@@ -82,6 +82,7 @@ const Home: NextPage<PageProps> = (props, context) => {
 
 export default Home
 
+// https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83
 // https://github.com/vercel/next.js/blob/canary/examples/cms-wordpress/pages/index.js
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     // 本地测试
