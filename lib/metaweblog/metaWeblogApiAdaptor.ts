@@ -24,13 +24,13 @@ export class MetaWeblogApiAdaptor implements IApi {
      */
     public async getRecentPosts(numOfPosts: number): Promise<Array<any>> {
         let result: Array<Post> = []
-        const cnblogsPosts = await this.metaWeblog.getRecentPosts(this.appkey, this.username, this.password, numOfPosts);
-        for (let i = 0; i < cnblogsPosts.length; i++) {
-            const cnblogsPost = cnblogsPosts[i]
+        const blogPosts = await this.metaWeblog.getRecentPosts(this.appkey, this.username, this.password, numOfPosts);
+        for (let i = 0; i < blogPosts.length; i++) {
+            const blogPost = blogPosts[i]
 
             // 适配公共属性
             let commonPost = new Post()
-            commonPost.title = cnblogsPost.title
+            commonPost.title = blogPost.title
             result.push(commonPost)
         }
 
