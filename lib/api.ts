@@ -1,38 +1,27 @@
-/**
- * 获取挂件所在的块ID
- * @returns {Promise<string>}
- */
-import {getBlockByID, getBlockAttrs, setBlockAttrs, exportMdContent} from "./siyuan/siYuanApi";
+import {SiYuanApiAdaptor} from "./siyuan/siYuanApiAdaptor";
+import {API_TYPE_CONSTANTS} from "./constants";
 
-/**
- * 获取页面
- * @param pageId 页面ID
- */
-export async function getPage(pageId: string) {
-    return await getBlockByID(pageId)
+export interface IApi {
+    getRecentPosts(numOfPosts: number): Promise<Array<any>>
 }
 
-/**
- * 获取页面属性
- * @param pageId 页面ID
- */
-export async function getPageAttrs(pageId: string) {
-    return await getBlockAttrs(pageId)
+export class API implements IApi {
+    type: string
+    private apiAdaptor: IApi
+
+    constructor(type: string) {
+        this.type = type;
+        switch (this.type) {
+            case API_TYPE_CONSTANTS.API_TYPE_SIYUAN:
+                this.apiAdaptor = new SiYuanApiAdaptor()
+                break;
+            default:
+                throw new Error("未找到接口适配器，请检查参数")
+        }
+    }
+
+    async getRecentPosts(numOfPosts: number): Promise<Array<any>> {
+        return this.apiAdaptor.getRecentPosts(numOfPosts);
+    }
 }
 
-/**
- * 保存页面属性
- * @param pageId 页面ID
- * @param attrs 属性对象
- */
-export async function setPageAttrs(pageId: string, attrs: any) {
-    return await setBlockAttrs(pageId, attrs)
-}
-
-/**
- * 获取页面的Markdown
- * @param pageId
- */
-export async function getPageMd(pageId: string) {
-    return await exportMdContent(pageId);
-}
