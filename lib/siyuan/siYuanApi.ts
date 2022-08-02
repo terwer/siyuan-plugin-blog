@@ -5,6 +5,7 @@
  */
 
 import {config} from "./siYuanConfig"
+import log from "../logUtil";
 
 export {
     向思源请求数据 as request,
@@ -76,25 +77,24 @@ async function 向思源请求数据(url: string, data: any, method?: string, us
         method: m
     }
     if (useToken) {
-        fetchOps = {
-            body: JSON.stringify(data),
-            method: m,
-            // @ts-ignore
+        Object.assign(fetchOps, {
             headers: {
                 Authorization: `Token ${config.token}`,
             }
-        }
+        })
     }
 
+    log.logInfo("向思源请求数据，url=>", url)
+    log.logInfo("向思源请求数据，fetchOps=>", fetchOps)
     await fetch(url, fetchOps).then(function (response) {
         resData = response.json()
     })
+    log.logInfo("向思源请求数据，resData=>", resData)
     return resData
 }
 
 async function 解析响应体(response: any) {
     let r = await response
-    // log.logInfo(r)
     return r.code === 0 ? r.data : null
 }
 
@@ -103,15 +103,13 @@ async function 以sql向思源请求块数据(sql: string) {
         stmt: sql,
     }
     let url = '/api/query/sql'
-    return 解析响应体(向思源请求数据(url, sqldata))
+    return 解析响应体(向思源请求数据(url, sqldata, "POST", true))
 }
 
 async function 向思源请求笔记本列表() {
-    // eslint-disable-next-line no-undef
-    // @ts-ignore
-    let sqldata = {stmt: sql语句}
+    let data = {}
     let url = '/api/notebook/lsNotebooks'
-    return 解析响应体(向思源请求数据(url, sqldata))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 获取思源块链接锚文本(链接源文本: string) {
@@ -146,7 +144,7 @@ async function 打开思源笔记本(笔记本id: string) {
         notebook: 笔记本id,
     }
     let url = '/api/notebook/openNotebook'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
@@ -155,7 +153,7 @@ async function 关闭思源笔记本(笔记本id: string) {
         notebook: 笔记本id,
     }
     let url = '/api/notebook/closeNotebook'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
@@ -165,7 +163,7 @@ async function 重命名思源笔记本(笔记本id: string, 笔记本的新名�
         name: 笔记本的新名称,
     }
     let url = '/api/notebook/renameNotebook'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
@@ -174,28 +172,28 @@ async function 新建思源笔记本(笔记本名称: string) {
         name: 笔记本名称,
     }
     let url = '/api/notebook/createNotebook'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
 async function 删除思源笔记本(笔记本id: string) {
     let data = {notebook: 笔记本id}
     let url = '/api/notebook/removeNotebook'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
 async function 获取思源笔记本配置(笔记本id: string) {
     let data = {notebook: 笔记本id}
     let url = '/api/notebook/getNotebookConf'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回笔记本配置
 }
 
 async function 保存思源笔记本配置(笔记本id: string) {
     let data = {notebook: 笔记本id}
     let url = '/api/notebook/setNotebookConf'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回笔记本配置
 }
 
@@ -206,7 +204,7 @@ async function 重命名思源文档(笔记本id: string, 文档路径: string, 
         title: 文档新标题,
     }
     let url = '/api/filetree/renameDoc'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
@@ -216,7 +214,7 @@ async function 删除思源文档(笔记本id: string, 文档路径: string) {
         path: 文档路径,
     }
     let url = '/api/filetree/removeDoc'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
@@ -228,7 +226,7 @@ async function 移动思源文档(源笔记本ID: string, 源路径: string, 目
         toPath: 目标路径,
     }
     let url = '/api/filetree/moveDoc'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回空数据
 }
 
@@ -238,7 +236,7 @@ async function 根据思源路径获取人类可读路径(笔记本ID: string, �
         Path: 路径,
     }
     let url = '/api/filetree/getHPathByPath'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //返回路径
 }
 
@@ -249,7 +247,7 @@ async function 以id获取思源块属性(内容块id: string) {
         id: 内容块id,
     }
     let url = '/api/attr/getBlockAttrs'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以id获取思源块信息(内容块id: string) {
@@ -266,7 +264,7 @@ async function 设置思源块属性(内容块id: string, 属性对象: any) {
     return 解析响应体(向思源请求数据(url, {
         id: 内容块id,
         attrs: 属性对象,
-    }))
+    }, "POST", true))
 }
 
 async function 以id获取文档块markdown(文档id: string) {
@@ -274,7 +272,7 @@ async function 以id获取文档块markdown(文档id: string) {
         id: 文档id,
     }
     let url = '/api/export/exportMdContent'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //文档hepath与Markdown 内容
 }
 
@@ -283,7 +281,7 @@ async function 列出指定路径下文档(路径: string) {
         path: 路径,
     }
     let url = '/api/filetree/listDocsByPath'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
     //文档hepath与Markdown 内容
 }
 
@@ -306,7 +304,7 @@ async function 以id获取反向链接(id: string) {
         mk: ""
     }
     let url = '/api/ref/getBacklink'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以sql获取嵌入块内容(外部id数组: any, sql: string) {
@@ -315,7 +313,7 @@ async function 以sql获取嵌入块内容(外部id数组: any, sql: string) {
         excludeIDs: 外部id数组,
     }
     let url = '/api/search/searchEmbedBlock'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 
 }
 
@@ -327,7 +325,7 @@ async function 以id获取文档内容(id: string) {
         size: 36,
     }
     let url = '/api/filetree/getDoc'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以id获取文档聚焦内容(id: string) {
@@ -338,13 +336,13 @@ async function 以id获取文档聚焦内容(id: string) {
         size: 36,
     }
     let url = '/api/filetree/getDoc'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 获取标签列表() {
     let data = {}
     let url = '/api/tag/getTag'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以id获取局部图谱(k: string, id: string, conf: any, reqId: string) {
@@ -355,7 +353,7 @@ async function 以id获取局部图谱(k: string, id: string, conf: any, reqId: 
         reqId: reqId,
     }
     let url = '/api/graph/getLocalGraph'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 获取全局图谱(k: string, conf: any, reqId: string) {
@@ -365,7 +363,7 @@ async function 获取全局图谱(k: string, conf: any, reqId: string) {
         reqId: reqId,
     }
     let url = '/api/graph/getGraph'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以关键词搜索文档(k: string) {
@@ -373,7 +371,7 @@ async function 以关键词搜索文档(k: string) {
         k: k,
     }
     let url = '/api/filetree/searchDocs'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以关键词搜索块(query: string) {
@@ -381,7 +379,7 @@ async function 以关键词搜索块(query: string) {
         "query": query,
     }
     let url = '/api/search/searchBlock'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 以关键词搜索模板(k: string) {
@@ -389,7 +387,7 @@ async function 以关键词搜索模板(k: string) {
         k: k,
     }
     let url = '/api/search/searchTemplate'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 通过markdown创建文档(notebook: string, path: string, markdown: string) {
@@ -399,24 +397,24 @@ async function 通过markdown创建文档(notebook: string, path: string, markdo
         markdown: markdown,
     }
     let url = '/api/filetree/createDocWithMd'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 渲染模板(data: any) {
     let url = '/api/template/render'
-    return 解析响应体(向思源请求数据(url, data))
+    return 解析响应体(向思源请求数据(url, data, "POST", true))
 }
 
 async function 插入块(previousID: string, dataType: string, data: any) {
     let url = '/api/block/insertBlock'
     return 解析响应体(向思源请求数据(
         // eslint-disable-next-line no-self-assign
-        url = url,
-        data = {
+        url,
+        {
             previousID: previousID,
             dataType: dataType,
             data: data,
-        },
+        }, "POST", true
     ))
 }
 
@@ -424,12 +422,12 @@ async function 插入前置子块(parentID: string, dataType: string, data: any)
     let url = '/api/block/prependBlock'
     return 解析响应体(向思源请求数据(
         // eslint-disable-next-line no-self-assign
-        url = url,
-        data = {
+        url,
+        {
             parentID: parentID,
             dataType: dataType,
             data: data,
-        },
+        }, "POST", true
     ))
 }
 
@@ -437,12 +435,12 @@ async function 插入后置子块(parentID: string, dataType: string, data: any)
     let url = '/api/block/appendBlock'
     return 解析响应体(向思源请求数据(
         // eslint-disable-next-line no-self-assign
-        url = url,
+        url,
         data = {
             parentID: parentID,
             dataType: dataType,
             data: data,
-        },
+        }, "POST", true
     ))
 }
 
@@ -450,24 +448,25 @@ async function 更新块(id: string, dataType: string, data: any) {
     let url = '/api/block/updateBlock'
     return 解析响应体(向思源请求数据(
         // eslint-disable-next-line no-self-assign
-        url = url,
-        data = {
+        url,
+        {
             id: id,
             dataType: dataType,
             data: data,
-        },
+        }, "POST", true
     ))
 }
 
 async function 删除块(id: string) {
     let url = '/api/block/deleteBlock'
+    let data;
     return 解析响应体(向思源请求数据(
         // eslint-disable-next-line no-self-assign
-        url = url,
+        url,
         // eslint-disable-next-line no-undef
         // @ts-ignore
         data = {
             id: id,
-        },
+        }, "POST", true
     ))
 }
