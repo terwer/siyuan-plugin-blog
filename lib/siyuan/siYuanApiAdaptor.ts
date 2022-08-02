@@ -1,6 +1,10 @@
 import {IApi} from "../api";
 import {getBlockByID} from "./siYuanApi";
+import {Post} from "../common/post";
 
+/**
+ * 思源笔记API适配器
+ */
 export class SiYuanApiAdaptor implements IApi {
     async getRecentPosts(numOfPosts: number): Promise<Array<any>> {
         let result = []
@@ -10,7 +14,11 @@ export class SiYuanApiAdaptor implements IApi {
 
         let page = await getBlockByID(pageId)
         if (page) {
-            result.push(page)
+            // 适配公共属性
+            let commonPost = new Post()
+            commonPost.postid = page.id
+            commonPost.title = page.content
+            result.push(commonPost)
         }
         return Promise.resolve(result);
     }
