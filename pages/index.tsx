@@ -1,16 +1,15 @@
-import type {GetStaticProps, NextPage} from 'next'
+import type {GetServerSideProps, NextPage} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {getPage} from "../lib/api";
+import {API} from "../lib/api";
+import {API_TYPE_CONSTANTS} from "../lib/constants";
 
-type PageProps = {
-    hello: string,
-    page: any,
-    random: any
+type Props = {
+    posts: any[]
 }
 
-const Home: NextPage<PageProps> = (props, context) => {
+const Home: NextPage<Props> = (props, context) => {
     return (
         <div className={styles.container}>
             <Head>
@@ -24,9 +23,7 @@ const Home: NextPage<PageProps> = (props, context) => {
                     Welcome to <a href="https://nextjs.org">Next.js!</a>
                 </h1>
 
-                <p>{JSON.stringify(props.hello)}</p>
-                <p>{JSON.stringify(props.page)}</p>
-                <p>{JSON.stringify(props.random)}</p>
+                <p>{JSON.stringify(props.posts)}</p>
 
                 <p className={styles.description}>
                     Get started by editing{' '}
@@ -84,19 +81,21 @@ export default Home
 
 // https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83
 // https://github.com/vercel/next.js/blob/canary/examples/cms-wordpress/pages/index.js
-export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-    // 本地测试
-    let pageId = "20220724172444-16a2oc1"
-
-    let page = await getPage(pageId)
-    if (!page) {
-        page = {}
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+    const query = context.query || {}
+    if (query.t instanceof Array) {
+        throw new Error("参数类型错误")
     }
+
+    let result = []
+    const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    const api = new API(type)
+
+    result = await api.getRecentPosts(10)
+
     return {
         props: {
-            hello: 'world',
-            page: page,
-            random: Math.random()
+            posts: result
         }
     }
 }
