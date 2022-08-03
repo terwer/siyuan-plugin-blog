@@ -28,7 +28,9 @@ const Home: NextPage<Props> = (props, context) => {
 
                 <div>
                     {props.posts.map((post) => (
-                        <p key={post.postid}>{post.title}</p>
+                        <p key={post.postid}>
+                            <a href={post.postid}>{post.title}</a>
+                        </p>
                     ))}
                 </div>
 

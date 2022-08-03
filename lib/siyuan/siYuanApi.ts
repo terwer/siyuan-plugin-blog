@@ -38,8 +38,6 @@ export {
     // 以id获取思源块属性 as getBlockAttrs,
     // 设置思源块属性 as setBlockAttrs,
 
-    sql,
-
     // 渲染模板 as render,
     // getFile, /api/file/getFile
     // putFile, /api/file/putFile
@@ -54,6 +52,8 @@ export {
     // currentTime, /api/system/currentTime
 
     // 以关键词搜索文档 as searchDocs,
+
+    getRootBlocks,
 
 
     // --------------
@@ -331,6 +331,20 @@ async function getHPathByID(blockId: string) {
     let url = '/api/filetree/getHPathByID'
     return parseBody(request(url, data))
     //返回路径
+}
+
+/**
+ * 分页获取根文档
+ * @param page 页码
+ * @param pagesize 数目
+ */
+async function getRootBlocks(page: number, pagesize: number) {
+    let stmt = `select *
+                from blocks
+                where parent_id = ''
+                order by created desc limit ${page}, ${pagesize}`
+    let data = await sql(stmt)
+    return data
 }
 
 // async function 以关键词搜索文档(k: string) {
