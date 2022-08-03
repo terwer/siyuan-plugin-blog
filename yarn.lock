@@ -161,6 +161,11 @@
   dependencies:
     tslib "^2.4.0"
 
+"@types/es6-promise@0.0.28":
+  version "0.0.28"
+  resolved "https://registry.npmmirror.com/@types/es6-promise/-/es6-promise-0.0.28.tgz#1af00118ff7b88fe3e46be943add54edeb285b75"
+  integrity sha512-4GA06MWCWCmuyBf+ptxrVK4BMQBXUSSCmyydk18Fvn9huS5zJdi24mEwxTn5x7sKMmGpJwKS6f1i2oLN7yL4lw==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmmirror.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -170,6 +175,11 @@
   version "18.6.3"
   resolved "https://registry.npmmirror.com/@types/node/-/node-18.6.3.tgz#4e4a95b6fe44014563ceb514b2598b3e623d1c98"
   integrity sha512-6qKpDtoaYLM+5+AFChLhHermMQxc3TOEFIDzrZLPRGHPrLEwqFkkT5Kx3ju05g6X7uDPazz3jHbKPX0KzCjntg==
+
+"@types/node@^6.0.31":
+  version "6.14.13"
+  resolved "https://registry.npmmirror.com/@types/node/-/node-6.14.13.tgz#b6649578fc0b5dac88c4ef48a46cab33c50a6c72"
+  integrity sha512-J1F0XJ/9zxlZel5ZlbeSuHW2OpabrUAqpFuC2sm2I3by8sERQ8+KCjNKUcq8QHuzpGMWiJpo9ZxeHrqrP2KzQw==
 
 "@types/prop-types@*":
   version "15.7.5"
@@ -1202,6 +1212,15 @@ merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.npmmirror.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
+metaweblog-api@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmmirror.com/metaweblog-api/-/metaweblog-api-1.2.0.tgz#572981d0f91d28ecfd8f429f6552e283a6d62d6c"
+  integrity sha512-lbN5Ge/WSM810k26Z2AtO6iLwhni0Q9qIwy2X3tEsjLNN/gP1TIs2MV5VGltVxbTpvs2nO7F86wr7AhW5TXHpQ==
+  dependencies:
+    "@types/es6-promise" "0.0.28"
+    "@types/node" "^6.0.31"
+    xmlrpc "^1.3.2"
+
 micromatch@^4.0.4:
   version "4.0.5"
   resolved "https://registry.npmmirror.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
@@ -1546,6 +1565,11 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
+sax@1.2.x:
+  version "1.2.4"
+  resolved "https://registry.npmmirror.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+  integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+
 scheduler@^0.23.0:
   version "0.23.0"
   resolved "https://registry.npmmirror.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
@@ -1772,6 +1796,19 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.npmmirror.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
+
+xmlbuilder@8.2.x:
+  version "8.2.2"
+  resolved "https://registry.npmmirror.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
+  integrity sha512-eKRAFz04jghooy8muekqzo8uCSVNeyRedbuJrp0fovbLIi7wlsYtdUn3vBAAPq2Y3/0xMz2WMEUQ8yhVVO9Stw==
+
+xmlrpc@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.npmmirror.com/xmlrpc/-/xmlrpc-1.3.2.tgz#26b2ea347848d028aac7e7514b5351976de3e83d"
+  integrity sha512-jQf5gbrP6wvzN71fgkcPPkF4bF/Wyovd7Xdff8d6/ihxYmgETQYSuTc+Hl+tsh/jmgPLro/Aro48LMFlIyEKKQ==
+  dependencies:
+    sax "1.2.x"
+    xmlbuilder "8.2.x"
 
 yallist@^4.0.0:
   version "4.0.0"
