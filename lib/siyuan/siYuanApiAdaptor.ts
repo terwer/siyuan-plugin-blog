@@ -63,10 +63,10 @@ export class SiYuanApiAdaptor implements IApi {
 
         // 适配公共属性
         let commonPost = new Post()
-        commonPost.postid = siyuanPost.root_id
-        commonPost.title = siyuanPost.content
-        commonPost.description = html
-        commonPost.mt_keywords = attr.tags
+        commonPost.postid = siyuanPost.root_id || ""
+        commonPost.title = siyuanPost.content || ""
+        commonPost.description = html || ""
+        commonPost.mt_keywords = attr.tags || ""
         // commonPost.dateCreated
 
         return commonPost
