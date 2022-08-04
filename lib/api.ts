@@ -4,9 +4,20 @@ import {JvueApiAdaptor} from "./metaweblog/jvueApiAdaptor";
 import {ConfApiAdaptor} from "./metaweblog/confApiAdaptor";
 import {CnblogsApiAdaptor} from "./metaweblog/cnblogsApiAdaptor";
 import {Post} from "./common/post";
+import {UserBlog} from "./common/userBlog";
 
 export interface IApi {
-    getRecentPosts(numOfPosts: number): Promise<Array<any>>
+    /**
+     * 博客配置列表
+     */
+    getUsersBlogs(): Promise<Array<UserBlog>>
+
+    /**
+     * 最新文章
+     * @param numOfPosts 文章数目
+     * @param page 页码（可选，部分平台不支持分页）
+     */
+    getRecentPosts(numOfPosts: number, page?: number): Promise<Array<any>>
 }
 
 export class API implements IApi {
@@ -33,8 +44,12 @@ export class API implements IApi {
         }
     }
 
-    async getRecentPosts(numOfPosts: number): Promise<Array<Post>> {
-        return this.apiAdaptor.getRecentPosts(numOfPosts);
+    async getRecentPosts(numOfPosts: number, page?: number): Promise<Array<Post>> {
+        return this.apiAdaptor.getRecentPosts(numOfPosts, page);
+    }
+
+    async getUsersBlogs(): Promise<Array<UserBlog>> {
+        return this.apiAdaptor.getUsersBlogs();
     }
 }
 
