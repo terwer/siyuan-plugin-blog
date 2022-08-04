@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bootstrap": "^5.2.0",
+    "clsx": "^1.2.1",
     "metaweblog-api": "^1.2.0",
     "next": "12.2.3",
     "react": "18.2.0",
+    "react-bootstrap": "^2.4.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
