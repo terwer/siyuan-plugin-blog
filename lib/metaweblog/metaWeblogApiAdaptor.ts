@@ -30,7 +30,14 @@ export class MetaWeblogApiAdaptor implements IApi {
 
             // 适配公共属性
             let commonPost = new Post()
+            commonPost.postid = blogPost.postid
             commonPost.title = blogPost.title
+            commonPost.mt_keywords = blogPost.mt_keywords
+            commonPost.permalink = blogPost.permalink
+            commonPost.description = blogPost.description
+            commonPost.wp_slug = blogPost.wp_slug
+            commonPost.dateCreated = blogPost.dateCreated
+            commonPost.categories = blogPost.categories
             result.push(commonPost)
         }
 
