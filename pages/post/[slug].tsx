@@ -15,13 +15,13 @@ type Props = {
 const PostDetail: NextPage<Props> = (props, context) => {
 
     function createMarkup() {
-        return {__html: props.post.description};
+        return {__html: props.post?.description};
     }
 
     return (
         <DefaultLayout props={props.propCfg}>
             <main className={styles.main}>
-                <p>{props.post.mt_keywords}</p>
+                <p>{props.post?.mt_keywords}</p>
                 <div dangerouslySetInnerHTML={createMarkup()}/>
             </main>
         </DefaultLayout>
