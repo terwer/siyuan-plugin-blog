@@ -34,6 +34,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     let result: Array<Post> = []
     const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
     const pageno = query.p
+
     const api = new API(type)
 
     // 配置

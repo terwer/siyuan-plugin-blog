@@ -35,14 +35,14 @@ export {
 
     // getBlockKramdown, ///api/block/getBlockKramdown
 
-    // 以id获取思源块属性 as getBlockAttrs,
-    // 设置思源块属性 as setBlockAttrs,
+    getBlockAttrs,
+    setBlockAttrs,
 
     // 渲染模板 as render,
     // getFile, /api/file/getFile
     // putFile, /api/file/putFile
 
-    // 以id获取文档块markdown as exportMdContent,
+    exportMdContent,
 
     // pushMsg, /api/notification/pushMsg
     // pushErrMsg, /api/notification/pushErrMsg
@@ -54,7 +54,7 @@ export {
     // 以关键词搜索文档 as searchDocs,
 
     getRootBlocks,
-
+    getBlockByID,
 
     // --------------
     // 下面的api未经验证
@@ -62,11 +62,10 @@ export {
     // 获取思源块链接锚文本 as getAnchor,
     //
     //
-    // 以id获取文档内容 as getDoc,
+    getDoc,
     // 以id获取文档聚焦内容 as getFocusedDoc,
     //
 
-    //
     // 列出指定路径下文档 as listDocsByPath,
     // 以id获取反向链接 as getBacklink,
     // 以sql获取嵌入块内容 as searchEmbedBlock,
@@ -77,9 +76,6 @@ export {
     //
     // 以关键词搜索块 as searchBlock,
     // 以关键词搜索模板 as searchTemplate,
-    //
-
-    // 以id获取思源块信息 as getBlockByID,
 };
 
 /**
@@ -347,6 +343,32 @@ async function getRootBlocks(page: number, pagesize: number) {
     return data
 }
 
+/**
+ * 以id获取思源块信息
+ * @param 内容块id
+ */
+async function getBlockByID(blockId: string) {
+    let stmt = `select *
+                from blocks
+                where id = '${blockId}'`
+    let data = await sql(stmt)
+    console.log(data)
+    return data[0]
+}
+
+/**
+ * 导出markdown文本
+ * @param 文档id
+ */
+async function exportMdContent(docId: string) {
+    let data = {
+        id: docId,
+    }
+    let url = '/api/export/exportMdContent'
+    return parseBody(request(url, data))
+    //文档hepath与Markdown 内容
+}
+
 // async function 以关键词搜索文档(k: string) {
 //     let data = {
 //         k: k,
@@ -383,43 +405,46 @@ async function getRootBlocks(page: number, pagesize: number) {
 // }
 //
 
+/**
+ * 获取块属性
+ * @param blockId
+ */
+async function getBlockAttrs(blockId: string) {
+    let data = {
+        id: blockId,
+    }
+    let url = '/api/attr/getBlockAttrs'
+    return parseBody(request(url, data))
+}
 
-// //暂缺上传文件
-//
-// async function 以id获取思源块属性(内容块id: string) {
-//     let data = {
-//         id: 内容块id,
-//     }
-//     let url = '/api/attr/getBlockAttrs'
-//     return 解析响应体(向思源请求数据(url, data, "POST", true))
-// }
-//
-// async function 以id获取思源块信息(内容块id: string) {
-//     let sql = `select *
-//                from blocks
-//                where id = '${内容块id}'`
-//     let data = await 以sql向思源请求块数据(sql)
-//     console.log(data)
-//     return data[0]
-// }
-//
-// async function 设置思源块属性(内容块id: string, 属性对象: any) {
-//     let url = '/api/attr/setBlockAttrs'
-//     return 解析响应体(向思源请求数据(url, {
-//         id: 内容块id,
-//         attrs: 属性对象,
-//     }, "POST", true))
-// }
-//
-// async function 以id获取文档块markdown(文档id: string) {
-//     let data = {
-//         id: 文档id,
-//     }
-//     let url = '/api/export/exportMdContent'
-//     return 解析响应体(向思源请求数据(url, data, "POST", true))
-//     //文档hepath与Markdown 内容
-// }
-//
+/**
+ * 设置块属性
+ * @param blockId
+ * @param attrs
+ */
+async function setBlockAttrs(blockId: string, attrs: any) {
+    let url = '/api/attr/setBlockAttrs'
+    return parseBody(request(url, {
+        id: blockId,
+        attrs: attrs,
+    }))
+}
+
+/**
+ * 以ID获取文档内容
+ * @param id
+ */
+async function getDoc(id: string) {
+    let data = {
+        id: id,
+        k: "",
+        mode: 2,
+        size: 36,
+    }
+    let url = '/api/filetree/getDoc'
+    return parseBody(request(url, data))
+}
+
 // async function 列出指定路径下文档(路径: string) {
 //     let data = {
 //         path: 路径,
@@ -460,18 +485,7 @@ async function getRootBlocks(page: number, pagesize: number) {
 //     return 解析响应体(向思源请求数据(url, data, "POST", true))
 //
 // }
-//
-// async function 以id获取文档内容(id: string) {
-//     let data = {
-//         id: id,
-//         k: "",
-//         mode: 2,
-//         size: 36,
-//     }
-//     let url = '/api/filetree/getDoc'
-//     return 解析响应体(向思源请求数据(url, data, "POST", true))
-// }
-//
+
 // async function 以id获取文档聚焦内容(id: string) {
 //     let data = {
 //         id: id,

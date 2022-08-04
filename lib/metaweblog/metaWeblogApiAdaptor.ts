@@ -57,4 +57,14 @@ export class MetaWeblogApiAdaptor implements IApi {
 
         return result;
     }
+
+    /**
+     * getPost
+     * https://codex.wordpress.org/XML-RPC_MetaWeblog_API#metaWeblog.getPost
+     *
+     */
+    public async getPost(postid: string): Promise<any> {
+        const data = await this.metaWeblog.getPost(postid, this.username, this.password)
+        return data;
+    }
 }

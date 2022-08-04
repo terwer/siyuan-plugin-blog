@@ -18,6 +18,12 @@ export interface IApi {
      * @param page 页码（可选，部分平台不支持分页）
      */
     getRecentPosts(numOfPosts: number, page?: number): Promise<Array<any>>
+
+    /**
+     * 文章详情
+     * @param postid
+     */
+    getPost(postid: string): Promise<any>
 }
 
 export class API implements IApi {
@@ -50,6 +56,10 @@ export class API implements IApi {
 
     async getUsersBlogs(): Promise<Array<UserBlog>> {
         return this.apiAdaptor.getUsersBlogs();
+    }
+
+    getPost(postid: string): Promise<any> {
+        return this.apiAdaptor.getPost(postid);
     }
 }
 
