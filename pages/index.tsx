@@ -25,6 +25,12 @@ export default Home
 // https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83
 // https://github.com/vercel/next.js/blob/canary/examples/cms-wordpress/pages/index.js
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+    // Add whatever `Cache-Control` value you want here
+    context.res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=1, stale-while-revalidate=59'
+    )
+
     const query = context.query || {}
     if (query.t instanceof Array) {
         throw new Error("参数类型错误")

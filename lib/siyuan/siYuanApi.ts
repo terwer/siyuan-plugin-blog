@@ -334,11 +334,16 @@ async function getHPathByID(blockId: string) {
  * @param page 页码
  * @param pagesize 数目
  */
-async function getRootBlocks(page: number, pagesize: number) {
-    let stmt = `select *
-                from blocks
-                where parent_id = ''
-                order by created desc limit ${page}, ${pagesize}`
+async function getRootBlocks(page: number, pagesize: number, keyword: string) {
+    let stmt = `SELECT b.content, tmp.root_id
+                FROM (SELECT DISTINCT root_id
+                      FROM blocks
+                      WHERE 1 = 1
+                        AND content LIKE '%${keyword}%'
+                      ORDER BY created DESC LIMIT ${page}, ${pagesize}) tmp,
+                     blocks b
+                WHERE tmp.root_id = b.root_id
+                  AND b.parent_id = ''`
     let data = await sql(stmt)
     return data
 }
