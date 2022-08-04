@@ -343,7 +343,8 @@ async function getRootBlocks(page: number, pagesize: number, keyword: string) {
                       ORDER BY created DESC LIMIT ${page}, ${pagesize}) tmp,
                      blocks b
                 WHERE tmp.root_id = b.root_id
-                  AND b.parent_id = ''`
+                  AND b.parent_id = ''
+                ORDER BY b.created DESC`
     let data = await sql(stmt)
     return data
 }
