@@ -3,12 +3,13 @@ import navbarStyles from "./css/navbar.module.css"
 import clsx from "clsx";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faHome, faFileText, faFile, faBook, faPieChart, faDownload} from '@fortawesome/free-solid-svg-icons'
+import SiteConfig from "../../../lib/common/siteconfig";
 
-export default function DefaultNavbar() {
+export default function DefaultNavbar({props}: { props: SiteConfig }) {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                <Navbar.Brand href="#home">{props.webname}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">

@@ -3,15 +3,17 @@ import {API} from "../lib/api";
 import {API_TYPE_CONSTANTS} from "../lib/constants";
 import {Post} from "../lib/common/post";
 import DefaultLayout from "../components/themes/default/defaultLayout";
+import SiteConfig from "../lib/common/siteconfig";
 
 type Props = {
     type: string,
+    layoutCfg: SiteConfig,
     posts: Post[]
 }
 
 const Home: NextPage<Props> = (props, context) => {
     return (
-        <DefaultLayout>
+        <DefaultLayout props={props.layoutCfg}>
             <div>
                 {props.posts.map((post) => (
                     <p key={post.postid}>
@@ -33,15 +35,23 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         throw new Error("参数类型错误")
     }
 
+    let cfg: SiteConfig = new SiteConfig()
     let result: Array<Post> = []
     const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
     const api = new API(type)
 
+    // 配置
+    const cfgs = await api.getUsersBlogs() || []
+    if (cfgs.length > 0) {
+        cfg.userBlog = cfgs[0]
+    }
+    // 文章
     result = await api.getRecentPosts(10)
 
     return {
         props: {
             type: type,
+            layoutCfg: JSON.parse(JSON.stringify(cfg)),
             posts: JSON.parse(JSON.stringify(result))
         }
     }

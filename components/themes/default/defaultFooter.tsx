@@ -1,8 +1,9 @@
 import styles from "./css/layout.module.css";
 import Image from "next/image";
 import footerStyles from "./css/footer.module.css"
+import SiteConfig from "../../../lib/common/siteconfig";
 
-export default function DefaultFooter() {
+export default function DefaultFooter({props}: { props: SiteConfig }) {
     return (
         <>
             <footer className={footerStyles.footer}>
