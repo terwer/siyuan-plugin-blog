@@ -8,7 +8,7 @@ export default function DefaultHomePostList({posts}: { posts: Post[] }) {
             <ListGroup variant="flush">
                 {posts.map((post) => (
                     <ListGroup.Item key={post.postid}>
-                        <a href={post.permalink} target="_blank" rel="noreferrer">{post.title}</a>
+                        <a href={post.permalink} rel="noreferrer">{post.title}</a>
                     </ListGroup.Item>
                 ))}
             </ListGroup>

@@ -1,8 +1,11 @@
 import {IApi} from "../api";
-import {getRootBlocks} from "./siYuanApi";
+import {exportMdContent, getBlockAttrs, getBlockByID, getDoc, getRootBlocks} from "./siYuanApi";
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
 import {API_TYPE_CONSTANTS} from "../constants";
+import log from "../logUtil";
+import {render} from "../markdownUtil";
+import {removeWidgetTag} from "../htmlUtil";
 
 /**
  * 思源笔记API适配器
@@ -37,9 +40,35 @@ export class SiYuanApiAdaptor implements IApi {
             let commonPost = new Post()
             commonPost.postid = siyuanPost.root_id
             commonPost.title = siyuanPost.content
+            commonPost.permalink = "/post/" + siyuanPost.root_id + ".html"
             result.push(commonPost)
         }
 
         return Promise.resolve(result);
+    }
+
+    public async getPost(postid: string): Promise<any> {
+        const siyuanPost = await getBlockByID(postid)
+        if (!siyuanPost) {
+            throw new Error("文章不存存在，postid=>" + postid)
+        }
+
+        const attr = await getBlockAttrs(postid)
+        const md = await exportMdContent(postid)
+
+        // 渲染Markdown
+        let html = render(md.content)
+        // 移除挂件html
+        html = removeWidgetTag(html)
+
+        // 适配公共属性
+        let commonPost = new Post()
+        commonPost.postid = siyuanPost.root_id
+        commonPost.title = siyuanPost.content
+        commonPost.description = html
+        commonPost.mt_keywords = attr.tags
+        // commonPost.dateCreated
+
+        return commonPost
     }
 }
