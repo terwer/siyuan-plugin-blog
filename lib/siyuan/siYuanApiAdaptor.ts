@@ -20,10 +20,14 @@ export class SiYuanApiAdaptor implements IApi {
         return result;
     }
 
-    public async getRecentPosts(numOfPosts: number): Promise<Array<any>> {
+    public async getRecentPosts(numOfPosts: number, page: number): Promise<Array<any>> {
         let result: any[] = []
 
-        const siyuanPosts = await getRootBlocks(0, numOfPosts)
+        let pg = 0
+        if (page) {
+            pg = page
+        }
+        const siyuanPosts = await getRootBlocks(pg, numOfPosts)
         // log.logInfo(siyuanPosts)
 
         for (let i = 0; i < siyuanPosts.length; i++) {

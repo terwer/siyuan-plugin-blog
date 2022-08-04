@@ -45,10 +45,10 @@ export class API implements IApi {
     }
 
     async getRecentPosts(numOfPosts: number, page?: number): Promise<Array<Post>> {
-        return this.apiAdaptor.getRecentPosts(numOfPosts);
+        return this.apiAdaptor.getRecentPosts(numOfPosts, page);
     }
 
-    getUsersBlogs(): Promise<Array<UserBlog>> {
+    async getUsersBlogs(): Promise<Array<UserBlog>> {
         return this.apiAdaptor.getUsersBlogs();
     }
 }

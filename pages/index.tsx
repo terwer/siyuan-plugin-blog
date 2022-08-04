@@ -4,6 +4,7 @@ import {API_TYPE_CONSTANTS} from "../lib/constants";
 import {Post} from "../lib/common/post";
 import DefaultLayout from "../components/themes/default/defaultLayout";
 import SiteConfig from "../lib/common/siteconfig";
+import DefaultHomePostList from "../components/themes/default/defaultHomePostList";
 
 type Props = {
     type: string,
@@ -14,13 +15,7 @@ type Props = {
 const Home: NextPage<Props> = (props, context) => {
     return (
         <DefaultLayout props={props.layoutCfg}>
-            <div>
-                {props.posts.map((post) => (
-                    <p key={post.postid}>
-                        <a href={post.postid}>{post.title}</a>
-                    </p>
-                ))}
-            </div>
+            <DefaultHomePostList posts={props.posts}/>
         </DefaultLayout>
     )
 }
@@ -38,6 +33,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     let cfg: SiteConfig = new SiteConfig()
     let result: Array<Post> = []
     const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    const pageno = query.p
     const api = new API(type)
 
     // 配置
@@ -46,7 +42,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         cfg.userBlog = cfgs[0]
     }
     // 文章
-    result = await api.getRecentPosts(10)
+    if (pageno) {
+        let num = 1
+        if (typeof pageno === "string") {
+            num = parseInt(pageno) || 1
+        }
+        result = await api.getRecentPosts(10, num - 1)
+    } else {
+        result = await api.getRecentPosts(10)
+    }
 
     return {
         props: {
