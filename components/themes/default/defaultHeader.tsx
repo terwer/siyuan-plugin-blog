@@ -2,7 +2,7 @@ import Head from "next/head";
 import DefaultNavbar from "./defaultNavbar";
 import SiteConfig from "../../../lib/common/siteconfig";
 
-export default function DefaultHeader({props}: { props: SiteConfig }) {
+export default function DefaultHeader({props,keyword}: { props: SiteConfig,keyword?:string }) {
     return (
         <>
             <Head>

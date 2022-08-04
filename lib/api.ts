@@ -16,8 +16,9 @@ export interface IApi {
      * 最新文章
      * @param numOfPosts 文章数目
      * @param page 页码（可选，部分平台不支持分页）
+     * @param keyword 关键字（可选，部分平台不支持搜索）
      */
-    getRecentPosts(numOfPosts: number, page?: number): Promise<Array<any>>
+    getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<any>>
 
     /**
      * 文章详情
@@ -50,8 +51,8 @@ export class API implements IApi {
         }
     }
 
-    async getRecentPosts(numOfPosts: number, page?: number): Promise<Array<Post>> {
-        return this.apiAdaptor.getRecentPosts(numOfPosts, page);
+    async getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<Post>> {
+        return this.apiAdaptor.getRecentPosts(numOfPosts, page, keyword);
     }
 
     async getUsersBlogs(): Promise<Array<UserBlog>> {

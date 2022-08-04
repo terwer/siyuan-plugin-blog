@@ -2,7 +2,7 @@ import styles from './css/layout.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DefaultHeader from "./defaultHeader";
 import DefaultFooter from "./defaultFooter";
-import {Container, Row} from "react-bootstrap";
+import {Alert, Container, Row} from "react-bootstrap";
 import SiteConfig from "../../../lib/common/siteconfig";
 
 /**
@@ -11,12 +11,21 @@ import SiteConfig from "../../../lib/common/siteconfig";
  * @param children
  * @constructor
  */
-export default function DefaultLayout({props,children}: { props:SiteConfig,children: any }) {
+export default function DefaultLayout({props,keyword,children}: { props:SiteConfig,keyword?:string,children: any }) {
     return (
         <>
             <Container>
                 <Row>
-                    <DefaultHeader props={props}/>
+                    <DefaultHeader props={props} keyword={keyword}/>
+                </Row>
+                <Row>
+                    <Container>
+                        {keyword &&
+                            <Alert className={styles.sKeywordInfo} key="info" variant="info">
+                                关键词： {keyword}
+                            </Alert>
+                        }
+                    </Container>
                 </Row>
                 <Row>
                     <main className={styles.main}>{children}</main>
