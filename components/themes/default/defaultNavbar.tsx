@@ -1,6 +1,8 @@
 import {Button, Container, Nav, Navbar, NavDropdown, Form} from "react-bootstrap";
 import navbarStyles from "./css/navbar.module.css"
 import clsx from "clsx";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faHome, faFileText, faFile, faBook, faPieChart, faDownload} from '@fortawesome/free-solid-svg-icons'
 
 export default function DefaultNavbar() {
     return (
@@ -10,17 +12,22 @@ export default function DefaultNavbar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+                        <Nav.Link href="#home"><FontAwesomeIcon icon={faHome}/>&nbsp;Home</Nav.Link>
+                        <Nav.Link href="#link"><FontAwesomeIcon icon={faFileText}/>&nbsp;Link</Nav.Link>
+
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Another action
+                            <NavDropdown.Item href="#action/3.1">
+                                <FontAwesomeIcon icon={faFile}/>&nbsp;Action
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">
+                                <FontAwesomeIcon icon={faBook}/>&nbsp;Another action
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">
+                                <FontAwesomeIcon icon={faPieChart}/>&nbsp;Something
+                            </NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item href="#action/3.4">
-                                Separated link
+                                <FontAwesomeIcon icon={faDownload}/>&nbsp;Separated link
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
