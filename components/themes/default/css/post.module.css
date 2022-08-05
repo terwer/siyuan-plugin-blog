@@ -2,6 +2,10 @@
 
 }
 
+.postBody img{
+    max-width: 100%;
+}
+
 /** 代码样式 */
 .postBody p code {
     border: solid 1px;
