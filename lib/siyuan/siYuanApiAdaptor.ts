@@ -92,6 +92,9 @@ export class SiYuanApiAdaptor implements IApi {
         // 访问密码
         const postPassword = attrs["custom-post-password"] || ""
 
+        // 访问密码
+        const shortDesc = attrs["custom-desc"] || ""
+
         // 渲染Markdown
         let html = render(md.content)
         // 移除挂件html
@@ -102,6 +105,7 @@ export class SiYuanApiAdaptor implements IApi {
         commonPost.postid = siyuanPost.root_id || ""
         commonPost.title = siyuanPost.content || ""
         commonPost.description = html || ""
+        commonPost.shortDesc = shortDesc || ""
         commonPost.mt_keywords = attrs.tags || ""
         commonPost.isPublished = isPublished
         commonPost.postPassword = postPassword

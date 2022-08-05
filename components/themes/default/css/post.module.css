@@ -2,6 +2,7 @@
 
 }
 
+/** 代码样式 */
 .postBody p code {
     border: solid 1px;
     border-radius: 4px;
@@ -23,4 +24,36 @@
     background-color: #f5f5f5 !important;
     border: 1px solid #ccc !important;
     border-radius: 3px !important;
+}
+
+/* 表格美化 */
+.postBody table {
+    margin: 10px 0;
+}
+
+.postBody table tr {
+    background-color: #ffffff;
+    border-top: 1px solid hsla(210, 18%, 87%, 1);
+}
+
+.postBody table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+.postBody table th, .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid #d0d7de;
+}
+
+.postBody table th {
+    font-weight: 600;
+}
+
+.postBody td, .postBody th {
+    padding: 0;
+}
+
+.postBody table td {
+    padding: 6px 13px;
+    border: 1px solid #d0d7de;
 }

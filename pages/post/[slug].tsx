@@ -48,6 +48,15 @@ const PostDetail: NextPage<Props> = (props, context) => {
                                 <p>{props.post?.mt_keywords}</p>
                             }
 
+                            {props.post && props.post.shortDesc &&
+                                props.post.shortDesc != "" &&
+                                <div>
+                                    <blockquote>
+                                        <p>{props.post?.shortDesc}</p>
+                                    </blockquote>
+                                </div>
+                            }
+
                             <div className={postStyles.postBody} dangerouslySetInnerHTML={createMarkup()}/>
                         </div>
                         : <div>
