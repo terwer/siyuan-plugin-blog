@@ -10,6 +10,7 @@ export class Post {
     mt_keywords: string
     link?: string
     permalink: string
+    shortDesc?:string
     description: string
     mt_excerpt?: string
     wp_slug: string

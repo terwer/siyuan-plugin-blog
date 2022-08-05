@@ -1,4 +1,4 @@
-import {GetServerSideProps, GetStaticProps, NextPage} from "next";
+import {GetServerSideProps, NextPage} from "next";
 import {Post} from "../../lib/common/post";
 import {API} from "../../lib/api";
 import {API_TYPE_CONSTANTS} from "../../lib/constants";
@@ -10,6 +10,7 @@ import {useEffect} from "react";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/vs.css'
 import {Alert} from "react-bootstrap";
+import DefaultPostTags from "../../components/themes/default/defaultPostTags";
 
 type Props = {
     type: string,
@@ -45,7 +46,18 @@ const PostDetail: NextPage<Props> = (props, context) => {
                         <div>
                             {props.post && props.post.mt_keywords &&
                                 props.post.mt_keywords != "" &&
-                                <p>{props.post?.mt_keywords}</p>
+                                <div>
+                                    <DefaultPostTags tagstr={props.post?.mt_keywords}/>
+                                </div>
+                            }
+
+                            {props.post && props.post.shortDesc &&
+                                props.post.shortDesc != "" &&
+                                <div>
+                                    <blockquote>
+                                        <p>{props.post?.shortDesc}</p>
+                                    </blockquote>
+                                </div>
                             }
 
                             <div className={postStyles.postBody} dangerouslySetInnerHTML={createMarkup()}/>
