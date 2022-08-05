@@ -23,8 +23,9 @@ export interface IApi {
     /**
      * 文章详情
      * @param postid
+     * @param useSlug 是否使用的是别名（可选，部分平台不支持）
      */
-    getPost(postid: string): Promise<any>
+    getPost(postid: string, useSlug?: boolean): Promise<any>
 }
 
 export class API implements IApi {
@@ -59,8 +60,8 @@ export class API implements IApi {
         return this.apiAdaptor.getUsersBlogs();
     }
 
-    getPost(postid: string): Promise<any> {
-        return this.apiAdaptor.getPost(postid);
+    getPost(postid: string, useSlug?: boolean): Promise<Post> {
+        return this.apiAdaptor.getPost(postid, useSlug);
     }
 }
 

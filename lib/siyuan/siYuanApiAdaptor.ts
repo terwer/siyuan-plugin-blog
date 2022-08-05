@@ -1,5 +1,5 @@
 import {IApi} from "../api";
-import {exportMdContent, getBlockAttrs, getBlockByID, getDoc, getRootBlocks} from "./siYuanApi";
+import {exportMdContent, getBlockAttrs, getBlockByID, getBlockBySlug, getDoc, getRootBlocks} from "./siYuanApi";
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
 import {API_TYPE_CONSTANTS} from "../constants";
@@ -37,25 +37,60 @@ export class SiYuanApiAdaptor implements IApi {
         for (let i = 0; i < siyuanPosts.length; i++) {
             const siyuanPost = siyuanPosts[i]
 
+            // 某些属性详情页控制即可
+            const attrs = await getBlockAttrs(siyuanPost.root_id)
+
+            // // 发布状态
+            // let isPublished = true
+            // const publishStatus = attrs["custom-publish-status"] || "draft"
+            // if (publishStatus == "secret") {
+            //     isPublished = false;
+            // }
+            //
+            // // 访问密码
+            // const postPassword = attrs["custom-publish-password"] || ""
+
+            // 文章别名
+            const customSlug = attrs["custom-slug"] || ""
+
             // 适配公共属性
             let commonPost = new Post()
             commonPost.postid = siyuanPost.root_id
             commonPost.title = siyuanPost.content
-            commonPost.permalink = "/post/" + siyuanPost.root_id + ".html"
+            commonPost.permalink = customSlug == "" ? "/post/" + siyuanPost.root_id : "/post/" + customSlug + ".html"
+            // commonPost.isPublished = isPublished
+            // commonPost.mt_keywords = attrs.tags || ""
             result.push(commonPost)
         }
 
         return Promise.resolve(result);
     }
 
-    public async getPost(postid: string): Promise<any> {
-        const siyuanPost = await getBlockByID(postid)
+    public async getPost(postid: string, useSlug?: boolean): Promise<any> {
+        let pid = postid
+        if (useSlug) {
+            const pidObj = await getBlockBySlug(postid)
+            if (pidObj) {
+                pid = pidObj.root_id
+            }
+        }
+        const siyuanPost = await getBlockByID(pid)
         if (!siyuanPost) {
-            throw new Error("文章不存存在，postid=>" + postid)
+            throw new Error("文章不存存在，postid=>" + pid)
         }
 
-        const attr = await getBlockAttrs(postid)
-        const md = await exportMdContent(postid)
+        const attrs = await getBlockAttrs(pid)
+        const md = await exportMdContent(pid)
+
+        // 发布状态
+        let isPublished = true
+        const publishStatus = attrs["custom-publish-status"] || "draft"
+        if (publishStatus == "secret") {
+            isPublished = false;
+        }
+
+        // 访问密码
+        const postPassword = attrs["custom-post-password"] || ""
 
         // 渲染Markdown
         let html = render(md.content)
@@ -67,7 +102,9 @@ export class SiYuanApiAdaptor implements IApi {
         commonPost.postid = siyuanPost.root_id || ""
         commonPost.title = siyuanPost.content || ""
         commonPost.description = html || ""
-        commonPost.mt_keywords = attr.tags || ""
+        commonPost.mt_keywords = attrs.tags || ""
+        commonPost.isPublished = isPublished
+        commonPost.postPassword = postPassword
         // commonPost.dateCreated
 
         return commonPost

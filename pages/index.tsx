@@ -26,10 +26,13 @@ export default Home
 // https://github.com/vercel/next.js/blob/canary/examples/cms-wordpress/pages/index.js
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
     // Add whatever `Cache-Control` value you want here
-    context.res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=1, stale-while-revalidate=59'
-    )
+    // 生产环境进行请求缓存
+    if(process.env.NODE_ENV=="production"){
+        context.res.setHeader(
+            'Cache-Control',
+            'public, s-maxage=1, stale-while-revalidate=59'
+        )
+    }
 
     const query = context.query || {}
     if (query.t instanceof Array) {

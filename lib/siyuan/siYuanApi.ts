@@ -55,6 +55,7 @@ export {
 
     getRootBlocks,
     getBlockByID,
+    getBlockBySlug,
 
     // --------------
     // 下面的api未经验证
@@ -357,6 +358,19 @@ async function getBlockByID(blockId: string) {
     let stmt = `select *
                 from blocks
                 where id = '${blockId}'`
+    let data = await sql(stmt)
+    console.log(data)
+    return data[0]
+}
+
+/**
+ * 以slug获取思源块信息
+ * @param 内容块id
+ */
+async function getBlockBySlug(slug: string) {
+    let stmt = `select root_id from attributes 
+               where name='custom-slug' and value='${slug}' 
+               limit 1`
     let data = await sql(stmt)
     console.log(data)
     return data[0]

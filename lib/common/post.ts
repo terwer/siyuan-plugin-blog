@@ -16,6 +16,8 @@ export class Post {
     dateCreated: Date
     categories: Array<string>
     mt_text_more?: string
+    isPublished: boolean
+    postPassword: string
 
     constructor() {
         this.postid = ""
@@ -26,5 +28,7 @@ export class Post {
         this.wp_slug = ""
         this.dateCreated = new Date()
         this.categories = []
+        this.isPublished = true
+        this.postPassword = ""
     }
 }

@@ -24,11 +24,12 @@ const SearchResult: NextPage<Props> = (props, context) => {
 export default SearchResult
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+    // 搜索需要实时结果，不提供缓存
     // Add whatever `Cache-Control` value you want here
-    context.res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=1, stale-while-revalidate=59'
-    )
+    // context.res.setHeader(
+    //     'Cache-Control',
+    //     'public, s-maxage=1, stale-while-revalidate=59'
+    // )
 
     const query = context.query || {}
     if (query.t instanceof Array) {
