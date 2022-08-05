@@ -121,6 +121,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         post.isPublished = true
     }
 
+    // SEO
+    cfg.webslogen = cfg.webname
+    cfg.webname = post.title
+    if (post.mt_keywords) {
+        cfg.keywords = post.mt_keywords.split(",").join(" ")
+    }
+    if (post.shortDesc) {
+        cfg.description = post.shortDesc
+    }
+
     return {
         props: {
             type: type,
