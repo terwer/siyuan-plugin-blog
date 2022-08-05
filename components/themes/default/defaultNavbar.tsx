@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBook, faDownload, faFile, faFileText, faHome, faPieChart} from '@fortawesome/free-solid-svg-icons'
 import SiteConfig from "../../../lib/common/siteconfig";
 import {useState} from "react";
+import Image from "next/image";
 
 export default function DefaultNavbar({props, keyword}: { props: SiteConfig, keyword?: string }) {
 
@@ -18,7 +19,9 @@ export default function DefaultNavbar({props, keyword}: { props: SiteConfig, key
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="/">{props?.webname}</Navbar.Brand>
+                <Navbar.Brand href="/">
+                    <Image src="/terwer.svg" width="283" height="64" title={props.webname} alt={props.webname}/>
+                </Navbar.Brand>
                 {
                     false &&
                     <div>
