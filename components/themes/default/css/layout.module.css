@@ -29,6 +29,7 @@ Github style
 .main blockquote p {
     font-style: italic;
     margin: 0 10px;
+    word-break: break-all;
 }
 .main blockquote p::before,
 .main blockquote p::after {
