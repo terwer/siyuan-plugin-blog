@@ -9,6 +9,7 @@ import DefaultLayout from "../../components/themes/default/defaultLayout";
 import {useEffect} from "react";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/vs.css'
+import {Alert} from "react-bootstrap";
 
 type Props = {
     type: string,
@@ -39,8 +40,22 @@ const PostDetail: NextPage<Props> = (props, context) => {
     return (
         <DefaultLayout props={props.propCfg}>
             <main className={styles.main}>
-                <p>{props.post?.mt_keywords}</p>
-                <div className={postStyles.postBody} dangerouslySetInnerHTML={createMarkup()}/>
+                {
+                    props.post.isPublished ?
+                        <div>
+                            {props.post && props.post.mt_keywords &&
+                                props.post.mt_keywords != "" &&
+                                <p>{props.post?.mt_keywords}</p>
+                            }
+
+                            <div className={postStyles.postBody} dangerouslySetInnerHTML={createMarkup()}/>
+                        </div>
+                        : <div>
+                            <Alert className={styles.sKeywordInfo} key="danger" variant="danger">
+                                对不起，您没有该文章的访问权限
+                            </Alert>
+                        </div>
+                }
             </main>
         </DefaultLayout>
     )
@@ -49,11 +64,13 @@ const PostDetail: NextPage<Props> = (props, context) => {
 export default PostDetail
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-    // Add whatever `Cache-Control` value you want here
-    context.res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=1, stale-while-revalidate=59'
-    )
+    // 生产环境进行请求缓存
+    if (process.env.NODE_ENV == "production") {
+        context.res.setHeader(
+            'Cache-Control',
+            'public, s-maxage=1, stale-while-revalidate=59'
+        )
+    }
 
     const query = context.query || {}
     if (query.t instanceof Array) {
@@ -64,9 +81,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     if (!slug || typeof slug !== "string") {
         throw new Error("文章路径错误")
     }
-    let smartSlug = ""
+    let smartSlug = slug || ""
+    let useSlug = false
     if (slug.indexOf(".html") > -1) {
         smartSlug = slug.replace(".html", "")
+        useSlug = true
     }
 
     const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
@@ -82,7 +101,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
     // 文章
     // log.logInfo("smartSlug=>", smartSlug)
-    const post = await api.getPost(smartSlug)
+    const post = await api.getPost(smartSlug, useSlug)
+
+    // 密码授权访问
+    const pwd = context.query.pwd || ""
+    if (pwd != "" && pwd == post.postPassword) {
+        post.isPublished = true
+    }
 
     return {
         props: {
