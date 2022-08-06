@@ -48,6 +48,8 @@ cp .env.local.example .env.local
 SIYUAN_API_URL=...
 # some api need to pass token
 SIYUAN_AUTH_TOKEN=...
+# publish post
+PUBLISH_SITE_URL=
 ```
 
 ## 部署在Vercel上

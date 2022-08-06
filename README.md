@@ -51,6 +51,8 @@ Your `.env.local` file should look like this:
 SIYUAN_API_URL=...
 # some api need to pass token
 SIYUAN_AUTH_TOKEN=...
+# publish post
+PUBLISH_SITE_URL=
 ```
 
 ## Deploy on Vercel
