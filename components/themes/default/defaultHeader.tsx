@@ -14,7 +14,7 @@ export default function DefaultHeader({props,keyword}: { props: SiteConfig,keywo
             </Head>
             <header>
                 <div className={headerStyles.forkMe}>
-                    <a href="https://github.com/you">
+                    <a href="https://github.com/terwer/node-siyuan">
                         <Image loading="lazy" width="149" height="149"
                                src="https://github.blog/wp-content/uploads/2008/12/forkme_right_green_007200.png?resize=149%2C149"
                                className="attachment-full size-full" alt="Fork me on GitHub"
