@@ -1,5 +1,9 @@
 .main {
     padding-top: 10px;
+    word-break: break-all;
+}
+.main p{
+    word-break: break-all;
 }
 
 .sKeywordInfo {

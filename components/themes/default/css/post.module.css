@@ -61,3 +61,16 @@
     padding: 6px 13px;
     border: 1px solid #d0d7de;
 }
+
+.postPublish{
+
+}
+
+.postPublish a{
+    color:#ffffff;
+    text-decoration: none;
+}
+.postPublish a:hover{
+    color:#ffffff;
+    text-decoration: none;
+}
