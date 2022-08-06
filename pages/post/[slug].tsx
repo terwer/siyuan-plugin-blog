@@ -9,7 +9,7 @@ import DefaultLayout from "../../components/themes/default/defaultLayout";
 import {useEffect} from "react";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/vs.css'
-import {Alert} from "react-bootstrap";
+import {Alert, Button} from "react-bootstrap";
 import DefaultPostTags from "../../components/themes/default/defaultPostTags";
 
 type Props = {
@@ -38,12 +38,24 @@ const PostDetail: NextPage<Props> = (props, context) => {
         return {__html: props.post?.description};
     }
 
+    function getPublishLink() {
+        const pubSiteUrl = process.env.PUBLISH_SITE_URL || ""
+        return pubSiteUrl + "/index.html?id=" + props.post.postid
+    }
+
     return (
         <DefaultLayout props={props.propCfg}>
             <main className={styles.main}>
                 {
                     props.post.isPublished ?
                         <div>
+                            {props.post && props.post.title &&
+                                <Button className={postStyles.postPublish}>
+                                    <a href={getPublishLink()} title={props.post.title} target="_blank"
+                                       rel="noreferrer">发布到其他平台</a>
+                                </Button>
+                            }
+
                             {props.post && props.post.mt_keywords &&
                                 props.post.mt_keywords != "" &&
                                 <div>
