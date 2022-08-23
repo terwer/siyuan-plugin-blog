@@ -15,23 +15,43 @@
 import {render} from "./markdownUtil";
 
 /**
+ * 移除标题数字
+ * @param str
+ */
+export function removeTitleNumber(str: string) {
+    let newstr = str
+
+    // 移除序号
+    const publisherRegex = /([0-9]*)\./g;
+    newstr = newstr.replace(publisherRegex, "")
+
+    return newstr
+}
+
+/**
  * 删除挂件的HTML
  * @param str 原字符
  * @returns {*|string} 删除后的字符
  */
 export function removeWidgetTag(str: string) {
+    let newstr = str
+
     // 旧版发布挂件
     const publisherRegex = /<iframe.*src="\/widgets\/publisher.*<\/iframe>/g;
-    str = str.replaceAll(publisherRegex, "")
+    newstr = newstr.replace(publisherRegex, "")
 
     // 新版发布挂件
     const syPublisherRegex = /<iframe.*src="\/widgets\/sy-post-publisher.*<\/iframe>/g;
-    str = str.replaceAll(syPublisherRegex, "")
+    newstr = newstr.replace(syPublisherRegex, "")
 
     // 文章属性挂件
     const noteAttrRegex = /<iframe.*\/widgets\/Note*\sAttrs.*\/iframe>/g
-    str = str.replaceAll(noteAttrRegex, "")
-    return str
+    newstr = newstr.replace(noteAttrRegex, "")
+
+    const h1Regex = /<h1.*\/h1>/g
+    newstr = newstr.replace(h1Regex, "")
+
+    return newstr
 }
 
 /**

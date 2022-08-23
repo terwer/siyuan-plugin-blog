@@ -1,21 +1,26 @@
 import {IApi} from "../api";
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
+import logUtil from "../logUtil";
 
 /**
  * 博客园的API适配器
  */
 export class MetaWeblogApiAdaptor implements IApi {
-    protected metaWeblog: any
+    protected apiUrl: string
     protected username: string
     protected password: string
     protected appkey: string
 
+    protected metaWeblog: any
+
     constructor() {
-        this.metaWeblog = null;
+        this.apiUrl = ""
         this.username = ""
         this.password = ""
         this.appkey = ""
+
+        this.metaWeblog = null
     }
 
     /**
@@ -26,7 +31,15 @@ export class MetaWeblogApiAdaptor implements IApi {
     public async getUsersBlogs(): Promise<Array<UserBlog>> {
         let result: Array<UserBlog> = []
         const data = await this.metaWeblog.getUsersBlogs(this.appkey, this.username, this.password);
-        // TODO
+        // logUtil.logInfo("data=>", data)
+
+        data.forEach((item:any)=>{
+            const userBlog = new UserBlog();
+            userBlog.blogid = item.blogid
+            userBlog.url = item.url
+            userBlog.blogName = item.blogName
+            result.push(userBlog)
+        })
 
         return result;
     }

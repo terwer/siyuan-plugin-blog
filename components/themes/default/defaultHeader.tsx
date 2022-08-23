@@ -4,7 +4,7 @@ import SiteConfig from "../../../lib/common/siteconfig";
 import Image from "next/image";
 import headerStyles from "./css/header.module.css"
 
-export default function DefaultHeader({props,keyword}: { props: SiteConfig,keyword?:string }) {
+export default function DefaultHeader({props, keyword, type}: { props: SiteConfig, keyword?: string, type: string }) {
     return (
         <>
             <Head>
@@ -21,7 +21,7 @@ export default function DefaultHeader({props,keyword}: { props: SiteConfig,keywo
                                data-recalc-dims="1"/>
                     </a>
                 </div>
-                <DefaultNavbar props={props}/>
+                <DefaultNavbar props={props} type={type}/>
             </header>
         </>
     )

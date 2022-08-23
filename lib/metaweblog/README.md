@@ -5,7 +5,7 @@
 ```json
 {
   "dependencies": {
-    "metaweblog-api": "^1.2.0"
+    "xmlrpc": "^1.3.2"
   }
 }
 ```

@@ -11,12 +11,17 @@ import SiteConfig from "../../../lib/common/siteconfig";
  * @param children
  * @constructor
  */
-export default function DefaultLayout({props,keyword,children}: { props:SiteConfig,keyword?:string,children: any }) {
+export default function DefaultLayout({
+                                          props,
+                                          keyword,
+                                          children,
+                                          type
+                                      }: { props: SiteConfig, keyword?: string, children: any, type: string }) {
     return (
         <>
             <Container>
                 <Row>
-                    <DefaultHeader props={props} keyword={keyword}/>
+                    <DefaultHeader props={props} keyword={keyword} type={type}/>
                 </Row>
                 <Row>
                     <Container>

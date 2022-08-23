@@ -221,11 +221,6 @@
   dependencies:
     tslib "^2.4.0"
 
-"@types/es6-promise@0.0.28":
-  version "0.0.28"
-  resolved "https://registry.npmmirror.com/@types/es6-promise/-/es6-promise-0.0.28.tgz#1af00118ff7b88fe3e46be943add54edeb285b75"
-  integrity sha512-4GA06MWCWCmuyBf+ptxrVK4BMQBXUSSCmyydk18Fvn9huS5zJdi24mEwxTn5x7sKMmGpJwKS6f1i2oLN7yL4lw==
-
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmmirror.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -235,11 +230,6 @@
   version "18.6.3"
   resolved "https://registry.npmmirror.com/@types/node/-/node-18.6.3.tgz#4e4a95b6fe44014563ceb514b2598b3e623d1c98"
   integrity sha512-6qKpDtoaYLM+5+AFChLhHermMQxc3TOEFIDzrZLPRGHPrLEwqFkkT5Kx3ju05g6X7uDPazz3jHbKPX0KzCjntg==
-
-"@types/node@^6.0.31":
-  version "6.14.13"
-  resolved "https://registry.npmmirror.com/@types/node/-/node-6.14.13.tgz#b6649578fc0b5dac88c4ef48a46cab33c50a6c72"
-  integrity sha512-J1F0XJ/9zxlZel5ZlbeSuHW2OpabrUAqpFuC2sm2I3by8sERQ8+KCjNKUcq8QHuzpGMWiJpo9ZxeHrqrP2KzQw==
 
 "@types/prop-types@*":
   version "15.7.5"
@@ -878,6 +868,13 @@ fast-levenshtein@^2.0.6:
   resolved "https://registry.npmmirror.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==
 
+fast-xml-parser@^4.0.9:
+  version "4.0.9"
+  resolved "https://registry.npmmirror.com/fast-xml-parser/-/fast-xml-parser-4.0.9.tgz#3a81dab7b4952b8d38f0136d28bd055b80ed6512"
+  integrity sha512-4G8EzDg2Nb1Qurs3f7BpFV4+jpMVsdgLVuG1Uv8O2OHJfVCg7gcA53obuKbmVqzd4Y7YXVBK05oJG7hzGIdyzg==
+  dependencies:
+    strnum "^1.0.5"
+
 fastq@^1.6.0:
   version "1.13.0"
   resolved "https://registry.npmmirror.com/fastq/-/fastq-1.13.0.tgz#616760f88a7526bdfc596b7cab8c18938c36b98c"
@@ -1323,15 +1320,6 @@ merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npmmirror.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
-
-metaweblog-api@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npmmirror.com/metaweblog-api/-/metaweblog-api-1.2.0.tgz#572981d0f91d28ecfd8f429f6552e283a6d62d6c"
-  integrity sha512-lbN5Ge/WSM810k26Z2AtO6iLwhni0Q9qIwy2X3tEsjLNN/gP1TIs2MV5VGltVxbTpvs2nO7F86wr7AhW5TXHpQ==
-  dependencies:
-    "@types/es6-promise" "0.0.28"
-    "@types/node" "^6.0.31"
-    xmlrpc "^1.3.2"
 
 micromatch@^4.0.4:
   version "4.0.5"
@@ -1821,6 +1809,11 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmmirror.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+strnum@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmmirror.com/strnum/-/strnum-1.0.5.tgz#5c4e829fe15ad4ff0d20c3db5ac97b73c9b072db"
+  integrity sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==
 
 styled-jsx@5.0.2:
   version "5.0.2"
