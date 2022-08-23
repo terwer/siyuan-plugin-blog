@@ -15,8 +15,8 @@ type Props = {
 
 const SearchResult: NextPage<Props> = (props, context) => {
     return (
-        <DefaultLayout props={props.layoutCfg} keyword={props.keyword}>
-            <DefaultHomePostList posts={props.posts}/>
+        <DefaultLayout props={props.layoutCfg} keyword={props.keyword} type={props.type}>
+            <DefaultHomePostList posts={props.posts} type={props.type}/>
         </DefaultLayout>
     )
 }
