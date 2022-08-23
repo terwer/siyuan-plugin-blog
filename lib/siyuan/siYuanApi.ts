@@ -1,5 +1,5 @@
 import {config} from "./siYuanConfig"
-import log from "../logUtil";
+import logUtil from "../logUtil";
 
 /**
  * 思源API v2.0.27
@@ -109,11 +109,11 @@ async function request(url: string, data: any, method?: string, useToken?: boole
         })
     }
 
-    log.logInfo("向思源请求数据，url=>", url)
-    log.logInfo("向思源请求数据，fetchOps=>", fetchOps)
+    logUtil.logInfo("向思源请求数据，url=>", url)
+    logUtil.logInfo("向思源请求数据，fetchOps=>", fetchOps)
     await fetch(url, fetchOps).then(function (response) {
         resData = response.json()
-        log.logInfo("向思源请求数据，resData=>", resData)
+        logUtil.logInfo("向思源请求数据，resData=>", resData)
     })
     return resData
 }

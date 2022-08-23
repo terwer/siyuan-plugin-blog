@@ -6,8 +6,10 @@ import {faBook, faDownload, faFile, faFileText, faHome, faPieChart} from '@forta
 import SiteConfig from "../../../lib/common/siteconfig";
 import {useState} from "react";
 import Image from "next/image";
+import {isEmptyString} from "../../../lib/util";
+import {API_TYPE_CONSTANTS} from "../../../lib/constants";
 
-export default function DefaultNavbar({props, keyword}: { props: SiteConfig, keyword?: string }) {
+export default function DefaultNavbar({props, keyword, type}: { props: SiteConfig, keyword?: string, type: string }) {
 
     let [value, setValue] = useState("")
 
@@ -16,10 +18,18 @@ export default function DefaultNavbar({props, keyword}: { props: SiteConfig, key
         window.location.href = "/s/" + value
     }
 
+    const getHomelink = function (type: string) {
+        let homeLink = "/"
+        if (!isEmptyString(type) && type != API_TYPE_CONSTANTS.API_TYPE_SIYUAN) {
+            homeLink = "/?t=" + type
+        }
+        return homeLink
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="/">
+                <Navbar.Brand href={getHomelink(type)}>
                     <Image src="/terwer.svg" width="283" height="64" title={props.webname} alt={props.webname}/>
                 </Navbar.Brand>
                 {

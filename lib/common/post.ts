@@ -1,6 +1,8 @@
 /**
  * 通用文章模型定义
  */
+import {POST_STATUS_CONSTANTS} from "../constants/postStatusConstants";
+
 export class Post {
     postid: string
     title: string
@@ -17,8 +19,9 @@ export class Post {
     dateCreated: Date
     categories: Array<string>
     mt_text_more?: string
+    post_status?:string
     isPublished: boolean
-    postPassword: string
+    wp_password: string
 
     constructor() {
         this.postid = ""
@@ -30,6 +33,7 @@ export class Post {
         this.dateCreated = new Date()
         this.categories = []
         this.isPublished = true
-        this.postPassword = ""
+        this.post_status = POST_STATUS_CONSTANTS.POST_STATUS_PUBLISH
+        this.wp_password = ""
     }
 }

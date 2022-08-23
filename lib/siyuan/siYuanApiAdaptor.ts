@@ -3,9 +3,9 @@ import {exportMdContent, getBlockAttrs, getBlockByID, getBlockBySlug, getDoc, ge
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
 import {API_TYPE_CONSTANTS} from "../constants";
-import log from "../logUtil";
+import logUtil from "../logUtil";
 import {render} from "../markdownUtil";
-import {removeWidgetTag} from "../htmlUtil";
+import {removeTitleNumber, removeWidgetTag} from "../htmlUtil";
 
 /**
  * 思源笔记API适配器
@@ -53,10 +53,13 @@ export class SiYuanApiAdaptor implements IApi {
             // 文章别名
             const customSlug = attrs["custom-slug"] || ""
 
+            let title = siyuanPost.content || ""
+            title = removeTitleNumber(title)
+
             // 适配公共属性
             let commonPost = new Post()
             commonPost.postid = siyuanPost.root_id
-            commonPost.title = siyuanPost.content
+            commonPost.title = title
             commonPost.permalink = customSlug == "" ? "/post/" + siyuanPost.root_id : "/post/" + customSlug + ".html"
             // commonPost.isPublished = isPublished
             // commonPost.mt_keywords = attrs.tags || ""
@@ -100,15 +103,18 @@ export class SiYuanApiAdaptor implements IApi {
         // 移除挂件html
         html = removeWidgetTag(html)
 
+        let title = siyuanPost.content || ""
+        title = removeTitleNumber(title)
+
         // 适配公共属性
         let commonPost = new Post()
         commonPost.postid = siyuanPost.root_id || ""
-        commonPost.title = siyuanPost.content || ""
+        commonPost.title = title
         commonPost.description = html || ""
         commonPost.shortDesc = shortDesc || ""
         commonPost.mt_keywords = attrs.tags || ""
         commonPost.isPublished = isPublished
-        commonPost.postPassword = postPassword
+        commonPost.wp_password = postPassword
         // commonPost.dateCreated
 
         return commonPost

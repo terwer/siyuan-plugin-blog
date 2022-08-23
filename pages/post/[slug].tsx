@@ -6,17 +6,24 @@ import styles from "../../components/themes/default/css/layout.module.css";
 import postStyles from "../../components/themes/default/css/post.module.css"
 import SiteConfig from "../../lib/common/siteconfig";
 import DefaultLayout from "../../components/themes/default/defaultLayout";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/vs.css'
 import {Alert, Button} from "react-bootstrap";
-import DefaultPostTags from "../../components/themes/default/defaultPostTags";
+import dynamic from "next/dynamic";
+// import DefaultPostTags from "../../components/themes/default/defaultPostTags";
 
 type Props = {
     type: string,
     propCfg: any
     post: Post
+    publishLink: string
 }
+
+const DefaultPostTags = dynamic(
+    () => import('../../components/themes/default/defaultPostTags'),
+    {ssr: false}
+);
 
 const PostDetail: NextPage<Props> = (props, context) => {
 
@@ -38,22 +45,18 @@ const PostDetail: NextPage<Props> = (props, context) => {
         return {__html: props.post?.description};
     }
 
-    function getPublishLink() {
-        const pubSiteUrl = process.env.PUBLISH_SITE_URL || ""
-        return pubSiteUrl + "/index.html?id=" + props.post.postid
-    }
-
     return (
-        <DefaultLayout props={props.propCfg}>
+        <DefaultLayout props={props.propCfg} type={props.type}>
             <main className={styles.main}>
                 {
                     props.post.isPublished ?
                         <div>
-                            {props.post && props.post.title &&
+                            {(props.type == API_TYPE_CONSTANTS.API_TYPE_SIYUAN) ?
                                 <Button className={postStyles.postPublish}>
-                                    <a href={getPublishLink()} title={props.post.title} target="_blank"
+                                    <a href={props.publishLink} title={props.post.title} target="_blank"
                                        rel="noreferrer">发布到其他平台</a>
                                 </Button>
+                                : <div></div>
                             }
 
                             {props.post && props.post.mt_keywords &&
@@ -86,6 +89,11 @@ const PostDetail: NextPage<Props> = (props, context) => {
 }
 
 export default PostDetail
+
+function getPublishLink(postid: string) {
+    const pubSiteUrl = process.env.PUBLISH_SITE_URL || ""
+    return pubSiteUrl + "/index.html?id=" + postid
+}
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
     // 生产环境进行请求缓存
@@ -129,7 +137,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
     // 密码授权访问
     const pwd = context.query.pwd || ""
-    if (pwd != "" && pwd == post.postPassword) {
+    if (pwd != "" && pwd == post.wp_password) {
         post.isPublished = true
     }
 
@@ -147,7 +155,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         props: {
             type: type,
             propCfg: JSON.parse(JSON.stringify(cfg)),
-            post: JSON.parse(JSON.stringify(post))
+            post: JSON.parse(JSON.stringify(post)),
+            publishLink: getPublishLink(post.postid) || ""
         }
     }
 }
