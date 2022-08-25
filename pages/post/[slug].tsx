@@ -92,7 +92,8 @@ export default PostDetail
 
 function getPublishLink(postid: string) {
     const pubSiteUrl = process.env.PUBLISH_SITE_URL || ""
-    return pubSiteUrl + "/index.html?id=" + postid
+    const opdPwd = process.env.OPT_PWD || ""
+    return pubSiteUrl + "/index.html?pwd=" + opdPwd + "&id=" + postid
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
