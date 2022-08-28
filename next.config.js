@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['github.blog'],
+    domains: ['img1.terwergreen.com'],
   },
 }
 
