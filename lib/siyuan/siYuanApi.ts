@@ -340,7 +340,7 @@ async function getRootBlocks(page: number, pagesize: number, keyword: string) {
                 FROM (SELECT DISTINCT root_id
                       FROM blocks
                       WHERE 1 = 1
-                        AND content LIKE '%${keyword}%'
+                        AND ((content LIKE '%${keyword}%') OR (tag LIKE '%${keyword}%'))
                       ORDER BY created DESC LIMIT ${page}, ${pagesize}) tmp,
                      blocks b
                 WHERE tmp.root_id = b.root_id

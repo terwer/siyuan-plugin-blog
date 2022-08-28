@@ -2,6 +2,11 @@
     margin-bottom: 10px;
 }
 
+.tagBox a{
+    text-decoration: none;
+    color:unset;
+}
+
 .OwnTag {
     margin: 4px 16px 4px 0;
     padding: 0 4px;

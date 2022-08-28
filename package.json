@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vdev": "vercel dev --listen 4004"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
