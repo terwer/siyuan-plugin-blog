@@ -23,6 +23,7 @@
     background-repeat: no-repeat;
     background-position: center;
     transition: background-color 200ms ease, transform 200ms ease-out;
+    cursor: pointer;
 }
 .hljs-copy-button:hover {
     border-color: #ffffff44;

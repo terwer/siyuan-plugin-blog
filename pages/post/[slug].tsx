@@ -33,6 +33,7 @@ const PostDetail: NextPage<Props> = (props, context) => {
             // 忽略未经转义的 HTML 字符
             ignoreUnescapedHTML: true
         });
+
         // 代码复制
         hljs.addPlugin(
             // @ts-ignore
@@ -41,13 +42,15 @@ const PostDetail: NextPage<Props> = (props, context) => {
             })
         )
 
-        // 代码选项卡
+        // 代码高亮
         // 获取到内容中所有的code标签
         const codes = document.querySelectorAll('pre code')
         codes.forEach((el) => {
             // 让code进行高亮
             hljs.highlightElement(el as HTMLElement)
         })
+
+        // 代码选项卡
         // 代码块
         const codeGroups = document.querySelectorAll('code-group')
         // 处理每个代码块
