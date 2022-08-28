@@ -3,3 +3,7 @@
     right: 8%;
     z-index: 99;
 }
+
+@media only screen and (max-width: 479px) {
+    .forkMe{ display: none !important; }
+}

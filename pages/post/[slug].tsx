@@ -6,11 +6,12 @@ import styles from "../../components/themes/default/css/layout.module.css";
 import postStyles from "../../components/themes/default/css/post.module.css"
 import SiteConfig from "../../lib/common/siteconfig";
 import DefaultLayout from "../../components/themes/default/defaultLayout";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/vs.css'
 import {Alert, Button} from "react-bootstrap";
 import dynamic from "next/dynamic";
+import {CopyButtonPlugin} from "../../lib/codecopy";
 // import DefaultPostTags from "../../components/themes/default/defaultPostTags";
 
 type Props = {
@@ -26,18 +27,77 @@ const DefaultPostTags = dynamic(
 );
 
 const PostDetail: NextPage<Props> = (props, context) => {
-
     useEffect(() => {
         // 配置 highlight.js
         hljs.configure({
             // 忽略未经转义的 HTML 字符
             ignoreUnescapedHTML: true
-        })
+        });
+        // 代码复制
+        hljs.addPlugin(
+            // @ts-ignore
+            new CopyButtonPlugin({
+                // callback: (text:any, el:any) => console.log("Copied to clipboard", text),
+            })
+        )
+
+        // 代码选项卡
         // 获取到内容中所有的code标签
         const codes = document.querySelectorAll('pre code')
         codes.forEach((el) => {
             // 让code进行高亮
             hljs.highlightElement(el as HTMLElement)
+        })
+        // 代码块
+        const codeGroups = document.querySelectorAll('code-group')
+        // 处理每个代码块
+        codeGroups.forEach((group) => {
+            // 防止重复添加
+            if (group.getElementsByTagName("ul").length == 0) {
+
+                const newNode = document.createElement("ul")
+                newNode.setAttribute("class", "code-tab")
+
+                const codeBlocks = group.querySelectorAll('code-block')
+                codeBlocks.forEach((block) => {
+                    const title = block.attributes.getNamedItem('title')?.value
+                    const active = block.attributes.getNamedItem('active')?.value
+                    const isActive = active != undefined
+                    // console.log(block.attributes.length)
+                    // console.log(title)
+                    // console.log(isActive)
+
+                    const item = document.createElement("li")
+                    item.setAttribute("class", isActive ? "code-tab-item current" : "code-tab-item")
+                    item.innerHTML = title || ""
+                    item.addEventListener("click", function (event) {
+                        const targetElement: any = event.target;
+                        // 选择状态
+                        // console.log(codeBlocks[0].innerHTML)
+                        const allLis = targetElement.parentElement.querySelectorAll("li")
+                        allLis.forEach((li: any) => {
+                            li.setAttribute("class", "code-tab-item")
+                        })
+                        targetElement.setAttribute("class", "code-tab-item current")
+
+                        // 设置tab
+                        codeBlocks.forEach(cb => {
+                            if (cb.attributes.getNamedItem('title')?.value == targetElement.innerHTML) {
+                                cb.setAttribute('active', '')
+                            } else {
+                                cb.removeAttribute("active")
+                            }
+                        })
+                        // console.log(targetElement.innerHTML);
+                    })
+
+                    newNode.append(item)
+                })
+
+                const firstBlock = codeBlocks[0]
+                firstBlock?.parentNode?.insertBefore(newNode, firstBlock)
+                // console.log("tab")
+            }
         })
     }, [])
 
@@ -57,6 +117,10 @@ const PostDetail: NextPage<Props> = (props, context) => {
                                        rel="noreferrer">发布到其他平台</a>
                                 </Button>
                                 : <div></div>
+                            }
+
+                            {props.post && props.post.title &&
+                                <h1>{props.post?.title}</h1>
                             }
 
                             {props.post && props.post.mt_keywords &&

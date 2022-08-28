@@ -11,7 +11,7 @@ export default function DefaultPostTags({tagstr}: { tagstr: string }) {
                     const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
                     return <Tag key={tag} color={randomColor} closable={false}>
-                        {tag}
+                        <a href={'/s/' + tag}> {tag}</a>
                     </Tag>
                 })
             }

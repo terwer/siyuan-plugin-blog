@@ -1,3 +1,5 @@
+@import url("codecopy.css");
+
 html,
 body {
   padding: 0;
@@ -23,4 +25,30 @@ a {
     color: white;
     background: black;
   }
+}
+
+/* 代码块 */
+code-group{
+}
+code-group code-block{
+  display: none;
+}
+code-group code-block[active]{
+  display: block;
+}
+.code-tab{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.code-tab-item{
+  cursor: pointer;
+  list-style: none;
+  display: inline-block;
+  min-width: 60px;
+  text-align: center;
+}
+.code-tab .current{
+  background: #f5f5f5;
+  padding: 5px 0;
 }
