@@ -108,12 +108,20 @@ export class MetaWeblogApi {
         // 错误处理
         this.doFault(ret)
 
-        const postArray = ret.params.param.value.array.data.value || []
-        postArray.forEach((item: any) => {
-            const post = this.parsePost(item)
-            result.push(post)
-        })
-
+        let postArray = ret.params.param.value.array.data.value || []
+        if (ret.params.param.value.array.data.value instanceof Array) {
+            postArray.forEach((item: any) => {
+                const post = this.parsePost(item)
+                result.push(post)
+            })
+        } else {
+            const onePost = ret.params.param.value.array.data.value
+            if (onePost) {
+                const post = this.parsePost(onePost)
+                result.push(post)
+            }
+        }
+        
         logUtil.logInfo("result=>", result)
         return result
     }
