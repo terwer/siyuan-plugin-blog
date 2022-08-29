@@ -33,7 +33,7 @@ export class MetaWeblogApiAdaptor implements IApi {
         const data = await this.metaWeblog.getUsersBlogs(this.appkey, this.username, this.password);
         // logUtil.logInfo("data=>", data)
 
-        data.forEach((item:any)=>{
+        data.forEach((item: any) => {
             const userBlog = new UserBlog();
             userBlog.blogid = item.blogid
             userBlog.url = item.url
@@ -48,10 +48,12 @@ export class MetaWeblogApiAdaptor implements IApi {
      * getRecentPosts
      * https://codex.wordpress.org/XML-RPC_MetaWeblog_API#metaWeblog.getRecentPosts
      * @param numOfPosts
+     * @param page 可选
+     * @param keyword 可选
      */
-    public async getRecentPosts(numOfPosts: number): Promise<Array<any>> {
+    public async getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<any>> {
         let result: Array<Post> = []
-        const blogPosts = await this.metaWeblog.getRecentPosts(this.appkey, this.username, this.password, numOfPosts);
+        const blogPosts = await this.metaWeblog.getRecentPosts(this.appkey, this.username, this.password, numOfPosts, page, keyword);
         for (let i = 0; i < blogPosts.length; i++) {
             const blogPost = blogPosts[i]
 

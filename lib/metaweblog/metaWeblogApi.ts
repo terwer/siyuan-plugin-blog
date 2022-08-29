@@ -89,11 +89,19 @@ export class MetaWeblogApi {
         return val
     }
 
-    public async getRecentPosts(appkey: string, username: string, password: string, numOfPosts: number): Promise<Array<Post>> {
+    public async getRecentPosts(appkey: string, username: string, password: string, numOfPosts: number, page?: number, keyword?: string): Promise<Array<Post>> {
         let result = <Array<Post>>[]
 
+        let reqParams = [this.apiType, username, password, numOfPosts]
+        if (page || keyword) {
+            let pg = page || 1
+            let k = keyword || ""
+            reqParams.push(pg)
+            reqParams.push(k)
+        }
+
         const ret = await this.xmlrpcClient.methodCallEntry(METAWEBLOG_METHOD_CONSTANTS.GET_RECENT_POSTS,
-            [this.apiType, username, password, numOfPosts])
+            reqParams)
         logUtil.logInfo("getRecentPosts ret=>")
         logUtil.logInfo(ret)
 
