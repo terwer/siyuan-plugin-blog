@@ -12,6 +12,7 @@ import 'highlight.js/styles/vs.css'
 import {Alert, Button} from "react-bootstrap";
 import dynamic from "next/dynamic";
 import {CopyButtonPlugin} from "../../lib/codecopy";
+import {isEmptyString} from "../../lib/util";
 // import DefaultPostTags from "../../components/themes/default/defaultPostTags";
 
 type Props = {
@@ -33,6 +34,7 @@ const PostDetail: NextPage<Props> = (props, context) => {
             // 忽略未经转义的 HTML 字符
             ignoreUnescapedHTML: true
         });
+
         // 代码复制
         hljs.addPlugin(
             // @ts-ignore
@@ -41,13 +43,15 @@ const PostDetail: NextPage<Props> = (props, context) => {
             })
         )
 
-        // 代码选项卡
+        // 代码高亮
         // 获取到内容中所有的code标签
         const codes = document.querySelectorAll('pre code')
         codes.forEach((el) => {
             // 让code进行高亮
             hljs.highlightElement(el as HTMLElement)
         })
+
+        // 代码选项卡
         // 代码块
         const codeGroups = document.querySelectorAll('code-group')
         // 处理每个代码块
@@ -185,7 +189,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         useSlug = true
     }
 
-    const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    let type = query.t || process.env.DEFAULT_TYPE
+    if (isEmptyString(type)) {
+        type = API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    } else {
+        type = type || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    }
 
     const api = new API(type)
 

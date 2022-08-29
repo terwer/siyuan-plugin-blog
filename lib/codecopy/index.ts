@@ -58,7 +58,7 @@ export class CopyButtonPlugin {
                     let alert = Object.assign(document.createElement("div"), {
                         role: "status",
                         className: "hljs-copy-alert",
-                        innerHTML: "Copied to clipboard",
+                        innerHTML: "复制到剪贴板",
                     });
                     el.parentElement.appendChild(alert);
 

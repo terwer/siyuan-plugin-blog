@@ -5,7 +5,8 @@ import {API_TYPE_CONSTANTS} from "../../../lib/constants";
 
 const getPermalink = function (postid: string, type: string) {
     let postUrl = "/post/" + postid + ".html"
-    if (!isEmptyString(type) && type != API_TYPE_CONSTANTS.API_TYPE_SIYUAN) {
+    const isDefault = process.env.DEFAULT_TYPE == type
+    if (!isEmptyString(type) && !isDefault) {
         postUrl = "/post/" + postid + ".html?t=" + type
     }
     return postUrl
