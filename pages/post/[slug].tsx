@@ -12,6 +12,7 @@ import 'highlight.js/styles/vs.css'
 import {Alert, Button} from "react-bootstrap";
 import dynamic from "next/dynamic";
 import {CopyButtonPlugin} from "../../lib/codecopy";
+import {isEmptyString} from "../../lib/util";
 // import DefaultPostTags from "../../components/themes/default/defaultPostTags";
 
 type Props = {
@@ -188,7 +189,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         useSlug = true
     }
 
-    const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    let type = query.t || process.env.DEFAULT_TYPE
+    if (isEmptyString(type)) {
+        type = API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    } else {
+        type = type || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    }
 
     const api = new API(type)
 

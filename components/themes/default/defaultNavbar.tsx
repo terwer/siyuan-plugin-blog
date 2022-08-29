@@ -20,7 +20,8 @@ export default function DefaultNavbar({props, keyword, type}: { props: SiteConfi
 
     const getHomelink = function (type: string) {
         let homeLink = "/"
-        if (!isEmptyString(type) && type != API_TYPE_CONSTANTS.API_TYPE_SIYUAN) {
+        const isDefault = process.env.DEFAULT_TYPE == type
+        if (!isEmptyString(type) && !isDefault) {
             homeLink = "/?t=" + type
         }
         return homeLink

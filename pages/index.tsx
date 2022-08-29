@@ -5,6 +5,7 @@ import {Post} from "../lib/common/post";
 import DefaultLayout from "../components/themes/default/defaultLayout";
 import SiteConfig from "../lib/common/siteconfig";
 import DefaultHomePostList from "../components/themes/default/defaultHomePostList";
+import {isEmptyString} from "../lib/util";
 
 type Props = {
     type: string,
@@ -41,7 +42,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
     let cfg: SiteConfig = new SiteConfig()
     let result: Array<Post> = []
-    const type = query.t || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+
+    let type = query.t || process.env.DEFAULT_TYPE
+    if (isEmptyString(type)) {
+        type = API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    } else {
+        type = type || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
+    }
+
     const pageno = query.p
 
     const api = new API(type)
