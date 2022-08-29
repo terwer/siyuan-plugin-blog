@@ -342,7 +342,8 @@ async function getRootBlocks(page: number, pagesize: number, keyword: string) {
                     WHERE 1 = 1
                     and parent_id = ''
                     AND ((content LIKE '%${keyword}%') OR (tag LIKE '%${keyword}%'))
-                    ORDER BY created DESC LIMIT ${page}, ${pagesize})`
+                    ORDER BY created DESC LIMIT ${page}, ${pagesize})
+                    ORDER BY created DESC`
     let data = await sql(stmt)
     return data
 }
