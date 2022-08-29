@@ -53,6 +53,8 @@ SIYUAN_API_URL=...
 SIYUAN_AUTH_TOKEN=...
 # publish post
 PUBLISH_SITE_URL=
+# set siyuan as default
+DEFAULT_TYPE=siyuan
 ```
 
 ## Deploy on Vercel
