@@ -1,16 +1,5 @@
 import {Post} from "../../../lib/common/post";
 import {Card, ListGroup} from "react-bootstrap";
-import {getQueryString, isEmptyString} from "../../../lib/util";
-import {API_TYPE_CONSTANTS} from "../../../lib/constants";
-
-const getPermalink = function (postid: string, type: string) {
-    let postUrl = "/post/" + postid + ".html"
-    const isDefault = process.env.DEFAULT_TYPE == type
-    if (!isEmptyString(type) && !isDefault) {
-        postUrl = "/post/" + postid + ".html?t=" + type
-    }
-    return postUrl
-}
 
 export default function DefaultHomePostList({posts, type}: { posts: Post[], type: string }) {
     return (
@@ -20,7 +9,7 @@ export default function DefaultHomePostList({posts, type}: { posts: Post[], type
                 {posts.length > 0 ?
                     posts.map((post) => (
                         <ListGroup.Item key={post.postid}>
-                            <a href={getPermalink(post.postid, type)} rel="noreferrer">{post.title}</a>
+                            <a href={post?.permalink} rel="noreferrer">{post.title}</a>
                         </ListGroup.Item>
                     )) :
                     <ListGroup.Item key="norecord">

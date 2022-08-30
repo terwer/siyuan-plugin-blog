@@ -5,7 +5,7 @@ import {API_TYPE_CONSTANTS} from "../../lib/constants";
 import {API} from "../../lib/api";
 import DefaultLayout from "../../components/themes/default/defaultLayout";
 import DefaultHomePostList from "../../components/themes/default/defaultHomePostList";
-import {isEmptyString} from "../../lib/util";
+import {assginPreviewUrlForPosts, getHomelink, isEmptyString} from "../../lib/util";
 
 type Props = {
     type: string,
@@ -53,6 +53,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     } else {
         type = type || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
     }
+    // homeLink
+    cfg.weburl = getHomelink(type)
 
     const pageno = query.p
 
@@ -73,6 +75,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     } else {
         result = await api.getRecentPosts(10)
     }
+
+    assginPreviewUrlForPosts(type, result)
 
     return {
         props: {

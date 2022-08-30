@@ -1,6 +1,8 @@
 /**
  * 是否在浏览器
  */
+import {Post} from "./common/post";
+
 export function inBrowser() {
     return typeof window !== 'undefined';
 }
@@ -61,4 +63,28 @@ export function isEmptyString(str: any) {
         return true
     }
     return str.trim().length == 0
+}
+
+export const getHomelink = function (type: string) {
+    let homeLink = "/"
+    const isDefault = process.env.DEFAULT_TYPE == type
+    if (!isEmptyString(type) && !isDefault) {
+        homeLink = "/?t=" + type
+    }
+    return homeLink
+}
+
+const getPermalink = function (postid: string, type: string) {
+    let postUrl = "/post/" + postid + ".html"
+    const isDefault = process.env.DEFAULT_TYPE == type
+    if (!isEmptyString(type) && !isDefault) {
+        postUrl = "/post/" + postid + ".html?t=" + type
+    }
+    return postUrl
+}
+
+export const assginPreviewUrlForPosts = (type: string, posts: Post[]) => {
+    posts.forEach(item => {
+        item.permalink = getPermalink(item.postid, type)
+    })
 }

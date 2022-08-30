@@ -18,19 +18,10 @@ export default function DefaultNavbar({props, keyword, type}: { props: SiteConfi
         window.location.href = "/s/" + value
     }
 
-    const getHomelink = function (type: string) {
-        let homeLink = "/"
-        const isDefault = process.env.DEFAULT_TYPE == type
-        if (!isEmptyString(type) && !isDefault) {
-            homeLink = "/?t=" + type
-        }
-        return homeLink
-    }
-
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href={getHomelink(type)}>
+                <Navbar.Brand href={props.weburl}>
                     <Image src="/terwer.svg" width="283" height="64" title={props.webname} alt={props.webname}/>
                 </Navbar.Brand>
                 {
