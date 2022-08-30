@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'FiraCode-Regular';
+  src: url('FiraCode-Regular.eot');
+  src: url('FiraCode-Regular.eot?#iefix') format('embedded-opentype'),
+       url('FiraCode-Regular.svg#FiraCode-Regular') format('svg'),
+       url('FiraCode-Regular.ttf') format('truetype'),
+       url('FiraCode-Regular.woff') format('woff'),
+       url('FiraCode-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
