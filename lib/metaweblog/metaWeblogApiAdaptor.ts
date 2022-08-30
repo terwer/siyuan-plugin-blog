@@ -3,6 +3,7 @@ import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
 import {mdToHtml, mdToPlainText, parseHtml, removeTitleNumber} from "../htmlUtil";
 import {CONSTANTS} from "../constants";
+import logUtil from "../logUtil";
 
 /**
  * 博客园的API适配器
@@ -107,6 +108,8 @@ export class MetaWeblogApiAdaptor implements IApi {
         // commonPost.isPublished = isPublished
         // commonPost.wp_password = postPassword
         // commonPost.dateCreated
+
+        logUtil.logInfo("metaweblogApiAdaptor文章解析并适配完毕，commonPost=>", commonPost)
 
         return commonPost;
     }
