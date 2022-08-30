@@ -336,7 +336,7 @@ async function getHPathByID(blockId: string) {
  * @param pagesize 数目
  */
 async function getRootBlocks(page: number, pagesize: number, keyword: string) {
-    let stmt = `select root_id,content from blocks WHERE id IN (
+    let stmt = `select DISTINCT root_id,content from blocks WHERE id IN (
                     SELECT id
                     FROM blocks
                     WHERE 1 = 1
