@@ -5,7 +5,7 @@ import {UserBlog} from "../common/userBlog";
 import {API_TYPE_CONSTANTS} from "../constants";
 import logUtil from "../logUtil";
 import {render} from "../markdownUtil";
-import {removeTitleNumber, removeWidgetTag} from "../htmlUtil";
+import {mdToHtml, removeTitleNumber, removeWidgetTag} from "../htmlUtil";
 
 /**
  * 思源笔记API适配器
@@ -99,9 +99,7 @@ export class SiYuanApiAdaptor implements IApi {
         const shortDesc = attrs["custom-desc"] || ""
 
         // 渲染Markdown
-        let html = render(md.content)
-        // 移除挂件html
-        html = removeWidgetTag(html)
+        let html = mdToHtml(md.content)
 
         let title = siyuanPost.content || ""
         title = removeTitleNumber(title)

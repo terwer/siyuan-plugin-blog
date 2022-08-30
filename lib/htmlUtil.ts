@@ -1,16 +1,5 @@
 // const showdown = require("showdown")
 // const converter = new showdown.Converter();
-//
-// /**
-//  * 将Markdown转换为HTML
-//  * @param md Markdown
-//  * @returns {*} HTML
-//  */
-// export function mdToHtml(md: string) {
-//     let html = converter.makeHtml(md);
-//     return removeWidgetTag(html);
-// }
-// instdead by lute
 
 import {render} from "./markdownUtil";
 
@@ -116,12 +105,24 @@ function filterHtml(str: string) {
 }
 
 /**
+ * 将Markdown转换为HTML
+ * @param md Markdown
+ * @returns {*} HTML
+ */
+export function mdToHtml(md: string) {
+    // let html = "<h1>No markdown parser,see src/lib/htmlUtil.ts</h1>"
+    // html = converter.makeHtml(md);
+    const html = render(md)
+    return removeWidgetTag(html);
+}
+
+/**
  * 将Markdown转换为纯文本
  * @param md
  * @returns {string}
  */
-export function mdToPlanText(md: string) {
-    let html = render(md)
+export function mdToPlainText(md: string) {
+    let html = mdToHtml(md)
     html = removeWidgetTag(html)
     return filterHtml(html)
 }

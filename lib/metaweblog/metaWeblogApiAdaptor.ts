@@ -1,8 +1,8 @@
 import {IApi} from "../api";
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
-import logUtil from "../logUtil";
-import {mdToPlanText, parseHtml} from "../htmlUtil";
+import {mdToHtml, mdToPlainText, parseHtml, removeTitleNumber} from "../htmlUtil";
+import {CONSTANTS} from "../constants";
 
 /**
  * 博客园的API适配器
@@ -58,8 +58,8 @@ export class MetaWeblogApiAdaptor implements IApi {
         for (let i = 0; i < blogPosts.length; i++) {
             const blogPost = blogPosts[i]
 
-            const plainText = mdToPlanText(blogPost.description)
-            const shortDesc = parseHtml(plainText, 100, true)
+            const plainText = mdToPlainText(blogPost.description)
+            const shortDesc = parseHtml(plainText, CONSTANTS.MAX_PREVIEW_LENGTH, true)
             // logUtil.logInfo("shortDesc=>", shortDesc)
 
             // 适配公共属性
@@ -87,15 +87,21 @@ export class MetaWeblogApiAdaptor implements IApi {
     public async getPost(postid: string): Promise<any> {
         const blogPost = await this.metaWeblog.getPost(postid, this.username, this.password)
 
-        const plainText = mdToPlanText(blogPost.description)
-        const shortDesc = parseHtml(plainText, 100, true)
+        const plainText = mdToPlainText(blogPost.description)
+        const shortDesc = parseHtml(plainText, CONSTANTS.MAX_PREVIEW_LENGTH, true)
         // logUtil.logInfo("shortDesc=>", shortDesc)
+
+        // 渲染Markdown
+        let html = mdToHtml(blogPost.description)
+
+        let title = blogPost.title || ""
+        title = removeTitleNumber(title)
 
         // 适配公共属性
         let commonPost = new Post()
         commonPost.postid = blogPost.postid
-        commonPost.title = blogPost.title
-        commonPost.description = blogPost.description
+        commonPost.title = title
+        commonPost.description = html
         commonPost.shortDesc = shortDesc || ""
         commonPost.mt_keywords = blogPost.mt_keywords
         // commonPost.isPublished = isPublished
