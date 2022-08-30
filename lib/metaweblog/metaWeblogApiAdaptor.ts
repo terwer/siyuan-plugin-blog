@@ -2,6 +2,7 @@ import {IApi} from "../api";
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
 import logUtil from "../logUtil";
+import {mdToPlanText, parseHtml} from "../htmlUtil";
 
 /**
  * 博客园的API适配器
@@ -57,10 +58,15 @@ export class MetaWeblogApiAdaptor implements IApi {
         for (let i = 0; i < blogPosts.length; i++) {
             const blogPost = blogPosts[i]
 
+            const plainText = mdToPlanText(blogPost.description)
+            const shortDesc = parseHtml(plainText, 100, true)
+            // logUtil.logInfo("shortDesc=>", shortDesc)
+
             // 适配公共属性
             let commonPost = new Post()
             commonPost.postid = blogPost.postid
             commonPost.title = blogPost.title
+            commonPost.shortDesc = shortDesc || ""
             commonPost.mt_keywords = blogPost.mt_keywords
             commonPost.permalink = blogPost.permalink
             commonPost.description = blogPost.description
@@ -79,7 +85,23 @@ export class MetaWeblogApiAdaptor implements IApi {
      *
      */
     public async getPost(postid: string): Promise<any> {
-        const data = await this.metaWeblog.getPost(postid, this.username, this.password)
-        return data;
+        const blogPost = await this.metaWeblog.getPost(postid, this.username, this.password)
+
+        const plainText = mdToPlanText(blogPost.description)
+        const shortDesc = parseHtml(plainText, 100, true)
+        // logUtil.logInfo("shortDesc=>", shortDesc)
+
+        // 适配公共属性
+        let commonPost = new Post()
+        commonPost.postid = blogPost.postid
+        commonPost.title = blogPost.title
+        commonPost.description = blogPost.description
+        commonPost.shortDesc = shortDesc || ""
+        commonPost.mt_keywords = blogPost.mt_keywords
+        // commonPost.isPublished = isPublished
+        // commonPost.wp_password = postPassword
+        // commonPost.dateCreated
+
+        return commonPost;
     }
 }

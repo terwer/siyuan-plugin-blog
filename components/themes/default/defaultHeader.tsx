@@ -4,11 +4,15 @@ import SiteConfig from "../../../lib/common/siteconfig";
 import Image from "next/image";
 import headerStyles from "./css/header.module.css"
 
+const getTitle = (webname: string, webslogen: string) => {
+    return webname + " - " + webslogen
+}
+
 export default function DefaultHeader({props, keyword, type}: { props: SiteConfig, keyword?: string, type: string }) {
     return (
         <>
             <Head>
-                <title>{props?.webname} - {props?.webslogen}</title>
+                <title>{getTitle(props?.webname, props?.webslogen)}</title>
                 <meta name="keywords" content={props?.keywords}/>
                 <meta name="description" content={props?.description}/>
             </Head>

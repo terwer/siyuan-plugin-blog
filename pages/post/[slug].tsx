@@ -12,8 +12,9 @@ import 'highlight.js/styles/vs.css'
 import {Alert, Button} from "react-bootstrap";
 import dynamic from "next/dynamic";
 import {CopyButtonPlugin} from "../../lib/codecopy";
-import {isEmptyString} from "../../lib/util";
+import {getHomelink, isEmptyString} from "../../lib/util";
 // import DefaultPostTags from "../../components/themes/default/defaultPostTags";
+const plantumlEncoder = require('plantuml-encoder')
 
 type Props = {
     type: string,
@@ -43,9 +44,12 @@ const PostDetail: NextPage<Props> = (props, context) => {
             })
         )
 
+        // 锁定容器，避免全部渲染
+        const htmlBody = document.querySelectorAll("#htmlBody")[0]
+
         // 代码高亮
         // 获取到内容中所有的code标签
-        const codes = document.querySelectorAll('pre code')
+        const codes = htmlBody.querySelectorAll('pre code')
         codes.forEach((el) => {
             // 让code进行高亮
             hljs.highlightElement(el as HTMLElement)
@@ -53,7 +57,7 @@ const PostDetail: NextPage<Props> = (props, context) => {
 
         // 代码选项卡
         // 代码块
-        const codeGroups = document.querySelectorAll('code-group')
+        const codeGroups = htmlBody.querySelectorAll('code-group')
         // 处理每个代码块
         codeGroups.forEach((group) => {
             // 防止重复添加
@@ -103,6 +107,20 @@ const PostDetail: NextPage<Props> = (props, context) => {
                 // console.log("tab")
             }
         })
+
+        // plantuml
+        const umlBlocks = htmlBody.querySelectorAll("div.language-plantuml")
+        umlBlocks.forEach(item => {
+            const encoded = plantumlEncoder.encode(item.innerHTML)
+            // const encoded = "SrJGjLDmibBmICt9oGS0"
+            const plantUMLServer = process.env.PLANT_UML_SERVR || "https://www.plantuml.com/plantuml/img/"
+            const url = plantUMLServer + encoded
+
+            const newNode = document.createElement("img")
+            newNode.setAttribute("src", url)
+            item?.parentNode?.insertBefore(newNode, item)
+            item.remove()
+        })
     }, [])
 
     function createMarkup() {
@@ -143,7 +161,8 @@ const PostDetail: NextPage<Props> = (props, context) => {
                                 </div>
                             }
 
-                            <div className={postStyles.postBody} dangerouslySetInnerHTML={createMarkup()}/>
+                            <div id="htmlBody" className={postStyles.postBody}
+                                 dangerouslySetInnerHTML={createMarkup()}/>
                         </div>
                         : <div>
                             <Alert className={styles.sKeywordInfo} key="danger" variant="danger">
@@ -189,16 +208,20 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         useSlug = true
     }
 
+    let cfg: SiteConfig = new SiteConfig()
+
+    // type
     let type = query.t || process.env.DEFAULT_TYPE
     if (isEmptyString(type)) {
         type = API_TYPE_CONSTANTS.API_TYPE_SIYUAN
     } else {
         type = type || API_TYPE_CONSTANTS.API_TYPE_SIYUAN
     }
+    // homeLink
+    cfg.weburl = getHomelink(type)
 
     const api = new API(type)
 
-    let cfg: SiteConfig = new SiteConfig()
     // 配置
     const cfgs = await api.getUsersBlogs() || []
     if (cfgs.length > 0) {
