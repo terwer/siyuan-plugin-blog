@@ -45,7 +45,13 @@ const PostDetail: NextPage<Props> = (props, context) => {
         )
 
         // 锁定容器，避免全部渲染
-        const htmlBody = document.querySelectorAll("#htmlBody")[0]
+        // 没有代码直接返回
+        const htmlBodys = document.querySelectorAll("#htmlBody")
+        if(!htmlBodys || htmlBodys.length == 0){
+            return
+        }
+
+        const htmlBody = htmlBodys[0]
 
         // 代码高亮
         // 获取到内容中所有的code标签
