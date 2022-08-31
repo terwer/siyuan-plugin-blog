@@ -334,16 +334,25 @@ async function getHPathByID(blockId: string) {
  * 分页获取根文档
  * @param page 页码
  * @param pagesize 数目
+ * 
+ * select root_id,content from blocks WHERE id IN (
+ * 	SELECT DISTINCT parent_id
+ * 	FROM blocks
+ * 	WHERE 1 = 1
+ * 	AND ((content LIKE '%token%') OR (tag LIKE '%token%'))
+ * )
+ * AND parent_id = ''
+ * ORDER BY created DESC LIMIT 0, 10
  */
 async function getRootBlocks(page: number, pagesize: number, keyword: string) {
-    let stmt = `select DISTINCT root_id,content from blocks WHERE id IN (
-                    SELECT id
-                    FROM blocks
-                    WHERE 1 = 1
-                    and parent_id = ''
-                    AND ((content LIKE '%${keyword}%') OR (tag LIKE '%${keyword}%'))
-                    ORDER BY created DESC LIMIT ${page}, ${pagesize})
-                    ORDER BY created DESC`
+    let stmt = `select root_id,content from blocks WHERE id IN (
+            SELECT DISTINCT parent_id
+            FROM blocks
+            WHERE 1 = 1
+            AND ((content LIKE '%${keyword}%') OR (tag LIKE '%${keyword}%'))
+        )
+        AND parent_id = ''
+        ORDER BY created DESC LIMIT ${page}, ${pagesize}`
     let data = await sql(stmt)
     return data
 }
