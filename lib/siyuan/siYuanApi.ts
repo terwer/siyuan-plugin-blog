@@ -334,25 +334,29 @@ async function getHPathByID(blockId: string) {
  * 分页获取根文档
  * @param page 页码
  * @param pagesize 数目
- * 
- * select root_id,content from blocks WHERE id IN (
- * 	SELECT DISTINCT parent_id
- * 	FROM blocks
- * 	WHERE 1 = 1
- * 	AND ((content LIKE '%token%') OR (tag LIKE '%token%'))
+ *
+ * select DISTINCT b2.root_id,b2.parent_id,b2.content from blocks b2
+ * WHERE 1==1
+ * AND b2.id IN (
+ * SELECT DISTINCT b1.id
+ * FROM blocks b1
+ * WHERE 1 = 1
+ * AND b1.parent_id=''
+ * AND ((b1.content LIKE '%jdbc%') OR (b1.tag LIKE '%jdbc%'))
+ * ORDER BY b1.created DESC LIMIT 0, 10
  * )
- * AND parent_id = ''
- * ORDER BY created DESC LIMIT 0, 10
  */
 async function getRootBlocks(page: number, pagesize: number, keyword: string) {
-    let stmt = `select root_id,content from blocks WHERE id IN (
-            SELECT DISTINCT parent_id
-            FROM blocks
-            WHERE 1 = 1
-            AND ((content LIKE '%${keyword}%') OR (tag LIKE '%${keyword}%'))
-        )
-        AND parent_id = ''
-        ORDER BY created DESC LIMIT ${page}, ${pagesize}`
+    let stmt = `select DISTINCT b2.root_id,b2.parent_id,b2.content from blocks b2 
+        WHERE 1==1
+		AND b2.id IN (
+			 SELECT DISTINCT b1.id
+				FROM blocks b1
+				WHERE 1 = 1
+				AND b1.parent_id=''
+				AND ((b1.content LIKE '%${keyword}%') OR (b1.tag LIKE '%${keyword}%'))
+				ORDER BY b1.created DESC LIMIT ${page}, ${pagesize}
+		)`
     let data = await sql(stmt)
     return data
 }
