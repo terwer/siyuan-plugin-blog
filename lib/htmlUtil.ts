@@ -97,7 +97,7 @@ function filterHtml(str: string) {
     const excludeWords = ['\\d*/\\d/\\d*', '[、|\\\\]', '[，|,]', '\\d', '/', '-']
     for (let i = 0; i < excludeWords.length; i++) {
         const regex = new RegExp(excludeWords[i], "g");
-        str = str.replaceAll(regex, "")
+        str = str.replace(regex, "")
     }
 
     str = str.toLowerCase();
