@@ -5,6 +5,7 @@ import {ConfApiAdaptor} from "./metaweblog/confApiAdaptor";
 import {CnblogsApiAdaptor} from "./metaweblog/cnblogsApiAdaptor";
 import {Post} from "./common/post";
 import {UserBlog} from "./common/userBlog";
+import {WordpressApiAdaptor} from "./metaweblog/WordpressApiAdaptor";
 
 export interface IApi {
     /**
@@ -46,6 +47,9 @@ export class API implements IApi {
                 break;
             case API_TYPE_CONSTANTS.API_TYPE_CNBLOGS:
                 this.apiAdaptor = new CnblogsApiAdaptor()
+                break;
+            case API_TYPE_CONSTANTS.API_TYPE_WORDPRESS:
+                this.apiAdaptor = new WordpressApiAdaptor()
                 break;
             default:
                 throw new Error("未找到接口适配器，请检查参数")

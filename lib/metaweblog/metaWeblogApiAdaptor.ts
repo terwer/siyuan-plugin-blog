@@ -4,6 +4,7 @@ import {UserBlog} from "../common/userBlog";
 import {mdToHtml, mdToPlainText, parseHtml, removeTitleNumber} from "../htmlUtil";
 import {CONSTANTS} from "../constants";
 import logUtil from "../logUtil";
+import {isEmptyString} from "../util";
 
 /**
  * 博客园的API适配器
@@ -63,13 +64,15 @@ export class MetaWeblogApiAdaptor implements IApi {
             const shortDesc = parseHtml(plainText, CONSTANTS.MAX_PREVIEW_LENGTH, true)
             // logUtil.logInfo("shortDesc=>", shortDesc)
 
+            let permalink = blogPost.link || blogPost.permalink || ""
+
             // 适配公共属性
             let commonPost = new Post()
             commonPost.postid = blogPost.postid
             commonPost.title = blogPost.title
             commonPost.shortDesc = shortDesc || ""
             commonPost.mt_keywords = blogPost.mt_keywords
-            commonPost.permalink = blogPost.permalink
+            commonPost.permalink = permalink
             commonPost.description = blogPost.description
             commonPost.wp_slug = blogPost.wp_slug
             commonPost.dateCreated = blogPost.dateCreated
