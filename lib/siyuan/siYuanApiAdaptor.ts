@@ -6,6 +6,7 @@ import {API_TYPE_CONSTANTS} from "../constants";
 import logUtil from "../logUtil";
 import {render} from "../markdownUtil";
 import {mdToHtml, removeTitleNumber, removeWidgetTag} from "../htmlUtil";
+import {CategoryInfo} from "../common/categoryInfo";
 
 /**
  * 思源笔记API适配器
@@ -116,5 +117,9 @@ export class SiYuanApiAdaptor implements IApi {
         // commonPost.dateCreated
 
         return commonPost
+    }
+
+    public async getCategories(): Promise<CategoryInfo[]> {
+        return Promise.resolve([])
     }
 }

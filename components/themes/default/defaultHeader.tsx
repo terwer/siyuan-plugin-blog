@@ -3,12 +3,13 @@ import DefaultNavbar from "./defaultNavbar";
 import SiteConfig from "../../../lib/common/siteconfig";
 import Image from "next/image";
 import headerStyles from "./css/header.module.css"
+import {CategoryInfo} from "../../../lib/common/categoryInfo";
 
 const getTitle = (webname: string, webslogen: string) => {
     return webname + " - " + webslogen
 }
 
-export default function DefaultHeader({props, keyword, type}: { props: SiteConfig, keyword?: string, type: string }) {
+export default function DefaultHeader({props, keyword, type, cats}: { props: SiteConfig, keyword?: string, type: string, cats?: CategoryInfo[] }) {
     return (
         <>
             <Head>
@@ -25,7 +26,7 @@ export default function DefaultHeader({props, keyword, type}: { props: SiteConfi
                                data-recalc-dims="1"/>
                     </a>
                 </div>
-                <DefaultNavbar props={props} type={type}/>
+                <DefaultNavbar props={props} type={type} cats={cats}/>
             </header>
         </>
     )

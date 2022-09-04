@@ -6,16 +6,18 @@ import DefaultLayout from "../components/themes/default/defaultLayout";
 import SiteConfig from "../lib/common/siteconfig";
 import DefaultHomePostList from "../components/themes/default/defaultHomePostList";
 import {assginPreviewUrlForPosts, getHomelink, isEmptyString} from "../lib/util";
+import {CategoryInfo} from "../lib/common/categoryInfo";
 
 type Props = {
     type: string,
     layoutCfg: SiteConfig,
-    posts: Post[]
+    posts: Post[],
+    cats: CategoryInfo[]
 }
 
 const Home: NextPage<Props> = (props, context) => {
     return (
-        <DefaultLayout props={props.layoutCfg} type={props.type}>
+        <DefaultLayout props={props.layoutCfg} type={props.type} cats={props.cats}>
             <DefaultHomePostList posts={props.posts} type={props.type}/>
         </DefaultLayout>
     )
@@ -72,14 +74,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     } else {
         result = await api.getRecentPosts(10)
     }
-
     assginPreviewUrlForPosts(type, result)
+
+    // 分类
+   const cats = await  api.getCategories()
 
     return {
         props: {
             type: type,
             layoutCfg: JSON.parse(JSON.stringify(cfg)),
-            posts: JSON.parse(JSON.stringify(result))
+            posts: JSON.parse(JSON.stringify(result)),
+            cats: JSON.parse(JSON.stringify(cats))
         }
     }
 }

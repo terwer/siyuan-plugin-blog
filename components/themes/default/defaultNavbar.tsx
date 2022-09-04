@@ -8,8 +8,14 @@ import {useState} from "react";
 import Image from "next/image";
 import {isEmptyString} from "../../../lib/util";
 import {API_TYPE_CONSTANTS} from "../../../lib/constants";
+import {CategoryInfo} from "../../../lib/common/categoryInfo";
 
-export default function DefaultNavbar({props, keyword, type}: { props: SiteConfig, keyword?: string, type: string }) {
+export default function DefaultNavbar({
+                                          props,
+                                          keyword,
+                                          type,
+                                          cats
+                                      }: { props: SiteConfig, keyword?: string, type: string, cats?: CategoryInfo[] }) {
 
     let [value, setValue] = useState("")
 
@@ -24,6 +30,16 @@ export default function DefaultNavbar({props, keyword, type}: { props: SiteConfi
                 <Navbar.Brand href={props.weburl}>
                     <Image src="/terwer.svg" width="283" height="64" title={props.webname} alt={props.webname}/>
                 </Navbar.Brand>
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        {
+                            cats && cats.map((item: CategoryInfo) => (
+                                <Nav.Link key={item.categoryId} href={item.htmlUrl}><FontAwesomeIcon
+                                    icon={faHome}/>&nbsp;{item.categoryName}</Nav.Link>
+                            ))
+                        }
+                    </Nav>
+                </Navbar.Collapse>
                 {
                     false &&
                     <div>
