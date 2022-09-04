@@ -1,8 +1,8 @@
+import {POST_STATUS_CONSTANTS} from "../constants/postStatusConstants";
+
 /**
  * 通用文章模型定义
  */
-import {POST_STATUS_CONSTANTS} from "../constants/postStatusConstants";
-
 export class Post {
     postid: string
     title: string

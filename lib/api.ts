@@ -6,6 +6,7 @@ import {CnblogsApiAdaptor} from "./metaweblog/cnblogsApiAdaptor";
 import {Post} from "./common/post";
 import {UserBlog} from "./common/userBlog";
 import {WordpressApiAdaptor} from "./metaweblog/WordpressApiAdaptor";
+import {CategoryInfo} from "./common/categoryInfo";
 
 export interface IApi {
     /**
@@ -27,6 +28,11 @@ export interface IApi {
      * @param useSlug 是否使用的是别名（可选，部分平台不支持）
      */
     getPost(postid: string, useSlug?: boolean): Promise<any>
+
+    /**
+     * 获取分类列表
+     */
+    getCategories(): Promise<CategoryInfo[]>
 }
 
 export class API implements IApi {
@@ -57,15 +63,19 @@ export class API implements IApi {
     }
 
     async getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<Post>> {
-        return this.apiAdaptor.getRecentPosts(numOfPosts, page, keyword);
+        return await this.apiAdaptor.getRecentPosts(numOfPosts, page, keyword);
     }
 
     async getUsersBlogs(): Promise<Array<UserBlog>> {
-        return this.apiAdaptor.getUsersBlogs();
+        return await this.apiAdaptor.getUsersBlogs();
     }
 
-    getPost(postid: string, useSlug?: boolean): Promise<Post> {
-        return this.apiAdaptor.getPost(postid, useSlug);
+    async getPost(postid: string, useSlug?: boolean): Promise<Post> {
+        return await this.apiAdaptor.getPost(postid, useSlug);
+    }
+
+    async getCategories(): Promise<CategoryInfo[]> {
+        return await this.apiAdaptor.getCategories()
     }
 }
 

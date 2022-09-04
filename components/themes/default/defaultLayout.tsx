@@ -4,6 +4,7 @@ import DefaultHeader from "./defaultHeader";
 import DefaultFooter from "./defaultFooter";
 import {Alert, Container, Row} from "react-bootstrap";
 import SiteConfig from "../../../lib/common/siteconfig";
+import {CategoryInfo} from "../../../lib/common/categoryInfo";
 
 /**
  * 默认布局
@@ -15,13 +16,14 @@ export default function DefaultLayout({
                                           props,
                                           keyword,
                                           children,
-                                          type
-                                      }: { props: SiteConfig, keyword?: string, children: any, type: string }) {
+                                          type,
+                                          cats
+                                      }: { props: SiteConfig, keyword?: string, children: any, type: string, cats?: CategoryInfo[] }) {
     return (
         <>
             <Container>
                 <Row>
-                    <DefaultHeader props={props} keyword={keyword} type={type}/>
+                    <DefaultHeader props={props} keyword={keyword} type={type} cats={cats}/>
                 </Row>
                 <Row>
                     <Container>

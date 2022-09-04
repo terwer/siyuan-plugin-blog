@@ -5,7 +5,7 @@ import logUtil from "../logUtil";
 import {METAWEBLOG_METHOD_CONSTANTS} from "../constants/metaweblogMethodConstants";
 import {POST_STATUS_CONSTANTS} from "../constants/postStatusConstants";
 import {inBrowser, isEmptyString} from "../util";
-import {render} from "../markdownUtil";
+import {CategoryInfo} from "../common/categoryInfo";
 
 export class MetaWeblogApi {
     private readonly apiType: string
@@ -121,7 +121,7 @@ export class MetaWeblogApi {
                 result.push(post)
             }
         }
-        
+
         logUtil.logInfo("result=>", result)
         return result
     }
@@ -283,5 +283,38 @@ export class MetaWeblogApi {
         //     post_status: post.post_status || POST_STATUS_CONSTANTS.POST_STATUS_PUBLISH,
         //     wp_password: post.wp_password || ''
         // }
+    }
+
+    public async getCategories(blogid: string, username: string, password: string,): Promise<CategoryInfo[]> {
+        let result = <Array<CategoryInfo>>[]
+
+        let ret = await this.xmlrpcClient.methodCallEntry(METAWEBLOG_METHOD_CONSTANTS.GET_CATEGORIES,
+            [this.apiType, username, password])
+        logUtil.logInfo("getCategories ret=>", ret)
+
+        // 错误处理
+        this.doFault(ret)
+
+        let catArray = ret.params.param.value.array.data.value || []
+        catArray.forEach((item: any) => {
+            const cat = this.parseCat(item)
+            result.push(cat)
+        })
+
+        return result
+    }
+
+    private parseCat(catStruct: any): CategoryInfo {
+        const cat = new CategoryInfo()
+        const catObj = catStruct.struct.member
+        cat.categoryId = this.parseFieldValue(catObj, "categoryId")
+        cat.parentId = this.parseFieldValue(catObj, "parentId")
+        cat.description = this.parseFieldValue(catObj, "description")
+        cat.categoryDescription = this.parseFieldValue(catObj, "categoryDescription")
+        cat.categoryName = this.parseFieldValue(catObj, "categoryName")
+        cat.htmlUrl = this.parseFieldValue(catObj, "htmlUrl")
+        cat.rssUrl = this.parseFieldValue(catObj, "rssUrl")
+
+        return cat
     }
 }
