@@ -88,8 +88,12 @@ export {
  */
 async function request(url: string, data: any, method?: string, useToken?: boolean) {
     let resData = null
-    if (config.baseUrl != "") {
-        url = config.baseUrl + url
+    var baseUrl = config.baseUrl
+    if (typeof baseUrl == "undefined" || baseUrl == "undefined") {
+        baseUrl = "http://127.0.0.1:6806"
+    }
+    if (baseUrl != "") {
+        url = baseUrl + url
     }
 
     let m = "POST"
@@ -336,28 +340,27 @@ async function getHPathByID(blockId: string) {
  * @param pagesize 数目
  *
  * select DISTINCT b2.root_id,b2.parent_id,b2.content from blocks b2
- * WHERE 1==1
+ *        WHERE 1==1
  * AND b2.id IN (
- * SELECT DISTINCT b1.id
- * FROM blocks b1
- * WHERE 1 = 1
- * AND b1.parent_id=''
- * AND ((b1.content LIKE '%jdbc%') OR (b1.tag LIKE '%jdbc%'))
- * ORDER BY b1.created DESC LIMIT 0, 10
+ *     SELECT DISTINCT b1.root_id
+ *        FROM blocks b1
+ *        WHERE 1 = 1
+ *        AND ((b1.content LIKE '%github%') OR (b1.tag LIKE '%github%'))
+ *        ORDER BY b1.updated DESC,b1.created DESC LIMIT 0,10
  * )
+ * ORDER BY b2.updated DESC,b2.created DESC
  */
 async function getRootBlocks(page: number, pagesize: number, keyword: string) {
     let stmt = `select DISTINCT b2.root_id,b2.parent_id,b2.content from blocks b2 
         WHERE 1==1
-		AND b2.id IN (
-			 SELECT DISTINCT b1.id
-				FROM blocks b1
-				WHERE 1 = 1
-				AND b1.parent_id=''
-				AND ((b1.content LIKE '%${keyword}%') OR (b1.tag LIKE '%${keyword}%'))
-				ORDER BY b1.updated DESC,b1.created DESC LIMIT ${page}, ${pagesize}
-		)
-		ORDER BY b2.updated DESC,b2.created DESC`
+        AND b2.id IN (
+             SELECT DISTINCT b1.root_id
+                FROM blocks b1
+                WHERE 1 = 1
+                AND ((b1.content LIKE '%${keyword}%') OR (b1.tag LIKE '%${keyword}%'))
+                ORDER BY b1.updated DESC,b1.created DESC LIMIT ${page},${pagesize}
+        )
+        ORDER BY b2.updated DESC,b2.created DESC`
     let data = await sql(stmt)
     return data
 }

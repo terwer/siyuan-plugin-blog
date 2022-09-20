@@ -6,9 +6,8 @@ import {faBook, faDownload, faFile, faFileText, faHome, faPieChart} from '@forta
 import SiteConfig from "../../../lib/common/siteconfig";
 import {useState} from "react";
 import Image from "next/image";
-import {isEmptyString} from "../../../lib/util";
-import {API_TYPE_CONSTANTS} from "../../../lib/constants";
 import {CategoryInfo} from "../../../lib/common/categoryInfo";
+import DefaultSearchBar from "./defaultSearchBar";
 
 export default function DefaultNavbar({
                                           props,
@@ -70,17 +69,22 @@ export default function DefaultNavbar({
                 }
 
                 <Nav.Item>
-                    <Form onSubmit={(e) => handleSearch(e)} className={clsx("d-flex", navbarStyles.sFormGroup)}>
-                        <Form.Control
-                            type="text"
-                            value={value}
-                            placeholder="请输入关键词"
-                            onChange={(e) => setValue(e.target.value)}
-                        />
-                        <Button type="submit">
-                            搜索
-                        </Button>
-                    </Form>
+                    {
+                        false &&
+                        <Form onSubmit={(e) => handleSearch(e)} className={clsx("d-flex", navbarStyles.sFormGroup)}>
+                            <Form.Control
+                                type="text"
+                                value={value}
+                                placeholder="请输入关键词"
+                                onChange={(e) => setValue(e.target.value)}
+                            />
+                            <Button type="submit">
+                                搜索
+                            </Button>
+                        </Form>
+                    }
+
+                    <DefaultSearchBar />
                 </Nav.Item>
             </Container>
         </Navbar>
