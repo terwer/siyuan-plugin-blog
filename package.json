@@ -21,6 +21,7 @@
     "plantuml-encoder": "^1.4.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.4.0",
+    "react-bootstrap-typeahead": "^6.0.0",
     "react-dom": "18.2.0",
     "xmlrpc": "^1.3.2"
   },

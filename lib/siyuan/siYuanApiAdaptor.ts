@@ -3,8 +3,6 @@ import {exportMdContent, getBlockAttrs, getBlockByID, getBlockBySlug, getDoc, ge
 import {Post} from "../common/post";
 import {UserBlog} from "../common/userBlog";
 import {API_TYPE_CONSTANTS} from "../constants";
-import logUtil from "../logUtil";
-import {render} from "../markdownUtil";
 import {mdToHtml, removeTitleNumber, removeWidgetTag} from "../htmlUtil";
 import {CategoryInfo} from "../common/categoryInfo";
 
