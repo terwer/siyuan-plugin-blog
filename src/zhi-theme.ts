@@ -27,15 +27,13 @@ import strUtil from "./utils/strUtil"
 import { Bootstrap } from "./zhi/bootstrap"
 import { version } from "../package.json"
 
-/**
+(async () => {
+  /**
    * 主题入口
    *
    * @author terwer
    * @since 0.0.1
    */
-
-
-(async () => {
   console.log(strUtil.f("hello, {0} {1} v{2}!", "zhi", "theme", version))
   await Bootstrap.start()
 })()
