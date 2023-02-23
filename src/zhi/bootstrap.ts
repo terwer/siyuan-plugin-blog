@@ -29,7 +29,7 @@ import Lifecycle from "./Lifecycle"
  * zhi主题唯一激活入口
  *
  * @author terwer
- * @see 0.0.1
+ * @since 0.0.1
  */
 export class Bootstrap {
   private static lifecycle: Lifecycle

@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Cache
+.sass-cache
+src/zhi-theme.css
+src/zhi-theme.css.map

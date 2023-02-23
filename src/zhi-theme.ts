@@ -29,6 +29,9 @@ import { version } from "../package.json"
 
 /**
    * 主题入口
+   *
+   * @author terwer
+   * @since 0.0.1
    */
 
 

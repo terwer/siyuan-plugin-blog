@@ -18,3 +18,5 @@ out
 # lib
 *.min.js
 /pnpm-lock.yaml
+!/src/zhi-theme.css
+!/src/zhi-theme.css.map
