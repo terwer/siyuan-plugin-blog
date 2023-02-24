@@ -38,13 +38,13 @@
  * @since 0.0.1
  */
 const getCjsZhiDir = () => {
-    return `${window.siyuan.config.system.confDir}/appearance/themes/zhi/dist-cjs`
-  }
+  return `${window.siyuan.config.system.confDir}/appearance/themes/zhi/dist-cjs`
+}
 
 ;(async () => {
   const zhi = window.require(`${getCjsZhiDir()}/zhi-theme.js`)
   // 主流程加载
-  await zhi.main([], async function(dynamicImports) {
+  await zhi.main([], async function (dynamicImports) {
     for (const item of dynamicImports) {
       console.log("开始加载=>", item)
       await import(item)
