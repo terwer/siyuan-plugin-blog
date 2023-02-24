@@ -24,4 +24,9 @@
  */
 
 /* 思源笔记启动会自动加载此文件 */
-@import "./dist/zhi-theme.css";
+
+/* 生产环境使用 */
+/*@import "./dist/zhi-theme.css";*/
+
+/* 开发阶段快速调试 */
+@import "./src/zhi-theme.css";

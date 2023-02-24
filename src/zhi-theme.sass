@@ -26,3 +26,17 @@
 //body
 //  .protyle
 //    background: $primary_color
+
+@import "./theme/widgets/webfont.css"
+@import "./theme/widgets/code-block.css"
+
+/* 字体 */
+$font-family-mono: "JetBrains Mono", "LXGW WenKai", "-apple-system", "Microsoft YaHei", "Times New Roman", "方正北魏楷书_GBK"
+
+\:root
+  --b3-font-family: #{$font-family-mono}
+  --b3-font-family-code: var(--b3-font-family)
+  --b3-font-family-graph: var(--b3-font-family)
+  --b3-font-family-emoji: var(--b3-font-family)
+  --b3-font-family-math: var(--b3-font-family)
+  --b3-border-radius-round: 50%

@@ -9,9 +9,11 @@
 - 天生支持插件系统
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个带权限的在线博客，默认私有
 
+**注意事项：插件系统为社区热心开发者提供，请详细了解相关机制之后再使用。强烈建议在使用之前做好数据备份，数据无价，谨慎操作！**
+
 ## TODO
 
-- 文章预览默认带密码，custom-publish-access 字段控制，公开是public，带密码是 protected ，默认 private
+- [ ] 文章预览默认带密码，custom-publish-access 字段控制，公开是 public，带密码是 protected ，默认 private
 
 ## 快速上手
 
