@@ -1,0 +1,17 @@
+// 通用常量、模板定义
+@import styles/common/common
+
+// 基础样式
+\:root
+  --b3-font-family: #{$font-family-mono}
+  --b3-font-family-code: var(--b3-font-family)
+  --b3-font-family-graph: var(--b3-font-family)
+  --b3-font-family-emoji: var(--b3-font-family)
+  --b3-font-family-math: var(--b3-font-family)
+  --b3-border-radius-round: 50%
+
+// 代码块
+@import styles/zhi/widgets/code-block
+
+// 浅色、暗黑单独适配
+@import zhi-light, zhi-dark

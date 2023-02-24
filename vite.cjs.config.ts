@@ -33,13 +33,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        appEntry: "src/zhi-theme.ts"
+        appEntry: "src/zhi.ts"
       },
       output: {
         format: "cjs",
         entryFileNames: (entry) => {
           if (entry.name == "appEntry") {
-            return "zhi-theme.js"
+            return "zhi.js"
           } else {
             return "entry/[name]-[hash].js"
           }

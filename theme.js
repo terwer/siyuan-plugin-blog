@@ -42,7 +42,7 @@ const getCjsZhiDir = () => {
 }
 
 ;(async () => {
-  const zhi = window.require(`${getCjsZhiDir()}/zhi-theme.js`)
+  const zhi = window.require(`${getCjsZhiDir()}/zhi.js`)
   // 主流程加载
   await zhi.main([], async function (dynamicImports) {
     for (const item of dynamicImports) {
