@@ -47,17 +47,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         appEntry: "index.html",
-        themeStyle: "src/zhi-theme.sass"
       },
       output: {
         format: "esm",
         chunkFileNames: "chunk/[name]-[hash].js",
         assetFileNames: (asset) => {
-          if (asset.name == "zhi-theme.css") {
-            return "[name].[ext]"
-          } else {
-            return "static/[name]-[hash].[ext]"
-          }
+          return "static/[name]-[hash].[ext]"
         },
         manualChunks(id) {
           if (id.indexOf("node_modules") > -1) {

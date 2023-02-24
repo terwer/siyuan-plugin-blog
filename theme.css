@@ -23,10 +23,88 @@
  * questions.
  */
 
+@charset "UTF-8";
+/* Copyright (c) 2023, Terwer . All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Terwer designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Terwer in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+ * or visit www.terwer.space if you need additional information or have any
+ * questions.
+ */
 /* 思源笔记启动会自动加载此文件 */
+/*!
+ * / Copyright (c) 2023, Terwer . All rights reserved.
+ * / DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ * /
+ * / This code is free software; you can redistribute it and/or modify it
+ * / under the terms of the GNU General Public License version 2 only, as
+ * / published by the Free Software Foundation.  Terwer designates this
+ * / particular file as subject to the "Classpath" exception as provided
+ * / by Terwer in the LICENSE file that accompanied this code.
+ * /
+ * / This code is distributed in the hope that it will be useful, but WITHOUT
+ * / ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * / FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * / version 2 for more details (a copy is included in the LICENSE file that
+ * / accompanied this code).
+ * /
+ * / You should have received a copy of the GNU General Public License version
+ * / 2 along with this work; if not, write to the Free Software Foundation,
+ * / Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * /
+ * / Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+ * / or visit www.terwer.space if you need additional information or have any
+ * / questions.
+ * / */
+@import url(./styles/common/webfont.css);
+/*!
+ * / Copyright (c) 2023, Terwer . All rights reserved.
+ * / DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ * /
+ * / This code is free software; you can redistribute it and/or modify it
+ * / under the terms of the GNU General Public License version 2 only, as
+ * / published by the Free Software Foundation.  Terwer designates this
+ * / particular file as subject to the "Classpath" exception as provided
+ * / by Terwer in the LICENSE file that accompanied this code.
+ * /
+ * / This code is distributed in the hope that it will be useful, but WITHOUT
+ * / ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * / FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * / version 2 for more details (a copy is included in the LICENSE file that
+ * / accompanied this code).
+ * /
+ * / You should have received a copy of the GNU General Public License version
+ * / 2 along with this work; if not, write to the Free Software Foundation,
+ * / Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * /
+ * / Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+ * / or visit www.terwer.space if you need additional information or have any
+ * / questions.
+ * / */
+/* 字体 */
+@import url(./styles/zhi/widgets/code-block.css);
+:root {
+  --b3-font-family: JetBrains Mono, LXGW WenKai, -apple-system, Microsoft YaHei, Times New Roman, 方正北魏楷书_GBK;
+  --b3-font-family-code: var(--b3-font-family);
+  --b3-font-family-graph: var(--b3-font-family);
+  --b3-font-family-emoji: var(--b3-font-family);
+  --b3-font-family-math: var(--b3-font-family);
+  --b3-border-radius-round: 50%; }
 
-/* 生产环境使用 */
-/*@import "./dist/zhi-theme.css";*/
-
-/* 开发阶段快速调试 */
-@import "./src/zhi-theme.css";
+/*# sourceMappingURL=theme.css.map */

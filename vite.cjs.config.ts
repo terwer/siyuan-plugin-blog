@@ -65,8 +65,8 @@ export default defineConfig({
           } else {
             return path.basename(id)
           }
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 })
