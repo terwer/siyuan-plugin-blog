@@ -31,21 +31,7 @@
  */
 class SysUtil {
   public getCrossPlatformAppDataFolder = () => {
-    const path = window.require("path")
 
-    let configFilePath
-    if (window.process.platform === "darwin") {
-      configFilePath = path.join(
-        window.process.env.HOME,
-        "/Library/Application Support"
-      )
-    } else if (window.process.platform === "win32") {
-      // Roaming包含在APPDATA中了
-      configFilePath = window.process.env.APPDATA
-    } else if (window.process.platform === "linux") {
-      configFilePath = window.process.env.HOME
-    }
-    return configFilePath
   }
 }
 

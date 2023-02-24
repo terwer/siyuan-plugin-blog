@@ -25,52 +25,60 @@
 
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react-swc"
+import { fileURLToPath } from "url"
+import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react()],
-    base: "./",
-    build: {
-        rollupOptions: {
-            input: {
-                themeStyle: "src/zhi-theme.sass",
-                themeScript: "src/zhi-theme.ts",
-                appEntry: "index.html"
-            },
-            output: {
-                chunkFileNames: "chunk/[name]-[hash].js",
-                entryFileNames: (entry) => {
-                    if (entry.name == "themeScript") {
-                        return "zhi-theme.js"
-                    } else {
-                        return "entry/[name]-[hash].js"
-                    }
-                },
-                assetFileNames: (asset) => {
-                    console.log(asset.name)
-                    if (asset.name == "zhi-theme.css") {
-                        return "[name].[ext]"
-                    } else {
-                        return "static/[ext]/[name]-[hash].[ext]"
-                    }
-                },
-                manualChunks(id) {
-                    if (id.indexOf("node_modules") > -1) {
-                        let arr = id.toString().split("node_modules/")[1].split("/")
-                        // pnpm单独处理
-                        if (id.indexOf(".pnpm") > -1) {
-                            arr = id.toString().split(".pnpm/")[1].split("/")
-                        }
-                        const dep = arr[0].split("@")[0].replace(/\./g, "-")
-                        // console.log("id=>", id)
-                        // console.log("dep=>", dep)
-                        if (dep !== "") {
-                            return "vendor_" + dep
-                        }
-                        return "vendor"
-                    }
-                }
-            }
-        }
+  plugins: [react()],
+  base: "./",
+  resolve: {
+    alias: {
+      "~": path.resolve(path.dirname(fileURLToPath(import.meta.url)), "")
     }
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        appEntry: "index.html",
+        themeStyle: "src/zhi-theme.sass",
+        themeScript: "src/zhi-theme.ts"
+      },
+      output: {
+        chunkFileNames: "chunk/[name]-[hash].js",
+        entryFileNames: (entry) => {
+          if (entry.name == "themeScript") {
+            return "zhi-theme.js"
+          } else {
+            return "entry/[name]-[hash].js"
+          }
+        },
+        assetFileNames: (asset) => {
+          if (asset.name == "zhi-theme.css") {
+            return "[name].[ext]"
+          } else {
+            return "static/[ext]/[name]-[hash].[ext]"
+          }
+        },
+        manualChunks(id) {
+          if (id.indexOf("node_modules") > -1) {
+            let arr = id.toString().split("node_modules/")[1].split("/")
+            // pnpm单独处理
+            if (id.indexOf(".pnpm") > -1) {
+              arr = id.toString().split(".pnpm/")[1].split("/")
+            }
+            const dep = arr[0].split("@")[0].replace(/\./g, "-")
+            // console.log("id=>", id)
+            // console.log("dep=>", dep)
+            if (dep !== "") {
+              return "vendor_" + dep
+            }
+            return "vendor"
+          } else {
+            return path.basename(id)
+          }
+        }
+      }
+    }
+  }
 })

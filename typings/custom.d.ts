@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,31 +23,14 @@
  * questions.
  */
 
-import loadOtherlib from "~/src/utils/otherlib/loadOtherlib"
-
-/**
- * zhi主题统一生命周期管理
- *
- * @author terwer
- * @since 0.0.1
- */
-class Lifecycle {
-  public async loadPlugins() {
-    console.log("plugin is loading...")
-
-    await this.loadPluginSystem()
-
-    console.log("plugin loaded.")
-  }
-
+declare module "~/src/utils/otherlib/loadOtherlib" {
   /**
-   * SiYuanPluginSystem
+   * 加载插件系统脚本
    *
-   * @private
+   * 此脚本在Electron环境执行，非Electron环境无法使用
+   *
+   * @author terwer
+   * @since 0.0.1
    */
-  private async loadPluginSystem() {
-    await loadOtherlib.loadPluginSystemScript()
-  }
+  export function loadPluginSystemScript(): any
 }
-
-export default Lifecycle

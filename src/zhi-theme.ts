@@ -23,9 +23,10 @@
  * questions.
  */
 
-import strUtil from "./utils/strUtil"
-import { Bootstrap } from "./zhi/bootstrap"
-import { version } from "../package.json"
+import strUtil from "~/src/utils/strUtil"
+import { Bootstrap } from "~/src/zhi/bootstrap"
+import { version } from "~/package.json"
+
 
 (async () => {
   /**

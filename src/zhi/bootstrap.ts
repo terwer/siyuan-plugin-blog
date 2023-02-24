@@ -23,7 +23,7 @@
  * questions.
  */
 
-import Lifecycle from "./Lifecycle"
+import Lifecycle from "~/src/zhi/Lifecycle"
 
 /**
  * zhi主题唯一激活入口
