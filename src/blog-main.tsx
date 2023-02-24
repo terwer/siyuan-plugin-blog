@@ -23,26 +23,16 @@
  * questions.
  */
 
-import Lifecycle from "~/src/zhi/Lifecycle"
+import React from "react"
+import ReactDOM from "react-dom/client"
+import BlogApp from "./apps/blog/BlogApp"
+import "./blog-theme.sass"
+import zhi from "~/src/zhi-theme"
 
-/**
- * zhi主题唯一激活入口
- *
- * @author terwer
- * @since 0.0.1
- */
-export class Bootstrap {
-  private static lifecycle: Lifecycle
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <BlogApp />
+  </React.StrictMode>
+)
 
-  static {
-    Bootstrap.lifecycle = new Lifecycle()
-  }
-
-  /**
-   * 主题激活
-   */
-  public static async start(): Promise<string[]> {
-    Bootstrap.lifecycle.load()
-    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
-  }
-}
+zhi.hello("zhi-theme-page")

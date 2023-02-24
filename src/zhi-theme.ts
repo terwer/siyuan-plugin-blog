@@ -24,7 +24,7 @@
  */
 
 import strUtil from "~/src/utils/strUtil"
-import { Bootstrap } from "~/src/zhi/bootstrap"
+import { Bootstrap } from "~/src/apps/zhi/bootstrap"
 import { version } from "~/package.json"
 
 /**
