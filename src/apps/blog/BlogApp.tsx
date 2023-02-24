@@ -46,7 +46,7 @@ function BlogApp() {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Edit <code>src/apps/blog/BlogApp.tsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">
