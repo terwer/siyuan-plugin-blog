@@ -1,8 +1,12 @@
 @charset "UTF-8";
 /* 思源笔记启动会自动加载此文件 */
-/* 字体 */
+/* 字体定义 */
 @import url(/appearance/themes/zhi/csslib/webfont.css);
-/* 颜色 */
+/* 颜色定义 */
+body {
+  --zhi-text-color: #00323c;
+  --zhi-body-bg: #f4f4f4; }
+
 :root {
   --b3-font-family: JetBrains Mono, LXGW WenKai, -apple-system, Microsoft YaHei, Times New Roman, 方正北魏楷书_GBK;
   --b3-font-family-code: var(--b3-font-family);
@@ -10,6 +14,17 @@
   --b3-font-family-emoji: var(--b3-font-family);
   --b3-font-family-math: var(--b3-font-family);
   --b3-border-radius-round: 50%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--b3-font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 16px;
+  color: var(--zhi-text-color);
+  background: var(--zhi-body-bg); }
 
 /* -------------------------------------------------代码块样式--------------------------------------------------- */
 .code-block {
@@ -86,21 +101,19 @@ code.hljs {
   color: gray; }
 
 /* -------------------------------------------------代码块样式 END--------------------------------------------------- */
-html[data-theme-mode="light"] {
-  color: red; }
-html body {
-  --bodyBg: #f4f4f4;
-  --mainBg: #fff;
-  --sidebarBg: hsla(0, 0%, 100%, 0.8);
-  --blurBg: hsla(0, 0%, 100%, 0.9);
-  --customBlockBg: #f1f1f1;
-  --textColor: #00323c;
-  --textLightenColor: #0085ad;
-  --borderColor: rgba(0, 0, 0, 0.12);
-  --codeBg: #f6f6f6;
-  --codeColor: #525252; }
+/* -------------------------------------------------浅色模式适配--------------------------------------------------- */
+html[data-theme-mode="light"] body {
+  --zhi-text-color: #00323c;
+  --zhi-body-bg: #f4f4f4; }
 
-html[data-theme-mode="dark"] {
-  color: #ffffff; }
+/* -------------------------------------------------暗黑模式适配--------------------------------------------------- */
+html[data-theme-mode="dark"] body {
+  --zhi-text-color: #9b9baa;
+  --zhi-body-bg: #27272b; }
+
+/* -------------------------------------------------护眼模式适配--------------------------------------------------- */
+html[data-theme-mode-zhi="green"] body {
+  --zhi-text-color: #704214;
+  --zhi-body-bg: #ececcc; }
 
 /*# sourceMappingURL=theme.css.map */
