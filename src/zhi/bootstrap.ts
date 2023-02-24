@@ -41,7 +41,8 @@ export class Bootstrap {
   /**
    * 主题激活
    */
-  public static async start() {
-    await Bootstrap.lifecycle.loadPlugins()
+  public static async start(): Promise<string[]> {
+    Bootstrap.lifecycle.load()
+    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
   }
 }

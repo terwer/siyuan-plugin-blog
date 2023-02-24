@@ -26,4 +26,28 @@
 /**
  * 思源笔记启动会自动加载此文件
  */
-import("/appearance/themes/zhi/dist/zhi-theme.js")
+// await import("/appearance/themes/zhi/dist/zhi-theme.js")
+
+// 警告1⚠️：思源笔记启动会自动加载此文件，请勿调用此文件中的任何方法
+// 警告2⚠️：此文件请勿引用其他任何需要编译的类库
+
+/**
+ * 获取zhi主题构建路径目录
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+const getCjsZhiDir = () => {
+    return `${window.siyuan.config.system.confDir}/appearance/themes/zhi/dist-cjs`
+  }
+
+;(async () => {
+  const zhi = window.require(`${getCjsZhiDir()}/zhi-theme.js`)
+  // 主流程加载
+  await zhi.main([], async function(dynamicImports) {
+    for (const item of dynamicImports) {
+      console.log("开始加载=>", item)
+      await import(item)
+    }
+  })
+})()

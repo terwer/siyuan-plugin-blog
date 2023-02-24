@@ -32,12 +32,21 @@ import loadOtherlib from "~/src/utils/otherlib/loadOtherlib"
  * @since 0.0.1
  */
 class Lifecycle {
-  public async loadPlugins() {
-    console.log("plugin is loading...")
+  private _dynamicImports = <string[]>[]
 
-    await this.loadPluginSystem()
+  get dynamicImports(): string[] {
+    return this._dynamicImports
+  }
 
-    console.log("plugin loaded.")
+  public load() {
+    let allImports = <string[]>[]
+
+    const pluginSystemImports = this.loadPluginSystem()
+    const widgetsImports = this.loadWidgets()
+
+    this._dynamicImports = allImports
+      .concat(pluginSystemImports)
+      .concat(widgetsImports)
   }
 
   /**
@@ -45,8 +54,17 @@ class Lifecycle {
    *
    * @private
    */
-  private async loadPluginSystem() {
-    await loadOtherlib.loadPluginSystemScript()
+  private loadPluginSystem(): string[] {
+    return loadOtherlib.loadPluginSystemScript()
+  }
+
+  /**
+   * 加载挂件
+   *
+   * @private
+   */
+  private loadWidgets(): string[] {
+    return loadOtherlib.loadPostPublisherScript()
   }
 }
 

@@ -32,5 +32,15 @@ declare module "~/src/utils/otherlib/loadOtherlib" {
    * @author terwer
    * @since 0.0.1
    */
-  export function loadPluginSystemScript(): any
+  export function loadPluginSystemScript(): string[]
+
+  /**
+   * 加载发布挂件脚本
+   *
+   * 此脚本在Electron环境执行，非Electron环境无法使用
+   *
+   * @author terwer
+   * @since 0.0.1
+   */
+  export function loadPostPublisherScript(): string[]
 }

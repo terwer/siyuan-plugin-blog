@@ -32,6 +32,7 @@
 export const getSiyuanDataDir = () => {
   return window.siyuan.config.system.dataDir
 }
+
 /**
  * 获取数据目录
  *
@@ -86,14 +87,33 @@ const requireOtherlib = (entryName, libfile, alias) => {
  * @author terwer
  * @since 0.0.1
  */
-const loadPluginSystemScript = async () => {
-  const pluginSystem = requireOtherlib("zhi", "plugin/plugin-system.js", "插件系统")
-  console.log(pluginSystem)
-  await pluginSystem.initPluginSystem()
+const loadPluginSystemScript = () => {
+  const pluginSystem = requireOtherlib(
+    "zhi",
+    "plugin/plugin-system.js",
+    "插件系统"
+  )
+  return pluginSystem.initPluginSystem()
+}
+
+/**
+ * 加载发布工具
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+const loadPostPublisherScript = () => {
+  const postPublisher = requireOtherlib(
+    "zhi",
+    "widgets/sy-post-publisher.js",
+    "发布工具"
+  )
+  return postPublisher.initPostPublisher()
 }
 
 const loadOtherlib = {
-  loadPluginSystemScript
+  loadPluginSystemScript,
+  loadPostPublisherScript
 }
 
 export default loadOtherlib

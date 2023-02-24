@@ -23,16 +23,12 @@
  * questions.
  */
 
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./App"
-import "./index.css"
-import zhi from "~/src/zhi-theme"
+import { describe, it } from "vitest"
+import zhi from "../src/zhi-theme"
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
-
-zhi.hello("zhi-theme-page")
+describe("test zhi-theme", () => {
+  it("test main", () => {
+    const imports = zhi.getDynamicImports()
+    console.log(imports)
+  })
+})

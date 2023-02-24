@@ -24,21 +24,8 @@
  */
 
 import { defineConfig } from "vite"
+import { commonConfig } from "./vite.config"
 import path from "path"
-import react from "@vitejs/plugin-react-swc"
-
-export const commonConfig = {
-  plugins: [react()],
-  base: "./",
-  resolve: {
-    alias: [
-      {
-        find: "~",
-        replacement: path.resolve(__dirname, "")
-      }
-    ]
-  }
-}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -46,18 +33,20 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        appEntry: "index.html",
-        themeStyle: "src/zhi-theme.sass"
+        appEntry: "src/zhi-theme.ts"
       },
       output: {
-        format: "esm",
+        format: "cjs",
+        entryFileNames: (entry) => {
+          if (entry.name == "appEntry") {
+            return "zhi-theme.js"
+          } else {
+            return "entry/[name]-[hash].js"
+          }
+        },
         chunkFileNames: "chunk/[name]-[hash].js",
         assetFileNames: (asset) => {
-          if (asset.name == "zhi-theme.css") {
-            return "[name].[ext]"
-          } else {
-            return "static/[name]-[hash].[ext]"
-          }
+          return "static/[name]-[hash].[ext]"
         },
         manualChunks(id) {
           if (id.indexOf("node_modules") > -1) {
@@ -76,8 +65,8 @@ export default defineConfig({
           } else {
             return path.basename(id)
           }
-        },
-      },
-    },
-  },
+        }
+      }
+    }
+  }
 })

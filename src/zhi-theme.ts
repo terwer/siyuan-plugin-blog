@@ -27,14 +27,37 @@ import strUtil from "~/src/utils/strUtil"
 import { Bootstrap } from "~/src/zhi/bootstrap"
 import { version } from "~/package.json"
 
+/**
+ * 主题入口
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+class Zhi {
+  public async main(args: string[], callback: Function) {
+    this.hello("zhi-theme")
+    const dynamicImports = await Bootstrap.start()
+    callback(dynamicImports)
+  }
 
-(async () => {
-  /**
-   * 主题入口
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  console.log(strUtil.f("hello, {0} {1} v{2}!", "zhi", "theme", version))
-  await Bootstrap.start()
-})()
+  public hello(from: string): void {
+    console.log(
+      strUtil.f(
+        "hello, {0} {1} v{2}! You are from {3}",
+        "zhi",
+        "theme",
+        version,
+        from
+      )
+    )
+  }
+}
+
+const zhi = new Zhi()
+
+// 默认支持esm
+export default zhi
+// 兼容cjs
+if (typeof module !== "undefined") {
+  module.exports = zhi
+}

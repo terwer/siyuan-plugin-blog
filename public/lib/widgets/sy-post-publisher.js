@@ -23,16 +23,12 @@
  * questions.
  */
 
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./App"
-import "./index.css"
-import zhi from "~/src/zhi-theme"
+const initPostPublisher = () => {
+  return ["/widgets/sy-post-publisher/lib/siyuanhook.js"]
+}
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+const postPublisher = {
+  initPostPublisher
+}
 
-zhi.hello("zhi-theme-page")
+module.exports = postPublisher

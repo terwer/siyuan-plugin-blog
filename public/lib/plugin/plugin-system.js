@@ -23,50 +23,8 @@
  * questions.
  */
 
-// 警告1⚠️：请勿在非思源笔记Electron环境调用此文件中的任何方法
-// 警告2⚠️：此文件请勿引用其他任何需要编译的类库
-
-const getCrossPlatformAppDataFolder = () => {
-  const path = window.require("path")
-
-  let configFilePath
-  if (window.process.platform === "darwin") {
-    configFilePath = path.join(
-      window.process.env.HOME,
-      "/Library/Application Support"
-    )
-  } else if (window.process.platform === "win32") {
-    // Roaming包含在APPDATA中了
-    configFilePath = window.process.env.APPDATA
-  } else if (window.process.platform === "linux") {
-    configFilePath = window.process.env.HOME
-  }
-  return configFilePath
-}
-
-const initPluginSystem = async () => {
-  const path = window.require("path")
-  try {
-    const data = window
-      .require("fs")
-      .readFileSync(
-        path.join(getCrossPlatformAppDataFolder(), ".siyuan", "plugin.js")
-      )
-    const script = data.toString("utf8")
-    console.log("local plugin system found, loading...")
-    eval(script)
-  } catch (e) {
-    console.log("local plugin system not found, load online")
-    return fetch(
-      "https://gitee.com/zuoez02/siyuan-plugin-system/raw/main/main.js",
-      { cache: "no-cache" }
-    )
-      .then((res) => res.text())
-      .then((sc) => {
-        window.siyuanPluginScript = sc
-        eval(sc)
-      })
-  }
+const initPluginSystem = () => {
+  return ["/appearance/themes/zhi/dist/lib/plugin/plugin-system-hook.js"]
 }
 
 const pluginSystem = {
