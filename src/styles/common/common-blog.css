@@ -1,0 +1,10 @@
+@charset "UTF-8";
+@import url(./csslib/webfont.css);
+/* 字体定义 */
+/* 颜色定义 */
+body {
+    --zhi-text-color: #00323c;
+    --zhi-body-bg: #f4f4f4;
+}
+
+/*# sourceMappingURL=common-blog.css.map */

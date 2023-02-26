@@ -25,7 +25,7 @@
 
 import { useState } from "react"
 import reactLogo from "../../assets/react.svg"
-import "../../styles/app/app.sass"
+import "../../styles/blog/main.sass"
 
 function App() {
   const [count, setCount] = useState(0)

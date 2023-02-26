@@ -25,6 +25,7 @@
 
 import strUtil from "~/src/utils/strUtil"
 import { version } from "~/package.json"
+import { Bootstrap } from "~/src/apps/zhi/bootstrap"
 
 /**
  * 主题入口
@@ -35,9 +36,9 @@ import { version } from "~/package.json"
 class Zhi {
   public async main(args: string[], callback: Function) {
     this.hello("zhi-theme")
-    // const dynamicImports = await Bootstrap.start()
-    // callback(dynamicImports)
-    callback([])
+    const dynamicImports = await Bootstrap.start()
+    callback(dynamicImports)
+    // callback([])
   }
 
   public hello(from: string): void {

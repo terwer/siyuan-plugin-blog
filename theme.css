@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* 思源笔记启动会自动加载此文件 */
+@import url(/appearance/themes/zhi/public/csslib/webfont.css);
 /* 字体定义 */
-@import url(/appearance/themes/zhi/csslib/webfont.css);
 /* 颜色定义 */
 body {
   --zhi-text-color: #00323c;
@@ -28,16 +28,19 @@ body {
 
 /* -------------------------------------------------代码块样式--------------------------------------------------- */
 .code-block {
-  border-radius: 1px !important;
   --terwer-code-tab-bg: #f3f5f7;
-  border: 0.1em solid var(--b3-border-color) !important;
-  padding-top: 32px !important; }
+  border: 0.5px solid var(--b3-border-color) !important;
+  border-radius: 5px !important;
+  padding-top: 32px !important;
+  background: var(--terwer-code-tab-bg); }
 
 /* 代码块编辑区域/正文内容 */
 .b3-typography div.hljs,
 .protyle-wysiwyg div.hljs {
-  padding: 4px;
-  font-family: var(--b3-font-family-code); }
+  padding: 8px;
+  font-family: var(--b3-font-family-code);
+  border-top: 0.5px solid var(--b3-border-color);
+  border-radius: 0 0 5px 5px !important; }
 
 /* 设置顶部三个mac按钮样式 */
 .code-block::after {
@@ -101,6 +104,16 @@ code.hljs {
   color: gray; }
 
 /* -------------------------------------------------代码块样式 END--------------------------------------------------- */
+/* -------------------------------------------------打印页面适配--------------------------------------------------- */
+#preview {
+  /* 打印页面代码块适配 */ }
+  #preview .protyle-action__language {
+    right: 0.2rem !important; }
+  #preview .protyle-action__language:after {
+    display: none !important; }
+  #preview .protyle-action__copy {
+    display: none !important; }
+
 /* -------------------------------------------------浅色模式适配--------------------------------------------------- */
 html[data-theme-mode="light"] body {
   --zhi-text-color: #00323c;

@@ -1,15 +1,18 @@
 /* -------------------------------------------------代码块样式--------------------------------------------------- */
 .code-block
-  border-radius: 1px !important
   --terwer-code-tab-bg: #f3f5f7
-  border: 0.1em solid var(--b3-border-color) !important
+  border: .5px solid var(--b3-border-color) !important
+  border-radius: 5px !important
   padding-top: 32px !important
+  background: var(--terwer-code-tab-bg)
 
 /* 代码块编辑区域/正文内容 */
 .b3-typography div.hljs,
 .protyle-wysiwyg div.hljs
-  padding: 4px
+  padding: 8px
   font-family: var(--b3-font-family-code)
+  border-top: 0.5px solid var(--b3-border-color)
+  border-radius: 0 0 5px 5px !important
 
 /* 设置顶部三个mac按钮样式 */
 .code-block::after
