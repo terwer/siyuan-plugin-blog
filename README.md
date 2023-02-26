@@ -11,6 +11,8 @@
 - 主题灵感源自于知乎但不限于知乎风格，外观优化包括不限于：
 
   - 字体样式美化，以 `落霞孤鹜` 和 `JetBrains Mono` 为主
+    ![](https://static.terwergreen.com/test/202302261359269.png)
+  
   - 代码块美化，类似 `Mac` 窗口风格
     - 浅色模式
       ![](https://static.terwergreen.com/test/202302261357568.png)
