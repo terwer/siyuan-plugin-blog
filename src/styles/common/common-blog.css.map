@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";AAAQ,iCAAsB;;;ACe9B,IAAI;EACF,gBAAgB,CAAC,QAAe;EAChC,aAAa,CAAC,QAAY",
-"sources": ["common-blog.sass","common.sass"],
-"names": [],
-"file": "common-blog.css"
-}
