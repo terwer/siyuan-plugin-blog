@@ -23,5 +23,16 @@
  * questions.
  */
 
-/* 思源笔记启动会自动加载此文件 */
-@import "./dist/zhi-theme.css";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import App from "./apps/blog/App"
+import "./blog.sass"
+import zhi from "~/src/zhi"
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
+
+zhi.hello("zhi-theme-page")

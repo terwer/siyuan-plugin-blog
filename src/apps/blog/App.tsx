@@ -23,41 +23,37 @@
  * questions.
  */
 
-import strUtil from "~/src/utils/strUtil"
-import { Bootstrap } from "~/src/zhi/bootstrap"
-import { version } from "~/package.json"
+import { useState } from "react"
+import reactLogo from "../../assets/react.svg"
+import "../../styles/blog/main.sass"
 
-/**
- * 主题入口
- *
- * @author terwer
- * @since 0.0.1
- */
-class Zhi {
-  public async main(args: string[], callback: Function) {
-    this.hello("zhi-theme")
-    const dynamicImports = await Bootstrap.start()
-    callback(dynamicImports)
-  }
+function App() {
+  const [count, setCount] = useState(0)
 
-  public hello(from: string): void {
-    console.log(
-      strUtil.f(
-        "hello, {0} {1} v{2}! You are from {3}",
-        "zhi",
-        "theme",
-        version,
-        from
-      )
-    )
-  }
+  return (
+    <div className="App">
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={"./vite.svg"} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://reactjs.org" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/apps/blog/BlogApp.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </div>
+  )
 }
 
-const zhi = new Zhi()
-
-// 默认支持esm
-export default zhi
-// 兼容cjs
-if (typeof module !== "undefined") {
-  module.exports = zhi
-}
+export default App

@@ -27,5 +27,5 @@ dist-cjs
 
 # Cache
 .sass-cache
-src/zhi-theme.css
-src/zhi-theme.css.map
+*.css
+*.css.map

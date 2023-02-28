@@ -37,17 +37,40 @@
  * @author terwer
  * @since 0.0.1
  */
-const getCjsZhiDir = () => {
-  return `${window.siyuan.config.system.confDir}/appearance/themes/zhi/dist-cjs`
+const getRealPath = (libpath) => {
+  const path = window.require("path")
+  return path.join(`${window.siyuan.config.system.confDir}`, libpath)
 }
 
+/**
+ * 安全的import，路径不存在或者加载出错
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+const safeImport = async (libpath) => {
+    const fs = window.require("fs")
+    const realpath = getRealPath(libpath)
+
+    try {
+      if (!fs.existsSync(realpath)) {
+        console.warn("依赖库不存在，请排查。依赖库路径=>", realpath)
+        return
+      }
+      await import(libpath)
+    } catch (e) {
+      console.error("依赖库加载失败，请排查。依赖库路径=>", realpath)
+      console.error(e)
+    }
+  }
+
 ;(async () => {
-  const zhi = window.require(`${getCjsZhiDir()}/zhi-theme.js`)
+  const zhiLibpath = getRealPath("/appearance/themes/zhi/dist-cjs/zhi.js")
+  const zhi = window.require(zhiLibpath)
   // 主流程加载
-  await zhi.main([], async function (dynamicImports) {
+  await zhi.main([], async function(dynamicImports) {
     for (const item of dynamicImports) {
-      console.log("开始加载=>", item)
-      await import(item)
+      await safeImport(item)
     }
   })
 })()
