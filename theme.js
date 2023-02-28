@@ -38,8 +38,16 @@
  * @since 0.0.1
  */
 const getRealPath = (libpath) => {
+  let ret
   const path = window.require("path")
-  return path.join(`${window.siyuan.config.system.confDir}`, libpath)
+  if (libpath.toString().includes("themes")) {
+    ret = path.join(`${window.siyuan.config.system.confDir}`, libpath)
+  } else if (libpath.toString().includes("widgets")) {
+    ret = path.join(`${window.siyuan.config.system.dataDir}`, libpath)
+  } else {
+    ret = path.join(`${window.siyuan.config.system.dataDir}`, libpath)
+  }
+  return ret
 }
 
 /**
