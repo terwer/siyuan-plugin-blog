@@ -12,7 +12,8 @@
     "build:esm": "python script/esm.py",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "new": "python scripts/version.py 0.0.1"
   },
   "dependencies": {
     "react": "^18.2.0",
