@@ -95,8 +95,8 @@ Vite + React + TypeScript + SWC
 │   ├── zhi
 │   │   ├── Lifecycle.ts
 │   │   └── bootstrap.ts
-│   ├── zhi-theme.sass               zhi 核心样式sass源码
-│   └── zhi-theme.ts                 zhi 核心加载逻辑
+│   ├   └── zhi-theme.styl           zhi 核心样式stylus源码
+│   └   └── zhi-theme.ts             zhi 核心加载逻辑
 ├── theme.css                        思源笔记样式入口
 ├── theme.js                         思源笔记脚本入口
 ├── theme.json
