@@ -13,7 +13,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "new": "python scripts/version.py 0.0.1"
+    "new": "python script/version.py 0.0.1"
   },
   "dependencies": {
     "react": "^18.2.0",
