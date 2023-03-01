@@ -4,13 +4,16 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "watch": "tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs --watch",
-    "build": "pnpm build:cjs && pnpm build:esm",
-    "build:cjs": "tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs",
-    "build:esm": "tsc && vite build",
+    "watch:css": "stylus -w theme.styl -o theme.css",
+    "watch:js": "tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs --watch",
+    "build": "python script/build.py",
+    "build:css": "python script/css.py",
+    "build:cjs": "python script/cjs.py",
+    "build:esm": "python script/esm.py",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "new": "python script/version.py 0.0.1"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -22,9 +25,18 @@
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "prettier": "^2.8.4",
-    "sass": "^1.58.3",
+    "stylus": "^0.59.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
+    "vite-plugin-stylus-alias": "^1.1.2",
     "vitest": "^0.28.5"
-  }
+  },
+  "files": [
+    "dist",
+    "dist-cjs",
+    "theme.css",
+    "theme.js",
+    "theme.json",
+    "README.md"
+  ]
 }

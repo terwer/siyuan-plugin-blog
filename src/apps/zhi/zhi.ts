@@ -23,16 +23,42 @@
  * questions.
  */
 
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./apps/blog/App"
-import "./blog.sass"
-import zhi from "~/src/zhi"
+import strUtil from "~/src/utils/strUtil"
+import { version } from "~/package.json"
+import ThemeFromEnum from "~/src/utils/enums/themeFromEnum"
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+/**
+ * 主题入口
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+class Zhi {
+  public async main(args: string[], callback: Function) {
+    this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
+    // const dynamicImports = await Bootstrap.start()
+    // callback(dynamicImports)
+    callback([])
+  }
 
-zhi.hello("zhi-theme-page")
+  public hello(from: string): void {
+    console.log(
+      strUtil.f(
+        "hello, {0} {1} v{2}! You are from {3}",
+        "zhi",
+        "theme",
+        version,
+        from
+      )
+    )
+  }
+}
+
+const zhi = new Zhi()
+
+// 默认支持esm
+export default zhi
+// 兼容cjs
+if (typeof module !== "undefined") {
+  module.exports = zhi
+}

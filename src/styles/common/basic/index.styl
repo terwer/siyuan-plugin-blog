@@ -1,9 +1,24 @@
-// 通用常量、模板定义
-@import styles/common/common-zhi
+@require "../fonts"
+
+/* 颜色定义 */
+$body-bg = #f4f4f4
+$main-bg = #fff
+$sidebar-bg = hsla(0, 0%, 100%, 0.8)
+$blur-bg = hsla(0, 0%, 100%, 0.9)
+$custom-block-bg = #f1f1f1
+$text-color = #00323c
+$text-lighten-color = #0085ad
+$border-color = rgba(0, 0, 0, 0.12)
+$code-bg = #f6f6f6
+$code-color = #525252
+
+body
+  --zhi-text-color: $text-color
+  --zhi-body-bg: $body-bg
 
 // 基础样式
 \:root
-  --b3-font-family: #{$font-family-mono}
+  --b3-font-family: $font-family-mono
   --b3-font-family-code: var(--b3-font-family)
   --b3-font-family-graph: var(--b3-font-family)
   --b3-font-family-emoji: var(--b3-font-family)
@@ -21,12 +36,3 @@ body
   font-size: 16px
   color: var(--zhi-text-color)
   background: var(--zhi-body-bg)
-
-// 代码块
-@import styles/zhi/widgets/code-block
-
-// 打印页面适配
-@import styles/zhi/widgets/print-page
-
-// 浅色、暗黑、护眼适配
-@import zhi-light, zhi-dark, zhi-green

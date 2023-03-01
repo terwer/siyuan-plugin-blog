@@ -1,8 +1,8 @@
-// 通用常量、模板定义
-@import styles/common/common-blog
+// 基本样式
+@require "../common/basic"
 
 \:root
-  font-family: #{$font-family-mono}
+  font-family: $font-family-mono
   line-height: 1.5
   font-weight: 400
   color-scheme: light dark
@@ -51,7 +51,7 @@ button:focus,
 button:focus-visible
   outline: 4px auto -webkit-focus-ring-color
 
-@media (prefers-color-scheme &: light)
+@media (prefers-color-scheme)
   \:root
     color: #213547
     background-color: #ffffff
@@ -59,3 +59,4 @@ button:focus-visible
     color: #747bff
   button
     background-color: #f9f9f9
+
