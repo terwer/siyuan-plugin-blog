@@ -22,6 +22,16 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* 思源笔记启动会自动加载此文件 */
-@require "./src/styles/common/vars/vars-zhi"
-@require "./src/styles/zhi/zhi"
+
+/**
+ * 主题来源
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+enum ThemeFromEnum {
+  ThemeFrom_Blog = "zhi-theme-blog",
+  ThemeFrom_Siyuan = "zhi-theme-siyuan",
+}
+
+export default ThemeFromEnum

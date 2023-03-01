@@ -11,6 +11,7 @@ specifiers:
   stylus: ^0.59.0
   typescript: ^4.9.3
   vite: ^4.1.0
+  vite-plugin-stylus-alias: ^1.1.2
   vitest: ^0.28.5
 
 dependencies:
@@ -26,6 +27,7 @@ devDependencies:
   stylus: 0.59.0
   typescript: 4.9.5
   vite: 4.1.4_y7fcyppcuzjteyaahq7ch36z2q
+  vite-plugin-stylus-alias: 1.1.2
   vitest: 0.28.5_stylus@0.59.0
 
 packages:
@@ -743,6 +745,12 @@ packages:
       react-is: 17.0.2
     dev: true
 
+  /querystring/0.2.1:
+    resolution: {integrity: sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==}
+    engines: {node: '>=0.4.x'}
+    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+    dev: true
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -923,6 +931,12 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vite-plugin-stylus-alias/1.1.2:
+    resolution: {integrity: sha512-e+T2HGqQAs+8xUsZeNCOg0owUU+eK6vns63KmmVAvNtOxTTOjqsjxpzNIn9U+UjTn0py9ZpGAuPNufgSGstJBg==}
+    dependencies:
+      querystring: 0.2.1
     dev: true
 
   /vite/4.1.4_y7fcyppcuzjteyaahq7ch36z2q:

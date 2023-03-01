@@ -29,3 +29,6 @@ dist-cjs
 .sass-cache
 *.css
 *.css.map
+package
+build
+script/__pycache__

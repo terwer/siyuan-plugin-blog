@@ -26,18 +26,23 @@
 import { defineConfig } from "vite"
 import path from "path"
 import react from "@vitejs/plugin-react-swc"
+import vitePluginStylusAlias from "vite-plugin-stylus-alias"
 
 export const commonConfig = {
-  plugins: [react()],
+  plugins: [react(), vitePluginStylusAlias()],
   base: "./",
   resolve: {
     alias: [
       {
         find: "~",
-        replacement: path.resolve(__dirname, "")
-      }
-    ]
-  }
+        replacement: path.resolve(__dirname, ""),
+      },
+      {
+        find: "@",
+        replacement: path.resolve(__dirname, "public"),
+      },
+    ],
+  },
 }
 
 // https://vitejs.dev/config/

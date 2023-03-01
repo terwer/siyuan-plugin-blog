@@ -25,9 +25,10 @@
 
 import React from "react"
 import ReactDOM from "react-dom/client"
+import "~/src/styles/blog/blog-theme.styl"
 import App from "./App"
-import "~/src/styles/blog/blog.styl"
 import zhi from "~/src/apps/zhi/zhi"
+import ThemeFromEnum from "~/src/utils/enums/themeFromEnum"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -35,4 +36,4 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   </React.StrictMode>
 )
 
-zhi.hello("zhi-theme-page")
+zhi.hello(ThemeFromEnum.ThemeFrom_Blog)

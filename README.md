@@ -55,6 +55,18 @@ pnpm build
 
 3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
 
+## npm发包
+```bash
+# 验证打包
+npm pack
+
+# 本地验证
+npm publish --dry-run
+
+# 发布到仓库
+npm publish
+```
+
 ## 项目结构
 
 Vite + React + TypeScript + SWC

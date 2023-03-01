@@ -33,7 +33,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        appEntry: "src/zhi.ts"
+        appEntry: "src/apps/zhi/zhi.ts",
       },
       output: {
         format: "cjs",
