@@ -36,9 +36,9 @@ import { Bootstrap } from "~/src/apps/zhi/bootstrap"
 class Zhi {
   public async main(args: string[], callback: Function) {
     this.hello("zhi-theme")
-    const dynamicImports = await Bootstrap.start()
-    callback(dynamicImports)
-    // callback([])
+    // const dynamicImports = await Bootstrap.start()
+    // callback(dynamicImports)
+    callback([])
   }
 
   public hello(from: string): void {

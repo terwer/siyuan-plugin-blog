@@ -22,17 +22,5 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./apps/blog/App"
-import "./blog.sass"
-import zhi from "~/src/zhi"
-
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
-
-zhi.hello("zhi-theme-page")
+/* 思源笔记启动会自动加载此文件 */
+@require "./src/styles/zhi/zhi"
