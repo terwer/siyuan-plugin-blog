@@ -26,6 +26,7 @@
 import strUtil from "~/src/utils/strUtil"
 import { version } from "~/package.json"
 import ThemeFromEnum from "~/src/utils/enums/themeFromEnum"
+import { Bootstrap } from "~/src/apps/zhi/bootstrap"
 
 /**
  * 主题入口
@@ -36,9 +37,8 @@ import ThemeFromEnum from "~/src/utils/enums/themeFromEnum"
 class Zhi {
   public async main(args: string[], callback: Function) {
     this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
-    // const dynamicImports = await Bootstrap.start()
-    // callback(dynamicImports)
-    callback([])
+    const dynamicImports = await Bootstrap.start()
+    callback(dynamicImports)
   }
 
   public hello(from: string): void {

@@ -57,26 +57,27 @@ const getRealPath = (libpath) => {
  * @since 0.0.1
  */
 const safeImport = async (libpath) => {
-    const fs = window.require("fs")
-    const realpath = getRealPath(libpath)
+  const fs = window.require("fs")
+  const realpath = getRealPath(libpath)
 
-    try {
-      if (!fs.existsSync(realpath)) {
-        console.warn("依赖库不存在，请排查。依赖库路径=>", realpath)
-        return
-      }
-      await import(libpath)
-    } catch (e) {
-      console.error("依赖库加载失败，请排查。依赖库路径=>", realpath)
-      console.error(e)
+  try {
+    if (!fs.existsSync(realpath)) {
+      console.warn("依赖库不存在，请排查。依赖库路径=>", realpath)
+      return
     }
+    console.log("将要从以下位置引入依赖=>", libpath)
+    await import(libpath)
+  } catch (e) {
+    console.error("依赖库加载失败，请排查。依赖库路径=>", realpath)
+    console.error(e)
   }
+}
 
 ;(async () => {
   const zhiLibpath = getRealPath("/appearance/themes/zhi/dist-cjs/zhi.js")
   const zhi = window.require(zhiLibpath)
   // 主流程加载
-  await zhi.main([], async function(dynamicImports) {
+  await zhi.main([], async function (dynamicImports) {
     for (const item of dynamicImports) {
       await safeImport(item)
     }

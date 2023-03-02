@@ -30,4 +30,6 @@ if __name__ == "__main__":
 
     scriptutils.rm_folder("./dist")
     os.system("tsc && vite build")
+    scriptutils.rm_folder("./dist/lib")
+
     print("esm构建完成.")

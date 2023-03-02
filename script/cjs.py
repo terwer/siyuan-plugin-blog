@@ -31,8 +31,6 @@ if __name__ == "__main__":
 
     scriptutils.rm_folder("./dist-cjs")
     os.system("tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs")
-    scriptutils.rm_folder("./dist-cjs/fonts")
-    scriptutils.rm_folder("./dist-cjs/lib")
     scriptutils.rm_file("./dist-cjs/vite.svg")
     print("cjs构建完成.")
 
