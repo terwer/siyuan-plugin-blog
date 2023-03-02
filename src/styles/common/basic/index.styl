@@ -1,38 +1,25 @@
 @require "../fonts"
 
-/* 颜色定义 */
-$body-bg = #f4f4f4
-$main-bg = #fff
-$sidebar-bg = hsla(0, 0%, 100%, 0.8)
-$blur-bg = hsla(0, 0%, 100%, 0.9)
-$custom-block-bg = #f1f1f1
-$text-color = #00323c
-$text-lighten-color = #0085ad
-$border-color = rgba(0, 0, 0, 0.12)
-$code-bg = #f6f6f6
-$code-color = #525252
-
-body
-  --zhi-text-color: $text-color
-  --zhi-body-bg: $body-bg
+@require "basic-light"
+@require "basic-dark"
+@require "basic-green"
 
 // 基础样式
 \:root
-  --b3-font-family: $font-family-mono
-  --b3-font-family-code: var(--b3-font-family)
-  --b3-font-family-graph: var(--b3-font-family)
-  --b3-font-family-emoji: var(--b3-font-family)
-  --b3-font-family-math: var(--b3-font-family)
-  --b3-border-radius-round: 50%
+  --b3-font-family: var(--zhi-font-family)
+  --b3-font-family-code: var(--zhi-font-family)
+  --b3-font-family-graph: var(--zhi-font-family)
+  --b3-font-family-emoji: var(--zhi-font-family)
+  --b3-font-family-math: var(--zhi-font-family)
+  --b3-border-radius-round: var(--zhi-border-radius-round)
+  --b3-theme-background: var(--zhi-body-bg)
+  --b3-theme-surface: var(--zhi-sidebar-bg)
 
 // 整体背景、字体颜色
 body
-  margin: 0
-  padding: 0
-  font-family: var(--b3-font-family)
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  -webkit-tap-highlight-color: transparent
-  font-size: 16px
+  font-family: var(--zhi-font-family)
+  font-size: var(--zhi-font-size)
+  margin: var(--zhi-m-zero)
+  padding: var(--zhi-p-zero)
   color: var(--zhi-text-color)
   background: var(--zhi-body-bg)
