@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, Terwer . All rights reserved.
+ * Copyright (c) 2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,34 +23,14 @@
  * questions.
  */
 
-declare module "~/src/utils/otherlib/loadOtherlib" {
-  /**
-   * 加载插件系统脚本
-   *
-   * 此脚本在Electron环境执行，非Electron环境无法使用
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  export function loadPluginSystemScript(): string[]
-
-  /**
-   * 加载挂件脚本
-   *
-   * 此脚本在Electron环境执行，非Electron环境无法使用
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  export function loadWidgetsScript(): string[]
-
-  /**
-   * 加载第三方库脚本
-   *
-   * 此脚本在Electron环境执行，非Electron环境无法使用
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  export function loadVendorsScript(): string[]
+const initTranslucify = () => {
+  return [
+    "/appearance/themes/zhi/dist-cjs/lib/vendor/translucify/translucify.js",
+  ]
 }
+
+const translucify = {
+  initTranslucify,
+}
+
+module.exports = translucify

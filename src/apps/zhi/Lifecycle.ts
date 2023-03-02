@@ -43,10 +43,12 @@ class Lifecycle {
 
     const pluginSystemImports = this.loadPluginSystem()
     const widgetsImports = this.loadWidgets()
+    const vendorImports = this.loadVendors()
 
     this._dynamicImports = allImports
       .concat(pluginSystemImports)
       .concat(widgetsImports)
+      .concat(vendorImports)
   }
 
   /**
@@ -64,7 +66,16 @@ class Lifecycle {
    * @private
    */
   private loadWidgets(): string[] {
-    return loadOtherlib.loadPostPublisherScript()
+    return loadOtherlib.loadWidgetsScript()
+  }
+
+  /**
+   * 加载第三方库
+   *
+   * @private
+   */
+  private loadVendors(): string[] {
+    return loadOtherlib.loadVendorsScript()
   }
 }
 

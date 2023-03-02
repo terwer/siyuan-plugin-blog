@@ -50,7 +50,7 @@ export const getSiyuanConfDir = () => {
  * @since 0.0.1
  */
 export const getZhiDir = () => {
-  return `${getSiyuanConfDir()}/appearance/themes/zhi/dist`
+  return `${getSiyuanConfDir()}/appearance/themes/zhi/dist-cjs`
 }
 
 /**
@@ -75,7 +75,6 @@ export const getOtherlibDir = () => {
 const requireOtherlib = (entryName, libfile, alias) => {
   const path = window.require("path")
   const libpath = path.join(getOtherlibDir(), libfile)
-  console.log(entryName + " 将要从以下位置引入 " + alias, libpath)
   return window.require(libpath)
 }
 
@@ -111,9 +110,45 @@ const loadPostPublisherScript = () => {
   return postPublisher.initPostPublisher()
 }
 
+/**
+ * 加载图片透明库
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+const loadTranslucifyScript = () => {
+  const translucify = requireOtherlib(
+    "zhi",
+    "vendor/translucify/index.js",
+    "图片透明类库"
+  )
+  return translucify.initTranslucify()
+}
+
+/**
+ * 加载挂件
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+const loadWidgetsScript = () => {
+  return loadPostPublisherScript()
+}
+
+/**
+ * 加载挂件
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+const loadVendorsScript = () => {
+  return loadTranslucifyScript()
+}
+
 const loadOtherlib = {
   loadPluginSystemScript,
-  loadPostPublisherScript
+  loadWidgetsScript,
+  loadVendorsScript,
 }
 
 export default loadOtherlib
