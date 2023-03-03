@@ -24,9 +24,10 @@
  */
 
 const initTranslucify = () => {
-  return [
-    "/appearance/themes/zhi/dist-cjs/lib/vendor/translucify/translucify.js",
-  ]
+  return []
+  // return [
+  //   "/appearance/themes/zhi/dist-cjs/lib/vendor/translucify/translucify.js",
+  // ]
 }
 
 const translucify = {

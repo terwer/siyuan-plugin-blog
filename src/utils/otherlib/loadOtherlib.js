@@ -89,7 +89,7 @@ const requireOtherlib = (entryName, libfile, alias) => {
 const loadPluginSystemScript = () => {
   const pluginSystem = requireOtherlib(
     "zhi",
-    "plugin/plugin-system.js",
+    "plugin/plugin-system/index.js",
     "插件系统"
   )
   return pluginSystem.initPluginSystem()
@@ -104,7 +104,7 @@ const loadPluginSystemScript = () => {
 const loadPostPublisherScript = () => {
   const postPublisher = requireOtherlib(
     "zhi",
-    "widgets/sy-post-publisher.js",
+    "widgets/sy-post-publisher/index.js",
     "发布工具"
   )
   return postPublisher.initPostPublisher()

@@ -24,11 +24,12 @@
  */
 
 const initPostPublisher = () => {
-  return ["/widgets/sy-post-publisher/lib/siyuanhook.js"]
+  return []
+  // return ["/widgets/sy-post-publisher/lib/siyuanhook.js"]
 }
 
 const postPublisher = {
-  initPostPublisher
+  initPostPublisher,
 }
 
 module.exports = postPublisher

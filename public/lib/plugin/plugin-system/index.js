@@ -24,11 +24,11 @@
  */
 
 const initPluginSystem = () => {
-  return ["/appearance/themes/zhi/dist-cjs/lib/plugin/plugin-system-hook.js"]
+  return ["/appearance/themes/zhi/dist-cjs/lib/plugin/plugin-system/plugin-system-hook.js"]
 }
 
 const pluginSystem = {
-  initPluginSystem
+  initPluginSystem,
 }
 
 module.exports = pluginSystem

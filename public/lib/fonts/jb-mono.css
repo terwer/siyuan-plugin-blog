@@ -1,0 +1,12 @@
+/* JetBrains Mono */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2")
+      format("woff2"),
+    url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/JetBrainsMono/JetBrainsMono-Regular.woff")
+      format("woff"),
+    url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/JetBrainsMono/JetBrainsMono-Regular.ttf")
+      format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
