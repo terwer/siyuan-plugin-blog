@@ -1,7 +1,14 @@
 @require "../fonts"
 
+@require "basic-light"
+@require "basic-dark"
+@require "basic-green"
+
+/* 基础样式 */
 :root {
   --zhi-font-family: _font-family-mono
+  --zhi-font-family-code: _font-family-mono
+  --zhi-border-radius-round: _border-radius-round
 
   ///* 主色 */
   --b3-theme-primary: var(--zhi-text-color);
@@ -20,14 +27,14 @@
   ///* 文字颜色 */
   //--b3-theme-on-primary: #fff;
   //--b3-theme-on-secondary: #fff;
-  //--b3-theme-on-background: #c9d1d9;
+  --b3-theme-on-background: var(--zhi-text-color)
   //--b3-theme-on-surface: #9aa0a6;
   //--b3-theme-on-surface-light: rgba(154, 160, 166, .68);
   //--b3-theme-on-error: #fff;
 
   /* 字体 */
   --b3-font-family: var(--zhi-font-family)
-  --b3-font-family-code: var(--zhi-font-family)
+  --b3-font-family-code: var(--zhi-font-family-code)
   --b3-font-family-graph: var(--zhi-font-family)
   --b3-font-family-emoji: var(--zhi-font-family)
   --b3-font-family-math: var(--zhi-font-family)
@@ -39,7 +46,7 @@
   //--b3-toolbar-hover: #383a42;
   //
   ///* 线条 */
-  //--b3-border-color: #0e0f10;
+  --b3-border-color: var(--zhi-border-color);
   //
   ///* 滚动条 */
   //--b3-scroll-color: rgba(230, 230, 230, .2);
@@ -160,23 +167,9 @@
   //--b3-pdf-dark: #212224;
 }
 
-// 基础样式
-//\:root
-//  --b3-font-family: var(--zhi-font-family)
-//  --b3-font-family-code: var(--zhi-font-family)
-//  --b3-font-family-graph: var(--zhi-font-family)
-//  --b3-font-family-emoji: var(--zhi-font-family)
-//  --b3-font-family-math: var(--zhi-font-family)
-//  --b3-border-radius-round: var(--zhi-border-radius-round)
-//  --b3-theme-background: var(--zhi-body-bg)
-//  --b3-theme-surface: var(--zhi-sidebar-bg)
-//
-//// 整体背景、字体颜色
+/* 整体背景、字体颜色 */
 body
   font-size: _font-size-normal
   margin: _padding-zero
   padding: _margin-zero
-
-@require "basic-light"
-@require "basic-dark"
-@require "basic-green"
+  color: var(--zhi-text-color)
