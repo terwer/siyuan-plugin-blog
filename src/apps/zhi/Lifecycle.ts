@@ -23,13 +23,13 @@
  * questions.
  */
 
-import loadOtherlib from "~/src/utils/otherlib/loadOtherlib"
+import pluginSystem from "~/src/apps/zhi/plugin-system"
 
 /**
  * zhi主题统一生命周期管理
  *
  * @author terwer
- * @since 0.0.1
+ * @since 1.0.0
  */
 class Lifecycle {
   private _dynamicImports = <string[]>[]
@@ -57,7 +57,7 @@ class Lifecycle {
    * @private
    */
   private loadPluginSystem(): string[] {
-    return loadOtherlib.loadPluginSystemScript()
+    return pluginSystem.initPluginSystem()
   }
 
   /**
@@ -66,7 +66,7 @@ class Lifecycle {
    * @private
    */
   private loadWidgets(): string[] {
-    return loadOtherlib.loadWidgetsScript()
+    return []
   }
 
   /**
@@ -75,7 +75,7 @@ class Lifecycle {
    * @private
    */
   private loadVendors(): string[] {
-    return loadOtherlib.loadVendorsScript()
+    return []
   }
 }
 

@@ -23,26 +23,12 @@
  * questions.
  */
 
-import Lifecycle from "~/src/apps/zhi/Lifecycle"
-
-/**
- * zhi主题唯一激活入口
- *
- * @author terwer
- * @since 1.0.0
- */
-export class Bootstrap {
-  private static lifecycle: Lifecycle
-
-  static {
-    Bootstrap.lifecycle = new Lifecycle()
-  }
-
-  /**
-   * 主题激活
-   */
-  public static async start(): Promise<string[]> {
-    Bootstrap.lifecycle.load()
-    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
-  }
+const initPluginSystem = () => {
+  return ["/appearance/themes/zhi/dist-cjs/plugin-system/plugin-system-hook.js"]
 }
+
+const pluginSystem = {
+  initPluginSystem
+}
+
+export default pluginSystem

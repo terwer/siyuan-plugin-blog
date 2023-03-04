@@ -23,12 +23,30 @@
  * questions.
  */
 
-const initPluginSystem = () => {
-  return ["/appearance/themes/zhi/dist-cjs/lib/plugin/plugin-system/plugin-system-hook.js"]
+import Zhi from "~/src/apps/zhi/zhi"
+
+// 警告1⚠️：此文件会在购建时生成js文件，并且由theme.js动态调用
+// 警告2⚠️：请勿主动调用此文件中的任何方法
+
+/**
+ * 主题通用入口（由theme.js动态调用，请勿主动调用）
+ * vite构建配置：vite.cjs.config
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class Theme {
+  private readonly zhiTheme
+
+  constructor() {
+    this.zhiTheme = new Zhi()
+  }
+
+  public async init(): Promise<string[]> {
+    // 主流程加载
+    return await this.zhiTheme.main([])
+  }
 }
 
-const pluginSystem = {
-  initPluginSystem,
-}
-
-module.exports = pluginSystem
+const theme = new Theme()
+module.exports = theme

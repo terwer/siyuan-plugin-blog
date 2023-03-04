@@ -23,13 +23,30 @@
  * questions.
  */
 
-const initPostPublisher = () => {
-  return []
-  // return ["/widgets/sy-post-publisher/lib/siyuanhook.js"]
+import { defineConfig } from "vite"
+import { commonConfig } from "../vite.config"
+
+const outputMap: any = {
+  pluginSystemHook: {
+    file: "src/apps/zhi/plugin-system/plugin-system-hook.ts",
+    folder: "plugin-system-hook.js"
+  }
 }
 
-const postPublisher = {
-  initPostPublisher,
-}
-
-module.exports = postPublisher
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...commonConfig,
+  build: {
+    rollupOptions: {
+      input: {
+        pluginSystemHook: outputMap["pluginSystemHook"].file
+      },
+      output: {
+        format: "cjs",
+        entryFileNames: (entry) => {
+          return outputMap[entry.name].folder
+        }
+      }
+    }
+  }
+})

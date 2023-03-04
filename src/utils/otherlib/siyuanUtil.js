@@ -23,12 +23,18 @@
  * questions.
  */
 
-// 警告1⚠️：请勿在非思源笔记Electron环境调用此文件中的任何方法
-// 警告2⚠️：此文件请勿引用其他任何需要编译的类库
+// 警告⚠️：请勿在非思源笔记Electron环境调用此文件中的任何方法
+
+const path = window.require("path")
+
+const SIYUAN_CONF_PATH = window.siyuan.config.system.confDir
+const SIYUAN_DATA_PATH = window.siyuan.config.system.dataDir
+const SIYUAN_APPEARANCE_PATH = path.join(SIYUAN_CONF_PATH, "appearance")
+const SIYUAN_THEME_PATH = path.join(SIYUAN_APPEARANCE_PATH, "themes")
+const ZHI_THEME_PATH = path.join(SIYUAN_THEME_PATH, "zhi")
+const ZHI_CJS_PATH = path.join(ZHI_THEME_PATH, "dist-cjs")
 
 const getCrossPlatformAppDataFolder = () => {
-  const path = window.require("path")
-
   let configFilePath
   if (window.process.platform === "darwin") {
     configFilePath = path.join(
@@ -44,31 +50,12 @@ const getCrossPlatformAppDataFolder = () => {
   return configFilePath
 }
 
-const initPluginSystem = async () => {
-    const path = window.require("path")
-    try {
-      const data = window
-        .require("fs")
-        .readFileSync(
-          path.join(getCrossPlatformAppDataFolder(), ".siyuan", "plugin.js")
-        )
-      const script = data.toString("utf8")
-      console.log("local plugin system found, loading...")
-      eval(script)
-    } catch (e) {
-      console.log("local plugin system not found, load online")
-      return fetch(
-        "https://gitee.com/zuoez02/siyuan-plugin-system/raw/main/main.js",
-        { cache: "no-cache" }
-      )
-        .then((res) => res.text())
-        .then((sc) => {
-          window.siyuanPluginScript = sc
-          eval(sc)
-        })
-    }
-  }
+const siyuanUtil = {
+  SIYUAN_CONF_PATH,
+  SIYUAN_DATA_PATH,
+  ZHI_CJS_PATH,
 
-;(async () => {
-  await initPluginSystem()
-})()
+  getCrossPlatformAppDataFolder,
+}
+
+export default siyuanUtil

@@ -23,34 +23,30 @@
  * questions.
  */
 
-declare module "~/src/utils/otherlib/loadOtherlib" {
-  /**
-   * 加载插件系统脚本
-   *
-   * 此脚本在Electron环境执行，非Electron环境无法使用
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  export function loadPluginSystemScript(): string[]
+declare module "~/src/utils/otherlib/siyuanUtil" {
+  const ZHI_CJS_PATH: string
+  const SIYUAN_DATA_PATH: string
 
-  /**
-   * 加载挂件脚本
-   *
-   * 此脚本在Electron环境执行，非Electron环境无法使用
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  export function loadWidgetsScript(): string[]
+  function getCrossPlatformAppDataFolder()
+}
 
-  /**
-   * 加载第三方库脚本
-   *
-   * 此脚本在Electron环境执行，非Electron环境无法使用
-   *
-   * @author terwer
-   * @since 0.0.1
-   */
-  export function loadVendorsScript(): string[]
+declare module "~/src/utils/otherlib/pluginSystemUtil" {
+  const ZHI_PLUGIN_FOLDER: string
+  const PLUGIN_FOLDER: string
+  const OLD_VERSION_ZERO: string
+
+  const MANIFEST: string
+  const SCRIPT: string
+
+  async function getPluginSystem(): Promise<any>
+
+  function getPluginSystemVersion(): string
+
+  async function initPluginSystem()
+
+  class HackPluginSystem {
+    async getManifest(manifest)
+
+    async scanPlugins(pluginFolder)
+  }
 }

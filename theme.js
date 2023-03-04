@@ -23,63 +23,44 @@
  * questions.
  */
 
+// 警告1⚠️：此文件由思源笔记自动加载，请勿调用此文件中的任何方法
+// 警告2⚠️：请勿在此文件中引用其他任何自定义或者第三方类库
+
 /**
  * 思源笔记启动会自动加载此文件
- */
-// await import("/appearance/themes/zhi/dist/zhi-theme.js")
-
-// 警告1⚠️：思源笔记启动会自动加载此文件，请勿调用此文件中的任何方法
-// 警告2⚠️：此文件请勿引用其他任何需要编译的类库
-
-/**
- * 获取zhi主题构建路径目录
  *
  * @author terwer
- * @since 0.0.1
+ * @since 1.0.0
  */
-const getRealPath = (libpath) => {
-  let ret
-  const path = window.require("path")
-  if (libpath.toString().includes("themes")) {
-    ret = path.join(`${window.siyuan.config.system.confDir}`, libpath)
-  } else if (libpath.toString().includes("widgets")) {
-    ret = path.join(`${window.siyuan.config.system.dataDir}`, libpath)
-  } else {
-    ret = path.join(`${window.siyuan.config.system.dataDir}`, libpath)
-  }
-  return ret
-}
-
-/**
- * 安全的import，路径不存在或者加载出错
- *
- * @author terwer
- * @since 0.0.1
- */
-const safeImport = async (libpath) => {
-  const fs = window.require("fs")
-  const realpath = getRealPath(libpath)
-
-  try {
-    if (!fs.existsSync(realpath)) {
-      console.warn("依赖库不存在，请排查。依赖库路径=>", realpath)
-      return
-    }
-    console.log("将要从以下位置引入依赖=>", libpath)
-    await import(libpath)
-  } catch (e) {
-    console.error("依赖库加载失败，请排查。依赖库路径=>", realpath)
-    console.error(e)
-  }
-}
-
 ;(async () => {
-  const zhiLibpath = getRealPath("/appearance/themes/zhi/dist-cjs/zhi.js")
-  const zhi = window.require(zhiLibpath)
-  // 主流程加载
-  await zhi.main([], async function (dynamicImports) {
+  try {
+    const path = window.require("path")
+    const SIYUAN_CONF_PATH = window.siyuan.config.system.confDir
+    const SIYUAN_APPEARANCE_PATH = path.join(SIYUAN_CONF_PATH, "appearance")
+    const SIYUAN_THEME_PATH = path.join(SIYUAN_APPEARANCE_PATH, "themes")
+    const ZHI_THEME_PATH = path.join(SIYUAN_THEME_PATH, "zhi")
+    const ZHI_CJS_PATH = path.join(ZHI_THEME_PATH, "dist-cjs")
+
+    // 初始化主题核心文件
+    const CJS_THEME_NAME = "theme.js"
+    const themePath = path.join(ZHI_CJS_PATH, CJS_THEME_NAME)
+    console.log("[zhi] Loading theme entry=>", themePath)
+    const theme = window.require(themePath)
+
+    // 初始化第三方依赖
+    const dynamicImports = await theme.init()
     for (const item of dynamicImports) {
-      await safeImport(item)
+      const importPath = path.join(SIYUAN_CONF_PATH, item)
+      console.log("[zhi] Loading dependency=>", importPath)
+      const lib = window.require(importPath)
+      // 如果有初始化方法，进行初始化
+      if (lib && lib.init) {
+        await lib.init()
+      }
     }
-  })
+
+    console.log("[zhi] Theme inited.")
+  } catch (e) {
+    console.log("[zhi] Theme load error=>", e)
+  }
 })()

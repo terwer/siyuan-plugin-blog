@@ -30,7 +30,16 @@ if __name__ == "__main__":
     scriptutils.switch_workdir()
 
     scriptutils.rm_folder("./dist-cjs")
+    # theme.js
     os.system("tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs")
-    scriptutils.rm_file("./dist-cjs/vite.svg")
-    print("cjs构建完成.")
+    scriptutils.cp_folder("src/assets/fonts", "dist-cjs/fonts")
 
+    # plugin-system-hook.js
+    os.system("tsc && vite build -c config/vite.cjs.config.plugin.system.hook.ts --outDir dist-cjs/plugin-system")
+
+    # zhi-demo-plugin/main.js
+    os.system("tsc && vite build -c config/plugins/vite.cjs.config.zhi-demo-plugin.ts --outDir "
+              "dist-cjs/zhi-plugins/zhi-demo-plugin")
+    scriptutils.cp_file("src/apps/zhi/zhi-plugins/zhi-demo-plugin/manifest.json", "dist-cjs/zhi-plugins/zhi-demo"
+                                                                                  "-plugin/manifest.json")
+    print("cjs构建完成.")

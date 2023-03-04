@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "modes": [
     "dark",
-    "light"
+    "light",
+    "green"
   ]
 }

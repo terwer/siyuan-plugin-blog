@@ -23,26 +23,36 @@
  * questions.
  */
 
-import Lifecycle from "~/src/apps/zhi/Lifecycle"
+import logFactory from "~/src/utils/logUtil"
+
+const siyuan = require("siyuan")
+
+const Plugin = siyuan.Plugin
 
 /**
- * zhi主题唯一激活入口
+ * zhi demo plugin
  *
  * @author terwer
- * @since 1.0.0
+ * @since 0.7.0
  */
-export class Bootstrap {
-  private static lifecycle: Lifecycle
+class ZhiDemoPlugin extends Plugin {
+  private logger = logFactory.getLogger("ZhiDemoPlugin")
 
-  static {
-    Bootstrap.lifecycle = new Lifecycle()
+  constructor() {
+    super()
+    this.logger.info("ZhiDemoPlugin created")
   }
 
-  /**
-   * 主题激活
-   */
-  public static async start(): Promise<string[]> {
-    Bootstrap.lifecycle.load()
-    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
+  onload() {
+    siyuan.addToolbarLeft()
+    this.logger.info("ZhiDemoPlugin loaded")
   }
+
+  onunload() {
+    this.logger.info("ZhiDemoPlugin unloaded")
+  }
+}
+
+module.exports = {
+  default: ZhiDemoPlugin,
 }

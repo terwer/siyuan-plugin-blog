@@ -23,15 +23,30 @@
  * questions.
  */
 
-const initTranslucify = () => {
-  return []
-  // return [
-  //   "/appearance/themes/zhi/dist-cjs/lib/vendor/translucify/translucify.js",
-  // ]
+import { defineConfig } from "vite"
+import { commonConfig } from "../../vite.config"
+
+const outputMap: any = {
+  ZhiDemoPlugin: {
+    file: "src/apps/zhi/zhi-plugins/zhi-demo-plugin/main.ts",
+    folder: "main.js",
+  },
 }
 
-const translucify = {
-  initTranslucify,
-}
-
-module.exports = translucify
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...commonConfig,
+  build: {
+    rollupOptions: {
+      input: {
+        ZhiDemoPlugin: outputMap["ZhiDemoPlugin"].file,
+      },
+      output: {
+        format: "cjs",
+        entryFileNames: (entry) => {
+          return outputMap[entry.name].folder
+        },
+      },
+    },
+  },
+})
