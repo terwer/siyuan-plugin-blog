@@ -23,12 +23,30 @@
  * questions.
  */
 
-/* Open Sans */
-@font-face {
-    font-family: "Open Sans";
-    src: url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/opensans/OpenSans-Regular.woff2") format("woff2"),
-    url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/opensans/OpenSans-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+import { defineConfig } from "vite"
+import { commonConfig } from "../../vite.config"
+
+const outputMap: any = {
+  ZhiDemoPlugin: {
+    file: "src/apps/zhi/zhi-plugins/zhi-demo-plugin/main.ts",
+    folder: "main.js",
+  },
 }
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...commonConfig,
+  build: {
+    rollupOptions: {
+      input: {
+        ZhiDemoPlugin: outputMap["ZhiDemoPlugin"].file,
+      },
+      output: {
+        format: "cjs",
+        entryFileNames: (entry) => {
+          return outputMap[entry.name].folder
+        },
+      },
+    },
+  },
+})

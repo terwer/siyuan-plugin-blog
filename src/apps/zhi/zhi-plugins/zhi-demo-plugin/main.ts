@@ -23,10 +23,36 @@
  * questions.
  */
 
-/* Times New Roman */
-@font-face {
-    font-family: "Times New Roman";
-    font-style: normal;
-    font-weight: normal;
-    src: url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/times/times.woff") format("woff");
+import logFactory from "~/src/utils/logUtil"
+
+const siyuan = require("siyuan")
+
+const Plugin = siyuan.Plugin
+
+/**
+ * zhi demo plugin
+ *
+ * @author terwer
+ * @since 0.7.0
+ */
+class ZhiDemoPlugin extends Plugin {
+  private logger = logFactory.getLogger("ZhiDemoPlugin")
+
+  constructor() {
+    super()
+    this.logger.info("ZhiDemoPlugin created")
+  }
+
+  onload() {
+    siyuan.addToolbarLeft()
+    this.logger.info("ZhiDemoPlugin loaded")
+  }
+
+  onunload() {
+    this.logger.info("ZhiDemoPlugin unloaded")
+  }
+}
+
+module.exports = {
+  default: ZhiDemoPlugin,
 }
