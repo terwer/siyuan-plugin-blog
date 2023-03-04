@@ -89,7 +89,7 @@ class LogUtil {
         strarr.push(chalk.gray(":"))
 
         return strarr.join(" ")
-      }
+      },
     })
   }
 
