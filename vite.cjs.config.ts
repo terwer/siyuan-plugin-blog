@@ -29,8 +29,8 @@ import { commonConfig } from "./vite.config"
 const outputMap: any = {
   theme: {
     file: "src/theme.ts",
-    folder: "theme.js"
-  }
+    folder: "theme.js",
+  },
 }
 
 // https://vitejs.dev/config/
@@ -39,7 +39,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        theme: outputMap["theme"].file
+        theme: outputMap["theme"].file,
       },
       output: {
         format: "cjs",

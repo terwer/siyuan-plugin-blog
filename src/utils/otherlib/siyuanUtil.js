@@ -55,7 +55,7 @@ const siyuanUtil = {
   SIYUAN_DATA_PATH,
   ZHI_CJS_PATH,
 
-  getCrossPlatformAppDataFolder
+  getCrossPlatformAppDataFolder,
 }
 
 export default siyuanUtil

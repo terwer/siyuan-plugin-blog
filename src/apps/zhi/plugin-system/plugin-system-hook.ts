@@ -24,7 +24,9 @@
  */
 
 import logFactory from "~/src/utils/logUtil"
-import pluginSystemUtil, { HackPluginSystem } from "~/src/utils/otherlib/pluginSystemUtil"
+import pluginSystemUtil, {
+  HackPluginSystem,
+} from "~/src/utils/otherlib/pluginSystemUtil"
 import siyuanUtil from "~/src/utils/otherlib/siyuanUtil"
 import strUtil from "~/src/utils/strUtil"
 

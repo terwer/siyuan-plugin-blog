@@ -55,7 +55,7 @@ class LogUtil {
       },
       red: (src: any): string => {
         return src.toString()
-      }
+      },
     }
 
     prefix.reg(loglevel)

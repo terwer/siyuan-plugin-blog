@@ -29,8 +29,7 @@
  * @author terwer
  * @since 1.0.0
  */
-class SysUtil {
-}
+class SysUtil {}
 
 const sysUtil = new SysUtil()
 export default sysUtil

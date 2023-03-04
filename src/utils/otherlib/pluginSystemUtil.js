@@ -166,6 +166,6 @@ const pluginSystemUtil = {
 
   getPluginSystem,
   getPluginSystemVersion,
-  initPluginSystem
+  initPluginSystem,
 }
 export default pluginSystemUtil
