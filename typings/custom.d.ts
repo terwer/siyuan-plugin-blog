@@ -24,4 +24,29 @@
  */
 
 declare module "~/src/utils/otherlib/siyuanUtil" {
+  const ZHI_CJS_PATH: string
+  const SIYUAN_DATA_PATH: string
+
+  function getCrossPlatformAppDataFolder()
+}
+
+declare module "~/src/utils/otherlib/pluginSystemUtil" {
+  const ZHI_PLUGIN_FOLDER: string
+  const PLUGIN_FOLDER: string
+  const OLD_VERSION_ZERO: string
+
+  const MANIFEST: string
+  const SCRIPT: string
+
+  async function getPluginSystem(): Promise<any>
+
+  function getPluginSystemVersion(): string
+
+  async function initPluginSystem()
+
+  class HackPluginSystem {
+    async getManifest(manifest)
+
+    async scanPlugins(pluginFolder)
+  }
 }

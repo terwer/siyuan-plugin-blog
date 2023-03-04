@@ -30,8 +30,6 @@
  * @since 1.0.0
  */
 class SysUtil {
-  public getCrossPlatformAppDataFolder = () => {
-  }
 }
 
 const sysUtil = new SysUtil()

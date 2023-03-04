@@ -60,11 +60,6 @@ class LogUtil {
 
     prefix.reg(loglevel)
     loglevel.setLevel(LOG_LEVEL_DEBUG)
-    // if (isDev) {
-    //   loglevel.setLevel(LOG_LEVEL_DEBUG)
-    // } else {
-    //   loglevel.setLevel(LOG_LEVEL_WARN)
-    // }
 
     prefix.apply(loglevel, {
       format(level, name, timestamp) {

@@ -34,24 +34,28 @@ const SIYUAN_THEME_PATH = path.join(SIYUAN_APPEARANCE_PATH, "themes")
 const ZHI_THEME_PATH = path.join(SIYUAN_THEME_PATH, "zhi")
 const ZHI_CJS_PATH = path.join(ZHI_THEME_PATH, "dist-cjs")
 
-const ZHI_PLUGIN_FOLDER = "zhi-plugins"
-const PLUGIN_FOLDER = "plugins"
-const MANIFEST = "manifest.json"
-const SCRIPT = "main.js"
-
-const OLD_VERSION_ZERO = "0.0.0"
+const getCrossPlatformAppDataFolder = () => {
+  let configFilePath
+  if (window.process.platform === "darwin") {
+    configFilePath = path.join(
+      window.process.env.HOME,
+      "/Library/Application Support"
+    )
+  } else if (window.process.platform === "win32") {
+    // Roaming包含在APPDATA中了
+    configFilePath = window.process.env.APPDATA
+  } else if (window.process.platform === "linux") {
+    configFilePath = window.process.env.HOME
+  }
+  return configFilePath
+}
 
 const siyuanUtil = {
   SIYUAN_CONF_PATH,
   SIYUAN_DATA_PATH,
   ZHI_CJS_PATH,
 
-  ZHI_PLUGIN_FOLDER,
-  PLUGIN_FOLDER,
-  OLD_VERSION_ZERO,
-
-  MANIFEST,
-  SCRIPT
+  getCrossPlatformAppDataFolder
 }
 
 export default siyuanUtil
