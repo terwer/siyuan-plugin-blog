@@ -23,12 +23,35 @@
  * questions.
  */
 
-const initPluginSystem = () => {
-  return ["/appearance/themes/zhi/dist-cjs/lib/plugin/plugin-system/plugin-system-hook.js"]
+// 警告⚠️：请勿在非思源笔记Electron环境调用此文件中的任何方法
+
+const path = window.require("path")
+
+const SIYUAN_CONF_PATH = window.siyuan.config.system.confDir
+const SIYUAN_DATA_PATH = window.siyuan.config.system.dataDir
+const SIYUAN_APPEARANCE_PATH = path.join(SIYUAN_CONF_PATH, "appearance")
+const SIYUAN_THEME_PATH = path.join(SIYUAN_APPEARANCE_PATH, "themes")
+const ZHI_THEME_PATH = path.join(SIYUAN_THEME_PATH, "zhi")
+const ZHI_CJS_PATH = path.join(ZHI_THEME_PATH, "dist-cjs")
+
+const ZHI_PLUGIN_FOLDER = "zhi-plugins"
+const PLUGIN_FOLDER = "plugins"
+const MANIFEST = "manifest.json"
+const SCRIPT = "main.js"
+
+const OLD_VERSION_ZERO = "0.0.0"
+
+const siyuanUtil = {
+  SIYUAN_CONF_PATH,
+  SIYUAN_DATA_PATH,
+  ZHI_CJS_PATH,
+
+  ZHI_PLUGIN_FOLDER,
+  PLUGIN_FOLDER,
+  OLD_VERSION_ZERO,
+
+  MANIFEST,
+  SCRIPT
 }
 
-const pluginSystem = {
-  initPluginSystem,
-}
-
-module.exports = pluginSystem
+export default siyuanUtil

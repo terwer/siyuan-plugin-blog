@@ -27,22 +27,28 @@ import strUtil from "~/src/utils/strUtil"
 import { version } from "~/package.json"
 import ThemeFromEnum from "~/src/utils/enums/themeFromEnum"
 import { Bootstrap } from "~/src/apps/zhi/bootstrap"
+import logFactory from "~/src/utils/logUtil"
 
 /**
  * 主题入口
  *
  * @author terwer
- * @since 0.0.1
+ * @since 1.0.0
  */
 class Zhi {
-  public async main(args: string[], callback: Function) {
+  private logger = logFactory.getLogger("zhi")
+
+  public async main(args: string[], callback?: Function) {
     this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
     const dynamicImports = await Bootstrap.start()
-    callback(dynamicImports)
+    if (callback) {
+      callback(dynamicImports)
+    }
+    return dynamicImports
   }
 
   public hello(from: string): void {
-    console.log(
+    this.logger.info(
       strUtil.f(
         "hello, {0} {1} v{2}! You are from {3}",
         "zhi",
@@ -54,11 +60,5 @@ class Zhi {
   }
 }
 
-const zhi = new Zhi()
-
 // 默认支持esm
-export default zhi
-// 兼容cjs
-if (typeof module !== "undefined") {
-  module.exports = zhi
-}
+export default Zhi

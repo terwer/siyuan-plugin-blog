@@ -27,11 +27,10 @@
  * 系统工具类
  *
  * @author terwer
- * @since 0.0.1
+ * @since 1.0.0
  */
 class SysUtil {
   public getCrossPlatformAppDataFolder = () => {
-
   }
 }
 

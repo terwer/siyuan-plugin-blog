@@ -23,26 +23,30 @@
  * questions.
  */
 
-import Lifecycle from "~/src/apps/zhi/Lifecycle"
+import { defineConfig } from "vite"
+import { commonConfig } from "../vite.config"
 
-/**
- * zhi主题唯一激活入口
- *
- * @author terwer
- * @since 1.0.0
- */
-export class Bootstrap {
-  private static lifecycle: Lifecycle
-
-  static {
-    Bootstrap.lifecycle = new Lifecycle()
-  }
-
-  /**
-   * 主题激活
-   */
-  public static async start(): Promise<string[]> {
-    Bootstrap.lifecycle.load()
-    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
+const outputMap: any = {
+  pluginSystemHook: {
+    file: "src/apps/zhi/plugin-system/plugin-system-hook.ts",
+    folder: "plugin-system-hook.js"
   }
 }
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...commonConfig,
+  build: {
+    rollupOptions: {
+      input: {
+        pluginSystemHook: outputMap["pluginSystemHook"].file
+      },
+      output: {
+        format: "cjs",
+        entryFileNames: (entry) => {
+          return outputMap[entry.name].folder
+        }
+      }
+    }
+  }
+})

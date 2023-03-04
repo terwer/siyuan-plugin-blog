@@ -23,15 +23,25 @@
  * questions.
  */
 
-const initTranslucify = () => {
-  return []
-  // return [
-  //   "/appearance/themes/zhi/dist-cjs/lib/vendor/translucify/translucify.js",
-  // ]
+import logFactory from "~/src/utils/logUtil"
+
+// 警告1⚠️：此文件会在购建时生成js文件，并且由theme.js动态调用
+// 警告2⚠️：请勿主动调用此文件中的任何方法
+
+/**
+ * 插件系统入口（由theme.js动态调用，请勿主动调用）
+ * vite构建配置：config/vite.cjs.config.plugin.system.hook
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class PluginSystemHook {
+  private logger = logFactory.getLogger("plugin-system-hook")
+
+  async init() {
+    this.logger.info("Syncing zhi theme plugins finished.")
+  }
 }
 
-const translucify = {
-  initTranslucify,
-}
-
-module.exports = translucify
+const pluginSystemHook = new PluginSystemHook()
+module.exports = pluginSystemHook

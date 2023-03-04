@@ -1,8 +1,0 @@
-/* Times New Roman */
-@font-face {
-  font-family: "Times New Roman";
-  font-style: normal;
-  font-weight: normal;
-  src: url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/times/times.woff")
-    format("woff");
-}

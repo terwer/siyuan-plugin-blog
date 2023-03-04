@@ -30,7 +30,10 @@ if __name__ == "__main__":
     scriptutils.switch_workdir()
 
     scriptutils.rm_folder("./dist-cjs")
+    # theme.js
     os.system("tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs")
-    scriptutils.rm_file("./dist-cjs/vite.svg")
+
+    # plugin-system-hook.js
+    os.system("tsc && vite build -c config/vite.cjs.config.plugin.system.hook.ts --outDir dist-cjs/plugin-system")
     print("cjs构建完成.")
 

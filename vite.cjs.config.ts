@@ -25,7 +25,13 @@
 
 import { defineConfig } from "vite"
 import { commonConfig } from "./vite.config"
-import path from "path"
+
+const outputMap: any = {
+  theme: {
+    file: "src/theme.ts",
+    folder: "theme.js"
+  }
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,38 +39,12 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        appEntry: "src/apps/zhi/zhi.ts",
+        theme: outputMap["theme"].file
       },
       output: {
         format: "cjs",
         entryFileNames: (entry) => {
-          if (entry.name == "appEntry") {
-            return "zhi.js"
-          } else {
-            return "entry/[name]-[hash].js"
-          }
-        },
-        chunkFileNames: "chunk/[name]-[hash].js",
-        assetFileNames: (asset) => {
-          return "static/[name]-[hash].[ext]"
-        },
-        manualChunks(id) {
-          if (id.indexOf("node_modules") > -1) {
-            let arr = id.toString().split("node_modules/")[1].split("/")
-            // pnpm单独处理
-            if (id.indexOf(".pnpm") > -1) {
-              arr = id.toString().split(".pnpm/")[1].split("/")
-            }
-            const dep = arr[0].split("@")[0].replace(/\./g, "-")
-            // console.log("id=>", id)
-            // console.log("dep=>", dep)
-            if (dep !== "") {
-              return "vendor_" + dep
-            }
-            return "vendor"
-          } else {
-            return path.basename(id)
-          }
+          return outputMap[entry.name].folder
         },
       },
     },
