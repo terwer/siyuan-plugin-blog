@@ -26,6 +26,14 @@
 // 警告1⚠️：请勿在非思源笔记Electron环境调用此文件中的任何方法
 // 警告2⚠️：此文件请勿引用其他任何需要编译的类库
 
+const log = (...p) => {
+  console.log(`[zhi-hook] plugin-system-hook`, ...p)
+}
+
+const warn = (...p) => {
+  console.warn(`[zhi-hook] theme`, ...p)
+}
+
 const getCrossPlatformAppDataFolder = () => {
   const path = window.require("path")
 
@@ -45,30 +53,46 @@ const getCrossPlatformAppDataFolder = () => {
 }
 
 const initPluginSystem = async () => {
-    const path = window.require("path")
-    try {
-      const data = window
-        .require("fs")
-        .readFileSync(
-          path.join(getCrossPlatformAppDataFolder(), ".siyuan", "plugin.js")
-        )
-      const script = data.toString("utf8")
-      console.log("local plugin system found, loading...")
-      eval(script)
-    } catch (e) {
-      console.log("local plugin system not found, load online")
-      return fetch(
-        "https://gitee.com/zuoez02/siyuan-plugin-system/raw/main/main.js",
-        { cache: "no-cache" }
+  const path = window.require("path")
+  try {
+    const data = window
+      .require("fs")
+      .readFileSync(
+        path.join(getCrossPlatformAppDataFolder(), ".siyuan", "plugin.js")
       )
-        .then((res) => res.text())
-        .then((sc) => {
-          window.siyuanPluginScript = sc
-          eval(sc)
-        })
-    }
+    const script = data.toString("utf8")
+    log("local plugin system found, loading...")
+    eval(script)
+  } catch (e) {
+    log("local plugin system not found, load online")
+    return fetch(
+      "https://gitee.com/zuoez02/siyuan-plugin-system/raw/main/main.js",
+      { cache: "no-cache" }
+    )
+      .then((res) => res.text())
+      .then((sc) => {
+        window.siyuanPluginScript = sc
+        eval(sc)
+      })
   }
+}
+
+const syncZhiPlugins = async () => {
+  log("Start syncing zhi plugin ", "xxx")
+}
 
 ;(async () => {
-  await initPluginSystem()
+  if (!window.pluginSystem) {
+    log("Undetected plugin system，initiating plugin system...")
+    await initPluginSystem()
+  } else {
+    warn(
+      "Plugin system already loaded by snapshots, ignore initiation!Loaded plugin system version is ",
+      window.pluginSystemVersion
+    )
+  }
+
+  log("Plugin system initiation finished，syncing zhi theme plugins...")
+  await syncZhiPlugins()
+  log("Syncing zhi theme plugins finished.")
 })()

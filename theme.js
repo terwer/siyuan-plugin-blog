@@ -31,6 +31,18 @@
 // 警告1⚠️：思源笔记启动会自动加载此文件，请勿调用此文件中的任何方法
 // 警告2⚠️：此文件请勿引用其他任何需要编译的类库
 
+const log = (...p) => {
+  console.log(`[zhi-hook] theme`, ...p)
+}
+
+const warn = (...p) => {
+  console.warn(`[zhi-hook] theme`, ...p)
+}
+
+const error = (...p) => {
+  console.error(`[zhi-hook] theme`, ...p)
+}
+
 /**
  * 获取zhi主题构建路径目录
  *
@@ -62,14 +74,14 @@ const safeImport = async (libpath) => {
 
   try {
     if (!fs.existsSync(realpath)) {
-      console.warn("依赖库不存在，请排查。依赖库路径=>", realpath)
+      warn("Dependency not found, path is=>", libpath)
       return
     }
-    console.log("将要从以下位置引入依赖=>", libpath)
     await import(libpath)
+    log("Loaded dependency=>", libpath)
   } catch (e) {
-    console.error("依赖库加载失败，请排查。依赖库路径=>", realpath)
-    console.error(e)
+    error("Failed to load dependency!Dependency path=>", libpath)
+    error(e)
   }
 }
 
