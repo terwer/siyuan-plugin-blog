@@ -23,13 +23,50 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
-import Zhi from "../src/apps/zhi/zhi"
+/**
+ * 获取环境变量
+ *
+ * @param key key
+ * @author terwer
+ * @since 1.0.0
+ */
+const getEnv = (key: string): string => {
+  let env = ""
+  try {
+    if (import.meta.env[key]) {
+      env = import.meta.env[key]
+    }
+  } catch (e: any) {
+    throw new Error(e)
+  }
 
-describe("test zhi-theme", () => {
-  it("test main", async () => {
-    const zhiTheme = new Zhi()
-    const imports = await zhiTheme.main([])
-    console.log(imports)
-  })
-})
+  return env
+}
+
+/**
+ * 获取Boolean类型的环境变量
+ *
+ * @param key
+ * @author terwer
+ * @since 1.0.0
+ */
+const getBooleanEnv = (key: string): boolean => {
+  let env = false
+  if (getEnv(key)) {
+    env = getEnv(key).toLowerCase() === "true"
+  }
+  return env
+}
+
+// 是否是开发阶段调试
+const isNodeDev = process.env.NODE_ENV === "development"
+const isDev = isNodeDev || getBooleanEnv("VITE_DEBUG_MODE")
+
+const envUtil = {
+  getEnv,
+  getBooleanEnv,
+
+  isNodeDev,
+  isDev,
+}
+export default envUtil

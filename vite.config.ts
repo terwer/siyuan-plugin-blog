@@ -45,38 +45,45 @@ export const commonConfig = {
   },
 }
 
+const outputMap: any = {
+  appEntry: {
+    file: "pages/index.html",
+  },
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   ...commonConfig,
+  // base: "/appearance/themes/zhi/dist",
   build: {
     rollupOptions: {
       input: {
-        appEntry: "index.html",
+        appEntry: outputMap["appEntry"].file,
       },
       output: {
         format: "esm",
-        chunkFileNames: "chunk/[name]-[hash].js",
-        assetFileNames: (asset) => {
-          return "static/[name]-[hash].[ext]"
-        },
-        manualChunks(id) {
-          if (id.indexOf("node_modules") > -1) {
-            let arr = id.toString().split("node_modules/")[1].split("/")
-            // pnpm单独处理
-            if (id.indexOf(".pnpm") > -1) {
-              arr = id.toString().split(".pnpm/")[1].split("/")
-            }
-            const dep = arr[0].split("@")[0].replace(/\./g, "-")
-            // console.log("id=>", id)
-            // console.log("dep=>", dep)
-            if (dep !== "") {
-              return "vendor_" + dep
-            }
-            return "vendor"
-          } else {
-            return path.basename(id)
-          }
-        },
+        // chunkFileNames: "chunk/[name]-[hash]",
+        // assetFileNames: (asset) => {
+        //   return "static/[name]-[hash].[ext]"
+        // },
+        // manualChunks(id) {
+        //   if (id.indexOf("node_modules") > -1) {
+        //     let arr = id.toString().split("node_modules/")[1].split("/")
+        //     // pnpm单独处理
+        //     if (id.indexOf(".pnpm") > -1) {
+        //       arr = id.toString().split(".pnpm/")[1].split("/")
+        //     }
+        //     const dep = arr[0].split("@")[0].replace(/\./g, "-")
+        //     // console.log("id=>", id)
+        //     // console.log("dep=>", dep)
+        //     if (dep !== "") {
+        //       return "vendor_" + dep
+        //     }
+        //     return "vendor"
+        //   } else {
+        //     return path.basename(id)
+        //   }
+        // },
       },
     },
   },
