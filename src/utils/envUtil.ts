@@ -24,7 +24,7 @@
  */
 
 /**
- * 获取环境变量
+ * 获取环境变量，未定义返回空
  *
  * @param key key
  * @author terwer
@@ -33,14 +33,25 @@
 const getEnv = (key: string): string => {
   let env = ""
   try {
-    if (import.meta.env[key]) {
-      env = import.meta.env[key]
-    }
-  } catch (e: any) {
-    throw new Error(e)
-  }
-
+    env = import.meta.env[key] ?? ""
+  } catch (e: any) {}
   return env
+}
+
+/**
+ * 获取环境变量，如果未定义或者为空值，用指定的默认值代替
+ *
+ * @param key key
+ * @param defaultValue 默认值
+ * @author terwer
+ * @since 0.1.0
+ */
+export const getEnvOrDefault = (key: string, defaultValue: string) => {
+  const value = getEnv(key)
+  if (value.trim().length == 0) {
+    return defaultValue
+  }
+  return value
 }
 
 /**
@@ -51,10 +62,9 @@ const getEnv = (key: string): string => {
  * @since 1.0.0
  */
 const getBooleanEnv = (key: string): boolean => {
-  let env = false
-  if (getEnv(key)) {
-    env = getEnv(key).toLowerCase() === "true"
-  }
+  let env: boolean
+  const defVal = getEnvOrDefault(key, "false")
+  env = defVal.toLowerCase() === "true"
   return env
 }
 
