@@ -34,7 +34,7 @@ const initPluginSystem = () => {
 }
 
 const pluginSystem = {
-  initPluginSystem
+  initPluginSystem,
 }
 
 export default pluginSystem
