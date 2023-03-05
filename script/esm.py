@@ -30,6 +30,5 @@ if __name__ == "__main__":
 
     scriptutils.rm_folder("./dist")
     os.system("tsc && vite build")
-    scriptutils.cp_folder("src/assets/fonts", "dist/fonts")
 
     print("esm构建完成.")

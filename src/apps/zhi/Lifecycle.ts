@@ -24,6 +24,8 @@
  */
 
 import pluginSystem from "~/src/apps/zhi/plugin-system"
+import fontAwesome from "~/src/apps/zhi/vendor/font-awesome"
+import DependencyItem from "~/src/models/DependencyItem"
 
 /**
  * zhi主题统一生命周期管理
@@ -32,14 +34,14 @@ import pluginSystem from "~/src/apps/zhi/plugin-system"
  * @since 1.0.0
  */
 class Lifecycle {
-  private _dynamicImports = <string[]>[]
+  private _dynamicImports = <DependencyItem[]>[]
 
-  get dynamicImports(): string[] {
+  get dynamicImports(): DependencyItem[] {
     return this._dynamicImports
   }
 
   public load() {
-    let allImports = <string[]>[]
+    let allImports = <DependencyItem[]>[]
 
     const pluginSystemImports = this.loadPluginSystem()
     const widgetsImports = this.loadWidgets()
@@ -56,7 +58,7 @@ class Lifecycle {
    *
    * @private
    */
-  private loadPluginSystem(): string[] {
+  private loadPluginSystem(): DependencyItem[] {
     return pluginSystem.initPluginSystem()
   }
 
@@ -65,7 +67,7 @@ class Lifecycle {
    *
    * @private
    */
-  private loadWidgets(): string[] {
+  private loadWidgets(): DependencyItem[] {
     return []
   }
 
@@ -74,8 +76,12 @@ class Lifecycle {
    *
    * @private
    */
-  private loadVendors(): string[] {
-    return []
+  private loadVendors(): DependencyItem[] {
+    let vendorImports = <DependencyItem[]>[]
+
+    // 字体图标
+    const fontAwesomeImports = fontAwesome.initFontAwesome()
+    return vendorImports.concat(fontAwesomeImports)
   }
 }
 

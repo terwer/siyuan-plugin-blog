@@ -24,6 +24,7 @@
  */
 
 import Lifecycle from "~/src/apps/zhi/Lifecycle"
+import DependencyItem from "~/src/models/DependencyItem"
 
 /**
  * zhi主题唯一激活入口
@@ -41,7 +42,7 @@ export class Bootstrap {
   /**
    * 主题激活
    */
-  public static async start(): Promise<string[]> {
+  public static async start(): Promise<DependencyItem[]> {
     Bootstrap.lifecycle.load()
     return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
   }

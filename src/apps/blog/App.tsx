@@ -23,16 +23,51 @@
  * questions.
  */
 
-import { useState } from "react"
+import React, { useState } from "react"
 import viteLogo from "~/src/assets/vite.svg"
 import reactLogo from "~/src/assets/react.svg"
 import "~/src/styles/blog/default/main.styl"
+import { Button, message, Space } from "antd"
 
-function App() {
+const App: React.FC = () => {
   const [count, setCount] = useState(0)
+  const [messageApi, contextHolder] = message.useMessage()
+
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "This is a success message",
+    })
+  }
+
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content: "This is an error message",
+    })
+  }
+
+  const warning = () => {
+    messageApi.open({
+      type: "warning",
+      content: "This is a warning message",
+    })
+  }
 
   return (
     <div className="App">
+      {contextHolder}
+      <Space>
+        <Button onClick={success}>Success</Button>
+        <Button onClick={error}>Error</Button>
+        <Button onClick={warning}>Warning</Button>
+      </Space>
+
+      <div>
+        <i className="fa-solid fa-user"></i>
+        <i className="fa-brands fa-github-square"></i>
+      </div>
+
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

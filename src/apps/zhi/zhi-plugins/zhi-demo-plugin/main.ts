@@ -24,19 +24,19 @@
  */
 
 import logFactory from "~/src/utils/logUtil"
+import cjsUtil from "~/src/utils/cjsUtil"
 
-const siyuan = require("siyuan")
-
+const siyuan = cjsUtil.nodeRequire("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
  * zhi demo plugin
  *
  * @author terwer
- * @since 0.7.0
+ * @since 1.0.0
  */
 class ZhiDemoPlugin extends Plugin {
-  private logger = logFactory.getLogger("ZhiDemoPlugin")
+  private readonly logger = logFactory.getLogger("ZhiDemoPlugin")
 
   constructor() {
     super()
@@ -44,7 +44,7 @@ class ZhiDemoPlugin extends Plugin {
   }
 
   onload() {
-    siyuan.addToolbarLeft()
+    this.logger.info("siyuan=>", siyuan)
     this.logger.info("ZhiDemoPlugin loaded")
   }
 

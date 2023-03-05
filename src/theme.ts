@@ -24,6 +24,7 @@
  */
 
 import Zhi from "~/src/apps/zhi/zhi"
+import DependencyItem from "~/src/models/DependencyItem"
 
 // 警告1⚠️：此文件会在购建时生成js文件，并且由theme.js动态调用
 // 警告2⚠️：请勿主动调用此文件中的任何方法
@@ -42,7 +43,7 @@ class Theme {
     this.zhiTheme = new Zhi()
   }
 
-  public async init(): Promise<string[]> {
+  public async init(): Promise<DependencyItem[]> {
     // 主流程加载
     return await this.zhiTheme.main([])
   }

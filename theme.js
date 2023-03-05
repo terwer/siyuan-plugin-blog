@@ -44,14 +44,15 @@
     // 初始化主题核心文件
     const CJS_THEME_NAME = "theme.js"
     const themePath = path.join(ZHI_CJS_PATH, CJS_THEME_NAME)
-    console.log("[zhi] Loading theme entry=>", themePath)
+    console.log("[zhi] Loading theme entry=>", CJS_THEME_NAME)
     const theme = window.require(themePath)
 
     // 初始化第三方依赖
     const dynamicImports = await theme.init()
     for (const item of dynamicImports) {
-      const importPath = path.join(SIYUAN_CONF_PATH, item)
-      console.log("[zhi] Loading dependency=>", importPath)
+      const libpath = item.libpath
+      const importPath = path.join(SIYUAN_CONF_PATH, libpath)
+      console.log("[zhi] Loading dependency=>", libpath)
       const lib = window.require(importPath)
       // 如果有初始化方法，进行初始化
       if (lib && lib.init) {

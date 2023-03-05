@@ -6,38 +6,33 @@
 
 ![](https://static.terwergreen.com/test/202303050156263.png)
 
+⚠️ 特别提醒: `1.0.0` 为前期可用版本，功能上尚不全面，建议进作为测试使用，欢迎 issue
+提出宝贵意见。完整功能，请参照 [核心特性](#核心特性) 。
+
 ## 版本适配
 
 思源笔记 <sup>2.7.6+</sup>
 
-## 核心特色
+## 核心特性
 
 - 主题灵感源自于知乎但不限于知乎风格，外观优化包括不限于：
 
-  - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
-  - 背景色优化
-  - 代码块美化，类似 `Mac` 窗口风格
-  - 文档图片背景自动透明
-    
+    - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
+    - 背景色优化
+    - 代码块美化，类似 `Mac` 窗口风格
+
 - 整合热门挂件以及其他小工具，提供统一的入口
+    - 集成 `sy-post-publisher` 思源笔记发布工具，提供tool按钮以及弹出菜单入口，无需手动添加挂件，无需添加js片段，开箱即用
+
+      注意：`sy-post-publisher` 需要单独在集市挂件下载
+
 - 天生支持插件系统，插件系统由社区开发者提供支持
+    - 文档图片背景自动透明插件
+
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个带权限的在线博客，默认私有
+    - 文章预览默认带密码，custom-publish-access 字段控制，公开是 public，带密码是 protected ，默认 private。提供设置为公开按钮。
 
 注意事项：插件系统为社区热心开发者提供，请详细了解相关机制之后再使用。
-
-！！！Warning！！！
-
-**强烈建议在使用之前做好数据备份， 数据无价，谨慎操作！**
-
-**强烈建议在使用之前做好数据备份， 数据无价，谨慎操作！**
-
-**强烈建议在使用之前做好数据备份， 数据无价，谨慎操作！**
-
-！！！Warning！！！
-
-## TODO
-
-- [ ] 文章预览默认带密码，custom-publish-access 字段控制，公开是 public，带密码是 protected ，默认 private
 
 ## 快速上手
 
@@ -58,6 +53,7 @@ pnpm build
 3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
 
 ## npm发包
+
 ```bash
 # 验证打包
 npm pack
@@ -68,11 +64,11 @@ npm publish --dry-run
 # 发布到仓库
 npm publish
 ```
+
 ## 挂载的window对象
 
 ```bash
-# translucify
-window.translucify($('img'));
+window.pluginSystem
 ```
 
 ## 项目结构
@@ -80,41 +76,104 @@ window.translucify($('img'));
 Vite + React + TypeScript + SWC
 
 ```
-.
 ├── README.md
-├── dist                            构建后的目录，可直接部署到Nginx等静态服务器
-├── index.html                      内置文章预览等功能的统一入口
-├── node_modules
+├── config
+│   ├── plugins
+│   │   ├── vite.cjs.config.zhi-demo-plugin.ts
+│   │   └── vite.cjs.config.zhi-picture-plugin.ts
+│   └── vite.cjs.config.plugin.system.hook.ts
+├── dist
+│   ├── chunk
+│   ├── fonts
+│   │   ├── jb-mono.css
+│   │   ├── lxgw.css
+│   │   ├── opensans.css
+│   │   └── times.css
+│   ├── icons
+│   │   └── fontawesome
+│   ├── index.html
+│   └── static
+├── dist-cjs
+│   ├── fonts
+│   │   ├── jb-mono.css
+│   │   ├── lxgw.css
+│   │   ├── opensans.css
+│   │   └── times.css
+│   ├── icons
+│   │   └── fontawesome
+│   ├── plugin-system
+│   │   └── plugin-system-hook.js
+│   ├── theme.js
+│   └── zhi-plugins
+│       ├── zhi-demo-plugin
+│       └── zhi-picture-plugin
+│       └── zhi-publisher-plugin
+├── index.html 内置文章预览等功能的统一入口
 ├── package.json
+├── pnpm-lock.yaml
 ├── public
-│   ├── lib                         思源内部加载的依赖，使用cjs，可以直接使用fs，可直接require思源内部支持的库，但是不可依赖任何自定义类库，也不能参与编译
-├── src                             源码根路径，除非特别说明，均参与编译类型检查，不可依赖node独有类库，例如fs等
-│   ├── App.css
-│   ├── App.tsx
+│   ├── fonts
+│   │   ├── jb-mono.css
+│   │   ├── lxgw.css
+│   │   ├── opensans.css
+│   │   └── times.css
+│   └── icons
+│       └── fontawesome
+├── script
+│   ├── build.py
+│   ├── cjs.py
+│   ├── css.py
+│   ├── esm.py
+│   ├── scriptutils.py
+│   ├── version.py
+│   ├── zhi-demo-plugin.py
+│   ├── zhi-picture-plugin.py
+│   └── zhi-publisher-plugin.py
+├── src 源码根路径，除非特别说明，均参与编译类型检查
+│   ├── adaptor
+│   │   ├── default
+│   │   └── rm
+│   ├── apps
+│   │   ├── blog
+│   │   └── zhi
+│   │   │  └── plugin-system 插件系统
+│   │   │  └── vendor 第三方依赖，例如
+│   │   │  └── zhi-plugins zhi主题插件源码目录
+│   │   │  │  └── zhi-demo-plugin      示例插件
+│   │   │  │  └── zhi-picture-plugin   图片背景透明插件
+│   │   │  │  └── zhi-publisher-plugin 发布工具集成插件
 │   ├── assets
-│   │   └── react.svg
-│   ├── index.css
-│   ├── main.tsx
-│   ├── utils
-│   │   ├── otherlib                参与编译，但是编译期间不参与类型检查，可以直接依赖ts或者js库，但不可依赖node独有类库，例如fs等
-│   │   ├── strUtil.ts
-│   │   └── sysUtil.ts
-│   ├── vite-env.d.ts
-│   ├── zhi
-│   │   ├── Lifecycle.ts
-│   │   └── bootstrap.ts
-│   ├   └── zhi-theme.styl           zhi 核心样式stylus源码
-│   └   └── zhi-theme.ts             zhi 核心加载逻辑
-├── theme.css                        思源笔记样式入口
-├── theme.js                         思源笔记脚本入口
+│   │   ├── react.svg
+│   │   └── vite.svg
+│   ├── models
+│   │   └── DependencyItem.ts
+│   ├── styles
+│   │   ├── blog
+│   │   ├── common
+│   │   └── zhi
+│   ├── theme.ts
+│   └── utils
+│       ├── cjsUtil.ts
+│       ├── enums
+│       ├── logUtil.ts
+│       ├── nodeUtil.ts
+│       ├── otherlib
+│       ├── strUtil.ts
+│       └── sysUtil.ts
+├── test
+│   └── zhi-theme.test.ts
+├── theme.css
+├── theme.js
 ├── theme.json
+├── theme.styl
 ├── tsconfig.json
 ├── tsconfig.node.json
 ├── typings
-│   └── custom.d.ts
-└── vite.config.ts                    vite项目配置
+│   ├── custom.d.ts
+│   └── vite-env.d.ts
+├── vite.cjs.config.ts
+└── vite.config.ts
 ```
-
 ## 感谢
 
 感谢 [zuoez02](https://github.com/zuoez02/siyuan-plugin-system) 提供的插件系统
