@@ -26,7 +26,6 @@
 import logFactory from "~/src/utils/logUtil"
 import cjsUtil from "~/src/utils/cjsUtil"
 import Translucify from "~/src/apps/zhi/zhi-plugins/zhi-demo-plugin/translucify"
-import strUtil from "~/src/utils/strUtil"
 
 const siyuan = cjsUtil.nodeRequire("siyuan")
 const Plugin = siyuan.Plugin
@@ -43,7 +42,7 @@ class ZhiDemoPlugin extends Plugin {
 
   constructor() {
     super()
-    this.translucify = new Translucify()
+    this.translucify = new Translucify().init()
     this.logger.info("ZhiDemoPlugin created")
   }
 
@@ -59,23 +58,8 @@ class ZhiDemoPlugin extends Plugin {
     //   '<svg><use xlink:href="#iconHand"></use></svg>'
     // )
     zhiDemoButton.addEventListener("click", (event) => {
-      // this.logger.info(this.translucify)
-
-      const retImgs = []
-      const imgs = document.querySelectorAll("img")
-      for (const img of imgs) {
-        const src = img.getAttribute("src")
-        if (!src) {
-          continue
-        }
-
-        retImgs.push(img)
-        this.logger.info(strUtil.f("Detected none empty image: {0}"), src)
-      }
-
-      if (retImgs.length > 0) {
-        this.translucify.translucifyAll(retImgs)
-      }
+      this.translucify(document.querySelectorAll("img"), 0.05)
+      this.logger.info("Picture is transplanted.")
       event.stopPropagation()
     })
     zhiDemoButton.insertAdjacentHTML(
