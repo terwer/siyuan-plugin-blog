@@ -25,34 +25,57 @@
 
 import logFactory from "~/src/utils/logUtil"
 import cjsUtil from "~/src/utils/cjsUtil"
+import Translucify from "~/src/apps/zhi/zhi-plugins/zhi-picture-plugin/translucify"
 
 const siyuan = cjsUtil.nodeRequire("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
- * zhi demo plugin
+ * zhi picture plugin
  *
  * @author terwer
  * @since 1.0.0
  */
-class ZhiDemoPlugin extends Plugin {
-  private readonly logger = logFactory.getLogger("ZhiDemoPlugin")
+class ZhiPicturePlugin extends Plugin {
+  private readonly logger = logFactory.getLogger("ZhiPicturePlugin")
+  private readonly translucify
 
   constructor() {
     super()
-    this.logger.info("ZhiDemoPlugin created")
+    this.translucify = new Translucify().init()
+    this.logger.info("ZhiPicturePlugin created")
   }
 
   onload() {
-    this.logger.info("siyuan=>", siyuan)
-    this.logger.info("ZhiDemoPlugin loaded")
+    const zhiDemoButton = document.createElement("button")
+    zhiDemoButton.classList.add("toolbar__item")
+
+    // 使用思源图标
+    // 图标地址：http://127.0.0.1:6806/appearance/icons/ant/icon.js?v=2.7.7
+    // zhiDemoButton.insertAdjacentHTML(
+    //   "beforeend",
+    //   '<svg><use xlink:href="#iconHand"></use></svg>'
+    // )
+    zhiDemoButton.addEventListener("click", (event) => {
+      this.translucify(document.querySelectorAll("img"), 0.05)
+      this.logger.info("Picture is transplanted.")
+      event.stopPropagation()
+    })
+
+    zhiDemoButton.insertAdjacentHTML(
+      "beforeend",
+      '<i class="fa-solid fa-lightbulb"></i>'
+    )
+
+    siyuan.clientApi.addToolbarRight(zhiDemoButton)
+    this.logger.info("ZhiPicturePlugin loaded")
   }
 
   onunload() {
-    this.logger.info("ZhiDemoPlugin unloaded")
+    this.logger.info("ZhiPicturePlugin unloaded")
   }
 }
 
 module.exports = {
-  default: ZhiDemoPlugin,
+  default: ZhiPicturePlugin,
 }

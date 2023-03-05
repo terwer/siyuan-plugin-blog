@@ -23,36 +23,39 @@
  * questions.
  */
 
-import logFactory from "~/src/utils/logUtil"
-import cjsUtil from "~/src/utils/cjsUtil"
+import { defineConfig } from "vite"
+import { commonConfig } from "../../vite.config"
 
-const siyuan = cjsUtil.nodeRequire("siyuan")
-const Plugin = siyuan.Plugin
-
-/**
- * zhi demo plugin
- *
- * @author terwer
- * @since 1.0.0
- */
-class ZhiDemoPlugin extends Plugin {
-  private readonly logger = logFactory.getLogger("ZhiDemoPlugin")
-
-  constructor() {
-    super()
-    this.logger.info("ZhiDemoPlugin created")
-  }
-
-  onload() {
-    this.logger.info("siyuan=>", siyuan)
-    this.logger.info("ZhiDemoPlugin loaded")
-  }
-
-  onunload() {
-    this.logger.info("ZhiDemoPlugin unloaded")
-  }
+const outputMap: any = {
+  ZhiPicturePlugin: {
+    file: "src/apps/zhi/zhi-plugins/zhi-picture-plugin/main.ts",
+    folder: "main.js",
+  },
 }
 
-module.exports = {
-  default: ZhiDemoPlugin,
-}
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...commonConfig,
+  build: {
+    rollupOptions: {
+      input: {
+        ZhiPicturePlugin: outputMap["ZhiPicturePlugin"].file,
+      },
+      output: {
+        format: "cjs",
+        entryFileNames: (entry) => {
+          return outputMap[entry.name].folder
+        },
+      },
+    },
+
+    // 生成sourcemap
+    sourcemap: false,
+
+    // 设置为 false 可以禁用最小化混淆
+    // 或是用来指定是应用哪种混淆器
+    // boolean | 'terser' | 'esbuild'
+    // minify: false,
+    minify: "esbuild",
+  },
+})

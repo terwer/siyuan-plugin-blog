@@ -29,22 +29,12 @@ if __name__ == "__main__":
     # 切换工作空间
     scriptutils.switch_workdir()
 
-    scriptutils.rm_folder("./dist-cjs")
-    # theme.js
-    os.system("tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs")
-
-    # plugin-system-hook.js
-    os.system("tsc && vite build -c config/vite.cjs.config.plugin.system.hook.ts --outDir dist-cjs/plugin-system")
-    scriptutils.rm_folder("dist-cjs/plugin-system/fonts")
-    scriptutils.rm_folder("dist-cjs/plugin-system/icons")
-
     # zhi-demo-plugin/main.js
-    os.system("pnpm build:plugin:zhi-demo-plugin")
+    os.system("tsc && vite build -c config/plugins/vite.cjs.config.zhi-picture-plugin.ts "
+              "--outDir dist-cjs/zhi-plugins/zhi-picture-plugin")
+    scriptutils.cp_file("src/apps/zhi/zhi-plugins/zhi-picture-plugin/manifest.json",
+                        "dist-cjs/zhi-plugins/zhi-picture-plugin/manifest.json")
+    scriptutils.rm_folder("dist-cjs/zhi-plugins/zhi-picture-plugin/fonts")
+    scriptutils.rm_folder("dist-cjs/zhi-plugins/zhi-picture-plugin/icons")
 
-    # zhi-picture-plugin/main.js
-    os.system("pnpm build:plugin:zhi-picture-plugin")
-
-    # zhi-publisher-plugin/main.js
-    os.system("pnpm build:plugin:zhi-publisher-plugin")
-
-    print("cjs构建完成.")
+    print("zhi-picture-plugin构建完成.")
