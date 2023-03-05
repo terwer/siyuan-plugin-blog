@@ -23,6 +23,12 @@
  * questions.
  */
 
+/**
+ * 插件系统注册
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
 const initPluginSystem = () => {
   return ["/appearance/themes/zhi/dist-cjs/plugin-system/plugin-system-hook.js"]
 }

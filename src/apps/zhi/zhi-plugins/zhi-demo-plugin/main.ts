@@ -33,7 +33,7 @@ const Plugin = siyuan.Plugin
  * zhi demo plugin
  *
  * @author terwer
- * @since 0.7.0
+ * @since 1.0.0
  */
 class ZhiDemoPlugin extends Plugin {
   private logger = logFactory.getLogger("ZhiDemoPlugin")
