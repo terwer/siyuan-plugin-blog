@@ -23,13 +23,39 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
-import Zhi from "../src/apps/zhi/zhi"
+import { defineConfig } from "vite"
+import { commonConfig } from "../../vite.config"
 
-describe("test zhi-theme", () => {
-  it("test main", async () => {
-    const zhiTheme = new Zhi()
-    const imports = await zhiTheme.main([])
-    console.log(imports)
-  })
+const outputMap: any = {
+  ZhiPublisherPlugin: {
+    file: "src/apps/zhi/zhi-plugins/zhi-publisher-plugin/main.ts",
+    folder: "main.js",
+  },
+}
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  ...commonConfig,
+  build: {
+    rollupOptions: {
+      input: {
+        ZhiPublisherPlugin: outputMap["ZhiPublisherPlugin"].file,
+      },
+      output: {
+        format: "cjs",
+        entryFileNames: (entry) => {
+          return outputMap[entry.name].folder
+        },
+      },
+    },
+
+    // 生成sourcemap
+    sourcemap: false,
+
+    // 设置为 false 可以禁用最小化混淆
+    // 或是用来指定是应用哪种混淆器
+    // boolean | 'terser' | 'esbuild'
+    // minify: false,
+    minify: "esbuild",
+  },
 })

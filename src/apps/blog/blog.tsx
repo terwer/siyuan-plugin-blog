@@ -25,10 +25,18 @@
 
 import React from "react"
 import ReactDOM from "react-dom/client"
-import "~/src/styles/blog/blog-theme.styl"
 import App from "./App"
 import Zhi from "~/src/apps/zhi/zhi"
 import ThemeFromEnum from "~/src/utils/enums/themeFromEnum"
+import envUtil from "~/src/utils/envUtil"
+
+const blogTheme = () => import("~/src/styles/blog/blog-theme.styl")
+const devTheme = () => import("~/src/styles/blog/blog-theme-dev.styl")
+if (envUtil.isDev) {
+  devTheme()
+} else {
+  blogTheme()
+}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

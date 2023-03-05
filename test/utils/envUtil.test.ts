@@ -23,13 +23,17 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
-import Zhi from "../src/apps/zhi/zhi"
+import { describe, expect, it } from "vitest"
+import envUtil from "../../src/utils/envUtil"
 
-describe("test zhi-theme", () => {
-  it("test main", async () => {
-    const zhiTheme = new Zhi()
-    const imports = await zhiTheme.main([])
-    console.log(imports)
+describe("test envUtil", () => {
+  it("test getEnv", () => {
+    const debugMode = envUtil.getEnv("VITE_DEBUG_MODE")
+    expect(debugMode).toEqual("true")
+  })
+
+  it("test getBooleanEnv", () => {
+    const debugMode = envUtil.getBooleanEnv("VITE_DEBUG_MODE")
+    expect(debugMode).toEqual(true)
   })
 })

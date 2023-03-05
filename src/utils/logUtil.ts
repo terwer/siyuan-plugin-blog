@@ -25,6 +25,7 @@
 
 import loglevel, { Logger } from "loglevel"
 import prefix from "loglevel-plugin-prefix"
+import envUtil from "~/src/utils/envUtil"
 
 /**
  * 日志工具类
@@ -59,7 +60,11 @@ class LogUtil {
     }
 
     prefix.reg(loglevel)
-    loglevel.setLevel(LOG_LEVEL_DEBUG)
+    if (envUtil.isDev) {
+      loglevel.setLevel(LOG_LEVEL_DEBUG)
+    } else {
+      loglevel.setLevel(LOG_LEVEL_INFO)
+    }
 
     prefix.apply(loglevel, {
       format(level, name, timestamp) {

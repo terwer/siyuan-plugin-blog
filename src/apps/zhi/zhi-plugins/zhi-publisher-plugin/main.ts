@@ -23,13 +23,37 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
-import Zhi from "../src/apps/zhi/zhi"
+import logFactory from "~/src/utils/logUtil"
+import cjsUtil from "~/src/utils/cjsUtil"
+import publisherHook from "~/src/apps/zhi/zhi-plugins/zhi-publisher-plugin/publisher-hook"
 
-describe("test zhi-theme", () => {
-  it("test main", async () => {
-    const zhiTheme = new Zhi()
-    const imports = await zhiTheme.main([])
-    console.log(imports)
-  })
-})
+const siyuan = cjsUtil.nodeRequire("siyuan")
+const Plugin = siyuan.Plugin
+
+/**
+ * zhi publisher plugin
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class ZhiPublisherPlugin extends Plugin {
+  private readonly logger = logFactory.getLogger("ZhiPublisherPlugin")
+
+  constructor() {
+    super()
+    this.logger.info("ZhiPublisherPlugin created")
+  }
+
+  onload() {
+    publisherHook.init()
+    this.logger.info("ZhiPublisherPlugin loaded")
+  }
+
+  onunload() {
+    this.logger.info("ZhiPublisherPlugin unloaded")
+  }
+}
+
+module.exports = {
+  default: ZhiPublisherPlugin,
+}
