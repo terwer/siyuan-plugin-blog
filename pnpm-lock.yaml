@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@fortawesome/fontawesome-free': ^6.3.0
   '@types/node': 16.11.7
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
@@ -19,6 +20,7 @@ specifiers:
   vitest: ^0.29.2
 
 dependencies:
+  '@fortawesome/fontawesome-free': 6.3.0
   antd: 5.2.3_biqbaboplfbrettd7655fr4n2y
   compare-versions: 6.0.0-rc.1
   loglevel: 1.8.1
@@ -317,6 +319,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@fortawesome/fontawesome-free/6.3.0:
+    resolution: {integrity: sha512-qVtd5i1Cc7cdrqnTWqTObKQHjPWAiRwjUPaXObaeNPcy7+WKxJumGBx66rfSFgK6LNpIasVKkEgW8oyf0tmPLA==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: false
 
   /@rc-component/context/1.3.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-6QdaCJ7Wn5UZLJs15IEfqy4Ru3OaL5ctqpQYWd5rlfV9wwzrzdt6+kgAQZV/qdB0MUPN4nhyBfRembQCIvBf+w==}

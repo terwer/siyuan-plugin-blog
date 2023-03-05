@@ -196,16 +196,12 @@ class PluginSystemHook {
     )
 
     if (syncedCount > 0) {
-      if (
-        confirm(
-          strUtil.f(
-            "Synced {0} zhi plugins, you need to reload siyuan to take effect.Continue?",
-            syncedCount
-          )
+      this.logger.warn(
+        strUtil.f(
+          "Synced {0} zhi plugins, you need to reload siyuan to take effect.Continue?",
+          syncedCount
         )
-      ) {
-        window.location.reload()
-      }
+      )
     }
   }
 
