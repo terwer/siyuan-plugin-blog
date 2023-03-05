@@ -23,38 +23,10 @@
  * questions.
  */
 
-import { defineConfig } from "vite"
-import { commonConfig } from "../../vite.config"
-
-const outputMap: any = {
-  ZhiDemoPlugin: {
-    file: "src/apps/zhi/zhi-plugins/zhi-demo-plugin/main.ts",
-    folder: "main.js",
-  },
+/* Times New Roman */
+@font-face {
+    font-family: "Times New Roman";
+    font-style: normal;
+    font-weight: normal;
+    src: url("https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/lib/fonts/times/times.woff") format("woff");
 }
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  ...commonConfig,
-  build: {
-    rollupOptions: {
-      input: {
-        ZhiDemoPlugin: outputMap["ZhiDemoPlugin"].file,
-      },
-      output: {
-        format: "cjs",
-        entryFileNames: (entry) => {
-          return outputMap[entry.name].folder
-        },
-      },
-    },
-
-    // 生成sourcemap
-    sourcemap: false,
-
-    // 设置为 false 可以禁用最小化混淆
-    // 或是用来指定是应用哪种混淆器
-    // boolean | 'terser' | 'esbuild'
-    minify: "esbuild",
-  },
-})

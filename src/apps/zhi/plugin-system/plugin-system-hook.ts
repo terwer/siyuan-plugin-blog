@@ -194,6 +194,15 @@ class PluginSystemHook {
         syncedCount
       )
     )
+
+    if (syncedCount > 0) {
+      alert(
+        strUtil.f(
+          "Synced {0} zhi plugins, you need to reload siyuan to take effect.",
+          syncedCount
+        )
+      )
+    }
   }
 
   async init() {

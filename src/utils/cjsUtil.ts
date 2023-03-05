@@ -25,6 +25,8 @@
 
 // 警告⚠️：请勿在非Node环境调用此文件中的任何方法
 
+import logFactory from "~/src/utils/logUtil"
+
 /**
  * 安全的require
  * 注意：使用vite打包，require和window.require行为不一样，为了兼容性，强烈建议使用cjsUtil.safeRequire
@@ -41,8 +43,23 @@ const safeRequire = (moduleName: string): any => {
   return window.require(moduleName)
 }
 
+/**
+ * Node的require
+ *
+ * @param moduleName
+ * @author terwer
+ * @since 1.0.0
+ */
+const nodeRequire = (moduleName: string): any => {
+  return require(moduleName)
+}
+
 const cjsUtil = {
   safeRequire,
+  nodeRequire,
 }
 
 export default cjsUtil
+if (typeof module !== "undefined") {
+  module.exports = cjsUtil
+}
