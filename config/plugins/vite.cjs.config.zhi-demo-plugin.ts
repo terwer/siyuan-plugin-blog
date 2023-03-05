@@ -56,6 +56,6 @@ export default defineConfig({
     // 或是用来指定是应用哪种混淆器
     // boolean | 'terser' | 'esbuild'
     // minify: false,
-    minify: "esbuild",
+    // minify: "esbuild",
   },
 })
