@@ -37,7 +37,7 @@ import { compareVersions } from "compare-versions"
 import cjsUtil from "~/src/utils/cjsUtil"
 
 const fs = cjsUtil.safeRequire("fs")
-const path = window.require("path")
+const path = cjsUtil.safeRequire("path")
 
 /**
  * 插件系统入口（由theme.js动态调用，请勿主动调用）

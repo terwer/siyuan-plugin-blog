@@ -28,9 +28,10 @@
 import logFactory from "~/src/utils/logUtil"
 import siyuanUtil from "~/src/utils/otherlib/siyuanUtil"
 import strUtil from "~/src/utils/strUtil"
+import cjsUtil from "~/src/utils/cjsUtil"
 
-const fs = window.require("fs")
-const path = window.require("path")
+const fs = cjsUtil.safeRequire("fs")
+const path = cjsUtil.safeRequire("path")
 
 const logger = logFactory.getLogger("pluginSystemUtil")
 

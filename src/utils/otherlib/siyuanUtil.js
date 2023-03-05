@@ -25,7 +25,9 @@
 
 // 警告⚠️：请勿在非思源笔记Electron环境调用此文件中的任何方法
 
-const path = window.require("path")
+import cjsUtil from "~/src/utils/cjsUtil"
+
+const path = cjsUtil.safeRequire("path")
 
 const SIYUAN_CONF_PATH = window.siyuan.config.system.confDir
 const SIYUAN_DATA_PATH = window.siyuan.config.system.dataDir
