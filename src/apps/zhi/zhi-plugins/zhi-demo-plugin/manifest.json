@@ -2,5 +2,6 @@
   "name": "zhiDemoPlugin",
   "author": "terwer",
   "url": "https://github.com/terwer/zhi",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "forceUpdate": true
 }

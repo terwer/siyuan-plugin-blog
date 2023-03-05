@@ -23,17 +23,20 @@
  * questions.
  */
 
+// 警告1⚠️：此文件会在购建时生成js文件，并且由theme.js动态调用
+// 警告2⚠️：请勿主动调用此文件中的任何方法
+
 import logFactory from "~/src/utils/logUtil"
 import pluginSystemUtil, {
   HackPluginSystem,
 } from "~/src/utils/otherlib/pluginSystemUtil"
 import siyuanUtil from "~/src/utils/otherlib/siyuanUtil"
 import strUtil from "~/src/utils/strUtil"
+import nodeUtil from "~/src/utils/nodeUtil"
+import { compareVersions } from "compare-versions"
+import cjsUtil from "~/src/utils/cjsUtil"
 
-// 警告1⚠️：此文件会在购建时生成js文件，并且由theme.js动态调用
-// 警告2⚠️：请勿主动调用此文件中的任何方法
-
-const fs = window.require("fs")
+const fs = cjsUtil.safeRequire("fs")
 const path = window.require("path")
 
 /**
@@ -66,7 +69,7 @@ class PluginSystemHook {
       }
 
       // 当前插件有新版本
-      if (true) {
+      if (compareVersions(zhiPlugin.version, item.version) > 0) {
         isUpdate = true
       }
 
@@ -122,10 +125,11 @@ class PluginSystemHook {
         const oldVersion = oldPluginInfo.oldVersion
         this.logger.info(
           strUtil.f(
-            "Plugin status : [{0}] isSynced=>{1}, isUpdate=>{2}, version Info:   {3} -> {4}",
+            "Plugin status : [{0}] isSynced=>{1}, isUpdate=>{2}, forceUpdate=>{3}, version Info: {4} -> {5}",
             pluginBasename,
             oldPluginInfo.isSynced,
             oldPluginInfo.isUpdate,
+            manifest.forceUpdate,
             oldVersion,
             manifest.version
           )
@@ -143,7 +147,7 @@ class PluginSystemHook {
           }
 
           strUtil.f("Do syncing, please wait...")
-          // fs.copyFileSync(from, to)
+          nodeUtil.copyFolderSync(from, to)
           syncedCount++
         } else if (oldPluginInfo.isSynced && oldPluginInfo.isUpdate) {
           // 新插件目录不一致，但是有版本号
@@ -157,11 +161,27 @@ class PluginSystemHook {
           }
 
           strUtil.f("Do syncing, please wait...")
-          // fs.copyFileSync(from, to)
+          nodeUtil.copyFolderSync(from, to)
+          syncedCount++
+        } else if (manifest.forceUpdate) {
+          this.logger.warn(
+            strUtil.f(
+              "Find forceUpdate flag in manifest.json, try forcing update plugin, [{0}] {1}.This flag is development only, before publish plugin, you should remove this flag from manifest.json!",
+              pluginBasename,
+              manifest.version
+            )
+          )
+
+          nodeUtil.rmFolder(to)
+          nodeUtil.copyFolderSync(from, to)
           syncedCount++
         } else {
           this.logger.debug(
-            strUtil.f("{0} already synced and the latest version", item)
+            strUtil.f(
+              "Already synced and the latest version [{0}] {1}",
+              pluginBasename,
+              manifest.version
+            )
           )
         }
       }

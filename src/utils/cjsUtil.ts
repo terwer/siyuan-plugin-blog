@@ -23,36 +23,26 @@
  * questions.
  */
 
-import logFactory from "~/src/utils/logUtil"
-import cjsUtil from "~/src/utils/cjsUtil"
-
-const siyuan = cjsUtil.safeRequire("siyuan")
-const Plugin = siyuan.Plugin
+// 警告⚠️：请勿在非Node环境调用此文件中的任何方法
 
 /**
- * zhi demo plugin
+ * 安全的require
+ * 注意：使用vite打包，require和window.require行为不一样，为了兼容性，强烈建议使用cjsUtil.safeRequire
  *
+ * @param moduleName 模块名
  * @author terwer
- * @since 0.7.0
+ * @since 1.0.0
  */
-class ZhiDemoPlugin extends Plugin {
-  private logger = logFactory.getLogger("ZhiDemoPlugin")
-
-  constructor() {
-    super()
-    this.logger.info("ZhiDemoPlugin created")
+const safeRequire = (moduleName: string): any => {
+  if (require === window.require) {
+    return require(moduleName)
   }
 
-  onload() {
-    siyuan.addToolbarLeft()
-    this.logger.info("ZhiDemoPlugin loaded")
-  }
-
-  onunload() {
-    this.logger.info("ZhiDemoPlugin unloaded")
-  }
+  return window.require(moduleName)
 }
 
-module.exports = {
-  default: ZhiDemoPlugin,
+const cjsUtil = {
+  safeRequire,
 }
+
+export default cjsUtil
