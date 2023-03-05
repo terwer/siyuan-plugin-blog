@@ -1,0 +1,26 @@
+<!--
+  - Copyright (c) 2023, Terwer . All rights reserved.
+  - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  -
+  - This code is free software; you can redistribute it and/or modify it
+  - under the terms of the GNU General Public License version 2 only, as
+  - published by the Free Software Foundation.  Terwer designates this
+  - particular file as subject to the "Classpath" exception as provided
+  - by Terwer in the LICENSE file that accompanied this code.
+  -
+  - This code is distributed in the hope that it will be useful, but WITHOUT
+  - ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  - FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  - version 2 for more details (a copy is included in the LICENSE file that
+  - accompanied this code).
+  -
+  - You should have received a copy of the GNU General Public License version
+  - 2 along with this work; if not, write to the Free Software Foundation,
+  - Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  -
+  - Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+  - or visit www.terwer.space if you need additional information or have any
+  - questions.
+  -->
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. --><path d="M227.7 11.7c15.6-15.6 40.9-15.6 56.6 0l216 216c15.6 15.6 15.6 40.9 0 56.6l-216 216c-15.6 15.6-40.9 15.6-56.6 0l-216-216c-15.6-15.6-15.6-40.9 0-56.6l216-216zm87.6 137c-4.6-4.6-11.5-5.9-17.4-3.5s-9.9 8.3-9.9 14.8v56H224c-35.3 0-64 28.7-64 64v48c0 13.3 10.7 24 24 24s24-10.7 24-24V280c0-8.8 7.2-16 16-16h64v56c0 6.5 3.9 12.3 9.9 14.8s12.9 1.1 17.4-3.5l80-80c6.2-6.2 6.2-16.4 0-22.6l-80-80z"/></svg>

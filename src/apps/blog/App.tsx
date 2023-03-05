@@ -64,6 +64,11 @@ const App: React.FC = () => {
       </Space>
 
       <div>
+        <i className="fa-solid fa-user"></i>
+        <i className="fa-brands fa-github-square"></i>
+      </div>
+
+      <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

@@ -1,0 +1,26 @@
+<!--
+  - Copyright (c) 2023, Terwer . All rights reserved.
+  - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  -
+  - This code is free software; you can redistribute it and/or modify it
+  - under the terms of the GNU General Public License version 2 only, as
+  - published by the Free Software Foundation.  Terwer designates this
+  - particular file as subject to the "Classpath" exception as provided
+  - by Terwer in the LICENSE file that accompanied this code.
+  -
+  - This code is distributed in the hope that it will be useful, but WITHOUT
+  - ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  - FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  - version 2 for more details (a copy is included in the LICENSE file that
+  - accompanied this code).
+  -
+  - You should have received a copy of the GNU General Public License version
+  - 2 along with this work; if not, write to the Free Software Foundation,
+  - Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  -
+  - Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+  - or visit www.terwer.space if you need additional information or have any
+  - questions.
+  -->
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. --><path d="M114.57,76.07a45.71,45.71,0,0,0-67.51-6.41c-17.58,16.18-19,43.52-4.75,62.77l91.78,123L41.76,379.58c-14.23,19.25-13.11,46.59,4.74,62.77A45.71,45.71,0,0,0,114,435.94L242.89,262.7a12.14,12.14,0,0,0,0-14.23ZM470.24,379.58,377.91,255.45l91.78-123c14.22-19.25,12.83-46.59-4.75-62.77a45.71,45.71,0,0,0-67.51,6.41l-128,172.12a12.14,12.14,0,0,0,0,14.23L398,435.94a45.71,45.71,0,0,0,67.51,6.41C483.35,426.17,484.47,398.83,470.24,379.58Z"/></svg>

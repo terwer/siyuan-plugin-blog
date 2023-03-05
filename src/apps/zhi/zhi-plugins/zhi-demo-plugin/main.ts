@@ -45,6 +45,23 @@ class ZhiDemoPlugin extends Plugin {
 
   onload() {
     this.logger.info("siyuan=>", siyuan)
+
+    const zhiDemoButton = document.createElement("button")
+    zhiDemoButton.classList.add("toolbar__item")
+    // 使用思源图标
+    // 图标地址：http://127.0.0.1:6806/appearance/icons/ant/icon.js?v=2.7.7
+    // zhiDemoButton.insertAdjacentHTML(
+    //   "beforeend",
+    //   '<svg><use xlink:href="#iconHand"></use></svg>'
+    // )
+    zhiDemoButton.addEventListener("click", (event) => {
+      event.stopPropagation()
+    })
+    zhiDemoButton.insertAdjacentHTML(
+      "beforeend",
+      '<i class="fa-solid fa-lightbulb"></i>'
+    )
+    siyuan.clientApi.addToolbarRight(zhiDemoButton)
     this.logger.info("ZhiDemoPlugin loaded")
   }
 

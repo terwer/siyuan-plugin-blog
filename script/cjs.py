@@ -36,6 +36,7 @@ if __name__ == "__main__":
     # plugin-system-hook.js
     os.system("tsc && vite build -c config/vite.cjs.config.plugin.system.hook.ts --outDir dist-cjs/plugin-system")
     scriptutils.rm_folder("dist-cjs/plugin-system/fonts")
+    scriptutils.rm_folder("dist-cjs/plugin-system/icons")
 
     # zhi-demo-plugin/main.js
     os.system("tsc && vite build -c config/plugins/vite.cjs.config.zhi-demo-plugin.ts --outDir "
@@ -43,5 +44,6 @@ if __name__ == "__main__":
     scriptutils.cp_file("src/apps/zhi/zhi-plugins/zhi-demo-plugin/manifest.json", "dist-cjs/zhi-plugins/zhi-demo"
                                                                                   "-plugin/manifest.json")
     scriptutils.rm_folder("dist-cjs/zhi-plugins/zhi-demo-plugin/fonts")
+    scriptutils.rm_folder("dist-cjs/zhi-plugins/zhi-demo-plugin/icons")
 
     print("cjs构建完成.")

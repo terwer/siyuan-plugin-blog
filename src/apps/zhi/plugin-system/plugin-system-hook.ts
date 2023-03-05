@@ -113,7 +113,7 @@ class PluginSystemHook {
         const from = item
         const to = path.join(pluginsPath, pluginBasename)
         this.logger.debug(
-          strUtil.f("Try syncing zhi plugins from {0} to {1}", from, to)
+          strUtil.f("Try syncing zhi plugin {0}", pluginBasename)
         )
 
         const manifest = await hack.getManifest(
@@ -196,12 +196,16 @@ class PluginSystemHook {
     )
 
     if (syncedCount > 0) {
-      alert(
-        strUtil.f(
-          "Synced {0} zhi plugins, you need to reload siyuan to take effect.",
-          syncedCount
+      if (
+        confirm(
+          strUtil.f(
+            "Synced {0} zhi plugins, you need to reload siyuan to take effect.Continue?",
+            syncedCount
+          )
         )
-      )
+      ) {
+        window.location.reload()
+      }
     }
   }
 
