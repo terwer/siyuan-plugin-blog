@@ -2,9 +2,19 @@
 
 🛍️ 一款源自知乎且自带插件和博客的思源笔记主题
 
+## 主题展示
+
+### 浅色风格
+
 ![](https://static.terwergreen.com/test/202303050157804.png)
 
+### 暗黑风格
+
 ![](https://static.terwergreen.com/test/202303050156263.png)
+
+### 博客主页
+
+![](https://static.terwergreen.com/test/202303052323466.png)
 
 ⚠️ 特别提醒 1: `1.0.0` 为前期可用版本，功能上尚不全面，仅作为测试使用，欢迎 issue
 提出宝贵意见。此版本特性，请参照 [核心特性](#核心特性) 。
