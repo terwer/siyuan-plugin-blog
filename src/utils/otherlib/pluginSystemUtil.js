@@ -27,6 +27,7 @@
 
 import logFactory from "~/src/utils/logUtil"
 import siyuanUtil from "~/src/utils/otherlib/siyuanUtil"
+import strUtil from "~/src/utils/strUtil"
 
 const fs = window.require("fs")
 const path = window.require("path")
@@ -152,6 +153,9 @@ const initPluginSystem = async () => {
         eval(sc)
       })
   }
+
+  const sysv = getPluginSystemVersion()
+  logger.info(strUtil.f("Plugin system initiation finished=>{0}.", sysv))
 }
 
 const pluginSystemUtil = {

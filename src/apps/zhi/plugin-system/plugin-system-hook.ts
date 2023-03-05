@@ -46,18 +46,35 @@ const path = window.require("path")
 class PluginSystemHook {
   private logger = logFactory.getLogger("plugin-system-hook")
 
-  getOldPluginVersion(p: any, zhiPlugin: any) {
+  /**
+   * 获取插件同步信息
+   *
+   * @param p 插件系统对象
+   * @param zhiPlugin 插件对象
+   */
+  getOldPluginInfo(p: any, zhiPlugin: any) {
+    let isSynced = false
+    let isUpdate = false
     let oldVersion = pluginSystemUtil.OLD_VERSION_ZERO
+
     const plugins = p.pslm.storageMangager.thirdPartyPlugins
     for (const item of plugins) {
-      this.logger.debug("Plugin=>", item)
+      // this.logger.debug("Plugin=>", item)
+      // 不是当前插件跳过
       if (zhiPlugin.name !== item.name) {
         continue
       }
+
+      // 当前插件有新版本
+      if (true) {
+        isUpdate = true
+      }
+
       oldVersion = item.version
+      isSynced = true
     }
 
-    return oldVersion
+    return { isSynced, oldVersion, isUpdate }
   }
 
   async syncZhiPlugins(p: any) {
@@ -70,15 +87,16 @@ class PluginSystemHook {
       siyuanUtil.ZHI_CJS_PATH,
       pluginSystemUtil.ZHI_PLUGIN_FOLDER
     )
-    this.logger.info("Zhi plugins folder=>", zhiPluginsPath)
+    // this.logger.info("Zhi plugins folder=>", zhiPluginsPath)
 
     // 插件系统默认目录
     const pluginsPath = path.join(
       siyuanUtil.SIYUAN_DATA_PATH,
       pluginSystemUtil.PLUGIN_FOLDER
     )
-    this.logger.info("Plugins folder=>", pluginsPath)
+    // this.logger.info("Plugins folder=>", pluginsPath)
 
+    let syncedCount = 0
     let zhiPlugins = []
     // 未找到主题差距，不同步
     if (!fs.existsSync(zhiPluginsPath)) {
@@ -86,35 +104,82 @@ class PluginSystemHook {
     } else {
       // 扫描插件并同步
       zhiPlugins = await hack.scanPlugins(zhiPluginsPath)
+      // this.logger.debug("zhiPlugins=>", zhiPlugins)
       for (const item of zhiPlugins) {
+        const pluginBasename = path.basename(item)
+        const from = item
+        const to = path.join(pluginsPath, pluginBasename)
+        this.logger.debug(
+          strUtil.f("Try syncing zhi plugins from {0} to {1}", from, to)
+        )
+
         const manifest = await hack.getManifest(
           path.join(item, pluginSystemUtil.MANIFEST)
         )
-        this.logger.debug("ZhiPlugin=>", manifest)
+        // this.logger.debug("ZhiPlugin=>", manifest)
 
-        const oldVersion = this.getOldPluginVersion(p, manifest)
-        this.logger.debug("OldVersion=>", oldVersion)
+        const oldPluginInfo = this.getOldPluginInfo(p, manifest)
+        const oldVersion = oldPluginInfo.oldVersion
+        this.logger.info(
+          strUtil.f(
+            "Plugin status : [{0}] isSynced=>{1}, isUpdate=>{2}, version Info:   {3} -> {4}",
+            pluginBasename,
+            oldPluginInfo.isSynced,
+            oldPluginInfo.isUpdate,
+            oldVersion,
+            manifest.version
+          )
+        )
 
-        // if (oldVersion === OLD_VERSION_ZERO) {
-        // }
+        // 同步需满足下面条件
+        // 1. 未同步过或者有新版本
+        // 2. 新旧插件注册信息目录均保持一致
+        if (!oldPluginInfo.isSynced) {
+          // 未同步过，但是目标目录已存在
+          if (fs.existsSync(to)) {
+            throw new Error(
+              strUtil.f("Expected forder already exists=>{0}", to)
+            )
+          }
+
+          strUtil.f("Do syncing, please wait...")
+          // fs.copyFileSync(from, to)
+          syncedCount++
+        } else if (oldPluginInfo.isSynced && oldPluginInfo.isUpdate) {
+          // 新插件目录不一致，但是有版本号
+          if (!fs.existsSync(to)) {
+            throw new Error(
+              strUtil.f(
+                "Conflict plugin exists, manifest exists but dest folder is not correct with original, please fix plugin folder name.Expected forder is=>{0}",
+                to
+              )
+            )
+          }
+
+          strUtil.f("Do syncing, please wait...")
+          // fs.copyFileSync(from, to)
+          syncedCount++
+        } else {
+          this.logger.debug(
+            strUtil.f("{0} already synced and the latest version", item)
+          )
+        }
       }
     }
 
     this.logger.info(
       strUtil.f(
-        "Syncing zhi theme plugins finished.synced {0} plugin(s).",
-        zhiPlugins.length
+        "Zhi theme plugins Synced.Scaned {0}, synced {1} plugin(s).",
+        zhiPlugins.length,
+        syncedCount
       )
     )
   }
 
   async init() {
     await pluginSystemUtil.initPluginSystem()
-    const sysv = pluginSystemUtil.getPluginSystemVersion()
-    this.logger.info("Plugin system initiation finished.", sysv)
 
     const sys = await pluginSystemUtil.getPluginSystem()
-    this.logger.info("Syncing zhi theme plugins...", sys)
     await this.syncZhiPlugins(sys)
   }
 }
