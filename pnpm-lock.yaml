@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@fortawesome/fontawesome-free': ^6.3.0
   '@types/node': 16.11.7
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
@@ -16,11 +15,9 @@ specifiers:
   stylus: ^0.59.0
   typescript: ^4.9.3
   vite: ^4.1.0
-  vite-plugin-stylus-alias: ^1.1.2
   vitest: ^0.29.2
 
 dependencies:
-  '@fortawesome/fontawesome-free': 6.3.0
   antd: 5.2.3_biqbaboplfbrettd7655fr4n2y
   compare-versions: 6.0.0-rc.1
   loglevel: 1.8.1
@@ -37,7 +34,6 @@ devDependencies:
   stylus: 0.59.0
   typescript: 4.9.5
   vite: 4.1.4_y7fcyppcuzjteyaahq7ch36z2q
-  vite-plugin-stylus-alias: 1.1.2
   vitest: 0.29.2_stylus@0.59.0
 
 packages:
@@ -319,12 +315,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@fortawesome/fontawesome-free/6.3.0:
-    resolution: {integrity: sha512-qVtd5i1Cc7cdrqnTWqTObKQHjPWAiRwjUPaXObaeNPcy7+WKxJumGBx66rfSFgK6LNpIasVKkEgW8oyf0tmPLA==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dev: false
 
   /@rc-component/context/1.3.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-6QdaCJ7Wn5UZLJs15IEfqy4Ru3OaL5ctqpQYWd5rlfV9wwzrzdt6+kgAQZV/qdB0MUPN4nhyBfRembQCIvBf+w==}
@@ -1011,12 +1001,6 @@ packages:
     dependencies:
       react: 18.2.0
     dev: false
-
-  /querystring/0.2.1:
-    resolution: {integrity: sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==}
-    engines: {node: '>=0.4.x'}
-    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
-    dev: true
 
   /rc-align/4.0.15_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-wqJtVH60pka/nOX7/IspElA8gjPNQKIx/ZqJ6heATCkXpe1Zg4cPVrMD2vC96wjsFFL8WsmhPbx9tdMo1qqlIA==}
@@ -1758,12 +1742,6 @@ packages:
       - sugarss
       - supports-color
       - terser
-    dev: true
-
-  /vite-plugin-stylus-alias/1.1.2:
-    resolution: {integrity: sha512-e+T2HGqQAs+8xUsZeNCOg0owUU+eK6vns63KmmVAvNtOxTTOjqsjxpzNIn9U+UjTn0py9ZpGAuPNufgSGstJBg==}
-    dependencies:
-      querystring: 0.2.1
     dev: true
 
   /vite/4.1.4_y7fcyppcuzjteyaahq7ch36z2q:

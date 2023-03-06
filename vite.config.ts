@@ -26,10 +26,9 @@
 import { defineConfig } from "vite"
 import path from "path"
 import react from "@vitejs/plugin-react-swc"
-import vitePluginStylusAlias from "vite-plugin-stylus-alias"
 
 export const commonConfig = {
-  plugins: [react(), vitePluginStylusAlias()],
+  plugins: [react()],
   base: "./",
   resolve: {
     alias: [
@@ -47,7 +46,7 @@ export const commonConfig = {
 
 const outputMap: any = {
   appEntry: {
-    file: "pages/index.html",
+    file: "index.html",
   },
 }
 

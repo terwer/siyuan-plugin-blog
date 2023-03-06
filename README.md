@@ -55,7 +55,7 @@
 
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个在线博客
 
-  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/dist/pages/
+  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/dist/
 
   挂件版博客管理与发布主页：http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
 
