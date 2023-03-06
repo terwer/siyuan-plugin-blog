@@ -25,28 +25,28 @@
 
 import { defineConfig } from "vite"
 import { commonConfig } from "../../vite.config"
-
-const outputMap: any = {
-  ZhiPublisherPlugin: {
-    file: "src/apps/zhi/zhi-plugins/zhi-publisher-plugin/main.ts",
-    folder: "main.js",
-  },
-}
+import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   ...commonConfig,
   build: {
+    lib: {
+      entry: path.resolve(
+        __dirname,
+        "../../src/apps/zhi/zhi-plugins/zhi-publisher-plugin/main.ts"
+      ),
+      name: "zhi-publisher-plugin",
+      fileName: "main",
+      formats: ["cjs"],
+    },
+
+    commonjsOptions: {
+      defaultIsModuleExports: true,
+    },
+
     rollupOptions: {
-      input: {
-        ZhiPublisherPlugin: outputMap["ZhiPublisherPlugin"].file,
-      },
-      output: {
-        format: "cjs",
-        entryFileNames: (entry) => {
-          return outputMap[entry.name].folder
-        },
-      },
+      external: "siyuan",
     },
 
     // 生成sourcemap

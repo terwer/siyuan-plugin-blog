@@ -25,8 +25,8 @@
 
 import logFactory from "~/src/utils/logUtil"
 import publisherHook from "~/src/apps/zhi/zhi-plugins/zhi-publisher-plugin/publisher-hook"
+import siyuan from "siyuan"
 
-const siyuan = require("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
@@ -53,6 +53,4 @@ class ZhiPublisherPlugin extends Plugin {
   }
 }
 
-module.exports = {
-  default: ZhiPublisherPlugin,
-}
+export default ZhiPublisherPlugin

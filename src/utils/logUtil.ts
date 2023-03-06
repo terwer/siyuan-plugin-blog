@@ -125,6 +125,3 @@ class LogFactory {
 const logFactory = new LogFactory()
 
 export default logFactory
-if (typeof module !== "undefined") {
-  module.exports = logFactory
-}

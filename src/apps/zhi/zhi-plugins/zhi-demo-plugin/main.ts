@@ -24,8 +24,8 @@
  */
 
 import logFactory from "~/src/utils/logUtil"
+import siyuan from "siyuan"
 
-const siyuan = require("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
@@ -52,6 +52,4 @@ class ZhiDemoPlugin extends Plugin {
   }
 }
 
-module.exports = {
-  default: ZhiDemoPlugin,
-}
+export default ZhiDemoPlugin

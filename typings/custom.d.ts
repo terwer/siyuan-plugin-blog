@@ -50,3 +50,5 @@ declare module "~/src/utils/otherlib/pluginSystemUtil" {
     async scanPlugins(pluginFolder)
   }
 }
+
+declare module "siyuan"

@@ -25,28 +25,23 @@
 
 import { defineConfig } from "vite"
 import { commonConfig } from "../vite.config"
-
-const outputMap: any = {
-  pluginSystemHook: {
-    file: "src/apps/zhi/plugin-system/plugin-system-hook.ts",
-    folder: "plugin-system-hook.js"
-  }
-}
+import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   ...commonConfig,
   build: {
-    rollupOptions: {
-      input: {
-        pluginSystemHook: outputMap["pluginSystemHook"].file
-      },
-      output: {
-        format: "cjs",
-        entryFileNames: (entry) => {
-          return outputMap[entry.name].folder
-        }
-      }
-    }
-  }
+    lib: {
+      entry: path.resolve(
+        __dirname,
+        "../src/apps/zhi/plugin-system/plugin-system-hook.ts"
+      ),
+      name: "plugin-system-hook",
+      fileName: "plugin-system-hook",
+      formats: ["cjs"],
+    },
+    commonjsOptions: {
+      defaultIsModuleExports: true,
+    },
+  },
 })

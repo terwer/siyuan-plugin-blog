@@ -25,8 +25,8 @@
 
 import logFactory from "~/src/utils/logUtil"
 import Translucify from "~/src/apps/zhi/zhi-plugins/zhi-picture-plugin/translucify"
+import siyuan from "siyuan"
 
-const siyuan = require("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
@@ -75,6 +75,4 @@ class ZhiPicturePlugin extends Plugin {
   }
 }
 
-module.exports = {
-  default: ZhiPicturePlugin,
-}
+export default ZhiPicturePlugin

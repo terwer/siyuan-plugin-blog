@@ -60,6 +60,3 @@ const cjsUtil = {
 }
 
 export default cjsUtil
-if (typeof module !== "undefined") {
-  module.exports = cjsUtil
-}
