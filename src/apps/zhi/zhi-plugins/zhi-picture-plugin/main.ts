@@ -24,10 +24,9 @@
  */
 
 import logFactory from "~/src/utils/logUtil"
-import cjsUtil from "~/src/utils/cjsUtil"
 import Translucify from "~/src/apps/zhi/zhi-plugins/zhi-picture-plugin/translucify"
 
-const siyuan = cjsUtil.nodeRequire("siyuan")
+const siyuan = require("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
@@ -47,27 +46,27 @@ class ZhiPicturePlugin extends Plugin {
   }
 
   onload() {
-    const zhiDemoButton = document.createElement("button")
-    zhiDemoButton.classList.add("toolbar__item")
+    const zhiPicturePlugin = document.createElement("button")
+    zhiPicturePlugin.classList.add("toolbar__item")
 
     // 使用思源图标
     // 图标地址：http://127.0.0.1:6806/appearance/icons/ant/icon.js?v=2.7.7
-    // zhiDemoButton.insertAdjacentHTML(
+    // zhiPicturePlugin.insertAdjacentHTML(
     //   "beforeend",
     //   '<svg><use xlink:href="#iconHand"></use></svg>'
     // )
-    zhiDemoButton.addEventListener("click", (event) => {
+    zhiPicturePlugin.addEventListener("click", (event) => {
       this.translucify(document.querySelectorAll("img"), 0.05)
       this.logger.info("Picture is transplanted.")
       event.stopPropagation()
     })
 
-    zhiDemoButton.insertAdjacentHTML(
+    zhiPicturePlugin.insertAdjacentHTML(
       "beforeend",
       '<i class="fa-solid fa-lightbulb"></i>'
     )
 
-    siyuan.clientApi.addToolbarRight(zhiDemoButton)
+    siyuan.clientApi.addToolbarRight(zhiPicturePlugin)
     this.logger.info("ZhiPicturePlugin loaded")
   }
 

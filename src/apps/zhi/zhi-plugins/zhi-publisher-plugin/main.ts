@@ -24,10 +24,9 @@
  */
 
 import logFactory from "~/src/utils/logUtil"
-import cjsUtil from "~/src/utils/cjsUtil"
 import publisherHook from "~/src/apps/zhi/zhi-plugins/zhi-publisher-plugin/publisher-hook"
 
-const siyuan = cjsUtil.nodeRequire("siyuan")
+const siyuan = require("siyuan")
 const Plugin = siyuan.Plugin
 
 /**

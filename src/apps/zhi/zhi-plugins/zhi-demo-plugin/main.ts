@@ -24,9 +24,8 @@
  */
 
 import logFactory from "~/src/utils/logUtil"
-import cjsUtil from "~/src/utils/cjsUtil"
 
-const siyuan = cjsUtil.nodeRequire("siyuan")
+const siyuan = require("siyuan")
 const Plugin = siyuan.Plugin
 
 /**
