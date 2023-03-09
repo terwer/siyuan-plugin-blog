@@ -22,39 +22,6 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import path from "path"
-import { defineConfig } from "vite"
-
-export default defineConfig({
-  plugins: [],
-  resolve: {
-    alias: [
-      {
-        find: "~",
-        replacement: path.resolve(__dirname, ""),
-      },
-    ],
-  },
-  build: {
-    outDir: ".",
-    lib: {
-      entry: [path.resolve(__dirname, "theme.ts")],
-      formats: ["cjs"],
-    },
-    commonjsOptions: {
-      defaultIsModuleExports: true,
-    },
-    rollupOptions: {
-      output: {
-        esModule: "if-default-prop",
-        manualChunks: undefined,
-      },
-      external: ["siyuan"],
-    },
-    // 构建后是否生成 source map 文件
-    sourcemap: false,
-    // 是否混淆
-    minify: false,
-  },
-})
+:root
+  body
+    font-size: 16px

@@ -28,3 +28,7 @@ coverage
 docs/.vitepress/dist
 docs/.vitepress/cache
 docs/doc
+
+# Theme
+theme.css
+theme.js
