@@ -23,12 +23,12 @@
  * questions.
  */
 
-import ZhiUtil from "~/src/utils/ZhiUtil"
-import Zhi from "~/src/apps/zhi/zhi"
-import strUtil from "~/src/utils/strUtil"
-import cjsUtil from "~/src/utils/cjsUtil"
-import BrowserUtil from "~/src/utils/browserUtil"
-import siyuanUtil from "~/src/utils/siyuanUtil"
+import ZhiUtil from "~/src/utils/ZhiUtil";
+import Zhi from "~/src/apps/zhi/zhi";
+import strUtil from "~/src/utils/strUtil";
+import cjsUtil from "~/src/utils/cjsUtil";
+import BrowserUtil from "~/src/utils/browserUtil";
+import siyuanUtil from "~/src/utils/siyuanUtil";
 
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
@@ -38,12 +38,12 @@ import siyuanUtil from "~/src/utils/siyuanUtil"
  * @since 1.0.0
  */
 class Theme {
-  private readonly logger
-  private readonly zhiTheme
+  private readonly logger;
+  private readonly zhiTheme;
 
   constructor() {
-    this.logger = ZhiUtil.zhiSdk().getLogger()
-    this.zhiTheme = new Zhi()
+    this.logger = ZhiUtil.zhiSdk().getLogger();
+    this.zhiTheme = new Zhi();
   }
 
   /**
@@ -54,44 +54,48 @@ class Theme {
   public async init(runAs?: any): Promise<void> {
     try {
       // 初始化第三方依赖
-      const dynamicImports = await this.zhiTheme.main([])
+      const dynamicImports = await this.zhiTheme.main([]);
       for (const item of dynamicImports) {
-        const libpath = item.libpath
+        const libpath = item.libpath;
         // 类型校验
         if (item.format !== "cjs" || !libpath.includes(".cjs")) {
-          this.logger.warn("Only cjs supported, skip this lib!", libpath)
-          continue
+          this.logger.warn("Only cjs supported, skip this lib!", libpath);
+          continue;
         }
 
         // 运行环境校验
         if (runAs) {
           if (runAs !== item.runAs) {
             this.logger.warn(
-              strUtil.f("This lib can only run at {0}, skip!", item.runAs)
-            )
-            continue
+              strUtil.f(
+                "This lib can only run at {0}, skip!Lib is=>{1}",
+                item.runAs,
+                item.libpath
+              )
+            );
+            continue;
           }
         }
 
-        const path = cjsUtil.safeRequire("path")
-        this.logger.info("Loading dependency=>", libpath)
+        const path = cjsUtil.safeRequire("path");
+        this.logger.info("Loading dependency=>", libpath);
 
-        let lib
+        let lib;
         if (BrowserUtil.isInBrowser) {
-          const importPath = path.join(siyuanUtil.SIYUAN_CONF_PATH(), libpath)
-          lib = cjsUtil.safeRequire(importPath)
+          const importPath = path.join(siyuanUtil.SIYUAN_CONF_PATH(), libpath);
+          lib = cjsUtil.safeRequire(importPath);
         }
 
         // 如果有初始化方法，进行初始化
         if (lib && lib.init) {
-          await lib.init()
+          await lib.init();
         }
       }
-      this.logger.info("Theme inited.")
+      this.logger.info("Theme inited.");
     } catch (e) {
-      this.logger.error("Theme load error=>", e)
+      this.logger.error("Theme load error=>", e);
     }
   }
 }
 
-export default Theme
+export default Theme;
