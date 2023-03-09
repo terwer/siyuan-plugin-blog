@@ -38,6 +38,7 @@ const initPluginSystem = (): DependencyItem[] => {
         "/appearance/themes/zhi/dist-cjs/plugin-system/plugin-system-hook.cjs",
       format: "cjs",
       importType: "require",
+      runAs: "electron",
     },
   ]
 }

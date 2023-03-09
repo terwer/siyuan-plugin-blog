@@ -40,11 +40,18 @@ class CjsUtil {
    * @author terwer
    * @since 1.0.0
    */
-  public static safeRequire(moduleName: string): unknown {
+  public static safeRequire(moduleName: string): any {
+    // Node环境
+    if (typeof window === "undefined") {
+      return require(moduleName)
+    }
+
+    // 构建环境
     if (require === window.require) {
       return require(moduleName)
     }
 
+    // Electron浏览器环境
     return window.require(moduleName)
   }
 }

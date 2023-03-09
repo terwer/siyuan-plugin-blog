@@ -28,67 +28,8 @@
  * 🛍️ 一款自带插件和博客的思源笔记主题
  */
 
-import Zhi from "~/src/apps/zhi/zhi"
-import ZhiUtil from "~/src/utils/ZhiUtil"
-import siyuanUtil from "~/src/utils/siyuanUtil"
-import Bootstrap from "~/src/apps/zhi/bootstrap"
-import Lifecycle from "~/src/apps/zhi/Lifecycle"
-import DependencyItem from "~/src/models/DependencyItem"
-
-// 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
-// 特别提醒2⚠️：该文件由思源笔记自动加载，请勿主动调用此文件中的任何方法
-
-/**
- * 主题通用入口（由theme.js动态调用，请勿主动调用）
- * vite构建配置：vite.config.ts
- *
- * @public
- * @author terwer
- * @since 1.0.0
- */
-class Theme {
-  private readonly logger
-  private readonly zhiTheme
-
-  constructor() {
-    this.logger = ZhiUtil.zhiSdk().getLogger()
-    this.zhiTheme = new Zhi()
-  }
-
-  /**
-   * 主流程加载
-   */
-  public async init(): Promise<void> {
-    try {
-      // 初始化第三方依赖
-      const dynamicImports = await this.zhiTheme.main([])
-      for (const item of dynamicImports) {
-        const libpath = item.libpath
-        if (item.format !== "cjs" || !libpath.includes(".cjs")) {
-          this.logger.warn("Only cjs supported, skip this lib!", libpath)
-          continue
-        }
-
-        const path = siyuanUtil.syWin.require("path")
-        const importPath = path.join(siyuanUtil.SIYUAN_CONF_PATH, libpath)
-        this.logger.info("Loading dependency=>", libpath)
-        const lib = siyuanUtil.syWin.require(importPath)
-        // 如果有初始化方法，进行初始化
-        if (lib && lib.init) {
-          await lib.init()
-        }
-      }
-      this.logger.info("Theme inited.")
-    } catch (e) {
-      this.logger.error("Theme load error=>", e)
-    }
-  }
-}
-
+import Theme from "~/src/index"
 ;(async () => {
   const theme = new Theme()
-  await theme.init()
+  await theme.init("electron")
 })()
-
-export default Theme
-export { Bootstrap, Lifecycle, DependencyItem }

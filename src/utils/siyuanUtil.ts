@@ -23,10 +23,55 @@
  * questions.
  */
 
-class SiyuanUtil {
-  public syWin = window as any
+import cjsUtil from "~/src/utils/cjsUtil"
+import BrowserUtil from "~/src/utils/browserUtil"
 
-  SIYUAN_CONF_PATH = this.syWin.siyuan.config.system.confDir
+const path = cjsUtil.safeRequire("path")
+
+class SiyuanUtil {
+  public syWin() {
+    return (BrowserUtil.isInBrowser ? window : {}) as any
+  }
+
+  public SIYUAN_CONF_PATH() {
+    return this.syWin()?.siyuan.config.system.confDir
+  }
+
+  public SIYUAN_DATA_PATH() {
+    return this.syWin()?.siyuan.config.system.dataDir
+  }
+
+  public SIYUAN_APPEARANCE_PATH() {
+    return path.join(this.SIYUAN_CONF_PATH(), "appearance")
+  }
+
+  public SIYUAN_THEME_PATH() {
+    return path.join(this.SIYUAN_APPEARANCE_PATH(), "themes")
+  }
+
+  public ZHI_THEME_PATH() {
+    return path.join(this.SIYUAN_THEME_PATH(), "zhi")
+  }
+
+  public ZHI_CJS_PATH() {
+    return path.join(this.ZHI_THEME_PATH(), "dist-cjs")
+  }
+
+  getCrossPlatformAppDataFolder = () => {
+    let configFilePath
+    if (this.syWin()?.process.platform === "darwin") {
+      configFilePath = path.join(
+        this.syWin()?.process.env.HOME,
+        "/Library/Application Support"
+      )
+    } else if (this.syWin()?.process.platform === "win32") {
+      // Roaming包含在APPDATA中了
+      configFilePath = this.syWin()?.process.env.APPDATA
+    } else if (this.syWin()?.process.platform === "linux") {
+      configFilePath = this.syWin()?.process.env.HOME
+    }
+    return configFilePath
+  }
 }
 
 const siyuanUtil = new SiyuanUtil()

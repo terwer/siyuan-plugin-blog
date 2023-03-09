@@ -7,6 +7,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.54.1
   '@typescript-eslint/parser': ^5.54.1
   '@vitest/coverage-c8': ^0.29.2
+  compare-versions: 6.0.0-rc.1
   eslint: ^8.35.0
   eslint-config-prettier: ^8.7.0
   jsdoc-babel: ^0.5.0
@@ -23,6 +24,7 @@ specifiers:
   zhi-log: ^1.5.5
 
 dependencies:
+  compare-versions: 6.0.0-rc.1
   zhi-log: 1.5.5
 
 devDependencies:
@@ -3859,6 +3861,10 @@ packages:
     resolution: {integrity: sha512-jAg09gkdkrDO9EWTdXfv80WWH3yeZl5oT69fGfedBNS9pXUKYInVJ1bJ+/ht2+Moeei48TmSbQDYMc8EOx9G0g==}
     engines: {node: '>=8'}
     dev: true
+
+  /compare-versions/6.0.0-rc.1:
+    resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
+    dev: false
 
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}

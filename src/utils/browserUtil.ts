@@ -23,24 +23,8 @@
  * questions.
  */
 
-/**
- * 依赖项类型定义
- *
- * @author terwer
- * @since 1.0.0
- */
-class DependencyItem {
-  libpath: string
-  format: "cjs" | "esm" | "js"
-  importType: "require" | "import"
-  runAs: "browser" | "node" | "electron" | "both"
-
-  constructor() {
-    this.libpath = ""
-    this.format = "cjs"
-    this.importType = "require"
-    this.runAs = "both"
-  }
+class BrowserUtil {
+  public static isInBrowser = typeof window !== "undefined"
 }
 
-export default DependencyItem
+export default BrowserUtil
