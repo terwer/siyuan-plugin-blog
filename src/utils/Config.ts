@@ -23,10 +23,16 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
-
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+/**
+ * zhi 主题通用常量配置
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class Config {
+  /**
+   * 日志栈大小
+   */
+  public static LOG_STACK_SIZE = 3
+}
+export default Config

@@ -23,10 +23,15 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
+/**
+ * 主题来源
+ *
+ * @author terwer
+ * @since 0.0.1
+ */
+enum ThemeFromEnum {
+  ThemeFrom_Blog = "zhi-theme-blog",
+  ThemeFrom_Siyuan = "zhi-theme-siyuan",
+}
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+export default ThemeFromEnum

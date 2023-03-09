@@ -23,10 +23,39 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
+/**
+ * @packageDocumentation
+ * Hello World
+ */
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+import Zhi from "~/src/apps/zhi/zhi"
+import DependencyItem from "~/src/models/DependencyItem"
+
+// 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
+// 特别提醒2⚠️：该文件由思源笔记自动加载，请勿主动调用此文件中的任何方法
+
+/**
+ * 主题通用入口（由theme.js动态调用，请勿主动调用）
+ * vite构建配置：vite.config.ts
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
+ */
+class Theme {
+  private readonly zhiTheme
+
+  constructor() {
+    this.zhiTheme = new Zhi()
+  }
+
+  public async init(): Promise<DependencyItem[]> {
+    // 主流程加载
+    return await this.zhiTheme.main([])
+  }
+}
+
+;(async () => {
+  const theme = new Theme()
+  await theme.init()
+})()

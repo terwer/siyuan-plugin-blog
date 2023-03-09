@@ -23,10 +23,21 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
+/// <reference types="vite/client" />
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+/**
+ * 预定义的环境变量
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+interface ImportMetaEnv {
+  VITE_ZHI_DEFAULT_THEME_MODE: string
+}
+
+/**
+ * 环境变量定义
+ */
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

@@ -25,12 +25,12 @@ zhi 系列生态
 
 - [zhi-cli](https://github.com/terwer/zhi-cli)
 - zhi-sdk
-    - [zhi-env](https://github.com/terwer/zhi-env)
-    - [zhi-log](https://github.com/terwer/zhi-log)
-    - zhi-common
-    - zhi-core
-    - zhi-blog-api
-    - zhi-siyuan-api
+  - [zhi-env](https://github.com/terwer/zhi-env)
+  - [zhi-log](https://github.com/terwer/zhi-log)
+  - zhi-common
+  - zhi-core
+  - zhi-blog-api
+  - zhi-siyuan-api
 
 ⚠️ 特别提醒 1: `1.0.0` 为前期可用版本，功能上尚不全面，仅作为测试使用，欢迎 issue
 提出宝贵意见。此版本特性，请参照 [核心特性](#核心特性) 。
@@ -54,20 +54,20 @@ zhi 系列生态
 
 - 主题灵感源自于知乎但不限于知乎风格，外观优化包括不限于：
 
-    - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
-    - 背景色优化
-    - 代码块美化，类似 `Mac` 窗口风格
+  - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
+  - 背景色优化
+  - 代码块美化，类似 `Mac` 窗口风格
 
 - 整合热门挂件以及其他小工具，提供统一的入口
 
-    - 集成 `sy-post-publisher` 思源笔记发布工具，无需手动添加挂件，无需添加 js 片段，开箱即用
+  - 集成 `sy-post-publisher` 思源笔记发布工具，无需手动添加挂件，无需添加 js 片段，开箱即用
 
-      注意：`sy-post-publisher` 需要单独在集市挂件下载
+    注意：`sy-post-publisher` 需要单独在集市挂件下载
 
 - 天生支持插件系统，插件系统由社区开发者提供支持
 
-    - 文档图片背景自动透明插件
-    - 博客插件
+  - 文档图片背景自动透明插件
+  - 博客插件
 
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个在线博客
 

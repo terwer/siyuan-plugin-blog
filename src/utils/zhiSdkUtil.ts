@@ -23,10 +23,39 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
+import LogFactory from "zhi-log"
+import Env from "zhi-env"
+import Config from "~/src/utils/Config"
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+/**
+ * SDK操作统一入口，建议大部分操作使用此工具类实现
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class ZhiSdkUtil {
+  private readonly env
+  private readonly logger
+
+  constructor() {
+    this.env = new Env(import.meta.env)
+    this.logger = LogFactory.defaultLogger(this.env, Config.LOG_STACK_SIZE)
+  }
+
+  /**
+   * 获取配置环境变量
+   */
+  public getEnv() {
+    return this.env
+  }
+
+  /**
+   * 获取日志操作对象
+   */
+  public getLogger() {
+    return this.logger
+  }
+}
+
+const zhiSdkUtil = new ZhiSdkUtil()
+export default zhiSdkUtil

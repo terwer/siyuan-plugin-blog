@@ -23,10 +23,38 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
+import { version } from "~/package.json"
+import zhiSdkUtil from "~/src/utils/zhiSdkUtil"
+import ThemeFromEnum from "~/src/enums/themeFromEnum"
+import strUtil from "~/src/utils/strUtil"
+import DependencyItem from "~/src/models/DependencyItem"
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+/**
+ * 主题入口
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class Zhi {
+  private logger = zhiSdkUtil.getLogger()
+
+  public async main(args: string[]): Promise<DependencyItem[]> {
+    this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
+    return Promise.resolve([])
+  }
+
+  public hello(from: string): void {
+    this.logger.info(
+      strUtil.f(
+        "hello, {0} {1} v{2}! You are from {3}",
+        "zhi",
+        "theme",
+        version,
+        from
+      )
+    )
+  }
+}
+
+// 默认支持esm
+export default Zhi

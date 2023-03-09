@@ -20,6 +20,9 @@ coverage
 .env
 *.local
 
+# Mac
+.DS_Store
+
 # Vercel
 .vercel
 docs/.vitepress/dist

@@ -23,10 +23,30 @@
  * questions.
  */
 
-import { describe, it } from "vitest"
+// 警告⚠️：请勿在非Node环境调用此文件中的任何方法
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
-  })
-})
+/**
+ * CommonJS辅助工具栏，仅仅在思源笔记的Electron环境使用
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class CjsUtil {
+  /**
+   * 安全的require
+   * 注意：使用vite打包，require和window.require行为不一样，为了兼容性，强烈建议使用cjsUtil.safeRequire
+   *
+   * @param moduleName 模块名
+   * @author terwer
+   * @since 1.0.0
+   */
+  public static safeRequire(moduleName: string): unknown {
+    if (require === window.require) {
+      return require(moduleName)
+    }
+
+    return window.require(moduleName)
+  }
+}
+
+export default CjsUtil
