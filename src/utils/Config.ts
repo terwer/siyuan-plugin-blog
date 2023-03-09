@@ -33,6 +33,6 @@ class Config {
   /**
    * 日志栈大小
    */
-  public static LOG_STACK_SIZE = 3
+  public static LOG_STACK_SIZE = 1
 }
 export default Config

@@ -49,7 +49,7 @@ export default defineConfig({
     // 构建后是否生成 source map 文件
     sourcemap: false,
     // 是否混淆
-    minify: true,
+    minify: false,
   },
   optimizeDeps: {
     disabled: false,

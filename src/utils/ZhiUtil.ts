@@ -35,9 +35,8 @@ class ZhiUtil {
   private static zhiSdkUtil: ZhiSdkUtil
   public static zhiSdk() {
     if (!ZhiUtil.zhiSdkUtil) {
-      console.log("[zhi] zhiSdkUtil Not found, initiating...")
       ZhiUtil.zhiSdkUtil = new ZhiSdkUtil()
-      console.log("[zhi] zhiSdkUtil inited.")
+      console.log("[zhi] zhiSdk inited.")
     }
     return ZhiUtil.zhiSdkUtil
   }

@@ -30,6 +30,8 @@
 
 import Zhi from "~/src/apps/zhi/zhi"
 import DependencyItem from "~/src/models/DependencyItem"
+import ZhiUtil from "~/src/utils/ZhiUtil"
+import strUtil from "~/src/utils/strUtil"
 
 // 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
 // 特别提醒2⚠️：该文件由思源笔记自动加载，请勿主动调用此文件中的任何方法
@@ -43,17 +45,25 @@ import DependencyItem from "~/src/models/DependencyItem"
  * @since 1.0.0
  */
 class Theme {
+  private readonly logger
   private readonly zhiTheme
 
   constructor() {
+    this.logger = ZhiUtil.zhiSdk().getLogger()
     this.zhiTheme = new Zhi()
   }
 
   /**
    * 主流程加载
    */
-  public async init(): Promise<DependencyItem[]> {
-    return await this.zhiTheme.main([])
+  public async init(): Promise<void> {
+    // 初始化第三方依赖
+    const dynamicImports = await this.zhiTheme.main([])
+    try {
+      this.logger.info("Theme inited.")
+    } catch (e) {
+      this.logger.error("Theme load error=>", e)
+    }
   }
 }
 

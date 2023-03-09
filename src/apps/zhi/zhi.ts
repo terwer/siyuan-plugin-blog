@@ -36,14 +36,14 @@ import ZhiUtil from "~/src/utils/ZhiUtil"
  * @since 1.0.0
  */
 class Zhi {
-  private logger
+  private readonly logger
 
   constructor() {
     this.logger = ZhiUtil.zhiSdk().getLogger()
   }
 
   public async main(args: string[]): Promise<DependencyItem[]> {
-    this.logger.info(strUtil.f("parsing args <{0}>", args))
+    this.logger.debug(strUtil.f("parsing args <{0}>", args))
 
     this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
     return Promise.resolve([])
