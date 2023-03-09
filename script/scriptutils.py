@@ -1,25 +1,5 @@
-#  Copyright (c) 2023, Terwer . All rights reserved.
-#  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
-#
-#  This code is free software; you can redistribute it and/or modify it
-#  under the terms of the GNU General Public License version 2 only, as
-#  published by the Free Software Foundation.  Terwer designates this
-#  particular file as subject to the "Classpath" exception as provided
-#  by Terwer in the LICENSE file that accompanied this code.
-#
-#  This code is distributed in the hope that it will be useful, but WITHOUT
-#  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#  version 2 for more details (a copy is included in the LICENSE file that
-#  accompanied this code).
-#
-#  You should have received a copy of the GNU General Public License version
-#  2 along with this work; if not, write to the Free Software Foundation,
-#  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-#
-#  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
-#  or visit www.terwer.space if you need additional information or have any
-#  questions.
+# Copyright (c) 2023 Terwer Authors. All Rights Reserved.
+# @author terwer on 2023/3/7
 
 import distutils
 import glob
@@ -213,6 +193,7 @@ def create_zip(root_path, file_name, ignored=[], storage_path=None):
     iter_subtree(root_path)
     zipf.close()
 
+
 def get_filename_from_time():
     """
     根据时间命名文件
@@ -223,3 +204,10 @@ def get_filename_from_time():
     # 使用strftime函数把时间转换成想要的格式
     filename = time.strftime("%Y%m%d%H%M%S", now_time)  # 输出结果为：20210126095555
     return filename
+
+
+def is_dir_empty(folder_path):
+    if not os.listdir(folder_path):
+        return True
+    else:
+        return False
