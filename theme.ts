@@ -31,6 +31,9 @@
 import Zhi from "~/src/apps/zhi/zhi"
 import ZhiUtil from "~/src/utils/ZhiUtil"
 import siyuanUtil from "~/src/utils/siyuanUtil"
+import Bootstrap from "~/src/apps/zhi/bootstrap"
+import Lifecycle from "~/src/apps/zhi/Lifecycle"
+import DependencyItem from "~/src/models/DependencyItem"
 
 // 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
 // 特别提醒2⚠️：该文件由思源笔记自动加载，请勿主动调用此文件中的任何方法
@@ -88,3 +91,4 @@ class Theme {
 })()
 
 export default Theme
+export { Bootstrap, Lifecycle, DependencyItem }

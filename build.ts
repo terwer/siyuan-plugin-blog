@@ -27,6 +27,7 @@
 
 import { build } from "vite"
 import path from "path"
+import dts from "vite-plugin-dts"
 
 // libraries
 const libraries = [
@@ -46,6 +47,7 @@ const libraries = [
 for (const libItem of libraries) {
   await build({
     configFile: false,
+    plugins: [dts()],
     resolve: {
       alias: [
         {

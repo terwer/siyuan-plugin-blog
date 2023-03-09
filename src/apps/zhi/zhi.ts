@@ -28,7 +28,7 @@ import ThemeFromEnum from "~/src/enums/themeFromEnum"
 import strUtil from "~/src/utils/strUtil"
 import DependencyItem from "~/src/models/DependencyItem"
 import ZhiUtil from "~/src/utils/ZhiUtil"
-import { Bootstrap } from "~/src/apps/zhi/bootstrap"
+import Bootstrap from "~/src/apps/zhi/bootstrap"
 
 /**
  * 主题入口

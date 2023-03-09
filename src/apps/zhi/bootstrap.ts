@@ -32,7 +32,7 @@ import DependencyItem from "~/src/models/DependencyItem"
  * @author terwer
  * @since 1.0.0
  */
-export class Bootstrap {
+class Bootstrap {
   private static lifecycle: Lifecycle
 
   static {
@@ -47,3 +47,5 @@ export class Bootstrap {
     return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
   }
 }
+
+export default Bootstrap
