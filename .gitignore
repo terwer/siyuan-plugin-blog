@@ -32,3 +32,5 @@ docs/doc
 # Theme
 theme.css
 theme.js
+vendor
+zhi.js

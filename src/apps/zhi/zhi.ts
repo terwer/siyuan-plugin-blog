@@ -24,10 +24,10 @@
  */
 
 import { version } from "~/package.json"
-import zhiSdkUtil from "~/src/utils/zhiSdkUtil"
 import ThemeFromEnum from "~/src/enums/themeFromEnum"
 import strUtil from "~/src/utils/strUtil"
 import DependencyItem from "~/src/models/DependencyItem"
+import ZhiUtil from "~/src/utils/ZhiUtil"
 
 /**
  * 主题入口
@@ -36,9 +36,15 @@ import DependencyItem from "~/src/models/DependencyItem"
  * @since 1.0.0
  */
 class Zhi {
-  private logger = zhiSdkUtil.getLogger()
+  private logger
+
+  constructor() {
+    this.logger = ZhiUtil.zhiSdk().getLogger()
+  }
 
   public async main(args: string[]): Promise<DependencyItem[]> {
+    this.logger.info(strUtil.f("parsing args <{0}>", args))
+
     this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
     return Promise.resolve([])
   }

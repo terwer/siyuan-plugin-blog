@@ -44,17 +44,14 @@ export default defineConfig({
     },
     commonjsOptions: {
       defaultIsModuleExports: true,
-    },
-    rollupOptions: {
-      output: {
-        esModule: "if-default-prop",
-        manualChunks: undefined,
-      },
-      external: ["siyuan"],
+      include: [],
     },
     // 构建后是否生成 source map 文件
     sourcemap: false,
     // 是否混淆
-    minify: false,
+    minify: true,
+  },
+  optimizeDeps: {
+    disabled: false,
   },
 })

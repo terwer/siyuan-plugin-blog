@@ -24,9 +24,11 @@
  */
 
 import { describe, it } from "vitest"
+import Theme from "~/theme"
 
-describe("test index", () => {
-  it("test hello", function () {
-    console.log("hello")
+describe("test theme", () => {
+  it("test main", async () => {
+    const theme = new Theme()
+    await theme.init()
   })
 })

@@ -24,42 +24,21 @@
  */
 
 /**
- * @packageDocumentation
- * Hello World
- */
-
-import Zhi from "~/src/apps/zhi/zhi"
-import DependencyItem from "~/src/models/DependencyItem"
-
-// 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
-// 特别提醒2⚠️：该文件由思源笔记自动加载，请勿主动调用此文件中的任何方法
-
-/**
- * 主题通用入口（由theme.js动态调用，请勿主动调用）
- * vite构建配置：vite.config.ts
+ * 依赖项类型定义
  *
- * @public
  * @author terwer
  * @since 1.0.0
  */
-class Theme {
-  private readonly zhiTheme
+class DependencyItem {
+  libpath: string
+  format: "cjs" | "esm" | "js"
+  importType: "require" | "import"
 
   constructor() {
-    this.zhiTheme = new Zhi()
-  }
-
-  /**
-   * 主流程加载
-   */
-  public async init(): Promise<DependencyItem[]> {
-    return await this.zhiTheme.main([])
+    this.libpath = ""
+    this.format = "cjs"
+    this.importType = "require"
   }
 }
 
-;(async () => {
-  const theme = new Theme()
-  await theme.init()
-})()
-
-export default Theme
+export default DependencyItem

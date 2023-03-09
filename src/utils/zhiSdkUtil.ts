@@ -57,5 +57,4 @@ class ZhiSdkUtil {
   }
 }
 
-const zhiSdkUtil = new ZhiSdkUtil()
-export default zhiSdkUtil
+export default ZhiSdkUtil
