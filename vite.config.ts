@@ -39,39 +39,14 @@ export default defineConfig({
   build: {
     outDir: ".",
     lib: {
-      entry: [
-        path.resolve(__dirname, "theme.ts"),
-        path.resolve(
-          __dirname,
-          "src/apps/zhi/plugin-system/plugin-system-hook.ts"
-        ),
-      ],
+      entry: [path.resolve(__dirname, "theme.ts")],
       formats: ["cjs"],
-      fileName: (_, entryName) => {
-        return `${entryName}.js`
-      },
     },
     commonjsOptions: {
       defaultIsModuleExports: true,
       include: [],
     },
     rollupOptions: {
-      // output: {
-      //   assetFileNames: "[name].[ext]",
-      //   entryFileNames: (chunkInfo: PreRenderedChunk) => {
-      //     console.log(chunkInfo.name)
-      //     let chunkName
-      //     switch (chunkInfo.name) {
-      //       case "plugin-system-hook":
-      //         chunkName = "dist-cjs/plugin-system/[name].js"
-      //         break
-      //       default:
-      //         chunkName = "[name].js"
-      //         break
-      //     }
-      //     return chunkName
-      //   },
-      // },
       external: ["path"],
     },
     // 构建后是否生成 source map 文件

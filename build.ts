@@ -22,50 +22,50 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-// build.js
 
-const { build } = require("vite")
-const path = require("path")
+// https://github.com/vitejs/vite/discussions/1736#discussioncomment-3229793
+
+import { build } from "vite"
+import path from "path"
 
 // libraries
 const libraries = [
   {
     entry: "./theme.ts",
-    name: "DateConverter",
-    fileName: "date-converter",
+    name: "Theme",
+    fileName: "theme",
   },
   {
     entry: "./src/apps/zhi/plugin-system/plugin-system-hook.ts",
-    name: "DatePicker",
-    fileName: "date-picker",
+    name: "PluginSystemHook",
+    fileName: "plugin-system-hook",
   },
 ]
 
 // build
-libraries.forEach(async (libItem) => {
+for (const libItem of libraries) {
   await build({
     configFile: false,
     resolve: {
       alias: [
         {
           find: "~",
-          replacement: path.resolve(__dirname, ""),
+          replacement: path.resolve(path.dirname("."), ""),
         },
       ],
     },
     build: {
-      outDir:".",
+      outDir: ".",
       lib: libItem,
       emptyOutDir: false,
       rollupOptions: {
         output: {
           assetFileNames: "[name].[ext]",
           entryFileNames: (chunkInfo) => {
-            console.log(chunkInfo.name)
             let chunkName
             switch (chunkInfo.name) {
               case "plugin-system-hook":
-                chunkName = "dist-cjs/plugin-system/[name].js"
+                chunkName = "dist-cjs/plugin-system/[name].cjs"
                 break
               default:
                 chunkName = "[name].js"
@@ -78,4 +78,4 @@ libraries.forEach(async (libItem) => {
       },
     },
   })
-})
+}

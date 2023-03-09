@@ -6,7 +6,7 @@
     "lib",
     "typings"
   ],
-  "type": "commonjs",
+  "type": "module",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "exports": {
@@ -17,7 +17,7 @@
   },
   "typings": "./typings/index.d.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm build.ts",
     "build": "vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",

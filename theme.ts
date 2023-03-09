@@ -30,7 +30,6 @@
 
 import Zhi from "~/src/apps/zhi/zhi"
 import ZhiUtil from "~/src/utils/ZhiUtil"
-import path from "path"
 import siyuanUtil from "~/src/utils/siyuanUtil"
 
 // 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
@@ -62,6 +61,12 @@ class Theme {
       const dynamicImports = await this.zhiTheme.main([])
       for (const item of dynamicImports) {
         const libpath = item.libpath
+        if (item.format !== "cjs" || !libpath.includes(".cjs")) {
+          this.logger.warn("Only cjs supported, skip this lib!", libpath)
+          continue
+        }
+
+        const path = siyuanUtil.syWin.require("path")
         const importPath = path.join(siyuanUtil.SIYUAN_CONF_PATH, libpath)
         this.logger.info("Loading dependency=>", libpath)
         const lib = siyuanUtil.syWin.require(importPath)

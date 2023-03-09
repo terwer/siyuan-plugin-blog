@@ -35,7 +35,7 @@ const initPluginSystem = (): DependencyItem[] => {
   return [
     {
       libpath:
-        "/appearance/themes/zhi/dist-cjs/plugin-system/plugin-system-hook.js",
+        "/appearance/themes/zhi/dist-cjs/plugin-system/plugin-system-hook.cjs",
       format: "cjs",
       importType: "require",
     },
