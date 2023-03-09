@@ -23,44 +23,24 @@
  * questions.
  */
 
-import { version } from "~/package.json"
-import ThemeFromEnum from "~/src/enums/themeFromEnum"
-import strUtil from "~/src/utils/strUtil"
-import DependencyItem from "~/src/models/DependencyItem"
 import ZhiUtil from "~/src/utils/ZhiUtil"
-import { Bootstrap } from "~/src/apps/zhi/bootstrap"
 
-/**
- * 主题入口
- *
- * @author terwer
- * @since 1.0.0
- */
-class Zhi {
+class PluginSystemHook {
   private readonly logger
 
   constructor() {
     this.logger = ZhiUtil.zhiSdk().getLogger()
   }
 
-  public async main(args: string[]): Promise<DependencyItem[]> {
-    this.logger.debug(strUtil.f("parsing args <{0}>", args))
-    this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
-    return await Bootstrap.start()
-  }
+  async init() {
+    // await pluginSystemUtil.initPluginSystem()
+    //
+    // const sys = await pluginSystemUtil.getPluginSystem()
+    // await this.syncZhiPlugins(sys)
 
-  public hello(from: string): void {
-    this.logger.info(
-      strUtil.f(
-        "hello, {0} {1} v{2}! You are from {3}",
-        "zhi",
-        "theme",
-        version,
-        from
-      )
-    )
+    this.logger.info("PluginSystemHook inited.")
   }
 }
 
-// 默认支持esm
-export default Zhi
+const pluginSystemHook = new PluginSystemHook()
+export default pluginSystemHook

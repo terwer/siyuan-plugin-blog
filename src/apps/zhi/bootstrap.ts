@@ -23,44 +23,27 @@
  * questions.
  */
 
-import { version } from "~/package.json"
-import ThemeFromEnum from "~/src/enums/themeFromEnum"
-import strUtil from "~/src/utils/strUtil"
+import Lifecycle from "~/src/apps/zhi/Lifecycle"
 import DependencyItem from "~/src/models/DependencyItem"
-import ZhiUtil from "~/src/utils/ZhiUtil"
-import { Bootstrap } from "~/src/apps/zhi/bootstrap"
 
 /**
- * 主题入口
+ * zhi主题唯一激活入口
  *
  * @author terwer
  * @since 1.0.0
  */
-class Zhi {
-  private readonly logger
+export class Bootstrap {
+  private static lifecycle: Lifecycle
 
-  constructor() {
-    this.logger = ZhiUtil.zhiSdk().getLogger()
+  static {
+    Bootstrap.lifecycle = new Lifecycle()
   }
 
-  public async main(args: string[]): Promise<DependencyItem[]> {
-    this.logger.debug(strUtil.f("parsing args <{0}>", args))
-    this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
-    return await Bootstrap.start()
-  }
-
-  public hello(from: string): void {
-    this.logger.info(
-      strUtil.f(
-        "hello, {0} {1} v{2}! You are from {3}",
-        "zhi",
-        "theme",
-        version,
-        from
-      )
-    )
+  /**
+   * 主题激活
+   */
+  public static async start(): Promise<DependencyItem[]> {
+    Bootstrap.lifecycle.load()
+    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
   }
 }
-
-// 默认支持esm
-export default Zhi

@@ -23,44 +23,61 @@
  * questions.
  */
 
-import { version } from "~/package.json"
-import ThemeFromEnum from "~/src/enums/themeFromEnum"
-import strUtil from "~/src/utils/strUtil"
 import DependencyItem from "~/src/models/DependencyItem"
-import ZhiUtil from "~/src/utils/ZhiUtil"
-import { Bootstrap } from "~/src/apps/zhi/bootstrap"
+import pluginSystem from "~/src/apps/zhi/plugin-system"
 
 /**
- * 主题入口
+ * zhi主题统一生命周期管理
  *
  * @author terwer
  * @since 1.0.0
  */
-class Zhi {
-  private readonly logger
+class Lifecycle {
+  private _dynamicImports = <DependencyItem[]>[]
 
-  constructor() {
-    this.logger = ZhiUtil.zhiSdk().getLogger()
+  get dynamicImports(): DependencyItem[] {
+    return this._dynamicImports
   }
 
-  public async main(args: string[]): Promise<DependencyItem[]> {
-    this.logger.debug(strUtil.f("parsing args <{0}>", args))
-    this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
-    return await Bootstrap.start()
+  public load() {
+    const allImports = <DependencyItem[]>[]
+
+    const pluginSystemImports = this.loadPluginSystem()
+    const widgetsImports = this.loadWidgets()
+    const vendorImports = this.loadVendors()
+
+    this._dynamicImports = allImports
+      .concat(pluginSystemImports)
+      .concat(widgetsImports)
+      .concat(vendorImports)
   }
 
-  public hello(from: string): void {
-    this.logger.info(
-      strUtil.f(
-        "hello, {0} {1} v{2}! You are from {3}",
-        "zhi",
-        "theme",
-        version,
-        from
-      )
-    )
+  /**
+   * SiYuanPluginSystem
+   *
+   * @private
+   */
+  private loadPluginSystem(): DependencyItem[] {
+    return pluginSystem.initPluginSystem()
+  }
+
+  /**
+   * 加载挂件
+   *
+   * @private
+   */
+  private loadWidgets(): DependencyItem[] {
+    return []
+  }
+
+  /**
+   * 加载第三方库
+   *
+   * @private
+   */
+  private loadVendors(): DependencyItem[] {
+    return []
   }
 }
 
-// 默认支持esm
-export default Zhi
+export default Lifecycle

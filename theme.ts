@@ -25,13 +25,13 @@
 
 /**
  * @packageDocumentation
- * Hello World
+ * 🛍️ 一款自带插件和博客的思源笔记主题
  */
 
 import Zhi from "~/src/apps/zhi/zhi"
-import DependencyItem from "~/src/models/DependencyItem"
 import ZhiUtil from "~/src/utils/ZhiUtil"
-import strUtil from "~/src/utils/strUtil"
+import path from "path"
+import siyuanUtil from "~/src/utils/siyuanUtil"
 
 // 特别提醒1⚠️：此文件是主题的唯一入口，会在构建时自动生成js文件
 // 特别提醒2⚠️：该文件由思源笔记自动加载，请勿主动调用此文件中的任何方法
@@ -57,9 +57,19 @@ class Theme {
    * 主流程加载
    */
   public async init(): Promise<void> {
-    // 初始化第三方依赖
-    const dynamicImports = await this.zhiTheme.main([])
     try {
+      // 初始化第三方依赖
+      const dynamicImports = await this.zhiTheme.main([])
+      for (const item of dynamicImports) {
+        const libpath = item.libpath
+        const importPath = path.join(siyuanUtil.SIYUAN_CONF_PATH, libpath)
+        this.logger.info("Loading dependency=>", libpath)
+        const lib = siyuanUtil.syWin.require(importPath)
+        // 如果有初始化方法，进行初始化
+        if (lib && lib.init) {
+          await lib.init()
+        }
+      }
       this.logger.info("Theme inited.")
     } catch (e) {
       this.logger.error("Theme load error=>", e)
