@@ -25,10 +25,10 @@
 
 import path from "path"
 import { defineConfig } from "vite"
-import dts from "vite-plugin-dts"
+
+// 警告⚠️：此文件仅用于单元测试，项目构建统一使用 build.ts
 
 export default defineConfig({
-  plugins: [dts()],
   resolve: {
     alias: [
       {
@@ -36,26 +36,5 @@ export default defineConfig({
         replacement: path.resolve(__dirname, ""),
       },
     ],
-  },
-  build: {
-    outDir: ".",
-    lib: {
-      entry: [path.resolve(__dirname, "theme.ts")],
-      formats: ["cjs"],
-    },
-    commonjsOptions: {
-      defaultIsModuleExports: true,
-      include: [],
-    },
-    rollupOptions: {
-      external: ["path"],
-    },
-    // 构建后是否生成 source map 文件
-    sourcemap: false,
-    // 是否混淆
-    minify: false,
-  },
-  optimizeDeps: {
-    disabled: false,
   },
 })
