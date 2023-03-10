@@ -24,6 +24,9 @@
  */
 
 import ZhiSdkUtil from "~/src/utils/zhiSdkUtil"
+import callsites from "callsites"
+import strUtil from "~/src/utils/strUtil"
+import dateUtil from "~/src/utils/dateUtil"
 
 /**
  * 工具类统一入口
@@ -36,7 +39,12 @@ class ZhiUtil {
   public static zhiSdk() {
     if (!ZhiUtil.zhiSdkUtil) {
       ZhiUtil.zhiSdkUtil = new ZhiSdkUtil()
-      console.log("[zhi] zhiSdk inited.")
+      const logger = ZhiUtil.zhiSdkUtil.getLogger()
+      logger.info(
+        strUtil.f(
+          "ZhiSdk inited, components are available now,like logger, env and so on."
+        )
+      )
     }
     return ZhiUtil.zhiSdkUtil
   }

@@ -44,7 +44,7 @@ class Zhi {
   }
 
   public async main(args: string[]): Promise<DependencyItem[]> {
-    this.logger.debug(strUtil.f("parsing args <{0}>", args))
+    this.logger.debug(strUtil.f("Parsing args <{0}>", args))
     this.hello(ThemeFromEnum.ThemeFrom_Siyuan)
     return await Bootstrap.start()
   }
@@ -52,7 +52,7 @@ class Zhi {
   public hello(from: string): void {
     this.logger.info(
       strUtil.f(
-        "hello, {0} {1} v{2}! You are from {3}",
+        "Hello, {0} {1} v{2}! You are from {3}",
         "zhi",
         "theme",
         version,

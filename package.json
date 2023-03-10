@@ -17,8 +17,8 @@
   },
   "typings": "./typings/index.d.ts",
   "scripts": {
-    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm build.ts",
-    "build": "vite build",
+    "theme": "node --experimental-specifier-resolution=node --loader ts-node/esm build.ts",
+    "blog": "vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint --ext .ts ./src",

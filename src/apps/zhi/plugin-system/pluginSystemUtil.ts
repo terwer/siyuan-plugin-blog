@@ -92,7 +92,7 @@ export class HackPluginSystem {
     try {
       return JSON.parse(content)
     } catch (e) {
-      this.logger.error("loading manifest: " + manifest, e)
+      this.logger.error("Lading manifest: " + manifest, e)
       return null
     }
   }
@@ -140,10 +140,10 @@ const initPluginSystem = async () => {
       )
     )
     const script = data.toString("utf8")
-    logger.info("local plugin system found, loading...")
+    logger.info("Local plugin system found, loading...")
     eval(script)
   } catch (e) {
-    logger.info("local plugin system not found, load online", e)
+    logger.info("Local plugin system not found, load online", e)
     return fetch(
       "https://gitee.com/zuoez02/siyuan-plugin-system/raw/main/main.js",
       { cache: "no-cache" }

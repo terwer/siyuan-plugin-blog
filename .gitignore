@@ -37,3 +37,4 @@ zhi.js
 dist-cjs
 *.d.ts
 *.map
+styles/**/**.css
