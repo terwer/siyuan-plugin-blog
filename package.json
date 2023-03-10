@@ -18,9 +18,9 @@
   "typings": "./typings/index.d.ts",
   "scripts": {
     "watch:css": "stylus -w theme.styl -o theme.css",
+    "build": "pnpm build:css && pnpm build:js",
     "build:css": "stylus theme.styl -o theme.css",
     "build:js": "node --experimental-specifier-resolution=node --loader ts-node/esm build.ts",
-    "build:blog": "vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint --ext .ts ./src",
