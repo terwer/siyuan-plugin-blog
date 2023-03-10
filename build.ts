@@ -27,6 +27,8 @@
 
 import { build } from "vite"
 import path from "path"
+import fs from "fs-extra"
+import { PreRenderedChunk } from "rollup"
 
 // libraries
 const libraries = [
@@ -40,7 +42,33 @@ const libraries = [
     name: "PluginSystemHook",
     fileName: "plugin-system-hook",
   },
+  {
+    entry: "./src/apps/zhi/zhi-plugins/zhi-blog-plugin/zhi-blog-plugin.ts",
+    name: "ZhiBlogPlugin",
+    fileName: "zhi-blog-plugin",
+  },
 ]
+
+// 插件处理
+const handlePluginName = (chunkInfo: PreRenderedChunk) => {
+  const facadeModuleId = chunkInfo.facadeModuleId
+  const entryPath = path.dirname(facadeModuleId ?? ".")
+  const pluginBasePath = path.join("dist-cjs", "zhi-plugins")
+
+  // 复制 manifest.json
+  const manifestPath = path.join(entryPath, "manifest.json")
+  const manifestToPath = path.join(
+    pluginBasePath,
+    chunkInfo.name,
+    "manifest.json"
+  )
+  if (fs.pathExistsSync(manifestPath)) {
+    fs.copySync(manifestPath, manifestToPath)
+    console.log("manifest.json copied.")
+  }
+
+  return path.join(pluginBasePath, "[name]", "main.js")
+}
 
 // build
 for (const libItem of libraries) {
@@ -58,24 +86,42 @@ for (const libItem of libraries) {
       outDir: ".",
       lib: libItem,
       emptyOutDir: false,
+      copyPublicDir: true,
+      commonjsOptions: {
+        defaultIsModuleExports: true,
+        include: [],
+      },
       rollupOptions: {
         output: {
           assetFileNames: "[name].[ext]",
           entryFileNames: (chunkInfo) => {
             let chunkName
-            switch (chunkInfo.name) {
-              case "plugin-system-hook":
-                chunkName = "dist-cjs/plugin-system/[name].cjs"
-                break
-              default:
-                chunkName = "[name].js"
-                break
+            const pluginSystemBasePath = path.join("dist-cjs", "plugin-system")
+            // console.log("pluginSystemBasePath=>", pluginSystemBasePath)
+
+            // 插件系统
+            if (chunkInfo.name === "plugin-system-hook") {
+              chunkName = path.join(pluginSystemBasePath, "[name].cjs")
+            } else if (chunkInfo.name.includes("-plugin")) {
+              // 插件
+              chunkName = handlePluginName(chunkInfo)
+            } else {
+              // 其他，比如主题入口
+              chunkName = "[name].js"
             }
             return chunkName
           },
+          esModule: "if-default-prop",
         },
-        external: ["path", "fs"],
+        external: ["path", "fs", "siyuan"],
       },
+      // 构建后是否生成 source map 文件
+      sourcemap: false,
+      // 是否压缩
+      minify: false,
+    },
+    optimizeDeps: {
+      disabled: false,
     },
   })
 }

@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@microsoft/api-documenter': ^7.21.5
   '@microsoft/api-extractor': ^7.34.4
+  '@types/fs-extra': ^11.0.1
   '@types/node': '16'
   '@typescript-eslint/eslint-plugin': ^5.54.1
   '@typescript-eslint/parser': ^5.54.1
@@ -10,9 +11,11 @@ specifiers:
   compare-versions: 6.0.0-rc.1
   eslint: ^8.35.0
   eslint-config-prettier: ^8.7.0
+  fs-extra: ^11.1.0
   jsdoc-babel: ^0.5.0
   jsdoc2vitepress: ^1.0.5
   prettier: ^2.8.4
+  siyuan: ^0.3.12
   stylus: ^0.59.0
   ts-node: ^10.9.1
   typescript: ^4.9.5
@@ -30,15 +33,18 @@ dependencies:
 devDependencies:
   '@microsoft/api-documenter': 7.21.5_@types+node@16.18.14
   '@microsoft/api-extractor': 7.34.4_@types+node@16.18.14
+  '@types/fs-extra': 11.0.1
   '@types/node': 16.18.14
   '@typescript-eslint/eslint-plugin': 5.54.1_mlk7dnz565t663n4razh6a6v6i
   '@typescript-eslint/parser': 5.54.1_ycpbpc6yetojsgtrx3mwntkhsu
   '@vitest/coverage-c8': 0.29.2_vitest@0.29.2
   eslint: 8.35.0
   eslint-config-prettier: 8.7.0_eslint@8.35.0
+  fs-extra: 11.1.0
   jsdoc-babel: 0.5.0
   jsdoc2vitepress: 1.0.5_stylus@0.59.0
   prettier: 2.8.4
+  siyuan: 0.3.12
   stylus: 0.59.0
   ts-node: 10.9.1_zix2iy4c4a7fivhrc3ey4gy2pu
   typescript: 4.9.5
@@ -2740,12 +2746,25 @@ packages:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
+  /@types/fs-extra/11.0.1:
+    resolution: {integrity: sha512-MxObHvNl4A69ofaTRU8DFqvgzzv8s9yRtaPPm5gud9HDNvpB3GPQFvNuTWAI59B9huVGV5jXYJwbCsmBsOGYWA==}
+    dependencies:
+      '@types/jsonfile': 6.1.1
+      '@types/node': 16.18.14
+    dev: true
+
   /@types/istanbul-lib-coverage/2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
     dev: true
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/jsonfile/6.1.1:
+    resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
+    dependencies:
+      '@types/node': 16.18.14
     dev: true
 
   /@types/linkify-it/3.0.2:
@@ -4508,6 +4527,15 @@ packages:
       universalify: 2.0.0
     dev: true
 
+  /fs-extra/11.1.0:
+    resolution: {integrity: sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.10
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
+
   /fs-extra/7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -5656,6 +5684,10 @@ packages:
 
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
+    dev: true
+
+  /siyuan/0.3.12:
+    resolution: {integrity: sha512-Hcjn7Ujisayi9SW5o0DBtV2Jj/B8PKEXlIksJfbyeTYAtTBpgy++Fhy3nO0Pz1rJazadLt/dxKZ1X8JvlDgFHw==}
     dev: true
 
   /slash/3.0.0:

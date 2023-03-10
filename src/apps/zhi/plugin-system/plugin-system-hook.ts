@@ -91,14 +91,14 @@ class PluginSystemHook {
       siyuanUtil.ZHI_CJS_PATH(),
       pluginSystemUtil.ZHI_PLUGIN_FOLDER
     )
-    // this.logger.info("Zhi plugins folder=>", zhiPluginsPath)
+    this.logger.debug("Zhi plugins folder=>", zhiPluginsPath)
 
     // 插件系统默认目录
     const pluginsPath = path.join(
       siyuanUtil.SIYUAN_DATA_PATH(),
       pluginSystemUtil.PLUGIN_FOLDER
     )
-    // this.logger.info("Plugins folder=>", pluginsPath)
+    this.logger.debug("Plugins folder=>", pluginsPath)
 
     let syncedCount = 0
     let zhiPlugins: any = []
