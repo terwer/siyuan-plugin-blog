@@ -95,7 +95,7 @@ zhi 系列生态
 
 ```bash
 npm i -g pnpm
-pnpm install
+pnpm dependency
 pnpm build
 ```
 
@@ -107,20 +107,27 @@ pnpm build
 ├── README.md
 ├── apps
 │   ├── blog 博客根目录
+│   │   ├── dist 博客预览入口
 │   └── theme 主题根目录
+│       ├── build.mts 主题项目构建入口
+│       ├── theme.ts 主题ts源码入口
 ├── scripts 脚本根目录
-backup 备份
+├── backup 备份
+├── theme.js 主题js文件，自动生成，请勿修改
+├── theme.json 主题描述文件
+├── theme.styl 主题styl源码入口
+├── theme.css 主题css文件，自动生成，请勿修改
 ```
 
 ## Useful scripts
 
-### Build
+### CI building
 
 ```bash
 pnpm ci
 ```
 
-### Publish to npm
+### Preparing for publishing to npm
 
 ```bash
 pnpm package
@@ -129,7 +136,7 @@ pnpm package
 ### Docs
 
 ```bash
-pnpm vitepress:dev
+pnpm docs
 ```
 
 ## 感谢
