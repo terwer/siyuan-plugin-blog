@@ -1,73 +1,22 @@
 {
   "name": "zhi",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A siyuan-note theme with plugin and blog bundled",
-  "files": [
-    "lib",
-    "typings"
-  ],
-  "type": "module",
-  "main": "./lib/index.js",
-  "module": "./lib/index.js",
-  "exports": {
-    ".": {
-      "import": "./lib/index.js",
-      "require": "./lib/index.cjs"
-    }
-  },
-  "typings": "./typings/index.d.ts",
   "scripts": {
-    "watch:css": "stylus -w theme.styl -o theme.css",
-    "build": "pnpm build:css && pnpm build:js",
-    "build:css": "stylus theme.styl -o theme.css",
-    "build:js": "node --experimental-specifier-resolution=node --loader ts-node/esm build.ts",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "lint": "eslint --ext .ts ./src",
-    "lint:fix": "eslint --fix --ext .ts ./src",
-    "prettier": "prettier --write .",
-    "typings": "python script/typings.py",
-    "clean": "python script/clean.py",
-    "ci": "python script/ci.py",
-    "package": "python script/package.py",
-    "template": "python script/template.py -b",
-    "restore": "python script/template.py -r",
-    "helpdoc": "jsdoc2vitepress start",
-    "vitepress:api": "mkdir -p etc && mkdir -p temp && api-extractor run --local",
-    "vitepress:prepare": "api-documenter markdown -i temp -o docs/doc",
-    "vitepress:dev": "vitepress dev docs",
-    "vitepress:build": "vitepress build docs"
+    "dev:blog": "python scripts/dev.py --blog",
+    "dev:theme": "python scripts/dev.py --theme",
+    "dependency": "python scripts/dependency.py",
+    "build": "python scripts/build.py"
   },
+  "devDependencies": {},
+  "dependencies": {},
+  "keywords": [
+    "zhi",
+    "theme",
+    "blog"
+  ],
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://blog.terwer.space",
   "author": "terwer",
-  "license": "MIT",
-  "devDependencies": {
-    "@microsoft/api-documenter": "^7.21.5",
-    "@microsoft/api-extractor": "^7.34.4",
-    "@types/fs-extra": "^11.0.1",
-    "@types/node": "16",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "@vitest/coverage-c8": "^0.29.2",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.7.0",
-    "fs-extra": "^11.1.0",
-    "jsdoc-babel": "^0.5.0",
-    "jsdoc2vitepress": "^1.0.5",
-    "prettier": "^2.8.4",
-    "siyuan": "^0.3.12",
-    "stylus": "^0.59.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4",
-    "vite-plugin-dts": "^2.1.0",
-    "vitepress": "1.0.0-alpha.50",
-    "vitepress-plugin-autobar": "^1.0.8",
-    "vitest": "^0.29.2"
-  },
-  "dependencies": {
-    "compare-versions": "6.0.0-rc.1",
-    "zhi-log": "^1.5.5"
-  }
+  "license": "MIT"
 }

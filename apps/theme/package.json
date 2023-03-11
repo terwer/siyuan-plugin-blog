@@ -1,0 +1,29 @@
+{
+  "name": "zhi-theme",
+  "version": "1.0.0",
+  "description": "zhi theme module",
+  "files": [
+    "lib",
+    "typings"
+  ],
+  "type": "module",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs"
+    }
+  },
+  "typings": "./typings/index.d.ts",
+  "devDependencies": {},
+  "dependencies": {},
+  "keywords": [
+    "zhi",
+    "theme"
+  ],
+  "repository": "terwer/zhi",
+  "homepage": "https://theme.terwer.space",
+  "author": "terwer",
+  "license": "MIT"
+}

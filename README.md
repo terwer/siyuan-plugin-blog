@@ -71,7 +71,7 @@ zhi 系列生态
 
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个在线博客
 
-  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/dist/
+  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/apps/blog/dist/
 
   挂件版博客管理与发布主页：http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
 
@@ -100,6 +100,17 @@ pnpm build
 ```
 
 3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
+
+## 项目结构
+
+```
+├── README.md
+├── apps
+│   ├── blog 博客根目录
+│   └── theme 主题根目录
+├── scripts 脚本根目录
+backup 备份
+```
 
 ## Useful scripts
 
