@@ -5,6 +5,7 @@
     "string-quotes": "double",
     "selector-combinator-space-after": "always",
     "custom-property-no-missing-var-function": false,
+    "color-function-notation": "legacy",
     "value-list-comma-space-before": "never",
     "value-list-comma-space-after": "always",
     "selector-class-pattern": null,
