@@ -108,18 +108,26 @@ zhi 系列生态
 
 ```
 ├── README.md
-├── apps
+├── apps 应用根目录
 │   ├── blog 博客根目录
 │   │   ├── dist 博客预览入口
-│   │   ├── app.vue 博客源码入口
-│   │   ├── app.styl 主题styl源码入口
+│   │   ├── app.vue 博客vue源码入口
+│   │   ├── app.styl 博客styl源码入口
+│   │   ├── .prettierrc.json 博客ts源码格式化配置
+│   │   ├── .stylelintrc.json 博客styl样式格式化配置
 │   └── theme 主题根目录
 │       ├── theme.ts 主题ts源码入口
 │       ├── theme.styl 主题styl源码入口
+│       ├── .prettierrc.json 主题ts源码格式化配置
+│       ├── .stylelintrc.json 主题styl样式格式化配置
+├── styles 样式根目录
 ├── scripts 脚本根目录
 ├── theme.json 主题描述文件         
 ├── theme.js 主题js文件，自动生成，请勿修改
 ├── theme.css 主题css文件，自动生成，请勿修改
+├── .stylelintrc.json 全局样式格式化配置
+├── .github Github-Actions-CI持续集成和release-please自动发版
+├── docs 帮助文档
 ├── temp 博客和主题插件的临时压缩包
 ```
 
@@ -128,6 +136,8 @@ zhi 系列生态
 - 主题会根据版本号自动检测并解压到对应目录
 
 - 发版本之后删除上一版
+
+推荐使用 `IntelliJ IDEA` 或者 `vscode` 进行开发。
 
 ### 本地调试
 
