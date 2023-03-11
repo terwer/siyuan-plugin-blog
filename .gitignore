@@ -1,9 +1,6 @@
 # JetBrains
 .idea
 
-# vscode
-.vscode
-
 # Mac
 .DS_Store
 
@@ -12,3 +9,6 @@
 
 # Backup
 backup
+
+# Node
+node_modules

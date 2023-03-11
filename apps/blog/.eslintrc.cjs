@@ -20,16 +20,12 @@ module.exports = {
 
   plugins: ["@typescript-eslint", "prettier"],
 
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-  ],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
 
   rules: {
     // Note: you must disable the base rule as it can report incorrect errors
     semi: "off",
     quotes: "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
   },
 }

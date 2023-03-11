@@ -1,0 +1,15 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-stylus/standard"],
+  "rules": {
+    "import-notation": "string",
+    "string-quotes": "double",
+    "selector-combinator-space-after": "always",
+    "value-list-comma-space-before": "never",
+    "value-list-comma-space-after": "always",
+    "stylus/declaration-colon": "never",
+    "stylus/pythonic": "always",
+    "stylus/selector-list-comma": "never",
+    "stylus/semicolon": "never",
+    "stylus/single-line-comment": "always"
+  }
+}

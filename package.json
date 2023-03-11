@@ -13,8 +13,12 @@
     "ci": "pnpm dependency && pnpm build",
     "package": "pnpm ci && pnpm docs"
   },
-  "devDependencies": {},
-  "dependencies": {},
+  "devDependencies": {
+    "stylelint": "^15.2.0",
+    "stylelint-config-standard": "^30.0.1",
+    "stylelint-stylus": "^0.18.0",
+    "stylus": "^0.59.0"
+  },
   "keywords": [
     "zhi",
     "theme",
