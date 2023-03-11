@@ -104,20 +104,6 @@ zhi 系列生态
 
 - 主题：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
 
-### 本地调试
-
-1. 下载压缩包，解压到主题目录。主题目录在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> - <kbd>打开主题文件夹</kbd>
-
-2. 安装依赖，构建项目
-
-```bash
-npm i -g pnpm
-pnpm dependency
-pnpm build
-```
-
-3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
-
 ### 项目结构
 
 ```
@@ -140,6 +126,20 @@ pnpm build
 - 主题会根据版本号自动检测并解压到对应目录
 
 - 发版本之后删除上一版
+
+### 本地调试
+
+1. 下载压缩包，解压到主题目录。主题目录在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> - <kbd>打开主题文件夹</kbd>
+
+2. 安装依赖，构建项目
+
+```bash
+npm i -g pnpm
+pnpm dependency
+pnpm build
+```
+
+3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
 
 ## Useful scripts
 
