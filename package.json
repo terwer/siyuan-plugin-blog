@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "description": "A siyuan-note theme with plugin and blog bundled",
   "scripts": {
-    "dev:blog": "python scripts/dev.py --blog",
-    "dev:theme": "python scripts/dev.py --theme",
     "dependency": "python scripts/dependency.py",
-    "build": "python scripts/build.py"
+    "dev:theme": "python scripts/dev.py --theme",
+    "dev:blog": "python scripts/dev.py --blog",
+    "build": "python scripts/build.py",
+    "build:theme": "python scripts/build.py --theme",
+    "build:blog": "python scripts/build.py --blog"
   },
   "devDependencies": {},
   "dependencies": {},

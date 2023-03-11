@@ -1,2 +1,5 @@
 # JetBrains
 *.iml
+
+# Node
+node_modules

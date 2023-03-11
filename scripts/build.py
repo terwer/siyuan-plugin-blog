@@ -7,5 +7,9 @@ if __name__ == "__main__":
     scriptutils.switch_workdir()
 
     # blog
-    os.chdir("./apps/blog")
+    # os.chdir("./apps/blog")
+    # os.system("pnpm build")
+
+    # theme
+    os.chdir("./apps/theme")
     os.system("pnpm build")
