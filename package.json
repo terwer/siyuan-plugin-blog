@@ -1,50 +1,31 @@
 {
   "name": "zhi",
-  "private": true,
   "version": "0.0.0",
+  "description": "A siyuan-note theme with plugin and blog bundled",
   "scripts": {
-    "dev": "vite",
-    "watch:css": "stylus -w theme.styl -o theme.css",
-    "watch:js": "tsc && vite build -c vite.cjs.config.ts --outDir dist-cjs --watch",
-    "build": "python script/build.py",
-    "build:cjs": "python script/cjs.py",
-    "build:esm": "python script/esm.py",
-    "build:css": "python script/css.py",
-    "build:plugin:zhi-demo-plugin": "python script/zhi-demo-plugin.py",
-    "build:plugin:zhi-picture-plugin": "python script/zhi-picture-plugin.py",
-    "build:plugin:zhi-publisher-plugin": "python script/zhi-publisher-plugin.py",
-    "preview": "vite preview",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "new": "python script/version.py 1.0.0"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.3.0",
-    "antd": "^5.2.3",
-    "compare-versions": "6.0.0-rc.1",
-    "loglevel": "^1.8.1",
-    "loglevel-plugin-prefix": "^0.8.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "dependency": "python scripts/dependency.py",
+    "dev:theme": "python scripts/dev.py --theme",
+    "dev:blog": "python scripts/dev.py --blog",
+    "build": "python scripts/build.py",
+    "build:theme": "python scripts/build.py --theme",
+    "build:blog": "python scripts/build.py --blog",
+    "docs": "echo 'docs'",
+    "ci": "pnpm dependency && pnpm build",
+    "package": "pnpm ci && pnpm docs"
   },
   "devDependencies": {
-    "@types/node": "16.11.7",
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
-    "@vitejs/plugin-react-swc": "^3.0.0",
-    "prettier": "^2.8.4",
-    "stylus": "^0.59.0",
-    "typescript": "^4.9.3",
-    "vite": "^4.1.0",
-    "vite-plugin-stylus-alias": "^1.1.2",
-    "vitest": "^0.29.2"
+    "stylelint": "^15.2.0",
+    "stylelint-config-standard": "^30.0.1",
+    "stylelint-stylus": "^0.18.0",
+    "stylus": "^0.59.0"
   },
-  "files": [
-    "dist",
-    "dist-cjs",
-    "theme.css",
-    "theme.js",
-    "theme.json",
-    "README.md"
-  ]
+  "keywords": [
+    "zhi",
+    "theme",
+    "blog"
+  ],
+  "repository": "terwer/zhi",
+  "homepage": "https://blog.terwer.space",
+  "author": "terwer",
+  "license": "GPL"
 }

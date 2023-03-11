@@ -1,0 +1,174 @@
+@import "../fonts"
+@import "basic-light"
+@import "basic-dark"
+@import "basic-green"
+
+// 基础样式
+:root
+  --zhi-font-family _font-family-mono
+  --zhi-font-family-code _font-family-mono
+  --zhi-border-radius-round _border-radius-round
+
+  // 主色
+  --b3-theme-primary var(--zhi-primary-color)
+  // --b3-theme-primary-light rgba(53, 115, 240, 0.72)
+  // --b3-theme-primary-lighter rgba(53, 115, 240, 0.48)
+  // --b3-theme-primary-lightest rgba(53, 115, 240, 0.24)
+  // --b3-theme-secondary #f3a92f
+  --b3-theme-background var(--zhi-main-bg)
+  // --b3-theme-background-light #353637
+  --b3-theme-background-light var(--zhi-sidebar-bg)
+  --b3-theme-surface var(--zhi-body-bg)
+  // --b3-theme-surface-light rgba(41, 42, 45, .86)
+  // --b3-theme-surface-lighter rgba(230, 230, 230, .06)
+  // --b3-theme-error #d23f31
+
+  // 文字颜色
+  // --b3-theme-on-primary #fff
+  // --b3-theme-on-secondary #fff
+  --b3-theme-on-background var(--zhi-text-color)
+  // --b3-theme-on-surface #9aa0a6
+  // --b3-theme-on-surface-light rgba(154, 160, 166, .68)
+  // --b3-theme-on-error #fff
+
+  // 字体
+  --b3-font-family var(--zhi-font-family)
+  --b3-font-family-code var(--zhi-font-family-code)
+  --b3-font-family-graph var(--zhi-font-family)
+  --b3-font-family-emoji var(--zhi-font-family)
+  --b3-font-family-math var(--zhi-font-family)
+
+  // 顶部工具栏
+  // --b3-toolbar-background #2b2d30
+  // --b3-toolbar-blur-background #373a41
+  // --b3-toolbar-color #ced0d6
+  // --b3-toolbar-hover #383a42
+
+  // 线条
+  --b3-border-color var(--zhi-border-color)
+
+  // 滚动条
+  // --b3-scroll-color rgba(230, 230, 230, .2)
+
+  // /* 列表 */
+  --b3-list-hover var(--zhi-list-hover)
+  // --b3-list-icon-hover rgba(201, 209, 217, .1)
+
+  // 菜单
+  --b3-menu-background var(--zhi-main-bg)
+
+  // 提示
+  // --b3-tooltips-color rgba(70, 72, 76, .86)
+
+  // 遮罩
+  // --b3-mask-background rgba(0, 0, 0, 0.78)
+
+  // 卡片背景
+  // --b3-card-error-color rgb(243, 153, 147)
+  // --b3-card-error-background #cc352d3d
+  // --b3-card-warning-color rgb(255, 213, 153)
+  // --b3-card-warning-background #be8b585d
+  // --b3-card-info-color rgb(166, 213, 250)
+  // --b3-card-info-background rgba(0, 153, 255, 0.288)
+  // --b3-card-success-color rgb(183, 223, 185)
+  // --b3-card-success-background #85d0a34d
+
+  // 自定义文字
+  // --b3-font-color1 var(--b3-card-error-color)
+  // --b3-font-color2 var(--b3-card-warning-color)
+  // --b3-font-color3 var(--b3-card-info-color)
+  // --b3-font-color4 var(--b3-card-success-color)
+  // --b3-font-color5 var(--b3-theme-on-surface)
+  // --b3-font-color6 var(--b3-theme-primary)
+  // --b3-font-color7 var(--b3-theme-secondary)
+  // --b3-font-color8 var(--b3-theme-error)
+  // --b3-font-color9 #f5539e
+  // --b3-font-color10 #bc67bc
+  // --b3-font-color11 #65b84d
+  // --b3-font-color12 #f5822e
+  // --b3-font-color13 var(--b3-theme-background)
+  // --b3-font-background1 var(--b3-card-error-background)
+  // --b3-font-background2 var(--b3-card-warning-background)
+  // --b3-font-background3 var(--b3-card-info-background)
+  // --b3-font-background4 var(--b3-card-success-background)
+  // --b3-font-background5 #4c5257;
+  // --b3-font-background6 #0c3d88;
+  // --b3-font-background7 #593905;
+  // --b3-font-background8 #541812;
+  // --b3-font-background9 #6a0634;
+  // --b3-font-background10 #6b2f6b;
+  // --b3-font-background11 #376629;
+  // --b3-font-background12 #803a06;
+  // --b3-font-background13 var(--b3-theme-on-background)
+
+  // 动画效果
+  // --b3-transition all .2s cubic-bezier(0, 0, .2, 1) 0ms
+  // --b3-width-transition width .2s cubic-bezier(0, 0, .2, 1) 0ms
+
+  // 阴影
+  // --b3-point-shadow 0 3px 6px #010409
+  // --b3-dialog-shadow 0 8px 24px #010409
+
+  // 图表颜色
+  // --b3-graph-p-point #076f7e
+  // --b3-graph-heading-point #8957e5
+  // --b3-graph-math-point #80FFA5
+  // --b3-graph-code-point #00DDFF
+  // --b3-graph-table-point #37A2FF
+  // --b3-graph-list-point #FF0087
+  // --b3-graph-todo-point #FFBF00
+  // --b3-graph-olist-point #b3005f
+  // --b3-graph-listitem-point #f65b00
+  // --b3-graph-bq-point #8d48e3
+  // --b3-graph-super-point #dd79ff
+  // --b3-graph-doc-point #e8eaed
+  // --b3-graph-tag-point #dbf32f
+  // --b3-graph-asset-point #05c091
+  // --b3-graph-line #9aa0a6
+  // --b3-graph-ref-line #d23f31
+  // --b3-graph-tag-line #5f6b06
+  // --b3-graph-tag-tag-line #dbf32f
+  // --b3-graph-asset-line #037457
+  // --b3-graph-hl-point #f3a92f
+  // --b3-graph-hl-line #4285f4
+
+  // 编辑器搜索颜色
+  // --b3-protyle-search-background #32593c
+  // --b3-protyle-search-border-color #486a51
+  // --b3-protyle-search-current-background #204282
+
+  // 代码片段背景
+  // --b3-protyle-code-background rgba(240, 246, 252, .15)
+  // --b3-protyle-code-linenumber-hl #26364a
+
+  // 所见即所得行内元素颜色
+  // --b3-protyle-inline-strong-color #e8eaed
+  // --b3-protyle-inline-em-color #e8eaed
+  // --b3-protyle-inline-s-color #e8eaed
+  // --b3-protyle-inline-link-color #8ab4f8
+  // --b3-protyle-inline-mark-background rgb(50, 89, 61)
+  // --b3-protyle-inline-mark-color #e8eaed
+  // --b3-protyle-inline-tag-color #9aa0a6
+  // --b3-protyle-inline-blockref-color #8957e5
+  // --b3-protyle-inline-fileref-color var(--b3-theme-secondary)
+
+  // PDF
+  // --b3-pdf-selection #779170
+  // --b3-pdf-sidebar-width 200px
+  // --b3-pdf-offset 0
+  // --b3-pdf-background1 var(--b3-theme-error)
+  // --b3-pdf-background2 #f5822e
+  // --b3-pdf-background3 var(--b3-theme-secondary)
+  // --b3-pdf-background4 #65b84d
+  // --b3-pdf-background5 #f5539e
+  // --b3-pdf-background6 var(--b3-theme-primary)
+  // --b3-pdf-background7 #944194
+  // --b3-pdf-dark #212224
+
+
+// 整体背景、字体颜色
+body
+  font-size _font-size-normal
+  margin _padding-zero
+  padding _margin-zero
+  color var(--zhi-text-color)

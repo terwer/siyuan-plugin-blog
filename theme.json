@@ -3,9 +3,5 @@
   "author": "terwer",
   "url": "https://github.com/terwer/zhi",
   "version": "1.0.0",
-  "modes": [
-    "dark",
-    "light",
-    "green"
-  ]
+  "modes": ["dark", "light", "green"]
 }

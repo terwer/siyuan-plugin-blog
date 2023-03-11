@@ -1,0 +1,46 @@
+{
+  "name": "zhi-blog",
+  "version": "1.0.0",
+  "description": "zhi blog module",
+  "scripts": {
+    "watch:css": "stylus --watch app.styl --out ./public/app.css",
+    "build": "pnpm build:css && pnpm build:js",
+    "build:css": "stylus --compress app.styl --out ./public/app.css",
+    "build:js": "nuxt build",
+    "dev": "pnpm build:css && nuxt dev",
+    "generate": "pnpm build:css && nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --ext .ts .",
+    "lint:fix": "eslint --fix --ext .ts .",
+    "lintcss": "stylelint *.styl --fix",
+    "lintcss:fix": "stylelint *.styl --fix",
+    "prettier": "prettier --write ."
+  },
+  "dependencies": {
+    "zhi-log": "^1.5.5"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nuxt": "^3.2.3",
+    "prettier": "^2.8.4",
+    "stylelint": "^15.2.0",
+    "stylelint-config-standard": "^30.0.1",
+    "stylelint-stylus": "^0.18.0",
+    "stylus": "^0.59.0",
+    "typescript": "^4.9.5",
+    "vite-plugin-eslint": "^1.8.1",
+    "vue-tsc": "^1.2.0"
+  },
+  "keywords": [
+    "zhi",
+    "blog"
+  ],
+  "repository": "terwer/zhi",
+  "homepage": "https://blog.terwer.space",
+  "author": "terwer",
+  "license": "GPL"
+}
