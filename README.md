@@ -111,6 +111,8 @@ zhi 系列生态
 ├── apps
 │   ├── blog 博客根目录
 │   │   ├── dist 博客预览入口
+│   │   ├── app.vue 博客源码入口
+│   │   ├── app.styl 主题styl源码入口
 │   └── theme 主题根目录
 │       ├── theme.ts 主题ts源码入口
 │       ├── theme.styl 主题styl源码入口

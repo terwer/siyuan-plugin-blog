@@ -1,3 +1,4 @@
+import argparse
 import os
 
 import scriptutils
@@ -6,10 +7,30 @@ if __name__ == "__main__":
     # 切换工作空间
     scriptutils.switch_workdir()
 
-    # blog
-    # os.chdir("./apps/blog")
-    # os.system("pnpm build")
+    # 参数解析
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--theme", action="store_true", required=False, help="build theme")
+    parser.add_argument("-b", "--blog", action="store_true", required=False, help="build blog")
+    parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
+    args = parser.parse_args()
 
-    # theme
-    os.chdir("./apps/theme")
-    os.system("pnpm build")
+    if args.verbose:
+        print("Verbose mode enabled")
+
+    if args.blog:
+        # blog
+        os.chdir("./apps/blog")
+        os.system("pnpm build")
+        print("Blog build finished.")
+    elif args.theme:
+        # theme
+        os.chdir("./apps/theme")
+        os.system("pnpm build")
+        print("Theme build finished.")
+    else:
+        os.chdir("./apps/theme")
+        os.system("pnpm build")
+        os.chdir("../blog")
+        os.system("pnpm build")
+
+        print("Theme and blog are build finished.")
