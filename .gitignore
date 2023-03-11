@@ -12,3 +12,6 @@ backup
 
 # Node
 node_modules
+
+# Styles
+styles/**/*.css
