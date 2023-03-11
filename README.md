@@ -19,6 +19,17 @@
 
 ![](https://static.terwergreen.com/test/202303052323466.png)
 
+### 快速上手
+
+直接在思源笔记 `集市` 下载 `zhi` 主题，然后在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
+
+## 设计哲学
+
+- 主题核心尽量保持足够轻量、小巧
+- 尽可能的使用插件实现功能
+- 插件功能单一化，杜绝功能无脑堆积
+- 组件尽可能保持可重用
+
 ## 前排推荐
 
 zhi 系列生态
@@ -79,15 +90,21 @@ zhi 系列生态
 
 ## 版本规划
 
-## 1.1.x
+### 1.1.x
 
 - [ ] 博客权限控制
 
-## 快速上手
+## 技术路线
 
-直接在思源笔记 `集市` 下载 `zhi` 主题，然后在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
+### 核心框架
 
-## 本地调试
+- 基础设施：[zhi-sdk](https://github.com/terwer/zhi-sdk)
+
+- 博客：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+
+- 主题：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+
+### 本地调试
 
 1. 下载压缩包，解压到主题目录。主题目录在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> - <kbd>打开主题文件夹</kbd>
 
@@ -101,7 +118,7 @@ pnpm build
 
 3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
 
-## 项目结构
+### 项目结构
 
 ```
 ├── README.md
@@ -109,15 +126,20 @@ pnpm build
 │   ├── blog 博客根目录
 │   │   ├── dist 博客预览入口
 │   └── theme 主题根目录
-│       ├── build.mts 主题项目构建入口
 │       ├── theme.ts 主题ts源码入口
+│       ├── theme.styl 主题styl源码入口
 ├── scripts 脚本根目录
-├── backup 备份
+├── theme.json 主题描述文件         
 ├── theme.js 主题js文件，自动生成，请勿修改
-├── theme.json 主题描述文件
-├── theme.styl 主题styl源码入口
 ├── theme.css 主题css文件，自动生成，请勿修改
+├── temp 博客和主题插件的临时压缩包
 ```
+
+特别说明：
+
+- 主题会根据版本号自动检测并解压到对应目录
+
+- 发版本之后删除上一版
 
 ## Useful scripts
 
