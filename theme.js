@@ -705,7 +705,7 @@ const O = class {
     if (!O.zhiSdkObj) {
       O.zhiSdkObj = new Te(e);
       const t = O.zhiSdkObj.getLogger(), n = O.zhiSdkObj.common;
-      t.info(n.strUtil.f("ZhiSdk inited, components are available now,like logger, env and so on222."));
+      t.info(n.strUtil.f("ZhiSdk inited, components are available now,like logger, env and so on."));
     }
     return O.zhiSdkObj;
   }
