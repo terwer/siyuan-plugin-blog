@@ -11,6 +11,7 @@
     "generate": "pnpm build:css && nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "package": "bash package.sh",
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --fix --ext .ts .",
     "lintcss": "stylelint *.styl --fix",
