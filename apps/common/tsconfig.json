@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "useDefineForClassFields": true,
+    "strict": true,
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noImplicitAny": true,
+    "declaration": true,
+    "declarationMap": true,
+    "baseUrl": ".",
+    "outDir": "./lib",
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "include": [".eslintrc.cjs", "./**/*.ts", "*.ts"],
+  "exclude": [".github", "node_modules", "lib/**/*"]
+}

@@ -1,5 +1,3 @@
-import eslint from "vite-plugin-eslint"
-
 const isDev = process.env.NODE_ENV === "development"
 const appBase = isDev ? "/" : "/appearance/themes/zhi/apps/blog/dist/"
 console.log("isDev=>", isDev)
@@ -12,9 +10,7 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-  vite: {
-    plugins: [eslint()],
-  },
+  vite: {},
   app: {
     baseURL: appBase,
   },
