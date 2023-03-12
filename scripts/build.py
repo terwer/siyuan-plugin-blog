@@ -26,7 +26,7 @@ if __name__ == "__main__":
     if args.blog:
         # blog
         os.chdir("./apps/blog")
-        os.system("pnpm build")
+        os.system("pnpm generate")
         print("Blog build finished.")
     elif args.theme:
         # theme
