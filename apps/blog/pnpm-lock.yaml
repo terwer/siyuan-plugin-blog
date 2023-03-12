@@ -14,10 +14,10 @@ specifiers:
   typescript: ^4.9.5
   vite-plugin-eslint: ^1.8.1
   vue-tsc: ^1.2.0
-  zhi-log: ^1.5.5
+  zhi-sdk: ^1.0.8
 
 dependencies:
-  zhi-log: 1.5.5
+  zhi-sdk: 1.0.8
 
 devDependencies:
   '@nuxtjs/eslint-config-typescript': 12.0.0_vgl77cfdswitgr47lm5swmv43m
@@ -2699,6 +2699,10 @@ packages:
   /commondir/1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
     dev: true
+
+  /compare-versions/6.0.0-rc.1:
+    resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
+    dev: false
 
   /compress-commons/4.1.1:
     resolution: {integrity: sha512-QLdDLCKNV2dtoTorqgxngQCMA+gWXkM/Nwu7FpeBhk/RdkzimqC3jueb/FDmaZeXh+uby1jkBqE3xArsLBE5wQ==}
@@ -6555,6 +6559,10 @@ packages:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
 
+  /siyuan/0.3.12:
+    resolution: {integrity: sha512-Hcjn7Ujisayi9SW5o0DBtV2Jj/B8PKEXlIksJfbyeTYAtTBpgy++Fhy3nO0Pz1rJazadLt/dxKZ1X8JvlDgFHw==}
+    dev: false
+
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -7769,6 +7777,14 @@ packages:
       loglevel: 1.8.1
       loglevel-plugin-prefix: 0.8.4
       zhi-env: 1.8.2
+    dev: false
+
+  /zhi-sdk/1.0.8:
+    resolution: {integrity: sha512-LZGDBvhsNtR1zZCCrFeu7bJhpADLIr1wD2m/EVhQ7Q286NS5ojkRdenzJxHc3Uz/ynpLf+sNKLyCYZdCnP2qpQ==}
+    dependencies:
+      compare-versions: 6.0.0-rc.1
+      siyuan: 0.3.12
+      zhi-log: 1.5.5
     dev: false
 
   /zip-stream/4.1.0:

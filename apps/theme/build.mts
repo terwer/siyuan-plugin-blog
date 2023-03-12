@@ -1,7 +1,7 @@
 // https://github.com/vitejs/vite/discussions/1736#discussioncomment-3229793
 
 import { build, InlineConfig } from "vite"
-import path from "path"
+import path from "path";
 
 /**
  * zhi 主题构建
@@ -31,6 +31,7 @@ class ZhiBuild {
             },
           ],
         },
+        plugins: [],
         build: {
           outDir: "../../",
           lib: {
