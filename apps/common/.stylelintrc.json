@@ -1,0 +1,18 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-stylus/standard"],
+  "rules": {
+    "import-notation": "string",
+    "string-quotes": "double",
+    "selector-combinator-space-after": "always",
+    "custom-property-no-missing-var-function": false,
+    "color-function-notation": "legacy",
+    "value-list-comma-space-before": "never",
+    "value-list-comma-space-after": "always",
+    "selector-class-pattern": null,
+    "stylus/declaration-colon": "never",
+    "stylus/pythonic": "always",
+    "stylus/selector-list-comma": "never",
+    "stylus/semicolon": "never",
+    "stylus/single-line-comment": "always"
+  }
+}

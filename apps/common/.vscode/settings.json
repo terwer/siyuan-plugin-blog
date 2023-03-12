@@ -1,0 +1,5 @@
+{
+  "python.formatting.provider": "black",
+  "stylelint.validate": ["stylus"],
+  "files.associations": { "*.json": "jsonc" }
+}

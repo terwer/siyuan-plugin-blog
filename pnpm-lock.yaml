@@ -5,6 +5,10 @@ specifiers:
   stylelint-config-standard: ^30.0.1
   stylelint-stylus: ^0.18.0
   stylus: ^0.59.0
+  zhi-sdk: 1.0.8
+
+dependencies:
+  zhi-sdk: 1.0.8
 
 devDependencies:
   stylelint: 15.2.0
@@ -184,6 +188,11 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /callsites/4.0.0:
+    resolution: {integrity: sha512-y3jRROutgpKdz5vzEhWM34TidDU8vkJppF8dszITeb1PQmSqV3DTxyV8G/lyO/DNvtE1YTedehmw9MPZsCBHxQ==}
+    engines: {node: '>=12.20'}
+    dev: false
+
   /camelcase-keys/6.2.2:
     resolution: {integrity: sha512-YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==}
     engines: {node: '>=8'}
@@ -231,6 +240,10 @@ packages:
   /colord/2.9.3:
     resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
     dev: true
+
+  /compare-versions/6.0.0-rc.1:
+    resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
+    dev: false
 
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -670,6 +683,15 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
 
+  /loglevel-plugin-prefix/0.8.4:
+    resolution: {integrity: sha512-WpG9CcFAOjz/FtNht+QJeGpvVl/cdR6P0z6OcXSkr8wFJOsV2GRj2j10JLfjuA4aYkcKCNIEqRGCyTife9R8/g==}
+    dev: false
+
+  /loglevel/1.8.1:
+    resolution: {integrity: sha512-tCRIJM51SHjAayKwC+QAg8hT8vg6z7GSgLJKGvzuPb1Wc+hLzqtuVLxp6/HzSPOozuK+8ErAhy7U/sVzw8Dgfg==}
+    engines: {node: '>= 0.6.0'}
+    dev: false
+
   /lru-cache/6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
@@ -1019,6 +1041,10 @@ packages:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
 
+  /siyuan/0.3.12:
+    resolution: {integrity: sha512-Hcjn7Ujisayi9SW5o0DBtV2Jj/B8PKEXlIksJfbyeTYAtTBpgy++Fhy3nO0Pz1rJazadLt/dxKZ1X8JvlDgFHw==}
+    dev: false
+
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -1353,3 +1379,24 @@ packages:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
     dev: true
+
+  /zhi-env/1.8.2:
+    resolution: {integrity: sha512-oMQX540mRNUa7w5IfvZSn06GLsNSK+2WcCBedpHRiA13k755L+1HlL9rAOReWg1xx2n4/2JelpQmiXIv/oHAKg==}
+    dev: false
+
+  /zhi-log/1.5.5:
+    resolution: {integrity: sha512-5/VzI4Jaj106veUc7rQkYdGe9wYI+VLjRpAxPamPPOHqhyiRFMe+lh77xa0TUixq1OLjkHRBu7yfy0FpDrcq+Q==}
+    dependencies:
+      callsites: 4.0.0
+      loglevel: 1.8.1
+      loglevel-plugin-prefix: 0.8.4
+      zhi-env: 1.8.2
+    dev: false
+
+  /zhi-sdk/1.0.8:
+    resolution: {integrity: sha512-LZGDBvhsNtR1zZCCrFeu7bJhpADLIr1wD2m/EVhQ7Q286NS5ojkRdenzJxHc3Uz/ynpLf+sNKLyCYZdCnP2qpQ==}
+    dependencies:
+      compare-versions: 6.0.0-rc.1
+      siyuan: 0.3.12
+      zhi-log: 1.5.5
+    dev: false

@@ -23,9 +23,10 @@
  * questions.
  */
 
-import ZhiUtil from "~/src/utils/ZhiUtil"
+import ZhiUtil from "../../common"
 import Zhi from "~/src/zhi"
 import path from "path"
+import Env from "zhi-env"
 
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
@@ -41,7 +42,8 @@ class Theme {
   private readonly zhiTheme
 
   constructor() {
-    const zhiSdk = ZhiUtil.zhiSdk()
+    const env = new Env(import.meta.env)
+    const zhiSdk = ZhiUtil.zhiSdk(env)
 
     this.logger = zhiSdk.getLogger()
     this.common = zhiSdk.common

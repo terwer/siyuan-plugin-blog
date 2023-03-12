@@ -5,230 +5,220 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-const _ = require("path");
-const I = require("fs");
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-var J = Object.defineProperty;
-var Q = (n, e, t) => e in n ? J(n, e, { enumerable: true, configurable: true, writable: true, value: t }) : n[e] = t;
-var g = (n, e, t) => (Q(n, typeof e != "symbol" ? e + "" : e, t), t);
+const path = require("path");
 var ee = Object.defineProperty;
-var te = (n, e, t) => e in n ? ee(n, e, { enumerable: true, configurable: true, writable: true, value: t }) : n[e] = t;
-var b = (n, e, t) => (te(n, typeof e != "symbol" ? e + "" : e, t), t);
-var $ = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-var N = {};
-var ne = {
+var te = (r, e, t) => e in r ? ee(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t;
+var M = (r, e, t) => (te(r, typeof e != "symbol" ? e + "" : e, t), t);
+const w = {};
+var re = Object.defineProperty, ne = (r, e, t) => e in r ? re(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t, g = (r, e, t) => (ne(r, typeof e != "symbol" ? e + "" : e, t), t), oe = Object.defineProperty, ie = (r, e, t) => e in r ? oe(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t, A = (r, e, t) => (ie(r, typeof e != "symbol" ? e + "" : e, t), t), X = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, b = {}, se = {
   get exports() {
-    return N;
+    return b;
   },
-  set exports(n) {
-    N = n;
+  set exports(r) {
+    b = r;
   }
 };
-(function(n) {
+(function(r) {
   (function(e, t) {
-    n.exports ? n.exports = t() : e.log = t();
-  })($, function() {
+    r.exports ? r.exports = t() : e.log = t();
+  })(X, function() {
     var e = function() {
-    }, t = "undefined", r = typeof window !== t && typeof window.navigator !== t && /Trident\/|MSIE /.test(window.navigator.userAgent), s = ["trace", "debug", "info", "warn", "error"];
-    function o(a, m) {
-      var v = a[m];
-      if (typeof v.bind == "function")
-        return v.bind(a);
+    }, t = "undefined", n = typeof window !== t && typeof window.navigator !== t && /Trident\/|MSIE /.test(window.navigator.userAgent), i = ["trace", "debug", "info", "warn", "error"];
+    function o(l, m) {
+      var S = l[m];
+      if (typeof S.bind == "function")
+        return S.bind(l);
       try {
-        return Function.prototype.bind.call(v, a);
+        return Function.prototype.bind.call(S, l);
       } catch {
         return function() {
-          return Function.prototype.apply.apply(v, [a, arguments]);
+          return Function.prototype.apply.apply(S, [l, arguments]);
         };
       }
     }
-    function i() {
+    function c() {
       console.log && (console.log.apply ? console.log.apply(console, arguments) : Function.prototype.apply.apply(console.log, [console, arguments])), console.trace && console.trace();
     }
-    function d(a) {
-      return a === "debug" && (a = "log"), typeof console === t ? false : a === "trace" && r ? i : console[a] !== void 0 ? o(console, a) : console.log !== void 0 ? o(console, "log") : e;
+    function h(l) {
+      return l === "debug" && (l = "log"), typeof console === t ? false : l === "trace" && n ? c : console[l] !== void 0 ? o(console, l) : console.log !== void 0 ? o(console, "log") : e;
     }
-    function E(a, m) {
-      for (var v = 0; v < s.length; v++) {
-        var u = s[v];
-        this[u] = v < a ? e : this.methodFactory(u, a, m);
+    function E(l, m) {
+      for (var S = 0; S < i.length; S++) {
+        var u = i[S];
+        this[u] = S < l ? e : this.methodFactory(u, l, m);
       }
       this.log = this.debug;
     }
-    function w(a, m, v) {
+    function y(l, m, S) {
       return function() {
-        typeof console !== t && (E.call(this, m, v), this[a].apply(this, arguments));
+        typeof console !== t && (E.call(this, m, S), this[l].apply(this, arguments));
       };
     }
-    function l(a, m, v) {
-      return d(a) || w.apply(this, arguments);
+    function s(l, m, S) {
+      return h(l) || y.apply(this, arguments);
     }
-    function f(a, m, v) {
+    function d(l, m, S) {
       var u = this, x;
       m = m ?? "WARN";
-      var h = "loglevel";
-      typeof a == "string" ? h += ":" + a : typeof a == "symbol" && (h = void 0);
-      function D(c) {
-        var S = (s[c] || "silent").toUpperCase();
-        if (!(typeof window === t || !h)) {
+      var f = "loglevel";
+      typeof l == "string" ? f += ":" + l : typeof l == "symbol" && (f = void 0);
+      function D(a) {
+        var L = (i[a] || "silent").toUpperCase();
+        if (!(typeof window === t || !f)) {
           try {
-            window.localStorage[h] = S;
+            window.localStorage[f] = L;
             return;
           } catch {
           }
           try {
-            window.document.cookie = encodeURIComponent(h) + "=" + S + ";";
+            window.document.cookie = encodeURIComponent(f) + "=" + L + ";";
           } catch {
           }
         }
       }
       function U() {
-        var c;
-        if (!(typeof window === t || !h)) {
+        var a;
+        if (!(typeof window === t || !f)) {
           try {
-            c = window.localStorage[h];
+            a = window.localStorage[f];
           } catch {
           }
-          if (typeof c === t)
+          if (typeof a === t)
             try {
-              var S = window.document.cookie, A = S.indexOf(encodeURIComponent(h) + "=");
-              A !== -1 && (c = /^([^;]+)/.exec(S.slice(A))[1]);
+              var L = window.document.cookie, _ = L.indexOf(encodeURIComponent(f) + "=");
+              _ !== -1 && (a = /^([^;]+)/.exec(L.slice(_))[1]);
             } catch {
             }
-          return u.levels[c] === void 0 && (c = void 0), c;
+          return u.levels[a] === void 0 && (a = void 0), a;
         }
       }
-      function V() {
-        if (!(typeof window === t || !h)) {
+      function C() {
+        if (!(typeof window === t || !f)) {
           try {
-            window.localStorage.removeItem(h);
+            window.localStorage.removeItem(f);
             return;
           } catch {
           }
           try {
-            window.document.cookie = encodeURIComponent(h) + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            window.document.cookie = encodeURIComponent(f) + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
           } catch {
           }
         }
       }
-      u.name = a, u.levels = {
+      u.name = l, u.levels = {
         TRACE: 0,
         DEBUG: 1,
         INFO: 2,
         WARN: 3,
         ERROR: 4,
         SILENT: 5
-      }, u.methodFactory = v || l, u.getLevel = function() {
+      }, u.methodFactory = S || s, u.getLevel = function() {
         return x;
-      }, u.setLevel = function(c, S) {
-        if (typeof c == "string" && u.levels[c.toUpperCase()] !== void 0 && (c = u.levels[c.toUpperCase()]), typeof c == "number" && c >= 0 && c <= u.levels.SILENT) {
-          if (x = c, S !== false && D(c), E.call(u, c, a), typeof console === t && c < u.levels.SILENT)
+      }, u.setLevel = function(a, L) {
+        if (typeof a == "string" && u.levels[a.toUpperCase()] !== void 0 && (a = u.levels[a.toUpperCase()]), typeof a == "number" && a >= 0 && a <= u.levels.SILENT) {
+          if (x = a, L !== false && D(a), E.call(u, a, l), typeof console === t && a < u.levels.SILENT)
             return "No console available for logging";
         } else
-          throw "log.setLevel() called with invalid level: " + c;
-      }, u.setDefaultLevel = function(c) {
-        m = c, U() || u.setLevel(c, false);
+          throw "log.setLevel() called with invalid level: " + a;
+      }, u.setDefaultLevel = function(a) {
+        m = a, U() || u.setLevel(a, false);
       }, u.resetLevel = function() {
-        u.setLevel(m, false), V();
-      }, u.enableAll = function(c) {
-        u.setLevel(u.levels.TRACE, c);
-      }, u.disableAll = function(c) {
-        u.setLevel(u.levels.SILENT, c);
+        u.setLevel(m, false), C();
+      }, u.enableAll = function(a) {
+        u.setLevel(u.levels.TRACE, a);
+      }, u.disableAll = function(a) {
+        u.setLevel(u.levels.SILENT, a);
       };
-      var L = U();
-      L == null && (L = m), u.setLevel(L, false);
+      var I = U();
+      I == null && (I = m), u.setLevel(I, false);
     }
-    var p = new f(), y = {};
-    p.getLogger = function(a) {
-      if (typeof a != "symbol" && typeof a != "string" || a === "")
+    var p = new d(), v = {};
+    p.getLogger = function(l) {
+      if (typeof l != "symbol" && typeof l != "string" || l === "")
         throw new TypeError("You must supply a name when creating a logger.");
-      var m = y[a];
-      return m || (m = y[a] = new f(a, p.getLevel(), p.methodFactory)), m;
+      var m = v[l];
+      return m || (m = v[l] = new d(l, p.getLevel(), p.methodFactory)), m;
     };
-    var R = typeof window !== t ? window.log : void 0;
+    var k = typeof window !== t ? window.log : void 0;
     return p.noConflict = function() {
-      return typeof window !== t && window.log === p && (window.log = R), p;
+      return typeof window !== t && window.log === p && (window.log = k), p;
     }, p.getLoggers = function() {
-      return y;
+      return v;
     }, p.default = p, p;
   });
-})(ne);
-var P = {};
-var re = {
+})(se);
+var P = {}, le = {
   get exports() {
     return P;
   },
-  set exports(n) {
-    P = n;
+  set exports(r) {
+    P = r;
   }
 };
-(function(n) {
+(function(r) {
   (function(e, t) {
-    n.exports ? n.exports = t() : e.prefix = t(e);
-  })($, function(e) {
-    var t = function(l) {
-      for (var f = 1, p = arguments.length, y; f < p; f++)
-        for (y in arguments[f])
-          Object.prototype.hasOwnProperty.call(arguments[f], y) && (l[y] = arguments[f][y]);
-      return l;
-    }, r = {
+    r.exports ? r.exports = t() : e.prefix = t(e);
+  })(X, function(e) {
+    var t = function(s) {
+      for (var d = 1, p = arguments.length, v; d < p; d++)
+        for (v in arguments[d])
+          Object.prototype.hasOwnProperty.call(arguments[d], v) && (s[v] = arguments[d][v]);
+      return s;
+    }, n = {
       template: "[%t] %l:",
-      levelFormatter: function(l) {
-        return l.toUpperCase();
+      levelFormatter: function(s) {
+        return s.toUpperCase();
       },
-      nameFormatter: function(l) {
-        return l || "root";
+      nameFormatter: function(s) {
+        return s || "root";
       },
-      timestampFormatter: function(l) {
-        return l.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+      timestampFormatter: function(s) {
+        return s.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
       },
       format: void 0
-    }, s, o = {}, i = function(l) {
-      if (!l || !l.getLogger)
+    }, i, o = {}, c = function(s) {
+      if (!s || !s.getLogger)
         throw new TypeError("Argument is not a root logger");
-      s = l;
-    }, d = function(l, f) {
-      if (!l || !l.setLevel)
+      i = s;
+    }, h = function(s, d) {
+      if (!s || !s.setLevel)
         throw new TypeError("Argument is not a logger");
-      var p = l.methodFactory, y = l.name || "", R = o[y] || o[""] || r;
-      function a(m, v, u) {
-        var x = p(m, v, u), h = o[u] || o[""], D = h.template.indexOf("%t") !== -1, U = h.template.indexOf("%l") !== -1, V = h.template.indexOf("%n") !== -1;
+      var p = s.methodFactory, v = s.name || "", k = o[v] || o[""] || n;
+      function l(m, S, u) {
+        var x = p(m, S, u), f = o[u] || o[""], D = f.template.indexOf("%t") !== -1, U = f.template.indexOf("%l") !== -1, C = f.template.indexOf("%n") !== -1;
         return function() {
-          for (var L = "", c = arguments.length, S = Array(c), A = 0; A < c; A++)
-            S[A] = arguments[A];
-          if (y || !o[u]) {
-            var k = h.timestampFormatter(new Date()), j = h.levelFormatter(m), Z = h.nameFormatter(u);
-            h.format ? L += h.format(j, Z, k) : (L += h.template, D && (L = L.replace(/%t/, k)), U && (L = L.replace(/%l/, j)), V && (L = L.replace(/%n/, Z))), S.length && typeof S[0] == "string" ? S[0] = L + " " + S[0] : S.unshift(L);
+          for (var I = "", a = arguments.length, L = Array(a), _ = 0; _ < a; _++)
+            L[_] = arguments[_];
+          if (v || !o[u]) {
+            var G = f.timestampFormatter(new Date()), z = f.levelFormatter(m), W = f.nameFormatter(u);
+            f.format ? I += f.format(z, W, G) : (I += f.template, D && (I = I.replace(/%t/, G)), U && (I = I.replace(/%l/, z)), C && (I = I.replace(/%n/, W))), L.length && typeof L[0] == "string" ? L[0] = I + " " + L[0] : L.unshift(I);
           }
-          x.apply(void 0, S);
+          x.apply(void 0, L);
         };
       }
-      return o[y] || (l.methodFactory = a), f = f || {}, f.template && (f.format = void 0), o[y] = t({}, R, f), l.setLevel(l.getLevel()), s || l.warn(
+      return o[v] || (s.methodFactory = l), d = d || {}, d.template && (d.format = void 0), o[v] = t({}, k, d), s.setLevel(s.getLevel()), i || s.warn(
         "It is necessary to call the function reg() of loglevel-plugin-prefix before calling apply. From the next release, it will throw an error. See more: https://github.com/kutuluk/loglevel-plugin-prefix/blob/master/README.md"
-      ), l;
+      ), s;
     }, E = {
-      reg: i,
-      apply: d
-    }, w;
-    return e && (w = e.prefix, E.noConflict = function() {
-      return e.prefix === E && (e.prefix = w), E;
+      reg: c,
+      apply: h
+    }, y;
+    return e && (y = e.prefix, E.noConflict = function() {
+      return e.prefix === E && (e.prefix = y), E;
     }), E;
   });
-})(re);
-var C = class {
-};
-b(C, "LOG_LEVEL_KEY", "VITE_LOG_LEVEL"), b(C, "LOG_PREFIX_KEY", "VITE_LOG_PREFIX");
-var T = /* @__PURE__ */ ((n) => (n.LOG_LEVEL_DEBUG = "DEBUG", n.LOG_LEVEL_INFO = "INFO", n.LOG_LEVEL_WARN = "WARN", n.LOG_LEVEL_ERROR = "ERROR", n))(T || {});
-function oe() {
-  const n = Error.prepareStackTrace;
-  Error.prepareStackTrace = (t, r) => r;
-  const e = new Error().stack.slice(1);
-  return Error.prepareStackTrace = n, e;
+})(le);
+class F {
 }
-var F = class {
+A(F, "LOG_LEVEL_KEY", "VITE_LOG_LEVEL"), A(F, "LOG_PREFIX_KEY", "VITE_LOG_PREFIX");
+var T = /* @__PURE__ */ ((r) => (r.LOG_LEVEL_DEBUG = "DEBUG", r.LOG_LEVEL_INFO = "INFO", r.LOG_LEVEL_WARN = "WARN", r.LOG_LEVEL_ERROR = "ERROR", r))(T || {});
+function ae() {
+  const r = Error.prepareStackTrace;
+  Error.prepareStackTrace = (t, n) => n;
+  const e = new Error().stack.slice(1);
+  return Error.prepareStackTrace = r, e;
+}
+class R {
   /**
    * 解析日志级别为枚举
    *
@@ -236,7 +226,7 @@ var F = class {
    * @param value 配置的值
    */
   static stringToEnumValue(e, t) {
-    return e[Object.keys(e).filter((r) => e[r].toString() === t)[0]];
+    return e[Object.keys(e).filter((n) => e[n].toString() === t)[0]];
   }
   /**
    * 获取配置的日志级别
@@ -244,66 +234,66 @@ var F = class {
   static getEnvLevel(e) {
     if (!e)
       return;
-    const t = e.getEnvOrDefault(C.LOG_LEVEL_KEY, T.LOG_LEVEL_INFO), r = F.stringToEnumValue(T, t.toUpperCase());
-    return r || console.warn(
+    const t = e.getEnvOrDefault(F.LOG_LEVEL_KEY, T.LOG_LEVEL_INFO), n = R.stringToEnumValue(T, t.toUpperCase());
+    return n || console.warn(
       "[zhi-log] LOG_LEVEL is invalid in you .env file.Must be either debug, info, warn or error, fallback to default info level"
-    ), r;
+    ), n;
   }
   /**
    * 获取默认日志
    */
   static getEnvLogger(e) {
     if (e)
-      return e.getEnv(C.LOG_PREFIX_KEY);
+      return e.getEnv(F.LOG_PREFIX_KEY);
   }
-};
-var ie = class {
-  constructor(e, t, r) {
-    b(this, "consoleLogger", "console"), b(this, "stackSize", 1), b(this, "getLogger", (i) => {
-      let d;
-      if (i)
-        d = i;
+}
+class ce {
+  constructor(e, t, n) {
+    A(this, "consoleLogger", "console"), A(this, "stackSize", 1), A(this, "getLogger", (c) => {
+      let h;
+      if (c)
+        h = c;
       else {
-        const E = oe(), w = [];
-        for (let l = 0; l < E.length; l++) {
-          const f = E[l], p = f.getFileName() ?? "none";
+        const E = ae(), y = [];
+        for (let s = 0; s < E.length; s++) {
+          const d = E[s], p = d.getFileName() ?? "none";
           if (!p.includes(".ts") && !p.includes(".js") && !p.includes(".cjs") && !p.includes(".mjs") && !p.includes(".vue") && !p.includes(".tsx"))
             continue;
-          if (l > this.stackSize - 1)
+          if (s > this.stackSize - 1)
             break;
-          const y = p + "-" + f.getLineNumber() + ":" + f.getColumnNumber();
-          w.push(y);
+          const v = p + "-" + d.getLineNumber() + ":" + d.getColumnNumber();
+          y.push(v);
         }
-        E.length > 0 && (d = w.join(" -> "));
+        E.length > 0 && (h = y.join(" -> "));
       }
-      return (!d || d.trim().length === 0) && (d = this.consoleLogger), N.getLogger(d);
+      return (!h || h.trim().length === 0) && (h = this.consoleLogger), b.getLogger(h);
     }), this.stackSize = 1;
-    let s;
-    e ? s = e : s = F.getEnvLevel(r), s = s ?? T.LOG_LEVEL_INFO, N.setLevel(s);
+    let i;
+    e ? i = e : i = R.getEnvLevel(n), i = i ?? T.LOG_LEVEL_INFO, b.setLevel(i);
     const o = {
-      gray: (i) => i.toString(),
-      green: (i) => i.toString(),
-      yellow: (i) => i.toString(),
-      red: (i) => i.toString()
+      gray: (c) => c.toString(),
+      green: (c) => c.toString(),
+      yellow: (c) => c.toString(),
+      red: (c) => c.toString()
     };
-    P.reg(N), P.apply(N, {
-      format(i, d, E) {
-        const w = ["[" + (t ?? F.getEnvLogger(r) ?? "zhi") + "]"];
-        switch (w.push(o.gray("[") + o.green(E).toString() + o.gray("]")), i) {
+    P.reg(b), P.apply(b, {
+      format(c, h, E) {
+        const y = ["[" + (t ?? R.getEnvLogger(n) ?? "zhi") + "]"];
+        switch (y.push(o.gray("[") + o.green(E).toString() + o.gray("]")), c) {
           case T.LOG_LEVEL_DEBUG:
-            w.push(o.gray(i.toUpperCase().toString()));
+            y.push(o.gray(c.toUpperCase().toString()));
             break;
           case T.LOG_LEVEL_INFO:
-            w.push(o.green(i.toUpperCase().toString()));
+            y.push(o.green(c.toUpperCase().toString()));
             break;
           case T.LOG_LEVEL_WARN:
-            w.push(o.yellow(i.toUpperCase().toString()));
+            y.push(o.yellow(c.toUpperCase().toString()));
             break;
           case T.LOG_LEVEL_ERROR:
-            w.push(o.red(i.toUpperCase().toString()));
+            y.push(o.red(c.toUpperCase().toString()));
             break;
         }
-        return w.push(o.green(d).toString()), w.push(o.gray(":")), w.join(" ");
+        return y.push(o.green(h).toString()), y.push(o.gray(":")), y.join(" ");
       }
     });
   }
@@ -315,8 +305,8 @@ var ie = class {
   setStackSize(e) {
     this.stackSize = e ?? 1;
   }
-};
-var se = class {
+}
+class ue {
   /**
    * 默认日志级别
    *
@@ -324,8 +314,8 @@ var se = class {
    * @param sign - 可选前缀，默认zhi
    * @param env - 可选环境变量实例
    */
-  constructor(e, t, r) {
-    b(this, "logger"), this.logger = new ie(e, t, r);
+  constructor(e, t, n) {
+    A(this, "logger"), this.logger = new ce(e, t, n);
   }
   /**
    * 获取日志记录器
@@ -337,10 +327,10 @@ var se = class {
   getLogger(e, t) {
     return this.logger.setStackSize(t), this.logger.getLogger(e);
   }
-};
-var M = class extends se {
-  constructor(e, t, r) {
-    super(e, t, r);
+}
+class Y extends ue {
+  constructor(e, t, n) {
+    super(e, t, n);
   }
   /**
    * 获取默认的日志记录器
@@ -351,8 +341,8 @@ var M = class extends se {
   getLogger(e, t) {
     return super.getLogger(e, t);
   }
-};
-var G = class {
+}
+class V {
   /**
    * 默认日志记录器
    *
@@ -360,65 +350,59 @@ var G = class {
    * @param env - 环境变量实例
    */
   static defaultLogger(e, t) {
-    return G.customLogFactory(void 0, void 0, e).getLogger(void 0, t);
+    return V.customLogFactory(void 0, void 0, e).getLogger(void 0, t);
   }
   /**
    * 自定义日志工厂
    */
-  static customLogFactory(e, t, r) {
-    return new M(e, t, r);
+  static customLogFactory(e, t, n) {
+    return new Y(e, t, n);
   }
   /**
    * 自定义日志工厂，自定义前缀
    */
   static customSignLogFactory(e, t) {
-    return new M(void 0, e, t);
+    return new Y(void 0, e, t);
   }
-};
-var X = class {
-};
-g(X, "LOG_STACK_SIZE", 1);
-var le = class {
+}
+class q {
+}
+g(q, "LOG_STACK_SIZE", 1);
+class ge {
   constructor() {
-    g(this, "VERSION");
-    this.VERSION = "1.0.0";
+    g(this, "VERSION"), this.VERSION = "1.0.0";
   }
-};
-var ae = class {
+}
+class pe {
   constructor() {
-    g(this, "VERSION");
-    this.VERSION = "1.0.0";
+    g(this, "VERSION"), this.VERSION = "1.0.0";
   }
-};
-var H = class {
+}
+const J = class {
   /**
    * 检测是否运行在Chrome插件中
    */
   static isInChromeExtension() {
-    return H.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
+    return J.isInBrowser ? window.location.href.indexOf("chrome-extension://") > -1 : false;
   }
 };
-var O = H;
-g(O, "isInBrowser", typeof window < "u");
-var q = class {
+let N = J;
+g(N, "isInBrowser", typeof window < "u");
+class Q {
   constructor() {
-    g(this, "isInSiyuanOrSiyuanNewWin", () => O.isInBrowser);
-    g(
+    g(this, "isInSiyuanOrSiyuanNewWin", () => N.isInBrowser), g(
       this,
       "isInSiyuanWidget",
       () => window.frameElement != null && window.frameElement.parentElement != null && window.frameElement.parentElement.parentElement != null && window.frameElement.parentElement.parentElement.getAttribute("data-node-id") !== ""
-    );
-    g(this, "isInSiyuanNewWin", () => typeof window.terwer < "u");
-    g(this, "requireLib", (e) => {
+    ), g(this, "isInSiyuanNewWin", () => typeof window.terwer < "u"), g(this, "requireLib", (e) => {
       const t = this.syWin();
       if (!this.syWin())
         throw new Error("Not in siyuan env");
       return t.require(e);
-    });
-    g(this, "getCrossPlatformAppDataFolder", () => {
-      var t, r, s, o, i, d;
-      let e;
-      return ((t = this.syProcess()) == null ? void 0 : t.platform) === "darwin" ? e = _.join((r = this.syProcess()) == null ? void 0 : r.env.HOME, "/Library/Application Support") : ((s = this.syProcess()) == null ? void 0 : s.platform) === "win32" ? e = (o = this.syProcess()) == null ? void 0 : o.env.APPDATA : ((i = this.syProcess()) == null ? void 0 : i.platform) === "linux" && (e = (d = this.syProcess()) == null ? void 0 : d.env.HOME), e;
+    }), g(this, "getCrossPlatformAppDataFolder", () => {
+      var e, t, n, i, o, c;
+      let h;
+      return ((e = this.syProcess()) == null ? void 0 : e.platform) === "darwin" ? h = w.join((t = this.syProcess()) == null ? void 0 : t.env.HOME, "/Library/Application Support") : ((n = this.syProcess()) == null ? void 0 : n.platform) === "win32" ? h = (i = this.syProcess()) == null ? void 0 : i.env.APPDATA : ((o = this.syProcess()) == null ? void 0 : o.platform) === "linux" && (h = (c = this.syProcess()) == null ? void 0 : c.env.HOME), h;
     });
   }
   /**
@@ -432,7 +416,7 @@ var q = class {
    * 思源笔记 process 对象
    */
   syProcess() {
-    return O.isInBrowser ? window.process : process;
+    return N.isInBrowser ? window.process : process;
   }
   /**
    * 思源笔记 conf 目录
@@ -456,48 +440,44 @@ var q = class {
    * 思源笔记 appearance 目录
    */
   SIYUAN_APPEARANCE_PATH() {
-    return _.join(this.SIYUAN_CONF_PATH(), "appearance");
+    return w.join(this.SIYUAN_CONF_PATH(), "appearance");
   }
   /**
    * 思源笔记 themes 目录
    */
   SIYUAN_THEME_PATH() {
-    return _.join(this.SIYUAN_APPEARANCE_PATH(), "themes");
+    return w.join(this.SIYUAN_APPEARANCE_PATH(), "themes");
   }
   /**
    * zhi 主题目录
    */
   ZHI_THEME_PATH() {
-    return _.join(this.SIYUAN_THEME_PATH(), "zhi");
+    return w.join(this.SIYUAN_THEME_PATH(), "zhi");
   }
   /**
    * zhi 主题构建目录
    */
   ZHI_THEME_DIST_PATH() {
-    return _.join(this.ZHI_THEME_PATH(), "apps", "theme", "dist");
+    return w.join(this.ZHI_THEME_PATH(), "apps", "theme", "dist");
   }
   /**
    * zhi 博客构建目录
    */
   ZHI_BLOG_DIST_PATH() {
-    return _.join(this.SIYUAN_THEME_PATH(), "apps", "blog", "dist");
+    return w.join(this.SIYUAN_THEME_PATH(), "apps", "blog", "dist");
   }
-};
-var ce = class {
+}
+class he {
   constructor() {
-    g(this, "serverApi");
-    g(this, "clientApi");
-    g(this, "siyuanUtil");
-    this.serverApi = new le(), this.clientApi = new ae(), this.siyuanUtil = new q();
+    g(this, "serverApi"), g(this, "clientApi"), g(this, "siyuanUtil"), this.serverApi = new ge(), this.clientApi = new pe(), this.siyuanUtil = new Q();
   }
-};
-var ue = class {
+}
+class de {
   constructor() {
-    g(this, "VERSION");
-    this.VERSION = "1.0.0";
+    g(this, "VERSION"), this.VERSION = "1.0.0";
   }
-};
-var ge = class {
+}
+class fe {
   /**
    * 格式化字符串
    *
@@ -507,15 +487,15 @@ var ge = class {
    * @since 0.0.1
    */
   f(e, ...t) {
-    let r = e;
-    for (let s = 0; s < t.length; s++) {
-      const o = t[s];
-      typeof o == "string" ? r = r.replace(`{${s}}`, o) : r = r.replace(`{${s}}`, o.toString());
+    let n = e;
+    for (let i = 0; i < t.length; i++) {
+      const o = t[i];
+      typeof o == "string" ? n = n.replace(`{${i}}`, o) : n = n.replace(`{${i}}`, o.toString());
     }
-    return r;
+    return n;
   }
-};
-var pe = class {
+}
+class we {
   /**
    *
    * 可以使用Node.js内置的fs模块中的`copyFileSync`或者`copyFile`方法来复制文件夹。不过需要注意，这两个方法只能复制单个文件，如果想要复制整个文件夹，需要自己编写递归函数实现。
@@ -527,10 +507,10 @@ var pe = class {
    * @since 1.0.0
    */
   copyFolderSync(e, t) {
-    const r = this;
-    I.existsSync(t) || I.mkdirSync(t), I.lstatSync(e).isDirectory() && I.readdirSync(e).forEach(function(o) {
-      const i = _.join(e, o);
-      I.lstatSync(i).isDirectory() ? r.copyFolderSync(i, _.join(t, o)) : I.copyFileSync(i, _.join(t, o));
+    const n = this;
+    w.existsSync(t) || w.mkdirSync(t), w.lstatSync(e).isDirectory() && w.readdirSync(e).forEach(function(i) {
+      const o = w.join(e, i);
+      w.lstatSync(o).isDirectory() ? n.copyFolderSync(o, w.join(t, i)) : w.copyFileSync(o, w.join(t, i));
     });
   }
   /**
@@ -539,7 +519,7 @@ var pe = class {
    * @param folder - 文件夹
    */
   rmFolder(e) {
-    I.existsSync(e) && I.rmdirSync(e, { recursive: true });
+    w.existsSync(e) && w.rmdirSync(e, { recursive: true });
   }
   /**
    * 路径拼接
@@ -547,7 +527,7 @@ var pe = class {
    * @param paths - 路径数组
    */
   joinPath(...e) {
-    return _.join(...e);
+    return w.join(...e);
   }
   /**
    * 获取相对路径
@@ -555,7 +535,7 @@ var pe = class {
    * @param pathname - 路径名称
    */
   dirname(e) {
-    return _.dirname(e);
+    return w.dirname(e);
   }
   /**
    * 获取绝对路径
@@ -564,28 +544,27 @@ var pe = class {
    */
   absPath(e) {
     const t = this.dirname(e);
-    return _.resolve(_.dirname(t), e);
+    return w.resolve(w.dirname(t), e);
   }
-};
-var fe = class {
+}
+class ye {
   constructor() {
-    g(this, "TIME_SPLIT", " ");
-    g(this, "formatIsoToZhDate", (e, t, r) => {
+    g(this, "TIME_SPLIT", " "), g(this, "formatIsoToZhDate", (e, t, n) => {
       if (!e)
         return "";
-      let s = e;
-      const o = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(.\d{3})Z$/gm, i = s.match(o);
-      if (i == null)
+      let i = e;
+      const o = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(.\d{3})Z$/gm, c = i.match(o);
+      if (c == null)
         return e;
-      for (let d = 0; d < i.length; d++) {
-        const E = i[d];
-        let w = E;
-        t && (w = this.addHoursToDate(new Date(E), 8).toISOString());
-        const l = w.split("T"), f = l[0], p = l[1].split(".")[0];
-        let y = f + this.TIME_SPLIT + p;
-        r && (y = f), s = s.replace(E, y);
+      for (let h = 0; h < c.length; h++) {
+        const E = c[h];
+        let y = E;
+        t && (y = this.addHoursToDate(new Date(E), 8).toISOString());
+        const s = y.split("T"), d = s[0], p = s[1].split(".")[0];
+        let v = d + this.TIME_SPLIT + p;
+        n && (v = d), i = i.replace(E, v);
       }
-      return s;
+      return i;
     });
   }
   /**
@@ -617,41 +596,34 @@ var fe = class {
   nowTimeZh() {
     return this.formatIsoToZhDate(new Date().toISOString(), true).split(this.TIME_SPLIT)[1];
   }
-};
-var W = (n, e) => {
-  const t = z(n), r = z(e), s = t.pop(), o = r.pop(), i = K(t, r);
-  return i !== 0 ? i : s && o ? K(s.split("."), o.split(".")) : s || o ? s ? -1 : 1 : 0;
-};
-var he = /^[v^~<>=]*?(\d+)(?:\.([x*]|\d+)(?:\.([x*]|\d+)(?:\.([x*]|\d+))?(?:-([\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?)?)?$/i;
-var z = (n) => {
-  if (typeof n != "string")
+}
+const H = (r, e) => {
+  const t = Z(r), n = Z(e), i = t.pop(), o = n.pop(), c = $(t, n);
+  return c !== 0 ? c : i && o ? $(i.split("."), o.split(".")) : i || o ? i ? -1 : 1 : 0;
+}, me = /^[v^~<>=]*?(\d+)(?:\.([x*]|\d+)(?:\.([x*]|\d+)(?:\.([x*]|\d+))?(?:-([\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?)?)?$/i, Z = (r) => {
+  if (typeof r != "string")
     throw new TypeError("Invalid argument expected string");
-  const e = n.match(he);
+  const e = r.match(me);
   if (!e)
-    throw new Error(`Invalid argument not valid semver ('${n}' received)`);
+    throw new Error(`Invalid argument not valid semver ('${r}' received)`);
   return e.shift(), e;
-};
-var Y = (n) => n === "*" || n === "x" || n === "X";
-var B = (n) => {
-  const e = parseInt(n, 10);
-  return isNaN(e) ? n : e;
-};
-var de = (n, e) => typeof n != typeof e ? [String(n), String(e)] : [n, e];
-var we = (n, e) => {
-  if (Y(n) || Y(e))
+}, B = (r) => r === "*" || r === "x" || r === "X", K = (r) => {
+  const e = parseInt(r, 10);
+  return isNaN(e) ? r : e;
+}, ve = (r, e) => typeof r != typeof e ? [String(r), String(e)] : [r, e], Ee = (r, e) => {
+  if (B(r) || B(e))
     return 0;
-  const [t, r] = de(B(n), B(e));
-  return t > r ? 1 : t < r ? -1 : 0;
-};
-var K = (n, e) => {
-  for (let t = 0; t < Math.max(n.length, e.length); t++) {
-    const r = we(n[t] || "0", e[t] || "0");
-    if (r !== 0)
-      return r;
+  const [t, n] = ve(K(r), K(e));
+  return t > n ? 1 : t < n ? -1 : 0;
+}, $ = (r, e) => {
+  for (let t = 0; t < Math.max(r.length, e.length); t++) {
+    const n = Ee(r[t] || "0", e[t] || "0");
+    if (n !== 0)
+      return n;
   }
   return 0;
 };
-var me = class {
+class Se {
   /**
    * Compare [semver](https://semver.org/) version strings
    * This library supports the full semver specification, including comparing versions with different number of digits like `1.0.0`, `1.0`, `1`, and pre-release versions like `1.0.0-alpha`.
@@ -661,7 +633,7 @@ var me = class {
    * @returns boolean true if v1 is higher than v2
    */
   greater(e, t) {
-    return W(e, t) > 0;
+    return H(e, t) > 0;
   }
   /**
    * Compare [semver](https://semver.org/) version strings
@@ -672,7 +644,7 @@ var me = class {
    * @returns boolean true if v1 is equal to v2
    */
   equal(e, t) {
-    return W(e, t) === 0;
+    return H(e, t) === 0;
   }
   /**
    * Compare [semver](https://semver.org/) version strings
@@ -683,41 +655,30 @@ var me = class {
    * @returns boolean true if v1 is lesser than v2
    */
   lesser(e, t) {
-    return W(e, t) < 0;
+    return H(e, t) < 0;
   }
-};
-var Ee = class {
+}
+class Le {
   /**
    * 获取当前设备
    */
   static getDevice() {
-    const e = new q();
-    return e.isInSiyuanWidget() ? "Siyuan_Widget" : e.isInSiyuanOrSiyuanNewWin() ? "Siyuan_NewWin" : O.isInChromeExtension() ? "Chrome_Extension" : "Chrome_Browser";
+    const e = new Q();
+    return e.isInSiyuanWidget() ? "Siyuan_Widget" : e.isInSiyuanOrSiyuanNewWin() ? "Siyuan_NewWin" : N.isInChromeExtension() ? "Chrome_Extension" : "Chrome_Browser";
   }
-};
-var ve = class {
+}
+class Ie {
   constructor() {
-    g(this, "strUtil");
-    g(this, "dateUtil");
-    g(this, "nodeUtil");
-    g(this, "browserUtil");
-    g(this, "versionUtil");
-    g(this, "deviceUtil");
-    this.strUtil = new ge(), this.dateUtil = new fe(), this.nodeUtil = new pe(), this.browserUtil = O, this.versionUtil = new me(), this.deviceUtil = Ee;
+    g(this, "strUtil"), g(this, "dateUtil"), g(this, "nodeUtil"), g(this, "browserUtil"), g(this, "versionUtil"), g(this, "deviceUtil"), this.strUtil = new fe(), this.dateUtil = new ye(), this.nodeUtil = new we(), this.browserUtil = N, this.versionUtil = new Se(), this.deviceUtil = Le;
   }
-};
-var Ie = class {
+}
+class Te {
   /**
    * 构造 zhi-sdk 对象
    * @param env - 可选，环境变量对象
    */
   constructor(e) {
-    g(this, "env");
-    g(this, "logger");
-    g(this, "siyuanApi");
-    g(this, "blogApi");
-    g(this, "common");
-    this.env = e, this.logger = G.defaultLogger(this.env, X.LOG_STACK_SIZE), this.siyuanApi = new ce(), this.blogApi = new ue(), this.common = new ve();
+    g(this, "env"), g(this, "logger"), g(this, "siyuanApi"), g(this, "blogApi"), g(this, "common"), this.env = e, this.logger = V.defaultLogger(this.env, q.LOG_STACK_SIZE), this.siyuanApi = new he(), this.blogApi = new de(), this.common = new Ie();
   }
   /**
    * 获取配置环境变量
@@ -733,6 +694,84 @@ var Ie = class {
   getLogger() {
     return this.logger;
   }
+}
+const O = class {
+  /**
+   * 获取 zhi-sdk 实例
+   *
+   * @param env - 可选，环境变量对象
+   */
+  static zhiSdk(e) {
+    if (!O.zhiSdkObj) {
+      O.zhiSdkObj = new Te(e);
+      const t = O.zhiSdkObj.getLogger(), n = O.zhiSdkObj.common;
+      t.info(n.strUtil.f("ZhiSdk inited, components are available now,like logger, env and so on222."));
+    }
+    return O.zhiSdkObj;
+  }
+};
+let j = O;
+M(j, "zhiSdkObj");
+var _e = /* @__PURE__ */ ((r) => (r.ThemeFrom_Blog = "zhi-theme-blog", r.ThemeFrom_Siyuan = "zhi-theme-siyuan", r))(
+  _e || {}
+);
+const version = "1.0.0";
+class Lifecycle {
+  constructor() {
+    __publicField(this, "_dynamicImports", []);
+  }
+  get dynamicImports() {
+    return this._dynamicImports;
+  }
+  load() {
+    const allImports = [];
+    const pluginSystemImports = this.loadPluginSystem();
+    const widgetsImports = this.loadWidgets();
+    const vendorImports = this.loadVendors();
+    this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports);
+  }
+  /**
+   * SiYuanPluginSystem
+   *
+   * @private
+   */
+  loadPluginSystem() {
+    return [];
+  }
+  /**
+   * 加载挂件
+   *
+   * @private
+   */
+  loadWidgets() {
+    return [];
+  }
+  /**
+   * 加载第三方库
+   *
+   * @private
+   */
+  loadVendors() {
+    return [];
+  }
+}
+const _Bootstrap = class {
+  /**
+   * 主题激活
+   */
+  static async start() {
+    _Bootstrap.lifecycle.load();
+    return Promise.resolve(_Bootstrap.lifecycle.dynamicImports);
+  }
+};
+let Bootstrap = _Bootstrap;
+__publicField(Bootstrap, "lifecycle");
+(() => {
+  _Bootstrap.lifecycle = new Lifecycle();
+})();
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var require_lib = __commonJS({
   "node_modules/.pnpm/zhi-env@1.8.2/node_modules/zhi-env/lib/index.js"(exports) {
@@ -779,118 +818,35 @@ var require_lib = __commonJS({
     exports.default = o;
   }
 });
-const __vite__cjsImport1_zhiEnv = require_lib();
-const Env = __vite__cjsImport1_zhiEnv.__esModule ? __vite__cjsImport1_zhiEnv.default : __vite__cjsImport1_zhiEnv;
-const _ZhiUtil = class {
-  static zhiSdk() {
-    if (!_ZhiUtil.zhiSdkObj) {
-      const env = new Env({ "BASE_URL": "/", "MODE": "production", "DEV": false, "PROD": true, "SSR": false });
-      _ZhiUtil.zhiSdkObj = new Ie(env);
-      const logger = _ZhiUtil.zhiSdkObj.getLogger();
-      const common = _ZhiUtil.zhiSdkObj.common;
-      logger.info(common.strUtil.f("ZhiSdk inited, components are available now,like logger, env and so on."));
-    }
-    return _ZhiUtil.zhiSdkObj;
-  }
-};
-let ZhiUtil = _ZhiUtil;
-__publicField(ZhiUtil, "zhiSdkObj");
-const version = "1.0.0";
-var ThemeFromEnum = /* @__PURE__ */ ((ThemeFromEnum2) => {
-  ThemeFromEnum2["ThemeFrom_Blog"] = "zhi-theme-blog";
-  ThemeFromEnum2["ThemeFrom_Siyuan"] = "zhi-theme-siyuan";
-  return ThemeFromEnum2;
-})(ThemeFromEnum || {});
-const initPluginSystem = () => {
-  return [
-    {
-      libpath: "/plugin-system/plugin-system-hook.cjs",
-      format: "cjs",
-      importType: "require",
-      runAs: "electron"
-    }
-  ];
-};
-const pluginSystem = {
-  initPluginSystem
-};
-class Lifecycle {
-  constructor() {
-    __publicField(this, "_dynamicImports", []);
-  }
-  get dynamicImports() {
-    return this._dynamicImports;
-  }
-  load() {
-    const allImports = [];
-    const pluginSystemImports = this.loadPluginSystem();
-    const widgetsImports = this.loadWidgets();
-    const vendorImports = this.loadVendors();
-    this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports);
-  }
-  /**
-   * SiYuanPluginSystem
-   *
-   * @private
-   */
-  loadPluginSystem() {
-    return pluginSystem.initPluginSystem();
-  }
-  /**
-   * 加载挂件
-   *
-   * @private
-   */
-  loadWidgets() {
-    return [];
-  }
-  /**
-   * 加载第三方库
-   *
-   * @private
-   */
-  loadVendors() {
-    return [];
-  }
-}
-const _Bootstrap = class {
-  /**
-   * 主题激活
-   */
-  static async start() {
-    _Bootstrap.lifecycle.load();
-    return Promise.resolve(_Bootstrap.lifecycle.dynamicImports);
-  }
-};
-let Bootstrap = _Bootstrap;
-__publicField(Bootstrap, "lifecycle");
-(() => {
-  _Bootstrap.lifecycle = new Lifecycle();
-})();
+const __vite__cjsImport3_zhiEnv = require_lib();
+const Env$1 = __vite__cjsImport3_zhiEnv.__esModule ? __vite__cjsImport3_zhiEnv.default : __vite__cjsImport3_zhiEnv;
 class Zhi {
   constructor() {
     __publicField(this, "logger");
     __publicField(this, "common");
-    const zhiSdk = ZhiUtil.zhiSdk();
+    const env = new Env$1({ "BASE_URL": "/", "MODE": "production", "DEV": false, "PROD": true, "SSR": false });
+    const zhiSdk = j.zhiSdk(env);
     this.logger = zhiSdk.getLogger();
     this.common = zhiSdk.common;
   }
   async main(args) {
     this.logger.debug(this.common.strUtil.f("Parsing args <{0}>", args));
-    this.hello(ThemeFromEnum.ThemeFrom_Siyuan);
+    this.hello(_e.ThemeFrom_Siyuan);
     return await Bootstrap.start();
   }
   hello(from) {
     this.logger.info(this.common.strUtil.f("Hello, {0} {1} v{2}! You are from {3}", "zhi", "theme", version, from));
   }
 }
+const Env = __vite__cjsImport3_zhiEnv.__esModule ? __vite__cjsImport3_zhiEnv.default : __vite__cjsImport3_zhiEnv;
 class Theme {
   constructor() {
     __publicField(this, "logger");
     __publicField(this, "common");
     __publicField(this, "siyuanApi");
     __publicField(this, "zhiTheme");
-    const zhiSdk = ZhiUtil.zhiSdk();
+    const env = new Env({ "BASE_URL": "/", "MODE": "production", "DEV": false, "PROD": true, "SSR": false });
+    const zhiSdk = j.zhiSdk(env);
     this.logger = zhiSdk.getLogger();
     this.common = zhiSdk.common;
     this.siyuanApi = zhiSdk.siyuanApi;
@@ -921,7 +877,7 @@ class Theme {
         this.logger.info("Loading dependency=>", libpath);
         let lib;
         if (this.common.browserUtil.isInBrowser) {
-          const importPath = _.join(this.siyuanApi.siyuanUtil.ZHI_THEME_DIST_PATH(), libpath);
+          const importPath = path.join(this.siyuanApi.siyuanUtil.ZHI_THEME_DIST_PATH(), libpath);
           lib = this.siyuanApi.siyuanUtil.requireLib(importPath);
         }
         if (lib && lib.init) {

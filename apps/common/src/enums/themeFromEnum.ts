@@ -23,27 +23,22 @@
  * questions.
  */
 
-import DependencyItem from "~/src/models/DependencyItem"
-
 /**
- * 插件系统注册
+ * 主题来源
  *
+ * @public
  * @author terwer
- * @since 1.0.0
+ * @since 0.0.1
  */
-const initPluginSystem = (): DependencyItem[] => {
-  return [
-    {
-      libpath: "/plugin-system/plugin-system-hook.cjs",
-      format: "cjs",
-      importType: "require",
-      runAs: "electron",
-    },
-  ]
+enum ThemeFromEnum {
+  /**
+   * 博客
+   */
+  ThemeFrom_Blog = "zhi-theme-blog",
+  /**
+   * 主题
+   */
+  ThemeFrom_Siyuan = "zhi-theme-siyuan",
 }
 
-const pluginSystem = {
-  initPluginSystem,
-}
-
-export default pluginSystem
+export default ThemeFromEnum

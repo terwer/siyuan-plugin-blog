@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - main
+name: release-please
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: release-please-action
+          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+
+      # Checkout
+      - uses: actions/checkout@v3
+        if: ${{ steps.release.outputs.release_created }}
+      # Setup node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"
+        if: ${{ steps.release.outputs.release_created }}
+      # Setup pnpm
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.29.0
+        if: ${{ steps.release.outputs.release_created }}
+      # Install dependencies
+      - run: pnpm package
+        if: ${{ steps.release.outputs.release_created }}
+      # Publish to npm
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.release.outputs.release_created }}

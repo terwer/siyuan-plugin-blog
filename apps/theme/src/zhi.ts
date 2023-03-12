@@ -24,10 +24,11 @@
  */
 
 import { version } from "~/package.json"
-import ThemeFromEnum from "~/src/enums/themeFromEnum"
+import { ThemeFromEnum } from "../../common"
+import ZhiUtil from "../../common"
 import DependencyItem from "~/src/models/DependencyItem"
-import ZhiUtil from "~/src/utils/ZhiUtil"
 import Bootstrap from "~/src/bootstrap"
+import Env from "zhi-env"
 
 /**
  * 主题入口
@@ -40,7 +41,8 @@ class Zhi {
   private readonly common
 
   constructor() {
-    const zhiSdk = ZhiUtil.zhiSdk()
+    const env = new Env(import.meta.env)
+    const zhiSdk = ZhiUtil.zhiSdk(env)
 
     this.logger = zhiSdk.getLogger()
     this.common = zhiSdk.common

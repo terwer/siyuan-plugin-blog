@@ -29,14 +29,20 @@ import Env from "zhi-env"
 /**
  * 工具类统一入口
  *
+ * @public
  * @author terwer
  * @since 1.0.0
  */
 class ZhiUtil {
   private static zhiSdkObj: ZhiSdk
-  public static zhiSdk() {
+
+  /**
+   * 获取 zhi-sdk 实例
+   *
+   * @param env - 可选，环境变量对象
+   */
+  public static zhiSdk(env?: Env) {
     if (!ZhiUtil.zhiSdkObj) {
-      const env = new Env(import.meta.env)
       ZhiUtil.zhiSdkObj = new ZhiSdk(env)
       const logger = ZhiUtil.zhiSdkObj.getLogger()
       const common = ZhiUtil.zhiSdkObj.common

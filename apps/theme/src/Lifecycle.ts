@@ -24,7 +24,6 @@
  */
 
 import DependencyItem from "~/src/models/DependencyItem"
-import pluginSystem from "~/src/plugin-system"
 
 /**
  * zhi主题统一生命周期管理
@@ -55,7 +54,7 @@ class Lifecycle {
    * @private
    */
   private loadPluginSystem(): DependencyItem[] {
-    return pluginSystem.initPluginSystem()
+    return []
   }
 
   /**

@@ -1,0 +1,75 @@
+{
+  "name": "common",
+  "version": "0.0.1",
+  "description": "common module for zhi",
+  "files": [
+    "lib",
+    "typings"
+  ],
+  "type": "module",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs"
+    }
+  },
+  "typings": "./typings/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --ext .ts ./src",
+    "lint:fix": "eslint --fix --ext .ts ./src",
+    "lintcss": "stylelint *.styl --fix",
+    "lintcss:fix": "stylelint *.styl --fix",
+    "prettier": "prettier --write .",
+    "typings": "python script/typings.py",
+    "clean": "python script/clean.py",
+    "ci": "python script/ci.py",
+    "package": "python script/package.py",
+    "template": "python script/template.py -b",
+    "restore": "python script/template.py -r",
+    "helpdoc": "jsdoc2vitepress start",
+    "vitepress:api": "mkdir -p etc && mkdir -p temp && api-extractor run --local",
+    "vitepress:prepare": "api-documenter markdown -i temp -o docs/doc",
+    "vitepress:dev": "vitepress dev docs",
+    "vitepress:build": "vitepress build docs"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.21.5",
+    "@microsoft/api-extractor": "^7.34.4",
+    "@types/node": "16",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "@vitest/coverage-c8": "^0.29.2",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jsdoc-babel": "^0.5.0",
+    "jsdoc2vitepress": "^1.0.5",
+    "prettier": "^2.8.4",
+    "stylelint": "^15.2.0",
+    "stylelint-config-standard": "^30.0.1",
+    "stylelint-stylus": "^0.18.0",
+    "stylus": "^0.59.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4",
+    "vite-plugin-dts": "^2.1.0",
+    "vite-plugin-eslint": "^1.8.1",
+    "vitepress": "1.0.0-alpha.50",
+    "vitepress-plugin-autobar": "^1.0.8",
+    "vitest": "^0.29.2",
+    "vue-eslint-parser": "^9.1.0"
+  },
+  "dependencies": {
+    "zhi-sdk": "^1.0.8"
+  },
+  "repository": "terwer/common",
+  "homepage": "https://terwer.space",
+  "author": "terwer",
+  "license": "GPL"
+}
