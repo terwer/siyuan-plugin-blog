@@ -9,6 +9,7 @@ if __name__ == "__main__":
 
     # 参数解析
     parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--common", action="store_true", required=False, help="build common")
     parser.add_argument("-t", "--theme", action="store_true", required=False, help="build theme")
     parser.add_argument("-b", "--blog", action="store_true", required=False, help="build blog")
     parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
@@ -17,10 +18,15 @@ if __name__ == "__main__":
     if args.verbose:
         print("Verbose mode enabled")
 
+    if args.common:
+        # common
+        os.chdir("./apps/common")
+        os.system("pnpm package")
+        print("Common build finished.")
     if args.blog:
         # blog
         os.chdir("./apps/blog")
-        os.system("pnpm build")
+        os.system("pnpm generate")
         print("Blog build finished.")
     elif args.theme:
         # theme
@@ -28,7 +34,9 @@ if __name__ == "__main__":
         os.system("pnpm build")
         print("Theme build finished.")
     else:
-        os.chdir("./apps/theme")
+        os.chdir("./apps/common")
+        os.system("pnpm package")
+        os.chdir("../theme")
         os.system("pnpm build")
         os.chdir("../blog")
         os.system("pnpm build")

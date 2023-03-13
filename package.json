@@ -7,6 +7,7 @@
     "dev:theme": "python scripts/dev.py --theme",
     "dev:blog": "python scripts/dev.py --blog",
     "build": "python scripts/build.py",
+    "build:common": "python scripts/build.py --common",
     "build:theme": "python scripts/build.py --theme",
     "build:blog": "python scripts/build.py --blog",
     "docs": "echo 'docs'",
