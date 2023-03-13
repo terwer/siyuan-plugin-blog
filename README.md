@@ -5,6 +5,10 @@
 ![version](https://img.shields.io/github/release/terwer/zhi.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
+⚠️温馨提示：如果你只想要一个轻量级的主题，请移步：[zhi-mini](https://github.com/terwer/zhi-mini)
+
+`zhi` 和 `zhi-mini` 会同步更新。唯一的区别是 zhi-mini 更加轻量级，不会包含主题之外的任何组件。
+
 ## 主题展示
 
 ### 浅色风格
@@ -34,6 +38,7 @@
 
 zhi 系列生态
 
+- [zhi-mini](https://github.com/terwer/zhi-mini)
 - [zhi-cli](https://github.com/terwer/zhi-cli)
 - zhi-sdk
   - [zhi-env](https://github.com/terwer/zhi-env)
@@ -100,15 +105,40 @@ zhi 系列生态
 
 - 基础设施：[zhi-sdk](https://github.com/terwer/zhi-sdk)
 
-- 博客：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+- 公共组件(common): [zhi-cli](https://github.com/terwer/zhi-cli)
 
-- 主题：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+- 博客(blog)：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+
+- 主题(theme)：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+
+依赖关系如下：
+
+- zhi-common-app
+  - zhi-sdk
+    - zhi-log
+      - zhi-env
+    - zhi-common
+
+- zhi-theme-app
+  - zhi-common
+
+- zhi-blog-app
+  - zhi-common
+
+其中，公共组件基于我的另一个脚手架项目 [zhi-cli](https://github.com/terwer/zhi-cli) 的模板类型`ts-vite-lib` 生成:
+
+```bash
+## 初始化公共组件
+npm i -g zhi-cli
+zhi-cli init common ts-vite-lib
+```
 
 ### 项目结构
 
 ```
 ├── README.md
 ├── apps 应用根目录
+│   ├── common 公共组件根目录
 │   ├── blog 博客根目录
 │   │   ├── dist 博客预览入口
 │   │   ├── app.vue 博客vue源码入口
