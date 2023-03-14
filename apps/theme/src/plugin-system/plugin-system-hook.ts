@@ -70,6 +70,8 @@ class PluginSystemHook {
     // 主题插件目录
     const zhiPluginsPath = this.common.electronUtil.joinPath(
       this.common.electronUtil.zhiThemePath(),
+      "apps",
+      "theme",
       "lib",
       this.hack.ZHI_PLUGIN_FOLDER
     )
