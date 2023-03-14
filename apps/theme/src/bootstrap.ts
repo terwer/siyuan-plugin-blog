@@ -43,7 +43,7 @@ class Bootstrap {
    * 主题激活
    */
   public static async start(): Promise<DependencyItem[]> {
-    Bootstrap.lifecycle.load()
+    await Bootstrap.lifecycle.load()
     return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
   }
 }

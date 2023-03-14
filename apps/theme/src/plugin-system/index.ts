@@ -23,22 +23,28 @@
  * questions.
  */
 
+import DependencyItem from "~/src/models/DependencyItem"
+import PluginSystemHook from "~/src/plugin-system/plugin-system-hook"
+
 /**
- * 主题来源
+ * 插件系统
  *
- * @public
  * @author terwer
- * @since 0.0.1
+ * @since 1.0.0
  */
-enum ThemeFromEnum {
+class PluginSystem {
   /**
-   * 博客
+   * 插件系统注册
+   *
+   * @author terwer
+   * @since 1.0.0
    */
-  ThemeFrom_Blog = "zhi-theme-blog",
-  /**
-   * 主题
-   */
-  ThemeFrom_Siyuan = "zhi-theme-siyuan",
+  public async initPluginSystem(): Promise<DependencyItem[]> {
+    const pluginSystemHook = new PluginSystemHook()
+    await pluginSystemHook.init()
+    return Promise.resolve([])
+  }
 }
 
-export default ThemeFromEnum
+const pluginSystem = new PluginSystem()
+export default pluginSystem

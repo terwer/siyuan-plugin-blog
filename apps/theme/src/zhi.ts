@@ -24,8 +24,8 @@
  */
 
 import { version } from "~/package.json"
-import { ThemeFromEnum } from "../../common"
-import ZhiUtil from "../../common"
+import { ThemeFromEnum } from "zhi-common"
+import ZhiUtil from "zhi-common"
 import DependencyItem from "~/src/models/DependencyItem"
 import Bootstrap from "~/src/bootstrap"
 import Env from "zhi-env"
@@ -59,5 +59,4 @@ class Zhi {
   }
 }
 
-// 默认支持esm
 export default Zhi

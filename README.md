@@ -5,6 +5,10 @@
 ![version](https://img.shields.io/github/release/terwer/zhi.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
+⚠️温馨提示：如果你只想要一个轻量级的主题，请移步：[zhi-mini](https://github.com/terwer/zhi-mini)
+
+`zhi` 和 `zhi-mini` 会同步更新。唯一的区别是 zhi-mini 更加轻量级，不会包含主题之外的任何组件。
+
 ## 主题展示
 
 ### 浅色风格
@@ -34,14 +38,16 @@
 
 zhi 系列生态
 
+- [zhi](https://github.com/terwer/zhi)
+- [zhi-mini](https://github.com/terwer/zhi-mini)
 - [zhi-cli](https://github.com/terwer/zhi-cli)
-- zhi-sdk
-  - [zhi-env](https://github.com/terwer/zhi-env)
-  - [zhi-log](https://github.com/terwer/zhi-log)
-  - zhi-common
-  - zhi-core
-  - zhi-blog-api
-  - zhi-siyuan-api
+- [zhi-common](https://github.com/terwer/zhi-common)
+  - [zhi-sdk](https://github.com/terwer/zhi-sdk)
+      - [zhi-env](https://github.com/terwer/zhi-env)
+      - [zhi-log](https://github.com/terwer/zhi-log)
+      - zhi-core
+      - zhi-blog-api
+      - zhi-siyuan-api
 
 ⚠️ 特别提醒 1: `1.0.0` 为前期可用版本，功能上尚不全面，仅作为测试使用，欢迎 issue
 提出宝贵意见。此版本特性，请参照 [核心特性](#核心特性) 。
@@ -65,20 +71,20 @@ zhi 系列生态
 
 - 主题灵感源自于知乎但不限于知乎风格，外观优化包括不限于：
 
-  - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
-  - 背景色优化
-  - 代码块美化，类似 `Mac` 窗口风格
+    - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
+    - 背景色优化
+    - 代码块美化，类似 `Mac` 窗口风格
 
 - 整合热门挂件以及其他小工具，提供统一的入口
 
-  - 集成 `sy-post-publisher` 思源笔记发布工具，无需手动添加挂件，无需添加 js 片段，开箱即用
+    - 集成 `sy-post-publisher` 思源笔记发布工具，无需手动添加挂件，无需添加 js 片段，开箱即用
 
-    注意：`sy-post-publisher` 需要单独在集市挂件下载
+      注意：`sy-post-publisher` 需要单独在集市挂件下载
 
 - 天生支持插件系统，插件系统由社区开发者提供支持
 
-  - 文档图片背景自动透明插件
-  - 博客插件
+    - 文档图片背景自动透明插件
+    - 博客插件
 
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个在线博客
 
@@ -100,15 +106,42 @@ zhi 系列生态
 
 - 基础设施：[zhi-sdk](https://github.com/terwer/zhi-sdk)
 
-- 博客：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+- 公共组件(zhi-common): [zhi-cli](https://github.com/terwer/zhi-cli) + [zhi-sdk](https://github.com/terwer/zhi-sdk)
 
-- 主题：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+- 博客(zhi-blog)：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+
+- 主题(zhi-theme)：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+
+依赖关系如下：
+
+- zhi-common
+    - zhi-sdk
+        - zhi-log
+            - zhi-env
+
+- zhi-mini
+    - zhi-sdk
+
+- zhi-theme
+    - zhi-common
+
+- zhi-blog
+    - zhi-common
+
+其中，公共组件( `zhi-common` )基于我的另一个脚手架项目 [zhi-cli](https://github.com/terwer/zhi-cli) 的模板类型 `ts-vite-lib` 生成:
+
+```bash
+## 初始化公共组件
+npm i -g zhi-cli
+zhi-cli init common ts-vite-lib
+```
 
 ### 项目结构
 
 ```
 ├── README.md
 ├── apps 应用根目录
+│   ├── common 公共组件根目录
 │   ├── blog 博客根目录
 │   │   ├── dist 博客预览入口
 │   │   ├── app.vue 博客vue源码入口
