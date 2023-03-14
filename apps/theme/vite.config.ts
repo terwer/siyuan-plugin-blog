@@ -25,10 +25,11 @@
 
 import path from "path"
 import { defineConfig } from "vite"
-
-// 警告⚠️：此文件仅用于单元测试，项目构建统一使用 build.mts
+import dts from "vite-plugin-dts"
+import eslint from "vite-plugin-eslint"
 
 export default defineConfig({
+  plugins: [dts(), eslint()],
   resolve: {
     alias: [
       {
@@ -36,5 +37,20 @@ export default defineConfig({
         replacement: path.resolve(__dirname, ""),
       },
     ],
+  },
+  build: {
+    outDir: "lib",
+    lib: {
+      entry: [path.resolve(__dirname, "theme.ts")],
+      formats: ["cjs"],
+      name: "theme",
+    },
+    rollupOptions: {
+      output: {
+        esModule: "if-default-prop",
+        exports: "named",
+      },
+      external: ["siyuan"],
+    },
   },
 })

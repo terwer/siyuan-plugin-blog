@@ -23,9 +23,8 @@
  * questions.
  */
 
-import ZhiUtil from "../../common"
+import ZhiUtil from "zhi-common"
 import Zhi from "~/src/zhi"
-import path from "path"
 import Env from "zhi-env"
 
 /**
@@ -82,8 +81,8 @@ class Theme {
 
         let lib
         if (this.common.browserUtil.isInBrowser) {
-          const importPath = path.join(this.siyuanApi.siyuanUtil.ZHI_THEME_DIST_PATH(), libpath)
-          lib = this.siyuanApi.siyuanUtil.requireLib(importPath)
+          const importPath = this.common.electronUtil.joinPath(this.common.electronUtil.zhiMiniPath(), libpath)
+          lib = this.common.electronUtil.requireLib(importPath)
         }
 
         // 如果有初始化方法，进行初始化

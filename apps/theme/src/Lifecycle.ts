@@ -1,29 +1,22 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Terwer designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Terwer in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
- * or visit www.terwer.space if you need additional information or have any
- * questions.
+ Copyright (c) 2023 Terwer. All rights reserved.
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
 import DependencyItem from "~/src/models/DependencyItem"
+import pluginSystem from "./plugin-system"
 
 /**
  * zhi主题统一生命周期管理
@@ -38,12 +31,12 @@ class Lifecycle {
     return this._dynamicImports
   }
 
-  public load() {
+  public async load() {
     const allImports = <DependencyItem[]>[]
 
-    const pluginSystemImports = this.loadPluginSystem()
-    const widgetsImports = this.loadWidgets()
-    const vendorImports = this.loadVendors()
+    const pluginSystemImports = await this.loadPluginSystem()
+    const widgetsImports = await this.loadWidgets()
+    const vendorImports = await this.loadVendors()
 
     this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports)
   }
@@ -53,8 +46,8 @@ class Lifecycle {
    *
    * @private
    */
-  private loadPluginSystem(): DependencyItem[] {
-    return []
+  private async loadPluginSystem(): Promise<DependencyItem[]> {
+    return await pluginSystem.initPluginSystem()
   }
 
   /**
@@ -62,8 +55,8 @@ class Lifecycle {
    *
    * @private
    */
-  private loadWidgets(): DependencyItem[] {
-    return []
+  private async loadWidgets(): Promise<DependencyItem[]> {
+    return Promise.resolve([])
   }
 
   /**
@@ -71,8 +64,13 @@ class Lifecycle {
    *
    * @private
    */
-  private loadVendors(): DependencyItem[] {
-    return []
+  private async loadVendors(): Promise<DependencyItem[]> {
+    // const vendorImports = <DependencyItem[]>[]
+
+    // // 字体图标
+    // const fontAwesomeImports = fontAwesome.initFontAwesome()
+    // return Promise.resolve(vendorImports.concat(fontAwesomeImports))
+    return Promise.resolve([])
   }
 }
 

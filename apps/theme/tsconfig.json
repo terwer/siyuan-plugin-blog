@@ -21,6 +21,6 @@
       "~/*": ["./*"]
     }
   },
-  "include": [".eslintrc.cjs", "build.mts", "./**/*.ts", "*.ts"],
-  "exclude": ["node_modules", "lib/**/*"]
+  "include": [".eslintrc.cjs", "./**/*.ts", "*.ts"],
+  "exclude": [".github", "node_modules", "lib/**/*", "theme.js"]
 }
