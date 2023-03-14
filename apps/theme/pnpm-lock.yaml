@@ -22,10 +22,10 @@ specifiers:
   vite-plugin-eslint: ^1.8.1
   vitest: ^0.29.2
   vue-eslint-parser: ^9.1.0
-  zhi-common: ^1.0.5
+  zhi-common: ^1.0.6
 
 dependencies:
-  zhi-common: 1.0.5
+  zhi-common: 1.0.6
 
 devDependencies:
   '@types/fs-extra': 11.0.1
@@ -3298,8 +3298,8 @@ packages:
       commander: 9.5.0
     dev: true
 
-  /zhi-common/1.0.5:
-    resolution: {integrity: sha512-SFciL9jpXve0O19FBz8QHVsy/P5kN3bL+E4Q7HAUIlVzwKfDVQacen3MiJUQykKwYabHxATGC/R+ld20IgeUZg==}
+  /zhi-common/1.0.6:
+    resolution: {integrity: sha512-3mzJzP9JAayl2poYtlHJ8cWWCY7p/hn9btLruGTKoI30uaPWqaSsj0L5p58Pe8x7BWy0VSk9movBqXS9sTnguQ==}
     dependencies:
       zhi-sdk: 1.0.10
     dev: false
