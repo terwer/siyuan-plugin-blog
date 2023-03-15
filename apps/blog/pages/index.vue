@@ -1,11 +1,10 @@
 <template>
   <div>
-    <NuxtLink to="./post/1">detail</NuxtLink>
-    <NuxtWelcome />
+    <div style="margin-top: 100px">index</div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import ZhiUtil, { ThemeFromEnum } from "zhi-common"
 import { version } from "~/package.json"
 import Env from "zhi-env"

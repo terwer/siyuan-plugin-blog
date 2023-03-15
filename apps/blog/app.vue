@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <!-- Markup shared across all pages, ex: NavBar -->
+  <NuxtLayout :name="layout">
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>
+
+<script setup lang="ts">
+const layout = "vdoing"
+</script>

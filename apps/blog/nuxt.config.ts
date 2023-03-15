@@ -1,22 +1,28 @@
 const isDev = process.env.NODE_ENV === "development"
 const isVercelBuild = process.env.BUILD_TYPE === "vercel"
-const appBase = !isDev ? "/" : isVercelBuild ? "/" : "/appearance/themes/zhi/apps/blog/dist/"
+let appBase = "/appearance/themes/zhi/apps/blog/dist/"
+if (isDev || isVercelBuild) {
+  appBase = "/"
+}
 console.log("isVercelBuild=>", isVercelBuild)
 console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  modules: ["@nuxt/content"],
+  content: {
+    // https://content.nuxtjs.org/api/configuration
+  },
   typescript: {
     shim: false,
     strict: true,
     typeCheck: true,
   },
-  vite: {
-    build: {
-      minify: false,
-    },
-  },
+  // vite: {
+  //   build: {
+  //     minify: false,
+  //   },
+  // },
   app: {
     baseURL: appBase,
   },
@@ -26,7 +32,8 @@ export default defineNuxtConfig({
       VITE_DEBUG_MODE: false,
     },
   },
-  nitro: {
-    serveStatic: !isDev,
-  },
+  // nitro: {
+  //   serveStatic: !isDev,
+  // },
+  css: ["@/assets/vdoing/styles/index.styl"],
 })
