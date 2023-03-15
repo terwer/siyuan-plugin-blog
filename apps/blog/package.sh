@@ -1,7 +1,3 @@
-cd ../common
 pnpm install
-pnpm build
-pnpm vitepress:api
-cd ../blog
-pnpm generate
+pnpm generate:vercel
 echo "vercel build blog done."

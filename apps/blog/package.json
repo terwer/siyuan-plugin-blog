@@ -10,6 +10,7 @@
     "build:js": "nuxt build",
     "dev": "pnpm build:css && nuxt dev",
     "generate": "pnpm build:css && nuxt generate",
+    "generate:vercel": "pnpm build:css && BUILD_TYPE=vercel nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "package:vercel": "bash package.sh",

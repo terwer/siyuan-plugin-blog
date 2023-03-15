@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import ZhiUtil from "zhi-common"
+import ZhiUtil, { ThemeFromEnum } from "zhi-common"
 import { version } from "~/package.json"
 import Env from "zhi-env"
 
