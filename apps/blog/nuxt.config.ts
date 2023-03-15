@@ -35,4 +35,5 @@ export default defineNuxtConfig({
   // nitro: {
   //   serveStatic: !isDev,
   // },
+  css: ["@/assets/vdoing/styles/index.styl"],
 })
