@@ -1,6 +1,9 @@
 const isDev = process.env.NODE_ENV === "development"
 const isVercelBuild = process.env.BUILD_TYPE === "vercel"
-const appBase = !isDev ? "/" : isVercelBuild ? "/" : "/appearance/themes/zhi/apps/blog/dist/"
+let appBase = "/appearance/themes/zhi/apps/blog/dist/"
+if (isDev || isVercelBuild) {
+  appBase = "/"
+}
 console.log("isVercelBuild=>", isVercelBuild)
 console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
