@@ -10,7 +10,11 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-  vite: {},
+  vite: {
+    build: {
+      minify: false,
+    },
+  },
   app: {
     baseURL: appBase,
   },
@@ -20,4 +24,7 @@ export default defineNuxtConfig({
       VITE_DEBUG_MODE: false,
     },
   },
+  // nitro: {
+  //   serveStatic: true,
+  // },
 })

@@ -22,10 +22,10 @@ specifiers:
   vite-plugin-eslint: ^1.8.1
   vitest: ^0.29.2
   vue-eslint-parser: ^9.1.0
-  zhi-common: ^1.0.6
+  zhi-common: ^1.0.7
 
 dependencies:
-  zhi-common: 1.0.6
+  zhi-common: 1.0.7
 
 devDependencies:
   '@types/fs-extra': 11.0.1
@@ -3298,28 +3298,28 @@ packages:
       commander: 9.5.0
     dev: true
 
-  /zhi-common/1.0.6:
-    resolution: {integrity: sha512-3mzJzP9JAayl2poYtlHJ8cWWCY7p/hn9btLruGTKoI30uaPWqaSsj0L5p58Pe8x7BWy0VSk9movBqXS9sTnguQ==}
+  /zhi-common/1.0.7:
+    resolution: {integrity: sha512-7353muaWBa0YciJEcoDHJfmtLCO+LVZi/eF+S8wxBXCY/TxB0fZ+UiGtO0l/+x0v10tKzrEZT3irpMgjNUSU5Q==}
     dependencies:
-      zhi-sdk: 1.0.10
+      zhi-sdk: 1.0.11
     dev: false
 
-  /zhi-env/1.8.2:
-    resolution: {integrity: sha512-oMQX540mRNUa7w5IfvZSn06GLsNSK+2WcCBedpHRiA13k755L+1HlL9rAOReWg1xx2n4/2JelpQmiXIv/oHAKg==}
+  /zhi-env/1.9.0:
+    resolution: {integrity: sha512-U8jMyLJjAVqXuM+rotmLz4t8U3fZjKKP3Iu3ApHzgX/qILcVZ/8EALV6sEvpYeyF9yg/cQUZgXQ3kuOWfGYddw==}
     dev: false
 
-  /zhi-log/1.5.5:
-    resolution: {integrity: sha512-5/VzI4Jaj106veUc7rQkYdGe9wYI+VLjRpAxPamPPOHqhyiRFMe+lh77xa0TUixq1OLjkHRBu7yfy0FpDrcq+Q==}
+  /zhi-log/1.5.6:
+    resolution: {integrity: sha512-f/tIRFx0xxDbHhkrB5OSyZZEYNbcgzGxdn7MlnB/TdmWlOyxiCooG7/dgUXnL5MixZqw3tdV43M/krJjOONmdQ==}
     dependencies:
       callsites: 4.0.0
       loglevel: 1.8.1
       loglevel-plugin-prefix: 0.8.4
-      zhi-env: 1.8.2
+      zhi-env: 1.9.0
     dev: false
 
-  /zhi-sdk/1.0.10:
-    resolution: {integrity: sha512-abJc/AjfjcBgw2akhp5Qykk+wagR3uiLJPvgqVbpMDlvboIcb0bP6I6COJl26xZbTBftsyuNlGViYlqoi0UYyw==}
+  /zhi-sdk/1.0.11:
+    resolution: {integrity: sha512-zgcBFS8GVFfKJR/z8ubyi/oehx0CdP3y9qsRj7nBvCv7p5gra8kbhX3QMhYl0x5TP9EQxh9frGCMbCqIX+ceEw==}
     dependencies:
       compare-versions: 6.0.0-rc.1
-      zhi-log: 1.5.5
+      zhi-log: 1.5.6
     dev: false

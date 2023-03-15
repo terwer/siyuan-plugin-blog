@@ -8,7 +8,6 @@
 <script lang="ts" setup>
 import ZhiUtil from "zhi-common"
 import { version } from "~/package.json"
-import { ThemeFromEnum } from "zhi-common"
 import Env from "zhi-env"
 
 const nuxtEnv = useRuntimeConfig()
