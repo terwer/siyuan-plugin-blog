@@ -14,4 +14,10 @@ export default defineNuxtConfig({
   app: {
     baseURL: appBase,
   },
+  runtimeConfig: {
+    public: {
+      VITE_LOG_LEVEL: "INFO",
+      VITE_DEBUG_MODE: false,
+    },
+  },
 })
