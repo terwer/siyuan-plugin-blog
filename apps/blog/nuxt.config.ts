@@ -8,18 +8,21 @@ console.log("isVercelBuild=>", isVercelBuild)
 console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  modules: ["@nuxt/content"],
+  content: {
+    // https://content.nuxtjs.org/api/configuration
+  },
   typescript: {
     shim: false,
     strict: true,
     typeCheck: true,
   },
-  vite: {
-    build: {
-      minify: false,
-    },
-  },
+  // vite: {
+  //   build: {
+  //     minify: false,
+  //   },
+  // },
   app: {
     baseURL: appBase,
   },
@@ -29,7 +32,7 @@ export default defineNuxtConfig({
       VITE_DEBUG_MODE: false,
     },
   },
-  nitro: {
-    serveStatic: !isDev,
-  },
+  // nitro: {
+  //   serveStatic: !isDev,
+  // },
 })
