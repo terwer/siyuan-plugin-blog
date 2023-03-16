@@ -17,7 +17,7 @@
 
 import siyuan from "siyuan"
 import { IPluginCommand } from "siyuan/types"
-import ZhiUtil from "zhi-common"
+import ZhiUtil from "../../../../../../../../../../../zhi-common"
 import Env from "zhi-env"
 
 const Plugin = siyuan.Plugin
@@ -29,6 +29,8 @@ class ZhiBlogBlogPlugin extends Plugin {
   constructor() {
     super()
     const env = new Env(import.meta.env)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const zhiSdk = ZhiUtil.zhiSdk(env)
     this.logger = zhiSdk.getLogger()
   }

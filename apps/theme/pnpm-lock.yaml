@@ -22,10 +22,6 @@ specifiers:
   vite-plugin-eslint: ^1.8.1
   vitest: ^0.29.2
   vue-eslint-parser: ^9.1.0
-  zhi-common: ^1.0.7
-
-dependencies:
-  zhi-common: 1.0.7
 
 devDependencies:
   '@types/fs-extra': 11.0.1
@@ -976,11 +972,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /callsites/4.0.0:
-    resolution: {integrity: sha512-y3jRROutgpKdz5vzEhWM34TidDU8vkJppF8dszITeb1PQmSqV3DTxyV8G/lyO/DNvtE1YTedehmw9MPZsCBHxQ==}
-    engines: {node: '>=12.20'}
-    dev: false
-
   /camelcase-keys/6.2.2:
     resolution: {integrity: sha512-YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==}
     engines: {node: '>=8'}
@@ -1085,10 +1076,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /compare-versions/6.0.0-rc.1:
-    resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
-    dev: false
 
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -1969,15 +1956,6 @@ packages:
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
-
-  /loglevel-plugin-prefix/0.8.4:
-    resolution: {integrity: sha512-WpG9CcFAOjz/FtNht+QJeGpvVl/cdR6P0z6OcXSkr8wFJOsV2GRj2j10JLfjuA4aYkcKCNIEqRGCyTife9R8/g==}
-    dev: false
-
-  /loglevel/1.8.1:
-    resolution: {integrity: sha512-tCRIJM51SHjAayKwC+QAg8hT8vg6z7GSgLJKGvzuPb1Wc+hLzqtuVLxp6/HzSPOozuK+8ErAhy7U/sVzw8Dgfg==}
-    engines: {node: '>= 0.6.0'}
-    dev: false
 
   /loupe/2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
@@ -3297,29 +3275,3 @@ packages:
     optionalDependencies:
       commander: 9.5.0
     dev: true
-
-  /zhi-common/1.0.7:
-    resolution: {integrity: sha512-7353muaWBa0YciJEcoDHJfmtLCO+LVZi/eF+S8wxBXCY/TxB0fZ+UiGtO0l/+x0v10tKzrEZT3irpMgjNUSU5Q==}
-    dependencies:
-      zhi-sdk: 1.0.11
-    dev: false
-
-  /zhi-env/1.9.0:
-    resolution: {integrity: sha512-U8jMyLJjAVqXuM+rotmLz4t8U3fZjKKP3Iu3ApHzgX/qILcVZ/8EALV6sEvpYeyF9yg/cQUZgXQ3kuOWfGYddw==}
-    dev: false
-
-  /zhi-log/1.5.6:
-    resolution: {integrity: sha512-f/tIRFx0xxDbHhkrB5OSyZZEYNbcgzGxdn7MlnB/TdmWlOyxiCooG7/dgUXnL5MixZqw3tdV43M/krJjOONmdQ==}
-    dependencies:
-      callsites: 4.0.0
-      loglevel: 1.8.1
-      loglevel-plugin-prefix: 0.8.4
-      zhi-env: 1.9.0
-    dev: false
-
-  /zhi-sdk/1.0.11:
-    resolution: {integrity: sha512-zgcBFS8GVFfKJR/z8ubyi/oehx0CdP3y9qsRj7nBvCv7p5gra8kbhX3QMhYl0x5TP9EQxh9frGCMbCqIX+ceEw==}
-    dependencies:
-      compare-versions: 6.0.0-rc.1
-      zhi-log: 1.5.6
-    dev: false

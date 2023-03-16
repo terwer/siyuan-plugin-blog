@@ -16,8 +16,8 @@
  */
 
 import siyuan from "siyuan"
-import ZhiUtil from "zhi-common"
-import Translucify from "~/src/zhi-plugins/zhi-picture-plugin/translucify"
+import ZhiUtil from "../../../../../../../../../../../zhi-common"
+import Translucify from "~/src/zhi-plugins/zhi-picture/translucify"
 import Env from "zhi-env"
 
 /**
@@ -34,6 +34,8 @@ class ZhiPicturePlugin extends siyuan.Plugin {
   constructor() {
     super()
     const env = new Env(import.meta.env)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const zhiSdk = ZhiUtil.zhiSdk(env)
     this.logger = zhiSdk.getLogger()
 

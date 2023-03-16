@@ -47,6 +47,14 @@ class ZhiBuild {
       console.log("manifest.json copied.")
     }
 
+    // 复制 README.md
+    const readmePath = path.join(entryPath, "README.md")
+    const readmeToPath = path.join(pluginBasePath, entryFolder, "README.md")
+    if (fs.pathExistsSync(manifestPath)) {
+      fs.copySync(readmePath, readmeToPath)
+      console.log("README.md copied.")
+    }
+
     const mainToPath = path.join(pluginBasePath, entryFolder)
     return path.join(mainToPath, "main.js")
   }
@@ -89,9 +97,8 @@ class ZhiBuild {
                 const entryFolder = entryPath.split("/").pop() ?? ""
                 console.log("entryFolder=>", entryFolder)
 
-                // 插件系统
-                if (entryFolder.includes("-plugin")) {
-                  // 插件
+                // 插件
+                if (entryFolder.includes("zhi-")) {
                   chunkName = that.handlePluginName(chunkInfo)
                 } else {
                   // 其他，比如主题入口

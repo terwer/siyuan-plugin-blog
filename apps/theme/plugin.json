@@ -1,17 +1,17 @@
 [
   {
-    "entry": "./src/zhi-plugins/zhi-picture-plugin/main.ts",
-    "name": "ZhiPicturePlugin",
-    "fileName": "zhi-picture-plugin"
+    "entry": "./src/zhi-plugins/zhi-picture/main.ts",
+    "name": "ZhiPicture",
+    "fileName": "zhi-picture"
   },
   {
-    "entry": "./src/zhi-plugins/zhi-blog-plugin/main.ts",
-    "name": "ZhiBlogPlugin",
-    "fileName": "zhi-blog-plugin"
+    "entry": "./src/zhi-plugins/zhi-blog/main.ts",
+    "name": "ZhiBlog",
+    "fileName": "zhi-blog"
   },
   {
-    "entry": "./src/zhi-plugins/zhi-publisher-plugin/main.ts",
-    "name": "ZhiPublisherPlugin",
-    "fileName": "zhi-publisher-plugin"
+    "entry": "./src/zhi-plugins/zhi-publisher/main.ts",
+    "name": "ZhiPublisher",
+    "fileName": "zhi-publisher"
   }
 ]
