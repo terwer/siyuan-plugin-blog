@@ -22,17 +22,18 @@
 
 <script setup lang="ts">
 import Env from "zhi-env"
-import ZhiUtil from "zhi-common"
+import ZhiUtil from "~/utils/zhiUtil"
 import OutboundLink from "~/components/vdoing/OutboundLink.vue"
 import VdoingUtil from "~/utils/vdoingUtil"
-import NavLink from "~/components/vdoing/NavLink.vue";
-import DropdownLink from "~/components/vdoing/DropdownLink.vue";
+import NavLink from "~/components/vdoing/NavLink.vue"
+import DropdownLink from "~/components/vdoing/DropdownLink.vue"
 
-const appConfig = useAppConfig()
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
 const zhiSdk = ZhiUtil.zhiSdk(env)
 const logger = zhiSdk.getLogger()
+
+const appConfig = useAppConfig()
 
 const computes = {
   nav: computed(() => {

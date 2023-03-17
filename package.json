@@ -11,7 +11,7 @@
     "build:js": "nuxt build",
     "generate": "pnpm build:css && nuxt generate",
     "generate:vercel": "pnpm build:css && BUILD_TYPE=vercel nuxt generate",
-    "ci": "pnpm inatsll && pnpm build",
+    "ci": "pnpm install && pnpm build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "package:vercel": "bash package.sh",
