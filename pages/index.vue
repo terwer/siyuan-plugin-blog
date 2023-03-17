@@ -5,9 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import ZhiUtil, { ThemeFromEnum } from "zhi-common"
+import ZhiUtil from "~/utils/zhiUtil"
 import { version } from "~/package.json"
 import Env from "zhi-env"
+import ThemeFromEnum from "~/utils/enums/themeFromEnum"
 
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)

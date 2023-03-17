@@ -14,10 +14,10 @@ specifiers:
   stylus: ^0.59.0
   typescript: ^4.9.5
   vue-tsc: ^1.2.0
-  zhi-common: ^1.0.7
+  zhi-sdk: ^1.0.12
 
 dependencies:
-  zhi-common: 1.0.7
+  zhi-sdk: 1.0.12
 
 devDependencies:
   '@nuxt/content': 2.5.2
@@ -8740,30 +8740,24 @@ packages:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
     dev: true
 
-  /zhi-common/1.0.7:
-    resolution: {integrity: sha512-7353muaWBa0YciJEcoDHJfmtLCO+LVZi/eF+S8wxBXCY/TxB0fZ+UiGtO0l/+x0v10tKzrEZT3irpMgjNUSU5Q==}
-    dependencies:
-      zhi-sdk: 1.0.11
+  /zhi-env/1.10.0:
+    resolution: {integrity: sha512-CqyIOlAV1QZ3SiBZu2UP63OAD+wAxyJ9DW3u1MsEmFwAfBC69IDGXRp5TU33IQ32DWKqm95+CkFoTjb1r87OhQ==}
     dev: false
 
-  /zhi-env/1.9.0:
-    resolution: {integrity: sha512-U8jMyLJjAVqXuM+rotmLz4t8U3fZjKKP3Iu3ApHzgX/qILcVZ/8EALV6sEvpYeyF9yg/cQUZgXQ3kuOWfGYddw==}
-    dev: false
-
-  /zhi-log/1.5.6:
-    resolution: {integrity: sha512-f/tIRFx0xxDbHhkrB5OSyZZEYNbcgzGxdn7MlnB/TdmWlOyxiCooG7/dgUXnL5MixZqw3tdV43M/krJjOONmdQ==}
+  /zhi-log/1.6.1:
+    resolution: {integrity: sha512-BXXQ2FMqNKFotLLPUDyxtz74ZJl8Ihzxz6ZE8H3dTdc58GW5DLARN4jcyAq4EDGTRyzkrmCMsPG3Gf62tG+1kw==}
     dependencies:
       callsites: 4.0.0
       loglevel: 1.8.1
       loglevel-plugin-prefix: 0.8.4
-      zhi-env: 1.9.0
+      zhi-env: 1.10.0
     dev: false
 
-  /zhi-sdk/1.0.11:
-    resolution: {integrity: sha512-zgcBFS8GVFfKJR/z8ubyi/oehx0CdP3y9qsRj7nBvCv7p5gra8kbhX3QMhYl0x5TP9EQxh9frGCMbCqIX+ceEw==}
+  /zhi-sdk/1.0.12:
+    resolution: {integrity: sha512-MOwHvADEFrMOJV6a/y/qMdgTSDtBmMX7wlzA4YxhUgyMjKc1WhSL0lveo06owdD5zXgVrsIM8Qvc01HBzRJYHg==}
     dependencies:
       compare-versions: 6.0.0-rc.1
-      zhi-log: 1.5.6
+      zhi-log: 1.6.1
     dev: false
 
   /zip-stream/4.1.0:

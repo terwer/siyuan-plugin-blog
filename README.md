@@ -1,6 +1,6 @@
 # zhi-blog
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+a blog based on siyuan-note api
 
 ## 规范
 
@@ -20,7 +20,7 @@ pnpm install
 Start the development server on http://localhost:3000
 
 ```bash
-pnpm dev -o
+pnpm dev
 ```
 
 ## Production

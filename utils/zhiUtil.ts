@@ -23,49 +23,33 @@
  * questions.
  */
 
-import { normalize } from "pathe"
-
-export const hashRE = /#.*$/
-export const extRE = /\.(md|html)$/
-export const endingSlashRE = /\/$/
-export const outboundRE = /^[a-z]+:/i
+import ZhiSdk from "zhi-sdk"
+import Env from "zhi-env"
 
 /**
- * Vdoing 主题工具类
+ * 工具类统一入口
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
  */
-class VdoingUtil {
-  public static resolveNavLinkItem(linkItem: any) {
-    return Object.assign(linkItem, {
-      type: linkItem.items && linkItem.items.length ? "links" : "link",
-    })
-  }
+class ZhiUtil {
+  private static zhiSdkObj: ZhiSdk
 
-  public static isExternal(path: string) {
-    return outboundRE.test(path)
-  }
-
-  public static isMailto(path: string) {
-    return /^mailto:/.test(path)
-  }
-
-  public static isTel(path: string) {
-    return /^tel:/.test(path)
-  }
-
-  public static ensureExt(path: string) {
-    if (VdoingUtil.isExternal(path)) {
-      return path
+  /**
+   * 获取 zhi-sdk 实例
+   *
+   * @param env - 环境变量对象
+   */
+  public static zhiSdk(env: Env) {
+    if (!ZhiUtil.zhiSdkObj) {
+      ZhiUtil.zhiSdkObj = new ZhiSdk(env)
+      const logger = ZhiUtil.zhiSdkObj.getLogger()
+      const common = ZhiUtil.zhiSdkObj.common
+      logger.debug(common.strUtil.f("ZhiSdk inited, components are available now, like logger, env and so on."))
     }
-    if (!path) return "404"
-    const hashMatch = path.match(hashRE)
-    const hash = hashMatch ? hashMatch[0] : ""
-    const normalized = normalize(path)
-
-    if (endingSlashRE.test(normalized)) {
-      return path
-    }
-    return normalized + ".html" + hash
+    return ZhiUtil.zhiSdkObj
   }
 }
 
-export default VdoingUtil
+export default ZhiUtil

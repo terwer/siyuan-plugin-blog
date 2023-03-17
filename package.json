@@ -1,16 +1,17 @@
 {
   "name": "zhi-blog",
-  "version": "0.0.1",
-  "description": "a simple blog for siyuan-note",
+  "version": "1.1.2",
+  "description": "a blog based on siyuan-note api",
   "type": "module",
   "scripts": {
+    "dev": "pnpm build:css && nuxt dev",
     "watch:css": "stylus --watch blog.styl --out ./public/blog.css",
     "build": "pnpm build:css && pnpm build:js",
     "build:css": "stylus --compress blog.styl --out ./public/blog.css",
     "build:js": "nuxt build",
-    "dev": "pnpm build:css && nuxt dev",
     "generate": "pnpm build:css && nuxt generate",
     "generate:vercel": "pnpm build:css && BUILD_TYPE=vercel nuxt generate",
+    "ci": "pnpm inatsll && pnpm build",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "package:vercel": "bash package.sh",
@@ -36,7 +37,7 @@
     "vue-tsc": "^1.2.0"
   },
   "dependencies": {
-    "zhi-common": "^1.0.7"
+    "zhi-sdk": "^1.0.12"
   },
   "keywords": [
     "zhi",
