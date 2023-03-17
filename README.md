@@ -2,30 +2,19 @@
 
 🛍️ 一款自带插件和博客的思源笔记主题
 
+[![dev checks](https://img.shields.io/github/checks-status/terwer/zhi/main?label=build)](https://github.com/terwer/zhi/tree/main)
 ![version](https://img.shields.io/github/release/terwer/zhi.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
+[![](https://img.shields.io/badge/主题源码-code-red)](https://github.com/terwer/src-sy-post-publisher)
+[![](https://img.shields.io/badge/博客源码-code-green)](https://github.com/terwer/src-sy-post-publisher)
 
-⚠️温馨提示：如果你只想要一个轻量级的主题，请移步：[zhi-mini](https://github.com/terwer/zhi-mini)
-
-`zhi` 和 `zhi-mini` 会同步更新。唯一的区别是 zhi-mini 更加轻量级，不会包含主题之外的任何组件。
-
-## 主题展示
-
-### 浅色风格
-
-![](https://static.terwergreen.com/test/202303050157804.png)
-
-### 暗黑风格
-
-![](https://static.terwergreen.com/test/202303050156263.png)
-
-### 博客主页
-
-![](https://static.terwergreen.com/test/202303052323466.png)
-
-### 快速上手
+## 快速上手
 
 直接在思源笔记 `集市` 下载 `zhi` 主题，然后在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
+
+## 版本适配
+
+思源笔记 <sup>2.7.6+</sup>
 
 ## 设计哲学
 
@@ -34,38 +23,12 @@
 - 插件功能单一化，杜绝功能无脑堆积
 - 组件尽可能保持可重用
 
-## 前排推荐
-
-zhi 系列生态
-
-- [zhi](https://github.com/terwer/zhi)
-- [zhi-mini](https://github.com/terwer/zhi-mini)
-- [zhi-cli](https://github.com/terwer/zhi-cli)
-- [zhi-common](https://github.com/terwer/zhi-common)
-  - [zhi-sdk](https://github.com/terwer/zhi-sdk)
-      - [zhi-env](https://github.com/terwer/zhi-env)
-      - [zhi-log](https://github.com/terwer/zhi-log)
-      - zhi-core
-      - zhi-blog-api
-      - zhi-siyuan-api
-
 ⚠️ 特别提醒 1: `1.0.0` 为前期可用版本，功能上尚不全面，仅作为测试使用，欢迎 issue
 提出宝贵意见。此版本特性，请参照 [核心特性](#核心特性) 。
 
 ⚠️ 特别提醒 2: 插件系统默认为 `安全模式` ，所有插件禁用，需要点击右上角设置菜单关闭安全模式，才能开启插件系统。
 
-⚠️ 特别提醒 3: 所有插件默认关闭，需要手动在插件列表开启对应插件才能使用，目前内置可用的插件如下：
-
-- 系统设置插件（插件系统内置）
-- 示例插件-需手动开启
-- 图片背景自动透明插件-需手动开启
-- 思源笔记发布工具集成插件-需手动开启
-- 博客插件-需手动开启
-- 更多插件开发中，敬请期待...
-
-## 版本适配
-
-思源笔记 <sup>2.7.6+</sup>
+⚠️ 特别提醒 3: 所有插件默认关闭，需要手动在插件列表开启对应插件才能使用。
 
 ## 核心特性
 
@@ -88,7 +51,7 @@ zhi 系列生态
 
 - 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个在线博客
 
-  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/apps/blog/dist/
+  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/blog/
 
   挂件版博客管理与发布主页：http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
 
@@ -101,6 +64,19 @@ zhi 系列生态
 - [ ] 博客权限控制
 
 ## 技术路线
+
+### zhi 系列生态
+
+- [zhi](https://github.com/terwer/zhi)
+- [zhi-mini](https://github.com/terwer/zhi-mini)
+- [zhi-cli](https://github.com/terwer/zhi-cli)
+- [zhi-common](https://github.com/terwer/zhi-common)
+  - [zhi-sdk](https://github.com/terwer/zhi-sdk)
+      - [zhi-env](https://github.com/terwer/zhi-env)
+      - [zhi-log](https://github.com/terwer/zhi-log)
+      - zhi-core
+      - zhi-blog-api
+      - zhi-siyuan-api
 
 ### 核心框架
 
@@ -128,6 +104,8 @@ zhi 系列生态
 - zhi-blog
     - zhi-common
 
+现阶段 `zhi-theme` = `zhi-mini` ， 即 `zhi-theme` 已经规划到 `zhi-mini` 了。
+
 其中，公共组件( `zhi-common` )基于我的另一个脚手架项目 [zhi-cli](https://github.com/terwer/zhi-cli) 的模板类型 `ts-vite-lib` 生成:
 
 ```bash
@@ -139,29 +117,16 @@ zhi-cli init common ts-vite-lib
 ### 项目结构
 
 ```
-├── README.md
-├── apps 应用根目录
-│   ├── common 公共组件根目录
-│   ├── blog 博客根目录
-│   │   ├── dist 博客预览入口
-│   │   ├── app.vue 博客vue源码入口
-│   │   ├── app.styl 博客styl源码入口
-│   │   ├── .prettierrc.json 博客ts源码格式化配置
-│   │   ├── .stylelintrc.json 博客styl样式格式化配置
-│   └── theme 主题根目录
-│       ├── theme.ts 主题ts源码入口
-│       ├── theme.styl 主题styl源码入口
-│       ├── .prettierrc.json 主题ts源码格式化配置
-│       ├── .stylelintrc.json 主题styl样式格式化配置
-├── styles 样式根目录
+├── blog 博客根目录
+├── theme 主题根目录
 ├── scripts 脚本根目录
+├── docs 帮助文档
+├── temp 博客和主题插件的临时压缩包
+├── .github Github-Actions-CI持续集成和release-please自动发版
 ├── theme.json 主题描述文件         
 ├── theme.js 主题js文件，自动生成，请勿修改
 ├── theme.css 主题css文件，自动生成，请勿修改
-├── .stylelintrc.json 全局样式格式化配置
-├── .github Github-Actions-CI持续集成和release-please自动发版
-├── docs 帮助文档
-├── temp 博客和主题插件的临时压缩包
+├── README.md
 ```
 
 特别说明：
