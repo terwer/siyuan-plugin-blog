@@ -135,42 +135,6 @@ zhi-cli init common ts-vite-lib
 
 - 发版本之后删除上一版
 
-推荐使用 `IntelliJ IDEA` 或者 `vscode` 进行开发。
-
-### 本地调试
-
-1. 下载压缩包，解压到主题目录。主题目录在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> - <kbd>打开主题文件夹</kbd>
-
-2. 安装依赖，构建项目
-
-```bash
-npm i -g pnpm
-pnpm dependency
-pnpm build
-```
-
-3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
-
-## Useful scripts
-
-### CI building
-
-```bash
-pnpm ci
-```
-
-### Preparing for publishing to npm
-
-```bash
-pnpm package
-```
-
-### Docs
-
-```bash
-pnpm docs
-```
-
 ## 感谢
 
 感谢 [zuoez02](https://github.com/zuoez02/siyuan-plugin-system) 提供的插件系统
