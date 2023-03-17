@@ -119,13 +119,14 @@ zhi-cli init common ts-vite-lib
 ```
 ├── blog 博客根目录
 ├── theme 主题根目录
+├── plugins 插件根目录
 ├── scripts 脚本根目录
 ├── docs 帮助文档
 ├── temp 博客和主题插件的临时压缩包
-├── .github Github-Actions-CI持续集成和release-please自动发版
+├── .github Github-Actions-CI 持续集成和 release-please 自动发版
 ├── theme.json 主题描述文件         
-├── theme.js 主题js文件，自动生成，请勿修改
-├── theme.css 主题css文件，自动生成，请勿修改
+├── theme.js 主题js入口
+├── theme.css 主题css入口
 ├── README.md
 ```
 
