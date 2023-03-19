@@ -30,9 +30,7 @@
 
     <Footer />
 
-    <!--
-    <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
-    -->
+    <Buttons ref="buttons" @toggle-theme-mode="methods.toggleThemeMode" />
 
     <BodyBgImg v-if="appConfig.themeConfig.bodyBgImg" />
 
@@ -56,6 +54,8 @@
 import Navbar from "~/components/vdoing/Navbar.vue"
 import Footer from "~/components/vdoing/Footer.vue"
 import BodyBgImg from "~/components/vdoing/BodyBgImg.vue"
+import Buttons from "~/components/vdoing/Buttons.vue"
+import storage from "good-storage"
 
 const appConfig = useAppConfig()
 
@@ -63,10 +63,10 @@ const appConfig = useAppConfig()
 useHead({
   title: appConfig.siteTitle + " - " + appConfig.siteSlogan,
   meta: [{ name: "description", content: appConfig.siteDescription }],
-  bodyAttrs: {
-    class: "theme-mode-light theme-style-card",
-  },
-  htmlAttrs: {},
+  // bodyAttrs: {
+  //   class: "theme-mode-light theme-style-card",
+  // },
+  // htmlAttrs: {},
 })
 
 // datas
@@ -139,6 +139,25 @@ const methods = {
     console.log(datas.isSidebarOpen)
     // this.$emit('toggle-sidebar', this.isSidebarOpen)
   },
+
+  _autoMode: () => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      // 系统处于深色模式
+      datas.themeMode = "dark"
+    } else {
+      datas.themeMode = "light"
+    }
+  },
+  toggleThemeMode: (key: string) => {
+    console.log("toggleThemeMode triggered", key)
+    if (key === "auto") {
+      methods._autoMode()
+    } else {
+      datas.themeMode = key
+    }
+    storage.set("mode", key)
+  },
+
   windowLB: () => {
     return "<p>test1</p>"
     // return this.getHtmlStr('windowLB')
@@ -147,17 +166,57 @@ const methods = {
     return "<p>test2</p>"
     // return this.getHtmlStr('windowRB')
   },
+
+  setBodyClass: () => {
+    const bodyBgImg = appConfig.themeConfig.bodyBgImg
+    let pageStyle = appConfig.themeConfig.pageStyle ?? "card"
+    if ((pageStyle !== "card" && pageStyle !== "line") || bodyBgImg) {
+      pageStyle = "card"
+    }
+    document.body.className = `theme-mode-${datas.themeMode} theme-style-${pageStyle}`
+  },
 }
 
 // lifecycles
-// onBeforeMount(() => {
-//   document.body.classList.toggle("theme-mode-light")
-//   document.body.classList.toggle("theme-style-card")
-// })
+onBeforeMount(() => {
+  // this.isSidebarOpenOfclientWidth()
+  const mode = storage.get("mode") // 不放在created是因为vuepress不能在created访问浏览器api，如window
+  const { defaultMode } = appConfig.themeConfig
+
+  console.log("mode=>", mode)
+  console.log("defaultMode", defaultMode)
+
+  if (defaultMode && defaultMode !== "auto" && !mode) {
+    datas.themeMode = defaultMode
+  } else if (!mode || mode === "auto" || (!mode && defaultMode === "auto")) {
+    // 当未切换过模式，或模式处于'跟随系统'时
+    methods._autoMode()
+  } else {
+    console.log("zzzzz", mode)
+    datas.themeMode = mode
+  }
+  methods.setBodyClass()
+
+  // 引入图标库
+  const social = appConfig.themeConfig.social
+  if (social && social.iconfontCssFile) {
+    let linkElm = document.createElement("link")
+    linkElm.setAttribute("rel", "stylesheet")
+    linkElm.setAttribute("type", "text/css")
+    linkElm.setAttribute("href", social.iconfontCssFile)
+    document.head.appendChild(linkElm)
+  }
+})
+
+watch(
+  () => datas.themeMode,
+  () => {
+    methods.setBodyClass()
+  }
+)
 </script>
 
 <style lang="stylus">
-@require "../assets/vdoing/styles/palette"
 @require "../assets/vdoing/styles/index"
 
 .custom-html-window

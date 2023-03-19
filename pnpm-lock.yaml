@@ -7,6 +7,7 @@ specifiers:
   eslint: ^8.36.0
   eslint-config-prettier: ^8.7.0
   eslint-plugin-prettier: ^4.2.1
+  good-storage: ^1.1.1
   nuxt: ^3.2.3
   nuxt-meilisearch: ^0.1.7
   prettier: ^2.8.4
@@ -20,6 +21,7 @@ specifiers:
   zhi-sdk: ^1.0.12
 
 dependencies:
+  good-storage: 1.1.1
   vue-instantsearch: 4.8.7
   zhi-sdk: 1.0.12
 
@@ -4454,6 +4456,10 @@ packages:
   /globrex/0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
+
+  /good-storage/1.1.1:
+    resolution: {integrity: sha512-+0UEpRT03fJgEJoeTVVz41ISC5+jaQrDIWatQ4BoDQfOiBBsjNanymi9sAtLFdEAADQN0FYR8mGpeqxSCe8oXQ==}
+    dev: false
 
   /gopd/1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}

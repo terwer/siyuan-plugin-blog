@@ -114,17 +114,13 @@ export default defineAppConfig({
     // archive: false, // 是否打开归档功能，默认true
     // categoryText: '随笔', // 碎片化文章（_posts文件夹的文章）预设生成的分类值，默认'随笔'
 
-    // pageStyle: 'line', // 页面风格，可选值：'card'卡片 | 'line' 线（未设置bodyBgImg时才生效）， 默认'card'。 说明：card时背景显示灰色衬托出卡片样式，line时背景显示纯色，并且部分模块带线条边框
+    pageStyle: "line", // 页面风格，可选值：'card'卡片 | 'line' 线（未设置bodyBgImg时才生效）， 默认'card'。 说明：card时背景显示灰色衬托出卡片样式，line时背景显示纯色，并且部分模块带线条边框
 
-    bodyBgImg: <string[] | string>[
-      "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175828.jpeg",
-      "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175845.jpeg",
-      "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175846.jpeg",
-    ],
+    bodyBgImg: <string[] | string>[],
     // bodyBgImg: [
-    //   'https://fastly.jsdelivr.net/gh/xugaoyi/image_store/blog/20200507175828.jpeg',
-    //   'https://fastly.jsdelivr.net/gh/xugaoyi/image_store/blog/20200507175845.jpeg',
-    //   'https://fastly.jsdelivr.net/gh/xugaoyi/image_store/blog/20200507175846.jpeg'
+    //     "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175828.jpeg",
+    //     "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175845.jpeg",
+    //     "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175846.jpeg",
     // ], // body背景大图，默认无。 单张图片 String | 多张图片 Array, 多张图片时隔bodyBgImgInterval切换一张。
     bodyBgImgOpacity: 0.5,
     // bodyBgImgOpacity: 0.5, // body背景图透明度，选值 0.1~1.0, 默认0.5
@@ -146,7 +142,7 @@ export default defineAppConfig({
     // pageButton: false, // 是否显示快捷翻页按钮，默认true
 
     // 默认外观模式（用户未在页面手动修改过模式时才生效，否则以用户设置的模式为准），可选：'auto' | 'light' | 'dark' | 'read'，默认'auto'。
-    // defaultMode: 'auto',
+    defaultMode: "auto",
 
     // 侧边栏  'structuring' | { mode: 'structuring', collapsable: Boolean} | 'auto' | <自定义>    温馨提示：目录页数据依赖于结构化的侧边栏数据，如果你不设置为'structuring',将无法使用目录页
     sidebar: "structuring",
@@ -166,6 +162,7 @@ export default defineAppConfig({
 
     // 社交图标 (显示于博主信息栏和页脚栏。内置图标：https://doc.xugaoyi.com/pages/a20ce8/#social)
     social: {
+      iconfontCssFile: undefined,
       // iconfontCssFile: '//at.alicdn.com/t/xxx.css', // 可选，阿里图标库在线css文件地址，对于主题没有的图标可自己添加。阿里图片库：https://www.iconfont.cn/
       icons: [
         {
