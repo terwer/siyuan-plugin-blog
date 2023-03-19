@@ -8,7 +8,6 @@ console.log("isVercelBuild=>", isVercelBuild)
 console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
 
-// @ts-ignore
 export default defineNuxtConfig({
   modules: ["@nuxt/content", "nuxt-meilisearch"],
   content: {
@@ -43,7 +42,7 @@ export default defineNuxtConfig({
   // nitro: {
   //   serveStatic: !isDev,
   // },
-  css: ["@/assets/vdoing/styles/index.styl"],
+  css: ["~/assets/vdoing/styles/index.styl"],
   meilisearch: {
     hostUrl: "http://localhost:3000/api/middleware/meilisearch",
     // hostUrl: "http://localhost:7700",

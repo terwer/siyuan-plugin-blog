@@ -9,6 +9,7 @@
     "value-list-comma-space-before": "never",
     "value-list-comma-space-after": "always",
     "selector-class-pattern": null,
+    "font-family-no-missing-generic-family-keyword": "newer",
     "stylus/declaration-colon": "never",
     "stylus/pythonic": "always",
     "stylus/selector-list-comma": "never",

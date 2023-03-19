@@ -9,13 +9,12 @@
         :src="appConfig.themeConfig.logo"
         :alt="appConfig.siteTitle"
       />
-      <span
-        ref="siteName"
-        class="site-name"
-        v-if="appConfig.siteTitle"
-        :class="{ 'can-hide': appConfig.themeConfig.logo }"
-        >{{ appConfig.siteTitle }}</span
-      >
+      <div class="site-info">
+        <div ref="siteName" class="site-name" v-if="appConfig.siteTitle">
+          {{ appConfig.siteTitle }}
+        </div>
+        <div class="site-slogan">寻找未知的技术拼图</div>
+      </div>
     </NuxtLink>
 
     <div class="links" :style="datas.linksWrapMaxWidth ? { 'max-width': datas.linksWrapMaxWidth + 'px' } : {}">
@@ -82,11 +81,18 @@ $navbar-horizontal-padding = 1.5rem
     min-width $navbarHeight - 1.4rem
     margin-right 0.8rem
     vertical-align top
-  .site-name
-    font-size 1.3rem
-    font-weight 600
-    color var(--textColor)
-    position relative
+  .site-info
+    display inline-block
+    .site-name
+      font-size 1.2rem
+      height 0.6rem
+      margin-top -0.4rem
+      font-weight 600
+      color var(--textColor)
+      position relative
+    .site-slogan
+      margin-top 0.6rem
+      font-size 12px
   .links
     padding-left 1.5rem
     box-sizing border-box
@@ -106,7 +112,11 @@ $navbar-horizontal-padding = 1.5rem
 @media (max-width $MQNarrow)
   .navbar
     .site-name
-      display none
+      height 1.6rem !important
+    .site-slogan
+      margin-top -0.4rem !important
+
+// display none
 @media (max-width $MQMobile)
   .navbar
     padding-left 4rem

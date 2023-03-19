@@ -1,14 +1,16 @@
-// 引入字体图标
-// @import '//at.alicdn.com/t/font_1678482_4tbhmh589x.css'
+// 字体图标
+@import "../fonts/font-vdoing"
+// 网页字体
+@import "../fonts/webfont"
 
 @require "./palette"
-@require './config'
-@require './code'
-@require './custom-blocks'
-@require './arrow'
-@require './wrapper'
-@require './toc'
-@require './markdown-container'
+@require "./config"
+@require "./code"
+@require "./custom-blocks"
+@require "./arrow"
+@require "./wrapper"
+@require "./toc"
+@require "./markdown-container"
 
 
 html, body
@@ -16,7 +18,7 @@ html, body
   margin 0
 
 body
-  font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+  font-family $fontFamily
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   -webkit-tap-highlight-color transparent
@@ -309,7 +311,7 @@ th, td
     .page
       padding-left 0
 
-@require 'mobile.styl'
+@require "mobile.styl"
 
 // 打印时的样式
 @media print

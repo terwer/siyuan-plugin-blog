@@ -14,17 +14,17 @@ export default defineEventHandler(async (event) => {
     hits: [
       {
         id: 426674,
-        title: "Once Upon a Sesame Street Christmas",
+        title: "Once 这是测试标签啊 Upon a Sesame Street Christmas",
         overview:
-          'This holiday special goes back in time to show how Elmo\'s ancestors--not to mention those of Grover, Big Bird, Bert, Ernie, Oscar the Grouch and Cookie Monster--helped transform "the most unfriendly street in town" into the bright, kind, music-filled place it is today.',
+          'This holiday 测试中文啊 special goes back in time to show how Elmo\'s ancestors--not to mention those of Grover, Big Bird, Bert, Ernie, Oscar the Grouch and Cookie Monster--helped transform "the most unfriendly street in town" into the bright, kind, music-filled place it is today.',
         genres: ["Family"],
         poster: "https://image.tmdb.org/t/p/w500/3Nioii38Lgn9uZvhugKyrad8TBj.jpg",
         release_date: 1480032000,
         _formatted: {
           id: "426674",
-          title: "Once Upon a __ais-highlight__Sesa__/ais-highlight__me Street Christmas",
+          title: "Once Upon 这是测试标签 a __ais-highlight__Sesa__/ais-highlight__me Street Christmas",
           overview:
-            'This holiday special goes back in time to show how Elmo\'s ancestors--not to mention those of Grover, Big Bird, Bert, Ernie, Oscar the Grouch and Cookie Monster--helped transform "the most unfriendly street in town" into the bright, kind, music-filled place it is today.',
+            'This holiday 假期 special goes back in time to show how Elmo\'s ancestors--not to mention those of Grover, Big Bird, Bert, Ernie, Oscar the Grouch and Cookie Monster--helped transform "the most unfriendly street in town" into the bright, kind, music-filled place it is today.',
           genres: ["Family"],
           poster: "https://image.tmdb.org/t/p/w500/3Nioii38Lgn9uZvhugKyrad8TBj.jpg",
           release_date: "1480032000",

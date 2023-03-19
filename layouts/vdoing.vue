@@ -28,17 +28,13 @@
 
     <slot />
 
-    <!--
     <Footer />
-    -->
 
     <!--
     <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
     -->
 
-    <!--
-    <BodyBgImg v-if="$themeConfig.bodyBgImg" />
-    -->
+    <BodyBgImg v-if="appConfig.themeConfig.bodyBgImg" />
 
     <!-- 自定义html插入左右下角的小窗口 -->
     <div class="custom-html-window custom-html-window-lb" v-if="methods.windowLB" v-show="datas.showWindowLB">
@@ -58,8 +54,20 @@
 
 <script setup lang="ts">
 import Navbar from "~/components/vdoing/Navbar.vue"
+import Footer from "~/components/vdoing/Footer.vue"
+import BodyBgImg from "~/components/vdoing/BodyBgImg.vue"
 
 const appConfig = useAppConfig()
+
+// seo
+useHead({
+  title: appConfig.siteTitle + " - " + appConfig.siteSlogan,
+  meta: [{ name: "description", content: appConfig.siteDescription }],
+  bodyAttrs: {
+    class: "theme-mode-light theme-style-card",
+  },
+  htmlAttrs: {},
+})
 
 // datas
 const datas = reactive({
@@ -142,10 +150,10 @@ const methods = {
 }
 
 // lifecycles
-onBeforeMount(() => {
-  document.body.classList.toggle("theme-mode-light")
-  document.body.classList.toggle("theme-style-card")
-})
+// onBeforeMount(() => {
+//   document.body.classList.toggle("theme-mode-light")
+//   document.body.classList.toggle("theme-style-card")
+// })
 </script>
 
 <style lang="stylus">

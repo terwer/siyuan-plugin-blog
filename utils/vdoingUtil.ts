@@ -66,6 +66,16 @@ class VdoingUtil {
     }
     return normalized + ".html" + hash
   }
+
+  /**
+   * 类型判断
+   * @param o - 参数
+   */
+  public static type(o: any) {
+    const s = Object.prototype.toString.call(o)
+    const m = s.match(/\[object (.*?)\]/) ?? []
+    return m[1].toLowerCase()
+  }
 }
 
 export default VdoingUtil

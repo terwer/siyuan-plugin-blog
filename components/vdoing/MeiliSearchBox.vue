@@ -42,6 +42,7 @@ const client = useMeilisearchClient()
     .searchbox
       .ais-SearchBox-form
         input
+          font-family $fontFamily
           color var(--textColor)
           border 1px solid var(--borderColor, #ccc)
           cursor text
