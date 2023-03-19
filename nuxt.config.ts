@@ -9,7 +9,16 @@ console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
 
 export default defineNuxtConfig({
-  modules: ["@nuxt/content", "nuxt-meilisearch"],
+  // content
+  // https://content.nuxtjs.org/guide/writing/content-directory
+
+  // meilisearch
+  // https://github.com/xlanex6/nuxt-meilisearch
+  // https://docs.meilisearch.com/learn/getting_started/quick_start.html
+
+  // unplugin-icons
+  // https://github.com/antfu/unplugin-icons
+  modules: ["@nuxt/content", "nuxt-meilisearch", ["unplugin-icons/nuxt", {}]],
   content: {
     // https://content.nuxtjs.org/api/configuration
   },
@@ -21,11 +30,11 @@ export default defineNuxtConfig({
       extends: "../tsconfig.base.json",
     },
   },
-  // vite: {
-  //   build: {
-  //     minify: false,
-  //   },
-  // },
+  vite: {
+    build: {
+      minify: !isDev,
+    },
+  },
   app: {
     baseURL: appBase,
     head: {

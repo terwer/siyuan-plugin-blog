@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@iconify/json': ^2.2.36
   '@nuxt/content': ^2.5.2
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   '@types/lodash': ^4.14.191
@@ -16,6 +17,7 @@ specifiers:
   stylelint-stylus: ^0.18.0
   stylus: ^0.59.0
   typescript: ^4.9.5
+  unplugin-icons: ^0.15.3
   vue-instantsearch: ^4.8.7
   vue-tsc: ^1.2.0
   zhi-sdk: ^1.0.12
@@ -26,6 +28,7 @@ dependencies:
   zhi-sdk: 1.0.12
 
 devDependencies:
+  '@iconify/json': 2.2.36
   '@nuxt/content': 2.5.2
   '@nuxtjs/eslint-config-typescript': 12.0.0_vgl77cfdswitgr47lm5swmv43m
   '@types/lodash': 4.14.191
@@ -40,6 +43,7 @@ devDependencies:
   stylelint-stylus: 0.18.0_stylelint@15.2.0
   stylus: 0.59.0
   typescript: 4.9.5
+  unplugin-icons: 0.15.3
   vue-tsc: 1.2.0_typescript@4.9.5
 
 packages:
@@ -66,6 +70,17 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
+    dev: true
+
+  /@antfu/install-pkg/0.1.1:
+    resolution: {integrity: sha512-LyB/8+bSfa0DFGC06zpCEfs89/XoWZwws5ygEa5D+Xsm3OfI+aXQ86VgVG7Acyef+rSZ5HE7J8rrxzrQeM3PjQ==}
+    dependencies:
+      execa: 5.1.1
+      find-up: 5.0.0
+    dev: true
+
+  /@antfu/utils/0.7.2:
+    resolution: {integrity: sha512-vy9fM3pIxZmX07dL+VX1aZe7ynZ+YyB0jY+jE6r3hOK6GNY2t6W8rzpFC4tgpbXUYABkFQwgJq2XYXlxbXAI0g==}
     dev: true
 
   /@azure/abort-controller/1.1.0:
@@ -1199,6 +1214,30 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@iconify/json/2.2.36:
+    resolution: {integrity: sha512-M3NzzLjmE5udIO24EgT9MV1LfU5FQDw9nfAfgrV3NySiLMtZFoOvFEdURJihH2SJWCoFhIpRRkgSZKN8qWIhuQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+      pathe: 1.1.0
+    dev: true
+
+  /@iconify/types/2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: true
+
+  /@iconify/utils/2.1.5:
+    resolution: {integrity: sha512-6MvDI+I6QMvXn5rK9KQGdpEE4mmLTcuQdLZEiX5N+uZB+vc4Yw9K1OtnOgkl8mp4d9X0UrILREyZgF1NUwUt+Q==}
+    dependencies:
+      '@antfu/install-pkg': 0.1.1
+      '@antfu/utils': 0.7.2
+      '@iconify/types': 2.0.0
+      debug: 4.3.4
+      kolorist: 1.7.0
+      local-pkg: 0.4.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@ioredis/commands/1.2.0:
@@ -5261,6 +5300,10 @@ packages:
     resolution: {integrity: sha512-5FZRzrZzNTBruuurWpvZnvP9pum+fe0HcK8z/ooo+U+Hmp4vtbyp1/QDsqmufirXy4egGzbaH/y2uCZf+6W5Kg==}
     dev: true
 
+  /kolorist/1.7.0:
+    resolution: {integrity: sha512-ymToLHqL02udwVdbkowNpzjFd6UzozMtshPQKVi5k1EjKRqKqBrOnE9QbLEb0/pV76SAiIT13hdL8R6suc+f3g==}
+    dev: true
+
   /lazystream/1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
@@ -8409,6 +8452,34 @@ packages:
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
+    dev: true
+
+  /unplugin-icons/0.15.3:
+    resolution: {integrity: sha512-YWgJqv5AahrokeOnta8uX/m1damZA6Rf6zPClgHg2Fa/45iyOe3Lj+Wn/Ba+CSsq9yBffn17YfKfJNyWCNZPvw==}
+    peerDependencies:
+      '@svgr/core': '>=5.5.0'
+      '@vue/compiler-sfc': ^3.0.2 || ^2.7.0
+      vue-template-compiler: ^2.6.12
+      vue-template-es2015-compiler: ^1.9.0
+    peerDependenciesMeta:
+      '@svgr/core':
+        optional: true
+      '@vue/compiler-sfc':
+        optional: true
+      vue-template-compiler:
+        optional: true
+      vue-template-es2015-compiler:
+        optional: true
+    dependencies:
+      '@antfu/install-pkg': 0.1.1
+      '@antfu/utils': 0.7.2
+      '@iconify/utils': 2.1.5
+      debug: 4.3.4
+      kolorist: 1.7.0
+      local-pkg: 0.4.3
+      unplugin: 1.2.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /unplugin/1.2.0:

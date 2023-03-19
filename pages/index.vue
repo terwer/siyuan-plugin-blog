@@ -1,5 +1,8 @@
 <template>
   <div>
+    <icon-accessibility />
+    <icon-account-box style="font-size: 2em; color: red" />
+
     <div style="margin-top: 100px" v-for="testItem in testItems.items">
       index
       <p>{{ testItem }}</p>
@@ -12,6 +15,8 @@ import ZhiUtil from "~/utils/zhiUtil"
 import { version } from "~/package.json"
 import Env from "zhi-env"
 import ThemeFromEnum from "~/utils/enums/themeFromEnum"
+import IconAccessibility from "~icons/carbon/accessibility"
+import IconAccountBox from "~icons/mdi/account-box"
 
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)

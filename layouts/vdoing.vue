@@ -10,9 +10,7 @@
 
     <div class="sidebar-mask" @click="methods.toggleSidebar(false)"></div>
 
-    <!--
     <div v-if="appConfig?.themeConfig?.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
-    -->
 
     <!--
     <Sidebar :items="sidebarItems" @toggle-sidebar="methods.toggleSidebar" v-show="showSidebar">
@@ -23,11 +21,14 @@
         <div class="sidebar-slot sidebar-slot-bottom" v-html="sidebarSlotBottom"></div>
       </template>
       <slot name="sidebar-top" #top />
-      <slot name="sidebar-bottom" #bottom /> 
+      <slot name="sidebar-bottom" #bottom />
     </Sidebar>
     -->
 
-    <slot />
+    <!-- 正文 -->
+    <div class="content-main">
+      <slot />
+    </div>
 
     <!-- 页脚 -->
     <Footer />
@@ -217,6 +218,9 @@ watch(
 
 <style lang="stylus">
 @require "../assets/vdoing/styles/index"
+
+.content-main
+  margin-top 80px
 
 .custom-html-window
   position fixed
