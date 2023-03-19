@@ -19,12 +19,7 @@
     </NuxtLink>
 
     <div class="links" :style="datas.linksWrapMaxWidth ? { 'max-width': datas.linksWrapMaxWidth + 'px' } : {}">
-      <!--
-      <AlgoliaSearchBox v-if="computes.isAlgoliaSearch" :options="computes.algolia" />
-      -->
-      <!--
-      <SearchBox v-else-if="appConfig.themeConfig.search !== false" />
-      -->
+      <MeiliSearchBox v-if="computes.isMeilisearch" />
       <NavLinks class="can-hide" />
     </div>
   </header>
@@ -33,26 +28,45 @@
 <script setup lang="ts">
 import SidebarButton from "~/components/vdoing/SidebarButton.vue"
 import NavLinks from "~/components/vdoing/NavLinks.vue"
+import MeiliSearchBox from "~/components/vdoing/MeiliSearchBox.vue"
 
 const appConfig = useAppConfig()
 
+// datas
 const datas = reactive({
   linksWrapMaxWidth: null,
 })
 
+// computes
 const computes = {
-  algolia: computed(() => {
+  meilisearch: computed(() => {
     return {}
     // return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}
   }),
-  isAlgoliaSearch: computed(() => {
-    return false
+  isMeilisearch: computed(() => {
+    return true
     // return this.algolia && this.algolia.apiKey && this.algolia.indexName
   }),
 }
+
+// lifecycle
+onMounted(() => {
+  // const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
+  // const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
+  // const handleLinksWrapWidth = () => {
+  //   if (document.documentElement.clientWidth < MOBILE_DESKTOP_BREAKPOINT) {
+  //     this.linksWrapMaxWidth = null
+  //   } else {
+  //     this.linksWrapMaxWidth = this.$el.offsetWidth - NAVBAR_VERTICAL_PADDING
+  //         - (this.$refs.siteName && this.$refs.siteName.offsetWidth || 0)
+  //   }
+  // }
+  // handleLinksWrapWidth()
+  // window.addEventListener('resize', handleLinksWrapWidth, false)
+})
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 @require "../../assets/vdoing/styles/index"
 
 $navbar-vertical-padding = 0.7rem

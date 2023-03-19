@@ -27,6 +27,8 @@ module.exports = {
     semi: "off",
     quotes: "off",
     "no-undef": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "prettier/prettier": "error",
   },
 }

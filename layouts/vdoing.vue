@@ -7,16 +7,67 @@
   >
     <Navbar v-if="computes.shouldShowNavbar" @toggle-sidebar="methods.toggleSidebar" />
 
+    <div class="sidebar-mask" @click="methods.toggleSidebar(false)"></div>
+
+    <!--
+    <div v-if="appConfig?.themeConfig?.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
+    -->
+
+    <!--
+    <Sidebar :items="sidebarItems" @toggle-sidebar="methods.toggleSidebar" v-show="showSidebar">
+      <template #top v-if="sidebarSlotTop">
+        <div class="sidebar-slot sidebar-slot-top" v-html="sidebarSlotTop"></div>
+      </template>
+      <template #bottom v-if="sidebarSlotBottom">
+        <div class="sidebar-slot sidebar-slot-bottom" v-html="sidebarSlotBottom"></div>
+      </template>
+      <slot name="sidebar-top" #top />
+      <slot name="sidebar-bottom" #bottom /> 
+    </Sidebar>
+    -->
+
     <slot />
+
+    <!--
+    <Footer />
+    -->
+
+    <!--
+    <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
+    -->
+
+    <!--
+    <BodyBgImg v-if="$themeConfig.bodyBgImg" />
+    -->
+
+    <!-- 自定义html插入左右下角的小窗口 -->
+    <div class="custom-html-window custom-html-window-lb" v-if="methods.windowLB" v-show="datas.showWindowLB">
+      <div class="custom-wrapper">
+        <span class="close-but" @click="datas.showWindowLB = false">×</span>
+        <div v-html="methods.windowLB()" />
+      </div>
+    </div>
+    <div class="custom-html-window custom-html-window-rb" v-if="methods.windowRB" v-show="datas.showWindowRB">
+      <div class="custom-wrapper">
+        <span class="close-but" @click="datas.showWindowRB = false">×</span>
+        <div v-html="methods.windowRB()" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import Navbar from "~/components/vdoing/Navbar.vue"
 
+const appConfig = useAppConfig()
+
 // datas
 const datas = reactive({
   isSidebarOpen: false,
+  showSidebar: false,
+  themeMode: "auto",
+  showWindowLB: true,
+  showWindowRB: true,
 })
 
 // computes
@@ -79,6 +130,14 @@ const methods = {
     datas.isSidebarOpen = typeof to === "boolean" ? to : !datas.isSidebarOpen
     console.log(datas.isSidebarOpen)
     // this.$emit('toggle-sidebar', this.isSidebarOpen)
+  },
+  windowLB: () => {
+    return "<p>test1</p>"
+    // return this.getHtmlStr('windowLB')
+  },
+  windowRB: () => {
+    return "<p>test2</p>"
+    // return this.getHtmlStr('windowRB')
   },
 }
 

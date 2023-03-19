@@ -1,91 +1,100 @@
 <template>
-  <div>dropdown</div>
-  <!--
-  <div class="dropdown-wrapper" :class="{ open }">
-    <button class="dropdown-title" type="button" :aria-label="dropdownAriaLabel" @click="toggle">
-      <router-link v-if="item.link" :to="item.link" class="link-title">{{ item.text }}</router-link>
-      <span class="title" v-show="!item.link">{{ item.text }}</span>
-      <span class="arrow" :class="open ? 'down' : 'right'"></span>
+  <div class="dropdown-wrapper">
+    <button class="dropdown-title" type="button" :aria-label="computes.dropdownAriaLabel.value" @click="methods.toggle">
+      <NuxtLink v-if="props.item.link" :to="props.item.link" class="link-title">{{ props.item.text }}</NuxtLink>
+      <span class="title" v-show="!props.item.link">{{ props.item.text }}</span>
+      <span class="arrow" :class="datas.open ? 'down' : 'right'"></span>
     </button>
 
-    <DropdownTransition>
-      <ul class="nav-dropdown" v-show="open">
-        <li class="dropdown-item" :key="subItem.link || index" v-for="(subItem, index) in item.items">
+    <transition>
+      <ul class="nav-dropdown" v-show="datas.open">
+        <li class="dropdown-item" :key="subItem.link || index" v-for="(subItem, index) in props.item.items">
           <h4 v-if="subItem.type === 'links'">{{ subItem.text }}</h4>
 
           <ul class="dropdown-subitem-wrapper" v-if="subItem.type === 'links'">
             <li class="dropdown-subitem" :key="childSubItem.link" v-for="childSubItem in subItem.items">
               <NavLink
                 @focusout="
-                  isLastItemOfArray(childSubItem, subItem.items) && isLastItemOfArray(subItem, item.items) && toggle()
+                  methods.isLastItemOfArray(childSubItem, subItem.items) &&
+                    methods.isLastItemOfArray(subItem, props.item.items) &&
+                    methods.toggle()
                 "
                 :item="childSubItem"
               />
             </li>
           </ul>
 
-          <NavLink v-else @focusout="isLastItemOfArray(subItem, item.items) && toggle()" :item="subItem" />
+          <NavLink
+            v-else
+            @focusout="methods.isLastItemOfArray(subItem, props.item.items) && methods.toggle()"
+            :item="subItem"
+          />
         </li>
       </ul>
-    </DropdownTransition>
+    </transition>
   </div>
-  -->
 </template>
 
 <script setup lang="ts">
-// import DropdownTransition from "@theme/components/DropdownTransition.vue"
-// import last from "lodash/last"
-//
-// export default {
-//   components: { NavLink, DropdownTransition },
-//
-//   data() {
-//     return {
-//       open: false,
-//       isMQMobile: false,
-//     }
-//   },
-//
-//   props: {
-//     item: {
-//       required: true,
-//     },
-//   },
-//
-//   computed: {
-//     dropdownAriaLabel() {
-//       return this.item.ariaLabel || this.item.text
-//     },
-//   },
-//   beforeMount() {
-//     this.isMQMobile = window.innerWidth < 720 ? true : false
-//
-//     window.addEventListener("resize", () => {
-//       this.isMQMobile = window.innerWidth < 720 ? true : false
-//     })
-//   },
-//   methods: {
-//     toggle() {
-//       if (this.isMQMobile) {
-//         this.open = !this.open
-//       }
-//     },
-//
-//     isLastItemOfArray(item, array) {
-//       return last(array) === item
-//     },
-//   },
-//
-//   watch: {
-//     $route() {
-//       this.open = false
-//     },
-//   },
-// }
+import last from "lodash/last"
+
+import NavLink from "~/components/vdoing/NavLink.vue"
+
+// props
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+})
+
+// uses
+const route = useRoute()
+
+// datas
+const datas = reactive({
+  open: false,
+  isMQMobile: false,
+})
+
+// computes
+const computes = {
+  dropdownAriaLabel: computed(() => {
+    return props.item.ariaLabel || props.item.text
+  }),
+}
+
+// methods
+const methods = {
+  toggle: () => {
+    if (datas.isMQMobile) {
+      datas.open = !datas.open
+    }
+  },
+  isLastItemOfArray: (item: any, array: any) => {
+    return last(array) === item
+  },
+}
+
+// lifecycle
+onBeforeMount(() => {
+  datas.isMQMobile = window.innerWidth < 720
+
+  window.addEventListener("resize", () => {
+    datas.isMQMobile = window.innerWidth < 720
+  })
+})
+
+watch(
+  () => route.params,
+  () => {
+    datas.open = false
+  }
+)
 </script>
 
-<style lang="stylus">
-@require "../../assets/vdoing/styles/palette"
+<style lang="stylus" scoped>
+@require "../../assets/vdoing/styles/index"
 
 .dropdown-wrapper
   cursor pointer
@@ -100,6 +109,8 @@
     border none
     font-weight 500
     color var(--textColor)
+    a
+      color var(--textColor)
     &:hover
       border-color transparent
     .arrow
@@ -121,6 +132,7 @@
           font-size 0.9em
       a
         display block
+        color var(--textColor)
         line-height 1.7rem
         position relative
         border-bottom none

@@ -8,8 +8,9 @@ console.log("isVercelBuild=>", isVercelBuild)
 console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
 
+// @ts-ignore
 export default defineNuxtConfig({
-  modules: ["@nuxt/content"],
+  modules: ["@nuxt/content", "nuxt-meilisearch"],
   content: {
     // https://content.nuxtjs.org/api/configuration
   },
@@ -17,6 +18,9 @@ export default defineNuxtConfig({
     shim: false,
     strict: true,
     typeCheck: true,
+    tsConfig: {
+      extends: "../tsconfig.base.json",
+    },
   },
   // vite: {
   //   build: {
@@ -25,6 +29,10 @@ export default defineNuxtConfig({
   // },
   app: {
     baseURL: appBase,
+    head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+    },
   },
   runtimeConfig: {
     public: {
@@ -36,4 +44,20 @@ export default defineNuxtConfig({
   //   serveStatic: !isDev,
   // },
   css: ["@/assets/vdoing/styles/index.styl"],
+  meilisearch: {
+    hostUrl: "http://localhost:3000/api/middleware/meilisearch",
+    // hostUrl: "http://localhost:7700",
+    searchApiKey: "<your_search_key>",
+    adminApiKey: "<your_admin_key>",
+    instantSearch: true, // default true
+    serverSideUsage: true, // default false
+    // optional
+    clientOptions: {
+      placeholderSearch: true, // default
+      paginationTotalHits: 50, // default
+      finitePagination: true, // default
+      primaryKey: undefined, // default
+      keepZeroFacets: false, // default
+    },
+  },
 })
