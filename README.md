@@ -4,7 +4,7 @@ a blog based on siyuan-note api
 
 ## 快速上手
 
-### docker-compose
+### 使用 docker-compose 部署 <sup>推荐</sup>
 
 ```bash
 docker compose up --build
