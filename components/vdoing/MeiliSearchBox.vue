@@ -71,8 +71,7 @@ const client = useMeilisearchClient()
         height 2rem
         position absolute
     .ais-Hits
-      //display none
-      display block
+      display none
       .suggestions
         overflow auto
         max-height calc(100vh - 6rem)
