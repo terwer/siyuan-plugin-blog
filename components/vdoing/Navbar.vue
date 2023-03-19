@@ -13,7 +13,7 @@
         <div ref="siteName" class="site-name" v-if="appConfig.siteTitle">
           {{ appConfig.siteTitle }}
         </div>
-        <div class="site-slogan">寻找未知的技术拼图</div>
+        <div class="site-slogan">{{ appConfig.siteSlogan }}</div>
       </div>
     </NuxtLink>
 

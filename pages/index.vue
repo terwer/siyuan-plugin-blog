@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div style="margin-top: 100px">index</div>
+    <div style="margin-top: 100px" v-for="testItem in testItems.items">
+      index
+      <p>{{ testItem }}</p>
+    </div>
   </div>
 </template>
 
@@ -15,6 +18,14 @@ const env = new Env(nuxtEnv)
 const zhiSdk = ZhiUtil.zhiSdk(env)
 const logger = zhiSdk.getLogger()
 const common = zhiSdk.common
+
+const testItems = reactive({
+  items: <string[]>[],
+})
+
+for (let i = 0; i < 20; i++) {
+  testItems.items.push("hello")
+}
 
 function hello(from: string): void {
   logger.debug("Nuxt env is ok")

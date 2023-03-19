@@ -46,54 +46,63 @@ $lineNumbersWrapperWidth = 2.5rem
 
 // 浅色模式
 .theme-mode-light
-  --bodyBg: #f4f4f4
-  --mainBg: rgba(255,255,255,1)
-  --sidebarBg: rgba(255,255,255,.8)
-  --blurBg: rgba(255,255,255,.9)
-  --customBlockBg: #f1f1f1
-  --textColor: #00323c
-  --textLightenColor: #0085AD
-  --borderColor: rgba(0,0,0,.12)
-  --codeBg: #f6f6f6
-  --codeColor: #525252
+  --bodyBg #f4f4f4
+  --mainBg rgba(255,255,255,1)
+  --sidebarBg rgba(255,255,255,.8)
+  --blurBg rgba(255,255,255,.9)
+  --pageTitleBg #e4e1e1
+  --customBlockBg #f1f1f1
+  --textColor #00323c
+  --textLightenColor #0085AD
+  --borderColor rgba(0,0,0,.12)
+  --codeBg #f6f6f6
+  --codeColor #525252
+  --codeTabBg --mainBg
+  --codeContentBg --mainBg
   codeThemeLight()
 
 // 深色模式
 .theme-mode-dark
-  --bodyBg: rgb(39,39,43)
-  --mainBg: rgba(30,30,34,1)
-  --sidebarBg: rgba(30,30,34,.8)
-  --blurBg: rgba(30,30,34,.8)
-  --customBlockBg: rgb(39,39,43)
-  --textColor: rgb(155,155,170)
-  --textLightenColor: #0085AD
-  // --borderColor: #2C2C3A
-  --borderColor: #30363d
-  --codeBg: #252526
-  --codeColor: #fff
+  --bodyBg rgb(39,39,43)
+  --mainBg rgba(30,30,34,1)
+  --sidebarBg rgba(30,30,34,.8)
+  --blurBg rgba(30,30,34,.8)
+  --pageTitleBg --mainBg
+  --customBlockBg rgb(39,39,43)
+  --textColor rgb(155,155,170)
+  --textLightenColor #0085AD
+  // --borderColor #2C2C3A
+  --borderColor #30363d
+  --codeBg #252526
+  --codeColor #fff
+  --codeTabBg = --mainBg
+  --codeContentBg = --mainBg
   codeThemeDark()
 
 // 阅读模式
 .theme-mode-read
-  --bodyBg: rgb(236,236,204)
-  --mainBg: rgba(245,245,213,1)
-  --sidebarBg: rgba(245,245,213,.8)
-  --blurBg: rgba(245,245,213,.9)
-  --customBlockBg: rgb(236,236,204)
-  --textColor: #704214
-  --textLightenColor: #996633
-  --borderColor: rgba(0,0,0,.15)
-  --codeBg: #282c34
-  --codeColor: #fff
+  --bodyBg rgb(236,236,204)
+  --mainBg rgba(245,245,213,1)
+  --sidebarBg rgba(245,245,213,.8)
+  --blurBg rgba(245,245,213,.9)
+  --pageTitleBg #e1dcb7
+  --customBlockBg rgb(236,236,204)
+  --textColor #704214
+  --textLightenColor #996633
+  --borderColor rgba(0,0,0,.15)
+  --codeBg #282c34
+  --codeColor #fff
+  --codeTabBg --mainBg
+  --codeContentBg rgba(27, 31, 35, 5%)
   codeThemeDark()
 
 // 背景色整体一致
 .theme-style-line.theme-mode-light
-  --bodyBg: rgba(255,255,255,1)
+  --bodyBg rgba(255,255,255,1)
 .theme-style-line.theme-mode-dark
-  --bodyBg: rgba(30,30,34,1)
+  --bodyBg rgba(30,30,34,1)
 .theme-style-line.theme-mode-read
-  --bodyBg: rgba(245,245,213,1)
+  --bodyBg rgba(245,245,213,1)
 
 // media媒介查询
 $MQMobile = 480px

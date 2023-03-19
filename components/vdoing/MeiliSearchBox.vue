@@ -71,16 +71,17 @@ const client = useMeilisearchClient()
         height 2rem
         position absolute
     .ais-Hits
-      display none
+      //display none
+      display block
       .suggestions
         overflow auto
         max-height calc(100vh - 6rem)
-        background #fff
+        background-color var(--mainBg)
         min-width 500px
         max-width 700px
         position absolute
         top 2rem
-        border 1px solid #cfd4db
+        border 1px solid var(--borderColor)
         border-radius 6px
         padding .4rem
         list-style-type none
@@ -97,9 +98,9 @@ const client = useMeilisearchClient()
             color #415b75
             width 100%
             .parent-page-title
-              color #fff
+              color var(--textColor)
               font-weight 600
-              background-color #11a8cd
+              background-color var(--pageTitleBg)
               padding 5px
             .suggestion-row
               border-collapse collapse
@@ -107,8 +108,9 @@ const client = useMeilisearchClient()
               display table
               .page-title
                 width 35%
-                background #f5f5f5
-                border 1px solid #eaecef
+                color var(--textColor)
+                background-color var(--bodyBg)
+                border 1px solid var(--borderColor)
                 border-left none
                 display table-cell
                 text-align right
@@ -116,13 +118,14 @@ const client = useMeilisearchClient()
                 font-weight 600
               .suggestion-content
                 font-weight 400
-                border 1px solid #eaecef
+                border 1px solid var(--borderColor)
+                color var(--textColor)
                 border-right none
                 width 65%
                 display table-cell
                 padding 5px
                 &:hover
-                  background #f5f5f5
+                  background var(--bodyBg)
                 .highlight
                   font-weight 600
                   color #11a8cd

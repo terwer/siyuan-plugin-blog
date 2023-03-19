@@ -5,6 +5,7 @@
     @touchstart="methods.onTouchStart"
     @touchend="methods.onTouchEnd"
   >
+    <!-- 页眉 -->
     <Navbar v-if="computes.shouldShowNavbar" @toggle-sidebar="methods.toggleSidebar" />
 
     <div class="sidebar-mask" @click="methods.toggleSidebar(false)"></div>
@@ -28,10 +29,13 @@
 
     <slot />
 
+    <!-- 页脚 -->
     <Footer />
 
+    <!-- 主题切换、返回顶部 -->
     <Buttons ref="buttons" @toggle-theme-mode="methods.toggleThemeMode" />
 
+    <!-- 自定义背景图 -->
     <BodyBgImg v-if="appConfig.themeConfig.bodyBgImg" />
 
     <!-- 自定义html插入左右下角的小窗口 -->
@@ -149,7 +153,6 @@ const methods = {
     }
   },
   toggleThemeMode: (key: string) => {
-    console.log("toggleThemeMode triggered", key)
     if (key === "auto") {
       methods._autoMode()
     } else {
@@ -183,16 +186,12 @@ onBeforeMount(() => {
   const mode = storage.get("mode") // 不放在created是因为vuepress不能在created访问浏览器api，如window
   const { defaultMode } = appConfig.themeConfig
 
-  console.log("mode=>", mode)
-  console.log("defaultMode", defaultMode)
-
   if (defaultMode && defaultMode !== "auto" && !mode) {
     datas.themeMode = defaultMode
   } else if (!mode || mode === "auto" || (!mode && defaultMode === "auto")) {
     // 当未切换过模式，或模式处于'跟随系统'时
     methods._autoMode()
   } else {
-    console.log("zzzzz", mode)
     datas.themeMode = mode
   }
   methods.setBodyClass()
