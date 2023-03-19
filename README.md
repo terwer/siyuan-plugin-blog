@@ -2,42 +2,34 @@
 
 a blog based on siyuan-note api
 
-## 规范
+## 快速上手
 
-- `ts` 规则请在 `.prettierrc.json` 添加，`eslint` 会自动继承此规则并生效
-
-## Setup
-
-Make sure to install the dependencies:
+### docker-compose
 
 ```bash
-# Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
-pnpm install
+docker compose up --build
 ```
 
-## Development Server
+### 本地启动
 
 Start the development server on http://localhost:3000
 
 ```bash
+# Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
+pnpm install
 pnpm dev
 ```
 
-## Production
+### 生产环境
 
 Build the application for production:
 
 ```bash
 pnpm build
-```
-
-Locally preview production build:
-
-```bash
 pnpm preview
 ```
 
-Staticly generate a site:
+Statically generate a site:
 
 ```bash
 pnpm generate
