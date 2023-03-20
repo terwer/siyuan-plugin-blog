@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "build:vercel": "BUILD_TYPE=vercel nuxt build",
     "generate": "nuxt generate",
     "generate:vercel": "BUILD_TYPE=vercel nuxt generate",
     "ci": "pnpm install && pnpm build",
