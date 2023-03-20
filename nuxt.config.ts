@@ -48,9 +48,9 @@ export default defineNuxtConfig({
       VITE_DEBUG_MODE: false,
     },
   },
-  // nitro: {
-  //   serveStatic: !isDev,
-  // },
+  nitro: {
+    serveStatic: !isDev,
+  },
   css: ["~/assets/vdoing/styles/index.styl"],
   meilisearch: {
     hostUrl: "http://localhost:3000/api/middleware/meilisearch",

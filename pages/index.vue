@@ -3,7 +3,7 @@
     <icon-accessibility />
     <icon-account-box style="font-size: 2em; color: red" />
 
-    <div style="margin-top: 100px" v-for="testItem in testItems.items">
+    <div v-for="testItem in testItems.items">
       index
       <p>{{ testItem }}</p>
     </div>

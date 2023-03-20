@@ -146,18 +146,20 @@ export default defineAppConfig({
 
     // 侧边栏  'structuring' | { mode: 'structuring', collapsable: Boolean} | 'auto' | <自定义>    温馨提示：目录页数据依赖于结构化的侧边栏数据，如果你不设置为'structuring',将无法使用目录页
     sidebar: "structuring",
+    sidebarHoverTriggerOpen: undefined,
 
     // 文章默认的作者信息，(可在md文件中单独配置此信息) string | {name: string, link?: string}
     author: {
-      name: "xugaoyi", // 必需
-      link: "https://github.com/xugaoyi", // 可选的
+      name: "terwer", // 必需
+      link: "https://github.com/terwer", // 可选的
     },
 
     // 博主信息 (显示在首页侧边栏)
     blogger: {
-      avatar: "https://fastly.jsdelivr.net/gh/xugaoyi/image_store/blog/20200103123203.jpg",
-      name: "Evan Xu",
-      slogan: "前端界的小学生",
+      avatar: "/img/photo.jpg",
+      name: "Terwer",
+      slogan: "一个后端老菜鸟",
+      social: undefined,
     },
 
     // 社交图标 (显示于博主信息栏和页脚栏。内置图标：https://doc.xugaoyi.com/pages/a20ce8/#social)

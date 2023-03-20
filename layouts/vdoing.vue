@@ -1,7 +1,7 @@
 <template>
   <div
     class="theme-container"
-    :class="computes.pageClasses"
+    :class="computes.pageClasses.value"
     @touchstart="methods.onTouchStart"
     @touchend="methods.onTouchEnd"
   >
@@ -12,18 +12,20 @@
 
     <div v-if="appConfig?.themeConfig?.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
 
-    <!--
-    <Sidebar :items="sidebarItems" @toggle-sidebar="methods.toggleSidebar" v-show="showSidebar">
+    <Sidebar :items="computes.sidebarItems" @toggle-sidebar="methods.toggleSidebar" v-show="datas.showSidebar">
+      <!--
       <template #top v-if="sidebarSlotTop">
         <div class="sidebar-slot sidebar-slot-top" v-html="sidebarSlotTop"></div>
       </template>
       <template #bottom v-if="sidebarSlotBottom">
         <div class="sidebar-slot sidebar-slot-bottom" v-html="sidebarSlotBottom"></div>
       </template>
+      -->
+      <!--
       <slot name="sidebar-top" #top />
       <slot name="sidebar-bottom" #bottom />
+      -->
     </Sidebar>
-    -->
 
     <!-- 正文 -->
     <div class="content-main">
@@ -61,7 +63,17 @@ import Footer from "~/components/vdoing/Footer.vue"
 import BodyBgImg from "~/components/vdoing/BodyBgImg.vue"
 import Buttons from "~/components/vdoing/Buttons.vue"
 import storage from "good-storage"
+import Sidebar from "~/components/vdoing/Sidebar.vue"
+import Env from "zhi-env"
+import ZhiUtil from "~/utils/zhiUtil"
 
+// zhi-sdk
+const nuxtEnv = useRuntimeConfig()
+const env = new Env(nuxtEnv)
+const zhiSdk = ZhiUtil.zhiSdk(env)
+const logger = zhiSdk.getLogger()
+
+// uses
 const appConfig = useAppConfig()
 
 // seo
@@ -76,6 +88,7 @@ useHead({
 
 // datas
 const datas = reactive({
+  hideNavbar: false,
   isSidebarOpen: false,
   showSidebar: false,
   themeMode: "auto",
@@ -85,21 +98,33 @@ const datas = reactive({
 
 // computes
 const computes = {
+  sidebarItems: computed(() => {
+    return []
+    // return resolveSidebarItems(
+    //     this.$page,
+    //     this.$page.regularPath,
+    //     this.$site,
+    //     this.$localePath
+    // )
+  }),
   pageClasses: computed(() => {
     // const userPageClass = this.$page.frontmatter.pageClass
-    // return [
-    //   {
-    //     'no-navbar': !this.shouldShowNavbar,
-    //     'hide-navbar': this.hideNavbar, // 向下滚动隐藏导航栏
-    //     'sidebar-open': this.isSidebarOpen,
-    //     'no-sidebar': !this.shouldShowSidebar,
-    //     'have-rightmenu': this.showRightMenu,
-    //     'have-body-img': this.$themeConfig.bodyBgImg,
-    //     'only-sidebarItem': this.sidebarItems.length === 1 && this.sidebarItems[0].type === 'page', // 左侧边栏只有一项时
-    //   },
-    //   userPageClass
-    // ]
-    return []
+    const userPageClass = {}
+    const pc = [
+      {
+        // 'no-navbar': !methods.shouldShowNavbar(),
+        "hide-navbar": datas.hideNavbar, // 向下滚动隐藏导航栏
+        "sidebar-open": datas.isSidebarOpen,
+        "no-sidebar": !methods.shouldShowSidebar(),
+        // 'have-rightmenu': this.showRightMenu,
+        // 'have-body-img': this.$themeConfig.bodyBgImg,
+        // 'only-sidebarItem': this.sidebarItems.length === 1 && this.sidebarItems[0].type === 'page', // 左侧边栏只有一项时
+      },
+      userPageClass,
+    ]
+
+    logger.debug("pageClasses=>", pc)
+    return pc
   }),
   shouldShowNavbar: computed(() => {
     // const { themeConfig } = this.$site
@@ -119,6 +144,9 @@ const computes = {
     return true
   }),
 }
+
+// emits
+const emit = defineEmits(["toggle-sidebar"])
 
 // methods
 const methods = {
@@ -141,8 +169,8 @@ const methods = {
   },
   toggleSidebar: (to: any) => {
     datas.isSidebarOpen = typeof to === "boolean" ? to : !datas.isSidebarOpen
-    console.log(datas.isSidebarOpen)
-    // this.$emit('toggle-sidebar', this.isSidebarOpen)
+    emit("toggle-sidebar", datas.isSidebarOpen)
+    logger.debug("toggleSidebar triggered=>", datas.isSidebarOpen)
   },
 
   _autoMode: () => {
@@ -179,6 +207,35 @@ const methods = {
     }
     document.body.className = `theme-mode-${datas.themeMode} theme-style-${pageStyle}`
   },
+
+  shouldShowNavbar: () => {
+    // const { themeConfig } = this.$site
+    // const { frontmatter } = this.$page
+    // if (
+    //     frontmatter.navbar === false
+    //     || themeConfig.navbar === false) {
+    //   return false
+    // }
+    // return (
+    //     this.$title
+    //     || themeConfig.logo
+    //     || themeConfig.repo
+    //     || themeConfig.nav
+    //     || this.$themeLocaleConfig.nav
+    // )
+    return false
+  },
+
+  shouldShowSidebar: () => {
+    // const { frontmatter } = this.$page
+    // return (
+    //     !frontmatter.home
+    //     && frontmatter.sidebar !== false
+    //     && this.sidebarItems.length
+    //     && frontmatter.showSidebar !== false
+    // )
+    return true
+  },
 }
 
 // lifecycles
@@ -206,6 +263,11 @@ onBeforeMount(() => {
     linkElm.setAttribute("href", social.iconfontCssFile)
     document.head.appendChild(linkElm)
   }
+})
+
+onMounted(() => {
+  // 解决移动端初始化页面时侧边栏闪现的问题
+  datas.showSidebar = true
 })
 
 watch(
