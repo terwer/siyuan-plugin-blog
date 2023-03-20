@@ -61,7 +61,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "vercel",
-    serveStatic: !isDev,
+    // 开启之后将进行静态伺服
+    // serveStatic: !isDev,
   },
   css: ["~/assets/vdoing/styles/index.styl"],
   meilisearch: {
