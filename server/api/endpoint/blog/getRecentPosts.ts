@@ -1,6 +1,5 @@
-import { API_TYPE_CONSTANTS } from "~/utils/lib-temp/constants"
-import { API } from "~/utils/lib-temp/api"
 import Env from "zhi-env"
+import ZhiUtil from "~/utils/zhiUtil"
 
 export default defineEventHandler(async (event) => {
   const nuxtEnv = useRuntimeConfig()
@@ -10,10 +9,10 @@ export default defineEventHandler(async (event) => {
   const page = 1
   const keyword = ""
 
-  const type = env.getEnv("VITE_DEFAULT_TYPE") ?? API_TYPE_CONSTANTS.API_TYPE_SIYUAN
-  const api = new API(type, nuxtEnv)
+  const zhiSdk = ZhiUtil.zhiSdk(env)
+  const blogApi = zhiSdk.blogApi
 
-  const result = await api.getRecentPosts(num, page, keyword)
+  const result = await blogApi.getRecentPosts(num, page, keyword)
 
   return {
     code: 0,

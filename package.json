@@ -44,9 +44,8 @@
   "dependencies": {
     "good-storage": "^1.1.1",
     "next-vue-device-detector": "^0.0.1",
-    "showdown": "^2.1.0",
     "vue-instantsearch": "^4.8.7",
-    "zhi-sdk": "^1.0.12"
+    "zhi-sdk": "^1.1.0"
   },
   "keywords": [
     "zhi",

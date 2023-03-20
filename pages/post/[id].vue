@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts" setup>
-import { SERVER_API_CONSTANTS } from "~/utils/lib-temp/constants/serverApiConstants"
-import { Post } from "~/utils/lib-temp/common/post"
 import Env from "zhi-env"
 import ZhiUtil from "~/utils/zhiUtil"
+import SERVER_API_CONSTANTS from "~/utils/constants/serverApiConstants"
+import { Post } from "zhi-sdk"
 
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)

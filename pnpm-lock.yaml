@@ -15,7 +15,6 @@ specifiers:
   nuxt: ^3.2.3
   nuxt-meilisearch: ^0.1.7
   prettier: ^2.8.4
-  showdown: ^2.1.0
   stylelint: ^15.2.0
   stylelint-config-standard: ^30.0.1
   stylelint-stylus: ^0.18.0
@@ -25,14 +24,13 @@ specifiers:
   vitest: ^0.29.3
   vue-instantsearch: ^4.8.7
   vue-tsc: ^1.2.0
-  zhi-sdk: ^1.0.12
+  zhi-sdk: ^1.1.0
 
 dependencies:
   good-storage: 1.1.1
   next-vue-device-detector: 0.0.1
-  showdown: 2.1.0
   vue-instantsearch: 4.8.7
-  zhi-sdk: 1.0.12
+  zhi-sdk: 1.1.0
 
 devDependencies:
   '@iconify/json': 2.2.36
@@ -9547,10 +9545,11 @@ packages:
       zhi-env: 1.10.0
     dev: false
 
-  /zhi-sdk/1.0.12:
-    resolution: {integrity: sha512-MOwHvADEFrMOJV6a/y/qMdgTSDtBmMX7wlzA4YxhUgyMjKc1WhSL0lveo06owdD5zXgVrsIM8Qvc01HBzRJYHg==}
+  /zhi-sdk/1.1.0:
+    resolution: {integrity: sha512-TKaBOHDNVzV2m2ULTDLMumcsvQWGFInQnKl/X/sdpkx9Tkhyw+Wu4JLrilZR3N0EvKnP/AlUnSFa5z/vsaSi5Q==}
     dependencies:
       compare-versions: 6.0.0-rc.1
+      showdown: 2.1.0
       zhi-log: 1.6.1
     dev: false
 

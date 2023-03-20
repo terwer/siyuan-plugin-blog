@@ -18,8 +18,8 @@ import Env from "zhi-env"
 import ThemeFromEnum from "~/utils/enums/themeFromEnum"
 import IconAccessibility from "~icons/carbon/accessibility"
 import IconAccountBox from "~icons/mdi/account-box"
-import { SERVER_API_CONSTANTS } from "~/utils/lib-temp/constants/serverApiConstants"
-import { Post } from "~/utils/lib-temp/common/post"
+import SERVER_API_CONSTANTS from "~/utils/constants/serverApiConstants"
+import { Post } from "zhi-sdk"
 
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)

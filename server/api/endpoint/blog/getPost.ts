@@ -1,7 +1,6 @@
-import { API_TYPE_CONSTANTS } from "~/utils/lib-temp/constants"
-import { API } from "~/utils/lib-temp/api"
 import { H3Event } from "h3"
-import Env from "zhi-env";
+import Env from "zhi-env"
+import ZhiUtil from "~/utils/zhiUtil"
 
 export default defineEventHandler(async (event: H3Event) => {
   const nuxtEnv = useRuntimeConfig()
@@ -12,12 +11,11 @@ export default defineEventHandler(async (event: H3Event) => {
   // const query = getQuery(event)
   // const id = event.context.params?.id
   const body = await readBody(event)
-
-  const type = env.getEnv("VITE_DEFAULT_TYPE") ?? API_TYPE_CONSTANTS.API_TYPE_SIYUAN
   const postid = body.id ?? "20220822195304-l7nucpp"
 
-  const api = new API(type, nuxtEnv)
-  const result = await api.getPost(postid)
+  const zhiSdk = ZhiUtil.zhiSdk(env)
+  const blogApi = zhiSdk.blogApi
+  const result = await blogApi.getPost(postid)
 
   return {
     code: 0,
