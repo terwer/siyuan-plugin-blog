@@ -123,7 +123,7 @@ const computes = {
       userPageClass,
     ]
 
-    logger.debug("pageClasses=>", pc)
+    // logger.debug("pageClasses=>", pc)
     return pc
   }),
   shouldShowNavbar: computed(() => {

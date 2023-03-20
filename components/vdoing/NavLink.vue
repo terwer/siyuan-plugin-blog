@@ -4,8 +4,8 @@
     :to="computes.link.value"
     @focusout.native="methods.focusoutAction"
     v-if="!VdoingUtil.isExternal(computes.link.value)"
-    :exact="computes.exact"
-    >{{ item.text }}</NuxtLink
+    :exact="computes.exact.value"
+    >{{ props.item.text }}</NuxtLink
   >
   <a
     v-else

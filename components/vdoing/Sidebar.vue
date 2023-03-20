@@ -7,7 +7,7 @@
 
         <div class="icons" v-if="computes.blogger.value.social">
           <a
-            v-for="(item, index) in computes.social.value.social.icons"
+            v-for="(item, index) in computes.blogger.value.social.icons"
             :href="item.link"
             :title="item.title"
             :class="['iconfont', item.iconClass]"
@@ -20,8 +20,9 @@
     </div>
 
     <!-- 移动端Nav -->
-    <NavLinks />
-
+    <client-only v-if="datas.isMobile">
+      <NavLinks />
+    </client-only>
     <slot name="top" />
 
     <!--
@@ -47,12 +48,25 @@ const props = defineProps({
   },
 })
 
+// datas
+const datas = reactive({
+  isMobile: false,
+})
+
 // computes
 const computes = {
   blogger: computed(() => {
     return appConfig.themeConfig.blogger
   }),
 }
+
+// lifecycle
+onBeforeMount(async () => {
+  const deviceDetector = await import("next-vue-device-detector")
+  const d = deviceDetector.createDeviceDetector()
+  datas.isMobile = d.mobile
+  console.log(d.mobile)
+})
 </script>
 
 <style lang="stylus">

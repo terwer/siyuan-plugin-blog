@@ -19,7 +19,9 @@
 
     <div class="links" :style="datas.linksWrapMaxWidth ? { 'max-width': datas.linksWrapMaxWidth + 'px' } : {}">
       <MeiliSearchBox v-if="computes.isMeilisearch" />
-      <NavLinks class="can-hide" />
+      <client-only v-if="!datas.isMobile">
+        <NavLinks class="can-hide" />
+      </client-only>
     </div>
   </header>
 </template>
@@ -33,6 +35,7 @@ const appConfig = useAppConfig()
 
 // datas
 const datas = reactive({
+  isMobile: true,
   linksWrapMaxWidth: null,
 })
 
@@ -49,6 +52,13 @@ const computes = {
 }
 
 // lifecycle
+onBeforeMount(async () => {
+  const deviceDetector = await import("next-vue-device-detector")
+  const d = deviceDetector.createDeviceDetector()
+  datas.isMobile = d.mobile
+  console.log(d.mobile)
+})
+
 onMounted(() => {
   // const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
   // const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))

@@ -80,7 +80,7 @@ const computes = {
 
   repoLink: computed(() => {
     const repo = appConfig.themeConfig.repo
-    logger.info("repo=>", repo)
+    // logger.debug("repo=>", repo)
     if (repo) {
       return /^https?:/.test(repo) ? repo : `https://github.com/${repo}`
     }

@@ -3,9 +3,10 @@
     <icon-accessibility />
     <icon-account-box style="font-size: 2em; color: red" />
 
-    <div v-for="testItem in testItems.items">
-      index
-      <p>{{ testItem }}</p>
+    <div v-for="post in testPosts.posts">
+      <h1>
+        <NuxtLink :to="'/post/' + post.postid"> {{ post.title }} </NuxtLink>
+      </h1>
     </div>
   </div>
 </template>
@@ -17,6 +18,8 @@ import Env from "zhi-env"
 import ThemeFromEnum from "~/utils/enums/themeFromEnum"
 import IconAccessibility from "~icons/carbon/accessibility"
 import IconAccountBox from "~icons/mdi/account-box"
+import { SERVER_API_CONSTANTS } from "~/utils/lib-temp/constants/serverApiConstants"
+import { Post } from "~/utils/lib-temp/common/post"
 
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
@@ -24,13 +27,9 @@ const zhiSdk = ZhiUtil.zhiSdk(env)
 const logger = zhiSdk.getLogger()
 const common = zhiSdk.common
 
-const testItems = reactive({
-  items: <string[]>[],
+const testPosts = reactive({
+  posts: <Post[]>[],
 })
-
-for (let i = 0; i < 20; i++) {
-  testItems.items.push("hello")
-}
 
 function hello(from: string): void {
   logger.debug("Nuxt env is ok")
@@ -38,4 +37,11 @@ function hello(from: string): void {
 }
 
 hello(ThemeFromEnum.ThemeFrom_Blog)
+
+try {
+  const { data } = await useFetch(SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS)
+  testPosts.posts = <Post[]>(data.value as any).data
+} catch (e) {
+  logger.error(SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS + "error", e)
+}
 </script>
