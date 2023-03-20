@@ -65,7 +65,6 @@ onBeforeMount(async () => {
   const deviceDetector = await import("next-vue-device-detector")
   const d = deviceDetector.createDeviceDetector()
   datas.isMobile = d.mobile
-  console.log(d.mobile)
 })
 </script>
 
