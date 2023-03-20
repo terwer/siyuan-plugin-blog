@@ -14,6 +14,7 @@ const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
 const zhiSdk = ZhiUtil.zhiSdk(env)
 const logger = zhiSdk.getLogger()
+const common = zhiSdk.common
 
 const route = useRoute()
 
@@ -30,6 +31,6 @@ try {
   })
   testPost.post = <Post>(res?.data.value as any).data
 } catch (e) {
-  logger.error(SERVER_API_CONSTANTS.SERVER_API_GET_POST + "error", e)
+  logger.error(common.strUtil.f("{0} request error", SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS), e)
 }
 </script>

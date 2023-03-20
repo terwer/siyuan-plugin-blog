@@ -42,6 +42,6 @@ try {
   const { data } = await useFetch(SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS)
   testPosts.posts = <Post[]>(data.value as any).data
 } catch (e) {
-  logger.error(SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS + "error", e)
+  logger.error(common.strUtil.f("{0} request error", SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS), e)
 }
 </script>
