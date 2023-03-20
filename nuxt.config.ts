@@ -60,6 +60,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    preset: "vercel",
     serveStatic: !isDev,
   },
   css: ["~/assets/vdoing/styles/index.styl"],
