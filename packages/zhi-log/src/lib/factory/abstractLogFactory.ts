@@ -23,42 +23,43 @@
  * questions.
  */
 
+import LogLevelEnum from "../logConstants"
 import Env from "zhi-env"
-import DefaultLogger from "./defaultLogger"
-import LogLevelEnum from "./logConstants"
-import CustomLogFactory from "./factory/customLogFactory"
+import Logger from "../logger"
+import DefaultLogger from "../defaultLogger"
 
 /**
- * 日志工具类
+ * 日志记录工厂
  *
  * @public
  * @author terwer
- * @since 1.0.7
+ * @since 1.0.0
  */
-class LogFactory {
+abstract class AbstractLogFactory {
+  private logger
+
   /**
-   * 默认日志记录器
+   * 默认日志级别
    *
-   * @param stackSize - 栈的深度
-   * @param env - 环境变量实例
+   * @param level - 可选，未设置默认INFO
+   * @param sign - 可选前缀，默认zhi
+   * @param env - 可选环境变量实例
    */
-  public static defaultLogger(env?: Env, stackSize?: number): DefaultLogger {
-    return LogFactory.customLogFactory(undefined, undefined, env).getLogger(undefined, stackSize)
+  protected constructor(level?: LogLevelEnum, sign?: string, env?: Env) {
+    this.logger = new Logger(level, sign, env)
   }
 
   /**
-   * 自定义日志工厂
+   * 获取日志记录器
+   *
+   * @param loggerName - 日志记录器名称
+   * @param stackSize - 打印栈的深度
+   * @protected
    */
-  public static customLogFactory(level?: LogLevelEnum, sign?: string, env?: Env) {
-    return new CustomLogFactory(level, sign, env)
-  }
-
-  /**
-   * 自定义日志工厂，自定义前缀
-   */
-  public static customSignLogFactory(sign?: string, env?: Env) {
-    return new CustomLogFactory(undefined, sign, env)
+  protected getLogger(loggerName?: string, stackSize?: number): DefaultLogger {
+    this.logger.setStackSize(stackSize)
+    return this.logger.getLogger(loggerName)
   }
 }
 
-export default LogFactory
+export default AbstractLogFactory

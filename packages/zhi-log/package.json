@@ -1,5 +1,15 @@
 {
   "name": "zhi-log",
-  "version": "0.0.1",
-  "type": "commonjs"
+  "version": "1.7.0",
+  "type": "module",
+  "description": "a simple logger for Node and Browser",
+  "repository": "terwer/zhi-log",
+  "homepage": "https://log.terwer.space",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi-log",
+    "zhi",
+    "log"
+  ]
 }

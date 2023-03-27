@@ -1,7 +1,7 @@
 {
   "name": "zhi",
-  "version": "0.0.0",
-  "license": "MIT",
+  "version": "1.0.0",
+  "license": "GPL",
   "scripts": {},
   "private": true,
   "devDependencies": {
@@ -27,5 +27,10 @@
     "vite-plugin-static-copy": "^0.13.1",
     "vite-tsconfig-paths": "^4.0.2",
     "vitest": "^0.25.8"
+  },
+  "dependencies": {
+    "callsites": "^4.0.0",
+    "loglevel": "^1.8.1",
+    "loglevel-plugin-prefix": "^0.8.4"
   }
 }

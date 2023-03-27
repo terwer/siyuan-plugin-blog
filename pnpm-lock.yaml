@@ -11,9 +11,12 @@ specifiers:
   '@typescript-eslint/parser': ^5.36.1
   '@vitest/coverage-c8': ~0.25.8
   '@vitest/ui': ^0.25.8
+  callsites: ^4.0.0
   eslint: ~8.15.0
   eslint-config-prettier: 8.1.0
   jsdom: ~20.0.3
+  loglevel: ^1.8.1
+  loglevel-plugin-prefix: ^0.8.4
   nx: 15.8.9
   prettier: ^2.6.2
   typescript: ~4.9.5
@@ -23,6 +26,11 @@ specifiers:
   vite-plugin-static-copy: ^0.13.1
   vite-tsconfig-paths: ^4.0.2
   vitest: ^0.25.8
+
+dependencies:
+  callsites: 4.0.0
+  loglevel: 1.8.1
+  loglevel-plugin-prefix: 0.8.4
 
 devDependencies:
   '@nrwl/eslint-plugin-nx': 15.8.9_nztsl5rylgdang2z34reasboam
@@ -2567,6 +2575,11 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /callsites/4.0.0:
+    resolution: {integrity: sha512-y3jRROutgpKdz5vzEhWM34TidDU8vkJppF8dszITeb1PQmSqV3DTxyV8G/lyO/DNvtE1YTedehmw9MPZsCBHxQ==}
+    engines: {node: '>=12.20'}
+    dev: false
+
   /caniuse-lite/1.0.30001470:
     resolution: {integrity: sha512-065uNwY6QtHCBOExzbV6m236DDhYCCtPmQUCoQtwkVqzud8v5QPidoMr6CoMkC2nfp6nksjttqWQRRh75LqUmA==}
     dev: true
@@ -3680,6 +3693,15 @@ packages:
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
+
+  /loglevel-plugin-prefix/0.8.4:
+    resolution: {integrity: sha512-WpG9CcFAOjz/FtNht+QJeGpvVl/cdR6P0z6OcXSkr8wFJOsV2GRj2j10JLfjuA4aYkcKCNIEqRGCyTife9R8/g==}
+    dev: false
+
+  /loglevel/1.8.1:
+    resolution: {integrity: sha512-tCRIJM51SHjAayKwC+QAg8hT8vg6z7GSgLJKGvzuPb1Wc+hLzqtuVLxp6/HzSPOozuK+8ErAhy7U/sVzw8Dgfg==}
+    engines: {node: '>= 0.6.0'}
+    dev: false
 
   /loupe/2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}

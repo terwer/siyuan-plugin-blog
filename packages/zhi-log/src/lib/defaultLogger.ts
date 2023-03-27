@@ -22,43 +22,63 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import Env from "zhi-env"
-import DefaultLogger from "./defaultLogger"
-import LogLevelEnum from "./logConstants"
-import CustomLogFactory from "./factory/customLogFactory"
+import { Logger } from "loglevel"
 
 /**
- * 日志工具类
+ * 默认日志记录器
  *
  * @public
  * @author terwer
  * @since 1.0.7
  */
-class LogFactory {
+interface DefaultLogger extends Logger {
   /**
-   * 默认日志记录器
+   * 日志颜色
+   */
+  colors?: string[]
+
+  /**
+   * Output trace message to console.
+   * This will also include a full stack trace
    *
-   * @param stackSize - 栈的深度
-   * @param env - 环境变量实例
+   * @param msg - unknown data to log to the console
    */
-  public static defaultLogger(env?: Env, stackSize?: number): DefaultLogger {
-    return LogFactory.customLogFactory(undefined, undefined, env).getLogger(undefined, stackSize)
-  }
+  trace(...msg: unknown[]): void
 
   /**
-   * 自定义日志工厂
+   * Output debug message to console including appropriate icons
+   *
+   * @param msg - unknown data to log to the console
    */
-  public static customLogFactory(level?: LogLevelEnum, sign?: string, env?: Env) {
-    return new CustomLogFactory(level, sign, env)
-  }
+  debug(...msg: unknown[]): void
 
   /**
-   * 自定义日志工厂，自定义前缀
+   * Output debug message to console including appropriate icons
+   *
+   * @param msg - unknown data to log to the console
    */
-  public static customSignLogFactory(sign?: string, env?: Env) {
-    return new CustomLogFactory(undefined, sign, env)
-  }
+  log(...msg: unknown[]): void
+
+  /**
+   * Output info message to console including appropriate icons
+   *
+   * @param msg - unknown data to log to the console
+   */
+  info(...msg: unknown[]): void
+
+  /**
+   * Output warn message to console including appropriate icons
+   *
+   * @param msg - unknown data to log to the console
+   */
+  warn(...msg: unknown[]): void
+
+  /**
+   * Output error message to console including appropriate icons
+   *
+   * @param msg - unknown data to log to the console
+   */
+  error(...msg: unknown[]): void
 }
 
-export default LogFactory
+export default DefaultLogger

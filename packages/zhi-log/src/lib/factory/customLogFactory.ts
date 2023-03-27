@@ -23,42 +23,32 @@
  * questions.
  */
 
+import AbstractLogFactory from "./abstractLogFactory"
+import LogLevelEnum from "../logConstants"
 import Env from "zhi-env"
-import DefaultLogger from "./defaultLogger"
-import LogLevelEnum from "./logConstants"
-import CustomLogFactory from "./factory/customLogFactory"
+import DefaultLogger from "../defaultLogger"
 
 /**
- * 日志工具类
+ * 自定义日志工厂
  *
  * @public
  * @author terwer
  * @since 1.0.7
  */
-class LogFactory {
+class CustomLogFactory extends AbstractLogFactory {
+  constructor(level?: LogLevelEnum, sign?: string, env?: Env) {
+    super(level, sign, env)
+  }
+
   /**
-   * 默认日志记录器
+   * 获取默认的日志记录器
    *
-   * @param stackSize - 栈的深度
-   * @param env - 环境变量实例
+   * @param loggerName - 日志记录器名称
+   * @param stackSize - 打印栈的深度
    */
-  public static defaultLogger(env?: Env, stackSize?: number): DefaultLogger {
-    return LogFactory.customLogFactory(undefined, undefined, env).getLogger(undefined, stackSize)
-  }
-
-  /**
-   * 自定义日志工厂
-   */
-  public static customLogFactory(level?: LogLevelEnum, sign?: string, env?: Env) {
-    return new CustomLogFactory(level, sign, env)
-  }
-
-  /**
-   * 自定义日志工厂，自定义前缀
-   */
-  public static customSignLogFactory(sign?: string, env?: Env) {
-    return new CustomLogFactory(undefined, sign, env)
+  override getLogger(loggerName?: string, stackSize?: number): DefaultLogger {
+    return super.getLogger(loggerName, stackSize)
   }
 }
 
-export default LogFactory
+export default CustomLogFactory

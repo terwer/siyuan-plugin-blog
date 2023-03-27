@@ -23,42 +23,43 @@
  * questions.
  */
 
-import Env from "zhi-env"
-import DefaultLogger from "./defaultLogger"
-import LogLevelEnum from "./logConstants"
-import CustomLogFactory from "./factory/customLogFactory"
-
 /**
- * 日志工具类
+ * 日志常量
  *
  * @public
  * @author terwer
- * @since 1.0.7
+ * @since 1.4.0
  */
-class LogFactory {
-  /**
-   * 默认日志记录器
-   *
-   * @param stackSize - 栈的深度
-   * @param env - 环境变量实例
-   */
-  public static defaultLogger(env?: Env, stackSize?: number): DefaultLogger {
-    return LogFactory.customLogFactory(undefined, undefined, env).getLogger(undefined, stackSize)
-  }
+class LogConstants {
+  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
+  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
+}
+export { LogConstants }
 
+/**
+ * 日志级别
+ *
+ * @author terwer
+ * @since 1.0.7
+ * @public
+ */
+enum LogLevelEnum {
   /**
-   * 自定义日志工厂
+   * DEBUG
    */
-  public static customLogFactory(level?: LogLevelEnum, sign?: string, env?: Env) {
-    return new CustomLogFactory(level, sign, env)
-  }
-
+  LOG_LEVEL_DEBUG = "DEBUG",
   /**
-   * 自定义日志工厂，自定义前缀
+   * INFO
    */
-  public static customSignLogFactory(sign?: string, env?: Env) {
-    return new CustomLogFactory(undefined, sign, env)
-  }
+  LOG_LEVEL_INFO = "INFO",
+  /**
+   * WARN
+   */
+  LOG_LEVEL_WARN = "WARN",
+  /**
+   * ERROR
+   */
+  LOG_LEVEL_ERROR = "ERROR",
 }
 
-export default LogFactory
+export default LogLevelEnum
