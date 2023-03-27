@@ -1,9 +1,0 @@
-{
-  "key": "zhi-publisher",
-  "name": "文章发布工具",
-  "description": "将思源笔记的文章发布到语雀、博客园、WordPress、Typecho、HUGO、HEXO等平台",
-  "author": "terwer",
-  "url": "https://github.com/terwer/zhi/tree/main/apps/theme/src/zhi-plugins/zhi-publisher",
-  "version": "1.0.2",
-  "forceUpdate": true
-}

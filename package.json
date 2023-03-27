@@ -1,35 +1,31 @@
 {
   "name": "zhi",
   "version": "0.0.0",
-  "description": "A siyuan-note theme with plugin and blog bundled",
-  "scripts": {
-    "dependency": "python scripts/dependency.py",
-    "dev:theme": "python scripts/dev.py --theme",
-    "dev:blog": "python scripts/dev.py --blog",
-    "build": "python scripts/build.py",
-    "build:common": "python scripts/build.py --common",
-    "build:theme": "python scripts/build.py --theme",
-    "build:blog": "python scripts/build.py --blog",
-    "docs": "echo 'docs'",
-    "ci": "pnpm dependency && pnpm build",
-    "package": "pnpm ci && pnpm docs"
-  },
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
   "devDependencies": {
-    "stylelint": "^15.2.0",
-    "stylelint-config-standard": "^30.0.1",
-    "stylelint-stylus": "^0.18.0",
-    "stylus": "^0.59.0"
-  },
-  "keywords": [
-    "zhi",
-    "theme",
-    "blog"
-  ],
-  "repository": "terwer/zhi",
-  "homepage": "https://blog.terwer.space",
-  "author": "terwer",
-  "license": "GPL",
-  "dependencies": {
-    "zhi-sdk": "1.0.8"
+    "@nrwl/eslint-plugin-nx": "15.8.9",
+    "@nrwl/js": "15.8.9",
+    "@nrwl/linter": "15.8.9",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/vite": "15.8.9",
+    "@nrwl/workspace": "15.8.9",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "@vitest/coverage-c8": "~0.25.8",
+    "@vitest/ui": "^0.25.8",
+    "eslint": "~8.15.0",
+    "eslint-config-prettier": "8.1.0",
+    "jsdom": "~20.0.3",
+    "nx": "15.8.9",
+    "prettier": "^2.6.2",
+    "typescript": "~4.9.5",
+    "vite": "^4.0.1",
+    "vite-plugin-dts": "~1.7.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-tsconfig-paths": "^4.0.2",
+    "vitest": "^0.25.8"
   }
 }
