@@ -2,7 +2,12 @@
   "name": "zhi",
   "version": "1.0.0",
   "license": "GPL",
-  "scripts": {},
+  "scripts": {
+    "build": "nx run-many --target=build",
+    "affected": "nx affected --target=build",
+    "test": "nx run-many --target=test",
+    "lint": "nx run-many --target=lint"
+  },
   "private": true,
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "15.8.9",

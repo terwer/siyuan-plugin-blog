@@ -12,12 +12,16 @@ Run `nx graph` to see a diagram of the dependencies of the projects.
 
 Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and make CI faster.
 
-## Init new project
+## Create new project
 
 ```bash
 ## project
 npx create-nx-workspace zhi --package-manager=pnpm --preset=ts 
+```
 
+## Init 
+
+```bash
 ## library
 nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
 nx generate @nrwl/node:library mylibrary
@@ -36,27 +40,26 @@ pnpm install
 ## Build
 
 ```
-nx build zhi-env
-nx run-many --target=build
-nx affected --target=build
+pmpm build
 ```
 
 ## Lint
 
 ```
-nx lint zhi-env
+pnpm lint
 ```
 
 ## Test
 
 ```
-nx test zhi-env
+pnpm test
 ```
 
 ## Publish
 
 ```
-nx publish zhi-env
+nx publish zhi-env --ver=0.0.1 --tag=latest
+nx publish zhi-log --ver=0.0.1 --tag=latest
 ```
 
 ## Further help
