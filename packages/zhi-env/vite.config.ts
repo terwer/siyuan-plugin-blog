@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite"
 
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 import viteTsConfigPaths from "vite-tsconfig-paths"
 import dts from "vite-plugin-dts"
 import { join } from "path"
@@ -18,6 +19,15 @@ export default defineConfig({
     viteTsConfigPaths({
       root: "../../",
     }),
+
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'README.md',
+          dest: './'
+        }
+      ]
+    })
   ],
 
   // Uncomment this if you are using workers.
@@ -35,6 +45,7 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: "src/index.ts",
+
       name: "zhi-env",
       fileName: "index",
       // Change this to the formats you want to support.

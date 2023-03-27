@@ -1,10 +1,15 @@
 {
   "name": "zhi-env",
-  "version": "1.10.0",
+  "version": "1.11.3",
   "type": "module",
   "description": "a cross-platform env config lib",
   "repository": "terwer/zhi-env",
   "homepage": "https://env.terwer.space",
   "author": "terwer",
-  "license": "GPL"
+  "license": "GPL",
+  "keywords": [
+    "zhi-env",
+    "zhi",
+    "env"
+  ]
 }
