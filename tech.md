@@ -71,41 +71,50 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 ### Series Ecology
 
 * [zhi](https://github.com/terwer/zhi)
-* [zhi-mini](https://github.com/terwer/zhi-mini)
+
 * [zhi-cli](https://github.com/terwer/zhi-cli)
-* [zhi-common](https://github.com/terwer/zhi-common)
 
-  * [zhi-sdk](https://github.com/terwer/zhi-sdk)
-
-    * [zhi-env](https://github.com/terwer/zhi-env)
-    * [zhi-log](https://github.com/terwer/zhi-log)
-    * zhi-core
-    * zhi-blog-api
+* [zhi-sdk](https://github.com/terwer/zhi-sdk)
+  * [zhi-env](https://github.com/terwer/zhi-env)
+  * [zhi-log](https://github.com/terwer/zhi-log)
+  * zhi-core - event, schedule
+  * [zhi-common](https://github.com/terwer/zhi-common) - utils
+  * zhi-blog-api
+    * zhi-common-blog-api
+      * zhi-yuque-api
+      * zhi-liandi-api
+      * zhi-wechat-api
+    * zhi-metaweblog-api
+      * zhi-cnblogs-api
+      * zhi-wordpress-api
     * zhi-siyuan-api
+  * zhi-electron - electron only api
+  * zhi-web - browser only api
+  * zhi-node - node only api
+  * zhi-mobile - mobile only api
+
+* [zhi-mini](https://github.com/terwer/zhi-mini)
+* [zhi-blog](https://github.com/terwer/zhi-blog)
+* [zhi-blog-astro](https://github.com/terwer/zhi-blog-astro)
 
 ### Core Framework
 
-* Infrastructure: [zhi-sdk](https://github.com/terwer/zhi-sdk)
-* Common Components (zhi-common): [zhi-cli](https://github.com/terwer/zhi-cli) + [zhi-sdk](https://github.com/terwer/zhi-sdk)
-* Blog (zhi-blog): [Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
-* Theme (zhi-theme): [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+- Infrastructure: [zhi-sdk](https://github.com/terwer/zhi-sdk)
+- Scaffold(zhi-cli): [zhi-cli](https://github.com/terwer/zhi-cli)
+- SDK (zhi-sdk): [zhi-sdk](https://github.com/terwer/zhi-sdk)
+- Theme (zhi-mini): [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+- Dynamic Blog (zhi-blog): [Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+- Static Blog (zhi-blog-astro): [Astro](https://astro.build/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
 
 The dependency relationship is as follows:
 
 * zhi-common
-* zhi-sdk
-
-  * zhi-log
-
-    * zhi-env
-* zhi-mini
-
   * zhi-sdk
-* zhi-theme
-
+    * zhi-log
+      * zhi-env
+* zhi-mini
   * zhi-common
 * zhi-blog
-
   * zhi-common
 
 Currently, `zhi-theme` = `zhi-mini`, which means that `zhi-theme` has been planned into `zhi-mini`.

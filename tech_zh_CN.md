@@ -72,42 +72,58 @@ nx publish zhi-log --ver=0.0.1 --tag=latest
 
 ### zhi 系列生态
 
-- [zhi](https://github.com/terwer/zhi)
-- [zhi-mini](https://github.com/terwer/zhi-mini)
-- [zhi-cli](https://github.com/terwer/zhi-cli)
-- [zhi-common](https://github.com/terwer/zhi-common)
-  - [zhi-sdk](https://github.com/terwer/zhi-sdk)
-    - [zhi-env](https://github.com/terwer/zhi-env)
-    - [zhi-log](https://github.com/terwer/zhi-log)
-    - zhi-core
-    - zhi-blog-api
-    - zhi-siyuan-api
+* [zhi](https://github.com/terwer/zhi)
+
+* [zhi-cli](https://github.com/terwer/zhi-cli)
+
+* [zhi-sdk](https://github.com/terwer/zhi-sdk)
+  * [zhi-env](https://github.com/terwer/zhi-env)
+  * [zhi-log](https://github.com/terwer/zhi-log)
+  * zhi-core - 事件、调度
+  * [zhi-common](https://github.com/terwer/zhi-common) - 工具类
+  * zhi-blog-api
+    * zhi-common-blog-api
+      * zhi-yuque-api
+      * zhi-liandi-api
+      * zhi-wechat-api
+    * zhi-metaweblog-api
+      * zhi-cnblogs-api
+      * zhi-wordpress-api
+    * zhi-siyuan-api
+  * zhi-electron - Electron专属API
+  * zhi-web - 浏览器专属API
+  * zhi-node - Node专属API
+  * zhi-mobile - 移动端专属API
+
+* [zhi-mini](https://github.com/terwer/zhi-mini)
+* [zhi-blog](https://github.com/terwer/zhi-blog)
+* [zhi-blog-astro](https://github.com/terwer/zhi-blog-astro)
+
 
 ### 核心框架
 
 - 基础设施：[zhi-sdk](https://github.com/terwer/zhi-sdk)
 
-- 公共组件(zhi-common): [zhi-cli](https://github.com/terwer/zhi-cli) + [zhi-sdk](https://github.com/terwer/zhi-sdk)
+- 脚手架(zhi-cli): [zhi-cli](https://github.com/terwer/zhi-cli)
 
-- 博客(zhi-blog)：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+- 开发工具包 (zhi-sdk): [zhi-sdk](https://github.com/terwer/zhi-sdk)
 
-- 主题(zhi-theme)：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+- 思源主题 (zhi-mini): [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+
+- 动态博客 (zhi-blog): [Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+
+- 静态博客 (zhi-blog-astro): [Astro](https://astro.build/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
 
 依赖关系如下：
 
-- zhi-common
-  - zhi-sdk
-    - zhi-log
-      - zhi-env
-
-- zhi-mini
-  - zhi-sdk
-
-- zhi-theme
-  - zhi-common
-
-- zhi-blog
-  - zhi-common
+* zhi-sdk
+  * zhi-log
+    * zhi-env
+  * zhi-common
+* zhi-mini
+  * zhi-common
+* zhi-blog
+  * zhi-common
 
 现阶段 `zhi-theme` = `zhi-mini` ， 即 `zhi-theme` 已经规划到 `zhi-mini` 了。
 
