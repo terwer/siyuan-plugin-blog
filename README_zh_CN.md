@@ -2,6 +2,8 @@
 
 🛍️ 一款自带插件和博客的思源笔记主题
 
+[English](README.md)
+
 [![dev checks](https://img.shields.io/github/checks-status/terwer/zhi/dev?label=build)](https://github.com/terwer/zhi/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/zhi.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
