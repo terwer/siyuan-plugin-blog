@@ -22,9 +22,15 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## Init
 
 ```bash
-## library
+## js library
 nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
-nx generate @nrwl/node:library mylibrary
+
+## Vite
+## https://nx.dev/packages/vite
+nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite
+
+## node library
+# nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
 
 ## app
 nx generate @nrwl/web:app myapp

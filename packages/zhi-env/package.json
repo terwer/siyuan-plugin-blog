@@ -3,8 +3,8 @@
   "version": "1.11.3",
   "type": "module",
   "description": "a cross-platform env config lib",
-  "repository": "terwer/zhi-env",
-  "homepage": "https://env.terwer.space",
+  "repository": "terwer/zhi",
+  "homepage": "https://terwer.space",
   "author": "terwer",
   "license": "GPL",
   "keywords": [
