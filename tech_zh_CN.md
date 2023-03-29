@@ -102,7 +102,7 @@ nx publish zhi-log --ver=0.0.1 --tag=latest
 
 ### 核心框架
 
-- 基础设施：[zhi-sdk](https://github.com/terwer/zhi-sdk)
+- 基础设施：[zhi-env](https://github.com/terwer/zhi-env) + [zhi-log](https://github.com/terwer/zhi-log)
 
 - 脚手架(zhi-cli): [zhi-cli](https://github.com/terwer/zhi-cli)
 

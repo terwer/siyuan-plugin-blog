@@ -99,7 +99,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 ### Core Framework
 
-- Infrastructure: [zhi-sdk](https://github.com/terwer/zhi-sdk)
+- Infrastructure: [zhi-env](https://github.com/terwer/zhi-env) + [zhi-log](https://github.com/terwer/zhi-log)
 - Scaffold(zhi-cli): [zhi-cli](https://github.com/terwer/zhi-cli)
 - SDK (zhi-sdk): [zhi-sdk](https://github.com/terwer/zhi-sdk)
 - Theme (zhi-mini): [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
