@@ -30,7 +30,7 @@ nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
 nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite
 
 ## node library
-# nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
+## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
 
 ## app
 nx generate @nrwl/web:app myapp

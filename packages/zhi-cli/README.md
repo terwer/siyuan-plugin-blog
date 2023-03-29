@@ -4,7 +4,7 @@ a tool for generating zhi framework related projects
 
 [Read more about node with cli](https://www.terwer.space/post/use-typescript-to-develop-a-custom-nodejs-frontend-development-scaffold-1i5fne.html)
 
-[Read more about nx with cli](https://hexo.terwer.space/post/use-nrwlnxworkspace-to-create-a-nodejscommand-line-library-1urtj8.html)
+[Read more about nx vite with cli](https://hexo.terwer.space/post/use-nrwlnxworkspace-to-create-a-nodejscommand-line-library-1urtj8.html)
 
 ## Usage
 

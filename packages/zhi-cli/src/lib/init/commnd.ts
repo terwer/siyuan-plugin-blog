@@ -23,7 +23,31 @@
  * questions.
  */
 
-describe("zhiCli", () => {
-  it("should work", () => {
-  })
-})
+import * as fs from "fs"
+import { Command } from "commander"
+import { printVerboseHook, rootDebug } from "../utils"
+import * as process from "process"
+
+// remember to name the folder of this file as the command name
+
+const debug = rootDebug.extend("init")
+const debugError = rootDebug.extend("init:error")
+
+export const initCommand = () => {
+  const command = new Command("init")
+  command
+    .argument("[path]", "directory to do something with")
+    .option("--verbose", "output debug logs", false)
+    .option("--target <name>", "the target name", "node")
+    // .requiredOption('--includeDirectories', 'copy directories')
+    .hook("preAction", printVerboseHook)
+    .action(async (path, options) => {
+      if (path && !fs.existsSync(path)) {
+        debugError("invalid path provided")
+        process.exit(1)
+      }
+
+      debug(`Zhi-cli is executing now....`)
+    })
+  return command
+}

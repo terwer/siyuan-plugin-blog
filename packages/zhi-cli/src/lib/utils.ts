@@ -23,7 +23,16 @@
  * questions.
  */
 
-describe("zhiCli", () => {
-  it("should work", () => {
-  })
-})
+import Debug from "debug"
+
+export const rootDebug = Debug("zhi-cli")
+
+export const printVerboseHook = (thisCommand: any) => {
+  const options = thisCommand.opts()
+
+  if (options.verbose) {
+    Debug.enable("zhi-cli*")
+    rootDebug(`CLI arguments`)
+    rootDebug(options)
+  }
+}

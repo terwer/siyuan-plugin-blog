@@ -22,14 +22,19 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## 初始化
 
 ```
-## 库  
+## js 库  
 nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env  
-nx generate @nrwl/node:library mylibrary
+
+## Vite
+## https://nx.dev/packages/vite
+nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite
+
+## node 库
+## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
 ```
 
+```
 ## 应用程序
-
-```
 nx generate @nrwl/web:app myapp  
 nx generate @nrwl/node:app myapp  
 ```

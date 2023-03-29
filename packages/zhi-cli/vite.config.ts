@@ -43,8 +43,12 @@ export default defineConfig({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [],
+      external: ["fs", "path", "process", "events"],
+      output: {
+        banner: "#! /usr/bin/env node",
+      },
     },
+    minify: false,
   },
 
   test: {
