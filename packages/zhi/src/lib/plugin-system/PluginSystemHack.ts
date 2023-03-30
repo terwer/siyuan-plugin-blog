@@ -60,7 +60,7 @@ class PluginSystemHack {
       const firstRes = await this.fetchPluginFromWidget()
       if (firstRes.code == 200) {
         js = firstRes.text
-        this.logger.info("plugin js download success during first try=>", firstRes.code)
+        this.logger.info("Success loaded plugin js during first try=>", firstRes.code)
       } else {
         // 下载挂件
         // TODO
@@ -68,7 +68,7 @@ class PluginSystemHack {
         const secondRes = await this.fetchPluginFromWidget()
         js = secondRes.text
 
-        this.logger.info("try download plugin js during second try=>", secondRes.code)
+        this.logger.info("Try download plugin js during second try=>", secondRes.code)
       }
       // this.logger.debug("plugin js code=>", js)
 
