@@ -18,6 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "zhi-cli": ["packages/zhi-cli/src/index.ts"],
+      "zhi-common": ["packages/zhi-common/src/index.ts"],
       "zhi-env": ["packages/zhi-env/src/index.ts"],
       "zhi-log": ["packages/zhi-log/src/index.ts"]
     }

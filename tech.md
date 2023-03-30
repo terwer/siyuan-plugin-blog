@@ -67,6 +67,7 @@ pnpm test
 nx publish zhi-env --ver=0.0.1 --tag=latest
 nx publish zhi-log --ver=0.0.1 --tag=latest
 nx publish zhi-cli --ver=0.0.1 --tag=latest
+nx publish zhi-common --ver=0.0.1 --tag=latest
 ```
 
 ## Further help
@@ -115,21 +116,17 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 The dependency relationship is as follows:
 
-* zhi-common
-  * zhi-sdk
-    * zhi-log
-      * zhi-env
+* zhi-sdk
+  * zhi-core
+  * zhi-log
+    * zhi-env
+  * zhi-common
 * zhi-mini
-  * zhi-common
+  * zhi-sdk
+  * zhi-electron
 * zhi-blog
-  * zhi-common
+  * zhi-sdk
+* zhi-blog-astro
+  * zhi-sdk
 
 Currently, `zhi-theme` = `zhi-mini`, which means that `zhi-theme` has been planned into `zhi-mini`.
-
-Among them, the common components (`zhi-common`) are generated based on the template type `ts-vite-lib` of my another scaffolding project [zhi-cli](https://github.com/terwer/zhi-cli):
-
-```
-## init common components
-npm i -g zhi-cli  
-zhi-cli init common ts-vite-lib
-```

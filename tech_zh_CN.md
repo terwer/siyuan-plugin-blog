@@ -68,6 +68,7 @@ pnpm lint
 nx publish zhi-env --ver=0.0.1 --tag=latest  
 nx publish zhi-log --ver=0.0.1 --tag=latest  
 nx publish zhi-cli --ver=0.0.1 --tag=latest
+nx publish zhi-common --ver=0.0.1 --tag=latest
 ```
 
 ## 更多帮助
@@ -123,20 +124,16 @@ nx publish zhi-cli --ver=0.0.1 --tag=latest
 依赖关系如下：
 
 * zhi-sdk
+  * zhi-core
   * zhi-log
     * zhi-env
   * zhi-common
 * zhi-mini
-  * zhi-common
+  * zhi-sdk
+  * zhi-electron
 * zhi-blog
-  * zhi-common
+  * zhi-sdk
+* zhi-blog-astro
+  * zhi-sdk
 
 现阶段 `zhi-theme` = `zhi-mini` ， 即 `zhi-theme` 已经规划到 `zhi-mini` 了。
-
-其中，公共组件( `zhi-common` )基于我的另一个脚手架项目 [zhi-cli](https://github.com/terwer/zhi-cli) 的模板类型 `ts-vite-lib` 生成:
-
-```bash
-## 初始化公共组件
-npm i -g zhi-cli
-zhi-cli init common ts-vite-lib
-```
