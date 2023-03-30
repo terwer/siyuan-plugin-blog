@@ -16,7 +16,7 @@
 > ⚠️ Special Reminder 1: 1.0.0 is an early version that is available for testing purposes only and its functionality is
 > not yet comprehensive. Please feel free to raise issues to provide valuable feedback. For the features of this
 > version,
-> please refer to .
+> please refer to [Core Features](#Core Features).
 
 > ⚠️ Special Reminder 2: The plugin system defaults to `Safe Mode` , You need to click the settings menu in the upper
 > right corner to turn off Safe Mode before you can enable the
