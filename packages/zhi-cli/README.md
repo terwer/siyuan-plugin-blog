@@ -16,7 +16,7 @@ npm i -g zhi-cli
 
 ```bash
 ## default
-zhi-cli init my-project main
+zhi-cli init my-project
 
 ## ts-cli
 zhi-cli init my-project ts-cli
@@ -45,5 +45,5 @@ Run `nx test zhi-cli` to execute the unit tests via [Jest](https://jestjs.io).
 ## Publish
 
 ```
-nx publish zhi-cli --ver=1.2.2 --tag=latest
+nx publish zhi-cli --ver=1.2.3 --tag=latest
 ```

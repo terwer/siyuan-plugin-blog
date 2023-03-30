@@ -1,6 +1,6 @@
 {
   "name": "zhi-cli",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "type": "module",
   "description": "a tool for generating zhi framework related projects",
   "repository": "terwer/zhi",

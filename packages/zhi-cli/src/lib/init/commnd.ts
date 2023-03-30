@@ -47,12 +47,15 @@ export const initCommand = () => {
     .option("--target <name>", "the target name", "node")
     .hook("preAction", printVerboseHook)
     .action(async (name, branch, options) => {
-      const templatePrompt = new Select({
-        name: "template",
-        message: "What template you want to use?",
-        choices: ["ts-vite-lib", "nx-ts-vite-lib", "main"],
-      })
-      branch = await templatePrompt.run()
+      // 没有指定仓库才去选择
+      if (!branch) {
+        const templatePrompt = new Select({
+          name: "template",
+          message: "What template you want to use?",
+          choices: ["ts-vite-lib", "nx-ts-vite-lib", "main"],
+        })
+        branch = await templatePrompt.run()
+      }
 
       logger.info(`zhi-cli is running at ${options.target}`)
       logger.info("start init zhi project:", name)
