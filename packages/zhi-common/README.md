@@ -7,9 +7,9 @@ Note: ⚠️This library must be compatible with node, browser, electron and bro
 ## Usage
 
 ```ts
-import ZhiUtil from "zhi-common"
+import zhiUtil from "zhi-common"
 
-const dateUtil = ZhiUtil.dateUtil
+const dateUtil = zhiUtil.dateUtil
 const now = dateUtil.nowDateZh()
 console.log("now=>", now)
 ```
