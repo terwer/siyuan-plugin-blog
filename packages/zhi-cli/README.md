@@ -45,5 +45,5 @@ Run `nx test zhi-cli` to execute the unit tests via [Jest](https://jestjs.io).
 ## Publish
 
 ```
-nx publish zhi-cli --ver=1.2.1 --tag=latest
+nx publish zhi-cli --ver=1.2.2 --tag=latest
 ```
