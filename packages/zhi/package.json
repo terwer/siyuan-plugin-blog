@@ -1,0 +1,15 @@
+{
+  "name": "zhi",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A siyuan-note theme with plugin and blog bundled",
+  "repository": "terwer/zhi",
+  "homepage": "https://terwer.space",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "siyuan-note",
+    "theme"
+  ]
+}

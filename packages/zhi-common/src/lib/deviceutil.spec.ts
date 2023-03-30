@@ -22,8 +22,13 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-import ZhiCommon from "./lib/zhi-common"
-import { DeviceType } from "./lib/deviceUtil"
 
-export default ZhiCommon
-export { DeviceType }
+import { describe, it } from "vitest"
+import DeviceUtil from "./deviceUtil"
+
+describe("DeviceUtil", () => {
+  it("getDevice", () => {
+    const deviceType = DeviceUtil.getDevice()
+    console.log(deviceType)
+  })
+})

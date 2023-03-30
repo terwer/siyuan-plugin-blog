@@ -17,6 +17,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "zhi": ["packages/zhi/src/index.ts"],
       "zhi-cli": ["packages/zhi-cli/src/index.ts"],
       "zhi-common": ["packages/zhi-common/src/index.ts"],
       "zhi-env": ["packages/zhi-env/src/index.ts"],

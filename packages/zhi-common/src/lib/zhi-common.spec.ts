@@ -23,11 +23,12 @@
  * questions.
  */
 
-import zhiUtil from "./zhi-common"
+import ZhiCommon from "./zhi-common"
 
 describe("zhiCommon", () => {
   it("should work", () => {
-    const now = zhiUtil.dateUtil.nowZh()
+    const common = new ZhiCommon()
+    const now = common.dateUtil.nowZh()
     console.log(now)
   })
 })

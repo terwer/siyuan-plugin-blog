@@ -23,26 +23,58 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
+import LogFactory, { DefaultLogger } from "zhi-log"
+import ZhiCommon from "zhi-common"
+import Env from "zhi-env"
 
 /**
- * 平台无关的通用工具类
+ * 工具类统一入口，每个应用自己实现
  *
+ * @public
  * @author terwer
- * @since 1.3.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly deviceUtil
+class ZhiUtil {
+  private static logger: DefaultLogger
+  private static common: ZhiCommon
+  private static env: Env
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.deviceUtil = DeviceUtil
+  /**
+   * 获取 zhi-env 实例
+   */
+  public static zhiEnv() {
+    if (!ZhiUtil.env) {
+      // https://github.com/vitejs/vite/issues/9539#issuecomment-1206301266
+      // add vite/client to tsconfig.lib.json
+      ZhiUtil.env = new Env(import.meta.env)
+    }
+    return ZhiUtil.env
+  }
+
+  /**
+   * 获取 zhi-common 实例
+   */
+  public static zhiCommon() {
+    if (!ZhiUtil.common) {
+      ZhiUtil.common = new ZhiCommon()
+    }
+    return ZhiUtil.common
+  }
+
+  /**
+   * 获取 zhi-log 实例
+   */
+  public static zhiLog(loggerName: string) {
+    if (!ZhiUtil.logger) {
+      const env = ZhiUtil.zhiEnv()
+      ZhiUtil.logger = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName)
+
+      const logger = ZhiUtil.logger
+      const common = ZhiUtil.zhiCommon()
+      logger.debug(common.strUtil.f("ZhiLog inited."))
+    }
+    return ZhiUtil.logger
   }
 }
 
-export default ZhiCommon
+export default ZhiUtil
