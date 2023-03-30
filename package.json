@@ -20,7 +20,6 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/vite": "15.8.9",
     "@nrwl/workspace": "15.8.9",
-    "@types/debug": "^4.1.7",
     "@types/node": "16",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
@@ -42,7 +41,6 @@
   "dependencies": {
     "callsites": "^4.0.0",
     "commander": "^10.0.0",
-    "debug": "^4.3.4",
     "loglevel": "^1.8.1",
     "loglevel-plugin-prefix": "^0.8.4"
   }

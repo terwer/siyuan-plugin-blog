@@ -9,6 +9,8 @@ a tool for generating zhi framework related projects
 ## Usage
 
 ```bash
+# npx zhi-cli
+
 npm i -g zhi-cli
 ```
 
@@ -43,5 +45,5 @@ Run `nx test zhi-cli` to execute the unit tests via [Jest](https://jestjs.io).
 ## Publish
 
 ```
-nx publish zhi-cli --ver=1.2.0 --tag=latest
+nx publish zhi-cli --ver=1.2.1 --tag=latest
 ```

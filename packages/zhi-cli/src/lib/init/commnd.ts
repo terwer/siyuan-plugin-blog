@@ -23,31 +23,31 @@
  * questions.
  */
 
-import * as fs from "fs"
 import { Command } from "commander"
-import { printVerboseHook, rootDebug } from "../utils"
-import * as process from "process"
+import { printVerboseHook } from "../utils"
+import LogFactory, { LogLevelEnum } from "zhi-log"
 
-// remember to name the folder of this file as the command name
-
-const debug = rootDebug.extend("init")
-const debugError = rootDebug.extend("init:error")
+const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("init")
 
 export const initCommand = () => {
   const command = new Command("init")
+
   command
-    .argument("[path]", "directory to do something with")
+    .description("init a zhi project")
+    .argument("<name>", "the name for your new project")
+    .argument("[branch]", "the branch for template repo, current support ts-cli, ts-vite-lib")
     .option("--verbose", "output debug logs", false)
     .option("--target <name>", "the target name", "node")
-    // .requiredOption('--includeDirectories', 'copy directories')
     .hook("preAction", printVerboseHook)
-    .action(async (path, options) => {
-      if (path && !fs.existsSync(path)) {
-        debugError("invalid path provided")
-        process.exit(1)
+    .action(async (name, branch, options) => {
+      if (!branch) {
+        branch = "ts-vite-lib"
+        logger.info("branch not provided, use ts-vite-lib as default")
       }
 
-      debug(`Zhi-cli is executing now....`)
+      logger.info(`zhi-cli is running at ${options.target}`)
+      logger.info(`zhi-cli is creating a new project ${name} using ${branch} as a template....`)
+      logger.info("done")
     })
   return command
 }

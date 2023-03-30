@@ -23,16 +23,14 @@
  * questions.
  */
 
-import Debug from "debug"
+import LogFactory, { LogLevelEnum } from "zhi-log"
 
-export const rootDebug = Debug("zhi-cli")
+const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("utils")
 
 export const printVerboseHook = (thisCommand: any) => {
   const options = thisCommand.opts()
 
   if (options.verbose) {
-    Debug.enable("zhi-cli*")
-    rootDebug(`CLI arguments`)
-    rootDebug(options)
+    logger.info(`CLI arguments`, options)
   }
 }

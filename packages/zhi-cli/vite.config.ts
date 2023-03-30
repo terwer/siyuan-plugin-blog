@@ -4,6 +4,7 @@ import { defineConfig } from "vite"
 import viteTsConfigPaths from "vite-tsconfig-paths"
 import dts from "vite-plugin-dts"
 import { join } from "path"
+import { viteStaticCopy } from "vite-plugin-static-copy"
 
 export default defineConfig({
   cacheDir: "../../node_modules/.vite/zhi-cli",
@@ -17,6 +18,15 @@ export default defineConfig({
 
     viteTsConfigPaths({
       root: "../../",
+    }),
+
+    viteStaticCopy({
+      targets: [
+        {
+          src: "README.md",
+          dest: "./",
+        },
+      ],
     }),
   ],
 

@@ -25,9 +25,10 @@
 
 import { Command } from "commander"
 import { initCommand } from "./init/commnd"
+import pkg from "../../package.json" assert { type: "json" }
 
 const program = new Command()
-program.name("Zhi project creator").description("Create projects for zhi theme")
+program.name("Zhi project creator").description("Create projects for zhi theme").version(pkg.version)
 
 program.addCommand(initCommand())
 
