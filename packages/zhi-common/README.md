@@ -17,8 +17,7 @@ console.log("now=>", now)
 ## Deps
 
 ```
-├── zhi-env
-├── zhi-log
+## Congregations! zhi-common need no deps, it is just pure js code 🎉
 ```
 
 ## Building
@@ -29,7 +28,7 @@ Run `nx build zhi-common` to build the library.
 
 ## Running unit tests
 
-Run `nx test zhi-common` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test zhi-env` to execute the unit tests via [Vitest](https://vitest.dev).
 
 ## Publish
 
