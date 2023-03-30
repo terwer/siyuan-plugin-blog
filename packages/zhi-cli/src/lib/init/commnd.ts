@@ -28,8 +28,8 @@ import { printVerboseHook } from "../utils"
 import LogFactory, { LogLevelEnum } from "zhi-log"
 import fs from "fs-extra"
 import path from "path"
-// import { downloadTemplate } from "./download"
-// import { modifyPackageJson } from "./modify"
+import { downloadTemplate } from "./download"
+import { modifyPackageJson } from "./modify"
 import { prompt } from "enquirer"
 import Select from "enquirer/lib/prompts/select"
 
@@ -58,16 +58,18 @@ export const initCommand = () => {
       logger.info("start init zhi project:", name)
       logger.info("using template:", branch)
 
+      const description = "please input project description"
+      const author = "please input author"
       const projectOptions = await prompt([
         {
           type: "input",
           name: "description",
-          message: "please input project description",
+          message: description,
         },
         {
           type: "input",
           name: "author",
-          message: "please input author",
+          message: author,
         },
       ])
 
@@ -82,8 +84,8 @@ export const initCommand = () => {
         }
 
         // 系在仓库并替换参数
-        // await downloadTemplate(templateGitUrl, downloadPath, branch)
-        // modifyPackageJson(downloadPath, { name, ...initOptions })
+        await downloadTemplate(templateGitUrl, downloadPath, branch)
+        modifyPackageJson(downloadPath, { name, description, author })
 
         // 删除git信息
         fs.removeSync(path.join(downloadPath, ".git"))

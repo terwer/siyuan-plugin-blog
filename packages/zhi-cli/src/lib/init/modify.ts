@@ -1,13 +1,13 @@
 import fs from "fs-extra"
 import path from "path"
 import handlebars from "handlebars"
-import ora from "ora"
+import LogFactory, { LogLevelEnum } from "zhi-log"
 
-const log = ora("modify")
+const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("init:modify")
 
 export const modifyPackageJson = function (downloadPath: string, options: any) {
   const packagePath = path.join(downloadPath, "package.json")
-  log.start("start modifying package.json")
+  logger.info("start modifying package.json ...")
   if (fs.existsSync(packagePath)) {
     const content = fs.readFileSync(packagePath).toString()
     const template = handlebars.compile(content)
@@ -20,11 +20,9 @@ export const modifyPackageJson = function (downloadPath: string, options: any) {
 
     const result = template(param)
     fs.writeFileSync(packagePath, result)
-    log.stop()
-    log.succeed("modify package.json complate")
+    logger.info("modify package.json complete")
   } else {
-    log.stop()
-    log.fail("modify package.json fail")
+    logger.error("modify package.json fail")
     throw new Error("no package.json")
   }
 }
