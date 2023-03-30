@@ -23,7 +23,7 @@
  * questions.
  */
 
-import LogFactory, { DefaultLogger } from "zhi-log"
+import LogFactory from "zhi-log"
 import ZhiCommon from "zhi-common"
 import Env from "zhi-env"
 
@@ -35,7 +35,11 @@ import Env from "zhi-env"
  * @since 1.0.0
  */
 class ZhiUtil {
-  private static logger: DefaultLogger
+  /**
+   * 按照logger缓存
+   * @private
+   */
+  private static loggerMap: any
   private static common: ZhiCommon
   private static env: Env
 
@@ -65,15 +69,26 @@ class ZhiUtil {
    * 获取 zhi-log 实例
    */
   public static zhiLog(loggerName: string) {
-    if (!ZhiUtil.logger) {
+    // 先检测日志Map
+    if (ZhiUtil.loggerMap) {
+      // 日志不存在，生成一个新的缓存到Map
+      if (ZhiUtil.loggerMap[loggerName]) {
+        ZhiUtil.loggerMap[loggerName].debug("Zhi-log use cache.");
+      } else {
+        const env = ZhiUtil.zhiEnv();
+        ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName);
+        ZhiUtil.loggerMap[loggerName].debug("Zhi-log add new logger.");
+      }
+    } else {
+      // 生成新的日志器
       const env = ZhiUtil.zhiEnv()
-      ZhiUtil.logger = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName)
-
-      const logger = ZhiUtil.logger
-      const common = ZhiUtil.zhiCommon()
-      logger.debug(common.strUtil.f("ZhiLog inited."))
+      ZhiUtil.loggerMap = {}
+      ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName)
+      ZhiUtil.loggerMap[loggerName].debug("Zhi-log inited.")
     }
-    return ZhiUtil.logger
+
+    // 从Map缓存获取日志器
+    return ZhiUtil.loggerMap[loggerName]
   }
 }
 

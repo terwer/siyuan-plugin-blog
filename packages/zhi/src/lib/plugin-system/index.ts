@@ -24,6 +24,7 @@
  */
 
 import DependencyItem from "../models/DependencyItem"
+import PluginSystemHook from "./PluginSystemHook"
 
 /**
  * 插件系统
@@ -39,6 +40,8 @@ class PluginSystem {
    * @since 1.0.0
    */
   public async initPluginSystem(): Promise<DependencyItem[]> {
+    const pluginSystemHook = new PluginSystemHook()
+    await pluginSystemHook.init()
     return Promise.resolve([])
   }
 }
