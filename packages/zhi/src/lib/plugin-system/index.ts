@@ -23,10 +23,24 @@
  * questions.
  */
 
-import { zhi } from "./zhi"
+import DependencyItem from "../models/DependencyItem"
 
-describe("zhi", () => {
-  it("should work", () => {
-    expect(zhi()).toEqual("zhi")
-  })
-})
+/**
+ * 插件系统
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class PluginSystem {
+  /**
+   * 插件系统注册
+   *
+   * @author terwer
+   * @since 1.0.0
+   */
+  public async initPluginSystem(): Promise<DependencyItem[]> {
+    return Promise.resolve([])
+  }
+}
+
+export default PluginSystem

@@ -23,10 +23,29 @@
  * questions.
  */
 
-import { zhi } from "./zhi"
+import Lifecycle from "./Lifecycle"
+import DependencyItem from "./models/DependencyItem"
 
-describe("zhi", () => {
-  it("should work", () => {
-    expect(zhi()).toEqual("zhi")
-  })
-})
+/**
+ * zhi主题唯一激活入口
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class Bootstrap {
+  private static lifecycle: Lifecycle
+
+  static {
+    Bootstrap.lifecycle = new Lifecycle()
+  }
+
+  /**
+   * 主题激活
+   */
+  public static async start(): Promise<DependencyItem[]> {
+    await Bootstrap.lifecycle.load()
+    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
+  }
+}
+
+export default Bootstrap

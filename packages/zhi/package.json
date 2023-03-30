@@ -2,7 +2,7 @@
   "name": "zhi",
   "version": "1.0.0",
   "type": "module",
-  "description": "A siyuan-note theme with plugin and blog bundled",
+  "description": "a pluggable siyuan-note theme",
   "repository": "terwer/zhi",
   "homepage": "https://terwer.space",
   "author": "terwer",

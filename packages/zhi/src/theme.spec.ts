@@ -23,10 +23,15 @@
  * questions.
  */
 
-import { zhi } from "./zhi"
+import { describe, it } from "vitest"
+import ZhiUtil from "./ZhiUtil"
+import Zhi from "./lib/zhi"
 
-describe("zhi", () => {
-  it("should work", () => {
-    expect(zhi()).toEqual("zhi")
+describe("theme", () => {
+  it("init", async () => {
+    const common = ZhiUtil.zhiCommon()
+
+    const zhi = new Zhi(common.deviceUtil.getDevice())
+    await zhi.init()
   })
 })

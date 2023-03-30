@@ -23,10 +23,24 @@
  * questions.
  */
 
-import { zhi } from "./zhi"
+/**
+ * 依赖项类型定义
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class DependencyItem {
+  libpath: string
+  format: "cjs" | "esm" | "js"
+  importType: "require" | "import"
+  runAs: "browser" | "node" | "electron" | "both"
 
-describe("zhi", () => {
-  it("should work", () => {
-    expect(zhi()).toEqual("zhi")
-  })
-})
+  constructor() {
+    this.libpath = ""
+    this.format = "cjs"
+    this.importType = "require"
+    this.runAs = "both"
+  }
+}
+
+export default DependencyItem
