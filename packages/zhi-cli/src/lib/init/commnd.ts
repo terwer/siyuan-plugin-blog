@@ -26,8 +26,15 @@
 import { Command } from "commander"
 import { printVerboseHook } from "../utils"
 import LogFactory, { LogLevelEnum } from "zhi-log"
+import fs from "fs-extra"
+import path from "path"
+// import { downloadTemplate } from "./download"
+// import { modifyPackageJson } from "./modify"
+import { prompt } from "enquirer"
+import Select from "enquirer/lib/prompts/select"
 
 const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("init")
+const templateGitUrl = "https://github.com/terwer/zhi-ts-template"
 
 export const initCommand = () => {
   const command = new Command("init")
@@ -35,18 +42,61 @@ export const initCommand = () => {
   command
     .description("init a zhi project")
     .argument("<name>", "the name for your new project")
-    .argument("[branch]", "the branch for template repo, current support ts-cli, ts-vite-lib")
+    .argument("[branch]", "the branch for template repo, current support ts-cli")
     .option("--verbose", "output debug logs", false)
     .option("--target <name>", "the target name", "node")
     .hook("preAction", printVerboseHook)
     .action(async (name, branch, options) => {
-      if (!branch) {
-        branch = "ts-vite-lib"
-        logger.info("branch not provided, use ts-vite-lib as default")
-      }
+      const templatePrompt = new Select({
+        name: "template",
+        message: "What template you want to use?",
+        choices: ["ts-vite-lib", "nx-ts-vite-lib", "main"],
+      })
+      branch = await templatePrompt.run()
 
       logger.info(`zhi-cli is running at ${options.target}`)
-      logger.info(`zhi-cli is creating a new project ${name} using ${branch} as a template....`)
+      logger.info("start init zhi project:", name)
+      logger.info("using template:", branch)
+
+      const projectOptions = await prompt([
+        {
+          type: "input",
+          name: "description",
+          message: "please input project description",
+        },
+        {
+          type: "input",
+          name: "author",
+          message: "please input author",
+        },
+      ])
+
+      logger.info("projectOptions=>", projectOptions)
+
+      try {
+        const downloadPath = `./${name}`
+
+        // 如果存在需要先删除，否则无法检出
+        if (fs.existsSync(downloadPath)) {
+          fs.removeSync(downloadPath)
+        }
+
+        // 系在仓库并替换参数
+        // await downloadTemplate(templateGitUrl, downloadPath, branch)
+        // modifyPackageJson(downloadPath, { name, ...initOptions })
+
+        // 删除git信息
+        fs.removeSync(path.join(downloadPath, ".git"))
+        // 删除模板
+        fs.removeSync(path.join(downloadPath, "package-template.json"))
+        logger.info(".git cleaned.")
+
+        logger.info("project created.")
+        logger.info("Now you can do `cd " + downloadPath + "`" + " and `pnpm install`")
+      } catch (error) {
+        console.error(error)
+      }
+
       logger.info("done")
     })
   return command

@@ -20,6 +20,9 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/vite": "15.8.9",
     "@nrwl/workspace": "15.8.9",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@types/fs-extra": "^11.0.1",
+    "@types/git-clone": "^0.2.0",
     "@types/node": "16",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
@@ -41,7 +44,11 @@
   "dependencies": {
     "callsites": "^4.0.0",
     "commander": "^10.0.0",
+    "enquirer": "^2.3.6",
+    "git-clone": "^0.2.0",
+    "handlebars": "^4.7.7",
     "loglevel": "^1.8.1",
-    "loglevel-plugin-prefix": "^0.8.4"
+    "loglevel-plugin-prefix": "^0.8.4",
+    "ora": "^6.1.2"
   }
 }
