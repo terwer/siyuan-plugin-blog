@@ -53,13 +53,67 @@ class PluginSystemHack {
     // 情形二：未初始化，重新初始化插件系统
     try {
       this.logger.info("Undetected plugin system，initiating plugin system...")
+
+      this.common.siyuanUtil.siyuanWindow().pluginSystemSource = "bazzar"
+
+      let js
+      const firstRes = await this.fetchPluginFromWidget()
+      if (firstRes.code == 200) {
+        js = firstRes.text
+        this.logger.info("plugin js download success during first try=>", firstRes.code)
+      } else {
+        // 下载挂件
+        // TODO
+
+        const secondRes = await this.fetchPluginFromWidget()
+        js = secondRes.text
+
+        this.logger.info("try download plugin js during second try=>", secondRes.code)
+      }
+      // this.logger.debug("plugin js code=>", js)
+
+      eval(js)
     } catch (e) {
-      this.logger.debug("Plugin system Load error", e)
+      this.logger.error("Plugin system Load error", e)
+      throw e
     }
 
     const sysv = this.getPluginSystemVersion() ?? "unknown"
     this.logger.info(this.common.strUtil.f("Plugin system inited, version => {0}.", sysv))
     return this.getPluginSystem()
+  }
+
+  /**
+   * 从挂件系统读取文件
+   *
+   * @private
+   */
+  private async fetchPluginFromWidget() {
+    const response = await fetch("/api/file/getFile", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      // 主题集成插件系统，暂时不能用
+      // body: JSON.stringify({ path: "/appearance/themes/zhi/plugin.js" }),
+      // 挂件版插件文件，不一定存在
+      body: JSON.stringify({ path: "/data/widgets/插件系统/plugin.js" }),
+    })
+
+    let responseText = ""
+    if (response.status == 200) {
+      responseText = await response.text()
+    }
+
+    return {
+      code: response.status,
+      text: responseText,
+    }
   }
 
   /**
