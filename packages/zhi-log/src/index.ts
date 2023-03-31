@@ -24,11 +24,12 @@
  */
 
 import LogFactory from "./lib/zhi-log"
-import LogLevelEnum from "./lib/logConstants"
+import LogLevelEnum, { LogConstants } from "./lib/logConstants"
 import AbstractLogFactory from "./lib/factory/abstractLogFactory"
 import CustomLogFactory from "./lib/factory/customLogFactory"
 import DefaultLogger from "./lib/defaultLogger"
 
 export default LogFactory
 export { LogLevelEnum, AbstractLogFactory, CustomLogFactory }
+export { LogConstants }
 export type { DefaultLogger }

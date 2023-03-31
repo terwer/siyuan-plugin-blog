@@ -1,1 +1,3 @@
-export * from "./lib/zhi-siyuan-api"
+import SiyuanApi from "./lib/zhi-siyuan-api"
+
+export default SiyuanApi

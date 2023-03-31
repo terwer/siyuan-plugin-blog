@@ -33,18 +33,22 @@ export enum PageType {
    * Markdown正文
    */
   Markdown,
+
   /**
    * HTML
    */
   Html,
+
   /**
    * 属性
    */
   Formatter,
+
   /**
    * Markdown和属性
    */
   Markdown_And_Formatter,
+
   /**
    * MDX
    *
@@ -66,6 +70,7 @@ export enum PasswordType {
    */
   PasswordType_Token,
 }
+
 /**
  * 博客通用配置类
  */

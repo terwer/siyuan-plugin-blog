@@ -1,7 +1,9 @@
-import { zhiSiyuanApi } from "./zhi-siyuan-api"
+import SiyuanApi from "./zhi-siyuan-api"
+import { expect } from "vitest"
 
 describe("zhiSiyuanApi", () => {
-  it("should work", () => {
-    expect(zhiSiyuanApi()).toEqual("zhi-siyuan-api")
+  it("siyuanApi", () => {
+    const siyuanApi = new SiyuanApi()
+    expect(siyuanApi).toBeTruthy()
   })
 })

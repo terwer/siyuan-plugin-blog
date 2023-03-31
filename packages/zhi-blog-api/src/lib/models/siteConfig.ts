@@ -23,43 +23,68 @@
  * questions.
  */
 
-/**
- * 日志常量
- *
- * @public
- * @author terwer
- * @since 1.4.0
- */
-class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
-}
+import UserBlog from "./userBlog"
 
 /**
- * 日志级别
- *
- * @author terwer
- * @since 1.0.7
- * @public
+ * 站点信息定义
  */
-enum LogLevelEnum {
+class SiteConfig {
   /**
-   * DEBUG
+   * 博客信息
    */
-  LOG_LEVEL_DEBUG = "DEBUG",
+  userBlog: UserBlog
+
   /**
-   * INFO
+   * 域名
    */
-  LOG_LEVEL_INFO = "INFO",
+  domain: string
+
   /**
-   * WARN
+   * 站点链接
    */
-  LOG_LEVEL_WARN = "WARN",
+  weburl: string
+
   /**
-   * ERROR
+   * 站点主题
    */
-  LOG_LEVEL_ERROR = "ERROR",
+  webtheme: string
+
+  /**
+   * 站点名称
+   */
+  webname: string
+
+  /**
+   * 站点口号
+   */
+  webslogen: string
+
+  /**
+   * 关键字
+   */
+  keywords: string
+
+  /**
+   * 描述
+   */
+  description: string
+
+  /**
+   * 备案信息
+   */
+  beianinfo: string
+
+  constructor() {
+    this.userBlog = new UserBlog()
+    this.domain = ""
+    this.weburl = ""
+    this.webtheme = "default"
+    this.webname = "浅海拾贝"
+    this.webslogen = "寻找未知的技术拼图"
+    this.keywords = "软件架构、服务端开发、Java、Spring、Dubbo、Zookeeper、微服务"
+    this.description = "浅海拾贝致力于Java后端开发及服务端技术、软件架构、微服务技术分享的个人博客"
+    this.beianinfo = "粤ICP备18023717号-1"
+  }
 }
 
-export default LogLevelEnum
-export { LogConstants }
+export default SiteConfig

@@ -24,42 +24,37 @@
  */
 
 /**
- * 日志常量
+ * 博客信息定义
  *
  * @public
- * @author terwer
- * @since 1.4.0
  */
-class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
+class UserBlog {
+  /**
+   * 博客ID
+   */
+  blogid: string
+  /**
+   * 博客地址
+   */
+  url: string
+  /**
+   * 博客名称
+   */
+  blogName: string
+  /**
+   * 是否是管理员
+   */
+  isAdmin?: boolean
+  /**
+   * xmlrpc地址
+   */
+  xmlrpc?: string
+
+  constructor() {
+    this.blogid = ""
+    this.url = ""
+    this.blogName = ""
+  }
 }
 
-/**
- * 日志级别
- *
- * @author terwer
- * @since 1.0.7
- * @public
- */
-enum LogLevelEnum {
-  /**
-   * DEBUG
-   */
-  LOG_LEVEL_DEBUG = "DEBUG",
-  /**
-   * INFO
-   */
-  LOG_LEVEL_INFO = "INFO",
-  /**
-   * WARN
-   */
-  LOG_LEVEL_WARN = "WARN",
-  /**
-   * ERROR
-   */
-  LOG_LEVEL_ERROR = "ERROR",
-}
-
-export default LogLevelEnum
-export { LogConstants }
+export default UserBlog

@@ -2,6 +2,8 @@
 
 a common blog interface
 
+> ⚠️Warning: blogApi should be implemented as a specific BlogApi, it cannot be used directly
+
 ## Building
 
 This library was generated with [Nx](https://nx.dev).

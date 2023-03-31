@@ -24,42 +24,21 @@
  */
 
 /**
- * 日志常量
- *
- * @public
- * @author terwer
- * @since 1.4.0
+ * 文章状态枚举
  */
-class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
+enum PostStatusEnum {
+  /**
+   * 已发布
+   */
+  PostStatusEnum_Publish="publish",
+  /**
+   * 草稿
+   */
+  PostStatusEnum_Draft="draft",
+  /**
+   * 继承
+   */
+  PostStatusEnum_Inherit="inherit"
 }
 
-/**
- * 日志级别
- *
- * @author terwer
- * @since 1.0.7
- * @public
- */
-enum LogLevelEnum {
-  /**
-   * DEBUG
-   */
-  LOG_LEVEL_DEBUG = "DEBUG",
-  /**
-   * INFO
-   */
-  LOG_LEVEL_INFO = "INFO",
-  /**
-   * WARN
-   */
-  LOG_LEVEL_WARN = "WARN",
-  /**
-   * ERROR
-   */
-  LOG_LEVEL_ERROR = "ERROR",
-}
-
-export default LogLevelEnum
-export { LogConstants }
+export default PostStatusEnum

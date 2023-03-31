@@ -23,43 +23,102 @@
  * questions.
  */
 
-/**
- * 日志常量
- *
- * @public
- * @author terwer
- * @since 1.4.0
- */
-class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
-}
+import PostStatusEnum from "../enums/postStatusEnum"
 
 /**
- * 日志级别
+ * 通用文章模型定义
  *
- * @author terwer
- * @since 1.0.7
  * @public
  */
-enum LogLevelEnum {
+class Post {
   /**
-   * DEBUG
+   * 文章ID
    */
-  LOG_LEVEL_DEBUG = "DEBUG",
+  postid: string
+
   /**
-   * INFO
+   * 标题
    */
-  LOG_LEVEL_INFO = "INFO",
+  title: string
+
   /**
-   * WARN
+   * 逗号分隔的标签
    */
-  LOG_LEVEL_WARN = "WARN",
+  mt_keywords: string
+
   /**
-   * ERROR
+   * 链接
    */
-  LOG_LEVEL_ERROR = "ERROR",
+  link?: string
+
+  /**
+   * 永久链接
+   */
+  permalink: string
+
+  /**
+   * 摘要
+   */
+  shortDesc?: string
+
+  /**
+   * 描述
+   */
+  description: string
+
+  /**
+   * 短评
+   */
+  mt_excerpt?: string
+
+  /**
+   * 别名
+   */
+  wp_slug: string
+
+  /**
+   * 创建时间
+   */
+  dateCreated: Date
+
+  /**
+   * 分类
+   */
+  categories: Array<string>
+
+  /**
+   * 更多
+   */
+  mt_text_more?: string
+
+  /**
+   * 发布状态
+   */
+  post_status?: PostStatusEnum
+
+  /**
+   * 是否发布
+   */
+  isPublished: boolean
+
+  /**
+   * 发布密码
+   */
+  wp_password: string
+
+  constructor() {
+    this.postid = ""
+    this.title = ""
+    this.mt_keywords = ""
+    this.permalink = ""
+    this.description = ""
+    this.wp_slug = ""
+    this.dateCreated = new Date()
+    this.categories = []
+    this.isPublished = true
+    this.post_status = PostStatusEnum.PostStatusEnum_Publish
+    this.wp_password = ""
+  }
 }
 
-export default LogLevelEnum
-export { LogConstants }
+export default Post

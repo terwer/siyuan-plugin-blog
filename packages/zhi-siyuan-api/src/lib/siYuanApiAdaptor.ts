@@ -23,43 +23,28 @@
  * questions.
  */
 
-/**
- * 日志常量
- *
- * @public
- * @author terwer
- * @since 1.4.0
- */
-class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
+import { IBlogApi, Post, UserBlog } from "zhi-blog-api"
+import SiyuanKernelApi from "./siyuanKernelApi";
+
+class SiYuanApiAdaptor implements IBlogApi {
+  private siyuanKernelApi
+
+
+  constructor() {
+    this.siyuanKernelApi = new SiyuanKernelApi()
+  }
+
+  getPost(postid: string, useSlug?: boolean): Promise<Post> {
+    return Promise.resolve(new Post())
+  }
+
+  getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<Post>> {
+    return Promise.resolve([])
+  }
+
+  getUsersBlogs(): Promise<Array<UserBlog>> {
+    return Promise.resolve([])
+  }
 }
 
-/**
- * 日志级别
- *
- * @author terwer
- * @since 1.0.7
- * @public
- */
-enum LogLevelEnum {
-  /**
-   * DEBUG
-   */
-  LOG_LEVEL_DEBUG = "DEBUG",
-  /**
-   * INFO
-   */
-  LOG_LEVEL_INFO = "INFO",
-  /**
-   * WARN
-   */
-  LOG_LEVEL_WARN = "WARN",
-  /**
-   * ERROR
-   */
-  LOG_LEVEL_ERROR = "ERROR",
-}
-
-export default LogLevelEnum
-export { LogConstants }
+export default SiYuanApiAdaptor

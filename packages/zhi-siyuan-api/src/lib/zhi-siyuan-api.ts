@@ -1,3 +1,2 @@
-export function zhiSiyuanApi(): string {
-  return "zhi-siyuan-api"
-}
+import SiyuanApi from "./siyuanApi"
+export default SiyuanApi

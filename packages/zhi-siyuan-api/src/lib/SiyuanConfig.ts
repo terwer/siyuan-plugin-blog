@@ -23,7 +23,7 @@
  * questions.
  */
 import { BlogConfig, BlogPlaceholder, PasswordType } from "zhi-blog-api"
-import SiyuanPlaceholder from "./SiyuanPlaceholder";
+import SiyuanPlaceholder from "./SiyuanPlaceholder"
 
 /**
  * 思源笔记配置
@@ -39,7 +39,7 @@ class SiyuanConfig extends BlogConfig {
    */
   protected override placeholder: SiyuanPlaceholder
 
-  constructor() {
+  constructor(apiUrl?: string, password?: string) {
     super()
     this.apiUrl = "http://127.0.0.1:6806"
     this.passwordType = PasswordType.PasswordType_Token
@@ -47,3 +47,5 @@ class SiyuanConfig extends BlogConfig {
     this.placeholder = new SiyuanPlaceholder()
   }
 }
+
+export default SiyuanConfig

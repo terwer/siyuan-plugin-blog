@@ -23,43 +23,38 @@
  * questions.
  */
 
-/**
- * 日志常量
- *
- * @public
- * @author terwer
- * @since 1.4.0
- */
-class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
-}
+import Env from "zhi-env"
+import SiyuanConfig from "./SiyuanConfig"
+import SiyuanKernelApi from "./siyuanKernelApi"
+import SiyuanClientApi from "./siyuanClientApi"
 
 /**
- * 日志级别
+ * 思源笔记API
  *
  * @author terwer
- * @since 1.0.7
- * @public
+ * @since 1.0.0
  */
-enum LogLevelEnum {
+class SiyuanApi {
   /**
-   * DEBUG
+   * 思源笔记内核API
    */
-  LOG_LEVEL_DEBUG = "DEBUG",
+  public readonly kernelApi
+
   /**
-   * INFO
+   * 思源笔记客户端API
    */
-  LOG_LEVEL_INFO = "INFO",
+  public readonly clientApi
+
   /**
-   * WARN
+   * 构造思源 API对象
+   *
+   * @param env - 可选，注意：serverApi必须传递env才能使用
+   * @param cfg - 可选，注意：y优先级比环境变量高
    */
-  LOG_LEVEL_WARN = "WARN",
-  /**
-   * ERROR
-   */
-  LOG_LEVEL_ERROR = "ERROR",
+  constructor(env?: Env, cfg?: SiyuanConfig) {
+    this.kernelApi = new SiyuanKernelApi(env, cfg)
+    this.clientApi = new SiyuanClientApi()
+  }
 }
 
-export default LogLevelEnum
-export { LogConstants }
+export default SiyuanApi
