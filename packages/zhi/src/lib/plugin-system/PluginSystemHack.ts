@@ -56,23 +56,14 @@ class PluginSystemHack {
 
       this.common.siyuanUtil.siyuanWindow().pluginSystemSource = "bazzar"
 
-      let js
-      const firstRes = await this.fetchPluginFromWidget()
-      if (firstRes.code == 200) {
-        js = firstRes.text
-        this.logger.info("Success loaded plugin js during first try=>", firstRes.code)
-      } else {
-        // 下载挂件
-        // TODO
+      const res = await this.fetchPluginFromWidget()
+      if (res.code == 200) {
+        const js = res.text
+        this.logger.info("Success loaded plugin js from zhi theme=>", res.code)
 
-        const secondRes = await this.fetchPluginFromWidget()
-        js = secondRes.text
-
-        this.logger.info("Try download plugin js during second try=>", secondRes.code)
+        eval(js)
       }
       // this.logger.debug("plugin js code=>", js)
-
-      eval(js)
     } catch (e) {
       this.logger.error("Plugin system Load error", e)
       throw e
@@ -99,10 +90,8 @@ class PluginSystemHack {
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      // 主题集成插件系统，暂时不能用
-      // body: JSON.stringify({ path: "/appearance/themes/zhi/plugin.js" }),
-      // 挂件版插件文件，不一定存在
-      body: JSON.stringify({ path: "/data/widgets/插件系统/plugin.js" }),
+      // 主题集成插件系统
+      body: JSON.stringify({ path: "/conf/appearance/themes/zhi/plugin.js" }),
     })
 
     let responseText = ""
