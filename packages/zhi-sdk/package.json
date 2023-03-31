@@ -1,0 +1,17 @@
+{
+  "name": "zhi-sdk",
+  "version": "1.3.0",
+  "type": "module",
+  "description": "a simple sdk for siyuan-note, blog, and more",
+  "repository": "terwer/zhi",
+  "homepage": "https://terwer.space",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi-sdk",
+    "zhi",
+    "sdk",
+    "siyuan-note",
+    "blog"
+  ]
+}

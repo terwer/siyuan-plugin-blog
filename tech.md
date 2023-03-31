@@ -29,8 +29,10 @@ nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
 ## js Vite
 ## zhi-cli, zhi-theme, zhi-plugins
 ## https://nx.dev/packages/vite
-nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite
-nx generate @nrwl/js:library zhi --publishable --importPath=zhi  --bundler=vite
+nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
 
 ## node library
 ## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
@@ -77,6 +79,7 @@ nx publish zhi-log --ver=0.0.1 --tag=latest
 nx publish zhi-cli --ver=0.0.1 --tag=latest
 nx publish zhi-common --ver=0.0.1 --tag=latest
 nx publish zhi --ver=0.0.1 --tag=latest
+nx publish zhi-sdk --ver=0.0.1 --tag=latest
 nx publish zhi-blog-api --ver=0.0.1 --tag=latest
 ```
 

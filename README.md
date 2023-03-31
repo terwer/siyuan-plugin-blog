@@ -13,7 +13,7 @@
 [![](https://img.shields.io/badge/dynamic-blog-blue)](https://github.com/terwer/zhi/tree/dev/packages/zhi-blog)
 [![](https://img.shields.io/badge/static-blog-purple)](https://github.com/terwer/zhi/tree/dev/packages/zhi-blog-astro)
 
-> ⚠️ WARNING 1: Attention: The `zhi` theme only supports the `2.7.6+` version of [siyuan-note](https://github.com/siyuan-note/siyuan) , and the plugin function only supports `2.8.1+`. Otherwise, you need to upgrade [siyuan-note](https://github.com/siyuan-note/siyuan) to a new version.
+> ⚠️ WARNING 1: Attention: The `zhi` theme only supports the `2.7.6+` version of [siyuan-note](https://github.com/siyuan-note/siyuan) , and the plugin system only supports `2.8.1+`. Otherwise, you need to upgrade [siyuan-note](https://github.com/siyuan-note/siyuan) to a new version.
 
 > ⚠️ WARNING 2: `1.0.0` is an available version in the early stage, and the function is not comprehensive yet. It is only used for testing and welcomes valuable opinions through issuing. Please refer to [core features](#core-features) for this version's characteristics.
 
