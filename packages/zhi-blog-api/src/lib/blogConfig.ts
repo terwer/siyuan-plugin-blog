@@ -52,7 +52,7 @@ export enum PageType {
   /**
    * MDX
    *
-   * @see https://mdxjs.com/
+   * @see {@link https://mdxjs.com/ mdx}
    */
   MDX,
 }

@@ -23,21 +23,47 @@
  * questions.
  */
 
-import Env, { EnvConstants } from "zhi-env"
+import Env from "zhi-env"
 import SiyuanConfig from "./SiyuanConfig"
-import LogFactory, { DefaultLogger, EnvHelper, LogConstants, LogLevelEnum } from "zhi-log"
+import LogFactory, { DefaultLogger, EnvHelper, LogLevelEnum } from "zhi-log"
 import { name, version } from "../../package.json"
 import ZhiCommon from "zhi-common"
 import SiyuanConstants from "./SiyuanConstants"
 
 /**
- * 思源笔记服务端API v2.0.27
- * https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83
- * https://github.com/leolee9086/noob-core/blob/master/frontEnd/noobApi/util/kernelApi.js
+ * 思源 API 返回类型
+ */
+export interface SiyuanData {
+  /**
+   * 非 0 为异常情况
+   */
+  code: number
+
+  /**
+   * 正常情况下是空字符串，异常情况下会返回错误文案
+   */
+  msg: string
+
+  /**
+   * 可能为 {}、[] 或者 NULL，根据不同接口而不同
+   */
+  data: any[] | object | null | undefined
+}
+
+/**
+ * 思源笔记服务端API v2.8.2
+ *
+ * 1. 均是 POST 方法
+ *
+ * 2. 需要带参的接口，参数为 JSON 字符串，放置到 body 里，标头 Content-Type 为 application/json
+ *
+ * 3. 鉴权：在 `设置` - `关于` 里查看 API token，请求标头：Authorization: Token xxx
  *
  * @public
  * @author terwer
  * @since 1.0.0
+ * @see {@link https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83 siyuan-api}
+ * @see {@link https://github.com/leolee9086/noob-core/blob/master/frontEnd/noobApi/util/kernelApi.js kernelApi}
  */
 class SiyuanKernelApi {
   /**
@@ -83,7 +109,7 @@ class SiyuanKernelApi {
         WHERE 1 = 1
         AND (b1.root_id ='${keyword}' OR (b1.content LIKE '%${keyword}%') OR (b1.tag LIKE '%${keyword}%')
     )`
-    const data = await this.sql(stmt)
+    const data = (await this.sql(stmt)) as any[]
     this.logger.debug("getRootBlocksCount data=>", data[0].count)
     return data[0].count
   }
@@ -92,8 +118,8 @@ class SiyuanKernelApi {
    * 以sql发送请求
    * @param sql sql
    */
-  public async sql(sql: string): Promise<any> {
-    const sqldata = {
+  public async sql(sql: string): Promise<SiyuanData["data"]> {
+    const sqldata: { stmt: string } = {
       stmt: sql,
     }
     const url = "/api/query/sql"
@@ -107,7 +133,7 @@ class SiyuanKernelApi {
    * @param url - url
    * @param data - 数据
    */
-  public async siyuanRequest(url: string, data: any): Promise<any> {
+  public async siyuanRequest(url: string, data: object): Promise<SiyuanData> {
     const reqUrl = `${this.siyuanConfig.apiUrl}${url}`
 
     const fetchOps = {
