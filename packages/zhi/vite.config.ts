@@ -28,13 +28,20 @@ import { defineConfig, loadEnv } from "vite"
 
 import viteTsConfigPaths from "vite-tsconfig-paths"
 import dts from "vite-plugin-dts"
-import { join, resolve } from "path"
+import { join } from "path"
 
 const mode = process.env["NODE_ENV"] ?? "production"
 const zhiBase = join(process.cwd(), "packages", "zhi")
 const env: Record<string, string> = loadEnv(mode, zhiBase)
 const debugMode = env["VITE_DEBUG_MODE"] === "true"
-
+const processEnvValues = {
+  "process.env": Object.entries(env).reduce((prev, [key, val]) => {
+    return {
+      ...prev,
+      [key]: val,
+    }
+  }, {}),
+}
 console.log("mode=>", mode)
 console.log("zhiBase=>", zhiBase)
 console.log("debugMode=>", debugMode)
@@ -62,6 +69,11 @@ export default defineConfig({
   //    }),
   //  ],
   // },
+
+  // https://github.com/vitejs/vite/issues/1930
+  // https://vitejs.dev/guide/env-and-mode.html#env-files
+  // 在这里自定义变量
+  define: Object.assign(processEnvValues, {}),
 
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode
@@ -96,7 +108,7 @@ export default defineConfig({
       // External packages that should not be bundled into your library.
       external: [],
     },
-    minify: false
+    minify: false,
   },
 
   test: {

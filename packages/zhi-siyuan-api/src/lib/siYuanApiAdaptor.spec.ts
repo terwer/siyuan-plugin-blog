@@ -23,14 +23,12 @@
  * questions.
  */
 
-import LogFactory from "./lib/zhi-log"
-import LogLevelEnum, { LogConstants } from "./lib/logConstants"
-import AbstractLogFactory from "./lib/factory/abstractLogFactory"
-import CustomLogFactory from "./lib/factory/customLogFactory"
-import DefaultLogger from "./lib/defaultLogger"
-import EnvHelper from "./lib/envHelper"
+import { describe, expect } from "vitest"
+import SiYuanApiAdaptor from "./siYuanApiAdaptor"
 
-export default LogFactory
-export { LogLevelEnum, AbstractLogFactory, CustomLogFactory }
-export { LogConstants, EnvHelper }
-export type { DefaultLogger }
+describe("SiYuanApiAdaptor", () => {
+  it("should work", function () {
+    const apiAdaptor = new SiYuanApiAdaptor()
+    expect(apiAdaptor).toBeTruthy()
+  })
+})

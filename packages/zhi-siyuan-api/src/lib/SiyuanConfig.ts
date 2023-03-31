@@ -22,8 +22,8 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-import { BlogConfig, BlogPlaceholder, PasswordType } from "zhi-blog-api"
-import SiyuanPlaceholder from "./SiyuanPlaceholder"
+import { BlogConfig, PasswordType } from "zhi-blog-api"
+import SiyuanPlaceholder from "./siyuanPlaceholder"
 
 /**
  * 思源笔记配置
@@ -33,17 +33,27 @@ import SiyuanPlaceholder from "./SiyuanPlaceholder"
  */
 class SiyuanConfig extends BlogConfig {
   /**
+   * 思源笔记伺服地址
+   */
+  public override apiUrl: string
+
+  /**
+   * 思源笔记 API token
+   */
+  public override password: string
+
+  /**
    * 思源笔记操作提示
    *
    * @protected
    */
-  protected override placeholder: SiyuanPlaceholder
+  public override placeholder: SiyuanPlaceholder
 
   constructor(apiUrl?: string, password?: string) {
     super()
-    this.apiUrl = "http://127.0.0.1:6806"
+    this.apiUrl = apiUrl ?? "http://127.0.0.1:6806"
     this.passwordType = PasswordType.PasswordType_Token
-    this.password = ""
+    this.password = password ?? ""
     this.placeholder = new SiyuanPlaceholder()
   }
 }

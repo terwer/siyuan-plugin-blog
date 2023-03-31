@@ -23,27 +23,61 @@
  * questions.
  */
 
-import { IBlogApi, Post, UserBlog } from "zhi-blog-api"
-import SiyuanKernelApi from "./siyuanKernelApi";
+import { CategoryInfo, IBlogApi, MediaObject, Post, UserBlog } from "zhi-blog-api"
+import SiyuanKernelApi from "./siyuanKernelApi"
 
+/**
+ * 思源笔记API适配器
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 class SiYuanApiAdaptor implements IBlogApi {
   private siyuanKernelApi
 
-
   constructor() {
     this.siyuanKernelApi = new SiyuanKernelApi()
+  }
+
+  async deletePost(postid: string): Promise<boolean> {
+    return Promise.resolve(false)
+  }
+
+  async editPost(postid: string, post: Post, publish?: boolean): Promise<boolean> {
+    return Promise.resolve(false)
+  }
+
+  async getCategories(): Promise<CategoryInfo[]> {
+    return Promise.resolve([])
   }
 
   getPost(postid: string, useSlug?: boolean): Promise<Post> {
     return Promise.resolve(new Post())
   }
 
-  getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<Post>> {
+  async getPreviewUrl(postid: string): Promise<string> {
+    return Promise.resolve("")
+  }
+
+  async getRecentPosts(numOfPosts: number, page?: number, keyword?: string): Promise<Array<Post>> {
     return Promise.resolve([])
   }
 
-  getUsersBlogs(): Promise<Array<UserBlog>> {
+  getRecentPostsCount(keyword?: string): Promise<number> {
+    return Promise.resolve(0)
+  }
+
+  async getUsersBlogs(): Promise<Array<UserBlog>> {
     return Promise.resolve([])
+  }
+
+  newMediaObject(mediaObject: MediaObject): Promise<MediaObject> {
+    return Promise.resolve({} as MediaObject)
+  }
+
+  async newPost(post: Post, publish?: boolean): Promise<string> {
+    return Promise.resolve("")
   }
 }
 

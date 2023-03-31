@@ -26,12 +26,14 @@
 import BlogConfig, { PageType, PasswordType } from "./lib/blogConfig"
 import BlogPlaceholder from "./lib/blogPlaceholder"
 import BlogApi from "./lib/zhi-blog-api"
-import IBlogApi from "./lib/blogApi"
+import { IBlogApi } from "./lib/blogApi"
 import Post from "./lib/models/post"
 import UserBlog from "./lib/models/userBlog"
 import SiteConfig from "./lib/models/siteConfig"
 import PostStatusEnum from "./lib/enums/postStatusEnum"
+import CategoryInfo from "./lib/models/categoryInfo"
+import MediaObject from "./lib/models/mediaObject"
 
 export default BlogApi
 export { IBlogApi, BlogConfig, BlogPlaceholder, PasswordType, PageType, PostStatusEnum }
-export { Post, UserBlog, SiteConfig }
+export { Post, UserBlog, SiteConfig, CategoryInfo, MediaObject }

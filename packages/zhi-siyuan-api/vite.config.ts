@@ -1,9 +1,26 @@
 /// <reference types="vitest" />
-import { defineConfig } from "vite"
+import { defineConfig, loadEnv } from "vite"
 
 import viteTsConfigPaths from "vite-tsconfig-paths"
 import dts from "vite-plugin-dts"
 import { join } from "path"
+
+const mode = process.env["NODE_ENV"] ?? "production"
+const zhiSiyuanApiBase = process.cwd()
+const env: Record<string, string> = loadEnv(mode, zhiSiyuanApiBase)
+const debugMode = env["VITE_DEBUG_MODE"] === "true"
+const processEnvValues = {
+  "process.env": Object.entries(env).reduce((prev, [key, val]) => {
+    return {
+      ...prev,
+      [key]: val,
+    }
+  }, {}),
+}
+console.log("mode=>", mode)
+console.log("zhiSiyuanApiBase=>", zhiSiyuanApiBase)
+console.log("debugMode=>", debugMode)
+// console.log("processEnvValues=>", processEnvValues)
 
 export default defineConfig({
   cacheDir: "../../node_modules/.vite/zhi-siyuan-api",
@@ -28,6 +45,11 @@ export default defineConfig({
   //    }),
   //  ],
   // },
+
+  // https://github.com/vitejs/vite/issues/1930
+  // https://vitejs.dev/guide/env-and-mode.html#env-files
+  // 在这里自定义变量
+  define: Object.assign(processEnvValues, {}),
 
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode

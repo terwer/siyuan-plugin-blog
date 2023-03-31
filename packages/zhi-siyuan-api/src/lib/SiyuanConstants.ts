@@ -23,14 +23,23 @@
  * questions.
  */
 
-import LogFactory from "./lib/zhi-log"
-import LogLevelEnum, { LogConstants } from "./lib/logConstants"
-import AbstractLogFactory from "./lib/factory/abstractLogFactory"
-import CustomLogFactory from "./lib/factory/customLogFactory"
-import DefaultLogger from "./lib/defaultLogger"
-import EnvHelper from "./lib/envHelper"
+/**
+ * 预定义思源变量
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class SiyuanConstants {
+  /**
+   * 思源 API 伺服地址
+   */
+  public static VITE_SIYUAN_API_URL_KEY = "VITE_SIYUAN_API_URL"
 
-export default LogFactory
-export { LogLevelEnum, AbstractLogFactory, CustomLogFactory }
-export { LogConstants, EnvHelper }
-export type { DefaultLogger }
+  /**
+   * 思源 token
+   */
+  public static VITE_SIYUAN_AUTH_TOKEN_KEY = "VITE_SIYUAN_AUTH_TOKEN"
+}
+
+export default SiyuanConstants

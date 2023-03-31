@@ -23,10 +23,36 @@
  * questions.
  */
 
-import { describe } from "vitest"
+import { describe, expect } from "vitest"
+import SiyuanKernelApi from "./siyuanKernelApi"
+import Env from "zhi-env"
+import SiyuanConfig from "./SiyuanConfig"
 
 describe("SiyuanKernelApi", () => {
-  it("should ", function () {
-    console.log("hello")
+  it("constructor", function () {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    expect(kernelApi).toBeTruthy()
+  })
+
+  it("sql using .env", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.sql("select 1 from blocks limit 1")
+    console.log("result=>", result)
+  })
+
+  it("sql using siyuanConfig", async () => {
+    const siyuanConfig = new SiyuanConfig("http://127.0.0.1:6806", "")
+    const kernelApi = new SiyuanKernelApi(siyuanConfig)
+    const result = await kernelApi.sql("select 1 from blocks limit 1")
+    console.log("result=>", result)
+  })
+
+  it("getRootBlocksCount", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.getRootBlocksCount("")
+    console.log("result=>", result)
   })
 })

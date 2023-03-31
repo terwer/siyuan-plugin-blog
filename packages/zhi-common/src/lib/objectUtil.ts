@@ -23,14 +23,29 @@
  * questions.
  */
 
-import LogFactory from "./lib/zhi-log"
-import LogLevelEnum, { LogConstants } from "./lib/logConstants"
-import AbstractLogFactory from "./lib/factory/abstractLogFactory"
-import CustomLogFactory from "./lib/factory/customLogFactory"
-import DefaultLogger from "./lib/defaultLogger"
-import EnvHelper from "./lib/envHelper"
+/**
+ * Object 工具类
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class ObjectUtil {
+  /**
+   * 检测是否是空对象
+   *
+   * @param obj - 对象
+   */
+  public isEmptyObject(obj: any): boolean {
+    if (!obj) {
+      return true
+    }
+    return (
+      Object.getPrototypeOf(obj) === Object.prototype &&
+      Object.getOwnPropertyNames(obj).length === 0 &&
+      Object.getOwnPropertySymbols(obj).length === 0
+    )
+  }
+}
 
-export default LogFactory
-export { LogLevelEnum, AbstractLogFactory, CustomLogFactory }
-export { LogConstants, EnvHelper }
-export type { DefaultLogger }
+export default ObjectUtil

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,14 +23,58 @@
  * questions.
  */
 
-import LogFactory from "./lib/zhi-log"
-import LogLevelEnum, { LogConstants } from "./lib/logConstants"
-import AbstractLogFactory from "./lib/factory/abstractLogFactory"
-import CustomLogFactory from "./lib/factory/customLogFactory"
-import DefaultLogger from "./lib/defaultLogger"
-import EnvHelper from "./lib/envHelper"
+/**
+ * 通用分类模型定义
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class CategoryInfo {
+  /**
+   * 分类ID
+   */
+  categoryId: string
 
-export default LogFactory
-export { LogLevelEnum, AbstractLogFactory, CustomLogFactory }
-export { LogConstants, EnvHelper }
-export type { DefaultLogger }
+  /**
+   * 父分类ID
+   */
+  parentId: string
+
+  /**
+   * 分类描述
+   */
+  description: string
+
+  /**
+   * 分类详情
+   */
+  categoryDescription: string
+
+  /**
+   * 分类名称
+   */
+  categoryName: string
+
+  /**
+   * 分类地址
+   */
+  htmlUrl: string
+
+  /**
+   * 分类订阅地址
+   */
+  rssUrl: string
+
+  constructor() {
+    this.categoryId = ""
+    this.parentId = "0"
+    this.description = ""
+    this.categoryDescription = ""
+    this.categoryName = ""
+    this.htmlUrl = ""
+    this.rssUrl = ""
+  }
+}
+
+export default CategoryInfo
