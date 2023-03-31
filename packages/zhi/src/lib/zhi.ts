@@ -42,6 +42,18 @@ class Zhi {
   private readonly runAs
 
   /**
+   * 主题样式最低支持版本
+   * @private
+   */
+  private readonly SUPPORTED_THEME_VERSION = "2.7.6"
+
+  /**
+   * 内核最低支持版本
+   * @private
+   */
+  private readonly SUPPORTED_KERNEL_VERSION = "2.8.1"
+
+  /**
    * 主题初始化
    *
    * @param runAs - 运行模式
@@ -69,6 +81,31 @@ class Zhi {
   public async init(): Promise<void> {
     try {
       this.logger.info(this.common.strUtil.f("Theme runAs {0}", this.runAs))
+
+      // 检测内核版本
+      // const kernelVersion = this.common.siyuanUtil.siyuanWindow().siyuan.config.system.kernelVersion
+      const kernelVersion = "2.7.5"
+      if (this.common.versionUtil.lesser(kernelVersion, this.SUPPORTED_THEME_VERSION)) {
+        const errMsg = this.common.strUtil.f(
+          "Your siyuan-note kernel version {0} is not supported by zhi theme, style will look weird, you must install siyuan-note {1}+ to use zhi-theme",
+          kernelVersion,
+          this.SUPPORTED_THEME_VERSION
+        )
+        this.logger.error(errMsg)
+        alert(errMsg)
+        return
+      }
+
+      if (this.common.versionUtil.lesser(kernelVersion, this.SUPPORTED_KERNEL_VERSION)) {
+        this.logger.warn(
+          this.common.strUtil.f(
+            "Your siyuan-note kernel version {0} is too low, plugin system will not work, you must install siyuan-note {1}+ to use plugin feature",
+            kernelVersion,
+            this.SUPPORTED_KERNEL_VERSION
+          )
+        )
+        return
+      }
 
       // 初始化第三方依赖
       const dynamicImports = await this.main([])

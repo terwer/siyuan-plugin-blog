@@ -76,6 +76,8 @@ nx publish zhi-env --ver=0.0.1 --tag=latest
 nx publish zhi-log --ver=0.0.1 --tag=latest
 nx publish zhi-cli --ver=0.0.1 --tag=latest
 nx publish zhi-common --ver=0.0.1 --tag=latest
+nx publish zhi --ver=0.0.1 --tag=latest
+nx publish zhi-blog-api --ver=0.0.1 --tag=latest
 ```
 
 ## Further help

@@ -13,17 +13,13 @@
 [![](https://img.shields.io/badge/dynamic-blog-blue)](https://github.com/terwer/zhi/tree/dev/packages/zhi-blog)
 [![](https://img.shields.io/badge/static-blog-purple)](https://github.com/terwer/zhi/tree/dev/packages/zhi-blog-astro)
 
-> ⚠️ Special Reminder 1: 1.0.0 is an early version that is available for testing purposes only and its functionality is
-> not yet comprehensive. Please feel free to raise issues to provide valuable feedback. For the features of this
-> version,
-> please refer to [Core Features](#Core Features).
+> ⚠️ WARNING 1: Attention: The `zhi` theme only supports the `2.7.6+` version of [siyuan-note](https://github.com/siyuan-note/siyuan) , and the plugin function only supports `2.8.1+`. Otherwise, you need to upgrade [siyuan-note](https://github.com/siyuan-note/siyuan) to a new version.
 
-> ⚠️ Special Reminder 2: The plugin system defaults to `Safe Mode` , You need to click the settings menu in the upper
-> right corner to turn off Safe Mode before you can enable the
-> plugin system.
+> ⚠️ WARNING 2: `1.0.0` is an available version in the early stage, and the function is not comprehensive yet. It is only used for testing and welcomes valuable opinions through issuing. Please refer to [core features](#core-features) for this version's characteristics.
 
-> ⚠️ Special Reminder 3: All plugins except for the theme core plugin are
-> disabled by default, so you need to manually enable the corresponding plugins in the plugin list to use them.
+> ⚠️ WARNING 3: The plugin system is set to `security mode` by default, and you need to click on the settings menu in the upper right corner to turn off the security mode before you can activate the plugin system.
+
+> ⚠️ WARNING 4: Except for the theme's core plugins, all plugins are disabled by default and need to be enabled in the plugin list before the first use.
 
 ## Quick start
 

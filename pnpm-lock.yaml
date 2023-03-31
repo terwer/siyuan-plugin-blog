@@ -7,6 +7,9 @@ dependencies:
   commander:
     specifier: ^10.0.0
     version: 10.0.0
+  compare-versions:
+    specifier: 6.0.0-rc.1
+    version: 6.0.0-rc.1
   enquirer:
     specifier: ^2.3.6
     version: 2.3.6
@@ -38,7 +41,7 @@ devDependencies:
     version: 15.8.9(@babel/core@7.21.3)(@types/node@16.11.7)(eslint@8.15.0)(nx@15.8.9)(prettier@2.8.7)(ts-node@10.9.1)(typescript@4.9.5)
   '@nrwl/nx-cloud':
     specifier: latest
-    version: 15.3.3
+    version: 15.3.4
   '@nrwl/react':
     specifier: ^15.8.9
     version: 15.8.9(eslint@8.15.0)(nx@15.8.9)(prettier@2.8.7)(typescript@4.9.5)
@@ -2150,8 +2153,8 @@ packages:
       - webpack-cli
     dev: true
 
-  /@nrwl/nx-cloud@15.3.3:
-    resolution: {integrity: sha512-zU+0YwN2M+G8Z9RjcsIbya6jgTB1SBGhqCXOb/CdwLnCHylAP0T6f9vaQibZE1BhI6doM+betqY0FvPazTjd8g==}
+  /@nrwl/nx-cloud@15.3.4:
+    resolution: {integrity: sha512-dBMyUK8coOxr9CeCnmhNh+e1kjvDhPuBvyoK6iIKPCI+H1brDIUAuRiKWrrOQpxruJYClFtEYXgV6wWpApeeaw==}
     hasBin: true
     dependencies:
       axios: 0.21.4
@@ -4035,6 +4038,10 @@ packages:
   /commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
     dev: true
+
+  /compare-versions@6.0.0-rc.1:
+    resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
+    dev: false
 
   /compressible@2.0.18:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}

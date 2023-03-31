@@ -48,6 +48,7 @@
   "dependencies": {
     "callsites": "^4.0.0",
     "commander": "^10.0.0",
+    "compare-versions": "6.0.0-rc.1",
     "enquirer": "^2.3.6",
     "git-clone": "^0.2.0",
     "handlebars": "^4.7.7",

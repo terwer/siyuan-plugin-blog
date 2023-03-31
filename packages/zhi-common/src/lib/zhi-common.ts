@@ -27,6 +27,7 @@ import DateUtil from "./dateUtil"
 import StrUtil from "./strUtil"
 import DeviceUtil from "./deviceUtil"
 import SiyuanUtil from "./siyuanUtil"
+import VersionUtil from "./versionUtil";
 
 /**
  * 平台无关的通用工具类
@@ -39,12 +40,14 @@ class ZhiCommon {
   public readonly strUtil
   public readonly deviceUtil
   public readonly siyuanUtil
+  public readonly versionUtil
 
   constructor() {
     this.dateUtil = new DateUtil()
     this.strUtil = new StrUtil()
     this.deviceUtil = DeviceUtil
     this.siyuanUtil = new SiyuanUtil()
+    this.versionUtil = new VersionUtil()
   }
 }
 

@@ -30,7 +30,8 @@ nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
 ## zhi-cli, zhi-theme, zhi-plugins
 ## https://nx.dev/packages/vite
 nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite
-nx generate @nrwl/js:library zhi --publishable --importPath=zhi  --bundler=vite
+nx generate @nrwl/js:library zhi --publishable --importPath=zhi  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi --publishable --importPath=zhi  --bundler=vite --unitTestRunner=vitest
 
 ## node library
 ## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
@@ -65,8 +66,9 @@ pnpm lint
 
 ## 测试
 
->pnpm test  
-</code></div></div></pre>
+```
+pnpm test  
+```
 
 ## 发布
 
@@ -75,6 +77,8 @@ nx publish zhi-env --ver=0.0.1 --tag=latest
 nx publish zhi-log --ver=0.0.1 --tag=latest  
 nx publish zhi-cli --ver=0.0.1 --tag=latest
 nx publish zhi-common --ver=0.0.1 --tag=latest
+nx publish zhi --ver=0.0.1 --tag=latest
+nx publish zhi-blog-api --ver=0.0.1 --tag=latest
 ```
 
 ## 更多帮助
