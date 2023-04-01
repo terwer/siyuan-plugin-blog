@@ -57,10 +57,16 @@
  * @version 1.0.0
  * @since 1.0.0
  */
-interface MediaObject {
+class MediaObject {
   name: string
   type: string
   bits: Buffer
+
+  constructor(name: string, type: string, bits: Buffer) {
+    this.name = name
+    this.type = type
+    this.bits = bits
+  }
 }
 
 export default MediaObject

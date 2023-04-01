@@ -23,13 +23,11 @@
  * questions.
  */
 
-import { BlogPlaceholder } from "zhi-blog-api";
+import { BlogPlaceholder } from "zhi-blog-api"
 
 /**
  * 思源笔记操作提示
  */
-class SiyuanPlaceholder extends BlogPlaceholder{
-
-}
+class SiyuanPlaceholder extends BlogPlaceholder {}
 
 export default SiyuanPlaceholder

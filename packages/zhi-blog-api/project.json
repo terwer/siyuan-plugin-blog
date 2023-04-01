@@ -32,6 +32,13 @@
       "options": {
         "lintFilePatterns": ["packages/zhi-blog-api/**/*.ts"]
       }
+    },
+    "doc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig packages/zhi-blog-api/tsconfig.json --out docs/zhi-blog-api packages/zhi-blog-api/src/index.ts"
+      },
+      "dependsOn": ["build"]
     }
   },
   "tags": []

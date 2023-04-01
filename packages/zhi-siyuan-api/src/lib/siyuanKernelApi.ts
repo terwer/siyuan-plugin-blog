@@ -29,7 +29,7 @@ import LogFactory, { DefaultLogger, EnvHelper, LogLevelEnum } from "zhi-log"
 import { name, version } from "../../package.json"
 import ZhiCommon from "zhi-common"
 import SiyuanConstants from "./siyuanConstants"
-import ISiyuanKernelApi, { SiyuanData } from "./ISiyuanKernelApi"
+import ISiyuanKernelApi, { type SiyuanData } from "./ISiyuanKernelApi"
 
 /**
  * 思源笔记服务端API v2.8.2

@@ -28,7 +28,7 @@ import Post from "./models/post"
 import CategoryInfo from "./models/categoryInfo"
 import { version } from "../../package.json"
 import MediaObject from "./models/mediaObject"
-import IBlogApi from "./IBlogApi"
+import type { IBlogApi } from "./IBlogApi"
 
 /**
  * 博客API

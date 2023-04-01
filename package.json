@@ -5,13 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "nx run-many --target=build",
-    "affected": "nx affected --target=build",
+    "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]",
     "test": "nx run-many --target=test",
     "lint": "nx run-many --target=lint",
-    "dev:zhi-cli": "node --experimental-specifier-resolution=node --loader ts-node/esm packages/zhi-cli/index.ts",
-    "watch:zhi-cli": "nx run zhi-cli:build --watch",
-    "watch:zhi": "nx run zhi:build --watch",
-    "cli:zhi-cli": "node --experimental-specifier-resolution=node dist/packages/zhi-cli"
+    "doc": "nx doc <project>"
   },
   "private": true,
   "devDependencies": {
@@ -37,6 +34,7 @@
     "nx": "15.8.9",
     "prettier": "^2.6.2",
     "ts-node": "10.9.1",
+    "typedoc": "^0.23.28",
     "typescript": "~4.9.5",
     "vite": "^4.0.1",
     "vite-plugin-dts": "~1.7.1",

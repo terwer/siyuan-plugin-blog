@@ -32,6 +32,13 @@
       "options": {
         "lintFilePatterns": ["packages/zhi-siyuan-api/**/*.ts"]
       }
+    },
+    "doc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig packages/zhi-siyuan-api/tsconfig.json --out docs/zhi-siyuan-api packages/zhi-siyuan-api/src/index.ts"
+      },
+      "dependsOn": ["build"]
     }
   },
   "tags": []

@@ -171,4 +171,4 @@ interface IBlogApi {
   newMediaObject(mediaObject: MediaObject): Promise<MediaObject>
 }
 
-export default IBlogApi
+export { IBlogApi }

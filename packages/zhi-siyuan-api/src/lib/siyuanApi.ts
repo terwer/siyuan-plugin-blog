@@ -48,11 +48,10 @@ class SiyuanApi {
   /**
    * 构造思源 API对象
    *
-   * @param env - 可选，注意：serverApi必须传递env才能使用
-   * @param cfg - 可选，注意：y优先级比环境变量高
+   * @param cfg - 环境变量 或者 配置项
    */
-  constructor(env?: Env, cfg?: SiyuanConfig) {
-    this.kernelApi = new SiyuanKernelApi(env, cfg)
+  constructor(cfg: Env | SiyuanConfig) {
+    this.kernelApi = new SiyuanKernelApi(cfg)
     this.clientApi = new SiyuanClientApi()
   }
 }

@@ -1,5 +1,5 @@
 import SiyuanApi from "./lib/zhi-siyuan-api"
-import { SiyuanData } from "./lib/siyuanKernelApi"
+import type { SiyuanData } from "./lib/ISiyuanKernelApi"
 
 export default SiyuanApi
 export { SiyuanData }

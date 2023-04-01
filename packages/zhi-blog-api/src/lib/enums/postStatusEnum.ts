@@ -30,15 +30,15 @@ enum PostStatusEnum {
   /**
    * 已发布
    */
-  PostStatusEnum_Publish="publish",
+  PostStatusEnum_Publish = "publish",
   /**
    * 草稿
    */
-  PostStatusEnum_Draft="draft",
+  PostStatusEnum_Draft = "draft",
   /**
    * 继承
    */
-  PostStatusEnum_Inherit="inherit"
+  PostStatusEnum_Inherit = "inherit",
 }
 
 export default PostStatusEnum

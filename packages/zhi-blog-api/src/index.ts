@@ -26,7 +26,7 @@
 import BlogConfig, { PageType, PasswordType } from "./lib/blogConfig"
 import BlogPlaceholder from "./lib/blogPlaceholder"
 import BlogApi from "./lib/zhi-blog-api"
-import IBlogApi from "./lib/IBlogApi"
+import type { IBlogApi } from "./lib/IBlogApi"
 import Post from "./lib/models/post"
 import UserBlog from "./lib/models/userBlog"
 import SiteConfig from "./lib/models/siteConfig"

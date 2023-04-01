@@ -25,6 +25,8 @@
 
 import { CategoryInfo, IBlogApi, MediaObject, Post, UserBlog } from "zhi-blog-api"
 import SiyuanKernelApi from "./siyuanKernelApi"
+import Env from "zhi-env"
+import SiyuanConfig from "./siyuanConfig"
 
 /**
  * 思源笔记API适配器
@@ -36,8 +38,13 @@ import SiyuanKernelApi from "./siyuanKernelApi"
 class SiYuanApiAdaptor implements IBlogApi {
   private siyuanKernelApi
 
-  constructor() {
-    this.siyuanKernelApi = new SiyuanKernelApi()
+  /**
+   * 初始化思源 API 适配器
+   *
+   * @param cfg - 环境变量 或者 配置项
+   */
+  constructor(cfg: Env | SiyuanConfig) {
+    this.siyuanKernelApi = new SiyuanKernelApi(cfg)
   }
 
   async deletePost(postid: string): Promise<boolean> {
