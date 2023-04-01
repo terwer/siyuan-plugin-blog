@@ -2,6 +2,12 @@
 
 a pluggable siyuan-note theme
 
+## Api docs
+
+- [zhi-blog-api](https://zhi.terwer.space/zhi-blog-api/index.html)
+
+- [zhi-siyuan-api](https://zhi.terwer.space/zhi-siyuan-api/index.html)
+
 ## Building
 
 This library was generated with [Nx](https://nx.dev).

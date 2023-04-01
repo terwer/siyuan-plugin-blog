@@ -21,12 +21,6 @@
 
 > ⚠️ WARNING 4: Except for the theme's core plugins, all plugins are disabled by default and need to be enabled in the plugin list before the first use.
 
-## Api docs
-
-- [zhi-blog-api](https://zhi.terwer.space/zhi-blog-api/index.html)
-
-- [zhi-siyuan-api](https://zhi.terwer.space/zhi-siyuan-api/index.html)
-
 ## Quick start
 
 You can download the `zhi` theme directly in the Market of siyuan-note, and then select the `zhi` theme

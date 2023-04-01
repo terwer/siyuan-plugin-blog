@@ -32,6 +32,13 @@
       "options": {
         "lintFilePatterns": ["packages/zhi/**/*.ts"]
       }
+    },
+    "doc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig packages/zhi/tsconfig.json --out docs/docs packages/zhi/src/theme.ts"
+      },
+      "dependsOn": ["build"]
     }
   },
   "tags": []
