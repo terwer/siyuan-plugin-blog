@@ -40,4 +40,4 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies and build for vercel.yaml
-        run: pnpm install && nx run-many --target=build --exclude=zhi
+        run: pnpm install
