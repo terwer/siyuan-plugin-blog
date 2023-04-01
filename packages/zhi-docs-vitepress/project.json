@@ -7,7 +7,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "vitepress build packages/zhi-docs-vitepress"
+        "command": "node packages/zhi-docs-vitepress/src/makeMd.cjs && vitepress build packages/zhi-docs-vitepress"
       }
     },
     "serve": {

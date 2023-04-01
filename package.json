@@ -39,6 +39,7 @@
     "prettier": "^2.6.2",
     "ts-node": "10.9.1",
     "typedoc": "^0.23.28",
+    "typedoc-github-wiki-theme": "^1.0.1",
     "typedoc-plugin-markdown": "^3.14.0",
     "typescript": "~4.9.5",
     "vite": "^4.0.1",

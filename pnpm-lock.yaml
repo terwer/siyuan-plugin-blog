@@ -126,6 +126,9 @@ devDependencies:
   typedoc:
     specifier: ^0.23.28
     version: 0.23.28(typescript@4.9.5)
+  typedoc-github-wiki-theme:
+    specifier: ^1.0.1
+    version: 1.0.1(typedoc-plugin-markdown@3.14.0)(typedoc@0.23.28)
   typedoc-plugin-markdown:
     specifier: ^3.14.0
     version: 3.14.0(typedoc@0.23.28)
@@ -11817,6 +11820,16 @@ packages:
     dependencies:
       is-typedarray: 1.0.0
     dev: false
+
+  /typedoc-github-wiki-theme@1.0.1(typedoc-plugin-markdown@3.14.0)(typedoc@0.23.28):
+    resolution: {integrity: sha512-FaO7fENGK6IJLpkddbNXxJfNbooF9KBC7xfk7Lj4uqG5SCC7YQFPTLDyNmbpJKO93QEenRYgqBwI5E5d/bKrHw==}
+    peerDependencies:
+      typedoc: '>=0.22.9'
+      typedoc-plugin-markdown: '>=3.11.10'
+    dependencies:
+      typedoc: 0.23.28(typescript@4.9.5)
+      typedoc-plugin-markdown: 3.14.0(typedoc@0.23.28)
+    dev: true
 
   /typedoc-plugin-markdown@3.14.0(typedoc@0.23.28):
     resolution: {integrity: sha512-UyQLkLRkfTFhLdhSf3RRpA3nNInGn+k6sll2vRXjflaMNwQAAiB61SYbisNZTg16t4K1dt1bPQMMGLrxS0GZ0Q==}
