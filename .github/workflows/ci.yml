@@ -39,5 +39,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies and build for vercel.yaml
+      - name: Install dependencies
         run: pnpm install
