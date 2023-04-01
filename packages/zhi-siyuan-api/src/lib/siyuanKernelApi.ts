@@ -88,6 +88,17 @@ class SiyuanKernelApi implements ISiyuanKernelApi {
   }
 
   /**
+   * 打开笔记本
+   *
+   * @param notebookId - 笔记本ID
+   */
+  public async openNotebook(notebookId: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/openNotebook", {
+      notebook: notebookId,
+    })
+  }
+
+  /**
    * 分页获取根文档
    *
    * @param keyword - 关键字
