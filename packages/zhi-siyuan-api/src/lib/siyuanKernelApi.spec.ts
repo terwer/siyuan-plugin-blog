@@ -56,6 +56,27 @@ describe("SiyuanKernelApi", () => {
     console.log("result=>", result)
   })
 
+  it("openNotebook", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.openNotebook("20220718062546-2nbmy21")
+    console.log("result=>", result)
+  })
+
+  it("closeNotebook", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.closeNotebook("20220718062546-2nbmy21")
+    console.log("result=>", result)
+  })
+
+  it("renameNotebook", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.renameNotebook("20220621105123-dlyn6nl", "临时文档")
+    console.log("result=>", result)
+  })
+
   it("getRootBlocksCount", async () => {
     const env = new Env(import.meta.env)
     const kernelApi = new SiyuanKernelApi(env)

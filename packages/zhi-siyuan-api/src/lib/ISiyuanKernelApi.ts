@@ -54,6 +54,10 @@ interface ISiyuanKernelApi {
   lsNotebooks(): Promise<SiyuanData>
   // /api/notebook/openNotebook
   openNotebook(notebookId: string): Promise<SiyuanData>
+  // /api/notebook/closeNotebook
+  closeNotebook(notebookId: string): Promise<SiyuanData>
+  // /api/notebook/renameNotebook
+  renameNotebook(notebookId: string, name: string): Promise<SiyuanData>
 }
 
 export default ISiyuanKernelApi

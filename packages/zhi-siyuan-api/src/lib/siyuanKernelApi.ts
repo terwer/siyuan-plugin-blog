@@ -99,6 +99,30 @@ class SiyuanKernelApi implements ISiyuanKernelApi {
   }
 
   /**
+   * 关闭笔记本
+   *
+   * @param notebookId - 笔记本ID
+   */
+  public async closeNotebook(notebookId: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/closeNotebook", {
+      notebook: notebookId,
+    })
+  }
+
+  /**
+   * 重命名笔记本
+   *
+   * @param notebookId - 笔记本ID
+   * @param name - 新笔记本名称
+   */
+  public async renameNotebook(notebookId: string, name: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/renameNotebook", {
+      notebook: notebookId,
+      name: name,
+    })
+  }
+
+  /**
    * 分页获取根文档
    *
    * @param keyword - 关键字
