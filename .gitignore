@@ -6,6 +6,7 @@ tmp
 /out-tsc
 packages/zhi-docs/docs/*
 !packages/zhi-docs/docs/.gitkeep
+packages/zhi-docs-vitepress/.vitepress/cache
 
 # dependencies
 node_modules
@@ -44,3 +45,4 @@ Thumbs.db
 # Generated Docusaurus files
 .docusaurus/
 .cache-loader/
+.vercel

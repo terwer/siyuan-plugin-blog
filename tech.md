@@ -52,7 +52,10 @@ nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyua
 nx generate @nx-plus/docusaurus:app zhi-docs
 ## nx serve zhi-docs
 ## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
-
+## pnpm add vue vitepress -D
+## pnpm exec vitepress init
+## ./packages/zhi-docs-vitepress
+ 
 ## nuxt
 ## pnpm install @nx-plus/nuxt --save-dev
 ## nx generate @nx-plus/nuxt:app zhi-blog
