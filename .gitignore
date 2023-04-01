@@ -4,7 +4,8 @@
 dist
 tmp
 /out-tsc
-packages/zhi-docs/docs
+packages/zhi-docs/docs/*
+!packages/zhi-docs/docs/.gitkeep
 
 # dependencies
 node_modules
