@@ -1,0 +1,14 @@
+{
+  "name": "zhi-docs",
+  "version": "1.0.0",
+  "description": "the docs for zhi related projects",
+  "repository": "terwer/zhi",
+  "homepage": "https://terwer.space",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi-docs",
+    "zhi",
+    "docs"
+  ]
+}

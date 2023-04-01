@@ -40,12 +40,32 @@ nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyua
 
 ## web app
 ## zhi-blog, zhi-blog-astro
-nx generate @nrwl/web:app zhi-blog --bundler=vite
-nx generate @nrwl/web:app zhi-blog-astro --bundler=vite
+## nx generate @nrwl/web:app zhi-blog --bundler=vite
+## nx generate @nrwl/web:app zhi-blog-astro --bundler=vite
 ## nx generate @nrwl/react:app zhi-blog --bundler=vite --dry-run
 
 ## node app
 ## nx generate @nrwl/node:app zhi-theme --bundler=esbuild --unitTestRunner=none --dry-run
+
+## docs
+## pnpm install @nx-plus/docusaurus --save-dev
+nx generate @nx-plus/docusaurus:app zhi-docs
+## nx serve zhi-docs
+## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
+
+## nuxt
+## pnpm install @nx-plus/nuxt --save-dev
+## nx generate @nx-plus/nuxt:app zhi-blog
+## nx serve my-app
+
+## astro
+## pnpm install -D @nxtensions/astro
+## nx migrate @nxtensions/astro@latest
+## nx generate @nxtensions/astro:app my-app
+## nx generate @nxtensions/astro:lib my-lib
+## nx generate @nxtensions/astro:component my-component
+## nx dev my-app
+## nx preview my-app
 ```
 
 ## 设置
