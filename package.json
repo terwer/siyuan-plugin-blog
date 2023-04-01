@@ -8,7 +8,7 @@
     "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]",
     "test": "nx run-many --target=test",
     "lint": "nx run-many --target=lint",
-    "doc": "nx doc <project>"
+    "doc": "nx run-many --target=doc"
   },
   "private": true,
   "devDependencies": {

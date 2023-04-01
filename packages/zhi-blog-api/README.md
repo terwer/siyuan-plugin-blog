@@ -7,7 +7,7 @@ a common blog interface
 ## Deps
 
 ```
-## Congregations! zhi-env need no deps, it is just pure js code 🎉
+## Congregations! zhi-blog-api need no deps, it is just pure js code 🎉
 ```
 
 ## Building
