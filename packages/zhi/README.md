@@ -4,9 +4,11 @@ a pluggable siyuan-note theme
 
 ## Api docs
 
-- [zhi-blog-api](https://zhi.terwer.space/zhi-blog-api/index.html)
+- [zhi-cli](https://zhi.terwer.space/zhi-cli/)
 
-- [zhi-siyuan-api](https://zhi.terwer.space/zhi-siyuan-api/index.html)
+- [zhi-blog-api](https://zhi.terwer.space/zhi-blog-api/)
+
+- [zhi-siyuan-api](https://zhi.terwer.space/zhi-siyuan-api/)
 
 ## Building
 
@@ -17,3 +19,9 @@ Run `nx build zhi` to build the library.
 ## Running unit tests
 
 Run `nx test zhi` to execute the unit tests via [Vitest](https://vitest.dev).
+
+## Command
+
+```
+nx serve zhi
+```

@@ -39,6 +39,13 @@
         "command": "typedoc --tsconfig packages/zhi/tsconfig.json --out docs/api packages/zhi/src/theme.ts"
       },
       "dependsOn": ["build"]
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run zhi:build --watch"
+      },
+      "dependsOn": []
     }
   },
   "tags": []

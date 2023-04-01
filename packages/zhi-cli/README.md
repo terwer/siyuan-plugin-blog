@@ -47,3 +47,10 @@ Run `nx test zhi-cli` to execute the unit tests via [Vitest](https://vitest.dev)
 ```
 nx publish zhi-cli --ver=1.2.3 --tag=latest
 ```
+
+## Command
+
+```
+nx serve zhi-cli
+nx cli zhi-cli -h
+```

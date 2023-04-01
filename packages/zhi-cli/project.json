@@ -32,6 +32,27 @@
       "options": {
         "lintFilePatterns": ["packages/zhi-cli/**/*.ts"]
       }
+    },
+    "doc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig packages/zhi-cli/tsconfig.json --out docs/api packages/zhi-cli/src/index.ts"
+      },
+      "dependsOn": ["build"]
+    },
+    "cli": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node --experimental-specifier-resolution=node dist/packages/zhi-cli"
+      },
+      "dependsOn": ["build"]
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run zhi-cli:build --watch"
+      },
+      "dependsOn": []
     }
   },
   "tags": []
