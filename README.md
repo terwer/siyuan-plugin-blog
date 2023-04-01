@@ -4,6 +4,7 @@
 
 [中文版](README_zh_CN.md)
 
+[![](https://img.shields.io/badge/api-docs-green)](https://zhi.terwer.space)
 [![dev checks](https://img.shields.io/github/checks-status/terwer/zhi/dev?label=build)](https://github.com/terwer/zhi/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/zhi.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)

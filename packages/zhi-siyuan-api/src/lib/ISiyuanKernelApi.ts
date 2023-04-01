@@ -38,7 +38,7 @@ interface SiyuanData {
   msg: string
 
   /**
-   * 可能为 {}、[] 或者 NULL，根据不同接口而不同
+   * 可能为 \{\}、[] 或者 NULL，根据不同接口而不同
    */
   data: any[] | object | null | undefined
 }
@@ -58,6 +58,14 @@ interface ISiyuanKernelApi {
   closeNotebook(notebookId: string): Promise<SiyuanData>
   // /api/notebook/renameNotebook
   renameNotebook(notebookId: string, name: string): Promise<SiyuanData>
+  // /api/notebook/createNotebook
+  createNotebook(name: string): Promise<SiyuanData>
+  // /api/notebook/removeNotebook
+  removeNotebook(notebookId: string): Promise<SiyuanData>
+  // /api/notebook/getNotebookConf
+  getNotebookConf(notebookId: string): Promise<SiyuanData>
+  // /api/notebook/setNotebookConf
+  setNotebookConf(notebookConf: object): Promise<SiyuanData>
 }
 
 export default ISiyuanKernelApi

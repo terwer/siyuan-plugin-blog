@@ -81,48 +81,6 @@ class SiyuanKernelApi implements ISiyuanKernelApi {
   }
 
   /**
-   * 列出笔记本
-   */
-  public async lsNotebooks(): Promise<SiyuanData> {
-    return await this.siyuanRequest("/api/notebook/lsNotebooks", {})
-  }
-
-  /**
-   * 打开笔记本
-   *
-   * @param notebookId - 笔记本ID
-   */
-  public async openNotebook(notebookId: string): Promise<SiyuanData> {
-    return await this.siyuanRequest("/api/notebook/openNotebook", {
-      notebook: notebookId,
-    })
-  }
-
-  /**
-   * 关闭笔记本
-   *
-   * @param notebookId - 笔记本ID
-   */
-  public async closeNotebook(notebookId: string): Promise<SiyuanData> {
-    return await this.siyuanRequest("/api/notebook/closeNotebook", {
-      notebook: notebookId,
-    })
-  }
-
-  /**
-   * 重命名笔记本
-   *
-   * @param notebookId - 笔记本ID
-   * @param name - 新笔记本名称
-   */
-  public async renameNotebook(notebookId: string, name: string): Promise<SiyuanData> {
-    return await this.siyuanRequest("/api/notebook/renameNotebook", {
-      notebook: notebookId,
-      name: name,
-    })
-  }
-
-  /**
    * 分页获取根文档
    *
    * @param keyword - 关键字
@@ -183,6 +141,103 @@ class SiyuanKernelApi implements ISiyuanKernelApi {
       throw new Error(resJson.msg)
     }
     return resJson.code === 0 ? resJson.data : null
+  }
+
+  /**
+   * 列出笔记本
+   */
+  public async lsNotebooks(): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/lsNotebooks", {})
+  }
+
+  /**
+   * 打开笔记本
+   *
+   * @param notebookId - 笔记本ID
+   */
+  public async openNotebook(notebookId: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/openNotebook", {
+      notebook: notebookId,
+    })
+  }
+
+  /**
+   * 关闭笔记本
+   *
+   * @param notebookId - 笔记本ID
+   */
+  public async closeNotebook(notebookId: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/closeNotebook", {
+      notebook: notebookId,
+    })
+  }
+
+  /**
+   * 重命名笔记本
+   *
+   * @param notebookId - 笔记本ID
+   * @param name - 新笔记本名称
+   */
+  public async renameNotebook(notebookId: string, name: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/renameNotebook", {
+      notebook: notebookId,
+      name: name,
+    })
+  }
+
+  /**
+   * 创建笔记本
+   *
+   * @param name - 新笔记本名称
+   */
+  public async createNotebook(name: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/createNotebook", {
+      name: name,
+    })
+  }
+
+  /**
+   * 删除笔记本
+   *
+   * @param notebookId - 笔记本ID
+   */
+  public async removeNotebook(notebookId: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/removeNotebook", {
+      notebook: notebookId,
+    })
+  }
+
+  /**
+   * 获取笔记本配置
+   *
+   * @param notebookId - 笔记本ID
+   */
+  public async getNotebookConf(notebookId: string): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/getNotebookConf", {
+      notebook: notebookId,
+    })
+  }
+
+  /**
+   * 保存笔记本配置
+   *
+   * ```json
+   * {
+   *   "notebook": "20210817205410-2kvfpfn",
+   *   "conf": {
+   *       "name": "测试笔记本",
+   *       "closed": false,
+   *       "refCreateSavePath": "",
+   *       "createDocNameTemplate": "",
+   *       "dailyNoteSavePath": "/daily note/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
+   *       "dailyNoteTemplatePath": ""
+   *     }
+   * }
+   * ```
+   * @param notebookConf - 笔记本配置
+   */
+  public async setNotebookConf(notebookConf: object): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/setNotebookConf", notebookConf)
   }
 }
 

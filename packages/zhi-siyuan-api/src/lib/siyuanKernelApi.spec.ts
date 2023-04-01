@@ -49,6 +49,13 @@ describe("SiyuanKernelApi", () => {
     console.log("result=>", result)
   })
 
+  it("getRootBlocksCount", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.getRootBlocksCount("")
+    console.log("result=>", result)
+  })
+
   it("lsNotebooks", async () => {
     const env = new Env(import.meta.env)
     const kernelApi = new SiyuanKernelApi(env)
@@ -77,10 +84,41 @@ describe("SiyuanKernelApi", () => {
     console.log("result=>", result)
   })
 
-  it("getRootBlocksCount", async () => {
+  it("createNotebook", async () => {
     const env = new Env(import.meta.env)
     const kernelApi = new SiyuanKernelApi(env)
-    const result = await kernelApi.getRootBlocksCount("")
+    const result = await kernelApi.createNotebook("临时文档3")
+    console.log("result=>", result)
+  })
+
+  it("removeNotebook", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.removeNotebook("20230401225851-4zgh677")
+    console.log("result=>", result)
+  })
+
+  it("getNotebookConf", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.getNotebookConf("20220621105123-dlyn6nl")
+    console.log("result=>", result)
+  })
+
+  it("setNotebookConf", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.setNotebookConf({
+      notebook: "20220621105123-dlyn6nl",
+      conf: {
+        name: "测试笔记本",
+        closed: false,
+        refCreateSavePath: "",
+        createDocNameTemplate: "",
+        dailyNoteSavePath: '/daily note/{{now | date "2006/01"}}/{{now | date "2006-01-02"}}',
+        dailyNoteTemplatePath: "",
+      },
+    })
     console.log("result=>", result)
   })
 })
