@@ -4,7 +4,7 @@
   "type": "module",
   "description": "a tool for generating zhi framework related projects",
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-cli",
   "author": "terwer",
   "license": "GPL",
   "bin": "./index.js",

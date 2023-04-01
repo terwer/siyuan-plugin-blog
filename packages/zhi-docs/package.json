@@ -1,9 +1,9 @@
 {
   "name": "zhi-docs",
   "version": "1.0.0",
-  "description": "the docs for zhi related projects",
+  "description": "docs for zhi related projects",
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-docs",
   "author": "terwer",
   "license": "GPL",
   "keywords": [

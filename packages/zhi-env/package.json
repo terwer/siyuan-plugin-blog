@@ -4,7 +4,7 @@
   "type": "module",
   "description": "a cross-platform env config lib",
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-env",
   "author": "terwer",
   "license": "GPL",
   "keywords": [

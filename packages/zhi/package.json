@@ -4,7 +4,7 @@
   "type": "module",
   "description": "a pluggable siyuan-note theme",
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi",
   "author": "terwer",
   "license": "GPL",
   "keywords": [

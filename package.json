@@ -8,7 +8,6 @@
     "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]",
     "test": "nx run-many --target=test",
     "lint": "nx run-many --target=lint",
-    "doc": "nx run-many --target=doc",
     "serve": "nx serve <project>",
     "cli": "nx cli <project>"
   },

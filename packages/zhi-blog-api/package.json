@@ -4,7 +4,7 @@
   "type": "module",
   "description": "a common blog interface",
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-blog-api",
   "author": "terwer",
   "license": "GPL",
   "keywords": [

@@ -4,7 +4,7 @@
   "type": "module",
   "description": "a simple sdk for siyuan-note, blog, and more",
   "repository": "terwer/zhi",
-  "homepage": "https://terwer.space",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-sdk",
   "author": "terwer",
   "license": "GPL",
   "keywords": [
