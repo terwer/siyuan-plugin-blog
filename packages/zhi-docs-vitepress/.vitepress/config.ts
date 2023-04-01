@@ -5,7 +5,7 @@ export default defineConfig({
   title: "Zhi",
   description: "A siyuan-note theme with plugin and blog bundled",
 
-  outDir: '../../dist/zhi-docs-vitepress', // specify static pages build output dir
+  outDir: '../../dist/packages/zhi-docs-vitepress', // specify static pages build output dir
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
