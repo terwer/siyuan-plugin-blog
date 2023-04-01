@@ -8,11 +8,15 @@ a tool for generating zhi framework related projects
 
 ## Usage
 
+Install  zhi-cli
+
 ```bash
 # npx zhi-cli
 
 npm i -g zhi-cli
 ```
+
+Create project using zhi-cli
 
 ```bash
 ## default

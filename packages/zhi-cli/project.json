@@ -36,7 +36,7 @@
     "doc": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "typedoc --tsconfig packages/zhi-cli/tsconfig.json --out docs/api packages/zhi-cli/src/index.ts"
+        "command": "typedoc --tsconfig packages/zhi-cli/tsconfig.json --out docs/zhi-cli packages/zhi-cli/src/index.ts"
       },
       "dependsOn": ["build"]
     },
