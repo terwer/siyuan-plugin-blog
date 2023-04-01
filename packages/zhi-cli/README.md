@@ -40,7 +40,7 @@ Run `nx build zhi-cli` to build the library.
 
 ## Running unit tests
 
-Run `nx test zhi-env` to execute the unit tests via [Vitest](https://vitest.dev).
+Run `nx test zhi-cli` to execute the unit tests via [Vitest](https://vitest.dev).
 
 ## Publish
 

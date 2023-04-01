@@ -82,4 +82,10 @@ Run `nx build zhi-sdk` to build the library.
 
 ## Running unit tests
 
-Run `nx test zhi-sdk` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test zhi-sdk` to execute the unit tests via [Vitest](https://vitest.dev).
+
+## Publish
+
+```
+nx publish zhi-sdk --ver=0.0.1 --tag=latest
+```
