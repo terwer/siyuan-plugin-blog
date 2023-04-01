@@ -23,17 +23,37 @@
  * questions.
  */
 
-import BlogConfig, { PageType, PasswordType } from "./lib/blogConfig"
-import BlogPlaceholder from "./lib/blogPlaceholder"
-import BlogApi from "./lib/zhi-blog-api"
-import IBlogApi from "./lib/IBlogApi"
-import Post from "./lib/models/post"
-import UserBlog from "./lib/models/userBlog"
-import SiteConfig from "./lib/models/siteConfig"
-import PostStatusEnum from "./lib/enums/postStatusEnum"
-import CategoryInfo from "./lib/models/categoryInfo"
-import MediaObject from "./lib/models/mediaObject"
+/**
+ * 思源 API 返回类型
+ */
+interface SiyuanData {
+  /**
+   * 非 0 为异常情况
+   */
+  code: number
 
-export default BlogApi
-export { IBlogApi, BlogConfig, BlogPlaceholder, PasswordType, PageType, PostStatusEnum }
-export { Post, UserBlog, SiteConfig, CategoryInfo, MediaObject }
+  /**
+   * 正常情况下是空字符串，异常情况下会返回错误文案
+   */
+  msg: string
+
+  /**
+   * 可能为 {}、[] 或者 NULL，根据不同接口而不同
+   */
+  data: any[] | object | null | undefined
+}
+
+/**
+ * 思源笔记内核接口定义
+ *
+ * @see {@link https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83 siyuan-api}
+ * @see {@link https://github.com/leolee9086/noob-core/blob/master/frontEnd/noobApi/util/kernelApi.js kernelApi}
+ */
+interface ISiyuanKernelApi {
+  // /api/notebook/lsNotebooks
+  lsNotebooks(): Promise<SiyuanData>
+  // /api/notebook/openNotebook
+}
+
+export default ISiyuanKernelApi
+export { SiyuanData }

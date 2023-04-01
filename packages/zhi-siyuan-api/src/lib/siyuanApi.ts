@@ -24,7 +24,7 @@
  */
 
 import Env from "zhi-env"
-import SiyuanConfig from "./SiyuanConfig"
+import SiyuanConfig from "./siyuanConfig"
 import SiyuanKernelApi from "./siyuanKernelApi"
 import SiyuanClientApi from "./siyuanClientApi"
 

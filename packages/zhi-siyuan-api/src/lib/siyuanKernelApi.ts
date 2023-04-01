@@ -24,31 +24,12 @@
  */
 
 import Env from "zhi-env"
-import SiyuanConfig from "./SiyuanConfig"
+import SiyuanConfig from "./siyuanConfig"
 import LogFactory, { DefaultLogger, EnvHelper, LogLevelEnum } from "zhi-log"
 import { name, version } from "../../package.json"
 import ZhiCommon from "zhi-common"
-import SiyuanConstants from "./SiyuanConstants"
-
-/**
- * 思源 API 返回类型
- */
-export interface SiyuanData {
-  /**
-   * 非 0 为异常情况
-   */
-  code: number
-
-  /**
-   * 正常情况下是空字符串，异常情况下会返回错误文案
-   */
-  msg: string
-
-  /**
-   * 可能为 {}、[] 或者 NULL，根据不同接口而不同
-   */
-  data: any[] | object | null | undefined
-}
+import SiyuanConstants from "./siyuanConstants"
+import ISiyuanKernelApi, { SiyuanData } from "./ISiyuanKernelApi"
 
 /**
  * 思源笔记服务端API v2.8.2
@@ -65,7 +46,7 @@ export interface SiyuanData {
  * @see {@link https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%89%B4%E6%9D%83 siyuan-api}
  * @see {@link https://github.com/leolee9086/noob-core/blob/master/frontEnd/noobApi/util/kernelApi.js kernelApi}
  */
-class SiyuanKernelApi {
+class SiyuanKernelApi implements ISiyuanKernelApi {
   /**
    * 思源笔记服务端API版本号
    */
@@ -100,8 +81,16 @@ class SiyuanKernelApi {
   }
 
   /**
+   * 列出笔记本
+   */
+  public async lsNotebooks(): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/lsNotebooks", {})
+  }
+
+  /**
    * 分页获取根文档
-   * @param keyword 关键字
+   *
+   * @param keyword - 关键字
    */
   public async getRootBlocksCount(keyword: string): Promise<number> {
     const stmt = `SELECT COUNT(DISTINCT b1.root_id) as count
@@ -116,7 +105,8 @@ class SiyuanKernelApi {
 
   /**
    * 以sql发送请求
-   * @param sql sql
+   *
+   * @param sql - sql
    */
   public async sql(sql: string): Promise<SiyuanData["data"]> {
     const sqldata: { stmt: string } = {

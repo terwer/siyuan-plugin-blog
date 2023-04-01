@@ -26,7 +26,7 @@
 import { describe, expect } from "vitest"
 import SiyuanKernelApi from "./siyuanKernelApi"
 import Env from "zhi-env"
-import SiyuanConfig from "./SiyuanConfig"
+import SiyuanConfig from "./siyuanConfig"
 
 describe("SiyuanKernelApi", () => {
   it("constructor", function () {
@@ -46,6 +46,13 @@ describe("SiyuanKernelApi", () => {
     const siyuanConfig = new SiyuanConfig("http://127.0.0.1:6806", "")
     const kernelApi = new SiyuanKernelApi(siyuanConfig)
     const result = await kernelApi.sql("select 1 from blocks limit 1")
+    console.log("result=>", result)
+  })
+
+  it("lsNotebooks", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.lsNotebooks()
     console.log("result=>", result)
   })
 
