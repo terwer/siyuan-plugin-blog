@@ -9,6 +9,9 @@ packages/zhi-docs/docs/*
 packages/zhi-docs-vitepress/.vitepress/cache
 packages/zhi-docs-vuepress/.vuepress/.temp
 packages/zhi-docs-vuepress/.vuepress/.cache
+packages/zhi-blog-vuepress/.vuepress/.temp
+packages/zhi-blog-vuepress/.vuepress/.cache
+packages/zhi-docs-vuepress/api
 
 # dependencies
 node_modules

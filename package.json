@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "build": "nx run-many --target=build",
-    "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]",
     "test": "nx run-many --target=test",
     "lint": "nx run-many --target=lint",
     "serve": "nx serve <project>",
-    "cli": "nx cli <project>"
+    "cli": "nx cli <project>",
+    "clean": "nx clean <project>",
+    "update": "nx uodate <project>",
+    "deploy": "nx deploy <project>",
+    "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]"
   },
   "private": true,
   "devDependencies": {
@@ -48,11 +51,11 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-static-copy": "^0.13.1",
     "vite-tsconfig-paths": "^4.0.2",
-    "vitepress": "1.0.0-alpha.64",
     "vitest": "^0.25.8",
     "vue": "^3.2.47",
     "vuepress": "2.0.0-beta.61",
-    "vuepress-plugin-typedoc": "^0.11.2"
+    "vuepress-plugin-typedoc": "^0.11.2",
+    "vuepress-theme-hope": "2.0.0-beta.200"
   },
   "dependencies": {
     "@docusaurus/core": "2.1.0",

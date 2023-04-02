@@ -67,6 +67,9 @@ nx generate @nx-plus/docusaurus:app zhi-docs
 ## pnpm add -D vuepress@next @vuepress/client@next vue
 ## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
 ## "docs:build": "vuepress build packages/zhi-docs-vuepress"
+## -----------------------------------------------
+## pnpm create vuepress-theme-hope packages/zhi-docs-vuepress2
+## pnpm add @vuepress/client vue vuepress vuepress-theme-hope -D
 
 ## nuxt
 ## pnpm install @nx-plus/nuxt --save-dev

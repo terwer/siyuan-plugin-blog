@@ -23,40 +23,11 @@
  * questions.
  */
 
-const TypeDoc = require("typedoc")
-const { join } = require("path")
+import { defineClientConfig } from "@vuepress/client"
 
-// TODO vitepress need to be adapted
-// https://github.com/tgreyuk/typedoc-plugin-markdown/issues/287
-async function main() {
-  await makeOneTypedoc("zhi", "src/theme.ts")
-}
-
-async function makeOneTypedoc(projectName, entry) {
-  const app = new TypeDoc.Application()
-
-  // If you want TypeDoc to load tsconfig.json / typedoc.json files
-  app.options.addReader(new TypeDoc.TSConfigReader())
-  app.options.addReader(new TypeDoc.TypeDocReader())
-
-  app.bootstrap({
-    entryPoints: [join("packages", projectName, entry)],
-    tsconfig: join("packages", projectName, "tsconfig.json"),
-    theme: "default",
-    plugin: ["typedoc-plugin-rename-defaults", "typedoc-plugin-markdown"],
-  })
-
-  const project = app.convert()
-
-  if (project) {
-    // Project may not have converted correctly
-    const outputDir = join("packages", "zhi-docs-vitepress", projectName)
-
-    // Rendered docs
-    await app.generateDocs(project, outputDir)
-    // Alternatively generate JSON output
-    await app.generateJson(project, outputDir + "/documentation.json")
-  }
-}
-
-main().catch(console.error)
+// https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-config.html
+export default defineClientConfig({
+  enhance({ app, router, siteData }) {},
+  setup() {},
+  rootComponents: [],
+})

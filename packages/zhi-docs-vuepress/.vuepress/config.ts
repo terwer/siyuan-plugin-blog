@@ -32,19 +32,29 @@ export default defineUserConfig({
   lang: "zh-CN",
   title: "你好， VuePress ！",
   description: "这是我的第一个 VuePress 站点",
+
+  base: "/",
+
+  locales: {
+    "/": {
+      lang: "en-US",
+      title: "Zhi",
+      description: "Docs for zhi related projects",
+    },
+    "/zh": {
+      lang: "zh-CN",
+      title: "Zhi",
+      description: "Zhi 系列项目的文档",
+    },
+  },
+
   theme: defaultTheme({}),
+
   plugins: [
     typedocPlugin({
-      entryPoints: ["packages/zhi/src/theme.ts"],
-      tsconfig: "packages/zhi/tsconfig.json",
+      entryPoints: ["packages/zhi/src/theme.ts", "packages/zhi-blog-api/src/index.ts"],
+      tsconfig: "tsconfig.typedoc.json",
       plugin: ["typedoc-plugin-rename-defaults"],
     }),
-    // typedocPlugin({
-    //   entryPoints: ["packages/zhi-blog-api/src/index.ts"],
-    //   tsconfig: "packages/zhi-blog-api/tsconfig.json",
-    //   plugin: ["typedoc-plugin-rename-defaults"],
-    //
-    //   out: "zhi-blog-api",
-    // }),
   ],
 })
