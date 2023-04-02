@@ -6,12 +6,8 @@ tmp
 /out-tsc
 packages/zhi-docs/docs/*
 !packages/zhi-docs/docs/.gitkeep
-packages/zhi-docs-vitepress/.vitepress/cache
-packages/zhi-docs-vuepress/.vuepress/.temp
-packages/zhi-docs-vuepress/.vuepress/.cache
-packages/zhi-blog-vuepress/.vuepress/.temp
-packages/zhi-blog-vuepress/.vuepress/.cache
-packages/zhi-docs-vuepress/api
+packages/zhi-blog-vuepress/src/.vuepress/.temp
+packages/zhi-blog-vuepress/src/.vuepress/.cache
 
 # dependencies
 node_modules

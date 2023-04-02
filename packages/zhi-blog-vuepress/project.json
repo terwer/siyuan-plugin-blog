@@ -7,13 +7,13 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "vuepress build packages/zhi-blog-vuepress"
+        "command": "vuepress build packages/zhi-blog-vuepress/src"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "vuepress dev packages/zhi-blog-vuepress"
+        "command": "vuepress dev packages/zhi-blog-vuepress/src"
       }
     }
   },
