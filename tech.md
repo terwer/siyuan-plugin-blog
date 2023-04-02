@@ -51,11 +51,23 @@ nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyua
 ## pnpm install @nx-plus/docusaurus --save-dev
 nx generate @nx-plus/docusaurus:app zhi-docs
 ## nx serve zhi-docs
+## -----------------------------------------------
 ## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
+## -----------------------------------------------
 ## pnpm add vue vitepress -D
 ## pnpm exec vitepress init
 ## ./packages/zhi-docs-vitepress
- 
+## -----------------------------------------------
+## pnpm add vuepress -D
+## mkdir packages/zhi-docs-vuepress
+## echo '# Hello VuePress' > packages/zhi-docs-vuepress/README.md
+## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
+## "docs:build": "vuepress build packages/zhi-docs-vuepress"
+## -----------------------------------------------
+## pnpm add -D vuepress@next @vuepress/client@next vue
+## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
+## "docs:build": "vuepress build packages/zhi-docs-vuepress"
+
 ## nuxt
 ## pnpm install @nx-plus/nuxt --save-dev
 ## nx generate @nx-plus/nuxt:app zhi-blog

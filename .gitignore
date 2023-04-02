@@ -7,6 +7,8 @@ tmp
 packages/zhi-docs/docs/*
 !packages/zhi-docs/docs/.gitkeep
 packages/zhi-docs-vitepress/.vitepress/cache
+packages/zhi-docs-vuepress/.vuepress/.temp
+packages/zhi-docs-vuepress/.vuepress/.cache
 
 # dependencies
 node_modules
