@@ -35,6 +35,10 @@ nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundl
 nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
 
+## zhi-plugins
+nx generate @nrwl/js:library zhi-plugin-publisher --publishable --importPath=zhi-plugin-publisher --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zhi-plugin-code-block --bundler=vite --unitTestRunner=vitest
+
 ## node library
 ## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
 

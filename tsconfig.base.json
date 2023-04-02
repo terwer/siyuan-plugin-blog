@@ -22,8 +22,9 @@
       "zhi-common": ["packages/zhi-common/src/index.ts"],
       "zhi-env": ["packages/zhi-env/src/index.ts"],
       "zhi-log": ["packages/zhi-log/src/index.ts"],
+      "zhi-plugin-code-block": ["packages/zhi-plugin-code-block/src/index.ts"],
       "zhi-sdk": ["packages/zhi-sdk/src/index.ts"],
-      "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"],
+      "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

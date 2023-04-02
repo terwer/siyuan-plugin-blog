@@ -49,6 +49,9 @@ dependencies:
   react-dom:
     specifier: ^17.0.2
     version: 17.0.2(react@17.0.2)
+  siyuan:
+    specifier: ^0.3.18
+    version: 0.3.18
 
 devDependencies:
   '@docusaurus/module-type-aliases':
@@ -144,6 +147,9 @@ devDependencies:
   vite:
     specifier: ^4.0.1
     version: 4.2.1(@types/node@18.15.11)(less@4.1.3)(stylus@0.55.0)
+  vite-plugin-css-injected-by-js:
+    specifier: ^3.1.0
+    version: 3.1.0(vite@4.2.1)
   vite-plugin-dts:
     specifier: ~1.7.1
     version: 1.7.3(@types/node@18.15.11)(rollup@2.79.1)(vite@4.2.1)
@@ -13145,6 +13151,10 @@ packages:
       arg: 5.0.2
       sax: 1.2.4
 
+  /siyuan@0.3.18:
+    resolution: {integrity: sha512-f4Q0AlT3RLkQB7JnZlcypeJ2frfymGSTwVWngtIp8+iMxTxnOnPPfuagcslNVmimlaTQd2Th/S3bDwDjpOPXsg==}
+    dev: false
+
   /slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -14369,6 +14379,14 @@ packages:
       unist-util-stringify-position: 2.0.3
       vfile-message: 2.0.4
     dev: false
+
+  /vite-plugin-css-injected-by-js@3.1.0(vite@4.2.1):
+    resolution: {integrity: sha512-qogCmpocZfcbSAYZQjS88ieIY0PzLUm7RkLFWFgAxkXdz3N6roZbSTNTxeIOj5IxFbZWACUPuVBBoo6qCuXDcw==}
+    peerDependencies:
+      vite: '>2.0.0-0'
+    dependencies:
+      vite: 4.2.1(@types/node@18.15.11)(less@4.1.3)(stylus@0.55.0)
+    dev: true
 
   /vite-plugin-dts@1.7.3(@types/node@18.15.11)(rollup@2.79.1)(vite@4.2.1):
     resolution: {integrity: sha512-u3t45p6fTbzUPMkwYe0ESwuUeiRMlwdPfD3dRyDKUwLe2WmEYcFyVp2o9/ke2EMrM51lQcmNWdV9eLcgjD1/ng==}

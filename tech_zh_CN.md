@@ -35,6 +35,10 @@ nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundl
 nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
 
+## zhi-plugins
+nx generate @nrwl/js:library zhi-plugin-publisher --publishable --importPath=zhi-plugin-publisher --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zhi-plugin-code-block --bundler=vite --unitTestRunner=vitest
+
 ## node library
 ## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
 
@@ -51,11 +55,26 @@ nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyua
 ## pnpm install @nx-plus/docusaurus --save-dev
 nx generate @nx-plus/docusaurus:app zhi-docs
 ## nx serve zhi-docs
+## -----------------------------------------------
 ## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
+## -----------------------------------------------
 ## pnpm add vue vitepress -D
 ## pnpm exec vitepress init
 ## ./packages/zhi-docs-vitepress
- 
+## -----------------------------------------------
+## pnpm add vuepress -D
+## mkdir packages/zhi-docs-vuepress
+## echo '# Hello VuePress' > packages/zhi-docs-vuepress/README.md
+## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
+## "docs:build": "vuepress build packages/zhi-docs-vuepress"
+## -----------------------------------------------
+## pnpm add -D vuepress@next @vuepress/client@next vue
+## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
+## "docs:build": "vuepress build packages/zhi-docs-vuepress"
+## -----------------------------------------------
+## pnpm create vuepress-theme-hope packages/zhi-docs-vuepress2
+## pnpm add @vuepress/client vue vuepress vuepress-theme-hope -D
+
 ## nuxt
 ## pnpm install @nx-plus/nuxt --save-dev
 ## nx generate @nx-plus/nuxt:app zhi-blog
