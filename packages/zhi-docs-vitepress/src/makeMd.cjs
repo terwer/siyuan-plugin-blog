@@ -42,7 +42,8 @@ async function makeOneTypedoc(projectName, entry) {
   app.bootstrap({
     entryPoints: [join("packages", projectName, entry)],
     tsconfig: join("packages", projectName, "tsconfig.json"),
-    theme: "github-wiki",
+    theme: "default",
+    plugin: ["typedoc-plugin-rename-defaults", "typedoc-plugin-markdown"],
   })
 
   const project = app.convert()

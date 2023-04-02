@@ -24,6 +24,8 @@ const config = {
         id: "zhi",
         entryPoints: ["packages/zhi/src/theme.ts"],
         tsconfig: "packages/zhi/tsconfig.json",
+        // https://typedoc.org/guides/plugins/
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi",
         sidebar: {
           categoryLabel: "Zhi",
@@ -35,6 +37,7 @@ const config = {
       {
         id: "zhi-blog-api",
         entryPoints: ["packages/zhi-blog-api/src/index.ts"],
+        plugin: ['typedoc-plugin-rename-defaults'],
         tsconfig: "packages/zhi-blog-api/tsconfig.json",
         out: "zhi-blog-api",
         sidebar: {
@@ -48,6 +51,7 @@ const config = {
         id: "zhi-cli",
         entryPoints: ["packages/zhi-cli/src/index.ts"],
         tsconfig: "packages/zhi-cli/tsconfig.json",
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi-cli",
         sidebar: {
           categoryLabel: "Zhi Cli",
@@ -60,6 +64,7 @@ const config = {
         id: "zhi-common",
         entryPoints: ["packages/zhi-common/src/index.ts"],
         tsconfig: "packages/zhi-common/tsconfig.json",
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi-common",
         sidebar: {
           categoryLabel: "Zhi Common",
@@ -72,6 +77,7 @@ const config = {
         id: "zhi-env",
         entryPoints: ["packages/zhi-env/src/index.ts"],
         tsconfig: "packages/zhi-env/tsconfig.json",
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi-env",
         sidebar: {
           categoryLabel: "Zhi Env",
@@ -84,6 +90,7 @@ const config = {
         id: "zhi-log",
         entryPoints: ["packages/zhi-log/src/index.ts"],
         tsconfig: "packages/zhi-log/tsconfig.json",
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi-log",
         sidebar: {
           categoryLabel: "Zhi Log",
@@ -96,6 +103,7 @@ const config = {
         id: "zhi-sdk",
         entryPoints: ["packages/zhi-sdk/src/index.ts"],
         tsconfig: "packages/zhi-sdk/tsconfig.json",
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi-sdk",
         sidebar: {
           categoryLabel: "Zhi Sdk",
@@ -108,6 +116,7 @@ const config = {
         id: "zhi-siyuan-api",
         entryPoints: ["packages/zhi-siyuan-api/src/index.ts"],
         tsconfig: "packages/zhi-siyuan-api/tsconfig.json",
+        plugin: ['typedoc-plugin-rename-defaults'],
         out: "zhi-siyuan-api",
         sidebar: {
           categoryLabel: "Zhi Siyuan Api",
