@@ -22,7 +22,7 @@ const config = {
       "docusaurus-plugin-typedoc",
       {
         id: "zhi",
-        entryPoints: ["packages/zhi/src/theme.ts"],
+        entryPoints: ["packages/zhi/src/index.ts"],
         tsconfig: "packages/zhi/tsconfig.json",
         // https://typedoc.org/guides/plugins/
         plugin: ['typedoc-plugin-rename-defaults'],
