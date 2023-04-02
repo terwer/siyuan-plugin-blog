@@ -134,7 +134,7 @@ describe("SiyuanKernelApi", () => {
   it("pushErrMsg", async () => {
     const env = new Env(import.meta.env)
     const kernelApi = new SiyuanKernelApi(env)
-    const result = await kernelApi.pushErrMsg({
+    const result = await kernelApi.pushMsg({
       msg: "测试错误消息",
     })
     console.log("result=>", result)

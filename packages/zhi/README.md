@@ -15,5 +15,5 @@ Run `nx test zhi` to execute the unit tests via [Vitest](https://vitest.dev).
 ## Command
 
 ```
-nx serve zhi
+nx run zhi:build --watch
 ```

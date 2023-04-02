@@ -26,6 +26,7 @@
 import LogFactory from "zhi-log"
 import ZhiCommon from "zhi-common"
 import Env from "zhi-env"
+import { SiyuanKernelApi } from "zhi-siyuan-api"
 
 /**
  * 工具类统一入口，每个应用自己实现
@@ -42,6 +43,7 @@ class ZhiUtil {
   private static loggerMap: any
   private static common: ZhiCommon
   private static env: Env
+  private static kernelApi: SiyuanKernelApi
 
   /**
    * 获取 zhi-env 实例
@@ -73,11 +75,11 @@ class ZhiUtil {
     if (ZhiUtil.loggerMap) {
       // 日志不存在，生成一个新的缓存到Map
       if (ZhiUtil.loggerMap[loggerName]) {
-        ZhiUtil.loggerMap[loggerName].debug("Zhi-log use cache.");
+        ZhiUtil.loggerMap[loggerName].debug("Zhi-log use cache.")
       } else {
-        const env = ZhiUtil.zhiEnv();
-        ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName);
-        ZhiUtil.loggerMap[loggerName].debug("Zhi-log add new logger.");
+        const env = ZhiUtil.zhiEnv()
+        ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName)
+        ZhiUtil.loggerMap[loggerName].debug("Zhi-log add new logger.")
       }
     } else {
       // 生成新的日志器
@@ -89,6 +91,17 @@ class ZhiUtil {
 
     // 从Map缓存获取日志器
     return ZhiUtil.loggerMap[loggerName]
+  }
+
+  /**
+   * 获取 siyuan-kernel-api 实例
+   */
+  public static siyuanKernelApi() {
+    if (!ZhiUtil.kernelApi) {
+      const env = ZhiUtil.zhiEnv()
+      ZhiUtil.kernelApi = new SiyuanKernelApi(env)
+    }
+    return ZhiUtil.kernelApi
   }
 }
 

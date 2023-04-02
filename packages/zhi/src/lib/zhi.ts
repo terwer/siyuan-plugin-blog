@@ -39,6 +39,7 @@ import Bootstrap from "./bootstrap"
 class Zhi {
   private readonly logger
   private readonly common
+  private readonly kernelApi
   private readonly runAs
 
   /**
@@ -61,6 +62,7 @@ class Zhi {
   constructor(runAs: DeviceType) {
     this.logger = ZhiUtil.zhiLog("zhi")
     this.common = ZhiUtil.zhiCommon()
+    this.kernelApi = ZhiUtil.siyuanKernelApi()
 
     this.runAs = runAs ?? DeviceType.DeviceType_Node
   }
@@ -83,8 +85,7 @@ class Zhi {
       this.logger.info(this.common.strUtil.f("Theme runAs {0}", this.runAs))
 
       // 检测内核版本
-      // const kernelVersion = this.common.siyuanUtil.siyuanWindow().siyuan.config.system.kernelVersion
-      const kernelVersion = "2.7.5"
+      const kernelVersion = this.common.siyuanUtil.siyuanWindow().siyuan.config.system.kernelVersion
       if (this.common.versionUtil.lesser(kernelVersion, this.SUPPORTED_THEME_VERSION)) {
         const errMsg = this.common.strUtil.f(
           "Your siyuan-note kernel version {0} is not supported by zhi theme, style will look weird, you must install siyuan-note {1}+ to use zhi-theme",
@@ -92,25 +93,29 @@ class Zhi {
           this.SUPPORTED_THEME_VERSION
         )
         this.logger.error(errMsg)
-        alert(errMsg)
+        this.kernelApi.pushErrMsg({
+          msg: errMsg,
+        })
         return
       }
 
       if (this.common.versionUtil.lesser(kernelVersion, this.SUPPORTED_KERNEL_VERSION)) {
-        this.logger.warn(
-          this.common.strUtil.f(
-            "Your siyuan-note kernel version {0} is too low, plugin system will not work, you must install siyuan-note {1}+ to use plugin feature",
-            kernelVersion,
-            this.SUPPORTED_KERNEL_VERSION
-          )
+        const warnMsg = this.common.strUtil.f(
+          "Your siyuan-note kernel version {0} is too low, plugin system will not work, you must install siyuan-note {1}+ to use plugin feature",
+          kernelVersion,
+          this.SUPPORTED_KERNEL_VERSION
         )
+        this.logger.warn(warnMsg)
+        this.kernelApi.pushMsg({
+          msg: warnMsg,
+        })
         return
       }
 
       // 初始化第三方依赖
       const dynamicImports = await this.main([])
       for (const item of dynamicImports) {
-        this.logger.warn(item)
+        this.logger.debug(item)
       }
 
       this.logger.info("Theme inited.")
