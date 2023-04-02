@@ -121,4 +121,22 @@ describe("SiyuanKernelApi", () => {
     })
     console.log("result=>", result)
   })
+
+  it("pushMsg", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.pushMsg({
+      msg: "测试消息",
+    })
+    console.log("result=>", result)
+  })
+
+  it("pushErrMsg", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.pushErrMsg({
+      msg: "测试错误消息",
+    })
+    console.log("result=>", result)
+  })
 })

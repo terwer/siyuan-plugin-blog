@@ -66,6 +66,11 @@ interface ISiyuanKernelApi {
   getNotebookConf(notebookId: string): Promise<SiyuanData>
   // /api/notebook/setNotebookConf
   setNotebookConf(notebookConf: object): Promise<SiyuanData>
+
+  // /api/notification/pushMsg
+  pushMsg(msgObj: object): Promise<SiyuanData>
+  // /api/notification/pushErrMsg
+  pushErrMsg(msgObj: object): Promise<SiyuanData>
 }
 
 export default ISiyuanKernelApi

@@ -239,6 +239,74 @@ class SiyuanKernelApi implements ISiyuanKernelApi {
   public async setNotebookConf(notebookConf: object): Promise<SiyuanData> {
     return await this.siyuanRequest("/api/notebook/setNotebookConf", notebookConf)
   }
+
+  /**
+   * 推送消息
+   *
+   * 参数
+   *
+   * ```json
+   * {
+   *   "msg": "test",
+   *   "timeout": 7000
+   * }
+   * ```
+   *
+   * timeout：消息持续显示时间，单位为毫秒。可以不传入该字段，默认为 7000 毫秒
+   *
+   * 返回值
+   *
+   * ```
+   * {
+   *   "code": 0,
+   *   "msg": "",
+   *   "data": {
+   *       "id": "62jtmqi"
+   *   }
+   * }
+   *
+   * id：消息 ID
+   * ```
+   *
+   * @param msgObj 消息体
+   */
+  public async pushMsg(msgObj: object): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notification/pushMsg", msgObj)
+  }
+
+  /**
+   * 推送报错消息
+   *
+   * 参数
+   *
+   * ```
+   * {
+   *   "msg": "test",
+   *   "timeout": 7000
+   * }
+   * ```
+   *
+   * timeout：消息持续显示时间，单位为毫秒。可以不传入该字段，默认为 7000 毫秒
+   *
+   * 返回值
+   *
+   * ```
+   * {
+   *   "code": 0,
+   *   "msg": "",
+   *   "data": {
+   *       "id": "qc9znut"
+   *   }
+   * }
+   *
+   * id：消息 ID
+   * ```
+   *
+   * @param msgObj
+   */
+  public async pushErrMsg(msgObj: object): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notification/pushErrMsg", msgObj)
+  }
 }
 
 export default SiyuanKernelApi

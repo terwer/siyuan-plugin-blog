@@ -23,9 +23,17 @@
  * questions.
  */
 
-import SiyuanApi from "./lib/zhi-siyuan-api"
-import SiyuanKernelApi from "./lib/siyuanKernelApi"
-import type { SiyuanData } from "./lib/ISiyuanKernelApi"
+import { afterEach, beforeEach } from "vitest"
+import fetch from "cross-fetch"
 
-export default SiyuanApi
-export { SiyuanData, SiyuanKernelApi }
+// Add `fetch` polyfill.
+// https://markus.oberlehner.net/blog/using-mock-service-worker-with-vitest-and-fetch/
+global.fetch = fetch
+
+beforeEach(() => {
+  console.log("======test is starting...======")
+})
+
+afterEach(() => {
+  console.log("======test is finished.========")
+})
