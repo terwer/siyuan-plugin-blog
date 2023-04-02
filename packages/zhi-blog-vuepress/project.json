@@ -7,13 +7,13 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "vuepress build packages/zhi-blog-vuepress/src"
+        "command": "export NODE_OPTIONS=--max_old_space_size=4096 && vuepress build packages/zhi-blog-vuepress/src"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "vuepress dev packages/zhi-blog-vuepress/src"
+        "command": "export NODE_OPTIONS=--max_old_space_size=4096 && vuepress dev packages/zhi-blog-vuepress/src"
       }
     }
   },
