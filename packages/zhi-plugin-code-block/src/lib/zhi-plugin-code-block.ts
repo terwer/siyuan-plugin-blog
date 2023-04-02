@@ -2,12 +2,13 @@ import siyuan from "siyuan"
 import "../main.styl"
 
 class ZhiCodeBlock extends siyuan.Plugin {
+  private readonly loggerName = "ZhiCodeBlock"
   private readonly logger
   private readonly clientApi = siyuan.clientApi
 
   constructor() {
     super()
-    this.logger = this.clientApi.createLogger(ZhiCodeBlock.name)
+    this.logger = this.clientApi.createLogger(this.loggerName)
   }
 
   override onload() {
