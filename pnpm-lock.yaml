@@ -87,6 +87,9 @@ devDependencies:
   '@nx-plus/docusaurus':
     specifier: 15.0.0-rc.0
     version: 15.0.0-rc.0(@nrwl/workspace@15.8.9)(nx@15.8.9)(typescript@4.9.5)
+  '@nxlv/python':
+    specifier: ^15.7.0
+    version: 15.7.0(@nrwl/devkit@15.8.9)(tslib@2.5.0)
   '@types/fs-extra':
     specifier: ^11.0.1
     version: 11.0.1
@@ -2826,6 +2829,10 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
 
+  /@iarna/toml@2.2.5:
+    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
+    dev: true
+
   /@istanbuljs/load-nyc-config@1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
     engines: {node: '>=8'}
@@ -3987,6 +3994,23 @@ packages:
     transitivePeerDependencies:
       - nx
       - typescript
+    dev: true
+
+  /@nxlv/python@15.7.0(@nrwl/devkit@15.8.9)(tslib@2.5.0):
+    resolution: {integrity: sha512-PtKsG2L1jDNRX/rTKxuejdxA98BOw2XAtUfNkN0m+aF8TbKkpqgGF2e5DG8lV0FC7drot3sEqgZE2bFf3Cy47w==}
+    peerDependencies:
+      '@nrwl/devkit': ^15.0.0
+      tslib: 2.5.0
+    dependencies:
+      '@iarna/toml': 2.2.5
+      '@nrwl/devkit': 15.8.9(nx@15.8.9)(typescript@4.9.5)
+      chalk: 4.1.2
+      command-exists: 1.2.9
+      cross-spawn: 7.0.3
+      file-uri-to-path: 2.0.0
+      fs-extra: 11.1.0
+      tslib: 2.5.0
+      uuid: 9.0.0
     dev: true
 
   /@parcel/watcher@2.0.4:
@@ -6572,6 +6596,10 @@ packages:
     resolution: {integrity: sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==}
     dev: false
 
+  /command-exists@1.2.9:
+    resolution: {integrity: sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==}
+    dev: true
+
   /commander@10.0.0:
     resolution: {integrity: sha512-zS5PnTI22FIRM6ylNW8G4Ap0IEOyk62fhLSD0+uHRT9McRCLGpkVNvao4bjimpK/GShynyQkFFxHhwMcETmduA==}
     engines: {node: '>=14'}
@@ -8331,6 +8359,11 @@ packages:
       schema-utils: 3.1.1
       webpack: 5.77.0
 
+  /file-uri-to-path@2.0.0:
+    resolution: {integrity: sha512-hjPFI8oE/2iQPVe4gbrJ73Pp+Xfub2+WI2LlXDbsaJBwT5wuMh35WNWVYYTpnz895shtwfyutMFLFywpQAFdLg==}
+    engines: {node: '>= 6'}
+    dev: true
+
   /filelist@1.0.4:
     resolution: {integrity: sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==}
     dependencies:
@@ -8539,6 +8572,15 @@ packages:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.0
+
+  /fs-extra@11.1.0:
+    resolution: {integrity: sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
 
   /fs-extra@11.1.1:
     resolution: {integrity: sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==}

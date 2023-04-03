@@ -26,6 +26,7 @@
     "@nrwl/web": "^15.8.9",
     "@nrwl/workspace": "15.8.9",
     "@nx-plus/docusaurus": "15.0.0-rc.0",
+    "@nxlv/python": "^15.7.0",
     "@types/fs-extra": "^11.0.1",
     "@types/git-clone": "^0.2.0",
     "@types/node": "18.15.11",

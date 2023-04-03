@@ -38,6 +38,7 @@ nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyua
 ## zhi-plugins
 nx generate @nrwl/js:library zhi-plugin-publisher --publishable --importPath=zhi-plugin-publisher --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zhi-plugin-code-block --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi-plugin-siyuan2md --bundler=vite --unitTestRunner=vitest
 
 ## node library
 ## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
@@ -88,6 +89,16 @@ nx generate @nx-plus/docusaurus:app zhi-docs
 ## nx generate @nxtensions/astro:component my-component
 ## nx dev my-app
 ## nx preview my-app
+
+## python
+## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
+## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
+pnpm install @nxlv/python --save-dev
+npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 \
+--type application \
+--description='zhi-vuepress1-to-vuepress2' \
+--packageName=zhi-vuepress1-to-vuepress2 \
+--moduleName=zhi_vuepress1_to_vuepress2
 ```
 
 ## 设置
