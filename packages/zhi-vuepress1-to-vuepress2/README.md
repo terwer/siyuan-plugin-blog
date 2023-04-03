@@ -30,6 +30,9 @@ nx add zhi-vuepress1-to-vuepress2 pytest-html
 
 ## Install pydoc-markdown
 nx add zhi-vuepress1-to-vuepress2 pydoc-markdown
+
+## Install tox
+nx add zhi-vuepress1-to-vuepress2 tox
 ```
 
 ## Install
@@ -46,6 +49,7 @@ nx add zhi-vuepress1-to-vuepress2 pydoc-markdown
 nx add zhi-vuepress1-to-vuepress2 pytest
 nx add zhi-vuepress1-to-vuepress2 pytest-cov
 nx add zhi-vuepress1-to-vuepress2 pytest-html
+nx add zhi-vuepress1-to-vuepress2 tox
 ```
 
 ## Lint
@@ -70,6 +74,12 @@ nx test zhi-vuepress1-to-vuepress2
 
 ```bash
 nx docs zhi-vuepress1-to-vuepress2
+```
+
+## Tox
+
+```bash
+nx tox zhi-vuepress1-to-vuepress2
 ```
 
 ## [Change log](CHANGELOG.md)

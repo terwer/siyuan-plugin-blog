@@ -36,7 +36,7 @@
                 "{options.outputPath}"
             ],
             "options": {
-                "outputPath": "dist/packages/zhi-vuepress1-to-vuepress2",
+                "outputPath": "packages/zhi-vuepress1-to-vuepress2/dist",
                 "publish": true,
                 "lockedVersions": true,
                 "bundleLocalDependencies": true
@@ -75,8 +75,8 @@
         "tox": {
             "executor": "@nxlv/python:tox",
             "outputs": [
-                "{workspaceRoot}/reports/packages/zhi-vuepress1-to-vuepress2/unittests",
-                "{workspaceRoot}/coverage/packages/zhi-vuepress1-to-vuepress2"
+                "reports/packages/zhi-vuepress1-to-vuepress2/unittests",
+                "coverage/packages/zhi-vuepress1-to-vuepress2"
             ],
             "options": {
                 "silent": false,
