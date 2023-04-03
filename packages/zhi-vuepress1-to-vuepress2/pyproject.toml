@@ -23,11 +23,13 @@ include = "zhi_vuepress1_to_vuepress2"
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
 pytest = "^7.2.2"
-pydoc-markdown = "^4.6.4"
+pydoc-markdown = ">=4.6.4,<5.0"
+PyYAML = ">=5.3,<6.0"
 pytest-cov = "^4.0.0"
 pytest-html = "^3.2.0"
 tox = "^4.4.8"
 loguru = "^0.6.0"
+python-slugify = "^8.0.1"
 
 
 

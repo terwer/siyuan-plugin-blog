@@ -31,50 +31,50 @@
  * @since 1.0.0
  */
 class CategoryInfo {
-  /**
-   * 分类ID
-   */
-  categoryId: string
+    /**
+     * 分类ID
+     */
+    categoryId: string
 
-  /**
-   * 父分类ID
-   */
-  parentId: string
+    /**
+     * 父分类ID
+     */
+    parentId: string
 
-  /**
-   * 分类描述
-   */
-  description: string
+    /**
+     * 分类名称
+     */
+    description: string
 
-  /**
-   * 分类详情
-   */
-  categoryDescription: string
+    /**
+     * 分类英文名
+     */
+    categoryName: string
 
-  /**
-   * 分类名称
-   */
-  categoryName: string
+    /**
+     * 分类详情
+     */
+    categoryDescription: string
 
-  /**
-   * 分类地址
-   */
-  htmlUrl: string
+    /**
+     * 分类地址
+     */
+    htmlUrl: string
 
-  /**
-   * 分类订阅地址
-   */
-  rssUrl: string
+    /**
+     * 分类订阅地址
+     */
+    rssUrl: string
 
-  constructor() {
-    this.categoryId = ""
-    this.parentId = "0"
-    this.description = ""
-    this.categoryDescription = ""
-    this.categoryName = ""
-    this.htmlUrl = ""
-    this.rssUrl = ""
-  }
+    constructor() {
+        this.categoryId = "-1"
+        this.parentId = "0"
+        this.description = "分类1"
+        this.categoryDescription = "这是测试分类1"
+        this.categoryName = "cate1"
+        this.htmlUrl = ""
+        this.rssUrl = ""
+    }
 }
 
 export default CategoryInfo

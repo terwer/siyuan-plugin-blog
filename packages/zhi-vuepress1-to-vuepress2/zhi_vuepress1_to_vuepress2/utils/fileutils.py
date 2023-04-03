@@ -20,19 +20,36 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
-import unittest
+import json
+import os
 
-from zhi_vuepress1_to_vuepress2.utils import strutils
-from zhi_vuepress1_to_vuepress2.vuepress import Vuepress
+from loguru import logger
 
 
-class MyTestCase(unittest.TestCase):
-    def test_index(self):
-        print()
-        vuepress = Vuepress()
-        vuepress.convert()
+def read_json_file(filename):
+    """
+    读取json文件
+    :param filename: 文件名
+    """
+    if not os.path.exists(filename):
+        return {}
+    with open(filename, encoding="utf-8") as json_file:
+        resp = json.load(json_file)
+    return resp
 
-    def test_slug(self):
-        print()
-        ret = strutils.slug("后端开发")
-        print(ret)
+
+def save_data_to_txt(save_folder, filename, content):
+    """
+    保存数据到指定目录的指定文件
+    :param save_folder: 保存目录
+    :param filename: 文件名
+    :param content: 数据列表
+    """
+    if not os.path.exists(save_folder):
+        os.makedirs(save_folder)
+    fname = os.path.join(save_folder, filename)
+    if os.path.isdir(fname):
+        logger.warning(f"This is dir, ignore {fname}")
+        return
+    with open(fname, mode='w', encoding='utf-8') as f:
+        f.write(content)

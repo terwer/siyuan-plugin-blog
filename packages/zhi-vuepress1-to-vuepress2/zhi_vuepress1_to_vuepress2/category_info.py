@@ -20,19 +20,16 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
-import unittest
 
-from zhi_vuepress1_to_vuepress2.utils import strutils
-from zhi_vuepress1_to_vuepress2.vuepress import Vuepress
+class CategoryInfo:
+    """分类信息类"""
 
-
-class MyTestCase(unittest.TestCase):
-    def test_index(self):
-        print()
-        vuepress = Vuepress()
-        vuepress.convert()
-
-    def test_slug(self):
-        print()
-        ret = strutils.slug("后端开发")
-        print(ret)
+    def __init__(self):
+        """初始化分类信息类"""
+        self.category_id = None  # 分类ID
+        self.parent_id = None  # 父分类ID
+        self.description = None  # 分类名称
+        self.category_name = None  # 分类英文名
+        self.category_description = None  # 分类详情
+        self.html_url = None  # 分类地址
+        self.rss_url = None  # 分类订阅地址
