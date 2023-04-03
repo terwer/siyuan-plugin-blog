@@ -55,3 +55,4 @@ coverage
 __pycache__
 .pytest_cache
 .tox
+packages/zhi-vuepress1-to-vuepress2/tests/data

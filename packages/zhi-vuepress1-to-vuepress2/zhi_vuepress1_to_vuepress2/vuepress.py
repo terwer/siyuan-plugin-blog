@@ -21,5 +21,11 @@
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
 
+from loguru import logger
 
-"""zhi-vuepress1-to-vuepress2"""
+class Vuepress:
+    def __init__(self):
+        pass
+
+    def convert(self):
+        logger.info("Convert is starting...")

@@ -27,6 +27,7 @@ pydoc-markdown = "^4.6.4"
 pytest-cov = "^4.0.0"
 pytest-html = "^3.2.0"
 tox = "^4.4.8"
+loguru = "^0.6.0"
 
 
 
