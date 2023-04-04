@@ -117,6 +117,9 @@ devDependencies:
   '@vuepress/plugin-register-components':
     specifier: ^2.0.0-beta.61
     version: 2.0.0-beta.61
+  '@vuepress/utils':
+    specifier: 2.0.0-alpha.1
+    version: 2.0.0-alpha.1
   docusaurus-plugin-typedoc:
     specifier: ^0.18.0
     version: 0.18.0(typedoc-plugin-markdown@3.14.0)(typedoc@0.23.28)
@@ -4578,6 +4581,12 @@ packages:
       '@types/node': 18.15.11
     dev: true
 
+  /@types/fs-extra@9.0.13:
+    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
+    dependencies:
+      '@types/node': 18.15.11
+    dev: true
+
   /@types/git-clone@0.2.0:
     resolution: {integrity: sha512-RnYrs8sZWTBfeg8hAh5VwM3wEBlIaraQfo8h9FSxmX09KQ9VUDuL9AFzR3doV6IUMzEwjee6fOViIhqFvs1ulA==}
     dev: true
@@ -5291,6 +5300,12 @@ packages:
       - supports-color
     dev: true
 
+  /@vuepress/shared@2.0.0-alpha.1:
+    resolution: {integrity: sha512-W0tLKLV9R3GDzT2LjXbyOpM8tgPNbhmzHJA4JlrifRsxzmugxlxbn24lL6G0mWd21ZJ2wj5tgRA8k7NCJ9jGVQ==}
+    dependencies:
+      '@vue/shared': 3.2.47
+    dev: true
+
   /@vuepress/shared@2.0.0-beta.61:
     resolution: {integrity: sha512-NhOQ1FDr5lDSu5IinNlNNzrF+jGOZ+bMFUyAlCxlTvK9oY6aRBCNwV8dWme+yoh3/zviKHGu62Xp7J2hKAHNZA==}
     dependencies:
@@ -5326,6 +5341,24 @@ packages:
       vue-router: 4.1.6(vue@3.2.47)
     transitivePeerDependencies:
       - '@vue/composition-api'
+      - supports-color
+    dev: true
+
+  /@vuepress/utils@2.0.0-alpha.1:
+    resolution: {integrity: sha512-qipGA5fDAkD49m/6o6Puks+Nke4wJ5rjIDGAY2jZRbULCVVAyKBMXXhckGFvtcPCKtFKU1hP897gG3NCvYYHxg==}
+    dependencies:
+      '@types/debug': 4.1.7
+      '@types/fs-extra': 9.0.13
+      '@types/hash-sum': 1.0.0
+      '@vuepress/shared': 2.0.0-alpha.1
+      chalk: 4.1.2
+      debug: 4.3.4
+      fs-extra: 9.1.0
+      globby: 11.1.0
+      hash-sum: 2.0.0
+      ora: 5.4.1
+      upath: 1.2.0
+    transitivePeerDependencies:
       - supports-color
     dev: true
 
@@ -7439,7 +7472,7 @@ packages:
       supports-color:
         optional: true
     dependencies:
-      ms: 2.1.2
+      ms: 2.1.3
     dev: true
 
   /debug@4.3.4:
@@ -9585,6 +9618,11 @@ packages:
       is-path-inside: 3.0.3
     dev: false
 
+  /is-interactive@1.0.0:
+    resolution: {integrity: sha512-2HvIEKRoqS62guEC+qBjpvRubdX910WCMuJTZ+I9yvqKU2/12eSL549HMwtabb4oupdj2sMP50k+XJfB/8JE6w==}
+    engines: {node: '>=8'}
+    dev: true
+
   /is-interactive@2.0.0:
     resolution: {integrity: sha512-qP1vozQRI+BMOPcjFzrjXuQvdak2pHNUMZoeG2eRbiSqyvbEf/wQtEOTOX1guk6E3t36RkaqiSt8A/6YElNxLQ==}
     engines: {node: '>=12'}
@@ -9724,6 +9762,11 @@ packages:
   /is-typedarray@1.0.0:
     resolution: {integrity: sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==}
     dev: false
+
+  /is-unicode-supported@0.1.0:
+    resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
+    engines: {node: '>=10'}
+    dev: true
 
   /is-unicode-supported@1.3.0:
     resolution: {integrity: sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ==}
@@ -10634,6 +10677,14 @@ packages:
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
+  /log-symbols@4.1.0:
+    resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
+    engines: {node: '>=10'}
+    dependencies:
+      chalk: 4.1.2
+      is-unicode-supported: 0.1.0
+    dev: true
+
   /log-symbols@5.1.0:
     resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
     engines: {node: '>=12'}
@@ -11315,6 +11366,21 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.3
+
+  /ora@5.4.1:
+    resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      bl: 4.1.0
+      chalk: 4.1.2
+      cli-cursor: 3.1.0
+      cli-spinners: 2.6.1
+      is-interactive: 1.0.0
+      is-unicode-supported: 0.1.0
+      log-symbols: 4.1.0
+      strip-ansi: 6.0.1
+      wcwidth: 1.0.1
+    dev: true
 
   /ora@6.3.0:
     resolution: {integrity: sha512-1/D8uRFY0ay2kgBpmAwmSA404w4OoPVhHMqRqtjvrcK/dnzcEZxMJ+V4DUbyICu8IIVRclHcOf5wlD1tMY4GUQ==}
