@@ -36,7 +36,7 @@
         "@vitest/ui": "^0.25.8",
         "@vuepress/client": "2.0.0-beta.61",
         "@vuepress/plugin-register-components": "^2.0.0-beta.61",
-        "@vuepress/utils": "2.0.0-alpha.1",
+        "@vuepress/utils": "2.0.0-beta.61",
         "docusaurus-plugin-typedoc": "^0.18.0",
         "eslint": "~8.15.0",
         "eslint-config-prettier": "8.1.0",
