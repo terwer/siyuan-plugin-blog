@@ -2,6 +2,7 @@ import { defineUserConfig } from "vuepress"
 import theme from "./theme"
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components"
 import { path } from "@vuepress/utils"
+import { searchProPlugin } from "vuepress-plugin-search-pro";
 
 export default defineUserConfig({
     base: "/",
@@ -19,6 +20,10 @@ export default defineUserConfig({
         registerComponentsPlugin({
             // componentsDir写法，该文件夹下的组件都会被注册为Vue组件。
             componentsDir: path.resolve(__dirname, "./components"),
+        }),
+        // 文档搜索
+        searchProPlugin({
+            // 配置选项
         }),
     ],
 
