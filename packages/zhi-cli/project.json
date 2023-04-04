@@ -1,0 +1,59 @@
+{
+  "name": "zhi-cli",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/zhi-cli/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/zhi-cli"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs zhi-cli {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/zhi-cli"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/zhi-cli"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/zhi-cli/**/*.ts"]
+      }
+    },
+    "doc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "typedoc --tsconfig packages/zhi-cli/tsconfig.json --out docs/zhi-cli packages/zhi-cli/src/index.ts"
+      },
+      "dependsOn": ["build"]
+    },
+    "cli": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node --experimental-specifier-resolution=node dist/packages/zhi-cli"
+      },
+      "dependsOn": ["build"]
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run zhi-cli:build --watch"
+      },
+      "dependsOn": []
+    }
+  },
+  "tags": []
+}

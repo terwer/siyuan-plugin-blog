@@ -1,17 +1,58 @@
-# JetBrains
-.idea
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Mac
-.DS_Store
+# compiled output
+dist
+tmp
+/out-tsc
+packages/zhi-docs/docs/*
+!packages/zhi-docs/docs/.gitkeep
+packages/zhi-blog-vuepress/src/.vuepress/.temp
+packages/zhi-blog-vuepress/src/.vuepress/.cache
 
-# Vercel
-.vercel
-
-# Backup
-backup
-
-# Node
+# dependencies
 node_modules
 
-# Styles
-styles/**/*.css
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.local
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Generated Docusaurus files
+.docusaurus/
+.cache-loader/
+.vercel
+
+# Python
+reports
+.coverage
+coverage
+__pycache__
+.pytest_cache
+.tox
+packages/zhi-vuepress1-to-vuepress2/tests/data

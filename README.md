@@ -1,211 +1,94 @@
 # zhi
 
-🛍️ 一款自带插件和博客的思源笔记主题
+🛍️ A siyuan-note theme with plugin and blog bundled
 
+[中文版](README_zh_CN.md)
+
+[![](https://img.shields.io/badge/api-docs-green)](https://zhi.terwer.space)
+[![dev checks](https://img.shields.io/github/checks-status/terwer/zhi/dev?label=build)](https://github.com/terwer/zhi/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/zhi.svg?style=flat-square)
 ![license](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
-⚠️温馨提示：如果你只想要一个轻量级的主题，请移步：[zhi-mini](https://github.com/terwer/zhi-mini)
+[![](https://img.shields.io/badge/build-assets-green)](https://github.com/terwer/zhi)
+[![](https://img.shields.io/badge/theme-source-red)](https://github.com/terwer/zhi/tree/dev/packages/zhi-mini)
+[![](https://img.shields.io/badge/dynamic-blog-blue)](https://github.com/terwer/zhi/tree/dev/packages/zhi-blog)
+[![](https://img.shields.io/badge/static-blog-purple)](https://github.com/terwer/zhi/tree/dev/packages/zhi-blog-astro)
 
-`zhi` 和 `zhi-mini` 会同步更新。唯一的区别是 zhi-mini 更加轻量级，不会包含主题之外的任何组件。
+> ⚠️ WARNING 1: Attention: The `zhi` theme only supports the `2.7.6+` version of [siyuan-note](https://github.com/siyuan-note/siyuan) , and the plugin system only supports `2.8.1+`. Otherwise, you need to upgrade [siyuan-note](https://github.com/siyuan-note/siyuan) to a new version.
 
-## 主题展示
+> ⚠️ WARNING 2: `1.0.0` is an available version in the early stage, and the function is not comprehensive yet. It is only used for testing and welcomes valuable opinions through issuing. Please refer to [core features](#core-features) for this version's characteristics.
 
-### 浅色风格
+> ⚠️ WARNING 3: The plugin system is set to `security mode` by default, and you need to click on the settings menu in the upper right corner to turn off the security mode before you can activate the plugin system.
 
-![](https://static.terwergreen.com/test/202303050157804.png)
+> ⚠️ WARNING 4: Except for the theme's core plugins, all plugins are disabled by default and need to be enabled in the plugin list before the first use.
 
-### 暗黑风格
+## Quick start
 
-![](https://static.terwergreen.com/test/202303050156263.png)
+You can download the `zhi` theme directly in the Market of siyuan-note, and then select the `zhi` theme
+in `Settings` - `Appearance` - `Theme` to change the appearance of the notebook.
 
-### 博客主页
+Note: `zhi` theme only supports siyuan-note `2.7.6+`, or you must upgrade siyuan-note first.
 
-![](https://static.terwergreen.com/test/202303052323466.png)
+## Design Philosophy
 
-### 快速上手
+- The theme core should be kept lightweight and compact as much as possible.
+- Plugins should be used as much as possible to implement functions.
+- Plugin functions should be single-purpose to avoid brainless accumulation of functions.
+- Components should be kept as reusable as possible.
 
-直接在思源笔记 `集市` 下载 `zhi` 主题，然后在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
+## Core Features
 
-## 设计哲学
+The theme is inspired by `Zhihu` but not limited to its style. The appearance optimization includes but is not limited
+to:
 
-- 主题核心尽量保持足够轻量、小巧
-- 尽可能的使用插件实现功能
-- 插件功能单一化，杜绝功能无脑堆积
-- 组件尽可能保持可重用
+- Font style beautification, using `Open Sans` for English and `LXGW WenKai` for Chinese
+- Background color optimization, overall layout and spacing optimization
+- Code block beautification, similar to the Mac window style
+- It natively supports the plugin system and comes with many built-in plugins. The plugin system is supported by
+  community developers.
+  - SourceNote publishing tool plugin
+  - Document image background automatic transparency plugin
+  - Blog plugin
+- It can handle both the theme and the preview. Installing the zhi theme is equivalent to installing an additional
+  plugin system and an online blog.
+  - Blog homepage: http://127.0.0.1:6806/appearance/themes/zhi/blog/
+  - Widget version of the blog management and publishing
+    homepage: http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
 
-## 前排推荐
+> Note: 🌹 The plugin system is provided by enthusiastic community developers. Please understand the relevant mechanisms in
+> detail before using.
 
-zhi 系列生态
+## Version Planning
 
-- [zhi](https://github.com/terwer/zhi)
-- [zhi-mini](https://github.com/terwer/zhi-mini)
-- [zhi-cli](https://github.com/terwer/zhi-cli)
-- [zhi-common](https://github.com/terwer/zhi-common)
-  - [zhi-sdk](https://github.com/terwer/zhi-sdk)
-      - [zhi-env](https://github.com/terwer/zhi-env)
-      - [zhi-log](https://github.com/terwer/zhi-log)
-      - zhi-core
-      - zhi-blog-api
-      - zhi-siyuan-api
+- 1.1.x
+  - [ ] Blog permission control
 
-⚠️ 特别提醒 1: `1.0.0` 为前期可用版本，功能上尚不全面，仅作为测试使用，欢迎 issue
-提出宝贵意见。此版本特性，请参照 [核心特性](#核心特性) 。
-
-⚠️ 特别提醒 2: 插件系统默认为 `安全模式` ，所有插件禁用，需要点击右上角设置菜单关闭安全模式，才能开启插件系统。
-
-⚠️ 特别提醒 3: 所有插件默认关闭，需要手动在插件列表开启对应插件才能使用，目前内置可用的插件如下：
-
-- 系统设置插件（插件系统内置）
-- 示例插件-需手动开启
-- 图片背景自动透明插件-需手动开启
-- 思源笔记发布工具集成插件-需手动开启
-- 博客插件-需手动开启
-- 更多插件开发中，敬请期待...
-
-## 版本适配
-
-思源笔记 <sup>2.7.6+</sup>
-
-## 核心特性
-
-- 主题灵感源自于知乎但不限于知乎风格，外观优化包括不限于：
-
-    - 字体样式美化，英文以 `Open Sans` 为主， 中文以 `落霞孤鹜` 为主
-    - 背景色优化
-    - 代码块美化，类似 `Mac` 窗口风格
-
-- 整合热门挂件以及其他小工具，提供统一的入口
-
-    - 集成 `sy-post-publisher` 思源笔记发布工具，无需手动添加挂件，无需添加 js 片段，开箱即用
-
-      注意：`sy-post-publisher` 需要单独在集市挂件下载
-
-- 天生支持插件系统，插件系统由社区开发者提供支持
-
-    - 文档图片背景自动透明插件
-    - 博客插件
-
-- 同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，一个在线博客
-
-  博客主页：http://127.0.0.1:6806/appearance/themes/zhi/apps/blog/dist/
-
-  挂件版博客管理与发布主页：http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
-
-注意事项：插件系统为社区热心开发者提供，请详细了解相关机制之后再使用。
-
-## 版本规划
-
-### 1.1.x
-
-- [ ] 博客权限控制
-
-## 技术路线
-
-### 核心框架
-
-- 基础设施：[zhi-sdk](https://github.com/terwer/zhi-sdk)
-
-- 公共组件(zhi-common): [zhi-cli](https://github.com/terwer/zhi-cli) + [zhi-sdk](https://github.com/terwer/zhi-sdk)
-
-- 博客(zhi-blog)：[Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
-
-- 主题(zhi-theme)：[Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
-
-依赖关系如下：
-
-- zhi-common
-    - zhi-sdk
-        - zhi-log
-            - zhi-env
-
-- zhi-mini
-    - zhi-sdk
-
-- zhi-theme
-    - zhi-common
-
-- zhi-blog
-    - zhi-common
-
-其中，公共组件( `zhi-common` )基于我的另一个脚手架项目 [zhi-cli](https://github.com/terwer/zhi-cli) 的模板类型 `ts-vite-lib` 生成:
-
-```bash
-## 初始化公共组件
-npm i -g zhi-cli
-zhi-cli init common ts-vite-lib
-```
-
-### 项目结构
+## Project Structure
 
 ```
-├── README.md
-├── apps 应用根目录
-│   ├── common 公共组件根目录
-│   ├── blog 博客根目录
-│   │   ├── dist 博客预览入口
-│   │   ├── app.vue 博客vue源码入口
-│   │   ├── app.styl 博客styl源码入口
-│   │   ├── .prettierrc.json 博客ts源码格式化配置
-│   │   ├── .stylelintrc.json 博客styl样式格式化配置
-│   └── theme 主题根目录
-│       ├── theme.ts 主题ts源码入口
-│       ├── theme.styl 主题styl源码入口
-│       ├── .prettierrc.json 主题ts源码格式化配置
-│       ├── .stylelintrc.json 主题styl样式格式化配置
-├── styles 样式根目录
-├── scripts 脚本根目录
-├── theme.json 主题描述文件         
-├── theme.js 主题js文件，自动生成，请勿修改
-├── theme.css 主题css文件，自动生成，请勿修改
-├── .stylelintrc.json 全局样式格式化配置
-├── .github Github-Actions-CI持续集成和release-please自动发版
-├── docs 帮助文档
-├── temp 博客和主题插件的临时压缩包
+├── blog - root directory of the blog
+├── theme - root directory of the theme
+├── plugins - root directory of the plugins
+├── scripts - root directory of the scripts
+├── docs - help documentation
+├── temp - temporary compression packages for the blog and theme plugins
+├── .github - Github-Actions-CI continuous integration and release-please automatic release
+├── theme.json - theme description file
+├── theme.js - theme js entry
+├── theme.css - theme css entry
+├── README.md - project notes
 ```
 
-特别说明：
+> Special Note:
+> 
+> - The theme will be automatically detected and extracted to the corresponding directory based on the version number.
+> - After releasing a new version, the previous version will be deleted.
 
-- 主题会根据版本号自动检测并解压到对应目录
 
-- 发版本之后删除上一版
+## Technical Roadmap
 
-推荐使用 `IntelliJ IDEA` 或者 `vscode` 进行开发。
+[tech](tech.md)
 
-### 本地调试
+## Acknowledgments
 
-1. 下载压缩包，解压到主题目录。主题目录在 <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> - <kbd>打开主题文件夹</kbd>
-
-2. 安装依赖，构建项目
-
-```bash
-npm i -g pnpm
-pnpm dependency
-pnpm build
-```
-
-3. <kbd>设置</kbd> - <kbd>外观</kbd> - <kbd>主题</kbd> 选择 `zhi` 主题即可
-
-## Useful scripts
-
-### CI building
-
-```bash
-pnpm ci
-```
-
-### Preparing for publishing to npm
-
-```bash
-pnpm package
-```
-
-### Docs
-
-```bash
-pnpm docs
-```
-
-## 感谢
-
-感谢 [zuoez02](https://github.com/zuoez02/siyuan-plugin-system) 提供的插件系统
+Thanks to [zuoez02](https://github.com/zuoez02/siyuan-plugin-system) for providing the plugin system.

@@ -1,0 +1,88 @@
+{
+    "name": "zhi-vuepress1-to-vuepress2",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "packages/zhi-vuepress1-to-vuepress2/zhi_vuepress1_to_vuepress2",
+    "targets": {
+        "docs": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "pydoc-markdown -p zhi_vuepress1_to_vuepress2 --render-toc > docs/source/api.md",
+                "cwd": "packages/zhi-vuepress1-to-vuepress2"
+            }
+        },
+        "lock": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "poetry lock --no-update",
+                "cwd": "packages/zhi-vuepress1-to-vuepress2"
+            }
+        },
+        "add": {
+            "executor": "@nxlv/python:add",
+            "options": {}
+        },
+        "update": {
+            "executor": "@nxlv/python:update",
+            "options": {}
+        },
+        "remove": {
+            "executor": "@nxlv/python:remove",
+            "options": {}
+        },
+        "build": {
+            "executor": "@nxlv/python:build",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "packages/zhi-vuepress1-to-vuepress2/dist",
+                "publish": true,
+                "lockedVersions": true,
+                "bundleLocalDependencies": true
+            }
+        },
+        "install": {
+            "executor": "@nxlv/python:install",
+            "options": {
+                "silent": false,
+                "args": "",
+                "cacheDir": ".cache/pypoetry",
+                "verbose": false,
+                "debug": false
+            }
+        },
+        "lint": {
+            "executor": "@nxlv/python:flake8",
+            "outputs": [
+                "reports/packages/zhi-vuepress1-to-vuepress2/pylint.txt"
+            ],
+            "options": {
+                "outputFile": "reports/packages/zhi-vuepress1-to-vuepress2/pylint.txt"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "outputs": [
+                "reports/packages/zhi-vuepress1-to-vuepress2/unittests",
+                "coverage/packages/zhi-vuepress1-to-vuepress2"
+            ],
+            "options": {
+                "command": "poetry run pytest tests/",
+                "cwd": "packages/zhi-vuepress1-to-vuepress2"
+            }
+        },
+        "tox": {
+            "executor": "@nxlv/python:tox",
+            "outputs": [
+                "reports/packages/zhi-vuepress1-to-vuepress2/unittests",
+                "coverage/packages/zhi-vuepress1-to-vuepress2"
+            ],
+            "options": {
+                "silent": false,
+                "args": ""
+            }
+        }
+    },
+    "tags": []
+}
