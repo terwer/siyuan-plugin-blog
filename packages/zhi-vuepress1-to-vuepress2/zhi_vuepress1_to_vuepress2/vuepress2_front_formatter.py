@@ -129,4 +129,20 @@ class Vuepress2FrontFormatter:
         :return: YAML 格式的字符串
         """
         data = self.to_dict()
+        if self.description is None:
+            data.pop("description")
+        if self.icon is None:
+            data.pop("icons")
+        if self.author is None:
+            data.pop("author")
+        if self.image is None:
+            data.pop("image")
+        if self.banner is None:
+            data.pop("banner")
+        if not self.is_original:
+            data.pop("is_original")
+        if not self.sticky:
+            data.pop("sticky")
+        if not self.star:
+            data.pop("star")
         return yaml.dump(data, allow_unicode=True, Dumper=MyDumper, indent=2, sort_keys=False)

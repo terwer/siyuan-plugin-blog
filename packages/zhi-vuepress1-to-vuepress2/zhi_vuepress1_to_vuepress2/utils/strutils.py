@@ -78,8 +78,18 @@ def slug(q):
     :param q: 中文字符
     :return:
     """
+    slug_text = slugify(q)
+    return slug_text
+
+
+def slug_with_translate(q):
+    """
+    根据中文获取别名，自带翻译
+    :param q: 中文字符
+    :return:
+    """
     translation = translate(q)
-    logger.debug(f"translation=>{translation}")
+    # logger.debug(f"translation=>{translation}")
     slug_text = slugify(translation)
     return slug_text
 

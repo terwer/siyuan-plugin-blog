@@ -20,11 +20,9 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
-import textwrap
 import unittest
 
 import yaml
-from yaml import Dumper
 
 from zhi_vuepress1_to_vuepress2.utils import strutils
 from zhi_vuepress1_to_vuepress2.utils.strutils import MyDumper
@@ -47,7 +45,7 @@ class MyTestCase(unittest.TestCase):
             "name": "John",
             "age": 30,
             "city": "New York",
-            "haha": ["aaaa", "bbbb"]
+            "haha": ["aaaa", "bbbb", str(404)]
         }
 
         # 设置 indent 和 default_flow_style 参数

@@ -23,11 +23,13 @@
 import os
 import re
 
+import yaml
 from loguru import logger
 
 from zhi_vuepress1_to_vuepress2.category_info import CategoryInfo
 from zhi_vuepress1_to_vuepress2.post import Post
 from zhi_vuepress1_to_vuepress2.utils import strutils, fileutils, dictutils
+from zhi_vuepress1_to_vuepress2.utils.strutils import MyDumper
 from zhi_vuepress1_to_vuepress2.vuepress2_front_formatter import Vuepress2FrontFormatter
 
 
@@ -40,7 +42,7 @@ class Vuepress:
                             "/zhi_vuepress1_to_vuepress2/dir_cats_map.json"
         self.VUEPRESS2_DOCS_PATH = "/Users/terwer/Documents/mydocs/zhi/packages/zhi-blog-vuepress/src/post"
         # self.VUEPRESS2_DOCS_PATH = "/Users/terwer/Downloads/zhi-blog-vuepress/post"
-        self.LIMIT_COUNT = 5
+        self.LIMIT_COUNT = -1
 
     def convert(self):
         logger.info("Convert is starting...")
@@ -100,7 +102,9 @@ class Vuepress:
                             cate_name_en = dir_cates_map.get(cate_name)
                             cate_slug = strutils.slug(cate_name_en)
                             cat_path_list.append(cate_slug)
-                            # print(cate_name_en)
+                            # 保存目录说明
+                            cur_cat_save_path = os.sep.join(cat_path_list)
+                            self._make_vuepress2_dir_category(cur_cat_save_path, cate_name)
                         cat_save_path = os.sep.join(cat_path_list)
                         title_save_path = permalink.replace(".html", ".md")
                         title_save_path = title_save_path.replace("/post/", "")
@@ -146,9 +150,11 @@ class Vuepress:
                 if cat_save_path == "":
                     logger.warning("Cate path is empty, ignore")
                     continue
+
                 if title_save_path == "":
                     logger.warning("File name is empty, ignore")
                     continue
+
                 # logger.debug(f"title_save_path=>{title_save_path}")
                 md_file_full_path = md_save_full_path + title_save_path
                 p = os.path.dirname(md_file_full_path)
@@ -161,7 +167,7 @@ class Vuepress:
 
         # dir_cats = list(set(dir_cats))
         # print(json.dumps(dir_cats,ensure_ascii=False))
-        logger.info(f"finish.handed {files_count} files")
+        logger.info(f"all posts converts finished.handed {files_count} file (s)")
 
     def _parse_cat_arr(self, path):
         cats: list[CategoryInfo] = []
@@ -201,8 +207,30 @@ class Vuepress:
         v2f.description = post.short_desc
         v2f.date = post.date_created
         v2f.category = [c.description for c in post.categories]
-        v2f.tag = post.mt_keywords
+        str_tags = []
+        for t in post.mt_keywords:
+            str_tags.append(str(t))
+        v2f.tag = str_tags
+
         if "timeline" in v2f.category:
             v2f.timeline = True
-            v2f.article = False
+            v2f.article = True
         return v2f.to_md()
+
+    def _make_vuepress2_dir_category(self, cate_save_path, cate_name):
+        cate_readme_full_path = os.path.join(self.VUEPRESS2_DOCS_PATH, cate_save_path, "README.md")
+        # print(cate_readme_full_path)
+        md_formatter = {
+            "article": False,
+            "timeline": False
+        }
+        title_text = f"# {cate_name}"
+        md_text = yaml.dump(md_formatter, allow_unicode=True, Dumper=MyDumper, indent=2, sort_keys=False)
+        result = ["---\n", md_text, "---\n", title_text]
+        md_content = "".join(result)
+        p = os.path.dirname(cate_readme_full_path)
+        f = os.path.basename(cate_readme_full_path)
+        # 不存在才写
+        if not os.path.exists(cate_readme_full_path):
+            logger.info(f"Creating dir category README.md in {cate_save_path}=>{cate_name} ...")
+            fileutils.save_data_to_txt(p, f, md_content)

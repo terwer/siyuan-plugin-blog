@@ -8,6 +8,11 @@ export const defaultNavbar = navbar([
     link: "/post/",
   },
   {
+    text: "随笔",
+    icon: "note",
+    link: "/timeline/",
+  },
+  {
     text: "关于",
     icon: "discover",
     link: "/about/",
