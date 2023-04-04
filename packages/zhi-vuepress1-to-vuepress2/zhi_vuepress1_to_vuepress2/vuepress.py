@@ -20,10 +20,8 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
-import json
 import os
 import re
-from collections import defaultdict
 
 from loguru import logger
 
