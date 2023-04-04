@@ -24,7 +24,7 @@ Mybatis的官网：[https://mybatis.org/mybatis-3/](https://mybatis.org/mybatis-
 
 ### 添加MyBatis的坐标
 
-```xml
+```
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
@@ -152,7 +152,7 @@ public class User {
 
 ### 编写映射⽂件UserMapper.xml
 
-```xml
+```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -166,7 +166,7 @@ public class User {
 
 ### 编写核⼼⽂件SqlMapConfig.xml
 
-```xml
+```
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
@@ -192,10 +192,6 @@ public class User {
 
 ### 编写测试类
 
-<code-group>
-
-<code-block title="Kotlin" active>
-
 ```kotlin
 @Test
 @Throws(IOException::class)
@@ -212,10 +208,6 @@ fun test1() {
     sqlSession.close()
 }
 ```
-
-</code-block>
-
-<code-block title="Java">
 
 ```java
 @Test
@@ -234,9 +226,6 @@ public void test1() throws IOException {
 }
 ```
 
-</code-block>
-
-</code-group>
 
 运行结果
 
@@ -256,7 +245,7 @@ jdbc:mysql://localhost:3306/zdy_mybatis?characterEncoding=utf8
 
 完善，添加新增方法
 
-```xml
+```
 <!-- 添加用户
 parameterType：参数类型
 -->
@@ -282,7 +271,7 @@ sqlSession.commit();
 
 更新
 
-```xml
+```
 <!-- 修改 -->
   <update id="updateUser" parameterType="com.terwergreen.pojo.User">
   update user set username=#{username} where id=#{id}
@@ -293,7 +282,7 @@ sqlSession.commit();
 
 删除
 
-```xml
+```
 <!-- 删除 -->
 <update id="deleteUser" parameterType="java.lang.Integer">
 delete from user where id=#{id}
@@ -304,7 +293,7 @@ delete from user where id=#{id}
 
 备注：只有一个参数的时候，参数名的占位符可以是任意字符，例如下面的语句也是正常的
 
-```xml
+```
 <!-- 删除 -->
 <update id="deleteUser" parameterType="java.lang.Integer">
 delete from user where id=#{abc}
@@ -316,10 +305,6 @@ delete from user where id=#{abc}
 #### 传统开发方式
 
 1. 定义Dao层接口
-
-    <code-group>
-
-    <code-block title="Kotlin" active>
 
     ```kotlin
     /**
@@ -338,10 +323,6 @@ delete from user where id=#{abc}
     }
     ```
 
-    </code-block>
-
-    <code-block title="Java">
-
     ```java
     /**
      * 用户Dao层接口
@@ -357,15 +338,7 @@ delete from user where id=#{abc}
         public List<User> findAll() throws IOException;
     }
     ```
-
-    </code-block>
-
-    </code-group>
 2. DaoImpl实现
-
-    <code-group>
-
-    <code-block title="Kotlin" active>
 
     ```kotlin
     /**
@@ -389,10 +362,6 @@ delete from user where id=#{abc}
         }
     }
     ```
-
-    </code-block>
-
-    <code-block title="Java">
 
     ```java
     /**
@@ -418,14 +387,7 @@ delete from user where id=#{abc}
     }
     ```
 
-    </code-block>
-
-    </code-group>
 3. 测试
-
-    <code-group>
-
-    <code-block title="Kotlin" active>
 
     ```kotlin
     // ===============
@@ -441,10 +403,6 @@ delete from user where id=#{abc}
     }
     ```
 
-    </code-block>
-
-    <code-block title="Java">
-
     ```java
     @Test
     public void test5() throws Exception{
@@ -456,10 +414,6 @@ delete from user where id=#{abc}
         }
     }
     ```
-
-    </code-block>
-
-    </code-group>
 
 #### 代理开发方式
 
@@ -483,10 +437,6 @@ Mapper 接口开发方法只需要程序员编写Mapper 接口(相当于Dao 接�
 
 测试代理方式
 
-<code-group>
-
-<code-block title="Kotlin" active>
-
 ```kotlin
 // ===============
 // Dao层代理开发方式
@@ -503,10 +453,6 @@ fun test5() {
     }
 }
 ```
-
-</code-block>
-
-<code-block title="Java">
 
 ```java
 // ===============
@@ -527,83 +473,7 @@ public void test5() throws IOException {
 }
 ```
 
-</code-block>
-
-</code-group>
-
 ![image-20220317102917399](https://img1.terwer.space/20220317102942.png)​
 
 > 文章更新历史  
 > 2022/05/08 feat:新增Kotlin支持
-
-<div>
-<code-group>
-</div>
-
-<div>
-<code-block title="Kotlin" active>
-</div>
-
-<div>
-</code-block>
-</div>
-
-<div>
-<code-block title="Java">
-</div>
-
-<div>
-</code-block>
-</div>
-
-<div>
-</code-group>
-</div>
-
-<div>
-<code-group>
-</div>
-
-<div>
-<code-block title="Kotlin" active>
-</div>
-
-<div>
-</code-block>
-</div>
-
-<div>
-<code-block title="Java">
-</div>
-
-<div>
-</code-block>
-</div>
-
-<div>
-</code-group>
-</div>
-
-<div>
-<code-group>
-</div>
-
-<div>
-<code-block title="Kotlin" active>
-</div>
-
-<div>
-</code-block>
-</div>
-
-<div>
-<code-block title="Java">
-</div>
-
-<div>
-</code-block>
-</div>
-
-<div>
-</code-group>
-</div>

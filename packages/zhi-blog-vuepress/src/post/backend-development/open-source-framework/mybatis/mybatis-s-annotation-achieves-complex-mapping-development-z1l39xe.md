@@ -23,12 +23,12 @@ timeline: false
 
 实现复杂映射我们之前可以在映射文件中通过配置来实现，使用注解开发后，我们可以通过 `@Results` 注解，`@Result` 注解，`@One` 注解和 `@Many` 注解组合完成复杂关系的配置。
 
-|注解|说明|
-| ---------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|@Results<br />|代替的是标签 <ResultMap>，该注解中可以使用单个的 @Result 注解，也可以使用 @Result 集合。<br />使用方式：`@Results({@Result(), @Result()})` 或者 `@Results(@Result())`|
-|@Result<br />|代替了 <id> 标签和 <result> 标签<br />@Result 中的属性介绍<br />column：数据库中的列名<br />property：要装配的属性名<br />one：需要使用 @One 注解（ `@Result(one=@One)()` ）<br />many：需要使用 @Many 注解（ `@Result(many=@many)()` ）|
-|@One（一对一）|代替了 <assocation> 标签，是多表查询的关键，在注解中用来指定子查询返回单一对象。<br />@One 注解属性介绍<br />select：指定用来多表查询的  sqlmapper<br />使用格式：`@Result(column="", property="", one=(select=""))`|
-|@Many（多对一）|代替了 <collection> 标签，是多表查询的关键，在注解中用来指定子查询返回对象集合。<br />使用格式：`@Result(property="", column="", many=@many(select=""))`|
+|注解| 说明                                                                                                                                                                                       |
+| ---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|@Results<br />| 代替的是标签 `<ResultMap>` ，该注解中可以使用单个的 @Result 注解，也可以使用 @Result 集合。<br />使用方式：`@Results({@Result(), @Result()})` 或者 `@Results(@Result())`                                                     |
+|@Result<br />| 代替了 `<id>` 标签和 `<result>` 标签<br />@Result 中的属性介绍<br />column：数据库中的列名<br />property：要装配的属性名<br />one：需要使用 @One 注解（ `@Result(one=@One)()` ）<br />many：需要使用 @Many 注解（ `@Result(many=@many)()` ） |
+|@One（一对一）| 代替了 `<assocation>` 标签，是多表查询的关键，在注解中用来指定子查询返回单一对象。<br />@One 注解属性介绍<br />select：指定用来多表查询的  sqlmapper<br />使用格式：`@Result(column="", property="", one=(select=""))`                           |
+|@Many（多对一）| 代替了 `<collection>` 标签，是多表查询的关键，在注解中用来指定子查询返回对象集合。<br />使用格式：`@Result(property="", column="", many=@many(select=""))`                                                                       |
 
 ## 一对一查询
 
