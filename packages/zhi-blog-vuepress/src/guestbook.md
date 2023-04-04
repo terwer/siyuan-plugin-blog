@@ -5,6 +5,6 @@ article: false
 timeline: false
 ---
 
-# Guestbook
+# 留言本
 
-Looking forward to hear from you !
+期待您的回音 !

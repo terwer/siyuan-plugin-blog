@@ -2,41 +2,42 @@
 home: true
 layout: BlogHome
 icon: home
-title: Blog Home
+title: 首页
 heroImage: /logo.svg
-heroText: The name of your blog
-tagline: You can put your slogan here
-heroFullScreen: true
+heroText: 浅海拾贝
+heroFullScreen: false
+bgImage: /bg.png
+tagline: 寻找未知的技术拼图
 projects:
   - icon: project
-    name: project name
-    desc: project detailed description
-    link: https://your.project.link
+    name: 项目名称
+    desc: 项目详细描述
+    link: https://你的项目链接
 
   - icon: link
-    name: link name
-    desc: link detailed description
-    link: https://link.address
+    name: 链接名称
+    desc: 链接详细描述
+    link: https://链接地址
 
   - icon: book
-    name: book name
-    desc: Detailed description of the book
-    link: https://link.to.your.book
+    name: 书籍名称
+    desc: 书籍详细描述
+    link: https://你的书籍链接
 
   - icon: article
-    name: article name
-    desc: Detailed description of the article
-    link: https://link.to.your.article
+    name: 文章名称
+    desc: 文章详细描述
+    link: https://你的文章链接
 
   - icon: friend
-    name: friend name
-    desc: Detailed description of friend
-    link: https://link.to.your.friend
+    name: 伙伴名称
+    desc: 伙伴详细介绍
+    link: https://你的伙伴链接
 
   - icon: /logo.svg
-    name: custom item
-    desc: Detailed description of this custom item
-    link: https://link.to.your.friend
+    name: 浅海拾贝
+    desc: 寻找技术拼图
+    link: https://terwer.space
 
-footer: Seek gold
+footer: 寻找未知的技术拼图
 ---

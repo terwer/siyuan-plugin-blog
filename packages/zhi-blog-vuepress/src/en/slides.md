@@ -1,7 +1,8 @@
 ---
-title: 幻灯片页
+title: Slide page
 icon: slides
 layout: Slide
+comment: true
 article: false
 timeline: false
 ---
@@ -12,19 +13,21 @@ timeline: false
 
 <!-- .slide: data-transition="slide" -->
 
-## 幻灯片演示
+## Slide Demo
 
 <!-- .element: class="r-fit-text" -->
 
-一个简单的幻灯片演示与各种小贴士。
+A simple slide demo and useful hints.
 
 <!-- .element: class="r-fit-text" -->
 
-> 作者 Mr.Hope. 请滚动鼠标滚轮进入下一页
+> By Mr.Hope. Please scroll mouse wheel down to the next slide
 
 ---
 
-## 标注幻灯片
+<!-- .slide: data-transition="slide" data-auto-animate -->
+
+## Marking Slides
 
 <!-- .element: class="r-fit-text" -->
 
@@ -32,23 +35,25 @@ timeline: false
 
 --
 
-## 标注幻灯片
+<!-- .slide: data-transition="slide" data-auto-animate -->
+
+## Marking Slides
 
 <!-- .element: class="r-fit-text" -->
 
-使用 `---` 标注水平幻灯片
+Use `---` to mark horizontal slides
 
 <!-- .element: class="fragment fade-in" -->
 
-在水平幻灯片中使用 `--` 分割垂直幻灯片
+Use `--` to separate vertical slides in a horizontal slide.
 
 <!-- .element: class="fragment fade-in" -->
 
-使用 `<!-- .slide: ... -->` 在幻灯片上添加属性
+Use `<!-- .slide: ... -->` to add attributes to slide
 
 <!-- .element: class="fragment fade-in" -->
 
-使用 `<!-- .element: ... -->` 在前一个 HTML 元素上添加属性
+Use `<!-- .element: ... -->` to add attributes to the previous html element
 
 <!-- .element: class="fragment fade-in" -->
 
@@ -60,7 +65,7 @@ timeline: false
 
 <!-- .element: class="r-fit-text" -->
 
-你可以在幻灯片中使用 Markdown 语法的各种标记.
+You can use all kinds of markup in slides.
 
 <!-- .element: class="r-fit-text" -->
 
@@ -70,31 +75,13 @@ timeline: false
 
 ## Markdown
 
-你可以在幻灯片中使用 Markdown 语法的各种标记.
+You can use all kinds of markup in slides.
 
-### 这是一个 H3
+### This is a H3
 
-标题默认会自动转换为大写。
+Headings will transform to UPPERCASE by default.
 
-这是一个有着 **粗体**, _斜体_, ~~删除线~~ 文字并包含 [一个链接](https://mrhope.site) 的段落，并且它会自动换行。所以你无需担心它的长度。
-
---
-
-<!-- .slide: data-auto-animate -->
-
-## Markdown
-
-你可以在幻灯片中使用 Markdown 语法的各种标记.
-
-列表默认为 `inline-block`
-
-- 项目
-- 项目
-- 项目
-
-1. 项目 1
-1. 项目 2
-1. 项目 3
+Here is paragraph with some **bold**, _italic_, ~~strike-through~~ text and a [link](https://mrhope.site), and it can auto break itself so you don’t need to worry the length.
 
 --
 
@@ -102,9 +89,27 @@ timeline: false
 
 ## Markdown
 
-你可以在幻灯片中使用 Markdown 语法的各种标记.
+You can use all kinds of markup in slides.
 
-在你启用 `highlight` 插件后，代码块会自动高亮。
+List is `inline-block` by default.
+
+- Item
+- Item
+- Item
+
+1. Item 1
+1. Item 2
+1. Item 3
+
+--
+
+<!-- .slide: data-auto-animate -->
+
+## Markdown
+
+You can use all kinds of markup in slides.
+
+Code block will get auto highlight if you enable `highlight` plugin.
 
 ```js
 const a = 1;
@@ -116,9 +121,9 @@ const a = 1;
 
 ## Markdown
 
-你可以在幻灯片中使用 Markdown 语法的各种标记.
+You can use all kinds of markup in slides.
 
-在你启用 `math` 插件后，你也可以使用 TEX 格式使用数学公式。
+You can also write math equation using tex syntax if you enable `math` plugin.
 
 $$
 J(\theta_0,\theta_1) = \sum_{i=0}
@@ -130,15 +135,15 @@ $$
 
 ## Markdown
 
-你可以在幻灯片中使用 Markdown 语法的各种标记.
+You can use all kinds of markup in slides.
 
-⚠**请注意**: 表格和分割线，以及所有不在 Markdown 标准语法中的内容均不受支持。
+⚠**Note**: Table, hr and other nonstandard Markdown syntax is not supported.
 
 ---
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 布局
+## Layout
 
 <!-- .element: class="r-fit-text" -->
 
@@ -146,39 +151,39 @@ $$
 
 <!-- .slide: data-auto-animate  -->
 
-## 布局
+## Layout
 
 <!-- .element: class="r-fit-text" -->
 
-👆 `r-fit-text` class 会让文字在不超出幻灯片范围的情况下尽可能大。
+👆 The `r-fit-text` class makes text as large as possible without overflowing the slide.
 
 --
 
 <!-- .slide: data-auto-animate  -->
 
-## 布局
+## Layout
 
 ![Logo](/logo.svg)
 
 <!-- .element: class="r-stretch" -->
 
-👆 `r-stretch` class 帮助你控制注入图片或视频的大小，使它们填充满幻灯片垂直方向上的剩余空间。
+👆 The `r-stretch` class helper lets you resize an element, like an image or video, to cover the remaining vertical space in a slide.
 
 --
 
 <!-- .slide: data-auto-animate data-background-color="rgb(70, 70, 255)" -->
 
-## 布局
+## Layout
 
-### 背景
+### Background
 
-你可以通过向特定幻灯片添加 `data-background` 属性自定义幻灯片背景.
+Custom background by adding `data-background` attribute to slide.
 
 ---
 
 <!-- .slide: data-auto-animate -->
 
-## 动画片段
+## Fragment
 
 <!-- .element: class="r-fit-text" -->
 
@@ -186,21 +191,21 @@ $$
 
 <!-- .slide: data-auto-animate -->
 
-## 动画片段
+## Fragment
 
 <!-- .element: class="r-fit-text" -->
 
-动画片段用于高亮或显隐幻灯片中的元素。
+Fragments are used to highlight or incrementally reveal individual elements on a slide.
 
-你需要在元素上添加 `fragment` 和动画 class。
+Add `fragment` and animation class to element.
 
 --
 
 <!-- .slide: data-auto-animate -->
 
-## 动画片段
+## Fragment
 
-### 动画 class
+### Animation class
 
 - `fade-in`
 <!-- .element: class="fragment fade-in" -->
@@ -234,9 +239,9 @@ $$
 
 <!-- .slide: data-auto-animate -->
 
-## 动画片段
+## Fragment
 
-### 动画 class
+### Animation class
 
 - `grow`
 <!-- .element: class="fragment grow" -->
@@ -273,16 +278,16 @@ $$
 
 <!-- .slide: data-auto-animate -->
 
-## 动画片段
+## Fragment
 
-### 多个动画片段
+### Multiple fragments
 
-你可以按照顺序包裹一个 HTML 元素使其拥有多个动画片段
+Multiple fragments can be applied to the same element sequentially by wrapping it
 
 <span class="fragment fade-in">
   <span class="fragment highlight-red">
     <span class="fragment fade-out">
-      渐入 > 变红 > 渐出
+      Fade in > Turn red > Fade out
     </span>
   </span>
 </span>
@@ -291,33 +296,33 @@ $$
 
 <!-- .slide: data-auto-animate -->
 
-## 动画片段
+## Fragment
 
-### 顺序
+### Order
 
-你可以使用 `data-fragment-index` 属性改变元素的动画顺序。
+Order can be changed using the `data-fragment-index` attribute.
 
-不同元素可以有相同的动画顺序。
+Multiple elements can appear at the same index.
 
-- 最后显示
+- Appears last
 <!-- .element: class="fragment" data-fragment-index="3"-->
 
-- 第二个显示
+- Appears second
 <!-- .element: class="fragment" data-fragment-index="2"-->
 
 <!-- list break -->
 
-- 第一个显示
+- Appears first
 <!-- .element: class="fragment" data-fragment-index="1"-->
 
-- 第二个显示
+- Appears second
 <!-- .element: class="fragment" data-fragment-index="2"-->
 
 ---
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 渐变
+## Transition
 
 <!-- .element: class="r-fit-text" -->
 
@@ -325,13 +330,13 @@ $$
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 渐变
+## Transition
 
 <!-- .element: class="r-fit-text" -->
 
-Transition 可以通过配置中的 `transition` 选项全局设置，也可以通过在特定幻灯片添加 `data-transition` 属性局部设置.
+Transition can be changed by setting the `transition` config option globally or `data-transition` attribute on slide.
 
-可能的值:
+Possible values:
 
 - none
 - fade
@@ -347,19 +352,19 @@ Transition 可以通过配置中的 `transition` 选项全局设置，也可以�
 
 <!-- .slide: data-auto-animate -->
 
-## 渐变
+## Transition
 
 <!-- .element: class="r-fit-text" -->
 
-### 过渡动画
+### Auto animate
 
-你可以在相邻的幻灯片上添加 `data-auto-animate` 使相同的 HTML 元素产生过渡动画效果。
+`data-auto-animate` can be added on nearby slides to make an animation on unchanged elements.
 
 ---
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 功能
+## Functions
 
 <!-- .element: class="r-fit-text" -->
 
@@ -367,15 +372,15 @@ Transition 可以通过配置中的 `transition` 选项全局设置，也可以�
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 功能
+## Functions
 
 <!-- .element: class="r-fit-text" -->
 
-### 代码
+### Code
 
-通过启用 `highlight` 插件，你可以对代码块进行高亮。
+By enabling `highlight` plugin, you can highlight code blocks.
 
-你可以使用 `[a-b|c-d]` 语法来分布高亮特定行。
+You can use `[a-b|c-d]` syntax to highlight lines by steps.
 
 ```js [1-2|3|4]
 let a = 1;
@@ -388,44 +393,44 @@ c(3);
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 功能
+## Functions
 
 <!-- .element: class="r-fit-text" -->
 
-### 预览模式
+### Overview
 
-按下 `Esc` 或 `O` 即可在幻灯片获得焦点时进入预览模式。
+Press `Esc` or `O` to enter overview mode when the presentation is active
 
 --
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 功能
+## Functions
 
 <!-- .element: class="r-fit-text" -->
 
-### 全屏模式
+### Full Screen
 
-按下 `F` 或 `F11` 即可在幻灯片获得焦点时进入全屏模式。
+Press `F` or `F11` to enter fullscreen when the presentation is active
 
 --
 
 <!-- .slide: data-transition="slide" data-auto-animate -->
 
-## 功能
+## Functions
 
 <!-- .element: class="r-fit-text" -->
 
-### 缩放
+### Zoom
 
-按下 `alt` (Linux 上使用 `ctrl`) 的同时点击幻灯片的任何元素，即可以向此元素进行放大。
+Hold down the `alt` key (`ctrl` in Linux) and click on any element to zoom towards it.
 
-再次点击即可缩小。
+Click again to zoom back out.
 
 ---
 
 <!-- .element: class="r-fit-text" -->
 
-## 结束
+## The End
 
 @slideend
