@@ -90,7 +90,12 @@ def serialize_datetime(obj):
     raise TypeError(f"Type {type(obj)} is not JSON serializable")
 
 
-def extract_frontmatter(file_path):
+class MyDumper(yaml.Dumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(MyDumper, self).increase_indent(flow, False)
+
+
+def extract_frontmatter_from_file(file_path):
     """
     从 Markdown 文件中提取 front matter，并返回 front matter 和正文内容
 
@@ -102,7 +107,19 @@ def extract_frontmatter(file_path):
     """
     with open(file_path, "r") as f:
         content = f.read()
+    return extract_frontmatter(content)
 
+
+def extract_frontmatter(content):
+    """
+    从 Markdown 字符串中提取 front matter，并返回 front matter 和正文内容
+
+    Args:
+        content (str): 包含 front matter 的 Markdown 字符串
+
+    Returns:
+        tuple: 包含两个元素的元组，第一个元素为 front matter 的字典格式，第二个元素为去除 front matter 后的 Markdown 正文内容
+    """
     # 使用正则表达式匹配 front matter
     match = re.search(r"^---\n(.|\n)*?---\n", content)
     # 如果找到了 front matter 则提取并删除

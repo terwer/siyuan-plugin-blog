@@ -20,9 +20,14 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
+import textwrap
 import unittest
 
+import yaml
+from yaml import Dumper
+
 from zhi_vuepress1_to_vuepress2.utils import strutils
+from zhi_vuepress1_to_vuepress2.utils.strutils import MyDumper
 from zhi_vuepress1_to_vuepress2.vuepress import Vuepress
 
 
@@ -36,3 +41,15 @@ class MyTestCase(unittest.TestCase):
         print()
         ret = strutils.slug("后端开发")
         print(ret)
+
+    def test_demo(self):
+        data = {
+            "name": "John",
+            "age": 30,
+            "city": "New York",
+            "haha": ["aaaa", "bbbb"]
+        }
+
+        # 设置 indent 和 default_flow_style 参数
+        output = yaml.dump(data, Dumper=MyDumper, sort_keys=False, indent=2)
+        print(output)

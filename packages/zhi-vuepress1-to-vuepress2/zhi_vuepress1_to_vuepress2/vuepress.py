@@ -30,6 +30,7 @@ from loguru import logger
 from zhi_vuepress1_to_vuepress2.category_info import CategoryInfo
 from zhi_vuepress1_to_vuepress2.post import Post
 from zhi_vuepress1_to_vuepress2.utils import strutils, fileutils, dictutils
+from zhi_vuepress1_to_vuepress2.vuepress2_front_formatter import Vuepress2FrontFormatter
 
 
 class Vuepress:
@@ -79,7 +80,7 @@ class Vuepress:
 
                 full_path = os.path.join(dirpath, each_file)
                 # 读取文件属性等操作
-                data, content = strutils.extract_frontmatter(full_path)
+                data, content = strutils.extract_frontmatter_from_file(full_path)
                 post.description = content
 
                 # 解析 front formatter
@@ -116,6 +117,32 @@ class Vuepress:
                         # 去除分类
                         post_cats = [i for i in post_cats if i not in self.EXCLUDE_CATS]
                         post_cats = ['timeline' if i == '随笔' else i for i in post_cats]
+                        cts = []
+                        for pc in post_cats:
+                            ct = CategoryInfo()
+                            ct.description = pc
+                            cts.append(ct)
+                        post.categories = cts
+                    # date
+                    post.date_created = dictutils.get_dict_str_value(data, "date")
+                    # short_desc
+                    meta = dictutils.get_dict_value(data, "meta")
+                    if meta is not None:
+                        for meta_item in meta:
+                            if meta_item['name'] == "description":
+                                post.short_desc = meta_item['content']
+                                break
+                    tags = dictutils.get_dict_value(data, "tags")
+                    if tags is not None:
+                        tags = list(filter(lambda x: x is not None, tags))
+                        post.mt_keywords = tags
+                    else:
+                        post.mt_keywords = []
+
+                # 生成vuepress2支持的formatter
+                v2f = self._make_vuepress2_formatter(post)
+                # 附加formatter到正文
+                post.description = v2f + post.description
 
                 md_save_full_path = os.path.join(self.VUEPRESS2_DOCS_PATH, cat_save_path)
                 if cat_save_path == "":
@@ -163,3 +190,21 @@ class Vuepress:
                 # cate.category_name = strutils.slug(cate_name)
                 cats.append(cate)
         return cats
+
+    def _make_vuepress2_formatter(self, post: Post):
+        """
+        生成vuepress2支持的formatter
+        :param post:
+        :return:
+        """
+        v2f = Vuepress2FrontFormatter()
+        v2f.title = post.title
+        # v2f.short_title = post.title
+        v2f.description = post.short_desc
+        v2f.date = post.date_created
+        v2f.category = [c.description for c in post.categories]
+        v2f.tag = post.mt_keywords
+        if "timeline" in v2f.category:
+            v2f.timeline = True
+            v2f.article = False
+        return v2f.to_md()
