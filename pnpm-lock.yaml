@@ -114,6 +114,9 @@ devDependencies:
   '@vuepress/client':
     specifier: 2.0.0-beta.61
     version: 2.0.0-beta.61
+  '@vuepress/plugin-register-components':
+    specifier: ^2.0.0-beta.61
+    version: 2.0.0-beta.61
   docusaurus-plugin-typedoc:
     specifier: ^0.18.0
     version: 0.18.0(typedoc-plugin-markdown@3.14.0)(typedoc@0.23.28)
@@ -5261,6 +5264,16 @@ packages:
     dependencies:
       '@vuepress/core': 2.0.0-beta.61
       prismjs: 1.29.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@vuepress/plugin-register-components@2.0.0-beta.61:
+    resolution: {integrity: sha512-3sbJbiY8pZ3/M4TMfyhIn+aGAlXz+xR57I5k4NQnekzJjDxSiCmaet6FjUeUChX6/eREkVBlitfDvXq4t45RKw==}
+    dependencies:
+      '@vuepress/core': 2.0.0-beta.61
+      '@vuepress/utils': 2.0.0-beta.61
+      chokidar: 3.5.3
     transitivePeerDependencies:
       - supports-color
     dev: true

@@ -1,6 +1,8 @@
-# zhi-docs
+# zhi-blog-vuepress
 
-My blog using vuepress 2
+My blog auto build using vuepress 2 and vercel
+
+[preview](https://terwer.space)
 
 ## Install
 

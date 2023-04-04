@@ -1,10 +1,26 @@
 import { defineUserConfig } from "vuepress"
 import theme from "./theme.js"
+import { path } from "@vuepress/utils"
+import { registerComponentsPlugin } from "@vuepress/plugin-register-components"
 
 export default defineUserConfig({
     base: "/",
 
     dest: "dist/packages/zhi-blog-vuepress",
+
+    alias: [
+        {
+            "@LinkLayout": path.resolve(__dirname, "components/LinkLayout.vue"),
+        },
+    ],
+
+    plugins: [
+        // 注册组件
+        registerComponentsPlugin({
+            // componentsDir写法，该文件夹下的组件都会被注册为Vue组件。
+            componentsDir: path.resolve(__dirname, "./components"),
+        }),
+    ],
 
     locales: {
         "/": {
