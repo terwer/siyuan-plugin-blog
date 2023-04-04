@@ -1,10 +1,7 @@
 import { defineUserConfig } from "vuepress"
 import theme from "./theme"
-import { getDirname, path } from "@vuepress/utils"
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components"
-
-// @ts-ignore
-const __dirname = getDirname(import.meta.url)
+import { path } from "@vuepress/utils"
 
 export default defineUserConfig({
     base: "/",
@@ -13,7 +10,7 @@ export default defineUserConfig({
 
     alias: [
         {
-            "@LinkLayout": path.resolve(__dirname, "components/LinkLayout.vue"),
+            "@LinkLayout": path.resolve(path.dirname(""), "components/LinkLayout.vue"),
         },
     ],
 
