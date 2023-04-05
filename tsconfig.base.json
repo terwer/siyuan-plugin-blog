@@ -1,32 +1,32 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "importHelpers": true,
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["es2020", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "zhi-blog-api": ["packages/zhi-blog-api/src/index.ts"],
-      "zhi-cli": ["packages/zhi-cli/src/index.ts"],
-      "zhi-common": ["packages/zhi-common/src/index.ts"],
-      "zhi-env": ["packages/zhi-env/src/index.ts"],
-      "zhi-log": ["packages/zhi-log/src/index.ts"],
-      "zhi-plugin-code-block": ["packages/zhi-plugin-code-block/src/index.ts"],
-      "zhi-plugin-publisher": ["packages/zhi-plugin-publisher/src/index.ts"],
-      "zhi-sdk": ["packages/zhi-sdk/src/index.ts"],
-      "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "importHelpers": true,
+        "target": "esnext",
+        "module": "esnext",
+        "lib": ["es2020", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "zhi-blog-api": ["packages/zhi-blog-api/src/index.ts"],
+            "zhi-cli": ["packages/zhi-cli/src/index.ts"],
+            "zhi-common": ["packages/zhi-common/src/index.ts"],
+            "zhi-env": ["packages/zhi-env/src/index.ts"],
+            "zhi-log": ["packages/zhi-log/src/index.ts"],
+            "zhi-plugin-code-block": ["packages/zhi-plugin-code-block/src/index.ts"],
+            "zhi-plugin-publisher": ["packages/zhi-plugin-publisher/src/index.ts"],
+            "zhi-sdk": ["packages/zhi-sdk/src/index.ts"],
+            "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
 }

@@ -84,7 +84,7 @@ nx generate @nx-plus/docusaurus:app zhi-docs
 ## astro
 ## pnpm install -D @nxtensions/astro
 ## nx migrate @nxtensions/astro@latest
-## nx generate @nxtensions/astro:app my-app
+nx generate @nxtensions/astro:app zhi-static-blog-astro
 ## nx generate @nxtensions/astro:lib my-lib
 ## nx generate @nxtensions/astro:component my-component
 ## nx dev my-app
