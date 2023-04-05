@@ -26,7 +26,7 @@
 import express from "express"
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { handler as ssrHandler } from "../../../../../dist/packages/zhi-static-blog-astro/dist/server/entry.mjs"
+import { handler as ssrHandler } from "../../../../../dist/packages/zhi-blog-astro/dist/server/entry.mjs"
 
 /**
  * 主题的 HTTP 服务
@@ -34,7 +34,7 @@ import { handler as ssrHandler } from "../../../../../dist/packages/zhi-static-b
 class HttpService {
     initHttpService() {
         const app = express()
-        app.use(express.static("/Users/terwer/Documents/mydocs/zhi/dist/packages/zhi-static-blog-astro/dist/client"))
+        app.use(express.static("/Users/terwer/Documents/mydocs/zhi/dist/packages/zhi-blog-astro/dist/client"))
         app.use(ssrHandler)
 
         app.listen(8080)

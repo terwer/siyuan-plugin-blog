@@ -1,0 +1,25 @@
+{
+    "name": "zhi-blog-astro-e2e",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/zhi-blog-astro-e2e/src",
+    "projectType": "application",
+    "targets": {
+        "e2e": {
+            "executor": "@nrwl/cypress:cypress",
+            "options": {
+                "cypressConfig": "packages/zhi-blog-astro-e2e/cypress.config.ts",
+                "devServerTarget": "zhi-blog-astro:dev",
+                "testingType": "e2e"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/zhi-blog-astro-e2e/**/*.{js,ts}"]
+            }
+        }
+    },
+    "tags": [],
+    "implicitDependencies": ["zhi-blog-astro"]
+}

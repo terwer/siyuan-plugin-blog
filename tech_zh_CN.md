@@ -41,12 +41,11 @@ nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zh
 nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi-plugin-siyuan2md --bundler=vite --unitTestRunner=vitest
 
 ## node library
-## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
+nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware --dry-run
 
 ## web app
 ## zhi-blog, zhi-blog-astro
 ## nx generate @nrwl/web:app zhi-blog --bundler=vite
-## nx generate @nrwl/web:app zhi-blog-astro --bundler=vite
 ## nx generate @nrwl/react:app zhi-blog --bundler=vite --dry-run
 
 ## node app
@@ -85,6 +84,7 @@ nx generate @nx-plus/docusaurus:app zhi-docs
 ## pnpm install -D @nxtensions/astro
 ## nx migrate @nxtensions/astro@latest
 nx generate @nxtensions/astro:app zhi-static-blog-astro
+nx generate @nxtensions/astro:app zhi-blog-astro
 ## nx generate @nxtensions/astro:lib my-lib
 ## nx generate @nxtensions/astro:component my-component
 ## nx dev my-app
