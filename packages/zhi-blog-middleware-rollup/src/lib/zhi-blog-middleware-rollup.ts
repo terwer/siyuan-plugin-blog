@@ -23,33 +23,34 @@
  * questions.
  */
 
-import DependencyItem from "../models/DependencyItem"
-import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../ZhiUtil"
+import ZhiUtil from "../ZhiUtil"
 
 /**
- * 主题的 HTTP 服务
+ * HTTP 服务
  */
-class HttpService {
-    private readonly common
+class ZhiBlogMiddleware {
+    private readonly logger
 
     constructor() {
-        this.common = ZhiUtil.zhiCommon()
+        this.logger = ZhiUtil.zhiLog("zhi")
     }
 
-    /**
-     * 初始化 HTTP 服务
-     */
-    async initHttpService(): Promise<DependencyItem[]> {
-        const deps = []
-        const depItem = new DependencyItem()
-        depItem.format = "cjs"
-        depItem.libpath = this.common.siyuanUtil.joinPath("modules", "blog-middleware-esbuild", "index.cjs")
-        depItem.importType = "require"
-        depItem.runAs = DeviceType.DeviceType_Siyuan_MainWin
-        deps.push(depItem)
-        return deps
+    async init() {
+        this.logger.info("Http server is staring...")
+        // const app = express()
+        // app.use(ssrHandler)
+
+        // app.listen(8080)
+        this.logger.info("Http server started.")
+        return []
     }
 }
 
-export default HttpService
+/**
+ * 服务入口
+ */
+const ZhiBlogMiddlewareRollup = () => {
+    return new ZhiBlogMiddleware()
+}
+
+export default ZhiBlogMiddlewareRollup

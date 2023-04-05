@@ -100,6 +100,11 @@ npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 \
 --description='zhi-vuepress1-to-vuepress2' \
 --packageName=zhi-vuepress1-to-vuepress2 \
 --moduleName=zhi_vuepress1_to_vuepress2
+
+## rollup
+## https://nx.dev/packages/js/generators/library#bundler
+## https://github.com/nrwl/nx/issues/2212#issuecomment-894064983
+nx generate @nrwl/js:lib zhi-blog-middleware-rollup --publishable --importPath=zhi-blog-middleware-rollup --bundler=rollup
 ```
 
 ## Setup

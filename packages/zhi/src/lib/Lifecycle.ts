@@ -25,7 +25,7 @@
 
 import DependencyItem from "./models/DependencyItem"
 import PluginSystem from "./plugin-system"
-import HttpService from "./http-service";
+import HttpService from "./http-service"
 
 /**
  * zhi主题统一生命周期管理
@@ -82,15 +82,16 @@ class Lifecycle {
      * @private
      */
     private async loadVendors(): Promise<DependencyItem[]> {
-        // const vendorImports = <DependencyItem[]>[]
+        let vendorImports = <DependencyItem[]>[]
 
-        // // 字体图标
+        // 字体图标
         // const fontAwesomeImports = fontAwesome.initFontAwesome()
-        // return Promise.resolve(vendorImports.concat(fontAwesomeImports))
+        // vendorImports = vendorImports.concat(fontAwesomeImports)
 
         // express 服务
-        await this.httpService.initHttpService()
-        return Promise.resolve([])
+        const httpServiceImports = await this.httpService.initHttpService()
+        vendorImports = vendorImports.concat(httpServiceImports)
+        return vendorImports
     }
 }
 

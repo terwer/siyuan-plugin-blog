@@ -23,33 +23,5 @@
  * questions.
  */
 
-import DependencyItem from "../models/DependencyItem"
-import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../ZhiUtil"
-
-/**
- * 主题的 HTTP 服务
- */
-class HttpService {
-    private readonly common
-
-    constructor() {
-        this.common = ZhiUtil.zhiCommon()
-    }
-
-    /**
-     * 初始化 HTTP 服务
-     */
-    async initHttpService(): Promise<DependencyItem[]> {
-        const deps = []
-        const depItem = new DependencyItem()
-        depItem.format = "cjs"
-        depItem.libpath = this.common.siyuanUtil.joinPath("modules", "blog-middleware-esbuild", "index.cjs")
-        depItem.importType = "require"
-        depItem.runAs = DeviceType.DeviceType_Siyuan_MainWin
-        deps.push(depItem)
-        return deps
-    }
-}
-
-export default HttpService
+import ZhiBlogMiddlewareRollup from "./lib/zhi-blog-middleware-rollup"
+export default ZhiBlogMiddlewareRollup

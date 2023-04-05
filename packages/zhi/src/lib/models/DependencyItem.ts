@@ -23,6 +23,8 @@
  * questions.
  */
 
+import { DeviceType } from "zhi-common";
+
 /**
  * 依赖项类型定义
  *
@@ -30,17 +32,18 @@
  * @since 1.0.0
  */
 class DependencyItem {
-  libpath: string
-  format: "cjs" | "esm" | "js"
-  importType: "require" | "import"
-  runAs: "browser" | "node" | "electron" | "both"
+    libpath: string
+    format: "cjs" | "esm" | "js"
+    importType: "require" | "import"
+    // "browser" | "node" | "electron" | "both"
+    runAs: DeviceType
 
-  constructor() {
-    this.libpath = ""
-    this.format = "cjs"
-    this.importType = "require"
-    this.runAs = "both"
-  }
+    constructor() {
+        this.libpath = ""
+        this.format = "cjs"
+        this.importType = "require"
+        this.runAs = DeviceType.DeviceType_Node
+    }
 }
 
 export default DependencyItem

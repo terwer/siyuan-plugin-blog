@@ -1,0 +1,52 @@
+{
+    "name": "zhi-blog-middleware-rollup",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/zhi-blog-middleware-rollup/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/rollup:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                // https://nx.dev/packages/web/executors/rollup#options-playground
+                // "outputPath": "dist/packages/zhi-blog-middleware-rollup",
+                "outputPath": "../SiYuanWorkspace/public/conf/appearance/themes/zhi/modules/blog-middleware-esbuild",
+                "main": "packages/zhi-blog-middleware-rollup/src/index.ts",
+                "tsConfig": "packages/zhi-blog-middleware-rollup/tsconfig.lib.json",
+                "assets": [],
+                "project": "packages/zhi-blog-middleware-rollup/package.json",
+                "compiler": "swc",
+                "format": ["cjs"]
+            },
+        },
+        "publish": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs zhi-blog-middleware-rollup {args.ver} {args.tag}"
+            },
+            "dependsOn": ["build"]
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/zhi-blog-middleware-rollup/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/zhi-blog-middleware-rollup/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}
