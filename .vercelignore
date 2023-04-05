@@ -1,0 +1,10 @@
+node_modules
+.cache
+.github
+.idea
+.vscode
+coverage
+dist
+packages
+reports
+tools
