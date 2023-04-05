@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const slug = Astro.params.slug;
+
+import { getEntryBySlug } from "astro:content";
+const entry = await getEntryBySlug("post", slug);
+const { remarkPluginFrontmatter, Content, headings } = await entry.render();
+---
+
+<Layout title={remarkPluginFrontmatter.title}>
+    <h1><a href="/">返回</a></h1>
+    <main>
+        <Content />
+    </main>
+</Layout>
+
+<style>
+    main {
+        margin: auto;
+        padding: 1.5rem;
+    }
+</style>

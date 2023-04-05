@@ -40,7 +40,7 @@
         "@vuepress/client": "2.0.0-beta.61",
         "@vuepress/plugin-register-components": "^2.0.0-beta.61",
         "@vuepress/utils": "2.0.0-beta.61",
-        "astro": "^2.0.0",
+        "astro": "^2.1.9",
         "cypress": "^12.2.0",
         "docusaurus-plugin-typedoc": "^0.18.0",
         "eslint": "~8.15.0",
@@ -68,6 +68,7 @@
         "vuepress-theme-hope": "2.0.0-beta.200"
     },
     "dependencies": {
+        "@astrojs/node": "^5.1.0",
         "@docusaurus/core": "2.1.0",
         "@docusaurus/preset-classic": "2.1.0",
         "@mdx-js/react": "^1.6.22",

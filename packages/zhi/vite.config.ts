@@ -50,11 +50,11 @@ export default defineConfig({
   cacheDir: "../../node_modules/.vite/zhi",
 
   plugins: [
-    dts({
-      entryRoot: "src",
-      tsConfigFilePath: join(__dirname, "tsconfig.lib.json"),
-      skipDiagnostics: true,
-    }),
+    // dts({
+    //   entryRoot: "src",
+    //   tsConfigFilePath: join(__dirname, "tsconfig.lib.json"),
+    //   skipDiagnostics: true,
+    // }),
 
     viteTsConfigPaths({
       root: "../../",

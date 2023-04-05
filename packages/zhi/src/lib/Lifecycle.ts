@@ -23,8 +23,9 @@
  * questions.
  */
 
-import DependencyItem from "./models/DependencyItem";
-import PluginSystem from "./plugin-system";
+import DependencyItem from "./models/DependencyItem"
+import PluginSystem from "./plugin-system"
+import HttpService from "./http-service";
 
 /**
  * zhi主题统一生命周期管理
@@ -33,58 +34,64 @@ import PluginSystem from "./plugin-system";
  * @since 1.0.0
  */
 class Lifecycle {
-  private pluginSystem
-  private _dynamicImports = <DependencyItem[]>[]
+    private pluginSystem
+    private httpService
 
-  constructor() {
-    this.pluginSystem = new PluginSystem()
-  }
+    private _dynamicImports = <DependencyItem[]>[]
 
-  get dynamicImports(): DependencyItem[] {
-    return this._dynamicImports
-  }
+    constructor() {
+        this.pluginSystem = new PluginSystem()
+        this.httpService = new HttpService()
+    }
 
-  public async load() {
-    const allImports = <DependencyItem[]>[]
+    get dynamicImports(): DependencyItem[] {
+        return this._dynamicImports
+    }
 
-    const pluginSystemImports = await this.loadPluginSystem()
-    const widgetsImports = await this.loadWidgets()
-    const vendorImports = await this.loadVendors()
+    public async load() {
+        const allImports = <DependencyItem[]>[]
 
-    this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports)
-  }
+        const pluginSystemImports = await this.loadPluginSystem()
+        const widgetsImports = await this.loadWidgets()
+        const vendorImports = await this.loadVendors()
 
-  /**
-   * SiYuanPluginSystem
-   *
-   * @private
-   */
-  private async loadPluginSystem(): Promise<DependencyItem[]> {
-    return await this.pluginSystem.initPluginSystem()
-  }
+        this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports)
+    }
 
-  /**
-   * 加载挂件
-   *
-   * @private
-   */
-  private async loadWidgets(): Promise<DependencyItem[]> {
-    return Promise.resolve([])
-  }
+    /**
+     * SiYuanPluginSystem
+     *
+     * @private
+     */
+    private async loadPluginSystem(): Promise<DependencyItem[]> {
+        return await this.pluginSystem.initPluginSystem()
+    }
 
-  /**
-   * 加载第三方库
-   *
-   * @private
-   */
-  private async loadVendors(): Promise<DependencyItem[]> {
-    // const vendorImports = <DependencyItem[]>[]
+    /**
+     * 加载挂件
+     *
+     * @private
+     */
+    private async loadWidgets(): Promise<DependencyItem[]> {
+        return Promise.resolve([])
+    }
 
-    // // 字体图标
-    // const fontAwesomeImports = fontAwesome.initFontAwesome()
-    // return Promise.resolve(vendorImports.concat(fontAwesomeImports))
-    return Promise.resolve([])
-  }
+    /**
+     * 加载第三方库
+     *
+     * @private
+     */
+    private async loadVendors(): Promise<DependencyItem[]> {
+        // const vendorImports = <DependencyItem[]>[]
+
+        // // 字体图标
+        // const fontAwesomeImports = fontAwesome.initFontAwesome()
+        // return Promise.resolve(vendorImports.concat(fontAwesomeImports))
+
+        // express 服务
+        await this.httpService.initHttpService()
+        return Promise.resolve([])
+    }
 }
 
 export default Lifecycle
