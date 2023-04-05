@@ -18,6 +18,8 @@
         "baseUrl": ".",
         "paths": {
             "zhi-blog-api": ["packages/zhi-blog-api/src/index.ts"],
+            "zhi-blog-middleware": ["packages/zhi-blog-middleware/src/index.ts"],
+            "zhi-blog-middleware-esbuild": ["packages/zhi-blog-middleware-esbuild/src/index.ts"],
             "zhi-cli": ["packages/zhi-cli/src/index.ts"],
             "zhi-common": ["packages/zhi-common/src/index.ts"],
             "zhi-env": ["packages/zhi-env/src/index.ts"],

@@ -41,7 +41,8 @@ nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zh
 nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi-plugin-siyuan2md --bundler=vite --unitTestRunner=vitest
 
 ## node library
-nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware --dry-run
+nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware
+nx generate @nrwl/js:lib zhi-blog-middleware-esbuild --publishable --importPath=zhi-blog-middleware-esbuild --bundler=esbuild
 
 ## web app
 ## zhi-blog, zhi-blog-astro
