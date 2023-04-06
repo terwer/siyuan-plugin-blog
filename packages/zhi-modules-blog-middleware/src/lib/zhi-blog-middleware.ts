@@ -23,17 +23,29 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
+// import express from "express"
+import ZhiUtil from "../ZhiUtil"
 
 /**
- * lib入口，如果是 zhi 模块，此方法必须是 init
- *
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
+ * HTTP 服务
  */
-export async function init(): Promise<string> {
-    const zhiBlogMiddleware = new ZhiBlogMiddleware()
-    await zhiBlogMiddleware.startServer()
-    return "Express server started"
+class ZhiBlogMiddleware {
+    private readonly logger
+
+    constructor() {
+        this.logger = ZhiUtil.zhiLog("zhi-blog-middleware")
+    }
+
+    async startServer() {
+        this.logger.info("Http server is staring...")
+        // const app = express()
+        // console.log(app)
+        // app.use(ssrHandler)
+
+        // app.listen(8888)
+        this.logger.info("Http server started.")
+        return []
+    }
 }
+
+export default ZhiBlogMiddleware

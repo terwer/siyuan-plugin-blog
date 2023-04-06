@@ -4,6 +4,9 @@ import { defineConfig } from "vite"
 import viteTsConfigPaths from "vite-tsconfig-paths"
 import dts from "vite-plugin-dts"
 import { join } from "path"
+import builtinModules from "builtin-modules"
+
+const externalPackages = [...builtinModules]
 
 export default defineConfig({
     cacheDir: "../../node_modules/.vite/zhi-modules-blog-middleware",
@@ -43,8 +46,9 @@ export default defineConfig({
         },
         rollupOptions: {
             // External packages that should not be bundled into your library.
-            external: [],
+            external: [...externalPackages],
         },
+        minify: false,
     },
 
     test: {
