@@ -24,6 +24,7 @@
  */
 
 import BrowserUtil from "./browserUtil"
+import DeviceUtil, { DeviceType } from "./deviceUtil"
 
 /**
  *
@@ -115,7 +116,7 @@ class SiyuanUtil {
         if (path) {
             return path.join(...paths)
         }
-        return paths.join("/")
+        return paths.join(BrowserUtil.BrowserSeperator)
     }
 
     /**
@@ -126,7 +127,7 @@ class SiyuanUtil {
         if (!syWin) {
             throw new Error("Not in siyuan env")
         }
-        return syWin?.siyuan.config.system.confDir
+        return syWin.siyuan.config.system.confDir
     }
 
     /**
@@ -144,24 +145,37 @@ class SiyuanUtil {
      * 思源笔记 appearance 目录
      */
     public siyuanAppearancePath() {
-        const path = this.requireLib("path")
-        return path.join(this.siyuanConfPath(), "appearance")
+        return this.joinPath(this.siyuanConfPath(), "appearance")
     }
 
     /**
      * 思源笔记 themes 目录
+     *
+     * 注意: 如果是非 electron 环境，这里返回的是浏览器的路径，不是真实路径
+     * 如果使用真实路径，请调用 siyuanAppearancePath 或者 siyuanDataPath
+     *
+     * @author terwer
+     * @since 1.0.0
      */
     public siyuanThemePath() {
-        const path = this.requireLib("path")
-        return path.join(this.siyuanAppearancePath(), "themes")
+        if (
+            DeviceUtil.getDevice() == DeviceType.DeviceType_Chrome_Browser ||
+            DeviceUtil.getDevice() == DeviceType.DeviceType_Chrome_Extension
+        ) {
+            const syWin = this.siyuanWindow()
+            if (!syWin) {
+                throw new Error("Not in siyuan env")
+            }
+            return this.joinPath(syWin.location.origin, "appearance", "themes")
+        }
+        return this.joinPath(this.siyuanAppearancePath(), "themes")
     }
 
     /**
      * zhi 主题目录
      */
     public zhiThemePath() {
-        const path = this.requireLib("path")
-        return path.join(this.siyuanThemePath(), "zhi")
+        return this.joinPath(this.siyuanThemePath(), "zhi")
     }
 }
 

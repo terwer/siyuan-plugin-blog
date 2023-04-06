@@ -116,15 +116,21 @@ class Zhi {
             const dynamicImports = await this.main([])
             for (const item of dynamicImports) {
                 // 类型校验
-                if (item.format !== "cjs" && item.format !== "js") {
-                    this.logger.warn("Only cjs supported, skip this lib!", item.libpath)
+                if (item.format !== "esm" && item.format !== "cjs" && item.format !== "js") {
+                    this.logger.warn("Only esm, cjs supported, skip this lib!", item.libpath)
                     continue
                 }
 
                 // 运行环境校验
                 if (this.runAs !== item.runAs) {
-                    this.logger.warn(this.common.strUtil.f("I'm sorry because this.runAs {0}, item.runAs {1}", this.runAs, item.runAs))
-                    this.logger.warn(
+                    this.logger.debug(
+                        this.common.strUtil.f(
+                            "I'm sorry because current runtime is {0}, while lib's define runtime is {1}",
+                            this.runAs,
+                            item.runAs
+                        )
+                    )
+                    this.logger.debug(
                         this.common.strUtil.f(
                             "This lib can only run at {0}, skip!Lib is=>{1}",
                             item.runAs,
@@ -137,28 +143,36 @@ class Zhi {
                 this.logger.info(this.common.strUtil.f("Loading modules form zhi {0}", item.libpath))
                 let lib
                 if (item.importType == "import") {
-                    lib = await import(item.libpath)
+                    const importPath = this.common.siyuanUtil.joinPath(
+                        this.common.siyuanUtil.zhiThemePath(),
+                        item.libpath
+                    )
+                    lib = await import(importPath)
+                    this.logger.debug(this.common.strUtil.f("Importing lib {0} ...", importPath))
                 } else {
                     const importPath = this.common.siyuanUtil.joinPath(
                         this.common.siyuanUtil.zhiThemePath(),
                         item.libpath
                     )
                     lib = this.common.siyuanUtil.requireLib(importPath)
-                    this.logger.debug("Require fullpath=>", importPath)
+                    this.logger.debug(this.common.strUtil.f("Requiring lib {0} ...", importPath))
                 }
                 // 如果有初始化方法，进行初始化
                 if (lib) {
-                    const libObj = lib()
+                    const libObj = lib
                     this.logger.debug("Required lib Obj=>", libObj)
                     if (libObj.init) {
-                        await libObj.init()
+                        const res = await libObj.init()
+                        if (res) {
+                            this.logger.info("Detected output from required lib=>", res)
+                        }
                     } else {
                         this.logger.debug(this.common.strUtil.f("No init method for {0}", item.libpath))
                     }
                 } else {
                     this.logger.debug(this.common.strUtil.f("Lib entry is not a function => {0}", item.libpath))
                 }
-                this.logger.info(this.common.strUtil.f("loaded {0} success", item.libpath))
+                this.logger.info(this.common.strUtil.f("loaded {0}", item.libpath))
             }
 
             this.logger.info("Theme inited.")

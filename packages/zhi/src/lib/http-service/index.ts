@@ -41,14 +41,22 @@ class HttpService {
      * 初始化 HTTP 服务
      */
     async initHttpService(): Promise<DependencyItem[]> {
-        const deps = []
-        const depItem = new DependencyItem()
-        depItem.format = "cjs"
-        depItem.libpath = this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js")
-        depItem.importType = "require"
-        depItem.runAs = DeviceType.DeviceType_Siyuan_MainWin
-        deps.push(depItem)
-        return deps
+        return [
+            // blogMiddlewareDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
+                importType: "require",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+            // blogMiddlewareWebDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("modules-web", "blog-middleware", "index.mjs"),
+                importType: "import",
+                runAs: DeviceType.DeviceType_Chrome_Browser,
+            },
+        ]
     }
 }
 

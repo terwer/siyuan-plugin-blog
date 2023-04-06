@@ -9,7 +9,7 @@
             "outputs": ["{options.outputPath}"],
             "options": {
                 // "outputPath": "dist/packages/zhi-modules-blog-middleware",
-                "outputPath": "../SiYuanWorkspace/public/conf/appearance/themes/zhi/modules-web/blog-middleware"
+                "outputPath": "../SiYuanWorkspace/public/conf/appearance/themes/zhi/modules/blog-middleware"
             }
         },
         "publish": {
