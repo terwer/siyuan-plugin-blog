@@ -22,6 +22,8 @@
             "zhi-common": ["packages/zhi-common/src/index.ts"],
             "zhi-env": ["packages/zhi-env/src/index.ts"],
             "zhi-log": ["packages/zhi-log/src/index.ts"],
+            "zhi-modules-blog-middleware": ["packages/zhi-modules-blog-middleware/src/index.ts"],
+            "zhi-modules-blog-middleware-web": ["packages/zhi-modules-blog-middleware-web/src/index.ts"],
             "zhi-plugin-code-block": ["packages/zhi-plugin-code-block/src/index.ts"],
             "zhi-plugin-publisher": ["packages/zhi-plugin-publisher/src/index.ts"],
             "zhi-sdk": ["packages/zhi-sdk/src/index.ts"],

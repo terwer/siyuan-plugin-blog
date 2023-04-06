@@ -22,13 +22,10 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## Init
 
 ```bash
-## js library
-## zhi-env, zhi-log
-nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
-
-## js Vite
-## zhi-cli, zhi-theme, zhi-plugins
+## core library
 ## https://nx.dev/packages/vite
+nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
@@ -40,9 +37,15 @@ nx generate @nrwl/js:library zhi-plugin-publisher --publishable --importPath=zhi
 nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zhi-plugin-code-block --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi-plugin-siyuan2md --bundler=vite --unitTestRunner=vitest
 
+## zhi-modules
+nx generate @nrwl/js:library zhi-modules-blog-middleware --publishable --importPath=zhi-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
+
+## zhi-modules-web
+nx generate @nrwl/js:library zhi-modules-blog-middleware-web --publishable --importPath=zhi-modules-blog-middleware-web --bundler=vite --unitTestRunner=vitest
+
 ## node library
-nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware
-nx generate @nrwl/js:lib zhi-blog-middleware-esbuild --publishable --importPath=zhi-blog-middleware-esbuild --bundler=esbuild
+#nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware
+#nx generate @nrwl/js:lib zhi-blog-middleware-esbuild --publishable --importPath=zhi-blog-middleware-esbuild --bundler=esbuild
 
 ## web app
 ## zhi-blog, zhi-blog-astro
@@ -94,17 +97,13 @@ nx generate @nxtensions/astro:app zhi-blog-astro
 ## python
 ## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
 ## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
-pnpm install @nxlv/python --save-dev
-npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 \
---type application \
---description='zhi-vuepress1-to-vuepress2' \
---packageName=zhi-vuepress1-to-vuepress2 \
---moduleName=zhi_vuepress1_to_vuepress2
+## pnpm install @nxlv/python --save-dev
+npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
 
 ## rollup
 ## https://nx.dev/packages/js/generators/library#bundler
 ## https://github.com/nrwl/nx/issues/2212#issuecomment-894064983
-nx generate @nrwl/js:lib zhi-blog-middleware-rollup --publishable --importPath=zhi-blog-middleware-rollup --bundler=rollup
+## nx generate @nrwl/js:lib zhi-blog-middleware-rollup --publishable --importPath=zhi-blog-middleware-rollup --bundler=rollup
 ```
 
 ## Setup

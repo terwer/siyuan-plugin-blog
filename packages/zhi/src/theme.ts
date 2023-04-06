@@ -26,9 +26,12 @@
 import Zhi from "./lib/zhi"
 import ZhiUtil from "./ZhiUtil"
 
+/**
+ * 主题唯一入口，由思源笔记自动调用
+ */
 ;(async () => {
-  const common = ZhiUtil.zhiCommon()
+    const common = ZhiUtil.zhiCommon()
 
-  const zhi = new Zhi(common.deviceUtil.getDevice())
-  await zhi.init()
+    const zhi = new Zhi(common.deviceUtil.getDevice())
+    await zhi.init()
 })()

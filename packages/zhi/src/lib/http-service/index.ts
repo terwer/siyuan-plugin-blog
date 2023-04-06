@@ -44,7 +44,7 @@ class HttpService {
         const deps = []
         const depItem = new DependencyItem()
         depItem.format = "cjs"
-        depItem.libpath = this.common.siyuanUtil.joinPath("modules", "blog-middleware-esbuild", "index.cjs")
+        depItem.libpath = this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js")
         depItem.importType = "require"
         depItem.runAs = DeviceType.DeviceType_Siyuan_MainWin
         deps.push(depItem)

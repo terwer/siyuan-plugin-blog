@@ -1,45 +1,38 @@
 {
-    "name": "zhi",
+    "name": "zhi-modules-blog-middleware-web",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/zhi/src",
+    "sourceRoot": "packages/zhi-modules-blog-middleware-web/src",
     "projectType": "library",
     "targets": {
         "build": {
             "executor": "@nrwl/vite:build",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "../SiYuanWorkspace/public/conf/appearance/themes/zhi",
-                "emptyOutDir": false
+                // "outputPath": "dist/packages/zhi-modules-blog-middleware-web",
+                "outputPath": "../SiYuanWorkspace/public/conf/appearance/themes/zhi/modules/blog-middleware"
             }
         },
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "node tools/scripts/publish.mjs zhi {args.ver} {args.tag}"
+                "command": "node tools/scripts/publish.mjs zhi-modules-blog-middleware-web {args.ver} {args.tag}"
             },
             "dependsOn": ["build"]
         },
         "test": {
             "executor": "@nrwl/vite:test",
-            "outputs": ["coverage/packages/zhi"],
+            "outputs": ["coverage/packages/zhi-modules-blog-middleware-web"],
             "options": {
                 "passWithNoTests": true,
-                "reportsDirectory": "../../coverage/packages/zhi"
+                "reportsDirectory": "../../coverage/packages/zhi-modules-blog-middleware-web"
             }
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/zhi/**/*.ts"]
+                "lintFilePatterns": ["packages/zhi-modules-blog-middleware-web/**/*.ts"]
             }
-        },
-        "serve": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "nx run zhi:build --watch"
-            },
-            "dependsOn": []
         }
     },
     "tags": []
