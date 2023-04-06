@@ -23,8 +23,10 @@
  * questions.
  */
 
+import { init } from "./zhi-modules-blog-middleware"
+
 describe("zhiModulesBlogMiddleware", () => {
-    it("should work", () => {
-        console.log("hello")
+    it("init", async () => {
+        await init(9000)
     })
 })

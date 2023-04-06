@@ -25,7 +25,7 @@
 
 import ZhiUtil from "../ZhiUtil"
 import http from "http"
-import * as fs from "fs"
+import fs from "fs"
 
 /**
  * HTTP 服务
