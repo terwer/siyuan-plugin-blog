@@ -23,27 +23,44 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
-import markdownMiddleware from "./markdownMiddleware"
-import ZhiUtil from "../ZhiUtil"
+import http from "http"
+import xml2js from "xml2js"
 
-/**
- * lib入口，如果是 zhi 模块，此方法必须是 init
- *
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export async function init(): Promise<string> {
-    const logger = ZhiUtil.zhiLog("init-blog-middleware")
-    const common = ZhiUtil.zhiCommon()
-    const port = 3000
-    try {
-        const zhiBlogMiddleware = new ZhiBlogMiddleware()
-        await zhiBlogMiddleware.startServer(port, [markdownMiddleware])
-    } catch (e) {
-        logger.error(common.strUtil.f("HTTP server init failed at {0}!Some function may not work", port), e)
-    }
-
-    return "HTTP server started"
+const ContentType = {
+    JSON: "application/json",
+    HTML: "text/html",
+    XML: "text/xml",
 }
+
+function sendResponse(
+    res: http.ServerResponse<http.IncomingMessage>,
+    statusCode: number,
+    data: object,
+    contentType: string
+) {
+    // 设置状态码和响应头
+    res.statusCode = statusCode
+    switch (contentType) {
+        case ContentType.JSON:
+            res.setHeader("Content-Type", ContentType.JSON)
+            res.write(JSON.stringify(data))
+            break
+        case ContentType.HTML:
+            res.setHeader("Content-Type", ContentType.HTML)
+            res.write(data)
+            break
+        case ContentType.XML:
+            res.setHeader("Content-Type", ContentType.XML)
+            xml2js.parseString(data, (err: any, result: any) => {
+                if (!err) {
+                    res.write(result)
+                }
+            })
+            break
+        default:
+            break
+    }
+}
+
+export default sendResponse
+export {ContentType}

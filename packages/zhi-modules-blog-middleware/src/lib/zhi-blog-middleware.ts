@@ -25,18 +25,28 @@
 
 import ZhiUtil from "../ZhiUtil"
 import http from "http"
+import * as fs from "fs"
 
 /**
  * HTTP 服务
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
  */
 class ZhiBlogMiddleware {
     private readonly logger
+    private readonly common
+    private port
 
     constructor() {
         this.logger = ZhiUtil.zhiLog("zhi-blog-middleware")
+        this.common = ZhiUtil.zhiCommon()
+        this.port = 3000
     }
 
     async startServer(
+        port: number,
         middlewares: ((
             req: http.IncomingMessage,
             res: http.ServerResponse<http.IncomingMessage>,
@@ -44,29 +54,33 @@ class ZhiBlogMiddleware {
         ) => void)[]
     ) {
         this.logger.info("Http server is staring...")
+        this.port = port
         const server = http.createServer(
             (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>) => {
                 // 定义 middleware 处理函数
                 const allMiddlewares = [
                     ...middlewares,
+                    // DefaultMiddleware
                     (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>, next: () => void) => {
-                        this.logger.debug("Default Middleware 1")
-                        next()
-                    },
-                    (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>, next: () => void) => {
-                        this.logger.debug("DefaultMiddleware 2")
                         next()
                     },
                 ]
 
                 // 定义处理请求的终端函数
                 const finalHandler = (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>) => {
-                    this.logger.debug("Final Handler")
-                    res.end("Hello World")
+                    res.end()
                 }
 
                 // 遍历调用 middleware 处理函数
                 const dispatch = (i: number) => {
+                    // 输出请求日志到文件
+                    const logPath = this.common.siyuanUtil.joinPath(
+                        this.common.siyuanUtil.zhiThemePath(),
+                        "zhi-request.log"
+                    )
+                    const logStream = fs.createWriteStream(logPath, { flags: "a" })
+                    logStream.write(`请求 ${req.url}\n`)
+
                     if (i < allMiddlewares.length) {
                         allMiddlewares[i](req, res, () => dispatch(i + 1))
                     } else {
@@ -77,8 +91,8 @@ class ZhiBlogMiddleware {
             }
         )
         // 监听 3000 端口
-        server.listen(3000, () => {
-            this.logger.info("Http Server started on port.")
+        server.listen(this.port, () => {
+            this.logger.info(this.common.strUtil.f("Http Server started on port {0} .", this.port))
         })
     }
 }

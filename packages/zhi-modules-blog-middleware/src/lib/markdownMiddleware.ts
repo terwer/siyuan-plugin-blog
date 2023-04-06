@@ -24,7 +24,7 @@
  */
 
 import http from "http"
-import ZhiUtil from "../ZhiUtil"
+import sendResponse, { ContentType } from "./handleResponse"
 
 /**
  * Markdown 渲染中间件
@@ -41,8 +41,10 @@ const markdownMiddleware = (
     res: http.ServerResponse<http.IncomingMessage>,
     next: () => void
 ) => {
-    const logger = ZhiUtil.zhiLog("markdown-middleware")
-    logger.debug("This is markdown middleware")
+    const resJson = {
+        name: "terwer",
+    }
+    sendResponse(res, 200, resJson, ContentType.JSON)
     next()
 }
 
