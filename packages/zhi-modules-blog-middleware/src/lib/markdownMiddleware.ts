@@ -23,18 +23,27 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
-import markdownMiddleware from "./markdownMiddleware"
+import http from "http"
+import ZhiUtil from "../ZhiUtil"
 
 /**
- * lib入口，如果是 zhi 模块，此方法必须是 init
+ * Markdown 渲染中间件
  *
+ * @param req - 请求
+ * @param res - 响应
+ * @param next - 下一个
  * @author terwer
  * @version 1.0.0
  * @since 1.0.0
  */
-export async function init(): Promise<string> {
-    const zhiBlogMiddleware = new ZhiBlogMiddleware()
-    await zhiBlogMiddleware.startServer([markdownMiddleware])
-    return "HTTP server started"
+const markdownMiddleware = (
+    req: http.IncomingMessage,
+    res: http.ServerResponse<http.IncomingMessage>,
+    next: () => void
+) => {
+    const logger = ZhiUtil.zhiLog("markdown-middleware")
+    logger.debug("This is markdown middleware")
+    next()
 }
+
+export default markdownMiddleware

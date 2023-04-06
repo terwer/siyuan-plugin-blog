@@ -79,14 +79,18 @@ class ZhiUtil {
                 ZhiUtil.loggerMap[loggerName].debug("Zhi-log use cache.")
             } else {
                 const env = ZhiUtil.zhiEnv()
-                ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName)
+                ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-blog-middleware", env).getLogger(
+                    loggerName
+                )
                 ZhiUtil.loggerMap[loggerName].debug("Zhi-log add new logger.")
             }
         } else {
             // 生成新的日志器
             const env = ZhiUtil.zhiEnv()
             ZhiUtil.loggerMap = {}
-            ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi", env).getLogger(loggerName)
+            ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-blog-middleware", env).getLogger(
+                loggerName
+            )
             ZhiUtil.loggerMap[loggerName].debug("Zhi-log inited.")
         }
 

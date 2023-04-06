@@ -23,8 +23,8 @@
  * questions.
  */
 
-// import express from "express"
 import ZhiUtil from "../ZhiUtil"
+import http from "http"
 
 /**
  * HTTP 服务
@@ -36,15 +36,50 @@ class ZhiBlogMiddleware {
         this.logger = ZhiUtil.zhiLog("zhi-blog-middleware")
     }
 
-    async startServer() {
+    async startServer(
+        middlewares: ((
+            req: http.IncomingMessage,
+            res: http.ServerResponse<http.IncomingMessage>,
+            next: () => void
+        ) => void)[]
+    ) {
         this.logger.info("Http server is staring...")
-        // const app = express()
-        // console.log(app)
-        // app.use(ssrHandler)
+        const server = http.createServer(
+            (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>) => {
+                // 定义 middleware 处理函数
+                const allMiddlewares = [
+                    ...middlewares,
+                    (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>, next: () => void) => {
+                        this.logger.debug("Default Middleware 1")
+                        next()
+                    },
+                    (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>, next: () => void) => {
+                        this.logger.debug("DefaultMiddleware 2")
+                        next()
+                    },
+                ]
 
-        // app.listen(8888)
-        this.logger.info("Http server started.")
-        return []
+                // 定义处理请求的终端函数
+                const finalHandler = (req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage>) => {
+                    this.logger.debug("Final Handler")
+                    res.end("Hello World")
+                }
+
+                // 遍历调用 middleware 处理函数
+                const dispatch = (i: number) => {
+                    if (i < allMiddlewares.length) {
+                        allMiddlewares[i](req, res, () => dispatch(i + 1))
+                    } else {
+                        finalHandler(req, res)
+                    }
+                }
+                dispatch(0)
+            }
+        )
+        // 监听 3000 端口
+        server.listen(3000, () => {
+            this.logger.info("Http Server started on port.")
+        })
     }
 }
 

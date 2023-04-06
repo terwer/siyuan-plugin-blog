@@ -6,8 +6,6 @@ import dts from "vite-plugin-dts"
 import { join } from "path"
 import builtinModules from "builtin-modules"
 
-const externalPackages = [...builtinModules]
-
 export default defineConfig({
     cacheDir: "../../node_modules/.vite/zhi-modules-blog-middleware",
 
@@ -46,7 +44,7 @@ export default defineConfig({
         },
         rollupOptions: {
             // External packages that should not be bundled into your library.
-            external: [...externalPackages],
+            external: [...builtinModules],
         },
         minify: false,
     },
