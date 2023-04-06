@@ -8,8 +8,8 @@ export default defineConfig({
     // https://docs.astro.build/en/guides/integrations-guide/vercel/
     // https://docs.astro.build/en/guides/integrations-guide/node/#standalone
     adapter: node({
-        mode: "standalone"
+        // mode: "standalone"
         // middleware 可配合express
-        // mode: "middleware",
+        mode: "middleware",
     }),
 })
