@@ -42,20 +42,20 @@ class HttpService {
      */
     async initHttpService(): Promise<DependencyItem[]> {
         return [
-            // blogMiddlewareDepItem
-            {
-                format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
-                importType: "require",
-                runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            },
-            // blogMiddlewareWebDepItem
-            {
-                format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
-                importType: "import",
-                runAs: DeviceType.DeviceType_Chrome_Browser,
-            },
+            // // blogMiddlewareDepItem
+            // {
+            //     format: "cjs",
+            //     libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
+            //     importType: "require",
+            //     runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            // },
+            // // blogMiddlewareWebDepItem
+            // {
+            //     format: "cjs",
+            //     libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
+            //     importType: "import",
+            //     runAs: DeviceType.DeviceType_Chrome_Browser,
+            // },
         ]
     }
 }
