@@ -41,7 +41,7 @@ nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi
 nx generate @nrwl/js:library zhi-modules-blog-middleware --publishable --importPath=zhi-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
 
 ## zhi-modules-web
-nx generate @nrwl/js:library zhi-modules-blog-middleware-web --publishable --importPath=zhi-modules-blog-middleware-web --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-web-modules-blog-middleware --publishable --importPath=zhi-web-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
 
 ## node library
 #nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware

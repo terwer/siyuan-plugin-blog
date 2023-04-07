@@ -112,6 +112,17 @@ class Zhi {
                 return
             }
 
+            // 设置依赖路径，hack require保证require能使用自定义路径的node_modules
+            if (this.common.browserUtil.isElectron()) {
+                const zhiNodeModulesPath = this.common.siyuanUtil.joinPath(
+                    this.common.siyuanUtil.zhiThemePath(),
+                    "node_modules"
+                )
+                this.logger.info("Init zhi node_modules from => ", zhiNodeModulesPath)
+                this.common.siyuanUtil.siyuanWindow().require.setExternalDeps(zhiNodeModulesPath)
+                this.logger.info("Zhi node_modules inited.")
+            }
+
             // 初始化第三方依赖
             const dynamicImports = await this.main([])
             for (const item of dynamicImports) {

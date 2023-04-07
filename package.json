@@ -4,6 +4,7 @@
     "license": "GPL",
     "scripts": {
         "build": "nx run-many --target=build --exclude=zhi-docs",
+        "zhi-build": "nx run-many --target=zhi-build --exclude=zhi-docs",
         "test": "nx run-many --target=test --exclude=zhi-docs",
         "lint": "nx run-many --target=lint --exclude=zhi-docs",
         "serve": "nx serve <project>",

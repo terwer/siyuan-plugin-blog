@@ -27,8 +27,9 @@
 import { defineConfig, loadEnv } from "vite"
 
 import viteTsConfigPaths from "vite-tsconfig-paths"
-import dts from "vite-plugin-dts"
+// import dts from "vite-plugin-dts"
 import { join } from "path"
+import builtinModules from "builtin-modules"
 
 const mode = process.env["NODE_ENV"] ?? "production"
 const zhiBase = join(process.cwd(), "packages", "zhi")
@@ -106,17 +107,7 @@ export default defineConfig({
                 },
             },
             // External packages that should not be bundled into your library.
-            external: [
-                "fs",
-                "path",
-                "tls",
-                "node:perf_hooks",
-                "node:stream/web",
-                "node:timers",
-                "stream",
-                "https",
-                "url",
-            ],
+            external: ["express", ...builtinModules],
         },
         minify: false,
     },

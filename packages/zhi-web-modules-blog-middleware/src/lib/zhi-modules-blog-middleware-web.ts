@@ -31,5 +31,5 @@
  * @since 1.0.0
  */
 export function init(): string {
-    return "zhi-modules-blog-middleware-web"
+    return "zhi-web-modules-blog-middleware"
 }

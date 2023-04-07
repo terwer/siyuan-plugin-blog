@@ -25,22 +25,13 @@
 
 import Zhi from "./lib/zhi"
 import ZhiUtil from "./ZhiUtil"
-import "./lib/util/requireHacker.js"
+import "./lib/util/requireHacker"
 
 /**
- * 主题唯一入口，由思源笔记自动调用
+ * 主题入口，由思源笔记自动调用
  */
 ;(async () => {
-    const logger = ZhiUtil.zhiLog("zhi")
     const common = ZhiUtil.zhiCommon()
-
-    // hack require保证require能使用自定义路径的node_modules
-    const zhiNodeModulesPath = common.siyuanUtil.joinPath(common.siyuanUtil.zhiThemePath(), "node_modules")
-    logger.info("Init zhi node_modules from => ", zhiNodeModulesPath)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    require.setExternalDeps(zhiNodeModulesPath)
-    logger.info("Zhi node_modules inited.")
 
     const zhi = new Zhi(common.deviceUtil.getDevice())
     await zhi.init()

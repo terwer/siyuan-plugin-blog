@@ -52,7 +52,7 @@ class HttpService {
             // blogMiddlewareWebDepItem
             {
                 format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("modules-web", "blog-middleware", "index.mjs"),
+                libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
                 importType: "import",
                 runAs: DeviceType.DeviceType_Chrome_Browser,
             },

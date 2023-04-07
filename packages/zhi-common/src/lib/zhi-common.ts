@@ -27,7 +27,8 @@ import DateUtil from "./dateUtil"
 import StrUtil from "./strUtil"
 import DeviceUtil from "./deviceUtil"
 import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil";
+import VersionUtil from "./versionUtil"
+import BrowserUtil from "./browserUtil"
 
 /**
  * 平台无关的通用工具类
@@ -36,19 +37,21 @@ import VersionUtil from "./versionUtil";
  * @since 1.3.0
  */
 class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly deviceUtil
-  public readonly siyuanUtil
-  public readonly versionUtil
+    public readonly dateUtil
+    public readonly strUtil
+    public readonly deviceUtil
+    public readonly siyuanUtil
+    public readonly versionUtil
+    public readonly browserUtil
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.deviceUtil = DeviceUtil
-    this.siyuanUtil = new SiyuanUtil()
-    this.versionUtil = new VersionUtil()
-  }
+    constructor() {
+        this.dateUtil = new DateUtil()
+        this.strUtil = new StrUtil()
+        this.deviceUtil = DeviceUtil
+        this.siyuanUtil = new SiyuanUtil()
+        this.versionUtil = new VersionUtil()
+        this.browserUtil = BrowserUtil
+    }
 }
 
 export default ZhiCommon

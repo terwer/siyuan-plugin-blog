@@ -67,7 +67,7 @@
         },
         "zhi-build": {
             "dependsOn": ["build"],
-            "command": "cp -r dist/packages/zhi-blog/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/modules/blog && echo 'dist copy success'"
+            "command": "cp -r dist/packages/zhi-blog/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/modules/blog && echo 'zhi-blog dist copy success'"
         }
     },
     "tags": []
