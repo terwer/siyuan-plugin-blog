@@ -54,8 +54,7 @@ nx generate @nrwl/web:app zhi-blog-ssr --bundler=vite --unitTestRunner=vitest
 
 ## node app
 https://nx.dev/packages/node/generators/application
-## nx generate @nrwl/node:app zhi-theme --bundler=esbuild --unitTestRunner=none --dry-run
-nx g @nrwl/node:application zhi-blog --bundler=webpack --framework=express --docker=true --dry-run
+nx g @nrwl/node:application zhi-blog --bundler=webpack --framework=express --docker=true
 
 ## docs
 ## pnpm install @nx-plus/docusaurus --save-dev
