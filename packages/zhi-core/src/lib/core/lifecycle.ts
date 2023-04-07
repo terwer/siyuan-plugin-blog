@@ -25,8 +25,8 @@
 
 import DependencyItem from "../models/DependencyItem"
 import PluginSystem from "./plugin-system"
-import HttpService from "../modules/http-service"
 import BlogEntry from "../modules/blog"
+import WebBlogEntry from "../web-modules/blog"
 
 /**
  * zhi主题统一生命周期管理
@@ -36,15 +36,15 @@ import BlogEntry from "../modules/blog"
  */
 class Lifecycle {
     private pluginSystem
-    private httpService
     private blogEntry
+    private webBlogEntry
 
     private _dynamicImports = <DependencyItem[]>[]
 
     constructor() {
         this.pluginSystem = new PluginSystem()
-        this.httpService = new HttpService()
         this.blogEntry = new BlogEntry()
+        this.webBlogEntry = new WebBlogEntry()
     }
 
     get dynamicImports(): DependencyItem[] {
@@ -91,13 +91,13 @@ class Lifecycle {
         // const fontAwesomeImports = fontAwesome.initFontAwesome()
         // vendorImports = vendorImports.concat(fontAwesomeImports)
 
-        // express 服务
-        const httpServiceImports = await this.httpService.initHttpService()
-        vendorImports = vendorImports.concat(httpServiceImports)
-
         // blog
         const blogImports = await this.blogEntry.initBlog()
         vendorImports = vendorImports.concat(blogImports)
+
+        // webBlog
+        const webBlogImports = await this.webBlogEntry.initWebBlog()
+        vendorImports = vendorImports.concat(webBlogImports)
         return vendorImports
     }
 }

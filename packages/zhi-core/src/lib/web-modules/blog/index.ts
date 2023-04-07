@@ -24,13 +24,9 @@
  */
 
 import DependencyItem from "../../models/DependencyItem"
-import { DeviceType } from "zhi-common"
 import ZhiUtil from "../../core/util/ZhiUtil"
 
-/**
- * 主题的 HTTP 服务
- */
-class HttpService {
+class WebBlogEntry {
     private readonly common
 
     constructor() {
@@ -38,26 +34,15 @@ class HttpService {
     }
 
     /**
-     * 初始化 HTTP 服务
+     * 初始化 blog 入口
      */
-    async initHttpService(): Promise<DependencyItem[]> {
+    async initWebBlog(): Promise<DependencyItem[]> {
         return [
-            // // blogMiddlewareDepItem
-            // {
-            //     format: "cjs",
-            //     libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
-            //     importType: "require",
-            //     runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            // },
-            // // blogMiddlewareWebDepItem
-            // {
-            //     format: "cjs",
-            //     libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
-            //     importType: "import",
-            //     runAs: DeviceType.DeviceType_Chrome_Browser,
-            // },
+            // blogDepItem
+            // Web博客采用Vue+SPA方案，无需后端支持，但是SEO不好，建议不考虑SEO的情况下用
+            // 这里还是留个口子，如果后面需要加载后端可以在这里写
         ]
     }
 }
 
-export default HttpService
+export default WebBlogEntry

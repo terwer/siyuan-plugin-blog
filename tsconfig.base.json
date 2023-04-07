@@ -9,7 +9,6 @@
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
-        // https://github.com/nrwl/nx/issues/2625#issuecomment-789243643
         "importHelpers": false,
         "target": "esnext",
         "module": "esnext",
