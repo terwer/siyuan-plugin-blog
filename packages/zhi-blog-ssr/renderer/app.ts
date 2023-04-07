@@ -23,29 +23,32 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
-import markdownMiddleware from "./markdownMiddleware"
-import ZhiUtil from "../ZhiUtil"
+import { createSSRApp, defineComponent, h } from "vue"
+import PageShell from "./PageShell.vue"
+import { setPageContext } from "./usePageContext"
+import type { Component, PageContext, PageProps } from "./types"
 
-/**
- * lib入口，如果是 zhi 模块，此方法必须是 init
- *
- * @param port - 端口
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export async function init(port?: number): Promise<string> {
-    const logger = ZhiUtil.zhiLog("init-blog-middleware")
-    const common = ZhiUtil.zhiCommon()
-    const p = port ?? 3000
-    try {
-        logger.warn("HTTP server is disabled")
-        // const zhiBlogMiddleware = new ZhiBlogMiddleware()
-        // await zhiBlogMiddleware.startServer(p, [markdownMiddleware])
-    } catch (e) {
-        logger.error(common.strUtil.f("HTTP server init failed at {0}!Some function may not work", p), e)
-    }
+export { createApp }
 
-    return "HTTP server started"
+function createApp(Page: Component, pageProps: PageProps | undefined, pageContext: PageContext) {
+    const PageWithLayout = defineComponent({
+        render() {
+            return h(
+                PageShell,
+                {},
+                {
+                    default() {
+                        return h(Page, pageProps || {})
+                    },
+                }
+            )
+        },
+    })
+
+    const app = createSSRApp(PageWithLayout)
+
+    // Make pageContext available from any Vue component
+    setPageContext(app, pageContext)
+
+    return app
 }

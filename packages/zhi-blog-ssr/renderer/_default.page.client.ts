@@ -23,29 +23,19 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
-import markdownMiddleware from "./markdownMiddleware"
-import ZhiUtil from "../ZhiUtil"
+export { render }
 
-/**
- * lib入口，如果是 zhi 模块，此方法必须是 init
- *
- * @param port - 端口
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export async function init(port?: number): Promise<string> {
-    const logger = ZhiUtil.zhiLog("init-blog-middleware")
-    const common = ZhiUtil.zhiCommon()
-    const p = port ?? 3000
-    try {
-        logger.warn("HTTP server is disabled")
-        // const zhiBlogMiddleware = new ZhiBlogMiddleware()
-        // await zhiBlogMiddleware.startServer(p, [markdownMiddleware])
-    } catch (e) {
-        logger.error(common.strUtil.f("HTTP server init failed at {0}!Some function may not work", p), e)
-    }
+import { createApp } from "./app"
+import type { PageContextClient } from "./types"
 
-    return "HTTP server started"
+// This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
+async function render(pageContext: PageContextClient) {
+    const { Page, pageProps } = pageContext
+    if (!Page) throw new Error("Client-side render() hook expects pageContext.Page to be defined")
+    const app = createApp(Page, pageProps, pageContext)
+    app.mount("#app")
 }
+
+/* To enable Client-side Routing:
+export const clientRouting = true
+// !! WARNING !! Before doing so, read https://vite-plugin-ssr.com/clientRouting */

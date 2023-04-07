@@ -9,7 +9,7 @@
             "!{projectRoot}/tsconfig.spec.json",
             "!{projectRoot}/.eslintrc.json"
         ],
-        "sharedGlobals": []
+        "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
     },
     "targetDefaults": {
         "build": {
@@ -42,5 +42,18 @@
             }
         }
     },
-    "defaultProject": "zhi"
+    "defaultProject": "zhi",
+    "generators": {
+        "@nrwl/web:application": {
+            "style": "styl",
+            "linter": "eslint",
+            "unitTestRunner": "vitest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/web:library": {
+            "style": "styl",
+            "linter": "eslint",
+            "unitTestRunner": "vitest"
+        }
+    }
 }

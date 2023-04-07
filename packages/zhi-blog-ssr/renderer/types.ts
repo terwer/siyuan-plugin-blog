@@ -23,29 +23,41 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
-import markdownMiddleware from "./markdownMiddleware"
-import ZhiUtil from "../ZhiUtil"
+export type { PageContextServer }
+export type { PageContextClient }
+export type { PageContext }
+export type { PageProps }
+export type { Component }
 
-/**
- * lib入口，如果是 zhi 模块，此方法必须是 init
- *
- * @param port - 端口
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export async function init(port?: number): Promise<string> {
-    const logger = ZhiUtil.zhiLog("init-blog-middleware")
-    const common = ZhiUtil.zhiCommon()
-    const p = port ?? 3000
-    try {
-        logger.warn("HTTP server is disabled")
-        // const zhiBlogMiddleware = new ZhiBlogMiddleware()
-        // await zhiBlogMiddleware.startServer(p, [markdownMiddleware])
-    } catch (e) {
-        logger.error(common.strUtil.f("HTTP server init failed at {0}!Some function may not work", p), e)
+import type {
+    PageContextBuiltIn,
+    /*
+    // When using Client Routing https://vite-plugin-ssr.com/clientRouting
+    PageContextBuiltInClientWithClientRouting as PageContextBuiltInClient
+    /*/
+    // When using Server Routing
+    PageContextBuiltInClientWithServerRouting as PageContextBuiltInClient,
+    //*/
+} from "vite-plugin-ssr/types"
+import type { ComponentPublicInstance } from "vue"
+
+type Component = ComponentPublicInstance // https://stackoverflow.com/questions/63985658/how-to-type-vue-instance-out-of-definecomponent-in-vue-3/63986086#63986086
+type Page = Component
+type PageProps = object
+
+export type PageContextCustom = {
+    Page: Page
+    pageProps?: PageProps
+    urlPathname: string
+    exports: {
+        documentProps?: {
+            title?: string
+            description?: string
+        }
     }
-
-    return "HTTP server started"
 }
+
+type PageContextServer = PageContextBuiltIn<Page> & PageContextCustom
+type PageContextClient = PageContextBuiltInClient<Page> & PageContextCustom
+
+type PageContext = PageContextClient | PageContextServer

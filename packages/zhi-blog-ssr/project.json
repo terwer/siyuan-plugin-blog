@@ -1,0 +1,72 @@
+{
+    "name": "zhi-blog-ssr",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "packages/zhi-blog-ssr/src",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nrwl/vite:build",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "outputPath": "dist/packages/zhi-blog-ssr"
+            },
+            "configurations": {
+                "development": {
+                    "mode": "development"
+                },
+                "production": {
+                    "mode": "production"
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/vite:dev-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "zhi-blog-ssr:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "zhi-blog-ssr:build:development",
+                    "hmr": true
+                },
+                "production": {
+                    "buildTarget": "zhi-blog-ssr:build:production",
+                    "hmr": false
+                }
+            }
+        },
+        "preview": {
+            "executor": "@nrwl/vite:preview-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "zhi-blog-ssr:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "zhi-blog-ssr:build:development"
+                },
+                "production": {
+                    "buildTarget": "zhi-blog-ssr:build:production"
+                }
+            }
+        },
+        "test": {
+            "executor": "@nrwl/vite:test",
+            "outputs": ["coverage/packages/zhi-blog-ssr"],
+            "options": {
+                "passWithNoTests": true,
+                "reportsDirectory": "../../coverage/packages/zhi-blog-ssr"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/zhi-blog-ssr/**/*.ts"]
+            }
+        },
+    }
+}

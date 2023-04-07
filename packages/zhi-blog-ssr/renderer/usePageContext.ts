@@ -23,29 +23,24 @@
  * questions.
  */
 
-import ZhiBlogMiddleware from "./zhi-blog-middleware"
-import markdownMiddleware from "./markdownMiddleware"
-import ZhiUtil from "../ZhiUtil"
+// `usePageContext` allows us to access `pageContext` in any Vue component.
+// See https://vite-plugin-ssr.com/pageContext-anywhere
 
-/**
- * lib入口，如果是 zhi 模块，此方法必须是 init
- *
- * @param port - 端口
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export async function init(port?: number): Promise<string> {
-    const logger = ZhiUtil.zhiLog("init-blog-middleware")
-    const common = ZhiUtil.zhiCommon()
-    const p = port ?? 3000
-    try {
-        logger.warn("HTTP server is disabled")
-        // const zhiBlogMiddleware = new ZhiBlogMiddleware()
-        // await zhiBlogMiddleware.startServer(p, [markdownMiddleware])
-    } catch (e) {
-        logger.error(common.strUtil.f("HTTP server init failed at {0}!Some function may not work", p), e)
-    }
+import { inject } from "vue"
+import type { App, InjectionKey } from "vue"
+import { PageContext } from "./types"
 
-    return "HTTP server started"
+export { usePageContext }
+export { setPageContext }
+
+const key: InjectionKey<PageContext> = Symbol()
+
+function usePageContext() {
+    const pageContext = inject(key)
+    if (!pageContext) throw new Error("setPageContext() not called in parent")
+    return pageContext
+}
+
+function setPageContext(app: App, pageContext: PageContext) {
+    app.provide(key, pageContext)
 }

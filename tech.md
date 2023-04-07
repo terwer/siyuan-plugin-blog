@@ -49,11 +49,13 @@ nx generate @nrwl/js:library zhi-modules-blog-middleware-web --publishable --imp
 
 ## web app
 ## zhi-blog, zhi-blog-astro
-## nx generate @nrwl/web:app zhi-blog --bundler=vite
+nx generate @nrwl/web:app zhi-blog-ssr --bundler=vite --unitTestRunner=vitest
 ## nx generate @nrwl/react:app zhi-blog --bundler=vite --dry-run
 
 ## node app
+https://nx.dev/packages/node/generators/application
 ## nx generate @nrwl/node:app zhi-theme --bundler=esbuild --unitTestRunner=none --dry-run
+nx g @nrwl/node:application zhi-blog --bundler=webpack --framework=express --docker=true --dry-run
 
 ## docs
 ## pnpm install @nx-plus/docusaurus --save-dev
