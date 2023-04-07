@@ -23,35 +23,31 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import DependencyItem from "../../models/DependencyItem"
+import { DeviceType } from "zhi-common"
+import ZhiUtil from "../../core/util/ZhiUtil"
 
-/**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @since 1.3.0
- */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+class BlogEntry {
+    private readonly common
 
     constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
+        this.common = ZhiUtil.zhiCommon()
+    }
+
+    /**
+     * 初始化 blog 入口
+     */
+    async initBlog(): Promise<DependencyItem[]> {
+        return [
+            // blogDepItem
+            {
+                format: "esm",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
+                importType: "import",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+        ]
     }
 }
 
-export default ZhiCommon
+export default BlogEntry

@@ -4,6 +4,13 @@
     "projectType": "application",
     "sourceRoot": "packages/zhi-vuepress1-to-vuepress2/zhi_vuepress1_to_vuepress2",
     "targets": {
+        "install-poetry": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "curl -sSL https://install.python-poetry.org | python3 -",
+                "cwd": "packages/zhi-vuepress1-to-vuepress2"
+            }
+        },
         "docs": {
             "executor": "nx:run-commands",
             "options": {
@@ -31,6 +38,7 @@
             "options": {}
         },
         "build": {
+            "dependsOn": ["install-poetry"],
             "executor": "@nxlv/python:build",
             "outputs": [
                 "{options.outputPath}"

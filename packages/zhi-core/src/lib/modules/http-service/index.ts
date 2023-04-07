@@ -23,35 +23,41 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import DependencyItem from "../../models/DependencyItem"
+import { DeviceType } from "zhi-common"
+import ZhiUtil from "../../core/util/ZhiUtil"
 
 /**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @since 1.3.0
+ * 主题的 HTTP 服务
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+class HttpService {
+    private readonly common
 
     constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
+        this.common = ZhiUtil.zhiCommon()
+    }
+
+    /**
+     * 初始化 HTTP 服务
+     */
+    async initHttpService(): Promise<DependencyItem[]> {
+        return [
+            // blogMiddlewareDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
+                importType: "require",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+            // blogMiddlewareWebDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
+                importType: "import",
+                runAs: DeviceType.DeviceType_Chrome_Browser,
+            },
+        ]
     }
 }
 
-export default ZhiCommon
+export default HttpService

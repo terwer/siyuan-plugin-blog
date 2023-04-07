@@ -22,36 +22,8 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
-
-/**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @since 1.3.0
- */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
-
-    constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
-    }
-}
-
-export default ZhiCommon
+describe("zhi", () => {
+    it("should work", () => {
+        console.log("hello")
+    })
+})

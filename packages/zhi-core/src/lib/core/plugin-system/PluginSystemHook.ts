@@ -23,35 +23,50 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import ZhiUtil from "../util/ZhiUtil"
+import PluginSystemHack from "./PluginSystemHack"
 
 /**
- * 平台无关的通用工具类
+ * 插件系统入口
  *
  * @author terwer
- * @since 1.3.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+class PluginSystemHook {
+    private readonly logger
+    private readonly hack
 
     constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
+        this.logger = ZhiUtil.zhiLog("plugin-system-hook")
+
+        this.hack = new PluginSystemHack()
+    }
+
+    /**
+     * 插件系统初始化
+     */
+    public async init() {
+        const sys = await this.hack.initPluginSystem()
+        if (!sys) {
+            this.logger.error("Plugin system init error, some feature may not work!")
+            return
+        }
+
+        // 同步插件
+        await this.syncZhiPlugins(sys)
+        this.logger.info("PluginSystem inited.")
+    }
+
+    /**
+     * 同步插件到插件目录
+     *
+     * @param p - 插件对象
+     */
+    private async syncZhiPlugins(p: any) {
+        this.logger.info("Start syncing zhi plugins ...")
+
+        // TODO
     }
 }
 
-export default ZhiCommon
+export default PluginSystemHook

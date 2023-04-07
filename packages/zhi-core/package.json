@@ -1,0 +1,19 @@
+{
+    "name": "zhi",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "a pluggable siyuan-note theme",
+    "repository": "terwer/zhi",
+    "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-core",
+    "author": "terwer",
+    "license": "GPL",
+    "keywords": [
+        "zhi",
+        "zhi-core",
+        "siyuan-note",
+        "theme"
+    ],
+    "dependencies": {
+        "express": "^4.18.2"
+    }
+}

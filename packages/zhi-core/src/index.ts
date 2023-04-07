@@ -23,35 +23,25 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import Zhi from "./lib/zhi"
+import ZhiUtil from "./lib/core/util/ZhiUtil"
 
 /**
- * 平台无关的通用工具类
+ * 仅仅提供Mock功能，请勿调用
+ *
+ * 主题使用的是 `theme.ts`
  *
  * @author terwer
- * @since 1.3.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+class MockTheme{
+  public async loadTheme(){
+    const common = ZhiUtil.zhiCommon()
 
-    constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
-    }
+    const zhi = new Zhi(common.deviceUtil.getDevice())
+    await zhi.init()
+  }
 }
 
-export default ZhiCommon
+export default MockTheme

@@ -7,9 +7,9 @@
             "default",
             "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
             "!{projectRoot}/tsconfig.spec.json",
-            "!{projectRoot}/.eslintrc.json"
+            "!{projectRoot}/.eslintrc.json",
         ],
-        "sharedGlobals": []
+        "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
     },
     "targetDefaults": {
         "build": {
@@ -42,5 +42,18 @@
             }
         }
     },
-    "defaultProject": "zhi-static-blog-astro"
+    "defaultProject": "zhi-core",
+    "generators": {
+        "@nrwl/web:application": {
+            "style": "styl",
+            "linter": "eslint",
+            "unitTestRunner": "vitest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/web:library": {
+            "style": "styl",
+            "linter": "eslint",
+            "unitTestRunner": "vitest"
+        }
+    }
 }

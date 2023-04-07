@@ -31,37 +31,37 @@ Note: `zhi` theme only supports siyuan-note `2.7.6+`, or you must upgrade siyuan
 
 ## Design Philosophy
 
-- The theme core should be kept lightweight and compact as much as possible.
-- Plugins should be used as much as possible to implement functions.
-- Plugin functions should be single-purpose to avoid brainless accumulation of functions.
-- Components should be kept as reusable as possible.
+-   The theme core should be kept lightweight and compact as much as possible.
+-   Plugins should be used as much as possible to implement functions.
+-   Plugin functions should be single-purpose to avoid brainless accumulation of functions.
+-   Components should be kept as reusable as possible.
 
 ## Core Features
 
 The theme is inspired by `Zhihu` but not limited to its style. The appearance optimization includes but is not limited
 to:
 
-- Font style beautification, using `Open Sans` for English and `LXGW WenKai` for Chinese
-- Background color optimization, overall layout and spacing optimization
-- Code block beautification, similar to the Mac window style
-- It natively supports the plugin system and comes with many built-in plugins. The plugin system is supported by
-  community developers.
-  - SourceNote publishing tool plugin
-  - Document image background automatic transparency plugin
-  - Blog plugin
-- It can handle both the theme and the preview. Installing the zhi theme is equivalent to installing an additional
-  plugin system and an online blog.
-  - Blog homepage: http://127.0.0.1:6806/appearance/themes/zhi/blog/
-  - Widget version of the blog management and publishing
-    homepage: http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
+-   Font style beautification, using `Open Sans` for English and `LXGW WenKai` for Chinese
+-   Background color optimization, overall layout and spacing optimization
+-   Code block beautification, similar to the Mac window style
+-   It natively supports the plugin system and comes with many built-in plugins. The plugin system is supported by
+    community developers.
+    -   SourceNote publishing tool plugin
+    -   Document image background automatic transparency plugin
+    -   Blog plugin
+-   It can handle both the theme and the preview. Installing the zhi theme is equivalent to installing an additional
+    plugin system and an online blog.
+    -   Blog homepage: http://127.0.0.1:6806/appearance/themes/zhi/blog/
+    -   Widget version of the blog management and publishing
+        homepage: http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
 
 > Note: 🌹 The plugin system is provided by enthusiastic community developers. Please understand the relevant mechanisms in
 > detail before using.
 
 ## Version Planning
 
-- 1.1.x
-  - [ ] Blog permission control
+-   1.1.x
+    -   [ ] Blog permission control
 
 ## Project Structure
 
@@ -80,10 +80,9 @@ to:
 ```
 
 > Special Note:
-> 
-> - The theme will be automatically detected and extracted to the corresponding directory based on the version number.
-> - After releasing a new version, the previous version will be deleted.
-
+>
+> -   The theme will be automatically detected and extracted to the corresponding directory based on the version number.
+> -   After releasing a new version, the previous version will be deleted.
 
 ## Technical Roadmap
 

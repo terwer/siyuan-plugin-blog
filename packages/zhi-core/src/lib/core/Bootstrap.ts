@@ -23,35 +23,29 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import Lifecycle from "./lifecycle"
+import DependencyItem from "../models/DependencyItem"
 
 /**
- * 平台无关的通用工具类
+ * zhi主题唯一激活入口
  *
  * @author terwer
- * @since 1.3.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+class Bootstrap {
+    private static lifecycle: Lifecycle
 
-    constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
+    static {
+        Bootstrap.lifecycle = new Lifecycle()
+    }
+
+    /**
+     * 主题激活
+     */
+    public static async start(): Promise<DependencyItem[]> {
+        await Bootstrap.lifecycle.load()
+        return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
     }
 }
 
-export default ZhiCommon
+export default Bootstrap

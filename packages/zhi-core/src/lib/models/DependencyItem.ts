@@ -23,35 +23,27 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import { DeviceType } from "zhi-common";
 
 /**
- * 平台无关的通用工具类
+ * 依赖项类型定义
  *
  * @author terwer
- * @since 1.3.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+class DependencyItem {
+    libpath: string
+    format: "cjs" | "esm" | "js"
+    importType: "require" | "import"
+    // "browser" | "node" | "electron" | "both"
+    runAs: DeviceType
 
     constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
+        this.libpath = ""
+        this.format = "cjs"
+        this.importType = "require"
+        this.runAs = DeviceType.DeviceType_Node
     }
 }
 
-export default ZhiCommon
+export default DependencyItem

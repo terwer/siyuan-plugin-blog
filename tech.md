@@ -16,19 +16,16 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 
 ```bash
 ## project
-npx create-nx-workspace zhi --package-manager=pnpm --preset=ts 
+npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ```
 
 ## Init
 
 ```bash
-## js library
-## zhi-env, zhi-log
-nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env
-
-## js Vite
-## zhi-cli, zhi-theme, zhi-plugins
+## core library
 ## https://nx.dev/packages/vite
+nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
@@ -40,17 +37,24 @@ nx generate @nrwl/js:library zhi-plugin-publisher --publishable --importPath=zhi
 nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zhi-plugin-code-block --bundler=vite --unitTestRunner=vitest
 nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi-plugin-siyuan2md --bundler=vite --unitTestRunner=vitest
 
+## zhi-modules
+nx generate @nrwl/js:library zhi-modules-blog-middleware --publishable --importPath=zhi-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
+
+## zhi-modules-web
+nx generate @nrwl/js:library zhi-web-modules-blog-middleware --publishable --importPath=zhi-web-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
+
 ## node library
-## nx generate @nrwl/node:library zhi-cli --publishable --importPath=zhi-cli --unitTestRunner=none
+#nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware
+#nx generate @nrwl/js:lib zhi-blog-middleware-esbuild --publishable --importPath=zhi-blog-middleware-esbuild --bundler=esbuild
 
 ## web app
 ## zhi-blog, zhi-blog-astro
-## nx generate @nrwl/web:app zhi-blog --bundler=vite
-## nx generate @nrwl/web:app zhi-blog-astro --bundler=vite
+nx generate @nrwl/web:app zhi-blog-ssr --bundler=vite --unitTestRunner=vitest
 ## nx generate @nrwl/react:app zhi-blog --bundler=vite --dry-run
 
 ## node app
-## nx generate @nrwl/node:app zhi-theme --bundler=esbuild --unitTestRunner=none --dry-run
+https://nx.dev/packages/node/generators/application
+nx g @nrwl/node:application zhi-blog --bundler=webpack --framework=express --docker=true
 
 ## docs
 ## pnpm install @nx-plus/docusaurus --save-dev
@@ -85,6 +89,7 @@ nx generate @nx-plus/docusaurus:app zhi-docs
 ## pnpm install -D @nxtensions/astro
 ## nx migrate @nxtensions/astro@latest
 nx generate @nxtensions/astro:app zhi-static-blog-astro
+nx generate @nxtensions/astro:app zhi-blog-astro
 ## nx generate @nxtensions/astro:lib my-lib
 ## nx generate @nxtensions/astro:component my-component
 ## nx dev my-app
@@ -93,12 +98,13 @@ nx generate @nxtensions/astro:app zhi-static-blog-astro
 ## python
 ## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
 ## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
-pnpm install @nxlv/python --save-dev
-npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 \
---type application \
---description='zhi-vuepress1-to-vuepress2' \
---packageName=zhi-vuepress1-to-vuepress2 \
---moduleName=zhi_vuepress1_to_vuepress2
+## pnpm install @nxlv/python --save-dev
+npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
+
+## rollup
+## https://nx.dev/packages/js/generators/library#bundler
+## https://github.com/nrwl/nx/issues/2212#issuecomment-894064983
+## nx generate @nrwl/js:lib zhi-blog-middleware-rollup --publishable --importPath=zhi-blog-middleware-rollup --bundler=rollup
 ```
 
 ## Setup
@@ -145,55 +151,56 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 ### Series Ecology
 
-* [zhi](https://github.com/terwer/zhi)
+-   [zhi](https://github.com/terwer/zhi)
 
-* [zhi-cli](https://github.com/terwer/zhi-cli)
+-   [zhi-cli](https://github.com/terwer/zhi-cli)
 
-* [zhi-sdk](https://github.com/terwer/zhi-sdk)
-  * [zhi-env](https://github.com/terwer/zhi-env)
-  * [zhi-log](https://github.com/terwer/zhi-log)
-  * zhi-core - event, schedule
-  * [zhi-common](https://github.com/terwer/zhi-common) - utils
-  * zhi-blog-api
-    * zhi-common-blog-api
-      * zhi-yuque-api
-      * zhi-liandi-api
-      * zhi-wechat-api
-    * zhi-metaweblog-api
-      * zhi-cnblogs-api
-      * zhi-wordpress-api
-    * zhi-siyuan-api
-  * zhi-electron - electron only api
-  * zhi-web - browser only api
-  * zhi-node - node only api
-  * zhi-mobile - mobile only api
+-   [zhi-sdk](https://github.com/terwer/zhi-sdk)
 
-* [zhi-mini](https://github.com/terwer/zhi-mini)
-* [zhi-blog](https://github.com/terwer/zhi-blog)
-* [zhi-blog-astro](https://github.com/terwer/zhi-blog-astro)
+    -   [zhi-env](https://github.com/terwer/zhi-env)
+    -   [zhi-log](https://github.com/terwer/zhi-log)
+    -   zhi-core - event, schedule
+    -   [zhi-common](https://github.com/terwer/zhi-common) - utils
+    -   zhi-blog-api
+        -   zhi-common-blog-api
+            -   zhi-yuque-api
+            -   zhi-liandi-api
+            -   zhi-wechat-api
+        -   zhi-metaweblog-api
+            -   zhi-cnblogs-api
+            -   zhi-wordpress-api
+        -   zhi-siyuan-api
+    -   zhi-electron - electron only api
+    -   zhi-web - browser only api
+    -   zhi-node - node only api
+    -   zhi-mobile - mobile only api
+
+-   [zhi-mini](https://github.com/terwer/zhi-mini)
+-   [zhi-blog](https://github.com/terwer/zhi-blog)
+-   [zhi-blog-astro](https://github.com/terwer/zhi-blog-astro)
 
 ### Core Framework
 
-- Infrastructure: [zhi-env](https://github.com/terwer/zhi-env) + [zhi-log](https://github.com/terwer/zhi-log)
-- Scaffold(zhi-cli): [zhi-cli](https://github.com/terwer/zhi-cli)
-- SDK (zhi-sdk): [zhi-sdk](https://github.com/terwer/zhi-sdk)
-- Theme (zhi-mini): [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
-- Dynamic Blog (zhi-blog): [Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
-- Static Blog (zhi-blog-astro): [Astro](https://astro.build/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+-   Infrastructure: [zhi-env](https://github.com/terwer/zhi-env) + [zhi-log](https://github.com/terwer/zhi-log)
+-   Scaffold(zhi-cli): [zhi-cli](https://github.com/terwer/zhi-cli)
+-   SDK (zhi-sdk): [zhi-sdk](https://github.com/terwer/zhi-sdk)
+-   Theme (zhi-mini): [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Stylus](https://stylus-lang.com/)
+-   Dynamic Blog (zhi-blog): [Nuxt framework](https://nuxt.com/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
+-   Static Blog (zhi-blog-astro): [Astro](https://astro.build/) + [Vue3](https://vuejs.org/) + [Stylus](https://stylus-lang.com/)
 
 The dependency relationship is as follows:
 
-* zhi-sdk
-  * zhi-core
-  * zhi-log
-    * zhi-env
-  * zhi-common
-* zhi-mini
-  * zhi-sdk
-  * zhi-electron
-* zhi-blog
-  * zhi-sdk
-* zhi-blog-astro
-  * zhi-sdk
+-   zhi-sdk
+    -   zhi-core
+    -   zhi-log
+        -   zhi-env
+    -   zhi-common
+-   zhi-mini
+    -   zhi-sdk
+    -   zhi-electron
+-   zhi-blog
+    -   zhi-sdk
+-   zhi-blog-astro
+    -   zhi-sdk
 
 Currently, `zhi-theme` = `zhi-mini`, which means that `zhi-theme` has been planned into `zhi-mini`.

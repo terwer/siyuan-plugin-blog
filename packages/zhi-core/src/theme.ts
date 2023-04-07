@@ -23,35 +23,16 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import Zhi from "./lib/zhi"
+import ZhiUtil from "./lib/core/util/ZhiUtil"
+import "./lib/core/util/requireHacker"
 
 /**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @since 1.3.0
+ * 主题入口，由思源笔记自动调用
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
+;(async () => {
+    const common = ZhiUtil.zhiCommon()
 
-    constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
-    }
-}
-
-export default ZhiCommon
+    const zhi = new Zhi(common.deviceUtil.getDevice())
+    await zhi.init()
+})()

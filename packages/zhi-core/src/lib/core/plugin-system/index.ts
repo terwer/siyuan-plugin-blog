@@ -23,35 +23,27 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
+import DependencyItem from "../../models/DependencyItem"
+import PluginSystemHook from "./PluginSystemHook"
 
 /**
- * 平台无关的通用工具类
+ * 插件系统
  *
  * @author terwer
- * @since 1.3.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-    public readonly dateUtil
-    public readonly strUtil
-    public readonly deviceUtil
-    public readonly siyuanUtil
-    public readonly versionUtil
-    public readonly browserUtil
-
-    constructor() {
-        this.dateUtil = new DateUtil()
-        this.strUtil = new StrUtil()
-        this.deviceUtil = DeviceUtil
-        this.siyuanUtil = new SiyuanUtil()
-        this.versionUtil = new VersionUtil()
-        this.browserUtil = BrowserUtil
+class PluginSystem {
+    /**
+     * 插件系统注册
+     *
+     * @author terwer
+     * @since 1.0.0
+     */
+    public async initPluginSystem(): Promise<DependencyItem[]> {
+        const pluginSystemHook = new PluginSystemHook()
+        await pluginSystemHook.init()
+        return Promise.resolve([])
     }
 }
 
-export default ZhiCommon
+export default PluginSystem
