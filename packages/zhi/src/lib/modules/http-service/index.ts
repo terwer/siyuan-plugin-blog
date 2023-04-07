@@ -23,25 +23,41 @@
  * questions.
  */
 
-import Zhi from "./lib/zhi"
-import ZhiUtil from "./ZhiUtil"
-import "./lib/util/requireHacker.js"
+import DependencyItem from "../../models/DependencyItem"
+import { DeviceType } from "zhi-common"
+import ZhiUtil from "../../../ZhiUtil"
 
 /**
- * 主题唯一入口，由思源笔记自动调用
+ * 主题的 HTTP 服务
  */
-;(async () => {
-    const logger = ZhiUtil.zhiLog("zhi")
-    const common = ZhiUtil.zhiCommon()
+class HttpService {
+    private readonly common
 
-    // hack require保证require能使用自定义路径的node_modules
-    const zhiNodeModulesPath = common.siyuanUtil.joinPath(common.siyuanUtil.zhiThemePath(), "node_modules")
-    logger.info("Init zhi node_modules from => ", zhiNodeModulesPath)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    require.setExternalDeps(zhiNodeModulesPath)
-    logger.info("Zhi node_modules inited.")
+    constructor() {
+        this.common = ZhiUtil.zhiCommon()
+    }
 
-    const zhi = new Zhi(common.deviceUtil.getDevice())
-    await zhi.init()
-})()
+    /**
+     * 初始化 HTTP 服务
+     */
+    async initHttpService(): Promise<DependencyItem[]> {
+        return [
+            // blogMiddlewareDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
+                importType: "require",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+            // blogMiddlewareWebDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("modules-web", "blog-middleware", "index.mjs"),
+                importType: "import",
+                runAs: DeviceType.DeviceType_Chrome_Browser,
+            },
+        ]
+    }
+}
+
+export default HttpService

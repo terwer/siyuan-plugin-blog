@@ -21,7 +21,7 @@
             "configurations": {
                 "development": {},
                 "production": {
-                    "generateLockfile": true
+                    "generateLockfile": true,
                 }
             }
         },
@@ -64,6 +64,10 @@
         "docker-build": {
             "dependsOn": ["build"],
             "command": "docker build -f packages/zhi-blog/Dockerfile . -t zhi-blog"
+        },
+        "zhi-build": {
+            "dependsOn": ["build"],
+            "command": "cp -r dist/packages/zhi-blog/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/modules/blog && echo 'dist copy success'"
         }
     },
     "tags": []

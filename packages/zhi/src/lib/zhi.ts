@@ -144,7 +144,7 @@ class Zhi {
                 let lib
                 if (item.importType == "import") {
                     const importPath = this.common.siyuanUtil.joinPath(
-                        this.common.siyuanUtil.zhiThemePath(),
+                        this.common.siyuanUtil.zhiThemePath(true),
                         item.libpath
                     )
                     lib = await import(importPath)

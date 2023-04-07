@@ -154,13 +154,15 @@ class SiyuanUtil {
      * 注意: 如果是非 electron 环境，这里返回的是浏览器的路径，不是真实路径
      * 如果使用真实路径，请调用 siyuanAppearancePath 或者 siyuanDataPath
      *
+     * @param useBrowserPath - 是否使用浏览器路径
      * @author terwer
      * @since 1.0.0
      */
-    public siyuanThemePath() {
+    public siyuanThemePath(useBrowserPath?: boolean) {
         if (
             DeviceUtil.getDevice() == DeviceType.DeviceType_Chrome_Browser ||
-            DeviceUtil.getDevice() == DeviceType.DeviceType_Chrome_Extension
+            DeviceUtil.getDevice() == DeviceType.DeviceType_Chrome_Extension ||
+            useBrowserPath === true
         ) {
             const syWin = this.siyuanWindow()
             if (!syWin) {
@@ -173,9 +175,11 @@ class SiyuanUtil {
 
     /**
      * zhi 主题目录
+     *
+     * @param useBrowserPath - 是否使用浏览器路径
      */
-    public zhiThemePath() {
-        return this.joinPath(this.siyuanThemePath(), "zhi")
+    public zhiThemePath(useBrowserPath?: boolean) {
+        return this.joinPath(this.siyuanThemePath(useBrowserPath), "zhi")
     }
 }
 

@@ -23,14 +23,11 @@
  * questions.
  */
 
-import DependencyItem from "../models/DependencyItem"
+import DependencyItem from "../../models/DependencyItem"
 import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../ZhiUtil"
+import ZhiUtil from "../../../ZhiUtil"
 
-/**
- * 主题的 HTTP 服务
- */
-class HttpService {
+class BlogEntry {
     private readonly common
 
     constructor() {
@@ -38,26 +35,19 @@ class HttpService {
     }
 
     /**
-     * 初始化 HTTP 服务
+     * 初始化 blog 入口
      */
-    async initHttpService(): Promise<DependencyItem[]> {
+    async initBlog(): Promise<DependencyItem[]> {
         return [
-            // blogMiddlewareDepItem
+            // blogDepItem
             {
-                format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
-                importType: "require",
-                runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            },
-            // blogMiddlewareWebDepItem
-            {
-                format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("modules-web", "blog-middleware", "index.mjs"),
+                format: "esm",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
                 importType: "import",
-                runAs: DeviceType.DeviceType_Chrome_Browser,
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
             },
         ]
     }
 }
 
-export default HttpService
+export default BlogEntry
