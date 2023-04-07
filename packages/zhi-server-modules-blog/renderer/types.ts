@@ -23,31 +23,41 @@
  * questions.
  */
 
-import DependencyItem from "../../models/DependencyItem"
-import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../core/util/ZhiUtil"
+export type { PageContextServer }
+export type { PageContextClient }
+export type { PageContext }
+export type { PageProps }
+export type { Component }
 
-class BlogEntry {
-    private readonly common
+import type {
+    PageContextBuiltIn,
+    /*
+    // When using Client Routing https://vite-plugin-ssr.com/clientRouting
+    PageContextBuiltInClientWithClientRouting as PageContextBuiltInClient
+    /*/
+    // When using Server Routing
+    PageContextBuiltInClientWithServerRouting as PageContextBuiltInClient,
+    //*/
+} from "vite-plugin-ssr/types"
+import type { ComponentPublicInstance } from "vue"
 
-    constructor() {
-        this.common = ZhiUtil.zhiCommon()
-    }
+type Component = ComponentPublicInstance // https://stackoverflow.com/questions/63985658/how-to-type-vue-instance-out-of-definecomponent-in-vue-3/63986086#63986086
+type Page = Component
+type PageProps = object
 
-    /**
-     * 初始化 blog 入口
-     */
-    async initBlog(): Promise<DependencyItem[]> {
-        return [
-            // blogDepItem
-            // {
-            //     format: "esm",
-            //     libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
-            //     importType: "import",
-            //     runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            // },
-        ]
+export type PageContextCustom = {
+    Page: Page
+    pageProps?: PageProps
+    urlPathname: string
+    exports: {
+        documentProps?: {
+            title?: string
+            description?: string
+        }
     }
 }
 
-export default BlogEntry
+type PageContextServer = PageContextBuiltIn<Page> & PageContextCustom
+type PageContextClient = PageContextBuiltInClient<Page> & PageContextCustom
+
+type PageContext = PageContextClient | PageContextServer

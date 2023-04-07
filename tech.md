@@ -26,6 +26,7 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## https://github.com/nxext/nx-extensions/tree/main/packages/vue
 pnpm add @nxext/vue -D
 nx g @nxext/vue:app zhi-web-modules-blog
+nx g @nxext/vue:app zhi-server-modules-blog
 ```
 
 ## Setup
