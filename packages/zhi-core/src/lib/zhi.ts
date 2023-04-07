@@ -23,11 +23,11 @@
  * questions.
  */
 
-import ZhiUtil from "../ZhiUtil"
+import ZhiUtil from "./core/util/ZhiUtil"
 import { DeviceType } from "zhi-common"
 import DependencyItem from "./models/DependencyItem"
 import { version } from "../../package.json"
-import Bootstrap from "./bootstrap"
+import Bootstrap from "./core/Bootstrap"
 
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）

@@ -23,29 +23,27 @@
  * questions.
  */
 
-import Lifecycle from "./Lifecycle"
-import DependencyItem from "./models/DependencyItem"
+import DependencyItem from "../../models/DependencyItem"
+import PluginSystemHook from "./PluginSystemHook"
 
 /**
- * zhi主题唯一激活入口
+ * 插件系统
  *
  * @author terwer
  * @since 1.0.0
  */
-class Bootstrap {
-  private static lifecycle: Lifecycle
-
-  static {
-    Bootstrap.lifecycle = new Lifecycle()
-  }
-
-  /**
-   * 主题激活
-   */
-  public static async start(): Promise<DependencyItem[]> {
-    await Bootstrap.lifecycle.load()
-    return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
-  }
+class PluginSystem {
+    /**
+     * 插件系统注册
+     *
+     * @author terwer
+     * @since 1.0.0
+     */
+    public async initPluginSystem(): Promise<DependencyItem[]> {
+        const pluginSystemHook = new PluginSystemHook()
+        await pluginSystemHook.init()
+        return Promise.resolve([])
+    }
 }
 
-export default Bootstrap
+export default PluginSystem

@@ -1,7 +1,7 @@
 {
-    "name": "zhi",
+    "name": "zhi-core",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/zhi/src",
+    "sourceRoot": "packages/zhi-core/src",
     "projectType": "library",
     "targets": {
         "build": {
@@ -15,7 +15,7 @@
         "publish": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "node tools/scripts/publish.mjs zhi {args.ver} {args.tag}"
+                "command": "node tools/scripts/publish.mjs zhi-core {args.ver} {args.tag}"
             },
             "dependsOn": ["build"]
         },
@@ -31,19 +31,19 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/zhi/**/*.ts"]
+                "lintFilePatterns": ["packages/zhi-core/**/*.ts"]
             }
         },
         "serve": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "nx run zhi:build --watch"
+                "command": "nx run zhi-core:build --watch"
             },
             "dependsOn": []
         },
         "zhi-build": {
             "dependsOn": ["build"],
-            "command": "cp -r dist/packages/zhi/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/ && cd /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/ && npm i --registry=https://registry.npmmirror.com && echo 'zhi dist copy success'"
+            "command": "cp -r dist/packages/zhi/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/ && cd /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/ && npm i --registry=https://registry.npmmirror.com && echo 'zhi-core dist copy success'"
         }
     },
     "tags": []

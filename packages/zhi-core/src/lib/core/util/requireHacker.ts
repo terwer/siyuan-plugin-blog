@@ -23,7 +23,7 @@
  * questions.
  */
 
-import ZhiUtil from "../../ZhiUtil"
+import ZhiUtil from "./ZhiUtil"
 
 /**
  * This snippet is copied from https://github.com/leolee9086/snippets/blob/3764e58f1f98286b9e2d14451ddcf53c6a63bedb/noobApi/util/requireHacker.js

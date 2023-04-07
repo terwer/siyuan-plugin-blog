@@ -23,31 +23,25 @@
  * questions.
  */
 
-import DependencyItem from "../../models/DependencyItem"
-import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../../ZhiUtil"
+import Zhi from "./lib/zhi"
+import ZhiUtil from "./lib/core/util/ZhiUtil"
 
-class BlogEntry {
-    private readonly common
+/**
+ * 仅仅提供Mock功能，请勿调用
+ *
+ * 主题使用的是 `theme.ts`
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class MockTheme{
+  public async loadTheme(){
+    const common = ZhiUtil.zhiCommon()
 
-    constructor() {
-        this.common = ZhiUtil.zhiCommon()
-    }
-
-    /**
-     * 初始化 blog 入口
-     */
-    async initBlog(): Promise<DependencyItem[]> {
-        return [
-            // blogDepItem
-            {
-                format: "esm",
-                libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
-                importType: "import",
-                runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            },
-        ]
-    }
+    const zhi = new Zhi(common.deviceUtil.getDevice())
+    await zhi.init()
+  }
 }
 
-export default BlogEntry
+export default MockTheme

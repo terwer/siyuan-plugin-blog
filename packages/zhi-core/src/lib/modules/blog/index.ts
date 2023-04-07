@@ -23,27 +23,31 @@
  * questions.
  */
 
-import DependencyItem from "../models/DependencyItem"
-import PluginSystemHook from "./PluginSystemHook"
+import DependencyItem from "../../models/DependencyItem"
+import { DeviceType } from "zhi-common"
+import ZhiUtil from "../../core/util/ZhiUtil"
 
-/**
- * 插件系统
- *
- * @author terwer
- * @since 1.0.0
- */
-class PluginSystem {
-  /**
-   * 插件系统注册
-   *
-   * @author terwer
-   * @since 1.0.0
-   */
-  public async initPluginSystem(): Promise<DependencyItem[]> {
-    const pluginSystemHook = new PluginSystemHook()
-    await pluginSystemHook.init()
-    return Promise.resolve([])
-  }
+class BlogEntry {
+    private readonly common
+
+    constructor() {
+        this.common = ZhiUtil.zhiCommon()
+    }
+
+    /**
+     * 初始化 blog 入口
+     */
+    async initBlog(): Promise<DependencyItem[]> {
+        return [
+            // blogDepItem
+            {
+                format: "esm",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
+                importType: "import",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+        ]
+    }
 }
 
-export default PluginSystem
+export default BlogEntry

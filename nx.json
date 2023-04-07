@@ -42,7 +42,7 @@
             }
         }
     },
-    "defaultProject": "zhi",
+    "defaultProject": "zhi-core",
     "generators": {
         "@nrwl/web:application": {
             "style": "styl",

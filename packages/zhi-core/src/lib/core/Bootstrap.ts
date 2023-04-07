@@ -23,50 +23,29 @@
  * questions.
  */
 
-import ZhiUtil from "../../ZhiUtil"
-import PluginSystemHack from "./PluginSystemHack"
+import Lifecycle from "./lifecycle"
+import DependencyItem from "../models/DependencyItem"
 
 /**
- * 插件系统入口
+ * zhi主题唯一激活入口
  *
  * @author terwer
  * @since 1.0.0
  */
-class PluginSystemHook {
-  private readonly logger
-  private readonly hack
+class Bootstrap {
+    private static lifecycle: Lifecycle
 
-  constructor() {
-    this.logger = ZhiUtil.zhiLog("plugin-system-hook")
-
-    this.hack = new PluginSystemHack()
-  }
-
-  /**
-   * 插件系统初始化
-   */
-  public async init() {
-    const sys = await this.hack.initPluginSystem()
-    if (!sys) {
-      this.logger.error("Plugin system init error, some feature may not work!")
-      return
+    static {
+        Bootstrap.lifecycle = new Lifecycle()
     }
 
-    // 同步插件
-    await this.syncZhiPlugins(sys)
-    this.logger.info("PluginSystem inited.")
-  }
-
-  /**
-   * 同步插件到插件目录
-   *
-   * @param p - 插件对象
-   */
-  private async syncZhiPlugins(p: any) {
-    this.logger.info("Start syncing zhi plugins ...")
-
-    // TODO
-  }
+    /**
+     * 主题激活
+     */
+    public static async start(): Promise<DependencyItem[]> {
+        await Bootstrap.lifecycle.load()
+        return Promise.resolve(Bootstrap.lifecycle.dynamicImports)
+    }
 }
 
-export default PluginSystemHook
+export default Bootstrap

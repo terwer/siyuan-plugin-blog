@@ -22,26 +22,8 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import Zhi from "./lib/zhi"
-import ZhiUtil from "./ZhiUtil"
-
-/**
- * 仅仅提供Mock功能，请勿调用
- *
- * 主题使用的是 `theme.ts`
- *
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-class MockTheme{
-  public async loadTheme(){
-    const common = ZhiUtil.zhiCommon()
-
-    const zhi = new Zhi(common.deviceUtil.getDevice())
-    await zhi.init()
-  }
-}
-
-export default MockTheme
+describe("zhi", () => {
+    it("should work", () => {
+        console.log("hello")
+    })
+})

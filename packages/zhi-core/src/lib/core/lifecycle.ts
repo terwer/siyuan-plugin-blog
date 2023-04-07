@@ -23,10 +23,10 @@
  * questions.
  */
 
-import DependencyItem from "./models/DependencyItem"
+import DependencyItem from "../models/DependencyItem"
 import PluginSystem from "./plugin-system"
-import HttpService from "./modules/http-service"
-import BlogEntry from "./modules/blog"
+import HttpService from "../modules/http-service"
+import BlogEntry from "../modules/blog"
 
 /**
  * zhi主题统一生命周期管理

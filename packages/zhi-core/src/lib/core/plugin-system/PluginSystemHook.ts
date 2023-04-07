@@ -23,41 +23,50 @@
  * questions.
  */
 
-import DependencyItem from "../../models/DependencyItem"
-import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../../ZhiUtil"
+import ZhiUtil from "../util/ZhiUtil"
+import PluginSystemHack from "./PluginSystemHack"
 
 /**
- * 主题的 HTTP 服务
+ * 插件系统入口
+ *
+ * @author terwer
+ * @since 1.0.0
  */
-class HttpService {
-    private readonly common
+class PluginSystemHook {
+    private readonly logger
+    private readonly hack
 
     constructor() {
-        this.common = ZhiUtil.zhiCommon()
+        this.logger = ZhiUtil.zhiLog("plugin-system-hook")
+
+        this.hack = new PluginSystemHack()
     }
 
     /**
-     * 初始化 HTTP 服务
+     * 插件系统初始化
      */
-    async initHttpService(): Promise<DependencyItem[]> {
-        return [
-            // blogMiddlewareDepItem
-            {
-                format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
-                importType: "require",
-                runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            },
-            // blogMiddlewareWebDepItem
-            {
-                format: "cjs",
-                libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
-                importType: "import",
-                runAs: DeviceType.DeviceType_Chrome_Browser,
-            },
-        ]
+    public async init() {
+        const sys = await this.hack.initPluginSystem()
+        if (!sys) {
+            this.logger.error("Plugin system init error, some feature may not work!")
+            return
+        }
+
+        // 同步插件
+        await this.syncZhiPlugins(sys)
+        this.logger.info("PluginSystem inited.")
+    }
+
+    /**
+     * 同步插件到插件目录
+     *
+     * @param p - 插件对象
+     */
+    private async syncZhiPlugins(p: any) {
+        this.logger.info("Start syncing zhi plugins ...")
+
+        // TODO
     }
 }
 
-export default HttpService
+export default PluginSystemHook

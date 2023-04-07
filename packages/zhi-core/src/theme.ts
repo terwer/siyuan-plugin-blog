@@ -23,10 +23,16 @@
  * questions.
  */
 
-import { zhi } from "./zhi"
+import Zhi from "./lib/zhi"
+import ZhiUtil from "./lib/core/util/ZhiUtil"
+import "./lib/core/util/requireHacker"
 
-describe("zhi", () => {
-  it("should work", () => {
-    expect(zhi()).toEqual("zhi")
-  })
-})
+/**
+ * 主题入口，由思源笔记自动调用
+ */
+;(async () => {
+    const common = ZhiUtil.zhiCommon()
+
+    const zhi = new Zhi(common.deviceUtil.getDevice())
+    await zhi.init()
+})()

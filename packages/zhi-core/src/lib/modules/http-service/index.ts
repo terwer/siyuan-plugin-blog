@@ -23,16 +23,41 @@
  * questions.
  */
 
-import Zhi from "./lib/zhi"
-import ZhiUtil from "./ZhiUtil"
-import "./lib/util/requireHacker"
+import DependencyItem from "../../models/DependencyItem"
+import { DeviceType } from "zhi-common"
+import ZhiUtil from "../../core/util/ZhiUtil"
 
 /**
- * 主题入口，由思源笔记自动调用
+ * 主题的 HTTP 服务
  */
-;(async () => {
-    const common = ZhiUtil.zhiCommon()
+class HttpService {
+    private readonly common
 
-    const zhi = new Zhi(common.deviceUtil.getDevice())
-    await zhi.init()
-})()
+    constructor() {
+        this.common = ZhiUtil.zhiCommon()
+    }
+
+    /**
+     * 初始化 HTTP 服务
+     */
+    async initHttpService(): Promise<DependencyItem[]> {
+        return [
+            // blogMiddlewareDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("modules", "blog-middleware", "index.js"),
+                importType: "require",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+            // blogMiddlewareWebDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("web-modules", "blog-middleware", "index.mjs"),
+                importType: "import",
+                runAs: DeviceType.DeviceType_Chrome_Browser,
+            },
+        ]
+    }
+}
+
+export default HttpService

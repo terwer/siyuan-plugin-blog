@@ -13,8 +13,7 @@
         "update": "nx uodate <project>",
         "deploy": "nx deploy <project>",
         "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]",
-        "postinstall": "node ./tools/scripts/patch-nx-cli.js",
-        "lintcss": "stylelint *.styl --fix"
+        "postinstall": "node ./tools/scripts/patch-nx-cli.js"
     },
     "private": true,
     "devDependencies": {
