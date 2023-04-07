@@ -40,12 +40,12 @@ class BlogEntry {
     async initBlog(): Promise<DependencyItem[]> {
         return [
             // blogDepItem
-            {
-                format: "esm",
-                libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
-                importType: "import",
-                runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            },
+            // {
+            //     format: "esm",
+            //     libpath: this.common.siyuanUtil.joinPath("modules", "blog", "main.js"),
+            //     importType: "import",
+            //     runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            // },
         ]
     }
 }
