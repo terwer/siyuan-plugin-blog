@@ -8,7 +8,6 @@
             "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
             "!{projectRoot}/tsconfig.spec.json",
             "!{projectRoot}/.eslintrc.json",
-            "!{projectRoot}/jest.config.[jt]s"
         ],
         "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
     },
@@ -18,7 +17,7 @@
             "inputs": ["production", "^production"]
         },
         "test": {
-            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+            "inputs": ["default", "^production"]
         },
         "lint": {
             "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/.eslintignore"]
