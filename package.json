@@ -29,7 +29,7 @@
         "@nrwl/nx-cloud": "latest",
         "@nrwl/react": "^15.8.9",
         "@nrwl/rollup": "15.8.9",
-        "@nrwl/vite": "15.8.9",
+        "@nrwl/vite": "15.9.2",
         "@nrwl/web": "^15.8.9",
         "@nrwl/webpack": "15.8.9",
         "@nrwl/workspace": "15.8.9",
