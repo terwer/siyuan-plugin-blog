@@ -86,7 +86,7 @@ export default defineConfig({
             fileName: "index",
             // Change this to the formats you want to support.
             // Don't forgot to update your package.json as well.
-            formats: ["es", "cjs"],
+            formats: ["cjs"],
         },
         rollupOptions: {
             output: {
@@ -107,7 +107,7 @@ export default defineConfig({
                 },
             },
             // External packages that should not be bundled into your library.
-            external: ["express", ...builtinModules],
+            external: [...builtinModules],
         },
         minify: false,
     },

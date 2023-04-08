@@ -24,28 +24,30 @@
  */
 
 import DependencyItem from "../../models/DependencyItem"
-import CustomCmd from "./customCmd"
-import ZhiUtil from "../util/ZhiUtil"
+import { DeviceType } from "zhi-common"
+import ZhiUtil from "../../core/util/ZhiUtil"
 
-class Cmd {
-    private readonly logger
+class InfraEntry {
     private readonly common
+
     constructor() {
-        this.logger = ZhiUtil.zhiLog("cmd")
         this.common = ZhiUtil.zhiCommon()
     }
 
     /**
-     * 插件系统注册
-     *
-     * @author terwer
-     * @since 1.0.0
+     * 初始化 infra 入口
      */
-    public async initCmd(): Promise<DependencyItem[]> {
-        this.common.siyuanUtil.siyuanWindow().customCmd = new CustomCmd()
-        this.logger.info("CustomCmd mounted", this.common.siyuanUtil.siyuanWindow().customCmd)
-        return Promise.resolve([])
+    async initInfra(): Promise<DependencyItem[]> {
+        return [
+            // infraDepItem
+            {
+                format: "cjs",
+                libpath: this.common.siyuanUtil.joinPath("server", "infra", "index.cjs"),
+                importType: "require",
+                runAs: DeviceType.DeviceType_Siyuan_MainWin,
+            },
+        ]
     }
 }
 
-export default Cmd
+export default InfraEntry

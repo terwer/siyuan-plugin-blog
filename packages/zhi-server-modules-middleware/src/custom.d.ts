@@ -26,3 +26,5 @@
 interface ImportMeta {
     readonly env: ImportMetaEnv
 }
+
+declare module "fix-path"

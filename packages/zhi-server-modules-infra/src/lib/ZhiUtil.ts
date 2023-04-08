@@ -59,7 +59,7 @@ class ZhiUtil {
                 [EnvConstants.NODE_ENV_KEY]: EnvConstants.NODE_ENV_DEVELOPMENT,
                 [EnvConstants.VITE_DEBUG_MODE_KEY]: false,
                 [LogConstants.LOG_LEVEL_KEY]: LogLevelEnum.LOG_LEVEL_DEBUG,
-                [LogConstants.LOG_PREFIX_KEY]: "zhi-server-middleware",
+                [LogConstants.LOG_PREFIX_KEY]: "zhi-server-infra",
             }
 
             ZhiUtil.env = new Env(customEnv)
@@ -88,7 +88,7 @@ class ZhiUtil {
                 ZhiUtil.loggerMap[loggerName].debug("Zhi-log use cache.")
             } else {
                 const env = ZhiUtil.zhiEnv()
-                ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-server-middleware", env).getLogger(
+                ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-server-infra", env).getLogger(
                     loggerName
                 )
                 ZhiUtil.loggerMap[loggerName].debug("Zhi-log add new logger.")
@@ -97,7 +97,7 @@ class ZhiUtil {
             // 生成新的日志器
             const env = ZhiUtil.zhiEnv()
             ZhiUtil.loggerMap = {}
-            ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-server-middleware", env).getLogger(
+            ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-server-infra", env).getLogger(
                 loggerName
             )
             ZhiUtil.loggerMap[loggerName].debug("Zhi-log inited.")

@@ -22,14 +22,45 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## Init
 
 ```bash
-## Vue
+## Notice: siyuan current only support two type of libs
+## 1. esm with simple file bundled.So cannot import with bare names, import-map not work well
+## 2. cjs with require hacker
+## So full compatible lib will be `cjs with out new features like import.meta` or `single esm bundled without base import`
+
+## core library
+## https://nx.dev/packages/vite
+nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
+
+## Esbuild cjs lib
+nx generate @nrwl/js:lib zhi-server-modules-infra --bundler=esbuild
+
+## Docs
+## pnpm install @nx-plus/docusaurus --save-dev
+nx generate @nx-plus/docusaurus:app zhi-docs
+## nx serve zhi-docs
+## ----------------------------------------------------------------------------------
+## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
+
+## Vue app
 ## https://github.com/nxext/nx-extensions/tree/main/packages/vue
 pnpm add @nxext/vue -D
 nx g @nxext/vue:app zhi-web-modules-blog
 nx g @nxext/vue:app zhi-server-modules-blog
 
-## Express
+## Express server
 nx g @nrwl/express:app zhi-server-modules-middleware
+
+## Python
+## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
+## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
+## pnpm install @nxlv/python --save-dev
+npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
 ```
 
 ## Setup
@@ -129,3 +160,10 @@ The dependency relationship is as follows:
     -   zhi-sdk
 
 Currently, `zhi-theme` = `zhi-mini`, which means that `zhi-theme` has been planned into `zhi-mini`.
+
+### Mounted window object
+
+```bash
+windowManager
+customCmd
+```

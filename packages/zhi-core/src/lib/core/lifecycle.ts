@@ -23,11 +23,13 @@
  * questions.
  */
 
-import DependencyItem from "../models/DependencyItem";
-import PluginSystem from "./plugin-system";
-import MiddlewareEntry from "../server-modules/middleware";
-import WebBlogEntry from "../web-modules/blog";
-import ZhiBrowserWindow from "./browser-windows";
+import DependencyItem from "../models/DependencyItem"
+import PluginSystem from "./plugin-system"
+import MiddlewareEntry from "../server-modules/middleware"
+import WebBlogEntry from "../web-modules/blog"
+import ZhiBrowserWindow from "./browser-windows"
+import InfraEntry from "../server-modules/infra"
+import Cmd from "./cmd"
 
 /**
  * zhi主题统一生命周期管理
@@ -36,8 +38,10 @@ import ZhiBrowserWindow from "./browser-windows";
  * @since 1.0.0
  */
 class Lifecycle {
+    private infra
     private pluginSystem
     private browserWindow
+    private cmd
 
     private middlewareEntry
     private webBlogEntry
@@ -45,8 +49,10 @@ class Lifecycle {
     private _dynamicImports = <DependencyItem[]>[]
 
     constructor() {
+        this.infra = new InfraEntry()
         this.pluginSystem = new PluginSystem()
         this.browserWindow = new ZhiBrowserWindow()
+        this.cmd = new Cmd()
 
         this.middlewareEntry = new MiddlewareEntry()
         this.webBlogEntry = new WebBlogEntry()
@@ -74,6 +80,10 @@ class Lifecycle {
     private async loadCoreModules(): Promise<DependencyItem[]> {
         let coreModulesImports = <DependencyItem[]>[]
 
+        // infra
+        const infraImports = await this.infra.initInfra()
+        coreModulesImports = coreModulesImports.concat(infraImports)
+
         // SiYuanPluginSystem
         const pluginSystemImports = await this.pluginSystem.initPluginSystem()
         coreModulesImports = coreModulesImports.concat(pluginSystemImports)
@@ -81,6 +91,10 @@ class Lifecycle {
         // ZhiBrowserWindow
         const browserWindowImports = await this.browserWindow.initBrowserWindow()
         coreModulesImports = coreModulesImports.concat(browserWindowImports)
+
+        // cmd
+        const cmdImports = await this.cmd.initCmd()
+        coreModulesImports = coreModulesImports.concat(cmdImports)
         return coreModulesImports
     }
 
@@ -104,6 +118,9 @@ class Lifecycle {
         // 字体图标
         // const fontAwesomeImports = fontAwesome.initFontAwesome()
         // vendorImports = vendorImports.concat(fontAwesomeImports)
+
+        // infra
+        // infra 叙事提取加载，移动到核心模块
 
         // middleware
         const middlewareImports = await this.middlewareEntry.initMiddleware()

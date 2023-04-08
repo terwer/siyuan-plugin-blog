@@ -50,9 +50,8 @@ class ZhiBrowserWindow {
      * @since 1.0.0
      */
     public async initBrowserWindow(): Promise<DependencyItem[]> {
-        this.logger.info("Init windowManager")
         this.common.siyuanUtil.siyuanWindow().windowManager = this.windowManager
-        this.logger.info("WindowManager inited", this.common.siyuanUtil.siyuanWindow().windowManager)
+        this.logger.info("WindowManager mounted", this.common.siyuanUtil.siyuanWindow().windowManager)
         return Promise.resolve([])
     }
 }

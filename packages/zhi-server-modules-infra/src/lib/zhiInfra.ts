@@ -23,29 +23,31 @@
  * questions.
  */
 
-import DependencyItem from "../../models/DependencyItem"
-import CustomCmd from "./customCmd"
-import ZhiUtil from "../util/ZhiUtil"
+import ZhiUtil from "./ZhiUtil"
+import fixPath from "fix-path"
 
-class Cmd {
+/**
+ * 基础设施
+ */
+class ZhiInfra {
     private readonly logger
     private readonly common
+
     constructor() {
-        this.logger = ZhiUtil.zhiLog("cmd")
+        this.logger = ZhiUtil.zhiLog("zhi-infra")
         this.common = ZhiUtil.zhiCommon()
     }
 
     /**
-     * 插件系统注册
-     *
-     * @author terwer
-     * @since 1.0.0
+     * 修复 Mac 和 Linux 下面的 PATH 环境变量问题
      */
-    public async initCmd(): Promise<DependencyItem[]> {
-        this.common.siyuanUtil.siyuanWindow().customCmd = new CustomCmd()
-        this.logger.info("CustomCmd mounted", this.common.siyuanUtil.siyuanWindow().customCmd)
-        return Promise.resolve([])
+    public fixPathEnv() {
+        // 修复 Mac 和 Linux 下面的 PATH 环境变量问题
+        this.logger.debug("process.env.PATH before => ", this.common.siyuanUtil.siyuanWindow().process.env.PATH)
+        fixPath()
+        console.log("process.env.PATH after fix => ", this.common.siyuanUtil.siyuanWindow().process.env.PATH)
+        this.logger.info("Fixed $PATH in Electron apps as GUI apps on macOS and Linux")
     }
 }
 
-export default Cmd
+export default ZhiInfra

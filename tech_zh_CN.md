@@ -22,14 +22,44 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## 初始化
 
 ```bash
-## Vue
+## 注意：思源目前仅支持两种类型的类库加载 
+## 1. esm 用文件打包，不能有裸模块import，具体原因是浏览器不支持这种解析方式，有一个 import-map 方案，但是经过尝试不可用
+## 2. cjs 模块，使用 require hacker 之后可以支持自定义的模块路径加载，但是 sjs 无法支持 import.meta 这种新特性
+
+## core library
+## https://nx.dev/packages/vite
+nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
+nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
+
+## Esbuild cjs lib
+nx generate @nrwl/js:lib zhi-server-modules-infra --bundler=esbuild
+
+## Docs
+## pnpm install @nx-plus/docusaurus --save-dev
+nx generate @nx-plus/docusaurus:app zhi-docs
+## nx serve zhi-docs
+## ----------------------------------------------------------------------------------
+## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
+
+## Vue app
 ## https://github.com/nxext/nx-extensions/tree/main/packages/vue
 pnpm add @nxext/vue -D
 nx g @nxext/vue:app zhi-web-modules-blog
 nx g @nxext/vue:app zhi-server-modules-blog
 
-## Express
+## Express server
 nx g @nrwl/express:app zhi-server-modules-middleware
+
+## Python
+## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
+## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
+## pnpm install @nxlv/python --save-dev
+npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
 ```
 
 ## 设置
@@ -134,3 +164,10 @@ nx publish zhi-blog-api --ver=0.0.1 --tag=latest
     -   zhi-sdk
 
 现阶段 `zhi-theme` = `zhi-mini` ， 即 `zhi-theme` 已经规划到 `zhi-mini` 了。
+
+### 挂载到 Window 的对象
+
+```bash
+windowManager
+customCmd
+```
