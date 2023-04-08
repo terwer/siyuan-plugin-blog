@@ -22,7 +22,7 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## 初始化
 
 ```bash
-## 注意：思源目前仅支持两种类型的类库加载 
+## 注意：思源目前仅支持两种类型的类库加载
 ## 1. esm 用文件打包，不能有裸模块import，具体原因是浏览器不支持这种解析方式，有一个 import-map 方案，但是经过尝试不可用
 ## 2. cjs 模块，使用 require hacker 之后可以支持自定义的模块路径加载，但是 sjs 无法支持 import.meta 这种新特性
 

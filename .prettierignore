@@ -1,2 +1,6 @@
 .prettierignore
-.docusaurus/
+.idea
+dist
+node_modules
+tmp
+tools

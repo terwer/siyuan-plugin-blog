@@ -50,15 +50,16 @@
 
 -   同时搞定主题与预览，安装了 zhi 主题相当于额外安装了一个插件系统，两个在线博客
 
-    静态博客主页：http://127.0.0.1:6806/appearance/themes/zhi/web/blog/ <sup>简单</sup>   
-    动态博客主页：http://127.0.0.1:3000/appearance/themes/zhi/server/blog/ <sup>SEO友好</sup>
+    静态博客主页：http://127.0.0.1:6806/appearance/themes/zhi/web/blog/ <sup>简单</sup>  
+    动态博客主页：http://127.0.0.1:3000/appearance/themes/zhi/server/blog/ <sup>SEO 友好</sup>
 
     特别说明：
+
     1. 博客服务已经自带，开箱即用，无需任何配置。
     2. 静态博客如果想自部署，可拷贝 `web/blog` 目录 ，然后用 `Nginx` 伺服即可，无需其他。
     3. 动态博客如果想自部署，可拷贝 `server/blog` 目录 ，然后用 `Node` 环境启动，也可自行通过 `docker` 镜像或者下面的 `docker-compose.yml` 启动，也可源码编译，然后部署到 `Vercel` 。
 
-   挂件版博客管理与发布主页：http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin [功能重叠][已废弃][建议使用新版博客]
+挂件版博客管理与发布主页：http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin [功能重叠][已废弃][建议使用新版博客]
 
 > 注意事项：🌹 插件系统为社区热心开发者提供，请详细了解相关机制之后再使用。
 

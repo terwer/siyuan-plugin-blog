@@ -1,0 +1,18 @@
+---
+import Layout from "@layouts/vdoing/Layout.astro"
+import ZhiUtil from "@utils/zhiUtil"
+
+const zhiSdk = ZhiUtil.zhiSdk()
+const blogApi = zhiSdk.blogApi
+
+const { slug } = Astro.params
+const postid = slug.includes(".html") ? slug.replace(".html", "") : slug
+const post = await blogApi.getPost(postid)
+---
+
+<Layout title="This is detail page.">
+  <article>
+    <h1 set:html={post.title} />
+    <Fragment set:html={post.description} />
+  </article>
+</Layout>
