@@ -99,6 +99,9 @@ devDependencies:
   '@nrwl/eslint-plugin-nx':
     specifier: 15.9.2
     version: 15.9.2(@typescript-eslint/parser@5.57.0)(eslint-config-prettier@8.1.0)(eslint@8.15.0)(nx@15.9.2)(typescript@4.9.5)
+  '@nrwl/express':
+    specifier: ^15.9.2
+    version: 15.9.2(@babel/core@7.21.3)(@swc/core@1.2.173)(@types/node@18.15.11)(esbuild@0.17.14)(eslint@8.15.0)(express@4.18.2)(nx@15.9.2)(ts-node@10.9.1)(typescript@4.9.5)
   '@nrwl/jest':
     specifier: 15.9.2
     version: 15.9.2(@swc/core@1.2.173)(@types/node@18.15.11)(nx@15.9.2)(ts-node@10.9.1)(typescript@4.9.5)
@@ -4121,6 +4124,47 @@ packages:
       - nx
       - supports-color
       - typescript
+    dev: true
+
+  /@nrwl/express@15.9.2(@babel/core@7.21.3)(@swc/core@1.2.173)(@types/node@18.15.11)(esbuild@0.17.14)(eslint@8.15.0)(express@4.18.2)(nx@15.9.2)(ts-node@10.9.1)(typescript@4.9.5):
+    resolution: {integrity: sha512-6UgQ5B2Ku+QaZyz01p67dZJsTnQOh/aX83zV0coiqwSNa7Lpu504j4/onK1C1JODNQgJwZ7BSQjCNdSRzPsUyw==}
+    peerDependencies:
+      express: ^4.18.1
+    peerDependenciesMeta:
+      express:
+        optional: true
+    dependencies:
+      '@nrwl/devkit': 15.9.2(nx@15.9.2)
+      '@nrwl/node': 15.9.2(@babel/core@7.21.3)(@swc/core@1.2.173)(@types/node@18.15.11)(esbuild@0.17.14)(eslint@8.15.0)(nx@15.9.2)(ts-node@10.9.1)(typescript@4.9.5)
+      '@nrwl/workspace': 15.9.2(@swc/core@1.2.173)
+      express: 4.18.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@babel/traverse'
+      - '@parcel/css'
+      - '@swc-node/register'
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - bufferutil
+      - clean-css
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - fibers
+      - html-webpack-plugin
+      - node-notifier
+      - node-sass
+      - nx
+      - sass-embedded
+      - supports-color
+      - ts-node
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
     dev: true
 
   /@nrwl/jest@15.9.2(@swc/core@1.2.173)(@types/node@18.15.11)(nx@15.9.2)(ts-node@10.9.1)(typescript@4.9.5):

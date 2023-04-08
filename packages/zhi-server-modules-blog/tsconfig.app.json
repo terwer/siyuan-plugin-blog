@@ -1,8 +1,12 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
         "outDir": "../../dist/out-tsc",
-        "types": ["node"]
+        "types": ["node", "vite/client", "vitest/globals"]
     },
     "files": [],
     "exclude": [
@@ -16,5 +20,16 @@
         "src/**/*.spec.jsx",
         "src/**/*.test.jsx"
     ],
-    "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+    "include": [
+        "*.ts",
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "src/**/*.ts",
+        "renderer/**/*.ts",
+        "server/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "pages/**/*.vue",
+        "renderer/**/*.vue"
+    ]
 }

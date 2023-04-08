@@ -27,6 +27,9 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 pnpm add @nxext/vue -D
 nx g @nxext/vue:app zhi-web-modules-blog
 nx g @nxext/vue:app zhi-server-modules-blog
+
+## Express
+nx g @nrwl/express:app zhi-server-modules-middleware
 ```
 
 ## 设置
