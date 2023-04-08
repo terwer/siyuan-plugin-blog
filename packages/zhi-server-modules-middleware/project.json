@@ -5,38 +5,10 @@
     "projectType": "application",
     "targets": {
         "build": {
-            "executor": "@nrwl/webpack:webpack",
-            "outputs": ["{options.outputPath}"],
-            "defaultConfiguration": "production",
-            "options": {
-                "target": "node",
-                "compiler": "tsc",
-                "outputPath": "dist/packages/zhi/server/middleware",
-                "main": "packages/zhi-server-modules-middleware/src/main.ts",
-                "tsConfig": "packages/zhi-server-modules-middleware/tsconfig.app.json",
-                "assets": ["packages/zhi-server-modules-middleware/src/assets"],
-                "isolatedConfig": true,
-                "webpackConfig": "packages/zhi-server-modules-middleware/webpack.config.js"
-            },
-            "configurations": {
-                "development": {},
-                "production": {}
-            }
+            "command": "node packages/zhi-server-modules-middleware/esbuild.mjs"
         },
         "serve": {
-            "executor": "@nrwl/js:node",
-            "defaultConfiguration": "development",
-            "options": {
-                "buildTarget": "zhi-server-modules-middleware:build"
-            },
-            "configurations": {
-                "development": {
-                    "buildTarget": "zhi-server-modules-middleware:build:development"
-                },
-                "production": {
-                    "buildTarget": "zhi-server-modules-middleware:build:production"
-                }
-            }
+            "command": "node packages/zhi-server-modules-middleware/esbuild.mjs --watch"
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
@@ -44,7 +16,7 @@
             "options": {
                 "lintFilePatterns": ["packages/zhi-server-modules-middleware/**/*.ts"]
             }
-        },
+        }
     },
     "tags": []
 }

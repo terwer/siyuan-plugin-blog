@@ -51,7 +51,7 @@ esbuild
     .build({
         ...commonOptions,
         outdir: outDir,
-        entryPoints: ["packages/zhi-server-modules-middleware/src/main.ts"],
+        entryPoints: ["packages/zhi-server-modules-middleware/src/index.ts"],
         external: ["esbuild", "fsevents", "express", ...builtinModules],
         format: "cjs",
         platform: "node",

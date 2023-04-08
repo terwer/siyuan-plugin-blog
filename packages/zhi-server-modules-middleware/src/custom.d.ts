@@ -23,3 +23,6 @@
  * questions.
  */
 
+interface ImportMeta {
+    readonly env: ImportMetaEnv
+}

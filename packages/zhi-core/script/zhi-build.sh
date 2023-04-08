@@ -8,5 +8,5 @@ echo "zhi dist copy success"
 ## install dependency for zhi
 cd $ZHI_THEME_DIR/ || exit
 echo "installing zhi dependencies ..."
-npm i express compression vite-plugin-ssr --registry=https://registry.npmmirror.com
+npm i express --registry=https://registry.npmmirror.com
 echo "zhi dependency installed"

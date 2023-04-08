@@ -23,15 +23,11 @@
  * questions.
  */
 
+import { init } from "./zhi-server-modules-middleware"
 import { describe, it } from "vitest"
-import ZhiUtil from "./lib/core/util/ZhiUtil"
-import Zhi from "./lib/zhi"
 
-describe("theme", () => {
+describe("zhiModulesBlogMiddleware", () => {
     it("init", async () => {
-        const common = ZhiUtil.zhiCommon()
-
-        const zhi = new Zhi(common.deviceUtil.getDevice())
-        await zhi.init()
+        await init(9000)
     })
 })
