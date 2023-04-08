@@ -171,19 +171,30 @@ class Zhi {
                 // 如果有初始化方法，进行初始化
                 if (lib) {
                     const libObj = lib
-                    this.logger.debug("Required lib Obj=>", libObj)
+                    this.logger.debug(this.common.strUtil.f("Success {0} lib Obj=>", item.importType), libObj)
                     if (libObj.init) {
                         const res = await libObj.init()
                         if (res) {
-                            this.logger.info("Detected output from required lib=>", res)
+                            this.logger.info(
+                                this.common.strUtil.f(
+                                    "Detected output from {0} lib {1}=>",
+                                    item.importType,
+                                    item.libpath
+                                ),
+                                res
+                            )
                         }
                     } else {
-                        this.logger.debug(this.common.strUtil.f("No init method for {0}", item.libpath))
+                        this.logger.debug(
+                            this.common.strUtil.f("No init method for {0} {1}", item.importType, item.libpath)
+                        )
                     }
                 } else {
-                    this.logger.debug(this.common.strUtil.f("Lib entry is not a function => {0}", item.libpath))
+                    this.logger.debug(
+                        this.common.strUtil.f("Lib entry is not a function => {0} {1}", item.importType, item.libpath)
+                    )
                 }
-                this.logger.info(this.common.strUtil.f("loaded {0}", item.libpath))
+                this.logger.info(this.common.strUtil.f("loaded {0} {1}", item.importType, item.libpath))
             }
 
             this.logger.info("Theme inited.")

@@ -23,10 +23,10 @@
  * questions.
  */
 
-import LogFactory from "zhi-log"
-import ZhiCommon from "zhi-common"
-import Env from "zhi-env"
-import { SiyuanKernelApi } from "zhi-siyuan-api"
+import LogFactory, { LogConstants, LogLevelEnum } from "zhi-log";
+import ZhiCommon from "zhi-common";
+import Env, { EnvConstants } from "zhi-env";
+import { SiyuanKernelApi } from "zhi-siyuan-api";
 
 /**
  * 工具类统一入口，每个应用自己实现
@@ -53,7 +53,16 @@ class ZhiUtil {
             // https://github.com/vitejs/vite/issues/9539#issuecomment-1206301266
             // 1 add modules:esnext tsconfig.app.json
             // 2 add custom.d.ts
-            ZhiUtil.env = new Env(import.meta.env)
+            // const envMeta = import.meta.env
+
+            const customEnv = {
+                [EnvConstants.NODE_ENV_KEY]: EnvConstants.NODE_ENV_DEVELOPMENT,
+                [EnvConstants.VITE_DEBUG_MODE_KEY]: false,
+                [LogConstants.LOG_LEVEL_KEY]: LogLevelEnum.LOG_LEVEL_DEBUG,
+                [LogConstants.LOG_PREFIX_KEY]: "zhi-server-middleware",
+            }
+
+            ZhiUtil.env = new Env(customEnv)
         }
         return ZhiUtil.env
     }

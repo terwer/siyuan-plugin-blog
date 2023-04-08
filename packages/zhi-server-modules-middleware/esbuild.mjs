@@ -53,7 +53,7 @@ esbuild
         outdir: outDir,
         entryPoints: ["packages/zhi-server-modules-middleware/src/index.ts"],
         external: ["esbuild", "fsevents", "express", ...builtinModules],
-        format: "cjs",
+        format: "esm",
         platform: "node",
         mainFields: ["module", "main"],
         plugins: [inlineImportPlugin()],
