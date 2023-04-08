@@ -23,31 +23,3 @@
  * questions.
  */
 
-import DependencyItem from "../../models/DependencyItem"
-import { DeviceType } from "zhi-common"
-import ZhiUtil from "../../core/util/ZhiUtil"
-
-class BlogEntry {
-    private readonly common
-
-    constructor() {
-        this.common = ZhiUtil.zhiCommon()
-    }
-
-    /**
-     * 初始化 blog 入口
-     */
-    async initBlog(): Promise<DependencyItem[]> {
-        return [
-            // blogDepItem
-            {
-                format: "esm",
-                libpath: this.common.siyuanUtil.joinPath("server", "blog", "main.js"),
-                importType: "import",
-                runAs: DeviceType.DeviceType_Siyuan_MainWin,
-            },
-        ]
-    }
-}
-
-export default BlogEntry

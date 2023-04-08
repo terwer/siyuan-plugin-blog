@@ -23,10 +23,11 @@
  * questions.
  */
 
-import DependencyItem from "../models/DependencyItem"
-import PluginSystem from "./plugin-system"
-import BlogEntry from "../modules/blog"
-import WebBlogEntry from "../web-modules/blog"
+import DependencyItem from "../models/DependencyItem";
+import PluginSystem from "./plugin-system";
+import MiddlewareEntry from "../server-modules/middleware";
+import WebBlogEntry from "../web-modules/blog";
+import ZhiBrowserWindow from "./browser-windows";
 
 /**
  * zhi主题统一生命周期管理
@@ -36,14 +37,18 @@ import WebBlogEntry from "../web-modules/blog"
  */
 class Lifecycle {
     private pluginSystem
-    private blogEntry
+    private browserWindow
+
+    private middlewareEntry
     private webBlogEntry
 
     private _dynamicImports = <DependencyItem[]>[]
 
     constructor() {
         this.pluginSystem = new PluginSystem()
-        this.blogEntry = new BlogEntry()
+        this.browserWindow = new ZhiBrowserWindow()
+
+        this.middlewareEntry = new MiddlewareEntry()
         this.webBlogEntry = new WebBlogEntry()
     }
 
@@ -54,20 +59,29 @@ class Lifecycle {
     public async load() {
         const allImports = <DependencyItem[]>[]
 
-        const pluginSystemImports = await this.loadPluginSystem()
+        const coreModuleImports = await this.loadCoreModules()
         const widgetsImports = await this.loadWidgets()
         const vendorImports = await this.loadVendors()
 
-        this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports)
+        this._dynamicImports = allImports.concat(coreModuleImports).concat(widgetsImports).concat(vendorImports)
     }
 
     /**
-     * SiYuanPluginSystem
+     * 加载核心模块
      *
      * @private
      */
-    private async loadPluginSystem(): Promise<DependencyItem[]> {
-        return await this.pluginSystem.initPluginSystem()
+    private async loadCoreModules(): Promise<DependencyItem[]> {
+        let coreModulesImports = <DependencyItem[]>[]
+
+        // SiYuanPluginSystem
+        const pluginSystemImports = await this.pluginSystem.initPluginSystem()
+        coreModulesImports = coreModulesImports.concat(pluginSystemImports)
+
+        // ZhiBrowserWindow
+        const browserWindowImports = await this.browserWindow.initBrowserWindow()
+        coreModulesImports = coreModulesImports.concat(browserWindowImports)
+        return coreModulesImports
     }
 
     /**
@@ -91,9 +105,9 @@ class Lifecycle {
         // const fontAwesomeImports = fontAwesome.initFontAwesome()
         // vendorImports = vendorImports.concat(fontAwesomeImports)
 
-        // blog
-        const blogImports = await this.blogEntry.initBlog()
-        vendorImports = vendorImports.concat(blogImports)
+        // middleware
+        const middlewareImports = await this.middlewareEntry.initMiddleware()
+        vendorImports = vendorImports.concat(middlewareImports)
 
         // webBlog
         const webBlogImports = await this.webBlogEntry.initWebBlog()
