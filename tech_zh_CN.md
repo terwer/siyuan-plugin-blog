@@ -28,20 +28,20 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 
 ## core library
 ## https://nx.dev/packages/vite
-nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
 
 ## Esbuild cjs lib
-nx generate @nrwl/js:lib zhi-server-modules-infra --bundler=esbuild
+nx g @nrwl/js:lib zhi-server-modules-infra --bundler=esbuild
 
 ## Docs
 ## pnpm install @nx-plus/docusaurus --save-dev
-nx generate @nx-plus/docusaurus:app zhi-docs
+nx g @nx-plus/docusaurus:app zhi-docs
 ## nx serve zhi-docs
 ## ----------------------------------------------------------------------------------
 ## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
@@ -49,8 +49,16 @@ nx generate @nx-plus/docusaurus:app zhi-docs
 ## Vue app
 ## https://github.com/nxext/nx-extensions/tree/main/packages/vue
 pnpm add @nxext/vue -D
+## Vite + Vue + SPA
 nx g @nxext/vue:app zhi-web-modules-blog
+## Nuxt3
 nx g @nxext/vue:app zhi-server-modules-blog
+
+## Astro app
+## pnpm install -D @nxtensions/astro
+## nx migrate @nxtensions/astro@latest
+pnpm add @astrojs/vue @astrojs/vercel -D
+nx g @nxtensions/astro:app zhi-static-blog-astro
 
 ## Express server
 nx g @nrwl/express:app zhi-server-modules-middleware
@@ -59,7 +67,7 @@ nx g @nrwl/express:app zhi-server-modules-middleware
 ## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
 ## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
 ## pnpm install @nxlv/python --save-dev
-npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
+npx nx g @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
 ```
 
 ## 设置

@@ -1,0 +1,28 @@
+{
+    "name": "zhi-server-modules-infra",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/zhi-server-modules-infra/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/zhi/server/infra",
+                "main": "packages/zhi-server-modules-infra/src/index.ts",
+                "format": ["cjs"],
+                "tsConfig": "packages/zhi-server-modules-infra/tsconfig.lib.json",
+                "assets": ["packages/zhi-server-modules-infra/*.md"],
+                "generatePackageJson": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/zhi-server-modules-infra/**/*.ts"]
+            }
+        }
+    },
+    "tags": []
+}
