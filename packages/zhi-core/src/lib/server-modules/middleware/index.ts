@@ -42,7 +42,7 @@ class MiddlewareEntry {
             // middlewareDepItem
             {
                 format: "esm",
-                libpath: this.common.siyuanUtil.joinPath("server", "middleware", "main.js"),
+                libpath: this.common.siyuanUtil.joinPath("server", "middleware", "index.js"),
                 importType: "import",
                 runAs: DeviceType.DeviceType_Siyuan_MainWin,
             },
