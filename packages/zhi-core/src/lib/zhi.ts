@@ -171,7 +171,7 @@ class Zhi {
                 // 如果有初始化方法，进行初始化
                 if (lib) {
                     const libObj = lib
-                    this.logger.debug(this.common.strUtil.f("Success {0} lib Obj=>", item.importType), libObj)
+                    this.logger.debug(this.common.strUtil.f("Current {0} lib Obj=>", item.importType), libObj)
                     if (libObj.init) {
                         const res = await libObj.init()
                         if (res) {
@@ -194,7 +194,7 @@ class Zhi {
                         this.common.strUtil.f("Lib entry is not a function => {0} {1}", item.importType, item.libpath)
                     )
                 }
-                this.logger.info(this.common.strUtil.f("loaded {0} {1}", item.importType, item.libpath))
+                this.logger.info(this.common.strUtil.f("Success {0} {1}", item.importType, item.libpath))
             }
 
             this.logger.info("Theme inited.")
