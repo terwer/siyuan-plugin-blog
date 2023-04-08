@@ -24,13 +24,13 @@ specifiers:
   vitest: ^0.29.3
   vue-instantsearch: ^4.8.7
   vue-tsc: ^1.2.0
-  zhi-sdk: ^1.1.0
+  zhi-sdk: ^1.2.1
 
 dependencies:
   good-storage: 1.1.1
   next-vue-device-detector: 0.0.1
   vue-instantsearch: 4.8.7
-  zhi-sdk: 1.1.0
+  zhi-sdk: 1.2.1
 
 devDependencies:
   '@iconify/json': 2.2.36
@@ -9545,8 +9545,8 @@ packages:
       zhi-env: 1.10.0
     dev: false
 
-  /zhi-sdk/1.1.0:
-    resolution: {integrity: sha512-TKaBOHDNVzV2m2ULTDLMumcsvQWGFInQnKl/X/sdpkx9Tkhyw+Wu4JLrilZR3N0EvKnP/AlUnSFa5z/vsaSi5Q==}
+  /zhi-sdk/1.2.1:
+    resolution: {integrity: sha512-CKmc427hj40qv2gjcszbNZUGIvvFsKLQjwBZzJN8GV3UtswDJt8bG9r6SASYtwuRxxxO/i7ianikfXYAUTN4kA==}
     dependencies:
       compare-versions: 6.0.0-rc.1
       showdown: 2.1.0
