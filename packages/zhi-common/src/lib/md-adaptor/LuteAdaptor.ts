@@ -26,7 +26,6 @@
 import MarkdownAdaptor from "./MarkdownAdaptor"
 import ZhiUtil from "../ZhiUtil"
 import Module from "node:module"
-import { globals } from "eslint-config-standard-with-typescript"
 
 /**
  * Lute 适配器
