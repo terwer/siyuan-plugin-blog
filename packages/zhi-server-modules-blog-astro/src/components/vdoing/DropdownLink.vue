@@ -1,51 +1,56 @@
 <template>
-  <div class="dropdown-wrapper">
-    <button class="dropdown-title" type="button" :aria-label="computes.dropdownAriaLabel.value" @click="methods.toggle">
-      <a v-if="props.item.link" :href="props.item.link" class="link-title">{{ props.item.text }}</a>
-      <span class="title" v-show="!props.item.link">{{ props.item.text }}</span>
-      <span class="arrow" :class="datas.open ? 'down' : 'right'"></span>
-    </button>
+    <div class="dropdown-wrapper">
+        <button
+            class="dropdown-title"
+            type="button"
+            :aria-label="computes.dropdownAriaLabel.value"
+            @click="methods.toggle"
+        >
+            <a v-if="props.item.link" :href="props.item.link" class="link-title">{{ props.item.text }}</a>
+            <span class="title" v-show="!props.item.link">{{ props.item.text }}</span>
+            <span class="arrow" :class="datas.open ? 'down' : 'right'"></span>
+        </button>
 
-    <transition>
-      <ul class="nav-dropdown" v-show="datas.open">
-        <li class="dropdown-item" :key="subItem.link || index" v-for="(subItem, index) in props.item.items">
-          <h4 v-if="subItem.type === 'links'">{{ subItem.text }}</h4>
+        <transition>
+            <ul class="nav-dropdown" v-show="datas.open">
+                <li class="dropdown-item" :key="subItem.link || index" v-for="(subItem, index) in props.item.items">
+                    <h4 v-if="subItem.type === 'links'">{{ subItem.text }}</h4>
 
-          <ul class="dropdown-subitem-wrapper" v-if="subItem.type === 'links'">
-            <li class="dropdown-subitem" :key="childSubItem.link" v-for="childSubItem in subItem.items">
-              <NavLink
-                @focusout="
-                  methods.isLastItemOfArray(childSubItem, subItem.items) &&
-                    methods.isLastItemOfArray(subItem, props.item.items) &&
-                    methods.toggle()
-                "
-                :item="childSubItem"
-              />
-            </li>
-          </ul>
+                    <ul class="dropdown-subitem-wrapper" v-if="subItem.type === 'links'">
+                        <li class="dropdown-subitem" :key="childSubItem.link" v-for="childSubItem in subItem.items">
+                            <NavLink
+                                @focusout="
+                                    methods.isLastItemOfArray(childSubItem, subItem.items) &&
+                                        methods.isLastItemOfArray(subItem, props.item.items) &&
+                                        methods.toggle()
+                                "
+                                :item="childSubItem"
+                            />
+                        </li>
+                    </ul>
 
-          <NavLink
-            v-else
-            @focusout="methods.isLastItemOfArray(subItem, props.item.items) && methods.toggle()"
-            :item="subItem"
-          />
-        </li>
-      </ul>
-    </transition>
-  </div>
+                    <NavLink
+                        v-else
+                        @focusout="methods.isLastItemOfArray(subItem, props.item.items) && methods.toggle()"
+                        :item="subItem"
+                    />
+                </li>
+            </ul>
+        </transition>
+    </div>
 </template>
 
 <script setup lang="ts">
 import last from "lodash"
-import NavLink from "@components/vdoing/NavLink.vue"
+import NavLink from "@astroBlog/src/components/vdoing/NavLink.vue"
 import { computed, onBeforeMount, reactive } from "vue"
 
 // props
 const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
+    item: {
+        type: Object,
+        required: true,
+    },
 })
 
 // uses
@@ -53,36 +58,36 @@ const props = defineProps({
 
 // datas
 const datas = reactive({
-  open: false,
-  isMQMobile: false,
+    open: false,
+    isMQMobile: false,
 })
 
 // computes
 const computes = {
-  dropdownAriaLabel: computed(() => {
-    return props.item.ariaLabel || props.item.text
-  }),
+    dropdownAriaLabel: computed(() => {
+        return props.item.ariaLabel || props.item.text
+    }),
 }
 
 // methods
 const methods = {
-  toggle: () => {
-    if (datas.isMQMobile) {
-      datas.open = !datas.open
-    }
-  },
-  isLastItemOfArray: (item: any, array: any) => {
-    return last(array) === item
-  },
+    toggle: () => {
+        if (datas.isMQMobile) {
+            datas.open = !datas.open
+        }
+    },
+    isLastItemOfArray: (item: any, array: any) => {
+        return last(array) === item
+    },
 }
 
 // lifecycle
 onBeforeMount(() => {
-  datas.isMQMobile = window.innerWidth < 720
-
-  window.addEventListener("resize", () => {
     datas.isMQMobile = window.innerWidth < 720
-  })
+
+    window.addEventListener("resize", () => {
+        datas.isMQMobile = window.innerWidth < 720
+    })
 })
 
 // watch(

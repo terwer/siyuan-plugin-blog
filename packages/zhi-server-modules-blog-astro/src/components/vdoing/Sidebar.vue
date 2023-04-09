@@ -1,52 +1,52 @@
 <template>
-  <aside class="sidebar">
-    <div class="blogger" v-if="computes.blogger">
-      <img :src="computes.blogger.value.avatar" alt="" />
-      <div class="blogger-info">
-        <h3>{{ computes.blogger.value.name }}</h3>
+    <aside class="sidebar">
+        <div class="blogger" v-if="computes.blogger">
+            <img :src="computes.blogger.value.avatar" alt="" />
+            <div class="blogger-info">
+                <h3>{{ computes.blogger.value.name }}</h3>
 
-        <div class="icons" v-if="computes.blogger.value.social">
-          <a
-            v-for="(item, index) in computes.blogger.value.social.icons"
-            :href="item.link"
-            :title="item.title"
-            :class="['iconfont', item.iconClass]"
-            :key="index"
-            target="_blank"
-          ></a>
+                <div class="icons" v-if="computes.blogger.value.social">
+                    <a
+                        v-for="(item, index) in computes.blogger.value.social.icons"
+                        :href="item.link"
+                        :title="item.title"
+                        :class="['iconfont', item.iconClass]"
+                        :key="index"
+                        target="_blank"
+                    ></a>
+                </div>
+                <span v-else>{{ computes.blogger.value.slogan }}</span>
+            </div>
         </div>
-        <span v-else>{{ computes.blogger.value.slogan }}</span>
-      </div>
-    </div>
 
-    <!-- 移动端Nav -->
-    <NavLinks />
-  </aside>
+        <!-- 移动端Nav -->
+        <NavLinks />
+    </aside>
 </template>
 
 <script setup lang="ts">
-import NavLinks from "@components/vdoing/NavLinks.vue"
-import appConfig from "@src/app.config"
+import NavLinks from "@astroBlog/src/components/vdoing/NavLinks.vue"
+import appConfig from "@astroBlog/src/app.config"
 import { onBeforeMount, computed, reactive } from "vue"
 
 // props
 const props = defineProps({
-  items: {
-    type: Object,
-    required: true,
-  },
+    items: {
+        type: Object,
+        required: true,
+    },
 })
 
 // datas
 const datas = reactive({
-  isMobile: false,
+    isMobile: false,
 })
 
 // computes
 const computes = {
-  blogger: computed(() => {
-    return appConfig.themeConfig.blogger
-  }),
+    blogger: computed(() => {
+        return appConfig.themeConfig.blogger
+    }),
 }
 
 // lifecycle

@@ -17,13 +17,19 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            // libs
             "zhi-blog-api": ["packages/zhi-blog-api/src/index.ts"],
             "zhi-cli": ["packages/zhi-cli/src/index.ts"],
             "zhi-common": ["packages/zhi-common/src/index.ts"],
             "zhi-env": ["packages/zhi-env/src/index.ts"],
             "zhi-log": ["packages/zhi-log/src/index.ts"],
             "zhi-sdk": ["packages/zhi-sdk/src/index.ts"],
-            "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"]
+            "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"],
+
+            // apps
+            "@nuxtBlog/*": ["packages/zhi-server-modules-blog/*"],
+            "@astroBlog/*": ["packages/zhi-server-modules-blog-astro/*"],
+            "@vueBlog/*": ["packages/zhi-web-modules-blog/*"],
         }
     },
     "exclude": ["node_modules", "tmp"]

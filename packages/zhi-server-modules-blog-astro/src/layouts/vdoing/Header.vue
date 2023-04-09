@@ -1,58 +1,57 @@
 <template>
-  <!-- 页眉 -->
-  <Navbar v-if="computes.shouldShowNavbar.value" @toggle-sidebar="methods.toggleSidebar" />
+    <!-- 页眉 -->
+    <Navbar v-if="computes.shouldShowNavbar.value" @toggle-sidebar="methods.toggleSidebar" />
 
-  <!-- 侧边栏 -->
-  <div class="sidebar-mask" @click="methods.toggleSidebar(false)"></div>
-  <div v-if="appConfig.themeConfig.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
-  <Sidebar :items="computes.sidebarItems" @toggle-sidebar="methods.toggleSidebar" v-show="datas.showSidebar" />
+    <!-- 侧边栏 -->
+    <div class="sidebar-mask" @click="methods.toggleSidebar(false)"></div>
+    <div v-if="appConfig.themeConfig.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
+    <Sidebar :items="computes.sidebarItems" @toggle-sidebar="methods.toggleSidebar" v-show="datas.showSidebar" />
 </template>
 
 <script lang="ts" setup>
-import Navbar from "@components/vdoing/Navbar.vue"
-import ZhiUtil from "@utils/zhiUtil"
+import Navbar from "@astroBlog/src/components/vdoing/Navbar.vue"
+import ZhiUtil from "@astroBlog/src/utils/zhiUtil"
 import { computed, reactive, onMounted } from "vue"
-import appConfig from "@src/app.config"
-import Sidebar from "@components/vdoing/Sidebar.vue"
+import appConfig from "@astroBlog/src/app.config"
+import Sidebar from "@astroBlog/src/components/vdoing/Sidebar.vue"
 
-const zhiSdk = ZhiUtil.zhiSdk()
-const logger = zhiSdk.getLogger()
+const logger = ZhiUtil.zhiLog("vdoing-header")
 
 // datas
 const datas = reactive({
-  isSidebarOpen: false,
-  showSidebar: false,
+    isSidebarOpen: false,
+    showSidebar: false,
 })
 
 // computes
 const computes = {
-  sidebarItems: computed(() => {
-    return []
-  }),
-  shouldShowNavbar: computed(() => {
-    return true
-  }),
+    sidebarItems: computed(() => {
+        return []
+    }),
+    shouldShowNavbar: computed(() => {
+        return true
+    }),
 }
 
 // methods
 const methods = {
-  toggleSidebar: (to: any) => {
-    datas.isSidebarOpen = typeof to === "boolean" ? to : !datas.isSidebarOpen
+    toggleSidebar: (to: any) => {
+        datas.isSidebarOpen = typeof to === "boolean" ? to : !datas.isSidebarOpen
 
-    const container = document.querySelector(".theme-container")
-    if (container) {
-      container.classList.toggle("sidebar-open")
-      container.classList.toggle("no-sidebar")
-    }
+        const container = document.querySelector(".theme-container")
+        if (container) {
+            container.classList.toggle("sidebar-open")
+            container.classList.toggle("no-sidebar")
+        }
 
-    logger.debug("toggleSidebar triggered=>", datas.isSidebarOpen)
-  },
+        logger.debug("toggleSidebar triggered=>", datas.isSidebarOpen)
+    },
 }
 
 // lifecycle
 onMounted(() => {
-  // 解决移动端初始化页面时侧边栏闪现的问题
-  datas.showSidebar = true
+    // 解决移动端初始化页面时侧边栏闪现的问题
+    datas.showSidebar = true
 })
 </script>
 

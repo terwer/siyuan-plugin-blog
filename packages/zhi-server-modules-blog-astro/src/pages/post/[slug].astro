@@ -1,13 +1,12 @@
 ---
-import Layout from "@layouts/vdoing/Layout.astro"
-import ZhiUtil from "@utils/zhiUtil"
+import Layout from "@astroBlog/src/layouts/vdoing/Layout.astro"
+import ZhiUtil from "@astroBlog/src/utils/ZhiUtil";
 
-const zhiSdk = ZhiUtil.zhiSdk()
-const blogApi = zhiSdk.blogApi
+// const blogApi = zhiSdk.blogApi
 
 const { slug } = Astro.params
 const postid = slug.includes(".html") ? slug.replace(".html", "") : slug
-const post = await blogApi.getPost(postid)
+const post = {title:"hello",description:"world"} //await blogApi.getPost(postid)
 ---
 
 <Layout title="This is detail page.">

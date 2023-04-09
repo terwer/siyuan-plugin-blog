@@ -32,49 +32,49 @@ export const outboundRE = /^[a-z]+:/i
  * Vdoing 主题工具类
  */
 class VdoingUtil {
-  public static resolveNavLinkItem(linkItem: any) {
-    return Object.assign(linkItem, {
-      type: linkItem.items && linkItem.items.length ? "links" : "link",
-    })
-  }
-
-  public static isExternal(path: string) {
-    return outboundRE.test(path)
-  }
-
-  public static isMailto(path: string) {
-    return /^mailto:/.test(path)
-  }
-
-  public static isTel(path: string) {
-    return /^tel:/.test(path)
-  }
-
-  public static ensureExt(path: string) {
-    if (VdoingUtil.isExternal(path)) {
-      return path
+    public static resolveNavLinkItem(linkItem: any) {
+        return Object.assign(linkItem, {
+            type: linkItem.items && linkItem.items.length ? "links" : "link",
+        })
     }
-    if (!path) return "404"
-    const hashMatch = path.match(hashRE)
-    const hash = hashMatch ? hashMatch[0] : ""
 
-    // const normalized = normalize(path)
-    const normalized = path
-    if (endingSlashRE.test(normalized)) {
-      return path
+    public static isExternal(path: string) {
+        return outboundRE.test(path)
     }
-    return normalized + ".html" + hash
-  }
 
-  /**
-   * 类型判断
-   * @param o - 参数
-   */
-  public static type(o: any) {
-    const s = Object.prototype.toString.call(o)
-    const m = s.match(/\[object (.*?)\]/) ?? []
-    return m[1].toLowerCase()
-  }
+    public static isMailto(path: string) {
+        return /^mailto:/.test(path)
+    }
+
+    public static isTel(path: string) {
+        return /^tel:/.test(path)
+    }
+
+    public static ensureExt(path: string) {
+        if (VdoingUtil.isExternal(path)) {
+            return path
+        }
+        if (!path) return "404"
+        const hashMatch = path.match(hashRE)
+        const hash = hashMatch ? hashMatch[0] : ""
+
+        // const normalized = normalize(path)
+        const normalized = path
+        if (endingSlashRE.test(normalized)) {
+            return path
+        }
+        return normalized + ".html" + hash
+    }
+
+    /**
+     * 类型判断
+     * @param o - 参数
+     */
+    public static type(o: any) {
+        const s = Object.prototype.toString.call(o)
+        const m = s.match(/\[object (.*?)\]/) ?? []
+        return m[1].toLowerCase()
+    }
 }
 
 export default VdoingUtil

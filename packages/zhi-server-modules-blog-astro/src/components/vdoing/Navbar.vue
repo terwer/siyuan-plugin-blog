@@ -1,40 +1,40 @@
 <template>
-  <header class="navbar blur">
-    <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
+    <header class="navbar blur">
+        <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
 
-    <a href="/" class="home-link">
-      <img
-        class="logo"
-        v-if="appConfig.themeConfig.logo"
-        :src="appConfig.themeConfig.logo"
-        :alt="appConfig.siteTitle"
-      />
-      <div class="site-info">
-        <div ref="siteName" class="site-name" v-if="appConfig.siteTitle">
-          {{ appConfig.siteTitle }}
-        </div>
-        <div class="site-slogan">{{ appConfig.siteSlogan }}</div>
-      </div>
-    </a>
+        <a href="/" class="home-link">
+            <img
+                class="logo"
+                v-if="appConfig.themeConfig.logo"
+                :src="appConfig.themeConfig.logo"
+                :alt="appConfig.siteTitle"
+            />
+            <div class="site-info">
+                <div ref="siteName" class="site-name" v-if="appConfig.siteTitle">
+                    {{ appConfig.siteTitle }}
+                </div>
+                <div class="site-slogan">{{ appConfig.siteSlogan }}</div>
+            </div>
+        </a>
 
-    <div class="links" :style="datas.linksWrapMaxWidth ? { 'max-width': datas.linksWrapMaxWidth + 'px' } : {}">
-      <!--
+        <div class="links" :style="datas.linksWrapMaxWidth ? { 'max-width': datas.linksWrapMaxWidth + 'px' } : {}">
+            <!--
       <MeiliSearchBox v-if="computes.isMeilisearch" />
       -->
-      <NavLinks class="can-hide" />
-    </div>
-  </header>
+            <NavLinks class="can-hide" />
+        </div>
+    </header>
 </template>
 
 <script setup lang="ts">
-import SidebarButton from "@components/vdoing/SidebarButton.vue"
-import appConfig from "@src/app.config"
-import NavLinks from "@components/vdoing/NavLinks.vue"
+import SidebarButton from "@astroBlog/src/components/vdoing/SidebarButton.vue"
+import appConfig from "@astroBlog/src/app.config"
+import NavLinks from "@astroBlog/src/components/vdoing/NavLinks.vue"
 import { reactive } from "vue"
 
 // datas
 const datas = reactive({
-  linksWrapMaxWidth: null,
+    linksWrapMaxWidth: null,
 })
 </script>
 
