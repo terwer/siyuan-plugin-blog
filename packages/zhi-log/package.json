@@ -1,15 +1,15 @@
 {
-  "name": "zhi-log",
-  "version": "1.7.0",
-  "type": "module",
-  "description": "a simple logger for Node and Browser",
-  "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-log",
-  "author": "terwer",
-  "license": "GPL",
-  "keywords": [
-    "zhi-log",
-    "zhi",
-    "log"
-  ]
+    "name": "zhi-log",
+    "version": "1.8.0",
+    "type": "module",
+    "description": "a simple logger for Node and Browser",
+    "repository": "terwer/zhi",
+    "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-log",
+    "author": "terwer",
+    "license": "GPL",
+    "keywords": [
+        "zhi-log",
+        "zhi",
+        "log"
+    ]
 }

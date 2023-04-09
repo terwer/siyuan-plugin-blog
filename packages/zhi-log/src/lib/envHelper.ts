@@ -33,47 +33,49 @@ import Env from "zhi-env"
  * @since 1.4.0
  */
 class EnvHelper {
-  /**
-   * 解析日志级别为枚举
-   *
-   * @param enumObj 枚举对象
-   * @param value 配置的值
-   */
-  private static stringToEnumValue<T extends Record<string, string>, K extends keyof T>(
-    enumObj: T,
-    value: string
-  ): T[keyof T] | undefined {
-    return enumObj[Object.keys(enumObj).filter((k) => enumObj[k as K].toString() === value)[0] as keyof typeof enumObj]
-  }
-
-  /**
-   * 获取配置的日志级别
-   */
-  public static getEnvLevel(env?: Env): LogLevelEnum | undefined {
-    if (!env) {
-      return undefined
+    /**
+     * 解析日志级别为枚举
+     *
+     * @param enumObj 枚举对象
+     * @param value 配置的值
+     */
+    private static stringToEnumValue<T extends Record<string, string>, K extends keyof T>(
+        enumObj: T,
+        value: string
+    ): T[keyof T] | undefined {
+        return enumObj[
+            Object.keys(enumObj).filter((k) => enumObj[k as K].toString() === value)[0] as keyof typeof enumObj
+        ]
     }
 
-    const envValue = env.getEnvOrDefault(LogConstants.LOG_LEVEL_KEY, LogLevelEnum.LOG_LEVEL_INFO)
-    const envLevel = EnvHelper.stringToEnumValue(LogLevelEnum, envValue.toUpperCase())
-    if (!envLevel) {
-      console.warn(
-        "[zhi-log] LOG_LEVEL is invalid in you .env file.Must be either debug, info, warn or error, fallback to default info level"
-      )
+    /**
+     * 获取配置的日志级别
+     */
+    public static getEnvLevel(env?: Env): LogLevelEnum | undefined {
+        if (!env) {
+            return undefined
+        }
+
+        const envValue = env.getEnvOrDefault(LogConstants.LOG_LEVEL_KEY, LogLevelEnum.LOG_LEVEL_INFO)
+        const envLevel = EnvHelper.stringToEnumValue(LogLevelEnum, envValue.toUpperCase())
+        if (!envLevel) {
+            console.warn(
+                "[zhi-log] LOG_LEVEL is invalid in you .env file.Must be either debug, info, warn or error, fallback to default info level"
+            )
+        }
+
+        return envLevel
     }
 
-    return envLevel
-  }
-
-  /**
-   * 获取默认日志
-   */
-  public static getEnvLogger(env?: Env): string | undefined {
-    if (!env) {
-      return undefined
+    /**
+     * 获取默认日志
+     */
+    public static getEnvLogger(env?: Env): string | undefined {
+        if (!env) {
+            return undefined
+        }
+        return env.getEnv(LogConstants.LOG_PREFIX_KEY)
     }
-    return env.getEnv(LogConstants.LOG_PREFIX_KEY)
-  }
 }
 
 export default EnvHelper

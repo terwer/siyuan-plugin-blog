@@ -10,7 +10,7 @@ For simple use
 import Env from "zhi-env"
 
 const env = new Env({
-  "some-key": "some-value",
+    "some-key": "some-value",
 })
 const val = env.getEnv("some-key")
 console.log("val=>", val)
