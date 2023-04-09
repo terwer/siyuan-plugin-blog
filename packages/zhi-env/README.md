@@ -38,6 +38,30 @@ const val = env.getEnv("some-key")
 console.log("val=>", val)
 ```
 
+For `Astro` framework or other libs
+
+```ts
+import Env from "zhi-env"
+
+// https://github.com/vitejs/vite/issues/9539#issuecomment-1206301266
+// 1 add modules:esnext tsconfig.app.json
+// 2 add custom.d.ts
+const envMeta = import.meta.env
+
+const customEnv = {
+    [EnvConstants.NODE_ENV_KEY]: EnvConstants.NODE_ENV_DEVELOPMENT,
+    [EnvConstants.VITE_DEBUG_MODE_KEY]: false,
+    [LogConstants.LOG_LEVEL_KEY]: LogLevelEnum.LOG_LEVEL_DEBUG,
+    [LogConstants.LOG_PREFIX_KEY]: "zhi-common",
+    ...envMeta,
+}
+
+const env = new Env(customEnv)
+
+const val = env.getEnv("some-key")
+console.log("val=>", val)
+```
+
 ## Deps
 
 ```

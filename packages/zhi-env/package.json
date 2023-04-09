@@ -1,6 +1,6 @@
 {
   "name": "zhi-env",
-  "version": "1.11.3",
+  "version": "1.12.0",
   "type": "module",
   "description": "a cross-platform env config lib",
   "repository": "terwer/zhi",
