@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "license": "GPL",
     "scripts": {
-        "zhi-dev": "pnpm build && pnpm zhi-build",
         "build": "nx run-many --target=build --exclude=zhi-docs",
         "zhi-build": "nx zhi-build zhi-core",
         "test": "nx run-many --target=test --exclude=zhi-docs",
@@ -14,7 +13,9 @@
         "update": "nx uodate <project>",
         "deploy": "nx deploy <project>",
         "publish": "nx publish <project> [--ver=0.0.1] [--tag=latest]",
-        "postinstall": "node ./tools/scripts/patch-nx-cli.js"
+        "zhi-publish": "pnpm build && pnpm zhi-build",
+        "postinstall": "node ./tools/scripts/patch-nx-cli.js",
+        "repo": "nx repo <project> [--to=../zhi-blog-astro]"
     },
     "private": true,
     "devDependencies": {

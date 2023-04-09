@@ -97,9 +97,7 @@ class ZhiUtil {
             // 生成新的日志器
             const env = ZhiUtil.zhiEnv()
             ZhiUtil.loggerMap = {}
-            ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-blog-astro", env).getLogger(
-                loggerName
-            )
+            ZhiUtil.loggerMap[loggerName] = LogFactory.customSignLogFactory("zhi-blog-astro", env).getLogger(loggerName)
             ZhiUtil.loggerMap[loggerName].debug("Zhi-log inited.")
         }
 

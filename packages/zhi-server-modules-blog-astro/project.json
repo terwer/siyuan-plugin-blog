@@ -28,6 +28,12 @@
         },
         "sync": {
             "executor": "@nxtensions/astro:sync"
+        },
+        "repo": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node tools/scripts/repo.mjs zhi-server-modules-blog-astro {args.to}"
+            }
         }
     },
     "tags": []
