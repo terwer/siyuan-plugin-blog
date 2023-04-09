@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "license": "GPL",
     "scripts": {
+        "reset": "nx reset",
         "build": "nx run-many --target=build --exclude=zhi-docs",
         "zhi-build": "nx zhi-build zhi-core",
         "test": "nx run-many --target=test --exclude=zhi-docs",

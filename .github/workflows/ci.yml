@@ -43,5 +43,5 @@ jobs:
         run: pnpm i --registry=https://registry.npmmirror.com
 
       - name: build for production
-        run: nx reset && pnpm build
+        run: pnpm reset && pnpm build
 
