@@ -23,41 +23,6 @@
  * questions.
  */
 
-import LuteAdaptor from "./md-adaptor/LuteAdaptor";
-import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor";
-
-/**
- * Markdown 处理工具类
- *
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-class MarkdownUtil {
-    public mdAdaptor
-    private readonly lute: LuteAdaptor
-
-    constructor() {
-        this.lute = new LuteAdaptor()
-        if (this.lute.isAvailable()) {
-            this.mdAdaptor = this.lute
-        } else {
-            this.mdAdaptor = new ShowdownAdaptor()
-        }
-    }
-
-    /**
-     * 渲染Markdown
-     *
-     * @param md - Markdown文本
-     * @param useLute - 使用 Lute
-     */
-    public async renderHTML(md: string, useLute?: boolean): Promise<string> {
-        if (useLute) {
-            this.mdAdaptor = this.lute
-        }
-        return await this.mdAdaptor.renderMarkdownStr(md)
-    }
+interface ImportMeta {
+    readonly env: ImportMetaEnv
 }
-
-export default MarkdownUtil

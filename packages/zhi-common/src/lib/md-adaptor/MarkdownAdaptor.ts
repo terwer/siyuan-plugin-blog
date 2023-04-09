@@ -41,7 +41,7 @@ interface MarkdownAdaptor {
      *
      * @param md - Markdown
      */
-    renderMarkdownStr(md: string): string
+    renderMarkdownStr(md: string): Promise<string>
 }
 
 export default MarkdownAdaptor

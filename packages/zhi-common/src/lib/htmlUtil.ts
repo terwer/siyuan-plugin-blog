@@ -156,8 +156,8 @@ class HtmlUtil {
      *
      * @param md - Markdown
      */
-    public mdToHtml(md: string): string {
-        const html = this.mdUtil.renderHTML(md)
+    public async mdToHtml(md: string): Promise<string> {
+        const html = await this.mdUtil.renderHTML(md)
         return this.removeWidgetTag(html)
     }
 
@@ -166,8 +166,8 @@ class HtmlUtil {
      *
      * @param md - Markdown
      */
-    public mdToPlainText(md: string): string {
-        const html = this.mdToHtml(md)
+    public async mdToPlainText(md: string): Promise<string> {
+        const html = await this.mdToHtml(md)
         return this.filterHtml(html)
     }
 

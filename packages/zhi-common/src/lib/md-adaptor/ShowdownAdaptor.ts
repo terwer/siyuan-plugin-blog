@@ -44,11 +44,11 @@ class ShowdownAdaptor implements MarkdownAdaptor {
         return typeof showdown !== "undefined"
     }
 
-    renderMarkdownStr(md: string): string {
+    renderMarkdownStr(md: string): Promise<string> {
         if (!this.isAvailable()) {
             throw new Error("Showdown is not available")
         }
-        return this.converter.makeHtml(md)
+        return Promise.resolve(this.converter.makeHtml(md))
     }
 }
 
