@@ -2,9 +2,8 @@
 import Layout from "@layouts/vdoing/Layout.astro"
 import ZhiUtil from "@utils/zhiUtil"
 
-const zhiSdk = ZhiUtil.zhiSdk()
-const blogApi = zhiSdk.blogApi
-const posts = await blogApi.getRecentPosts(10)
+// const blogApi = ZhiUtil.siyuanKernelApi()
+const posts = [] //await blogApi.getRecentPosts(10)
 ---
 
 <Layout title="Welcome to index.">

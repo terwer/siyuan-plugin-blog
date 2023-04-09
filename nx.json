@@ -9,7 +9,7 @@
             "!{projectRoot}/tsconfig.spec.json",
             "!{projectRoot}/.eslintrc.json"
         ],
-        "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
+        "sharedGlobals": []
     },
     "targetDefaults": {
         "build": {

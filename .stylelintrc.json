@@ -9,10 +9,13 @@
         "value-list-comma-space-before": "never",
         "value-list-comma-space-after": "always",
         "selector-class-pattern": null,
+        "function-no-unknown": null,
+        "custom-property-pattern": "^-?\\w*",
         "stylus/declaration-colon": "never",
         "stylus/pythonic": "always",
         "stylus/selector-list-comma": "never",
         "stylus/semicolon": "never",
-        "stylus/single-line-comment": "always"
+        "stylus/single-line-comment": "always",
+        "stylus/selector-type-no-unknown": "never"
     }
 }

@@ -1,26 +1,39 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        // Enable top-level await, and other modern ESM features
-        "target": "ESNext",
-        "module": "ESNext",
-        // Enable node-style module resolution, for things like npm package imports
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
         "moduleResolution": "node",
-        // Enable JSON imports
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
-        // Enable stricter transpilation for better output
-        "isolatedModules": true,
-        // Astro directly run TypeScript code, no transpilation needed
-        "noEmit": true,
-        // Report an error when importing a file using a casing different from the casing on disk
-        "forceConsistentCasingInFileNames": true,
-        // Properly support importing CJS modules in ESM
-        "esModuleInterop": true,
-        // Skip typechecking libraries and .d.ts files
+        "importHelpers": false,
+        "target": "esnext",
+        "module": "esnext",
+        "lib": ["es2020", "dom"],
         "skipLibCheck": true,
-        // Enable strict mode
-        "strict": true,
-        // Error when a value import is only used as a type
-        "importsNotUsedAsValues": "error"
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+
+        "paths": {
+            // base
+            "zhi-blog-api": ["packages/zhi-blog-api/src/index.ts"],
+            "zhi-cli": ["packages/zhi-cli/src/index.ts"],
+            "zhi-common": ["packages/zhi-common/src/index.ts"],
+            "zhi-env": ["packages/zhi-env/src/index.ts"],
+            "zhi-log": ["packages/zhi-log/src/index.ts"],
+            "zhi-sdk": ["packages/zhi-sdk/src/index.ts"],
+            "zhi-siyuan-api": ["packages/zhi-siyuan-api/src/index.ts"],
+
+            // project
+            "@components/*": ["packages/zhi-server-modules-blog-astro/src/components/*"],
+            "@assets/*": ["packages/zhi-server-modules-blog-astro/src/assets/*"],
+            "@utils/*": ["packages/zhi-server-modules-blog-astro/src/utils/*"],
+            "@layouts/*": ["packages/zhi-server-modules-blog-astro/src/layouts/*"],
+            "@pages/*": ["packages/zhi-server-modules-blog-astro/src/pages/*"],
+            "@src/*": ["packages/zhi-server-modules-blog-astro/src/*"]
+        }
     }
 }
