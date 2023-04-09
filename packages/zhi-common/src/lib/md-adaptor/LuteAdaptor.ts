@@ -23,9 +23,9 @@
  * questions.
  */
 
-import MarkdownAdaptor from "./MarkdownAdaptor"
-import ZhiUtil from "../ZhiUtil"
-import Module from "node:module"
+import MarkdownAdaptor from "./MarkdownAdaptor";
+import ZhiUtil from "../ZhiUtil";
+import Module from "node:module";
 
 /**
  * Lute 适配器
@@ -87,10 +87,8 @@ class LuteAdaptor implements MarkdownAdaptor {
      * @private
      */
     private highlightWords(str: string) {
-        const regex = /(?<=^|[\s\S])==([^\n]+?)==(?=($|[\s\S]))/g;
-        const result = str.replace(regex, '<span class="mark">$1</span>');
-        console.log(result);
-        return result;
+        const regex = /(?<=^|[\s\S])==([^\n]+?)==(?=($|[\s\S]))/g
+        return str.replace(regex, '<span class="mark">$1</span>')
     }
 
     /**
