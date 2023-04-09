@@ -4,7 +4,8 @@
         "outDir": "../../dist/out-tsc",
         "declaration": true,
         "allowJs": true,
-        "types": ["node"]
+        "module": "esnext",
+        "types": ["node", "vite/client"]
     },
     "include": ["src/**/*.ts"],
     "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]

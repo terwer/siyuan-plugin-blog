@@ -48,7 +48,7 @@ class ZhiUtil {
         if (!ZhiUtil.env) {
             // https://github.com/vitejs/vite/issues/9539#issuecomment-1206301266
             // 1 add modules:esnext tsconfig.app.json
-            // 2 add custom.d.ts
+            // 2 add custom.d.ts or add "vite/client" to tsconfig.app.json
             const envMeta = import.meta.env
 
             const customEnv = {

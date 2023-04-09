@@ -35,12 +35,18 @@
     },
     "tasksRunnerOptions": {
         "default": {
-            "runner": "@nrwl/nx-cloud",
+            "runner": "nx/tasks-runners/default",
             "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e", "check"],
-                "accessToken": "MjNjZTQxNDgtYzhiYy00NDg0LWIwMGQtMWJhMjZhZmFlNDc0fHJlYWQtd3JpdGU="
+                "cacheableOperations": []
             }
-        }
+        },
+//        "default": {
+//            "runner": "@nrwl/nx-cloud",
+//            "options": {
+//                "cacheableOperations": ["build", "lint", "test", "e2e", "check"],
+//                "accessToken": "MjNjZTQxNDgtYzhiYy00NDg0LWIwMGQtMWJhMjZhZmFlNDc0fHJlYWQtd3JpdGU="
+//            }
+//        }
     },
     "defaultProject": "zhi-core",
     "generators": {
