@@ -23,13 +23,33 @@
  * questions.
  */
 
-import SiyuanApi from "./lib/zhi-siyuan-api"
-import SiyuanKernelApi from "./lib/siyuanKernelApi"
-import type { SiyuanData } from "./lib/ISiyuanKernelApi"
-import SiyuanConfig from "./lib/siyuanConfig"
-import SiYuanApiAdaptor from "./lib/siYuanApiAdaptor"
-import SiyuanConstants from "./lib/siyuanConstants"
+import MarkdownAdaptor from "./MarkdownAdaptor"
+import showdown from "showdown"
 
-export default SiyuanApi
-export { SiyuanData, SiyuanKernelApi }
-export { SiyuanConstants, SiyuanConfig, SiYuanApiAdaptor }
+/**
+ * showdown 适配器
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class ShowdownAdaptor implements MarkdownAdaptor {
+    private readonly converter
+
+    constructor() {
+        this.converter = new showdown.Converter()
+    }
+
+    isAvailable(): boolean {
+        return typeof showdown !== "undefined"
+    }
+
+    renderMarkdownStr(md: string): string {
+        if (!this.isAvailable()) {
+            throw new Error("Showdown is not available")
+        }
+        return this.converter.makeHtml(md)
+    }
+}
+
+export default ShowdownAdaptor

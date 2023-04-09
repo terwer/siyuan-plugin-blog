@@ -29,6 +29,8 @@ import DeviceUtil from "./deviceUtil"
 import SiyuanUtil from "./siyuanUtil"
 import VersionUtil from "./versionUtil"
 import BrowserUtil from "./browserUtil"
+import HtmlUtil from "./htmlUtil"
+import MarkdownUtil from "./markdownUtil"
 
 /**
  * 平台无关的通用工具类
@@ -43,6 +45,8 @@ class ZhiCommon {
     public readonly siyuanUtil
     public readonly versionUtil
     public readonly browserUtil
+    public readonly htmlUtil
+    public readonly markdownUtil
 
     constructor() {
         this.dateUtil = new DateUtil()
@@ -51,6 +55,8 @@ class ZhiCommon {
         this.siyuanUtil = new SiyuanUtil()
         this.versionUtil = new VersionUtil()
         this.browserUtil = BrowserUtil
+        this.htmlUtil = new HtmlUtil()
+        this.markdownUtil = new MarkdownUtil()
     }
 }
 

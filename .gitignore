@@ -21,6 +21,8 @@ node_modules
 .settings/
 *.sublime-workspace
 *.local
+.env.development
+.env.production
 
 # IDE - VSCode
 .vscode/*

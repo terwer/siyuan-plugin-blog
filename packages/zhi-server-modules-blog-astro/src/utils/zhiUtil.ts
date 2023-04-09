@@ -26,7 +26,8 @@
 import LogFactory, { LogConstants, LogLevelEnum } from "zhi-log"
 import ZhiCommon from "zhi-common"
 import Env, { EnvConstants } from "zhi-env"
-import { SiyuanKernelApi } from "zhi-siyuan-api"
+import { SiYuanApiAdaptor, SiyuanConfig, SiyuanConstants } from "zhi-siyuan-api"
+import BlogApi, { BlogConstants, BlogTypeEnum } from "zhi-blog-api"
 
 /**
  * 工具类统一入口，每个应用自己实现
@@ -43,7 +44,7 @@ class ZhiUtil {
     private static loggerMap: any
     private static common: ZhiCommon
     private static env: Env
-    private static kernelApi: SiyuanKernelApi
+    private static bApi: BlogApi
 
     /**
      * 获取 zhi-env 实例
@@ -53,13 +54,14 @@ class ZhiUtil {
             // https://github.com/vitejs/vite/issues/9539#issuecomment-1206301266
             // 1 add modules:esnext tsconfig.app.json
             // 2 add custom.d.ts
-            // const envMeta = import.meta.env
+            const envMeta = import.meta.env
 
             const customEnv = {
                 [EnvConstants.NODE_ENV_KEY]: EnvConstants.NODE_ENV_DEVELOPMENT,
                 [EnvConstants.VITE_DEBUG_MODE_KEY]: false,
                 [LogConstants.LOG_LEVEL_KEY]: LogLevelEnum.LOG_LEVEL_DEBUG,
                 [LogConstants.LOG_PREFIX_KEY]: "zhi-blog-astro",
+                ...envMeta,
             }
 
             ZhiUtil.env = new Env(customEnv)
@@ -108,12 +110,32 @@ class ZhiUtil {
     /**
      * 获取 siyuan-kernel-api 实例
      */
-    public static siyuanKernelApi() {
-        if (!ZhiUtil.kernelApi) {
+    public static blogApi() {
+        if (!ZhiUtil.bApi) {
             const env = ZhiUtil.zhiEnv()
-            ZhiUtil.kernelApi = new SiyuanKernelApi(env)
+
+            let apiAdaptor
+            const blogType = env.getEnv(BlogConstants.DEFAULT_BLOG_TYPE_KEY)
+            switch (blogType) {
+                case BlogTypeEnum.BlogTypeEnum_Wordpress:
+                    break
+                default:
+                    const apiUrl = env.getEnvOrDefault(SiyuanConstants.VITE_SIYUAN_API_URL_KEY, "http://127.0.0.1:6806")
+                    const token = env.getStringEnv(SiyuanConstants.VITE_SIYUAN_AUTH_TOKEN_KEY)
+
+                    const siyuanConfig = new SiyuanConfig(apiUrl, token)
+                    // 显示指定修复标题
+                    siyuanConfig.fixTitle = true
+                    apiAdaptor = new SiYuanApiAdaptor(siyuanConfig)
+                    break
+            }
+
+            if (!apiAdaptor) {
+                throw new Error("ApiAdaptor cannot be null")
+            }
+            ZhiUtil.bApi = new BlogApi(apiAdaptor)
         }
-        return ZhiUtil.kernelApi
+        return ZhiUtil.bApi
     }
 }
 

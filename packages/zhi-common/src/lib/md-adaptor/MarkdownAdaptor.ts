@@ -23,13 +23,25 @@
  * questions.
  */
 
-import SiyuanApi from "./lib/zhi-siyuan-api"
-import SiyuanKernelApi from "./lib/siyuanKernelApi"
-import type { SiyuanData } from "./lib/ISiyuanKernelApi"
-import SiyuanConfig from "./lib/siyuanConfig"
-import SiYuanApiAdaptor from "./lib/siYuanApiAdaptor"
-import SiyuanConstants from "./lib/siyuanConstants"
+/**
+ * Markdown适配器接口
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+interface MarkdownAdaptor {
+    /**
+     * 是否可用
+     */
+    isAvailable(): boolean
 
-export default SiyuanApi
-export { SiyuanData, SiyuanKernelApi }
-export { SiyuanConstants, SiyuanConfig, SiYuanApiAdaptor }
+    /**
+     * 渲染MD
+     *
+     * @param md - Markdown
+     */
+    renderMarkdownStr(md: string): string
+}
+
+export default MarkdownAdaptor

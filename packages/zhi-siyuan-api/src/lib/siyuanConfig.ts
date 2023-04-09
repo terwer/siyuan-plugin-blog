@@ -32,30 +32,38 @@ import SiyuanPlaceholder from "./siyuanPlaceholder"
  * @since 1.0.0
  */
 class SiyuanConfig extends BlogConfig {
-  /**
-   * 思源笔记伺服地址
-   */
-  public override apiUrl: string
+    /**
+     * 思源笔记伺服地址
+     */
+    public override apiUrl: string
 
-  /**
-   * 思源笔记 API token
-   */
-  public override password: string
+    /**
+     * 思源笔记 API token
+     */
+    public override password: string
 
-  /**
-   * 思源笔记操作提示
-   *
-   * @protected
-   */
-  public override placeholder: SiyuanPlaceholder
+    /**
+     * 思源笔记操作提示
+     *
+     * @protected
+     */
+    public override placeholder: SiyuanPlaceholder
 
-  constructor(apiUrl?: string, password?: string) {
-    super()
-    this.apiUrl = apiUrl ?? "http://127.0.0.1:6806"
-    this.passwordType = PasswordType.PasswordType_Token
-    this.password = password ?? ""
-    this.placeholder = new SiyuanPlaceholder()
-  }
+    /**
+     * 是否修复标题
+     *
+     * @protected
+     */
+    public override fixTitle: boolean
+
+    constructor(apiUrl?: string, password?: string) {
+        super()
+        this.apiUrl = apiUrl ?? "http://127.0.0.1:6806"
+        this.passwordType = PasswordType.PasswordType_Token
+        this.password = password ?? ""
+        this.placeholder = new SiyuanPlaceholder()
+        this.fixTitle = true
+    }
 }
 
 export default SiyuanConfig

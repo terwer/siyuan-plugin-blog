@@ -79,6 +79,9 @@ dependencies:
   regenerator-runtime:
     specifier: 0.13.7
     version: 0.13.7
+  showdown:
+    specifier: ^2.1.0
+    version: 2.1.0
   siyuan:
     specifier: ^0.3.18
     version: 0.3.18
@@ -180,6 +183,9 @@ devDependencies:
   '@types/node':
     specifier: 18.15.11
     version: 18.15.11
+  '@types/showdown':
+    specifier: ^2.0.0
+    version: 2.0.0
   '@types/xml2js':
     specifier: ^0.4.11
     version: 0.4.11
@@ -4192,6 +4198,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -4201,6 +4208,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -4210,6 +4218,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -4219,6 +4228,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -5012,6 +5022,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -5020,6 +5031,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -5028,6 +5040,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -5036,6 +5049,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -5482,6 +5496,10 @@ packages:
     dependencies:
       '@types/mime': 3.0.1
       '@types/node': 18.15.11
+
+  /@types/showdown@2.0.0:
+    resolution: {integrity: sha512-70xBJoLv+oXjB5PhtA8vo7erjLDp9/qqI63SRHm4REKrwuPOLs8HhXwlZJBJaB4kC18cCZ1UUZ6Fb/PLFW4TCA==}
+    dev: true
 
   /@types/sinonjs__fake-timers@8.1.1:
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -7788,8 +7806,6 @@ packages:
     resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
     engines: {node: ^12.20.0 || >=14}
     requiresBuild: true
-    dev: true
-    optional: true
 
   /comment-regex@1.0.1:
     resolution: {integrity: sha512-IWlN//Yfby92tOIje7J18HkNmWRR7JESA/BK8W7wqY/akITpU5B0JQWnbTjCfdChSrDNb0DrdA9jfAxiiBXyiQ==}
@@ -15881,6 +15897,13 @@ packages:
       vscode-oniguruma: 1.7.0
       vscode-textmate: 8.0.0
     dev: true
+
+  /showdown@2.1.0:
+    resolution: {integrity: sha512-/6NVYu4U819R2pUIk79n67SYgJHWCce0a5xTP979WbNp0FL9MN1I1QK662IDU1b6JzKTvmhgI7T7JYIxBi3kMQ==}
+    hasBin: true
+    dependencies:
+      commander: 9.5.0
+    dev: false
 
   /side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}

@@ -1,9 +1,9 @@
 ---
 import Layout from "@astroBlog/src/layouts/vdoing/Layout.astro"
-import ZhiUtil from "@astroBlog/src/utils/ZhiUtil";
+import ZhiUtil from "@astroBlog/src/utils/ZhiUtil"
 
-// const blogApi = ZhiUtil.siyuanKernelApi()
-const posts = [] //await blogApi.getRecentPosts(10)
+const blogApi = ZhiUtil.blogApi()
+const posts = await blogApi.getRecentPosts(10)
 ---
 
 <Layout title="Welcome to index.">

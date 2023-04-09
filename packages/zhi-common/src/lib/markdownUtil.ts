@@ -23,13 +23,35 @@
  * questions.
  */
 
-import SiyuanApi from "./lib/zhi-siyuan-api"
-import SiyuanKernelApi from "./lib/siyuanKernelApi"
-import type { SiyuanData } from "./lib/ISiyuanKernelApi"
-import SiyuanConfig from "./lib/siyuanConfig"
-import SiYuanApiAdaptor from "./lib/siYuanApiAdaptor"
-import SiyuanConstants from "./lib/siyuanConstants"
+import LuteAdaptor from "./md-adaptor/LuteAdaptor"
+import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor"
 
-export default SiyuanApi
-export { SiyuanData, SiyuanKernelApi }
-export { SiyuanConstants, SiyuanConfig, SiYuanApiAdaptor }
+/**
+ * Markdown 处理工具类
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class MarkdownUtil {
+    private readonly mdAdaptor
+
+    constructor() {
+        const luteAdaptor = new LuteAdaptor()
+        if (luteAdaptor.isAvailable()) {
+            this.mdAdaptor = luteAdaptor
+        } else {
+            this.mdAdaptor = new ShowdownAdaptor()
+        }
+    }
+
+    /**
+     * 渲染Markdown
+     * @param md Markdown文本
+     */
+    public renderHTML(md: string): string {
+        return this.mdAdaptor.renderMarkdownStr(md)
+    }
+}
+
+export default MarkdownUtil

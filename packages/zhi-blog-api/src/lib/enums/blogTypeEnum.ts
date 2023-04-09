@@ -23,13 +23,26 @@
  * questions.
  */
 
-import SiyuanApi from "./lib/zhi-siyuan-api"
-import SiyuanKernelApi from "./lib/siyuanKernelApi"
-import type { SiyuanData } from "./lib/ISiyuanKernelApi"
-import SiyuanConfig from "./lib/siyuanConfig"
-import SiYuanApiAdaptor from "./lib/siYuanApiAdaptor"
-import SiyuanConstants from "./lib/siyuanConstants"
+/**
+ * 博客类型枚举
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+enum BlogTypeEnum {
+    /**
+     * 思源笔记
+     */
+    BlogTypeEnum_Siyuan="siyuan",
+    /**
+     * WordPress
+     */
+    BlogTypeEnum_Wordpress="wordpress",
+    /**
+     * Metaweblog
+     */
+    BlogTypeEnum_Metaweblog="metaweblog"
+}
 
-export default SiyuanApi
-export { SiyuanData, SiyuanKernelApi }
-export { SiyuanConstants, SiyuanConfig, SiYuanApiAdaptor }
+export default BlogTypeEnum

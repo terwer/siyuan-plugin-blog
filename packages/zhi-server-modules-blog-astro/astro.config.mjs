@@ -44,6 +44,13 @@ export default defineConfig({
         ssr: {
             noExternal: externals,
         },
+        server: {
+            fs: {
+                // if you use this with --host anyone on the network can view
+                // the contents of your yarn cache (including private packages)
+                strict: false
+            }
+        }
     },
     // https://docs.astro.build/en/guides/integrations-guide/vercel/
     // https://docs.astro.build/en/guides/integrations-guide/node/#standalone
