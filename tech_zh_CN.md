@@ -22,89 +22,52 @@ npx create-nx-workspace zhi --package-manager=pnpm --preset=ts
 ## 初始化
 
 ```bash
+## 注意：思源目前仅支持两种类型的类库加载
+## 1. esm 用文件打包，不能有裸模块import，具体原因是浏览器不支持这种解析方式，有一个 import-map 方案，但是经过尝试不可用
+## 2. cjs 模块，使用 require hacker 之后可以支持自定义的模块路径加载，但是 sjs 无法支持 import.meta 这种新特性
+
 ## core library
 ## https://nx.dev/packages/vite
-nx generate @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-env --publishable --importPath zhi-env --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-log --publishable --importPath zhi-log --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-cli --publishable --importPath=zhi-cli  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi --publishable --importPath=zhi --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-sdk --publishable --importPath=zhi-sdk  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-blog-api --publishable --importPath=zhi-blog-api  --bundler=vite --unitTestRunner=vitest
+nx g @nrwl/js:library zhi-siyuan-api --publishable --importPath=zhi-siyuan-api  --bundler=vite --unitTestRunner=vitest
 
-## zhi-plugins
-nx generate @nrwl/js:library zhi-plugin-publisher --publishable --importPath=zhi-plugin-publisher --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-plugin-code-block --publishable --importPath=zhi-plugin-code-block --bundler=vite --unitTestRunner=vitest
-nx generate @nrwl/js:library zhi-plugin-siyuan2md --publishable --importPath=zhi-plugin-siyuan2md --bundler=vite --unitTestRunner=vitest
+## Esbuild cjs lib
+nx g @nrwl/js:lib zhi-server-modules-infra --bundler=esbuild
 
-## zhi-modules
-nx generate @nrwl/js:library zhi-modules-blog-middleware --publishable --importPath=zhi-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
-
-## zhi-modules-web
-nx generate @nrwl/js:library zhi-web-modules-blog-middleware --publishable --importPath=zhi-web-modules-blog-middleware --bundler=vite --unitTestRunner=vitest
-
-## node library
-#nx generate @nrwl/node:lib zhi-blog-middleware --publishable --importPath=zhi-blog-middleware
-#nx generate @nrwl/js:lib zhi-blog-middleware-esbuild --publishable --importPath=zhi-blog-middleware-esbuild --bundler=esbuild
-
-## web app
-## zhi-blog, zhi-blog-astro
-nx generate @nrwl/web:app zhi-blog-ssr --bundler=vite --unitTestRunner=vitest
-## nx generate @nrwl/react:app zhi-blog --bundler=vite --dry-run
-
-## node app
-https://nx.dev/packages/node/generators/application
-nx g @nrwl/node:application zhi-blog --bundler=webpack --framework=express --docker=true
-
-## docs
+## Docs
 ## pnpm install @nx-plus/docusaurus --save-dev
-nx generate @nx-plus/docusaurus:app zhi-docs
+nx g @nx-plus/docusaurus:app zhi-docs
 ## nx serve zhi-docs
-## -----------------------------------------------
+## ----------------------------------------------------------------------------------
 ## pnpm install typedoc typedoc-plugin-markdown docusaurus-plugin-typedoc --save-dev
-## -----------------------------------------------
-## pnpm add vue vitepress -D
-## pnpm exec vitepress init
-## ./packages/zhi-docs-vitepress
-## -----------------------------------------------
-## pnpm add vuepress -D
-## mkdir packages/zhi-docs-vuepress
-## echo '# Hello VuePress' > packages/zhi-docs-vuepress/README.md
-## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
-## "docs:build": "vuepress build packages/zhi-docs-vuepress"
-## -----------------------------------------------
-## pnpm add -D vuepress@next @vuepress/client@next vue
-## "docs:dev": "vuepress dev packages/zhi-docs-vuepress",
-## "docs:build": "vuepress build packages/zhi-docs-vuepress"
-## -----------------------------------------------
-## pnpm create vuepress-theme-hope packages/zhi-docs-vuepress2
-## pnpm add @vuepress/client vue vuepress vuepress-theme-hope -D
 
-## nuxt
-## pnpm install @nx-plus/nuxt --save-dev
-## nx generate @nx-plus/nuxt:app zhi-blog
-## nx serve my-app
+## Vue app
+## https://github.com/nxext/nx-extensions/tree/main/packages/vue
+pnpm add @nxext/vue -D
+## Vite + Vue + SPA
+nx g @nxext/vue:app zhi-web-modules-blog
+## Nuxt3
+nx g @nxext/vue:app zhi-server-modules-blog
 
-## astro
+## Astro app
 ## pnpm install -D @nxtensions/astro
 ## nx migrate @nxtensions/astro@latest
-nx generate @nxtensions/astro:app zhi-static-blog-astro
-nx generate @nxtensions/astro:app zhi-blog-astro
-## nx generate @nxtensions/astro:lib my-lib
-## nx generate @nxtensions/astro:component my-component
-## nx dev my-app
-## nx preview my-app
+pnpm add @astrojs/vue @astrojs/vercel -D
+nx g @nxtensions/astro:app zhi-static-blog-astro
 
-## python
+## Express server
+nx g @nrwl/express:app zhi-server-modules-middleware
+
+## Python
 ## https://betterprogramming.pub/poetry-python-nx-monorepo-5750d8627024
 ## https://github.com/lucasvieirasilva/nx-plugins/blob/main/packages/nx-python/README.md
 ## pnpm install @nxlv/python --save-dev
-npx nx generate @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
-
-## rollup
-## https://nx.dev/packages/js/generators/library#bundler
-## https://github.com/nrwl/nx/issues/2212#issuecomment-894064983
-## nx generate @nrwl/js:lib zhi-blog-middleware-rollup --publishable --importPath=zhi-blog-middleware-rollup --bundler=rollup
+npx nx g @nxlv/python:project zhi-vuepress1-to-vuepress2 --type application --description='zhi-vuepress1-to-vuepress2' --packageName=zhi-vuepress1-to-vuepress2 --moduleName=zhi_vuepress1_to_vuepress2
 ```
 
 ## 设置
@@ -209,3 +172,10 @@ nx publish zhi-blog-api --ver=0.0.1 --tag=latest
     -   zhi-sdk
 
 现阶段 `zhi-theme` = `zhi-mini` ， 即 `zhi-theme` 已经规划到 `zhi-mini` 了。
+
+### 挂载到 Window 的对象
+
+```bash
+windowManager
+customCmd
+```

@@ -36,30 +36,30 @@ import DefaultLogger from "../defaultLogger"
  * @since 1.0.0
  */
 abstract class AbstractLogFactory {
-  private logger
+    private logger
 
-  /**
-   * 默认日志级别
-   *
-   * @param level - 可选，未设置默认INFO
-   * @param sign - 可选前缀，默认zhi
-   * @param env - 可选环境变量实例
-   */
-  protected constructor(level?: LogLevelEnum, sign?: string, env?: Env) {
-    this.logger = new Logger(level, sign, env)
-  }
+    /**
+     * 默认日志级别
+     *
+     * @param level - 可选，未设置默认INFO
+     * @param sign - 可选前缀，默认zhi
+     * @param env - 可选环境变量实例
+     */
+    protected constructor(level?: LogLevelEnum, sign?: string, env?: Env) {
+        this.logger = new Logger(level, sign, env)
+    }
 
-  /**
-   * 获取日志记录器
-   *
-   * @param loggerName - 日志记录器名称
-   * @param stackSize - 打印栈的深度
-   * @protected
-   */
-  protected getLogger(loggerName?: string, stackSize?: number): DefaultLogger {
-    this.logger.setStackSize(stackSize)
-    return this.logger.getLogger(loggerName)
-  }
+    /**
+     * 获取日志记录器
+     *
+     * @param loggerName - 日志记录器名称
+     * @param stackSize - 打印栈的深度
+     * @protected
+     */
+    protected getLogger(loggerName?: string, stackSize?: number): DefaultLogger {
+        this.logger.setStackSize(stackSize)
+        return this.logger.getLogger(loggerName)
+    }
 }
 
 export default AbstractLogFactory

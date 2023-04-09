@@ -39,5 +39,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies and build for production
-        run: pnpm install && pnpm build
+      - name: Install dependencies
+        run: pnpm i --registry=https://registry.npmmirror.com
+
+      - name: build for production
+        run: pnpm reset && pnpm build
+

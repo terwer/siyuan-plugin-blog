@@ -1,0 +1,22 @@
+{
+    "name": "zhi-server-modules-middleware",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/zhi-server-modules-middleware/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "command": "node packages/zhi-server-modules-middleware/esbuild.mjs"
+        },
+        "serve": {
+            "command": "node packages/zhi-server-modules-middleware/esbuild.mjs --watch"
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/zhi-server-modules-middleware/**/*.ts"]
+            }
+        }
+    },
+    "tags": []
+}

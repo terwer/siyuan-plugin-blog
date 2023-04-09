@@ -1,17 +1,17 @@
 {
-  "name": "zhi-blog-api",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "a common blog interface",
-  "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-blog-api",
-  "author": "terwer",
-  "license": "GPL",
-  "keywords": [
-    "zhi-blog-api",
-    "zhi",
-    "blog",
-    "api",
-    "blog-api"
-  ]
+    "name": "zhi-blog-api",
+    "version": "1.0.1",
+    "type": "module",
+    "description": "a common blog interface",
+    "repository": "terwer/zhi",
+    "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-blog-api",
+    "author": "terwer",
+    "license": "GPL",
+    "keywords": [
+        "zhi-blog-api",
+        "zhi",
+        "blog",
+        "api",
+        "blog-api"
+    ]
 }

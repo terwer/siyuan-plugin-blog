@@ -42,8 +42,7 @@
             "dependsOn": []
         },
         "zhi-build": {
-            "dependsOn": ["build"],
-            "command": "cp -r dist/packages/zhi/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/ && cd /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/ && npm i --registry=https://registry.npmmirror.com && echo 'zhi-core dist copy success'"
+            "command": "bash packages/zhi-core/script/zhi-build.sh"
         }
     },
     "tags": []

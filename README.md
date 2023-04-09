@@ -51,8 +51,9 @@ to:
     -   Blog plugin
 -   It can handle both the theme and the preview. Installing the zhi theme is equivalent to installing an additional
     plugin system and an online blog.
-    -   Blog homepage: http://127.0.0.1:6806/appearance/themes/zhi/blog/
-    -   Widget version of the blog management and publishing
+    -   SPA blog homepage: http://127.0.0.1:6806/appearance/themes/zhi/web/blog/ <sup>simple</sup>
+    -   SSR blog homepage: http://127.0.0.1:6806/appearance/themes/zhi/server/blog/ <sup>seo friendly</sup>
+    -   Widget version of the blog management and publishing [Deprecated]
         homepage: http://127.0.0.1:6806/widgets/sy-post-publisher/blog/?from=siyuanNewWin
 
 > Note: 🌹 The plugin system is provided by enthusiastic community developers. Please understand the relevant mechanisms in

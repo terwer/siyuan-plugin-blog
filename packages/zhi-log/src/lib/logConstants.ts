@@ -31,8 +31,8 @@
  * @since 1.4.0
  */
 class LogConstants {
-  public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
-  public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
+    public static readonly LOG_LEVEL_KEY = "VITE_LOG_LEVEL"
+    public static readonly LOG_PREFIX_KEY = "VITE_LOG_PREFIX"
 }
 
 /**
@@ -43,22 +43,22 @@ class LogConstants {
  * @public
  */
 enum LogLevelEnum {
-  /**
-   * DEBUG
-   */
-  LOG_LEVEL_DEBUG = "DEBUG",
-  /**
-   * INFO
-   */
-  LOG_LEVEL_INFO = "INFO",
-  /**
-   * WARN
-   */
-  LOG_LEVEL_WARN = "WARN",
-  /**
-   * ERROR
-   */
-  LOG_LEVEL_ERROR = "ERROR",
+    /**
+     * DEBUG
+     */
+    LOG_LEVEL_DEBUG = "DEBUG",
+    /**
+     * INFO
+     */
+    LOG_LEVEL_INFO = "INFO",
+    /**
+     * WARN
+     */
+    LOG_LEVEL_WARN = "WARN",
+    /**
+     * ERROR
+     */
+    LOG_LEVEL_ERROR = "ERROR",
 }
 
 export default LogLevelEnum

@@ -24,7 +24,7 @@
  */
 
 describe("zhiBlogApi", () => {
-  it("blogApi", () => {
-    console.log("blogApi should be implemented as a specific BlogApi, it cannot be used directly")
-  })
+    it("blogApi", () => {
+        console.log("blogApi should be implemented as a specific BlogApi, it cannot be used directly")
+    })
 })

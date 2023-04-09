@@ -1,0 +1,381 @@
+.theme-mode-light {
+    --bodyBg: #f4f4f4;
+    --mainBg: #fff;
+    --sidebarBg: rgba(255, 255, 255, 0.8);
+    --blurBg: rgba(255, 255, 255, 0.9);
+    --customBlockBg: #f1f1f1;
+    --textColor: #00323c;
+    --textLightenColor: #0085ad;
+    --borderColor: rgba(0, 0, 0, 0.12);
+    --codeBg: #f6f6f6;
+    --codeColor: #525252;
+    /* Code blocks */
+    /* Inline code */
+}
+.theme-mode-light code[class*="language-"],
+.theme-mode-light pre[class*="language-"] {
+    color: #000;
+    background: none;
+    text-shadow: 0 1px #fff;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+.theme-mode-light pre[class*="language-"]::-moz-selection,
+.theme-mode-light pre[class*="language-"] ::-moz-selection,
+.theme-mode-light code[class*="language-"]::-moz-selection,
+.theme-mode-light code[class*="language-"] ::-moz-selection {
+    text-shadow: none;
+    background: #b3d4fc;
+}
+.theme-mode-light pre[class*="language-"]::selection,
+.theme-mode-light pre[class*="language-"] ::selection,
+.theme-mode-light code[class*="language-"]::selection,
+.theme-mode-light code[class*="language-"] ::selection {
+    text-shadow: none;
+    background: #b3d4fc;
+}
+@media print {
+    .theme-mode-light code[class*="language-"],
+    .theme-mode-light pre[class*="language-"] {
+        text-shadow: none;
+    }
+}
+.theme-mode-light pre[class*="language-"] {
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+}
+.theme-mode-light :not(pre) > code[class*="language-"],
+.theme-mode-light pre[class*="language-"] {
+    background: #f5f2f0;
+}
+.theme-mode-light :not(pre) > code[class*="language-"] {
+    padding: 0.1em;
+    border-radius: 0.3em;
+    white-space: normal;
+}
+.theme-mode-light .token.comment,
+.theme-mode-light .token.prolog,
+.theme-mode-light .token.doctype,
+.theme-mode-light .token.cdata {
+    color: #708090;
+}
+.theme-mode-light .token.punctuation {
+    color: #999;
+}
+.theme-mode-light .namespace {
+    opacity: 0.7;
+}
+.theme-mode-light .token.property,
+.theme-mode-light .token.tag,
+.theme-mode-light .token.boolean,
+.theme-mode-light .token.number,
+.theme-mode-light .token.constant,
+.theme-mode-light .token.symbol,
+.theme-mode-light .token.deleted {
+    color: #905;
+}
+.theme-mode-light .token.selector,
+.theme-mode-light .token.attr-name,
+.theme-mode-light .token.string,
+.theme-mode-light .token.char,
+.theme-mode-light .token.builtin,
+.theme-mode-light .token.inserted {
+    color: #690;
+}
+.theme-mode-light .token.operator,
+.theme-mode-light .token.entity,
+.theme-mode-light .token.url,
+.theme-mode-light .language-css .token.string,
+.theme-mode-light .style .token.string {
+    color: #9a6e3a;
+    background: rgba(255, 255, 255, 0.5);
+}
+.theme-mode-light .token.atrule,
+.theme-mode-light .token.attr-value,
+.theme-mode-light .token.keyword {
+    color: #07a;
+}
+.theme-mode-light .token.function,
+.theme-mode-light .token.class-name {
+    color: #dd4a68;
+}
+.theme-mode-light .token.regex,
+.theme-mode-light .token.important,
+.theme-mode-light .token.variable {
+    color: #e90;
+}
+.theme-mode-light .token.important,
+.theme-mode-light .token.bold {
+    font-weight: bold;
+}
+.theme-mode-light .token.italic {
+    font-style: italic;
+}
+.theme-mode-light .token.entity {
+    cursor: help;
+}
+.theme-mode-light div[class*="language-"] .highlight-lines .highlighted {
+    background-color: rgba(200, 200, 200, 0.4);
+}
+.theme-mode-light div[class*="language-"].line-numbers-mode .highlight-lines .highlighted:before {
+    background-color: rgba(200, 200, 200, 0.4);
+}
+.theme-mode-dark {
+    --bodyBg: #27272b;
+    --mainBg: #1e1e22;
+    --sidebarBg: rgba(30, 30, 34, 0.8);
+    --blurBg: rgba(30, 30, 34, 0.8);
+    --customBlockBg: #27272b;
+    --textColor: #9b9baa;
+    --textLightenColor: #0085ad;
+    --borderColor: #30363d;
+    --codeBg: #252526;
+    --codeColor: #fff;
+    /* Code blocks */
+    /* Inline code */
+}
+.theme-mode-dark code[class*="language-"],
+.theme-mode-dark pre[class*="language-"] {
+    color: #ccc;
+    background: none;
+    text-shadow: none;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+.theme-mode-dark pre[class*="language-"] {
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+}
+.theme-mode-dark :not(pre) > code[class*="language-"],
+.theme-mode-dark pre[class*="language-"] {
+    background: #2d2d2d;
+}
+.theme-mode-dark :not(pre) > code[class*="language-"] {
+    padding: 0.1em;
+    border-radius: 0.3em;
+    white-space: normal;
+}
+.theme-mode-dark .token.comment,
+.theme-mode-dark .token.block-comment,
+.theme-mode-dark .token.prolog,
+.theme-mode-dark .token.doctype,
+.theme-mode-dark .token.cdata {
+    color: #999;
+}
+.theme-mode-dark .token.punctuation {
+    color: #ccc;
+}
+.theme-mode-dark .token.tag,
+.theme-mode-dark .token.attr-name,
+.theme-mode-dark .token.namespace,
+.theme-mode-dark .token.deleted {
+    color: #e2777a;
+}
+.theme-mode-dark .token.function-name {
+    color: #6196cc;
+}
+.theme-mode-dark .token.boolean,
+.theme-mode-dark .token.number,
+.theme-mode-dark .token.function {
+    color: #f08d49;
+}
+.theme-mode-dark .token.property,
+.theme-mode-dark .token.class-name,
+.theme-mode-dark .token.constant,
+.theme-mode-dark .token.symbol {
+    color: #f8c555;
+}
+.theme-mode-dark .token.selector,
+.theme-mode-dark .token.important,
+.theme-mode-dark .token.atrule,
+.theme-mode-dark .token.keyword,
+.theme-mode-dark .token.builtin {
+    color: #cc99cd;
+}
+.theme-mode-dark .token.string,
+.theme-mode-dark .token.char,
+.theme-mode-dark .token.attr-value,
+.theme-mode-dark .token.regex,
+.theme-mode-dark .token.variable {
+    color: #7ec699;
+}
+.theme-mode-dark .token.operator,
+.theme-mode-dark .token.entity,
+.theme-mode-dark .token.url {
+    color: #67cdcc;
+}
+.theme-mode-dark .token.operator,
+.theme-mode-dark .token.entity,
+.theme-mode-dark .token.url,
+.theme-mode-dark .language-css .token.string,
+.theme-mode-dark .style .token.string {
+    background: none;
+}
+.theme-mode-dark .token.important,
+.theme-mode-dark .token.bold {
+    font-weight: bold;
+}
+.theme-mode-dark .token.italic {
+    font-style: italic;
+}
+.theme-mode-dark .token.entity {
+    cursor: help;
+}
+.theme-mode-dark .token.inserted {
+    color: #008000;
+}
+.theme-mode-read {
+    --bodyBg: #ececcc;
+    --mainBg: #f5f5d5;
+    --sidebarBg: rgba(245, 245, 213, 0.8);
+    --blurBg: rgba(245, 245, 213, 0.9);
+    --customBlockBg: #ececcc;
+    --textColor: #704214;
+    --textLightenColor: #963;
+    --borderColor: rgba(0, 0, 0, 0.15);
+    --codeBg: #282c34;
+    --codeColor: #fff;
+    /* Code blocks */
+    /* Inline code */
+}
+.theme-mode-read code[class*="language-"],
+.theme-mode-read pre[class*="language-"] {
+    color: #ccc;
+    background: none;
+    text-shadow: none;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+.theme-mode-read pre[class*="language-"] {
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+}
+.theme-mode-read :not(pre) > code[class*="language-"],
+.theme-mode-read pre[class*="language-"] {
+    background: #2d2d2d;
+}
+.theme-mode-read :not(pre) > code[class*="language-"] {
+    padding: 0.1em;
+    border-radius: 0.3em;
+    white-space: normal;
+}
+.theme-mode-read .token.comment,
+.theme-mode-read .token.block-comment,
+.theme-mode-read .token.prolog,
+.theme-mode-read .token.doctype,
+.theme-mode-read .token.cdata {
+    color: #999;
+}
+.theme-mode-read .token.punctuation {
+    color: #ccc;
+}
+.theme-mode-read .token.tag,
+.theme-mode-read .token.attr-name,
+.theme-mode-read .token.namespace,
+.theme-mode-read .token.deleted {
+    color: #e2777a;
+}
+.theme-mode-read .token.function-name {
+    color: #6196cc;
+}
+.theme-mode-read .token.boolean,
+.theme-mode-read .token.number,
+.theme-mode-read .token.function {
+    color: #f08d49;
+}
+.theme-mode-read .token.property,
+.theme-mode-read .token.class-name,
+.theme-mode-read .token.constant,
+.theme-mode-read .token.symbol {
+    color: #f8c555;
+}
+.theme-mode-read .token.selector,
+.theme-mode-read .token.important,
+.theme-mode-read .token.atrule,
+.theme-mode-read .token.keyword,
+.theme-mode-read .token.builtin {
+    color: #cc99cd;
+}
+.theme-mode-read .token.string,
+.theme-mode-read .token.char,
+.theme-mode-read .token.attr-value,
+.theme-mode-read .token.regex,
+.theme-mode-read .token.variable {
+    color: #7ec699;
+}
+.theme-mode-read .token.operator,
+.theme-mode-read .token.entity,
+.theme-mode-read .token.url {
+    color: #67cdcc;
+}
+.theme-mode-read .token.operator,
+.theme-mode-read .token.entity,
+.theme-mode-read .token.url,
+.theme-mode-read .language-css .token.string,
+.theme-mode-read .style .token.string {
+    background: none;
+}
+.theme-mode-read .token.important,
+.theme-mode-read .token.bold {
+    font-weight: bold;
+}
+.theme-mode-read .token.italic {
+    font-style: italic;
+}
+.theme-mode-read .token.entity {
+    cursor: help;
+}
+.theme-mode-read .token.inserted {
+    color: #008000;
+}
+.theme-style-line.theme-mode-light {
+    --bodyBg: #fff;
+}
+.theme-style-line.theme-mode-dark {
+    --bodyBg: #1e1e22;
+}
+.theme-style-line.theme-mode-read {
+    --bodyBg: #f5f5d5;
+}

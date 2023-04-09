@@ -35,25 +35,25 @@ import SiyuanClientApi from "./siyuanClientApi"
  * @since 1.0.0
  */
 class SiyuanApi {
-  /**
-   * 思源笔记内核API
-   */
-  public readonly kernelApi
+    /**
+     * 思源笔记内核API
+     */
+    public readonly kernelApi
 
-  /**
-   * 思源笔记客户端API
-   */
-  public readonly clientApi
+    /**
+     * 思源笔记客户端API
+     */
+    public readonly clientApi
 
-  /**
-   * 构造思源 API对象
-   *
-   * @param cfg - 环境变量 或者 配置项
-   */
-  constructor(cfg: Env | SiyuanConfig) {
-    this.kernelApi = new SiyuanKernelApi(cfg)
-    this.clientApi = new SiyuanClientApi()
-  }
+    /**
+     * 构造思源 API对象
+     *
+     * @param cfg - 环境变量 或者 配置项
+     */
+    constructor(cfg: Env | SiyuanConfig) {
+        this.kernelApi = new SiyuanKernelApi(cfg)
+        this.clientApi = new SiyuanClientApi()
+    }
 }
 
 export default SiyuanApi

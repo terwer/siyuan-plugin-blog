@@ -12,8 +12,5 @@
         "zhi-core",
         "siyuan-note",
         "theme"
-    ],
-    "dependencies": {
-        "express": "^4.18.2"
-    }
+    ]
 }

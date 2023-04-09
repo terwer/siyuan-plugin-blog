@@ -25,8 +25,11 @@
 
 import DependencyItem from "../models/DependencyItem"
 import PluginSystem from "./plugin-system"
-import HttpService from "../modules/http-service"
-import BlogEntry from "../modules/blog"
+import MiddlewareEntry from "../server-modules/middleware"
+import WebBlogEntry from "../web-modules/blog"
+import ZhiBrowserWindow from "./browser-windows"
+import InfraEntry from "../server-modules/infra"
+import Cmd from "./cmd"
 
 /**
  * zhi主题统一生命周期管理
@@ -35,16 +38,24 @@ import BlogEntry from "../modules/blog"
  * @since 1.0.0
  */
 class Lifecycle {
+    private infra
     private pluginSystem
-    private httpService
-    private blogEntry
+    private browserWindow
+    private cmd
+
+    private middlewareEntry
+    private webBlogEntry
 
     private _dynamicImports = <DependencyItem[]>[]
 
     constructor() {
+        this.infra = new InfraEntry()
         this.pluginSystem = new PluginSystem()
-        this.httpService = new HttpService()
-        this.blogEntry = new BlogEntry()
+        this.browserWindow = new ZhiBrowserWindow()
+        this.cmd = new Cmd()
+
+        this.middlewareEntry = new MiddlewareEntry()
+        this.webBlogEntry = new WebBlogEntry()
     }
 
     get dynamicImports(): DependencyItem[] {
@@ -54,20 +65,37 @@ class Lifecycle {
     public async load() {
         const allImports = <DependencyItem[]>[]
 
-        const pluginSystemImports = await this.loadPluginSystem()
+        const coreModuleImports = await this.loadCoreModules()
         const widgetsImports = await this.loadWidgets()
         const vendorImports = await this.loadVendors()
 
-        this._dynamicImports = allImports.concat(pluginSystemImports).concat(widgetsImports).concat(vendorImports)
+        this._dynamicImports = allImports.concat(coreModuleImports).concat(widgetsImports).concat(vendorImports)
     }
 
     /**
-     * SiYuanPluginSystem
+     * 加载核心模块
      *
      * @private
      */
-    private async loadPluginSystem(): Promise<DependencyItem[]> {
-        return await this.pluginSystem.initPluginSystem()
+    private async loadCoreModules(): Promise<DependencyItem[]> {
+        let coreModulesImports = <DependencyItem[]>[]
+
+        // infra
+        const infraImports = await this.infra.initInfra()
+        coreModulesImports = coreModulesImports.concat(infraImports)
+
+        // SiYuanPluginSystem
+        const pluginSystemImports = await this.pluginSystem.initPluginSystem()
+        coreModulesImports = coreModulesImports.concat(pluginSystemImports)
+
+        // ZhiBrowserWindow
+        const browserWindowImports = await this.browserWindow.initBrowserWindow()
+        coreModulesImports = coreModulesImports.concat(browserWindowImports)
+
+        // cmd
+        const cmdImports = await this.cmd.initCmd()
+        coreModulesImports = coreModulesImports.concat(cmdImports)
+        return coreModulesImports
     }
 
     /**
@@ -91,13 +119,16 @@ class Lifecycle {
         // const fontAwesomeImports = fontAwesome.initFontAwesome()
         // vendorImports = vendorImports.concat(fontAwesomeImports)
 
-        // express 服务
-        const httpServiceImports = await this.httpService.initHttpService()
-        vendorImports = vendorImports.concat(httpServiceImports)
+        // infra
+        // infra 叙事提取加载，移动到核心模块
 
-        // blog
-        const blogImports = await this.blogEntry.initBlog()
-        vendorImports = vendorImports.concat(blogImports)
+        // middleware
+        const middlewareImports = await this.middlewareEntry.initMiddleware()
+        vendorImports = vendorImports.concat(middlewareImports)
+
+        // webBlog
+        const webBlogImports = await this.webBlogEntry.initWebBlog()
+        vendorImports = vendorImports.concat(webBlogImports)
         return vendorImports
     }
 }

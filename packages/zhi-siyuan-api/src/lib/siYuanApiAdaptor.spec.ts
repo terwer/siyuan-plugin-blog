@@ -25,10 +25,12 @@
 
 import { describe, expect } from "vitest"
 import SiYuanApiAdaptor from "./siYuanApiAdaptor"
+import SiyuanConfig from "./siyuanConfig";
 
 describe("SiYuanApiAdaptor", () => {
-  it("should work", function () {
-    const apiAdaptor = new SiYuanApiAdaptor()
-    expect(apiAdaptor).toBeTruthy()
-  })
+    it("should work", function () {
+        const siyuanConfig = new SiyuanConfig("http://127.0.0.1:6806", "")
+        const apiAdaptor = new SiYuanApiAdaptor(siyuanConfig)
+        expect(apiAdaptor).toBeTruthy()
+    })
 })

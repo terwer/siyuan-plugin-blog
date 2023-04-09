@@ -29,32 +29,32 @@
  * @public
  */
 class UserBlog {
-  /**
-   * 博客ID
-   */
-  blogid: string
-  /**
-   * 博客地址
-   */
-  url: string
-  /**
-   * 博客名称
-   */
-  blogName: string
-  /**
-   * 是否是管理员
-   */
-  isAdmin?: boolean
-  /**
-   * xmlrpc地址
-   */
-  xmlrpc?: string
+    /**
+     * 博客ID
+     */
+    blogid: string
+    /**
+     * 博客地址
+     */
+    url: string
+    /**
+     * 博客名称
+     */
+    blogName: string
+    /**
+     * 是否是管理员
+     */
+    isAdmin?: boolean
+    /**
+     * xmlrpc地址
+     */
+    xmlrpc?: string
 
-  constructor() {
-    this.blogid = ""
-    this.url = ""
-    this.blogName = ""
-  }
+    constructor() {
+        this.blogid = ""
+        this.url = ""
+        this.blogName = ""
+    }
 }
 
 export default UserBlog

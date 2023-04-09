@@ -24,14 +24,14 @@
  */
 
 import { describe, it } from "vitest"
-import ZhiUtil from "./ZhiUtil"
+import ZhiUtil from "./lib/core/util/ZhiUtil"
 import Zhi from "./lib/zhi"
 
 describe("theme", () => {
-  it("init", async () => {
-    const common = ZhiUtil.zhiCommon()
+    it("init", async () => {
+        const common = ZhiUtil.zhiCommon()
 
-    const zhi = new Zhi(common.deviceUtil.getDevice())
-    await zhi.init()
-  })
+        const zhi = new Zhi(common.deviceUtil.getDevice())
+        await zhi.init()
+    })
 })

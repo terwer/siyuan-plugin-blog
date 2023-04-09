@@ -21,6 +21,8 @@ node_modules
 .settings/
 *.sublime-workspace
 *.local
+.env.development
+.env.production
 
 # IDE - VSCode
 .vscode/*
@@ -58,3 +60,4 @@ __pycache__
 packages/zhi-vuepress1-to-vuepress2/tests/data
 
 .astro
+repo

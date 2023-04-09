@@ -1,17 +1,17 @@
 {
-  "name": "zhi-siyuan-api",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "a simple logger for Node and Browser",
-  "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-siyuan-api",
-  "author": "terwer",
-  "license": "GPL",
-  "keywords": [
-    "siyuan-api",
-    "siyuan-note",
-    "client-api",
-    "server-api",
-    "api"
-  ]
+    "name": "zhi-siyuan-api",
+    "version": "1.0.2",
+    "type": "module",
+    "description": "a simple logger for Node and Browser",
+    "repository": "terwer/zhi",
+    "homepage": "https://github.com/terwer/zhi/tree/dev/packages/zhi-siyuan-api",
+    "author": "terwer",
+    "license": "GPL",
+    "keywords": [
+        "siyuan-api",
+        "siyuan-note",
+        "client-api",
+        "server-api",
+        "api"
+    ]
 }
