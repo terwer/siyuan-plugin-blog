@@ -31,15 +31,15 @@
  * @since 1.0.0
  */
 class SiyuanConstants {
-  /**
-   * 思源 API 伺服地址
-   */
-  public static VITE_SIYUAN_API_URL_KEY = "VITE_SIYUAN_API_URL"
+    /**
+     * 思源 API 伺服地址
+     */
+    public static VITE_SIYUAN_API_URL_KEY = "VITE_SIYUAN_API_URL"
 
-  /**
-   * 思源 token
-   */
-  public static VITE_SIYUAN_AUTH_TOKEN_KEY = "VITE_SIYUAN_AUTH_TOKEN"
+    /**
+     * 思源 token
+     */
+    public static VITE_SIYUAN_AUTH_TOKEN_KEY = "VITE_SIYUAN_AUTH_TOKEN"
 }
 
 export default SiyuanConstants

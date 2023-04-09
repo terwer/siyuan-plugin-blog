@@ -31,9 +31,9 @@ import fetch from "cross-fetch"
 global.fetch = fetch
 
 beforeEach(() => {
-  console.log("======test is starting...======")
+    console.log("======test is starting...======")
 })
 
 afterEach(() => {
-  console.log("======test is finished.========")
+    console.log("======test is finished.========")
 })

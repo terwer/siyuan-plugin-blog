@@ -247,7 +247,7 @@ class SiyuanKernelApi implements ISiyuanKernelApi {
             stmt: sql,
         }
         const url = "/api/query/sql"
-        if(this.env.isDev()){
+        if (this.env.isDev()) {
             this.logger.trace("sql=>", sql)
         }
         return await this.siyuanRequest(url, sqldata)

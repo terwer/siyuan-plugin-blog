@@ -27,20 +27,20 @@
  * 思源 API 返回类型
  */
 interface SiyuanData {
-  /**
-   * 非 0 为异常情况
-   */
-  code: number
+    /**
+     * 非 0 为异常情况
+     */
+    code: number
 
-  /**
-   * 正常情况下是空字符串，异常情况下会返回错误文案
-   */
-  msg: string
+    /**
+     * 正常情况下是空字符串，异常情况下会返回错误文案
+     */
+    msg: string
 
-  /**
-   * 可能为 \{\}、[] 或者 NULL，根据不同接口而不同
-   */
-  data: any[] | object | null | undefined
+    /**
+     * 可能为 \{\}、[] 或者 NULL，根据不同接口而不同
+     */
+    data: any[] | object | null | undefined
 }
 
 /**
@@ -50,27 +50,27 @@ interface SiyuanData {
  * @see {@link https://github.com/leolee9086/noob-core/blob/master/frontEnd/noobApi/util/kernelApi.js kernelApi}
  */
 interface ISiyuanKernelApi {
-  // /api/notebook/lsNotebooks
-  lsNotebooks(): Promise<SiyuanData>
-  // /api/notebook/openNotebook
-  openNotebook(notebookId: string): Promise<SiyuanData>
-  // /api/notebook/closeNotebook
-  closeNotebook(notebookId: string): Promise<SiyuanData>
-  // /api/notebook/renameNotebook
-  renameNotebook(notebookId: string, name: string): Promise<SiyuanData>
-  // /api/notebook/createNotebook
-  createNotebook(name: string): Promise<SiyuanData>
-  // /api/notebook/removeNotebook
-  removeNotebook(notebookId: string): Promise<SiyuanData>
-  // /api/notebook/getNotebookConf
-  getNotebookConf(notebookId: string): Promise<SiyuanData>
-  // /api/notebook/setNotebookConf
-  setNotebookConf(notebookConf: object): Promise<SiyuanData>
+    // /api/notebook/lsNotebooks
+    lsNotebooks(): Promise<SiyuanData>
+    // /api/notebook/openNotebook
+    openNotebook(notebookId: string): Promise<SiyuanData>
+    // /api/notebook/closeNotebook
+    closeNotebook(notebookId: string): Promise<SiyuanData>
+    // /api/notebook/renameNotebook
+    renameNotebook(notebookId: string, name: string): Promise<SiyuanData>
+    // /api/notebook/createNotebook
+    createNotebook(name: string): Promise<SiyuanData>
+    // /api/notebook/removeNotebook
+    removeNotebook(notebookId: string): Promise<SiyuanData>
+    // /api/notebook/getNotebookConf
+    getNotebookConf(notebookId: string): Promise<SiyuanData>
+    // /api/notebook/setNotebookConf
+    setNotebookConf(notebookConf: object): Promise<SiyuanData>
 
-  // /api/notification/pushMsg
-  pushMsg(msgObj: object): Promise<SiyuanData>
-  // /api/notification/pushErrMsg
-  pushErrMsg(msgObj: object): Promise<SiyuanData>
+    // /api/notification/pushMsg
+    pushMsg(msgObj: object): Promise<SiyuanData>
+    // /api/notification/pushErrMsg
+    pushErrMsg(msgObj: object): Promise<SiyuanData>
 }
 
 export default ISiyuanKernelApi
