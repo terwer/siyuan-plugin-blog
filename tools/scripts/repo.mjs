@@ -64,8 +64,8 @@ try {
     execSync(`mkdir -p ${toPath}/packages/${name}`)
 
     // 拷贝文件
-    execSync(`rsync -av --delete --exclude='.git' --exclude='tsconfig.base.json' --exclude='packages' --exclude='.github' --exclude-from='.gitignore' . ${toPath}`)
-    execSync(`rsync -av --delete --exclude='.git' --exclude='tsconfig.base.json' ./packages/${name} ${toPath}/packages`)
+    execSync(`rsync -av --delete --exclude='package.json' --exclude='README_zh_CN.md' --exclude='README.md' --exclude='tools/venv' --exclude='.git' --exclude='tsconfig.base.json' --exclude='packages' --exclude='.github' --exclude-from='.gitignore' . ${toPath}`)
+    execSync(`rsync -av --delete --exclude='package.json' --exclude='README_zh_CN.md' --exclude='README.md' --exclude='tools/venv' --exclude='.git' --exclude='tsconfig.base.json' --exclude='packages' --exclude='.github' --exclude-from='.gitignore' ./packages/${name} ${toPath}/packages`)
 
     // 切换到目标目录
     process.chdir(absTo)
