@@ -31,94 +31,94 @@ import PostStatusEnum from "../enums/postStatusEnum"
  * @public
  */
 class Post {
-  /**
-   * 文章ID
-   */
-  postid: string
+    /**
+     * 文章ID
+     */
+    postid: string
 
-  /**
-   * 标题
-   */
-  title: string
+    /**
+     * 标题
+     */
+    title: string
 
-  /**
-   * 逗号分隔的标签
-   */
-  mt_keywords: string
+    /**
+     * 逗号分隔的标签
+     */
+    mt_keywords: string
 
-  /**
-   * 链接
-   */
-  link?: string
+    /**
+     * 链接
+     */
+    link?: string
 
-  /**
-   * 永久链接
-   */
-  permalink: string
+    /**
+     * 永久链接
+     */
+    permalink: string
 
-  /**
-   * 摘要
-   */
-  shortDesc?: string
+    /**
+     * 摘要
+     */
+    shortDesc?: string
 
-  /**
-   * 描述
-   */
-  description: string
+    /**
+     * 描述
+     */
+    description: string
 
-  /**
-   * 短评
-   */
-  mt_excerpt?: string
+    /**
+     * 短评
+     */
+    mt_excerpt?: string
 
-  /**
-   * 别名
-   */
-  wp_slug: string
+    /**
+     * 别名
+     */
+    wp_slug: string
 
-  /**
-   * 创建时间
-   */
-  dateCreated: Date
+    /**
+     * 创建时间
+     */
+    dateCreated: Date
 
-  /**
-   * 分类
-   */
-  categories: Array<string>
+    /**
+     * 分类
+     */
+    categories: Array<string>
 
-  /**
-   * 更多
-   */
-  mt_text_more?: string
+    /**
+     * 更多
+     */
+    mt_text_more?: string
 
-  /**
-   * 发布状态
-   */
-  post_status?: PostStatusEnum
+    /**
+     * 发布状态
+     */
+    post_status?: PostStatusEnum
 
-  /**
-   * 是否发布
-   */
-  isPublished: boolean
+    /**
+     * 是否发布
+     */
+    isPublished: boolean
 
-  /**
-   * 发布密码
-   */
-  wp_password: string
+    /**
+     * 发布密码
+     */
+    wp_password: string
 
-  constructor() {
-    this.postid = ""
-    this.title = ""
-    this.mt_keywords = ""
-    this.permalink = ""
-    this.description = ""
-    this.wp_slug = ""
-    this.dateCreated = new Date()
-    this.categories = []
-    this.isPublished = true
-    this.post_status = PostStatusEnum.PostStatusEnum_Publish
-    this.wp_password = ""
-  }
+    constructor() {
+        this.postid = ""
+        this.title = ""
+        this.mt_keywords = ""
+        this.permalink = ""
+        this.description = ""
+        this.wp_slug = ""
+        this.dateCreated = new Date()
+        this.categories = []
+        this.isPublished = true
+        this.post_status = PostStatusEnum.PostStatusEnum_Publish
+        this.wp_password = ""
+    }
 }
 
 export default Post

@@ -58,15 +58,15 @@
  * @since 1.0.0
  */
 class MediaObject {
-  name: string
-  type: string
-  bits: Buffer
+    name: string
+    type: string
+    bits: Buffer
 
-  constructor(name: string, type: string, bits: Buffer) {
-    this.name = name
-    this.type = type
-    this.bits = bits
-  }
+    constructor(name: string, type: string, bits: Buffer) {
+        this.name = name
+        this.type = type
+        this.bits = bits
+    }
 }
 
 export default MediaObject

@@ -34,7 +34,7 @@ class BlogConstants {
     /**
      * 博客类型
      */
-    public static DEFAULT_BLOG_TYPE_KEY="VITE_DEFAULT_TYPE"
+    public static DEFAULT_BLOG_TYPE_KEY = "VITE_DEFAULT_TYPE"
 }
 
 export default BlogConstants

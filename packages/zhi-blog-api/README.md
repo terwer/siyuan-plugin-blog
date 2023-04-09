@@ -2,13 +2,14 @@
 
 a common blog interface
 
-> ⚠️Warning: blogApi should be implemented as a specific BlogApi, it cannot be used directly
+> ⚠️Warning: BlogApi should be implemented as a specific BlogApi, it cannot be used directly
 
 ## Deps
 
 ```
-## Congregations! zhi-blog-api need no deps, it is just pure js code 🎉
-```
+├── zhi-env
+├── zhi-log
+````
 
 ## Building
 

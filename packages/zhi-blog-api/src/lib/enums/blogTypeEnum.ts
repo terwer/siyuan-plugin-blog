@@ -34,15 +34,15 @@ enum BlogTypeEnum {
     /**
      * 思源笔记
      */
-    BlogTypeEnum_Siyuan="siyuan",
+    BlogTypeEnum_Siyuan = "siyuan",
     /**
      * WordPress
      */
-    BlogTypeEnum_Wordpress="wordpress",
+    BlogTypeEnum_Wordpress = "wordpress",
     /**
      * Metaweblog
      */
-    BlogTypeEnum_Metaweblog="metaweblog"
+    BlogTypeEnum_Metaweblog = "metaweblog",
 }
 
 export default BlogTypeEnum
