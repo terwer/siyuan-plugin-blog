@@ -1,6 +1,6 @@
 {
   "name": "zhi-common",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "type": "module",
   "description": "the library base for zhi related projects",
   "repository": "terwer/zhi",

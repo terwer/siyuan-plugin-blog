@@ -2,7 +2,7 @@
 
 the library base for zhi related projects
 
-Note: ⚠️This library must be compatible with node, browser, electron and browser extension these all platforms
+Note: ⚠️This library is compatible with node, browser, electron and browser extension these all platforms
 
 ## Usage
 
@@ -16,8 +16,13 @@ console.log("now=>", now)
 
 ## Deps
 
+
 ```
-## Congregations! zhi-common need no deps, it is just pure js code 🎉
+├── zhi-env
+├── zhi-log
+├── lute
+├── showdown
+├── compare-versions
 ```
 
 ## Building
@@ -33,5 +38,5 @@ Run `nx test zhi-common` to execute the unit tests via [Vitest](https://vitest.d
 ## Publish
 
 ```
-nx publish zhi-common --ver=1.3.0 --tag=latest
+nx publish zhi-common --ver=0.0.1 --tag=latest
 ```
