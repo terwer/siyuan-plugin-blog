@@ -23,14 +23,14 @@
  * questions.
  */
 
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import DeviceUtil from "./deviceUtil"
-import SiyuanUtil from "./siyuanUtil"
-import VersionUtil from "./versionUtil"
-import BrowserUtil from "./browserUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
+import DateUtil from "./dateUtil";
+import StrUtil from "./strUtil";
+import DeviceUtil from "./deviceUtil";
+import SiyuanUtil from "./siyuanUtil";
+import VersionUtil from "./versionUtil";
+import BrowserUtil from "./browserUtil";
+import HtmlUtil from "./htmlUtil";
+import MarkdownUtil from "./markdownUtil";
 
 /**
  * 平台无关的通用工具类
@@ -47,6 +47,7 @@ class ZhiCommon {
     public readonly browserUtil
     public readonly htmlUtil
     public readonly markdownUtil
+
 
     constructor() {
         this.dateUtil = new DateUtil()

@@ -23,9 +23,10 @@
  * questions.
  */
 
-import MarkdownAdaptor from "./MarkdownAdaptor";
-import ZhiUtil from "../ZhiUtil";
-import Module from "node:module";
+import MarkdownAdaptor from "./MarkdownAdaptor"
+import ZhiUtil from "../ZhiUtil"
+import Module from "node:module"
+import { globals } from "eslint-config-standard-with-typescript"
 
 /**
  * Lute 适配器
@@ -70,8 +71,28 @@ class LuteAdaptor implements MarkdownAdaptor {
     constructor() {
         this.logger = ZhiUtil.zhiLog("lute-adaptor")
 
-        const require = Module.createRequire(import.meta.url)
-        require("./lute.min.cjs")
+        // 这里做个判断，如果有问题，需要自己在global加一个require
+        let nodeRequire
+        if (Module.createRequire) {
+            nodeRequire = Module.createRequire(import.meta.url)
+        } else {
+            nodeRequire = global.require
+        }
+
+        if (!nodeRequire) {
+            this.logger.error("Lute cannot be used because of no global.require")
+        } else {
+            try {
+                nodeRequire("zhi-common/lute.min.cjs")
+            } catch (e) {
+                try {
+                    nodeRequire("./lute.min.cjs")
+                    this.logger.error("Try require Lute in current path, development only")
+                } catch (e) {
+                    this.logger.error("Lute nodeRequire failed, will not use lute")
+                }
+            }
+        }
     }
 
     isAvailable(): boolean {

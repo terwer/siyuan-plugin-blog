@@ -1,10 +1,10 @@
 /// <reference types="vitest" />
-import { defineConfig } from "vite"
+import { defineConfig } from "vite";
 
-import viteTsConfigPaths from "vite-tsconfig-paths"
-import dts from "vite-plugin-dts"
-import { join } from "path"
-import { viteStaticCopy } from "vite-plugin-static-copy"
+import viteTsConfigPaths from "vite-tsconfig-paths";
+import dts from "vite-plugin-dts";
+import { join } from "path";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
     cacheDir: "../../node_modules/.vite/zhi-common",
@@ -24,6 +24,10 @@ export default defineConfig({
             targets: [
                 {
                     src: "README.md",
+                    dest: "./",
+                },
+                {
+                    src: "src/lib/md-adaptor/lute.min.cjs",
                     dest: "./",
                 },
             ],
@@ -53,7 +57,7 @@ export default defineConfig({
         },
         rollupOptions: {
             // External packages that should not be bundled into your library.
-            external: ["module"],
+            external: [],
             output: {
                 exports: "named",
             },

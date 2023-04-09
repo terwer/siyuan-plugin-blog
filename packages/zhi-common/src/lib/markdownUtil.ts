@@ -46,6 +46,18 @@ class MarkdownUtil {
     }
 
     /**
+     * 获取当前 MD 解析器名称
+     */
+    public getCurrentAdaptorName() {
+        if (this.mdAdaptor instanceof LuteAdaptor) {
+            return "Lute"
+        } else if (this.mdAdaptor instanceof ShowdownAdaptor) {
+            return "Showdown"
+        }
+        return "None"
+    }
+
+    /**
      * 渲染Markdown
      *
      * @param md - Markdown文本
