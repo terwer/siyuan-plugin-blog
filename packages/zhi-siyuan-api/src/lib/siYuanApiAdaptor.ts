@@ -105,7 +105,7 @@ class SiYuanApiAdaptor implements IBlogApi {
         // 渲染Markdown
         const adaptorName = Object.getPrototypeOf(this.common.markdownUtil.mdAdaptor).constructor.name
         this.logger.info("Using markdown adaptor =>", adaptorName)
-        let html = await this.common.markdownUtil.renderHTML(md.content,true)
+        let html = await this.common.markdownUtil.renderHTML(md.content)
         // 移除挂件html
         html = this.common.htmlUtil.removeWidgetTag(html)
         if (this.cfg.fixTitle) {

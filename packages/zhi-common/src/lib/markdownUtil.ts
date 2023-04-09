@@ -23,8 +23,8 @@
  * questions.
  */
 
-import LuteAdaptor from "./md-adaptor/LuteAdaptor";
-import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor";
+import LuteAdaptor from "./md-adaptor/LuteAdaptor"
+import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor"
 
 /**
  * Markdown 处理工具类
@@ -35,12 +35,11 @@ import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor";
  */
 class MarkdownUtil {
     public mdAdaptor
-    private readonly lute: LuteAdaptor
 
     constructor() {
-        this.lute = new LuteAdaptor()
-        if (this.lute.isAvailable()) {
-            this.mdAdaptor = this.lute
+        const lute = new LuteAdaptor()
+        if (lute.isAvailable()) {
+            this.mdAdaptor = lute
         } else {
             this.mdAdaptor = new ShowdownAdaptor()
         }
@@ -50,12 +49,8 @@ class MarkdownUtil {
      * 渲染Markdown
      *
      * @param md - Markdown文本
-     * @param useLute - 使用 Lute
      */
-    public async renderHTML(md: string, useLute?: boolean): Promise<string> {
-        if (useLute) {
-            this.mdAdaptor = this.lute
-        }
+    public async renderHTML(md: string): Promise<string> {
         return await this.mdAdaptor.renderMarkdownStr(md)
     }
 }
