@@ -11,17 +11,13 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "preview": "turbo run preview",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "turbo run lint"
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "prettier": "latest",
     "turbo": "latest"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "pnpm@8.1.1"
 }

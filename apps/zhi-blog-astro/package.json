@@ -19,13 +19,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "prettier -w --plugin-search-dir=. ."
+    "lint": "../../packages/eslint-config-custom/node_modules/prettier/bin-prettier.js -w --plugin-search-dir=. ."
   },
   "dependencies": {
     "astro": "^2.2.1"
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "prettier-plugin-astro": "^0.8.0"
+    "eslint-config-custom": "workspace:*"
   }
 }
