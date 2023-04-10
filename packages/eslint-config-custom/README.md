@@ -2,11 +2,12 @@
 
 common eslint config
 
-## Pluigns
+## Plugins
 
 ```bash
 ## pnpm add -D eslint --filter eslint-config-custom
 pnpm add -D astro-eslint-parser --filter eslint-config-custom
+pnpm add -D prettier-plugin-astro --filter eslint-config-custom
 ```
 
 ## Thanks
