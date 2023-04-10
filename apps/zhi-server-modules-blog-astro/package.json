@@ -1,10 +1,10 @@
 {
-  "name": "zhi-blog-astro",
+  "name": "zhi-server-modules-blog-astro",
   "type": "module",
   "version": "1.0.0",
   "description": "a performance first blog",
   "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/dev/apps/zhi-blog-astro",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/apps/zhi-server-modules-blog-astro",
   "author": "terwer",
   "license": "GPL",
   "keywords": [
@@ -19,7 +19,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "../../packages/eslint-config-custom/node_modules/prettier/bin-prettier.js -w --plugin-search-dir=. ."
+    "lint": "eslint \"src/**/*.{js,ts,astro}\" --fix"
   },
   "dependencies": {
     "astro": "^2.2.1"
