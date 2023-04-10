@@ -23,24 +23,18 @@
  * questions.
  */
 
-import { BuildOptions } from "esbuild"
-import path from "path"
-import minimist from "minimist"
-
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-const outDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "dist"
-console.log("outDir=>", outDir)
-const outFile = "theme.js"
-
-/**
- * 构建配置
- */
-export const esbuildConfig: BuildOptions = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, outFile),
-  bundle: true,
-  format: "cjs",
-  platform: "node",
+module.exports = {
+  semi: false,
+  singleQuote: false,
+  printWidth: 120,
+  pluginSearchDirs: ["."],
+  plugins: [require.resolve("prettier-plugin-astro")],
+  overrides: [
+    {
+      files: "*.astro",
+      options: {
+        parser: "astro",
+      },
+    },
+  ],
 }
