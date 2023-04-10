@@ -1,0 +1,28 @@
+{
+  "name": "zhi-core",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "a pluggable siyuan-note theme",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/dev/apps/zhi-core",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "zhi-core",
+    "siyuan-note",
+    "theme"
+  ],
+  "scripts": {
+    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --watch",
+    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --production"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.15.11",
+    "esbuild": "^0.16.9",
+    "minimist": "^1.2.8",
+    "ts-node": "^10.9.1",
+    "tsconfig": "workspace:*"
+  }
+}
