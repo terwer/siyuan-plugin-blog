@@ -1,11 +1,5 @@
 module.exports = {
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "turbo", "prettier"],
-  overrides: [
-    {
-      files: ["*.astro"],
-      parser: "astro-eslint-parser",
-    },
-  ],
 
   // 这里是next的配置支持，需要在子项目安装下列依赖
   // pnpm add @babel/core@^7.0.0 -D
@@ -23,7 +17,27 @@ module.exports = {
   // },
 
   // parser: "vue-eslint-parser",
-  // parser: "@typescript-eslint/parser",
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    // 下面一行next项目可用，参考web
+    // babelOptions: {
+    //   presets: [require.resolve("next/babel")],
+    // },
+  },
+
+  overrides: [
+    {
+      files: ["*.astro"],
+      parser: "astro-eslint-parser",
+      // Parse the script in `.astro` as TypeScript by adding the following configuration.
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
+    },
+  ],
+
+  plugins: ["@typescript-eslint", "prettier"],
+
   rules: {
     // Note: you must disable the base rule as it can report incorrect errors
     semi: "off",
@@ -31,11 +45,4 @@ module.exports = {
     "@typescript-eslint/no-this-alias": "off",
     "prettier/prettier": "error",
   },
-  parserOptions: {
-    // 下面一行next项目可用，参考web
-    // babelOptions: {
-    //   presets: [require.resolve("next/babel")],
-    // },
-  },
-  plugins: ["@typescript-eslint", "prettier"],
 }
