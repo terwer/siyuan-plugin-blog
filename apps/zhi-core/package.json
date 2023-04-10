@@ -14,11 +14,15 @@
     "theme"
   ],
   "scripts": {
-    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm esbuild.config.ts"
+    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --watch",
+    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --production"
   },
   "devDependencies": {
-    "esbuild": "^0.17.16",
-    "esbuild-dev-server": "^0.3.0",
-    "ts-node": "^10.9.1"
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.15.11",
+    "esbuild": "^0.16.9",
+    "minimist": "^1.2.8",
+    "ts-node": "^10.9.1",
+    "tsconfig": "workspace:*"
   }
 }

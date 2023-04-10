@@ -22,20 +22,4 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import { BuildOptions } from "esbuild"
-import path from "path"
-
-const outDir = "dist"
-const outFile = "theme.js"
-
-/**
- * 构建配置
- */
-export const esbuildConfig: BuildOptions = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, outFile),
-  bundle: true,
-  format: "cjs",
-  platform: "node",
-}
+console.log("hello, zhi theme")
