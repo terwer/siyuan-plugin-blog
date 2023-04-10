@@ -12,7 +12,7 @@ jobs:
       - name: git-sync
         uses: wei/git-sync@v3
         with:
-          source_repo: "terwer/zgi"
+          source_repo: "terwer/zhi"
           source_branch: "main"
           destination_repo: "terwer/zhi-blog-astro"
           destination_branch: "main"
