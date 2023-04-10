@@ -1,5 +1,11 @@
 module.exports = {
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "turbo", "prettier"],
+  overrides: [
+    {
+      files: ["*.astro"],
+      parser: "astro-eslint-parser",
+    },
+  ],
 
   // pnpm add eslint-plugin-react -D
   // pnpm add eslint-config-next -D

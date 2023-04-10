@@ -3,14 +3,13 @@
   "version": "0.0.0",
   "main": "index.cjs",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "astro-eslint-parser": "^0.13.3",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-turbo": "latest",
-    "eslint-plugin-prettier": "^4.2.1"
-  },
-  "devDependencies": {
+    "eslint-plugin-prettier": "^4.2.1",
     "typescript": "^4.7.4"
   },
   "publishConfig": {
