@@ -8,16 +8,6 @@ importers:
         specifier: latest
         version: 1.8.8
 
-  apps/zhi-blog-astro:
-    dependencies:
-      astro:
-        specifier: ^2.2.1
-        version: 2.2.1
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/eslint-config-custom
-
   apps/zhi-core:
     devDependencies:
       '@types/minimist':
@@ -41,6 +31,16 @@ importers:
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
+
+  apps/zhi-server-modules-blog-astro:
+    dependencies:
+      astro:
+        specifier: ^2.2.1
+        version: 2.2.1
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
 
   packages/eslint-config-custom:
     devDependencies:
