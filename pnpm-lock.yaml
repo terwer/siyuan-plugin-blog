@@ -76,6 +76,12 @@ importers:
       '@vuepress/client':
         specifier: 2.0.0-beta.61
         version: 2.0.0-beta.61
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       vue:
         specifier: ^3.2.47
         version: 3.2.47
