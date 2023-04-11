@@ -5,7 +5,7 @@
     "module": "esnext",
     "isolatedModules": false,
     "esModuleInterop": true,
-    "outDir": "./dist"
+    "outDir": "./lib"
   },
   "include": ["env.d.ts", "**/*.ts"],
   "exclude": ["node_modules"]
