@@ -16,7 +16,6 @@
     "md": "turbo run md",
     "apidev": "pnpm md && turbo run apidev --filter zhi-docs",
     "apibuild": "pnpm md && turbo run apibuild --filter zhi-docs",
-    "vercelbuild": "pnpm apibuild"
   },
   "devDependencies": {
     "turbo": "latest"
