@@ -14,7 +14,8 @@
     "lint": "turbo run lint",
     "doc":"turbo run doc",
     "md":"turbo run md",
-    "api":"turbo run api"
+    "apidev":"turbo run apidev",
+    "apibuild":"turbo run apibuild"
   },
   "devDependencies": {
     "turbo": "latest"
