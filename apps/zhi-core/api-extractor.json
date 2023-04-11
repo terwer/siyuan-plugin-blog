@@ -1,3 +1,8 @@
 {
-  "extends": "api-docs/api-extractor-base.json"
+  "extends": "api-docs/api-extractor-base.json",
+
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "../../reports/api/"
+  }
 }

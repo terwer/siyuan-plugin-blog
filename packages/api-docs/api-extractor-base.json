@@ -135,7 +135,14 @@
     /**
      * (REQUIRED) Whether to generate an API report.
      */
-    "enabled": true
+    "enabled": true,
+
+    /**
+     * For a single project, it's fine to keep the report in the default location "<projectFolder>/etc/". Whereas if you
+     * work in a monorepo with many projects, you may prefer to have all the API report files written to a central
+     * location such as common/reviews/api used by the rushstack repo where API Extractor is developed.
+     */
+    "reportFolder": "<projectFolder>/etc/"
 
     /**
      * The filename for the API report files.  It will be combined with "reportFolder" or "reportTempFolder" to produce
@@ -255,7 +262,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/dist/<unscopedPackageName>.d.ts"
      */
-     "untrimmedFilePath": "<projectFolder>/dist/index.d.ts",
+    "untrimmedFilePath": "<projectFolder>/dist/index.d.ts"
     // "untrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>.d.ts",
 
     /**
