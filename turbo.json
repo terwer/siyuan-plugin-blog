@@ -21,11 +21,7 @@
     "md": {
       "dependsOn": ["^doc"]
     },
-    "apidev": {
-      "dependsOn": ["^md"]
-    },
-    "apibuild": {
-      "dependsOn": ["^md"]
-    }
+    "apidev": {},
+    "apibuild": {}
   }
 }

@@ -12,10 +12,11 @@
     "build": "turbo run build",
     "preview": "turbo run preview",
     "lint": "turbo run lint",
-    "doc":"turbo run doc",
-    "md":"turbo run md",
-    "apidev":"turbo run apidev",
-    "apibuild":"turbo run apibuild"
+    "doc": "turbo run doc",
+    "md": "turbo run md",
+    "apidev": "pnpm md && turbo run apidev --filter zhi-docs",
+    "apibuild": "pnpm md && turbo run apibuild --filter zhi-docs",
+    "vercelbuild": "pnpm apibuild"
   },
   "devDependencies": {
     "turbo": "latest"
