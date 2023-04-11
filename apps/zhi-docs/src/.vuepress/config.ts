@@ -1,8 +1,10 @@
-import { defineUserConfig } from "vuepress";
-import theme from "./theme.js";
+import { defineUserConfig } from "vuepress"
+import theme from "./theme.js"
 
 export default defineUserConfig({
   base: "/",
+
+  dest: "src/.vuepress/dist",
 
   locales: {
     "/": {
@@ -21,4 +23,4 @@ export default defineUserConfig({
 
   // Enable it with pwa
   // shouldPrefetch: false,
-});
+})
