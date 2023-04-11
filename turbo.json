@@ -20,6 +20,9 @@
     },
     "md": {
       "dependsOn": ["^doc"]
+    },
+    "api": {
+      "dependsOn": ["^md"]
     }
   }
 }

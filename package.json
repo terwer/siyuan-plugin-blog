@@ -13,7 +13,8 @@
     "preview": "turbo run preview",
     "lint": "turbo run lint",
     "doc":"turbo run doc",
-    "md":"turbo run md"
+    "md":"turbo run md",
+    "api":"turbo run api"
   },
   "devDependencies": {
     "turbo": "latest"
