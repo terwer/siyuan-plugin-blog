@@ -23,46 +23,18 @@
  * questions.
  */
 
-import { BuildOptions } from "esbuild"
-import path from "path"
-import minimist from "minimist"
-import { copy } from "esbuild-plugin-copy"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
-
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
-
 /**
- * 构建配置
+ * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
  */
-export const esbuildConfig: BuildOptions = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(isWatch ? baseDir : path.join(baseDir, "dist"), "theme.js"),
-  bundle: true,
-  format: "cjs",
-  platform: "node",
-  plugins: [
-    dtsPlugin(),
-
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      // resolveFrom: "cwd",
-      assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [path.join(baseDir, "assets")],
-        },
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(baseDir, "/README.md")],
-        },
-      ],
-      watch: true,
-    }),
-  ],
+class Zhi {
+  /**
+   * 主流程加载
+   */
+  public async init(): Promise<void> {}
 }
+
+export default Zhi

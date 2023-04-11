@@ -1,0 +1,13 @@
+{
+  "name": "api-docs",
+  "version": "1.0.0",
+  "main": "index.cjs",
+  "license": "GPL",
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.21.7",
+    "@microsoft/api-extractor": "^7.34.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

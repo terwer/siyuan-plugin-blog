@@ -11,7 +11,11 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "preview": "turbo run preview",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "doc":"turbo run doc",
+    "md":"turbo run md",
+    "apidev":"turbo run apidev",
+    "apibuild":"turbo run apibuild"
   },
   "devDependencies": {
     "turbo": "latest"

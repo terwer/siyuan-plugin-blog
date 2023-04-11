@@ -23,23 +23,6 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi 一款简洁、强大的思源笔记主题
- */
-
-import Zhi from "./theme/zhi"
-
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
-
-  const zhi = new Zhi()
-  console.log("hello, zhi theme", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
-
-export default Zhi
+export function hello() {
+  console.log("hello, zhi cli")
+}
