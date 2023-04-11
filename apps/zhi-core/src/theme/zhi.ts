@@ -22,19 +22,11 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import Zhi from "./theme/zhi"
-
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
-
-  const zhi = new Zhi()
-  console.log("hello, zhi theme", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
+class Zhi {
+  /**
+   * 主流程加载
+   */
+  public async init(): Promise<void> {}
+}
 
 export default Zhi
