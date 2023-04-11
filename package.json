@@ -15,7 +15,7 @@
     "doc": "turbo run doc",
     "md": "turbo run md",
     "apidev": "pnpm md && turbo run apidev --filter zhi-docs",
-    "apibuild": "pnpm md && turbo run apibuild --filter zhi-docs",
+    "apibuild": "pnpm md && turbo run apibuild --filter zhi-docs"
   },
   "devDependencies": {
     "turbo": "latest"
