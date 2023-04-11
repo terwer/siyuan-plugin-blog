@@ -17,6 +17,9 @@
     },
     "doc": {
       "dependsOn": ["^build"]
+    },
+    "md": {
+      "dependsOn": ["^doc"]
     }
   }
 }

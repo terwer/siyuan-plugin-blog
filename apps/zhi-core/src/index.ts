@@ -37,7 +37,7 @@ import Zhi from "./theme/zhi"
   // const common = ZhiUtil.zhiCommon()
 
   const zhi = new Zhi()
-  console.log("hello, zhi theme24444", zhi)
+  console.log("hello, zhi theme", zhi)
   // const zhi = new Zhi(common.deviceUtil.getDevice())
   // await zhi.init()
 })()

@@ -19,7 +19,8 @@
     "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --watch",
     "build": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --production",
     "lint": "eslint \"src/**/*.{ts,js}\" --fix",
-    "doc": "api-extractor run --local --verbose"
+    "doc": "api-extractor run --local --verbose",
+    "md": "api-documenter markdown -i temp -o ../../docs/zhi-core"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",

@@ -12,7 +12,8 @@
     "build": "turbo run build",
     "preview": "turbo run preview",
     "lint": "turbo run lint",
-    "doc":"turbo run doc"
+    "doc":"turbo run doc",
+    "md":"turbo run md"
   },
   "devDependencies": {
     "turbo": "latest"
