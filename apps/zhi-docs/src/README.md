@@ -94,11 +94,6 @@ features:
     details: Make your site more like an APP
     link: https://theme-hope.vuejs.press/guide/advanced/pwa.html
 
-  - title: More new features
-    icon: more
-    details: Including icon support, fullscreen button, etc.
-    link: https://theme-hope.vuejs.press/guide/feature/
-
 copyright: false
 footer: Theme by <a href="https://theme-hope.vuejs.press/" target="_blank">VuePress Theme Hope</a> | MIT Licensed, Copyright © 2019-present Mr.Hope
 ---
