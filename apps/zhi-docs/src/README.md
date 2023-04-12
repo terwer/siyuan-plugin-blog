@@ -3,8 +3,8 @@ home: true
 icon: home
 title: Home 
 heroImage: /logo.svg
-heroText: Zhi
-tagline: A plugable framework for zhi theme.
+heroText: Zhi Theme
+tagline: A plugable siyuan-note theme with blog bundled and more.Let's regain the joy of creation!
 actions:
   - text: Getting started 💡
     link: /docs/introduction/motivation
