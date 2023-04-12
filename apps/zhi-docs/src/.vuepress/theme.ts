@@ -3,20 +3,18 @@ import { enNavbar, zhNavbar } from "./navbar/index.js"
 import { enSidebar, zhSidebar } from "./sidebar/index.js"
 
 export default hopeTheme({
-  hostname: "https://vuepress-theme-hope-docs-demo.netlify.app",
+  hostname: "https://zhi.terwer.space",
 
   author: {
-    name: "Mr.Hope",
-    url: "https://mrhope.site",
+    name: "terwer",
+    url: "https://terwer.space",
   },
 
   iconAssets: "iconfont",
 
   logo: "/logo.svg",
 
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
-
-  docsDir: "../../../docs",
+  repo: "terwer/zhi",
 
   locales: {
     "/": {
@@ -24,7 +22,7 @@ export default hopeTheme({
       navbar: enNavbar,
 
       // sidebar
-      sidebar: enSidebar,
+      // sidebar: enSidebar,
 
       footer: "Default footer",
 
