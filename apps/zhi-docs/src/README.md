@@ -1,17 +1,17 @@
 ---
 home: true
 icon: home
-title: Project home
+title: Home 
 heroImage: /logo.svg
-heroText: Project name
-tagline: You can place the description of the project here.
+heroText: Zhi
+tagline: A plugable framework for zhi theme.
 actions:
-  - text: How to Use 💡
-    link: /demo/
+  - text: Getting started 💡
+    link: /docs/introduction/motivation
     type: primary
 
-  - text: Docs
-    link: /guide/
+  - text: Api docs
+    link: /api/zhi-core
 
 features:
   - title: Markdown Enhance
@@ -102,9 +102,3 @@ features:
 copyright: false
 footer: Theme by <a href="https://theme-hope.vuejs.press/" target="_blank">VuePress Theme Hope</a> | MIT Licensed, Copyright © 2019-present Mr.Hope
 ---
-
-This is an example of a project homepage. You can place your main content here.
-
-To use this layout, you need to set `home: true` in the page front matter.
-
-For related descriptions of configuration items, please see [Project HomePage Layout Config](https://theme-hope.vuejs.press/guide/layout/home/).
