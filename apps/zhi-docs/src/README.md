@@ -4,7 +4,7 @@ icon: home
 title: Home 
 heroImage: /logo.svg
 heroText: Zhi Theme
-tagline: A plugable siyuan-note theme with blog bundled and more.Let's regain the joy of creation!
+tagline: A plugable siyuan-note theme with blog bundled.
 actions:
   - text: Getting started 💡
     link: /docs/introduction/motivation
