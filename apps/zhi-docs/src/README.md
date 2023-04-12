@@ -11,7 +11,7 @@ actions:
     type: primary
 
   - text: Api docs
-    link: /api/zhi-core
+    link: /api/zhi-core/zhi-core
 
 features:
   - title: Markdown Enhance
