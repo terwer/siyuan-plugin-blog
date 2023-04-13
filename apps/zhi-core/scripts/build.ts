@@ -113,7 +113,7 @@ class ZhiBuild {
 }
 
 ;(async function () {
-  console.log("Zhi plugins is building...")
+  console.log("Zhi build system is starting...")
 
   const args = minimist(process.argv.slice(2))
   const isWatch = args.watch || args.w
@@ -122,7 +122,7 @@ class ZhiBuild {
   console.log("isProduction=>", isProduction)
 
   try {
-    const buildResult = await ZhiBuild.processBuild(isWatch, isProduction)
+    await ZhiBuild.processBuild(isWatch, isProduction)
     console.log("Zhi build success.")
   } catch (e) {
     console.error("Zhi build error=>", e)
