@@ -23,18 +23,4 @@
  * questions.
  */
 
-/**
- * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
- *
- * @public
- * @author terwer
- * @since 0.1.0
- */
-class Zhi {
-  /**
-   * 主流程加载
-   */
-  public async init(): Promise<void> {}
-}
-
-export default Zhi
+module.exports = "test-file-stub"

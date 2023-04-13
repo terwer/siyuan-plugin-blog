@@ -31,7 +31,7 @@ import minimist from "minimist"
  * zhi 主题构建
  *
  * @author terwer
- * @since 1.0.0
+ * @since 0.1.0
  */
 class ZhiBuild {
   /**
