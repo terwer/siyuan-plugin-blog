@@ -18,7 +18,7 @@
     "apibuild": "pnpm build && pnpm doc && pnpm md && turbo run apibuild --filter zhi-docs"
   },
   "devDependencies": {
-    "turbo": "latest"
+    "turbo": "^1.9.1"
   },
   "engines": {
     "node": ">=14.0.0"
