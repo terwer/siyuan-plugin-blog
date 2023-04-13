@@ -62,9 +62,17 @@ export default hopeTheme({
   },
 
   plugins: {
+    // https://plugin-comment2.vuejs.press/zh/
     comment: {
-      // @ts-expect-error: You should generate and use your own comment service
+      // 插件选项
       provider: "Waline",
+      serverURL: "https://waline.terwergreen.com",
+      login: "disable",
+      dark: "auto",
+      wordLimit: 512,
+
+      // provider: "Artalk",
+      // serverURL: "https://talk.terwergreen.com:8003",
     },
 
     // all features are enabled for demo, only preserve features you need here
