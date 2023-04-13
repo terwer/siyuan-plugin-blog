@@ -3,15 +3,27 @@
   "version": "1.2.0",
   "description": "a tool for generating zhi framework related projects",
   "type": "module",
+  "bin": {
+    "zhi-cli": "dist/index.js"
+  },
   "repository": "terwer/zhi-cli",
   "homepage": "terwer/zhi-cli",
   "author": "terwer",
   "license": "GPL",
-  "keywords": [],
+  "keywords": [
+    "zhi",
+    "cli",
+    "zhi-cli"
+  ],
   "scripts": {
     "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --watch",
     "build": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --production",
-    "lint": "../../packages/eslint-config-custom/node_modules/prettier/bin-prettier.js -w ."
+    "test": "node ./dist/index.js",
+    "lint": "eslint \"src/**/*.{ts,js}\" --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-cli && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-cli/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-cli\n---' | cat - ../zhi-docs/src/api/zhi-cli/index.md > ../zhi-docs/src/api/zhi-cli/README.md"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
@@ -22,6 +34,7 @@
     "esbuild-plugin-copy": "^2.1.1",
     "minimist": "^1.2.8",
     "ts-node": "^10.9.1",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "api-docs": "workspace:*"
   }
 }

@@ -34,13 +34,14 @@ const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 
 const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
+const outDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 /**
  * 构建配置
  */
 export const esbuildConfig: BuildOptions = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(isWatch ? baseDir : path.join(baseDir, "dist"), "theme.js"),
+  outfile: path.join(outDir, "theme.js"),
   bundle: true,
   format: "cjs",
   platform: "node",

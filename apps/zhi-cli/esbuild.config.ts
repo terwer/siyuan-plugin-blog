@@ -25,45 +25,36 @@
 
 import { BuildOptions } from "esbuild"
 import path from "path"
-import minimist from "minimist"
 import { dtsPlugin } from "esbuild-plugin-d.ts"
-// import { copy } from "esbuild-plugin-copy"
+import { copy } from "esbuild-plugin-copy"
 
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-// const baseDir = isWatch ? "/my-custom-folder" : "./"
 const baseDir = "./"
+const outDir = path.join(baseDir, "dist")
 
 /**
  * 构建配置
  */
 export const esbuildConfig: BuildOptions = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(isWatch ? baseDir : path.join(baseDir, "dist"), "theme.js"),
+  outfile: path.join(outDir, "index.js"),
   bundle: true,
   format: "cjs",
   platform: "node",
   plugins: [
     dtsPlugin(),
 
-    // copy({
-    //   // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-    //   // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-    //   // resolveFrom: "cwd",
-    //   assets: [
-    //     // copy folder
-    //     {
-    //       from: "./public/**/*",
-    //       to: [path.join(baseDir, "assets")],
-    //     },
-    //     // copy one file
-    //     {
-    //       from: ["./README.md"],
-    //       to: [path.join(baseDir, "/README.md")],
-    //     },
-    //   ],
-    //   watch: true,
-    // }),
+    copy({
+      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+      // resolveFrom: "cwd",
+      assets: [
+        // copy one file
+        {
+          from: ["./README.md"],
+          to: [path.join(baseDir, "/README.md")],
+        },
+      ],
+      watch: true,
+    }),
   ],
 }

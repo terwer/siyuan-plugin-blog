@@ -7,6 +7,6 @@
     "esModuleInterop": true,
     "outDir": "./lib"
   },
-  "include": ["env.d.ts", "**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["**/*.ts"],
+  "exclude": ["lib", "node_modules"]
 }
