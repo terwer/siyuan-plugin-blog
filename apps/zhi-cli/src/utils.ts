@@ -23,28 +23,14 @@
  * questions.
  */
 
-#!/usr/bin/env node
+import LogFactory, { LogLevelEnum } from "zhi-log"
 
-/**
- * @packageDocumentation
- * zhi-cli 脚手架
- */
+const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("utils")
 
-import { Command } from "commander"
-import { initCommand } from "./init/commnd"
-import pkg from "../package.json" assert { type: "json" }
+export const printVerboseHook = (thisCommand: any) => {
+  const options = thisCommand.opts()
 
-/**
- * cli 入口
- *
- * @public
- */
-const cliEntry = () => {
-  const program = new Command()
-  program.name("Zhi project creator").description("Create projects for zhi theme").version(pkg.version)
-  program.addCommand(initCommand())
-  program.parse(process.argv)
+  if (options.verbose) {
+    logger.info(`CLI arguments`, options)
+  }
 }
-cliEntry()
-
-export default cliEntry

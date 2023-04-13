@@ -4,7 +4,7 @@
   "description": "a tool for generating zhi framework related projects",
   "type": "module",
   "bin": {
-    "zhi-cli": "dist/index.js"
+    "zhi-cli": "dist/index.cjs"
   },
   "repository": "terwer/zhi-cli",
   "homepage": "terwer/zhi-cli",
@@ -26,15 +26,22 @@
     "mdfmt": "echo '---\ntitle: zhi-cli\n---' | cat - ../zhi-docs/src/api/zhi-cli/index.md > ../zhi-docs/src/api/zhi-cli/README.md"
   },
   "devDependencies": {
+    "@types/git-clone": "^0.2.0",
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.15.11",
+    "api-docs": "workspace:*",
     "esbuild": "^0.16.9",
-    "eslint-config-custom": "workspace:*",
-    "esbuild-plugin-d.ts": "^1.1.0",
     "esbuild-plugin-copy": "^2.1.1",
+    "esbuild-plugin-d.ts": "^1.1.0",
+    "eslint-config-custom": "workspace:*",
     "minimist": "^1.2.8",
     "ts-node": "^10.9.1",
-    "tsconfig": "workspace:*",
-    "api-docs": "workspace:*"
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "enquirer": "^2.3.6",
+    "fs-extra": "^11.1.1",
+    "git-clone": "^0.2.0",
+    "handlebars": "^4.7.7"
   }
 }

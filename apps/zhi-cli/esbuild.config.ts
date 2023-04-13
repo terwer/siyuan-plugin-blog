@@ -38,7 +38,7 @@ export const esbuildConfig: BuildOptions = {
   entryPoints: ["src/index.ts"],
   outfile: path.join(outDir, "index.js"),
   bundle: true,
-  format: "cjs",
+  format: "esm",
   platform: "node",
   plugins: [
     dtsPlugin(),

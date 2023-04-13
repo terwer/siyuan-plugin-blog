@@ -23,28 +23,30 @@
  * questions.
  */
 
-#!/usr/bin/env node
+import gitclone from "git-clone/promise"
+import LogFactory, { LogLevelEnum } from "zhi-log"
 
-/**
- * @packageDocumentation
- * zhi-cli 脚手架
- */
+const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("init:download")
 
-import { Command } from "commander"
-import { initCommand } from "./init/commnd"
-import pkg from "../package.json" assert { type: "json" }
+export const downloadTemplate = (templateGitUrl: string, downloadPath: string, branch: string) => {
+  logger.info("download template")
+  return new Promise((resolve, reject) => {
+    logger.info("prepare to checkout templateGitUrl=>", templateGitUrl)
+    logger.info("prepare to checkout downloadPath=>", downloadPath)
+    logger.info("prepare to checkout branch=>", branch)
+    logger.info("start download template ...")
 
-/**
- * cli 入口
- *
- * @public
- */
-const cliEntry = () => {
-  const program = new Command()
-  program.name("Zhi project creator").description("Create projects for zhi theme").version(pkg.version)
-  program.addCommand(initCommand())
-  program.parse(process.argv)
+    gitclone(templateGitUrl, downloadPath, {
+      checkout: branch,
+      shallow: false,
+    })
+      .then((r: any) => {
+        logger.info("download success")
+        resolve("download success")
+      })
+      .catch((error: any) => {
+        logger.error("download fail")
+        reject(error)
+      })
+  })
 }
-cliEntry()
-
-export default cliEntry

@@ -23,28 +23,31 @@
  * questions.
  */
 
-#!/usr/bin/env node
+import fs from "fs-extra"
+import path from "path"
+import handlebars from "handlebars"
+import LogFactory, { LogLevelEnum } from "zhi-log"
 
-/**
- * @packageDocumentation
- * zhi-cli 脚手架
- */
+const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("init:modify")
 
-import { Command } from "commander"
-import { initCommand } from "./init/commnd"
-import pkg from "../package.json" assert { type: "json" }
+export const modifyPackageJson = function (downloadPath: string, options: any) {
+  const packagePath = path.join(downloadPath, "package.json")
+  logger.info("start modifying package.json ...")
+  if (fs.existsSync(packagePath)) {
+    const content = fs.readFileSync(packagePath).toString()
+    const template = handlebars.compile(content)
 
-/**
- * cli 入口
- *
- * @public
- */
-const cliEntry = () => {
-  const program = new Command()
-  program.name("Zhi project creator").description("Create projects for zhi theme").version(pkg.version)
-  program.addCommand(initCommand())
-  program.parse(process.argv)
+    const param = {
+      name: options.name,
+      description: options.description,
+      author: options.author,
+    }
+
+    const result = template(param)
+    fs.writeFileSync(packagePath, result)
+    logger.info("modify package.json complete")
+  } else {
+    logger.error("modify package.json fail")
+    throw new Error("no package.json")
+  }
 }
-cliEntry()
-
-export default cliEntry
