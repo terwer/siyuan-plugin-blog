@@ -54,7 +54,7 @@ export const esbuildConfig: BuildOptions = {
         // copy folder
         {
           from: "./public/**/*",
-          to: [path.join(baseDir, "assets")],
+          to: [baseDir],
         },
         // copy one file
         {
