@@ -32,7 +32,7 @@ Creating project use the following commands
 
 ```bash
 ## turbo-workspace
-zhi-cli init my-turbo-workspace turbo-workspace-simple
+## zhi-cli init my-turbo-workspace turbo-workspace-simple
 
 ## ts-cli
 ## zhi-cli init my-project ts-cli

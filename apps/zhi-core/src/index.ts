@@ -25,7 +25,7 @@
 
 /**
  * @packageDocumentation
- * zhi 一款简洁、强大的思源笔记主题
+ * zhi-core 主题核心模块
  */
 
 import Zhi from "./theme/zhi"

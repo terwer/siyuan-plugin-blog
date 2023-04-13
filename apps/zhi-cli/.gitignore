@@ -1,3 +1,12 @@
+# idea
 .idea
+
+# build
 dist
+lib
 node_modules
+
+# api-extractor
+etc
+temp
+tsdoc-metadata.json

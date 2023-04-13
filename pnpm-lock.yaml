@@ -16,6 +16,9 @@ importers:
       '@types/node':
         specifier: ^18.15.11
         version: 18.15.11
+      api-docs:
+        specifier: workspace:*
+        version: link:../../packages/api-docs
       esbuild:
         specifier: ^0.16.9
         version: 0.16.9
