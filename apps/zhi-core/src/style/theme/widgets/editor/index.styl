@@ -23,27 +23,34 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi 一款简洁、强大的思源笔记主题
- */
+// 标签与左侧间距
+.protyle-background__tags
+  margin-left 36px !important
 
-import Zhi from "./theme/zhi"
+// 标签操作按钮
+// .protyle-icons
+//   opacity 1
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
+// 背景间距
+.protyle-background__iconw
+  left 54px !important
 
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
+// 标题与编辑器左侧间距
+.protyle-title
+  margin-top 0 !important
+  margin-left 48px !important
+  margin-right 48px !important
 
-  const zhi = new Zhi()
-  console.log("hello, zhi theme2345", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
+// 正文左右间距
+.protyle-wysiwyg
+  padding-left 48px !important
+  padding-right 48px !important
 
-export default Zhi
+ // 正文标题间距
+.protyle-wysiwyg--attr
+  padding-top 0 !important
+
+// 引述
+.b3-typography blockquote, .b3-typography .bq
+.protyle-wysiwyg blockquote, .protyle-wysiwyg .bq
+  background-color: transparent

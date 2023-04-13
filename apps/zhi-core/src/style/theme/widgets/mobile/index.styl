@@ -23,27 +23,25 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi 一款简洁、强大的思源笔记主题
- */
+@media screen and (min-width 1px) and (max-width 719px)
+  // 竖屏
+  .protyle-background
+    min-height 32px !important
+    padding-bottom 0 !important
 
-import Zhi from "./theme/zhi"
+  .protyle-icons
+    opacity 0.86 !important
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
+  // .protyle-background__icon
+  //     display: none
 
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
+  .protyle-background__iconw
+    left 16px !important
 
-  const zhi = new Zhi()
-  console.log("hello, zhi theme2345", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
+  .protyle-title
+    margin-left 16px !important
+    margin-right 16px !important
 
-export default Zhi
+  .protyle-wysiwyg
+    padding-left 16px !important
+    padding-right 16px !important

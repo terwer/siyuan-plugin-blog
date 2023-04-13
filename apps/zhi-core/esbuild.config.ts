@@ -28,6 +28,7 @@ import path from "path"
 import minimist from "minimist"
 import { copy } from "esbuild-plugin-copy"
 import { dtsPlugin } from "esbuild-plugin-d.ts"
+import stylePlugin from "esbuild-style-plugin"
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
@@ -64,5 +65,7 @@ export const esbuildConfig: BuildOptions = {
       ],
       watch: true,
     }),
+
+    stylePlugin(),
   ],
 }

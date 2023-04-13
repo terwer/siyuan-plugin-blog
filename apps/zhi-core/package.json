@@ -27,13 +27,15 @@
   "devDependencies": {
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.15.11",
+    "api-docs": "workspace:*",
     "esbuild": "^0.16.9",
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-plugin-d.ts": "^1.1.0",
+    "esbuild-style-plugin": "^1.6.1",
     "eslint-config-custom": "workspace:*",
     "minimist": "^1.2.8",
+    "stylus": "^0.59.0",
     "ts-node": "^10.9.1",
-    "tsconfig": "workspace:*",
-    "api-docs": "workspace:*"
+    "tsconfig": "workspace:*"
   }
 }

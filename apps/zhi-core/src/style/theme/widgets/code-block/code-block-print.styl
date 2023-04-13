@@ -23,27 +23,13 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi 一款简洁、强大的思源笔记主题
- */
+// -------------------------------------------------代码块-打印模式---------------------------------------------------
+#preview
+  .protyle-action__language
+    right 0.2rem !important
 
-import Zhi from "./theme/zhi"
+  .protyle-action__language::after
+    display none !important
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
-
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
-
-  const zhi = new Zhi()
-  console.log("hello, zhi theme2345", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
-
-export default Zhi
+  .protyle-action__copy
+    display none !important

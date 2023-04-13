@@ -23,27 +23,15 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi 一款简洁、强大的思源笔记主题
- */
+// -------------------------------------------------代码块-Rem Craft适配---------------------------------------------------
+html[data-light-theme="Rem Craft"]
+  .b3-typography .code-block, .protyle-wysiwyg .code-block
+    background var(--zhi-code-tab-bg)
 
-import Zhi from "./theme/zhi"
+  .b3-typography .code-block .protyle-action .protyle-action__language
+  .protyle-wysiwyg .code-block .protyle-action .protyle-action__language
+    right 5rem
+    top -0.1rem
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
-
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
-
-  const zhi = new Zhi()
-  console.log("hello, zhi theme2345", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
-
-export default Zhi
+  .protyle-linenumber__rows
+    margin-top 8px !important
