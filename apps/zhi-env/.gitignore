@@ -11,3 +11,8 @@ node_modules
 etc
 temp
 tsdoc-metadata.json
+
+# env
+.env.development
+.env.production
+.env.test
