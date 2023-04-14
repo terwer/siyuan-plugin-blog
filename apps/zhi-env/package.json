@@ -14,6 +14,7 @@
     "dev": "node ../../packages/esbuild-config-custom/build.cjs --watch",
     "build": "node ../../packages/esbuild-config-custom/build.cjs --production",
     "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-env",
+    "publish": "npm publish --tag latest",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
     "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-env && pnpm mdfix",
