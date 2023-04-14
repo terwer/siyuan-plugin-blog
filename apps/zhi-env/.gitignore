@@ -4,6 +4,7 @@
 # build
 dist
 lib
+!src/lib
 node_modules
 
 # api-extractor

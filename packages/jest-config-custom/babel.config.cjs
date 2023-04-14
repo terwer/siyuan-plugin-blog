@@ -23,7 +23,7 @@
  * questions.
  */
 
-import EnvConstants from "./lib/EnvConstants"
-import Env from "./lib/zhi-env"
-export default Env
-export { EnvConstants }
+module.exports = {
+  presets: [["@babel/preset-env", { targets: { node: "current" } }], "@babel/preset-typescript"],
+  plugins: ["babel-plugin-transform-vite-meta-env"],
+}

@@ -23,11 +23,69 @@
  * questions.
  */
 
-import { describe, expect, test } from "@jest/globals"
-import { hello } from "./index"
+import { describe, expect, it } from "@jest/globals"
+import Env, { EnvConstants } from "./index"
 
-describe("zhi-cli", () => {
-  test("index", () => {
-    expect(hello()).toBe("hello world")
+describe("zhiEnv", () => {
+  const NOT_EXIST_KEY = "NOT_EXIST_KEY"
+
+  it("test env", () => {
+    const env = new Env(import.meta.env)
+    expect(env.getEnv(EnvConstants.NODE_ENV_KEY)).toEqual("test")
+  })
+
+  it("test debug mode", () => {
+    const env = new Env(import.meta.env)
+    expect(env.getEnv(EnvConstants.VITE_DEBUG_MODE_KEY)).toEqual("true")
+  })
+
+  it("test getEnv undefined", function () {
+    const env = new Env(import.meta.env)
+
+    const val = env.getEnv(NOT_EXIST_KEY)
+    console.log("val=>", val)
+    expect(val).toBeUndefined()
+  })
+
+  it("test getEnv ok", function () {
+    const env = new Env(import.meta.env)
+
+    const val = env.getEnv(EnvConstants.VITE_DEBUG_MODE_KEY)
+    console.log("val=>", val)
+    // expect(val).toBeTruthy()
+  })
+
+  it("test getStringEnv", function () {
+    const env = new Env(import.meta.env)
+
+    const val = env.getStringEnv(EnvConstants.VITE_DEBUG_MODE_KEY)
+    console.log("val=>", val)
+    expect(val).toBeInstanceOf("string")
+  })
+
+  it("test getBooleanEnv", function () {
+    const env = new Env(import.meta.env)
+
+    const val = env.getBooleanEnv(EnvConstants.VITE_DEBUG_MODE_KEY)
+    console.log("val=>", val)
+    expect(val).toBeInstanceOf("boolean")
+  })
+
+  it("test getEnvOrDefault", function () {
+    const env = new Env(import.meta.env)
+
+    const val = env.getEnvOrDefault(NOT_EXIST_KEY, "hello")
+    console.log("val=>", val)
+    expect(val).toBeInstanceOf("string")
+  })
+
+  it("test custom env", function () {
+    const env = new Env({
+      "mykey-a": "myvalue",
+    })
+
+    const val = env.getEnv("mykey-a")
+    console.log("val=>", val)
+    expect(val).toBeInstanceOf("string")
   })
 })

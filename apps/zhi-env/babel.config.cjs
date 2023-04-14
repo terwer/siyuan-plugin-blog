@@ -23,7 +23,8 @@
  * questions.
  */
 
-import EnvConstants from "./lib/EnvConstants"
-import Env from "./lib/zhi-env"
-export default Env
-export { EnvConstants }
+const sharedConfig = require("jest-config-custom/babel.config.cjs")
+
+module.exports = {
+  ...sharedConfig,
+}

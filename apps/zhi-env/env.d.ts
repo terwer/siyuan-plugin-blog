@@ -23,7 +23,6 @@
  * questions.
  */
 
-import EnvConstants from "./lib/EnvConstants"
-import Env from "./lib/zhi-env"
-export default Env
-export { EnvConstants }
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

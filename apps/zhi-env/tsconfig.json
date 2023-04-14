@@ -3,10 +3,11 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "moduleResolution": "node",
     "isolatedModules": false,
     "esModuleInterop": true,
     "outDir": "./lib"
   },
-  "include": ["env.d.ts", "**/*.ts"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts"],
   "exclude": ["node_modules"]
 }
