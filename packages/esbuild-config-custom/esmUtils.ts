@@ -23,12 +23,18 @@
  * questions.
  */
 
+// @ts-ignore
 import dotenv from "dotenv"
 import { join } from "path"
+// @ts-ignore
+import minimist from "minimist"
 
 const loadDotenv = () => {
-  const envFile = join(process.cwd(), process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env.production")
-  console.log(`loading env variables from ${envFile}`)
+  // 处理参数
+  const args = minimist(process.argv.slice(2))
+  const isWatch = args.watch ?? false
+  const isTest = args.test ?? false
+  const envFile = join(process.cwd(), isWatch || isTest ? `.env.development` : ".env.production")
   dotenv.config({ path: envFile })
 }
 

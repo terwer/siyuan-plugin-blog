@@ -29,6 +29,7 @@ import Env from "zhi-env"
 /**
  * 解析日志级别为枚举
  *
+ * @public
  * @author terwer
  * @since 1.4.0
  */
@@ -36,8 +37,8 @@ class EnvHelper {
   /**
    * 解析日志级别为枚举
    *
-   * @param enumObj 枚举对象
-   * @param value 配置的值
+   * @param enumObj - 枚举对象
+   * @param value - 配置的值
    */
   private static stringToEnumValue<T extends Record<string, string>, K extends keyof T>(
     enumObj: T,
@@ -58,7 +59,7 @@ class EnvHelper {
     const envLevel = EnvHelper.stringToEnumValue(LogLevelEnum, envValue.toUpperCase())
     if (!envLevel) {
       console.warn(
-        "[zhi-log] LOG_LEVEL is invalid in you .env file.Must be either debug, info, warn or error, fallback to default info level"
+        "[zhi-log] LOG_LEVEL is invalid in you .env file.It must be either debug, info, warn or error, fallback to default info level"
       )
     }
 
@@ -69,10 +70,7 @@ class EnvHelper {
    * 获取默认日志
    */
   public static getEnvLogger(env?: Env): string | undefined {
-    if (!env) {
-      return undefined
-    }
-    return env.getEnv(LogConstants.LOG_PREFIX_KEY)
+    return !env ? undefined : env.getEnv(LogConstants.LOG_PREFIX_KEY)
   }
 }
 

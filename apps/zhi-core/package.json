@@ -33,5 +33,9 @@
     "stylus": "^0.59.0",
     "tsconfig": "workspace:*",
     "jest-config-custom": "workspace:*"
+  },
+  "dependencies": {
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*"
   }
 }

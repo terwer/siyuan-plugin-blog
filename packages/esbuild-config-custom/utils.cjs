@@ -25,11 +25,14 @@
 
 const dotenv = require("dotenv")
 const { join } = require("path")
+const minimist = require("minimist")
 
 const loadDotenv = () => {
-  // try to use dotenv to load in custom local env vars to existing node runtime env vars:
-  // eslint-disable-next-line turbo/no-undeclared-env-vars
-  const envFile = join(process.cwd(), process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env.production")
+  // 处理参数
+  const args = minimist(process.argv.slice(2))
+  const isWatch = args.watch ?? false
+  const isTest = args.test ?? false
+  const envFile = join(process.cwd(), isWatch || isTest ? `.env.development` : ".env.production")
   console.log(`loading env variables from ${envFile}`)
   dotenv.config({ path: envFile })
 }

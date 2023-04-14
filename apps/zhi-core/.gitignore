@@ -4,9 +4,15 @@
 # build
 dist
 lib
+!src/lib
 node_modules
 
 # api-extractor
 etc
 temp
 tsdoc-metadata.json
+
+# env
+.env.development
+.env.production
+.env.test

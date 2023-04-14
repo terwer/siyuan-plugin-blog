@@ -99,6 +99,8 @@ class Logger {
           case LogLevelEnum.LOG_LEVEL_ERROR:
             strarr.push(chalk.red(level.toUpperCase().toString()))
             break
+          default:
+            break
         }
 
         strarr.push(chalk.green(name).toString())

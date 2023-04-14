@@ -40,6 +40,13 @@ importers:
         version: link:../../packages/tsconfig
 
   apps/zhi-core:
+    dependencies:
+      zhi-env:
+        specifier: workspace:*
+        version: link:../zhi-env
+      zhi-log:
+        specifier: workspace:*
+        version: link:../zhi-log
     devDependencies:
       api-docs:
         specifier: workspace:*
