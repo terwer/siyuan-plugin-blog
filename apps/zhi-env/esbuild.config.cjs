@@ -23,54 +23,50 @@
  * questions.
  */
 
-import { BuildOptions } from "esbuild"
-import path from "path"
-// import minimist from "minimist"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
-// import { copy } from "esbuild-plugin-copy"
+const path = require("path")
+// const minimist = require("minimist")
+const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const { copy } = require("esbuild-plugin-copy")
 
 // const args = minimist(process.argv.slice(2))
 // const isWatch = args.watch || args.w
 
 // for dist
 const baseDir = "./"
-const outDir = path.join(baseDir, "dist")
+const distDir = path.join(baseDir, "dist")
 
 // for outer custom output for dev
 // const baseDir = isWatch ? "my-custom-absolute-path" : "./"
-// const outDir = isWatch ? baseDir : path.join(baseDir, "dist")
-
-// console.log(process.env.VITE_DEBUG_MODE)
+// const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 /**
  * 构建配置
  */
-export const esbuildConfig: BuildOptions = {
+module.exports = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, "index.js"),
+  outfile: path.join(distDir, "index.js"),
   bundle: true,
   format: "esm",
   platform: "node",
   plugins: [
     dtsPlugin(),
-
-    // copy({
-    //   // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-    //   // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-    //   // resolveFrom: "cwd",
-    //   assets: [
-    //     // copy folder
-    //     {
-    //       from: "./public/**/*",
-    //       to: [path.join(baseDir, "assets")],
-    //     },
-    //     // copy one file
-    //     {
-    //       from: ["./README.md"],
-    //       to: [path.join(baseDir, "/README.md")],
-    //     },
-    //   ],
-    //   watch: true,
-    // }),
+    copy({
+      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+      resolveFrom: "cwd",
+      assets: [
+        // copy folder
+        {
+          from: "./public/**/*",
+          to: [path.join(distDir, "assets")],
+        },
+        // copy one file
+        {
+          from: ["./README.md"],
+          to: [path.join(distDir, "/README.md")],
+        },
+      ],
+      watch: true,
+    }),
   ],
 }

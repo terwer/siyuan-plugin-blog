@@ -23,8 +23,39 @@
  * questions.
  */
 
-import EnvConstants from "./lib/EnvConstants"
-import Env from "./lib/zhi-env"
+import dotenv from "dotenv"
+import { join } from "path"
 
-export default Env
-export { EnvConstants }
+const loadDotenv = () => {
+  const envFile = join(process.cwd(), process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env.production")
+  console.log(`loading env variables from ${envFile}`)
+  dotenv.config({ path: envFile })
+}
+
+/**
+ * 获取环境变量，仅构建工具和单元测试使用
+ *
+ * @author terwer
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+const getNormalizedEnvDefines = (prefixes: string[] = []) => {
+  loadDotenv()
+  const envs = {} as any
+  for (let k in process.env) {
+    k = k.replace(/ /g, "") // hack for now.
+    if (k === "CommonProgramFiles(x86)" || k === "ProgramFiles(x86)") {
+      continue
+    }
+    if (k.includes("NODE_PATH")) {
+      continue
+    }
+    if (prefixes.length > 0 && !prefixes.some((prefix) => k.startsWith(prefix))) {
+      continue
+    }
+    envs[`${k}`] = `${process.env[k]}`
+  }
+  return envs
+}
+
+export { getNormalizedEnvDefines }

@@ -16,10 +16,10 @@
     "zhi-cli"
   ],
   "scripts": {
-    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --watch",
-    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --production",
+    "dev": "node ../../packages/esbuild-config-custom/build.cjs --watch",
+    "build": "node ../../packages/esbuild-config-custom/build.cjs --production",
     "test": "node ./dist/index.js",
-    "lint": "eslint \"src/**/*.{ts,js}\" --fix",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
     "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-cli && pnpm mdfix",
     "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-cli/index.md",
@@ -27,15 +27,9 @@
   },
   "devDependencies": {
     "@types/git-clone": "^0.2.0",
-    "@types/minimist": "^1.2.2",
-    "@types/node": "^18.15.11",
     "api-docs": "workspace:*",
-    "esbuild": "^0.16.9",
-    "esbuild-plugin-copy": "^2.1.1",
-    "esbuild-plugin-d.ts": "^1.1.0",
+    "esbuild-config-custom": "workspace:*",
     "eslint-config-custom": "workspace:*",
-    "minimist": "^1.2.8",
-    "ts-node": "^10.9.1",
     "tsconfig": "workspace:*"
   },
   "dependencies": {

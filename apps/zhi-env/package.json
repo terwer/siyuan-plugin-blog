@@ -1,6 +1,6 @@
 {
   "name": "zhi-env",
-  "version": "0.1.0",
+  "version": "1.13.0",
   "type": "module",
   "description": "please input project description",
   "main": "./dist/index.js",
@@ -11,27 +11,20 @@
   "license": "GPL",
   "keywords": [],
   "scripts": {
-    "dev": "ts-node -T --esm --experimental-specifier-resolution=node scripts/build.ts  --watch",
-    "build": "ts-node -T --esm --experimental-specifier-resolution=node scripts/build.ts  --production",
-    "test": "jest",
-    "lint": "eslint \"src/**/*.{ts,js}\" --fix",
+    "dev": "node ../../packages/esbuild-config-custom/build.cjs --watch",
+    "build": "node ../../packages/esbuild-config-custom/build.cjs --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-env",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
     "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-env && pnpm mdfix",
     "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-env/index.md",
     "mdfmt": "echo '---\ntitle: zhi-env\n---' | cat - ../zhi-docs/src/api/zhi-env/index.md > ../zhi-docs/src/api/zhi-env/README.md"
   },
   "devDependencies": {
-    "@types/minimist": "^1.2.2",
-    "@types/node": "^18.15.11",
     "api-docs": "workspace:*",
-    "dotenv": "^16.0.3",
-    "esbuild": "^0.16.9",
-    "esbuild-plugin-copy": "^2.1.1",
-    "esbuild-plugin-d.ts": "^1.1.0",
+    "esbuild-config-custom": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "jest-config-custom": "workspace:*",
-    "minimist": "^1.2.8",
-    "ts-node": "^10.9.1",
     "tsconfig": "workspace:*"
   }
 }

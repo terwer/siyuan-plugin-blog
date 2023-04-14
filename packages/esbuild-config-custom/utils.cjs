@@ -23,38 +23,52 @@
  * questions.
  */
 
-import { BuildOptions } from "esbuild"
-import path from "path"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
-import { copy } from "esbuild-plugin-copy"
+const dotenv = require("dotenv")
+const { join } = require("path")
 
-const baseDir = "./"
-const outDir = path.join(baseDir, "dist")
+const loadDotenv = () => {
+  // try to use dotenv to load in custom local env vars to existing node runtime env vars:
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
+  const envFile = join(process.cwd(), process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env.production")
+  console.log(`loading env variables from ${envFile}`)
+  dotenv.config({ path: envFile })
+}
 
 /**
- * 构建配置
+ * 获取环境变量，仅构建工具使用
+ *
+ * @author terwer
+ * @version 0.1.0
+ * @since 0.1.0
  */
-export const esbuildConfig: BuildOptions = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, "index.js"),
-  bundle: true,
-  format: "esm",
-  platform: "node",
-  plugins: [
-    dtsPlugin(),
+const getNormalizedEnvDefines = (prefixes = []) => {
+  // load dotenv
+  loadDotenv()
 
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      // resolveFrom: "cwd",
-      assets: [
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(baseDir, "/README.md")],
-        },
-      ],
-      watch: true,
-    }),
-  ],
+  // collect env
+  const envs = {}
+  for (let k in process.env) {
+    k = k.replace(/ /g, "") // hack for now.
+
+    // Bypass Windows errors
+    if (k === "CommonProgramFiles(x86)" || k === "ProgramFiles(x86)") {
+      continue
+    }
+
+    // Skip node path
+    if (k.includes("NODE_PATH")) {
+      continue
+    }
+
+    // Only allow user defined prefixes
+    if (prefixes.length > 0 && !prefixes.some((prefix) => k.startsWith(prefix))) {
+      continue
+    }
+
+    envs[`${k}`] = `${process.env[k]}`
+  }
+
+  return envs
 }
+
+module.exports = getNormalizedEnvDefines
