@@ -4,7 +4,7 @@
   "type": "module",
   "description": "esbuild custom config",
   "bin": {
-    "zhi-build": "./build.ts"
+    "zhi-build": "./build.cjs"
   },
   "main": "index.ts",
   "keywords": [

@@ -16,8 +16,8 @@
     "zhi-cli"
   ],
   "scripts": {
-    "dev": "node ../../packages/esbuild-config-custom/build.cjs --watch",
-    "build": "node ../../packages/esbuild-config-custom/build.cjs --production",
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
     "test": "node ./dist/index.js",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",

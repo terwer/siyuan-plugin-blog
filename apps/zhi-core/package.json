@@ -16,8 +16,8 @@
     "theme"
   ],
   "scripts": {
-    "dev": "node ../../packages/esbuild-config-custom/build.cjs --watch",
-    "build": "node ../../packages/esbuild-config-custom/build.cjs --production",
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
     "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-env",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",

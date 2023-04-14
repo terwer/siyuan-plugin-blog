@@ -11,8 +11,8 @@
   "license": "GPL",
   "keywords": [],
   "scripts": {
-    "dev": "node ../../packages/esbuild-config-custom/build.cjs --watch",
-    "build": "node ../../packages/esbuild-config-custom/build.cjs --production",
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
     "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-env",
     "publish": "npm publish --tag latest",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
