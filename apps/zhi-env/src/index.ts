@@ -25,5 +25,10 @@
 
 import EnvConstants from "./lib/EnvConstants"
 import Env from "./lib/zhi-env"
+
+console.log(import.meta.env)
+const env = new Env(import.meta.env)
+console.log(env.getEnv(EnvConstants.VITE_DEBUG_MODE_KEY))
+
 export default Env
 export { EnvConstants }

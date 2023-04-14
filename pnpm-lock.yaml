@@ -131,6 +131,9 @@ importers:
       api-docs:
         specifier: workspace:*
         version: link:../../packages/api-docs
+      dotenv:
+        specifier: ^16.0.3
+        version: 16.0.3
       esbuild:
         specifier: ^0.16.9
         version: 0.16.9
@@ -219,9 +222,9 @@ importers:
       babel-jest:
         specifier: ^29.5.0
         version: 29.5.0(@babel/core@7.21.4)
-      babel-plugin-transform-vite-meta-env:
-        specifier: ^1.0.3
-        version: 1.0.3
+      babel-preset-vite:
+        specifier: ^1.1.0
+        version: 1.1.0
       jest:
         specifier: ^29.5.0
         version: 29.5.0
@@ -4150,6 +4153,21 @@ packages:
       '@types/babel__core': 7.20.0
     dev: true
 
+  /babel-plugin-transform-vite-meta-glob@1.0.3:
+    resolution: {integrity: sha512-JW3VnwUjJqpj0FM0vJFxrGdxSBcHOa0j5YMvvtXYPmFshroq53nbK9dqRETgjXlMrfIz0oU/6ki+u1GdVWdNHA==}
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@types/babel__core': 7.20.0
+      glob: 7.2.3
+    dev: true
+
+  /babel-plugin-transform-vite-meta-hot@1.0.0:
+    resolution: {integrity: sha512-qF7T46bDG5UPPOfy4MFgQJyd3mZvm1sGOR2gZ4lIHy6DEcxAVTIt39/adAn89il44CvwestshuEybKPMR+L/Tg==}
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@types/babel__core': 7.20.0
+    dev: true
+
   /babel-preset-current-node-syntax@1.0.1(@babel/core@7.21.4):
     resolution: {integrity: sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ==}
     peerDependencies:
@@ -4179,6 +4197,16 @@ packages:
       '@babel/core': 7.21.4
       babel-plugin-jest-hoist: 29.5.0
       babel-preset-current-node-syntax: 1.0.1(@babel/core@7.21.4)
+    dev: true
+
+  /babel-preset-vite@1.1.0:
+    resolution: {integrity: sha512-5OnV5RPD+Byi1KnhQpgzz2e1Bc2PFJ9i6wy1VDMPmYu0NjaxcyJuWy9piBoefCL4tMn1nm3VtvInPNitCHJnbQ==}
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@types/babel__core': 7.20.0
+      babel-plugin-transform-vite-meta-env: 1.0.3
+      babel-plugin-transform-vite-meta-glob: 1.0.3
+      babel-plugin-transform-vite-meta-hot: 1.0.0
     dev: true
 
   /bail@2.0.2:
@@ -5094,6 +5122,11 @@ packages:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
+    dev: true
+
+  /dotenv@16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /dset@3.1.2:

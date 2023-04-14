@@ -25,9 +25,16 @@
 
 import { describe, expect, it } from "@jest/globals"
 import Env, { EnvConstants } from "./index"
+import { getNormalizedEnvDefines } from "../scripts/utils"
 
 describe("zhiEnv", () => {
   const NOT_EXIST_KEY = "NOT_EXIST_KEY"
+  const defineEnv = getNormalizedEnvDefines()
+
+  it("test node env", () => {
+    const nodeEnv = import.meta.env.NODE_ENV
+    expect(nodeEnv).toEqual(EnvConstants.NODE_ENV_TEST)
+  })
 
   it("test env", () => {
     const env = new Env(import.meta.env)
@@ -60,7 +67,7 @@ describe("zhiEnv", () => {
 
     const val = env.getStringEnv(EnvConstants.VITE_DEBUG_MODE_KEY)
     console.log("val=>", val)
-    expect(val).toBeInstanceOf("string")
+    expect(typeof val).toBe("string")
   })
 
   it("test getBooleanEnv", function () {
@@ -68,7 +75,7 @@ describe("zhiEnv", () => {
 
     const val = env.getBooleanEnv(EnvConstants.VITE_DEBUG_MODE_KEY)
     console.log("val=>", val)
-    expect(val).toBeInstanceOf("boolean")
+    expect(typeof val).toBe("boolean")
   })
 
   it("test getEnvOrDefault", function () {
@@ -76,7 +83,7 @@ describe("zhiEnv", () => {
 
     const val = env.getEnvOrDefault(NOT_EXIST_KEY, "hello")
     console.log("val=>", val)
-    expect(val).toBeInstanceOf("string")
+    expect(typeof val).toBe("string")
   })
 
   it("test custom env", function () {
@@ -86,6 +93,6 @@ describe("zhiEnv", () => {
 
     const val = env.getEnv("mykey-a")
     console.log("val=>", val)
-    expect(val).toBeInstanceOf("string")
+    expect(typeof val).toBe("string")
   })
 })

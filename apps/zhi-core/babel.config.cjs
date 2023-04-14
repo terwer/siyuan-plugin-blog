@@ -23,28 +23,8 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi-core 主题核心模块
- */
+const sharedConfig = require("jest-config-custom/babel.config.cjs")
 
-import Zhi from "./theme/zhi"
-
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
-
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
-
-  const zhi = new Zhi()
-  // console.log(import.meta.env)
-  console.log("hello, zhi theme", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
-
-export default Zhi
+module.exports = {
+  ...sharedConfig,
+}

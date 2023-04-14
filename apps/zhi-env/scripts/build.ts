@@ -26,6 +26,7 @@
 import esbuild from "esbuild"
 import { esbuildConfig } from "../esbuild.config"
 import minimist from "minimist"
+import { getNormalizedEnvDefines } from "./utils"
 
 /**
  * zhi 主题构建
@@ -87,10 +88,16 @@ class ZhiBuild {
     if (!esbuildConfig.define) {
       esbuildConfig.define = {}
     }
-    esbuildConfig.define = {
+    const defineEnv = {
       ...esbuildConfig.define,
-      "process.env.NODE_ENV": isProduction ? '"production"' : '"development"',
+      ...import.meta.env,
+      "import.meta.env": JSON.stringify({
+        NODE_ENV: isWatch ? "development" : "production",
+        ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+      }),
     }
+    console.log("Detected env=>", defineEnv)
+    esbuildConfig.define = defineEnv
 
     // hande result
     const resultHandler = async (result: any) => {

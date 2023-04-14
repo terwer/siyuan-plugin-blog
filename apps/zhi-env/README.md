@@ -46,17 +46,21 @@ import Env from "zhi-env"
 // https://github.com/vitejs/vite/issues/9539#issuecomment-1206301266
 // 1 add modules:esnext to tsconfig.json
 // 2 add env.d.ts
+//   ```
+//  interface ImportMeta {
+//    readonly env: ImportMetaEnv
+//  }
+//  ```
+// 3 add define to esbuild, vite etc.
+//    ```
+//    "import.meta.env": JSON.stringify({
+//      NODE_ENV: isWatch ? "development" : "production",
+//      ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+//    })
+//    ```
+
 const envMeta = import.meta.env
-
-const customEnv = {
-[EnvConstants.NODE_ENV_KEY]: EnvConstants.NODE_ENV_DEVELOPMENT,
-[EnvConstants.VITE_DEBUG_MODE_KEY]: false,
-// [LogConstants.LOG_LEVEL_KEY]: LogLevelEnum.LOG_LEVEL_DEBUG,
-// [LogConstants.LOG_PREFIX_KEY]: "zhi-common",
-...envMeta,
-}
-
-const env = new Env(customEnv)
+const env = new Env(import.meta.env)
 
 const val = env.getEnv("some-key")
 console.log("val=>", val)

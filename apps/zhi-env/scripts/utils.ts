@@ -23,28 +23,49 @@
  * questions.
  */
 
+import dotenv from "dotenv"
+
+const loadDotenv = () => {
+  // try to use dotenv to load in custom local env vars to existing node runtime env vars:
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
+  const envFile = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env.production"
+  console.log(`loading env variables from ${envFile}`)
+  dotenv.config({ path: envFile })
+}
+
 /**
- * @packageDocumentation
- * zhi-core 主题核心模块
+ * 获取环境变量，仅构建工具使用
+ *
+ * @author terwer
+ * @version 0.1.0
+ * @since 0.1.0
  */
+export const getNormalizedEnvDefines = (prefixes?: string[]): any => {
+  // load dotenv
+  loadDotenv()
 
-import Zhi from "./theme/zhi"
+  // collect env
+  const envs = {
+    ...import.meta.env,
+  } as any
+  for (let k in process.env) {
+    k = k.replace(/ /g, "") // hack for now.
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
+    // Bypass Windows errors
+    if (k === "CommonProgramFiles(x86)" || k === "ProgramFiles(x86)") {
+      continue
+    }
 
-/**
- * 主题入口，由思源笔记自动调用
- */
-;(async () => {
-  // const common = ZhiUtil.zhiCommon()
+    if (k.includes("NODE_PATH")) {
+      continue
+    }
 
-  const zhi = new Zhi()
-  // console.log(import.meta.env)
-  console.log("hello, zhi theme", zhi)
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
-})()
+    if (prefixes && !prefixes.some((prefix) => k.startsWith(prefix))) {
+      continue
+    }
 
-export default Zhi
+    envs[`${k}`] = `${process.env[k]}`
+  }
+
+  return envs
+}

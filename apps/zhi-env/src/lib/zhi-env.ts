@@ -70,7 +70,7 @@ class Env {
         env = this.envMeta[key]
       }
     } catch (e: any) {
-      console.error(e)
+      // console.error(e)
     }
 
     return env

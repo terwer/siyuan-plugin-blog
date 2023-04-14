@@ -40,14 +40,16 @@ const outDir = path.join(baseDir, "dist")
 // const baseDir = isWatch ? "my-custom-absolute-path" : "./"
 // const outDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
+// console.log(process.env.VITE_DEBUG_MODE)
+
 /**
  * 构建配置
  */
 export const esbuildConfig: BuildOptions = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, "theme.js"),
+  outfile: path.join(outDir, "index.js"),
   bundle: true,
-  format: "cjs",
+  format: "esm",
   platform: "node",
   plugins: [
     dtsPlugin(),

@@ -47,6 +47,11 @@ class EnvConstants {
   public static NODE_ENV_PRODUCTION = "production"
 
   /**
+   * 测试环境
+   */
+  public static NODE_ENV_TEST = "test"
+
+  /**
    * 是否处于调试模式
    */
   public static VITE_DEBUG_MODE_KEY = "VITE_DEBUG_MODE"
