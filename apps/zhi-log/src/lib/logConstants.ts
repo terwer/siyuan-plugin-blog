@@ -44,6 +44,10 @@ class LogConstants {
  */
 enum LogLevelEnum {
   /**
+   * TRACE
+   */
+  LOG_LEVEL_TRACE = "TRACE",
+  /**
    * DEBUG
    */
   LOG_LEVEL_DEBUG = "DEBUG",

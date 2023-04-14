@@ -9,5 +9,5 @@
     "outDir": "./lib"
   },
   "include": ["env.d.ts", "**/*.ts"],
-  "exclude": ["node_modules", "src/index.ts"]
+  "exclude": ["node_modules"]
 }

@@ -87,6 +87,9 @@ class Logger {
         strarr.push(chalk.gray("[") + chalk.green(timestamp).toString() + chalk.gray("]"))
 
         switch (level) {
+          case LogLevelEnum.LOG_LEVEL_TRACE:
+            strarr.push(chalk.yellow(level.toUpperCase().toString()))
+            break
           case LogLevelEnum.LOG_LEVEL_DEBUG:
             strarr.push(chalk.gray(level.toUpperCase().toString()))
             break

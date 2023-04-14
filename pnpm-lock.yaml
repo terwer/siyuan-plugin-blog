@@ -22,6 +22,9 @@ importers:
       handlebars:
         specifier: ^4.7.7
         version: 4.7.7
+      zhi-log:
+        specifier: workspace:*
+        version: link:../zhi-log
     devDependencies:
       '@types/git-clone':
         specifier: ^0.2.0

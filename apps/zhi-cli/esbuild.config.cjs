@@ -35,10 +35,13 @@ const distDir = path.join(baseDir, "dist")
  */
 module.exports = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(distDir, "index.js"),
+  outfile: path.join(distDir, "index.cjs"),
   bundle: true,
-  format: "esm",
+  format: "cjs",
   platform: "node",
+  banner: {
+    js: '#!/usr/bin/env node'
+  },
   plugins: [
     dtsPlugin(),
 

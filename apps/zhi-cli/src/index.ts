@@ -23,8 +23,6 @@
  * questions.
  */
 
-#!/usr/bin/env node
-
 /**
  * @packageDocumentation
  * zhi-cli 脚手架
@@ -39,12 +37,12 @@ import pkg from "../package.json" assert { type: "json" }
  *
  * @public
  */
-const cliEntry = () => {
+const cliMain = () => {
   const program = new Command()
   program.name("Zhi project creator").description("Create projects for zhi theme").version(pkg.version)
   program.addCommand(initCommand())
   program.parse(process.argv)
 }
-cliEntry()
+cliMain()
 
-export default cliEntry
+export default cliMain

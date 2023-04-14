@@ -17,8 +17,8 @@
   ],
   "scripts": {
     "dev": "zhi-build --watch",
-    "build": "zhi-build --production",
-    "test": "node ./dist/index.js",
+    "build": "zhi-build --production && npm link",
+    "test": "zhi-cli",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
     "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-cli && pnpm mdfix",
@@ -36,6 +36,7 @@
     "enquirer": "^2.3.6",
     "fs-extra": "^11.1.1",
     "git-clone": "^0.2.0",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "zhi-log": "workspace:*"
   }
 }

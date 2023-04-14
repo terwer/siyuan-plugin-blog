@@ -102,7 +102,7 @@ class ZhiBuild {
       bundle: true,
       minify: true,
       sourcemap: true,
-      target: ['chrome58', 'firefox57', 'safari11', 'edge16'],
+      target: ["chrome58", "firefox57", "safari11", "edge16"],
       plugins: [],
     }
     // console.log("defaultEsbuildConfig=>", defaultEsbuildConfig)
@@ -122,6 +122,11 @@ class ZhiBuild {
         ...(userEsbuildConfig.define ?? {}),
       },
     }
+    // some fix
+    if (esbuildConfig.platform === "node") {
+      esbuildConfig.target = undefined
+    }
+
     console.log("building is start, esbuildConfig=>", esbuildConfig)
     await esbuild.build(esbuildConfig)
   }
