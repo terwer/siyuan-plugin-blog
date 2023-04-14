@@ -83,5 +83,5 @@ pnpm test -F zhi-cli
 ## Publish
 
 ```
-pnpm publish -F zhi-cli --ver=0.1.0 --tag=latest
+pnpm publish -F zhi-cli --tag=latest
 ```
