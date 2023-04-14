@@ -23,50 +23,40 @@
  * questions.
  */
 
-import { BuildOptions } from "esbuild"
-import path from "path"
-import minimist from "minimist"
-import { copy } from "esbuild-plugin-copy"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
-import stylePlugin from "esbuild-style-plugin"
+const path = require("path")
+const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const { copy } = require("esbuild-plugin-copy")
 
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
-const outDir = isWatch ? baseDir : path.join(baseDir, "dist")
+const baseDir = "./"
+const distDir = path.join(baseDir, "dist")
 
 /**
  * 构建配置
  */
-export const esbuildConfig: BuildOptions = {
+module.exports = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, "theme.js"),
+  outfile: path.join(distDir, "index.cjs"),
   bundle: true,
   format: "cjs",
   platform: "node",
+  banner: {
+    js: '#!/usr/bin/env node'
+  },
   plugins: [
     dtsPlugin(),
 
     copy({
       // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
       // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      // resolveFrom: "cwd",
+      resolveFrom: "cwd",
       assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [baseDir],
-        },
         // copy one file
         {
           from: ["./README.md"],
-          to: [path.join(baseDir, "/README.md")],
+          to: [path.join(distDir, "/README.md")],
         },
       ],
       watch: true,
     }),
-
-    stylePlugin(),
   ],
 }

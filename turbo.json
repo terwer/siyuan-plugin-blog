@@ -15,6 +15,9 @@
     "test": {
       "dependsOn": ["^build"]
     },
+    "publish": {
+      "dependsOn": ["^build"]
+    },
     "preview": {
       "dependsOn": ["^build"]
     },

@@ -1,0 +1,25 @@
+{
+  "name": "esbuild-config-custom",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "esbuild custom config",
+  "bin": {
+    "zhi-build": "./build.cjs"
+  },
+  "main": "index.ts",
+  "keywords": [
+    "esbuild",
+    "config",
+    "build"
+  ],
+  "author": "terwer",
+  "license": "GPL",
+  "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.16.9",
+    "esbuild-plugin-copy": "^2.1.1",
+    "esbuild-plugin-d.ts": "^1.1.0",
+    "minimist": "^1.2.8"
+  }
+}

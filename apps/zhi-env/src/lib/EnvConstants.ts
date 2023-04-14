@@ -23,38 +23,38 @@
  * questions.
  */
 
-import { BuildOptions } from "esbuild"
-import path from "path"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
-import { copy } from "esbuild-plugin-copy"
-
-const baseDir = "./"
-const outDir = path.join(baseDir, "dist")
-
 /**
- * 构建配置
+ * 预定义的环境变量
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
  */
-export const esbuildConfig: BuildOptions = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(outDir, "index.js"),
-  bundle: true,
-  format: "cjs",
-  platform: "node",
-  plugins: [
-    dtsPlugin(),
+class EnvConstants {
+  /**
+   * Node环境
+   */
+  public static NODE_ENV_KEY = "NODE_ENV"
 
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      // resolveFrom: "cwd",
-      assets: [
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(baseDir, "/README.md")],
-        },
-      ],
-      watch: true,
-    }),
-  ],
+  /**
+   * 开发环境
+   */
+  public static NODE_ENV_DEVELOPMENT = "development"
+
+  /**
+   * 生产环境
+   */
+  public static NODE_ENV_PRODUCTION = "production"
+
+  /**
+   * 测试环境
+   */
+  public static NODE_ENV_TEST = "test"
+
+  /**
+   * 是否处于调试模式
+   */
+  public static VITE_DEBUG_MODE_KEY = "VITE_DEBUG_MODE"
 }
+
+export default EnvConstants

@@ -1,6 +1,6 @@
 {
   "name": "zhi-core",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "a pluggable siyuan-note theme",
   "main": "./dist/theme.js",
@@ -16,26 +16,26 @@
     "theme"
   ],
   "scripts": {
-    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --watch",
-    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm scripts/build.ts --production",
-    "lint": "eslint \"src/**/*.{ts,js}\" --fix",
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-env",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
     "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-core && pnpm mdfix",
     "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-core/index.md",
     "mdfmt": "echo '---\ntitle: zhi-core\n---' | cat - ../zhi-docs/src/api/zhi-core/index.md > ../zhi-docs/src/api/zhi-core/README.md"
   },
   "devDependencies": {
-    "@types/minimist": "^1.2.2",
-    "@types/node": "^18.15.11",
     "api-docs": "workspace:*",
-    "esbuild": "^0.16.9",
-    "esbuild-plugin-copy": "^2.1.1",
-    "esbuild-plugin-d.ts": "^1.1.0",
+    "esbuild-config-custom": "workspace:*",
     "esbuild-style-plugin": "^1.6.1",
     "eslint-config-custom": "workspace:*",
-    "minimist": "^1.2.8",
     "stylus": "^0.59.0",
-    "ts-node": "^10.9.1",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "jest-config-custom": "workspace:*"
+  },
+  "dependencies": {
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*"
   }
 }
