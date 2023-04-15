@@ -9,6 +9,7 @@ import AbstractLogFactory from "./lib/factory/abstractLogFactory"
 import CustomLogFactory from "./lib/factory/customLogFactory"
 import DefaultLogger from "./lib/defaultLogger"
 import EnvHelper from "./lib/envHelper"
+import crossChalk from "./lib/crossChalk"
 
 /**
  * 日志工具类
@@ -53,4 +54,5 @@ export default LogFactory
 
 export { LogLevelEnum, AbstractLogFactory, CustomLogFactory }
 export { LogConstants, EnvHelper }
+export { crossChalk }
 export type { DefaultLogger }
