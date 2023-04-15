@@ -164,24 +164,6 @@ updates:
       - "zhi-device-detection"
 
   - package-ecosystem: npm
-    directory: "/apps/zhi-device-detection"
-    schedule:
-      interval: daily
-      time: "00:00"
-    open-pull-requests-limit: 10
-    reviewers:
-      - terwer
-    assignees:
-      - terwer
-    commit-message:
-      prefix: fix
-      prefix-development: chore
-      include: scope
-    labels:
-      - "npm dependencies"
-      - "zhi-device-detection"
-
-  - package-ecosystem: npm
     directory: "/apps/zhi-docs"
     schedule:
       interval: daily
