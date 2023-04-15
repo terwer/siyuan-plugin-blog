@@ -183,14 +183,15 @@ class BrowserUtil {
    * 重新加载指定tab
    *
    * @param tabname - tabname
+   * @param t - 延迟时间
    */
-  public static reloadTabPage = (tabname: string): void => {
+  public static reloadTabPage = (tabname: string, t = 200): void => {
     setTimeout(function () {
       if (BrowserUtil.isInBrowser) {
         const url = window.location.href
         window.location.href = BrowserUtil.setUrlParameter(url, "tab", tabname)
       }
-    }, 200)
+    }, t)
   }
 
   /**

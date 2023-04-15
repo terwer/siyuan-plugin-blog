@@ -65,6 +65,16 @@ class SiyuanDevice {
      */
     return typeof (window as any).terwer !== "undefined" || typeof (window as any).siyuanNewWin !== "undefined"
   }
+
+  /**
+   * 检测是否运行在思源打开的浏览器中
+   */
+  public static isInSiyuanBrowser() {
+    if (!BrowserUtil.isInBrowser) {
+      return false
+    }
+    return typeof (window as any).siyuan !== "undefined" && typeof (window as any).Lute !== "undefined"
+  }
 }
 
 export default SiyuanDevice
