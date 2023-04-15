@@ -35,12 +35,17 @@ import DeviceDetection from "zhi-device-detection"
 import "./style/common/fonts/webfont.css"
 import "./style/index.styl"
 
+const loadTheme = async (): Promise<void> => {
+  const zhi = new Zhi(DeviceDetection.getDevice())
+  await zhi.init()
+}
+
 /**
  * 主题入口，由思源笔记自动触发，请勿主动调用
  */
 ;(async () => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
+  await loadTheme()
 })()
 
-export default Zhi
+export default loadTheme
+export { Zhi }

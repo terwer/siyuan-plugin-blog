@@ -25,7 +25,7 @@
 
 import { DeviceTypeEnum } from "zhi-device-detection"
 import ZhiUtil from "./core/util/ZhiUtil"
-import { version } from "../../package.json"
+// import pkg from "../../package.json" assert { type: "json" }
 import DependencyItem from "./models/DependencyItem"
 import Bootstrap from "./core/Bootstrap"
 
@@ -58,7 +58,7 @@ class Zhi {
   }
 
   private hello(from: string): void {
-    this.logger.info(`Hello, zhi theme v${version}! You are from ${from}`)
+    this.logger.info(`Hello, zhi theme v0.1.0! You are from ${from}`)
   }
 
   /**
