@@ -53,6 +53,11 @@ class Zhi {
    */
   public async init(): Promise<void> {
     try {
+      this.logger.trace("trace log")
+      this.logger.debug("debug log")
+      this.logger.info("info log")
+      this.logger.warn("warn log")
+      this.logger.error("error log")
       this.logger.info(`Theme runAs ${this.runAs}`)
       this.logger.info("Theme inited.")
     } catch (e) {

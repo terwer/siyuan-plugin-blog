@@ -138,15 +138,24 @@ importers:
 
   apps/zhi-log:
     dependencies:
+      ansi-colors:
+        specifier: ^4.1.3
+        version: 4.1.3
       callsites:
         specifier: ^4.0.0
         version: 4.0.0
+      kleur:
+        specifier: ^4.1.5
+        version: 4.1.5
       loglevel:
         specifier: ^1.8.1
         version: 1.8.1
       loglevel-plugin-prefix:
         specifier: ^0.8.4
         version: 0.8.4
+      zhi-device-detection:
+        specifier: workspace:*
+        version: link:../zhi-device-detection
       zhi-env:
         specifier: workspace:*
         version: link:../zhi-env
@@ -203,6 +212,9 @@ importers:
       esbuild-plugin-d.ts:
         specifier: ^1.1.0
         version: 1.1.0(typescript@5.0.4)
+      esbuild-plugin-ifdef:
+        specifier: ^1.0.1
+        version: 1.0.1
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -5211,6 +5223,10 @@ packages:
       - postcss
       - supports-color
       - ts-node
+    dev: true
+
+  /esbuild-plugin-ifdef@1.0.1:
+    resolution: {integrity: sha512-dn1sf+WGIUBp4kxN+rJRYIXrmGTwRLyhWASmhl8IKKKPfIlWFE8hloAVnI6mM5jPF3+abDvkndYe+RZDFXItbA==}
     dev: true
 
   /esbuild-style-plugin@1.6.1:

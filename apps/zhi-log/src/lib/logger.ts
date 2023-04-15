@@ -30,6 +30,9 @@ import callsites, { CallSite } from "callsites"
 import EnvHelper from "./envHelper"
 import Env from "zhi-env"
 import DefaultLogger from "./defaultLogger"
+import colors from "ansi-colors"
+import kleur from "kleur"
+import { BrowserUtil } from "zhi-device-detection"
 
 /**
  * 日志工具类
@@ -66,48 +69,66 @@ class Logger {
     // 颜色
     // polyfill due to https://github.com/vitejs/vite/issues/7385
     const chalk = {
-      gray: (src: any): string => {
-        return src.toString()
+      white: (str: string): string => {
+        return BrowserUtil.isElectron() ? colors.whiteBright(str) : kleur.white(str)
       },
-      green: (src: any): string => {
-        return src.toString()
+      gray: (str: string): string => {
+        return BrowserUtil.isElectron() ? colors.gray(str) : kleur.gray(str)
       },
-      yellow: (src: any): string => {
-        return src.toString()
+      blue: (str: string): string => {
+        return BrowserUtil.isElectron() ? colors.blue(str) : kleur.blue(str)
       },
-      red: (src: any): string => {
-        return src.toString()
+      green: (str: string): string => {
+        return BrowserUtil.isElectron() ? colors.green(str) : kleur.green(str)
       },
+      yellow: (str: string): string => {
+        return BrowserUtil.isElectron() ? colors.yellow(str) : kleur.yellow(str)
+      },
+      red: (str: string): string => {
+        return BrowserUtil.isElectron() ? colors.red(str) : kleur.red(str)
+      },
+    }
+    const fmtLog = (level: LogLevelEnum, name: string, timestamp: Date, colorFn: any) => {
+      const strarr = []
+
+      // sign
+      const logSign = sign ?? EnvHelper.getEnvLogger(env) ?? "zhi"
+      strarr.push(chalk.gray("[") + colorFn(logSign) + chalk.gray("]"))
+      // timestamp
+      strarr.push(chalk.gray("[") + chalk.gray(timestamp.toString()) + chalk.gray("]"))
+      // level
+      strarr.push(colorFn(level.toUpperCase().toString()))
+      // name
+      strarr.push(colorFn(name))
+      strarr.push(colorFn(":"))
+      return strarr
     }
     prefix.reg(loglevel)
     prefix.apply(loglevel, {
       format(level, name, timestamp) {
-        const defaultSign = sign ?? EnvHelper.getEnvLogger(env) ?? "zhi"
-        const strarr = ["[" + defaultSign + "]"]
-        strarr.push(chalk.gray("[") + chalk.green(timestamp).toString() + chalk.gray("]"))
+        let strarr = []
+        const logName = name ?? ""
 
         switch (level) {
           case LogLevelEnum.LOG_LEVEL_TRACE:
-            strarr.push(chalk.yellow(level.toUpperCase().toString()))
+            strarr = fmtLog(level, logName, timestamp, chalk.white)
             break
           case LogLevelEnum.LOG_LEVEL_DEBUG:
-            strarr.push(chalk.gray(level.toUpperCase().toString()))
+            strarr = fmtLog(level, logName, timestamp, chalk.gray)
             break
           case LogLevelEnum.LOG_LEVEL_INFO:
-            strarr.push(chalk.green(level.toUpperCase().toString()))
+            strarr = fmtLog(level, logName, timestamp, chalk.green)
             break
           case LogLevelEnum.LOG_LEVEL_WARN:
-            strarr.push(chalk.yellow(level.toUpperCase().toString()))
+            strarr = fmtLog(level, logName, timestamp, chalk.yellow)
             break
           case LogLevelEnum.LOG_LEVEL_ERROR:
-            strarr.push(chalk.red(level.toUpperCase().toString()))
+            strarr = fmtLog(level, logName, timestamp, chalk.red)
             break
           default:
+            strarr = fmtLog(LogLevelEnum.LOG_LEVEL_INFO, logName, timestamp, chalk.green)
             break
         }
-
-        strarr.push(chalk.green(name).toString())
-        strarr.push(chalk.gray(":"))
 
         return strarr.join(" ")
       },
