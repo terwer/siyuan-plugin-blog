@@ -23,11 +23,11 @@
  * questions.
  */
 
-const path = require("path");
-const minimist = require("minimist");
-const { copy } = require("esbuild-plugin-copy");
-const { dtsPlugin } = require("esbuild-plugin-d.ts");
-const stylePlugin = require("esbuild-style-plugin");
+const path = require("path")
+const minimist = require("minimist")
+const { copy } = require("esbuild-plugin-copy")
+const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const stylePlugin = require("esbuild-style-plugin")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w

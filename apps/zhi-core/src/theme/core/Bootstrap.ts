@@ -23,29 +23,24 @@
  * questions.
  */
 
+import Lifecycle from "./lifecycle"
+import DependencyItem from "../models/DependencyItem"
+
 /**
- * @packageDocumentation
- * zhi-core 主题核心模块
+ * zhi主题唯一激活入口
+ *
+ * @author terwer
+ * @since 0.1.0
  */
+class Bootstrap {
+  private static lifecycle = new Lifecycle()
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device-detection"
-
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
-
-const loadTheme = async (): Promise<void> => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
+  /**
+   * 主题激活
+   */
+  public static async start(): Promise<DependencyItem[]> {
+    return await this.lifecycle.load()
+  }
 }
 
-/**
- * 主题入口，由思源笔记自动触发，请勿主动调用
- */
-;(async () => {
-  await loadTheme()
-})()
-
-export default loadTheme
-export { Zhi }
+export default Bootstrap

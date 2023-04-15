@@ -23,29 +23,53 @@
  * questions.
  */
 
+import DependencyItem from "../models/DependencyItem"
+
 /**
- * @packageDocumentation
- * zhi-core 主题核心模块
+ * zhi主题统一生命周期管理
+ *
+ * @author terwer
+ * @since 0.1.0
  */
+class Lifecycle {
+  public async load() {
+    const allImports = <DependencyItem[]>[]
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device-detection"
+    return allImports
+  }
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
+  /**
+   * 加载核心模块
+   *
+   * @private
+   */
+  private async loadCoreModules(): Promise<DependencyItem[]> {
+    const coreModulesImports = <DependencyItem[]>[]
+    return coreModulesImports
+  }
 
-const loadTheme = async (): Promise<void> => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
+  /**
+   * 加载挂件
+   *
+   * @private
+   */
+  private async loadWidgets(): Promise<DependencyItem[]> {
+    return Promise.resolve([])
+  }
+
+  /**
+   * 加载第三方库
+   *
+   * @private
+   */
+  private async loadVendors(): Promise<DependencyItem[]> {
+    const vendorImports = <DependencyItem[]>[]
+
+    // 字体图标
+    // const fontAwesomeImports = fontAwesome.initFontAwesome()
+    // vendorImports = vendorImports.concat(fontAwesomeImports)
+    return vendorImports
+  }
 }
 
-/**
- * 主题入口，由思源笔记自动触发，请勿主动调用
- */
-;(async () => {
-  await loadTheme()
-})()
-
-export default loadTheme
-export { Zhi }
+export default Lifecycle
