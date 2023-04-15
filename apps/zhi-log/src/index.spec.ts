@@ -65,10 +65,11 @@ describe("zhiLog", () => {
   })
 
   it("test custom log level", function () {
-    const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_DEBUG).getLogger("test")
+    const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_TRACE).getLogger("test")
+    logger.trace("This is trace log")
     logger.debug("This is debug log")
     logger.info("This is info log")
-    logger.error("This is error log")
+    // logger.error("This is error log")
   })
 
   it("test custom level and sign", function () {
