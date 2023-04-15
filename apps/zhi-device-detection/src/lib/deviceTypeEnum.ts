@@ -52,6 +52,11 @@ enum DeviceTypeEnum {
   DeviceType_Siyuan_MainWin = "Siyuan_MainWindow",
 
   /**
+   * 思源打开的浏览器
+   */
+  DeviceType_Siyuan_Browser = "Siyuan_Browser",
+
+  /**
    * Google Chrome浏览器插件
    */
   DeviceType_Chrome_Extension = "Chrome_Extension",

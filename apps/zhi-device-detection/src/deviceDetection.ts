@@ -60,6 +60,11 @@ class DeviceDetection {
       return DeviceTypeEnum.DeviceType_Siyuan_MainWin
     }
 
+    // 思源打开的浏览器
+    if (SiyuanDevice.isInSiyuanBrowser()) {
+      return DeviceTypeEnum.DeviceType_Siyuan_Browser
+    }
+
     // Chrome浏览器插件
     if (BrowserUtil.isInChromeExtension()) {
       return DeviceTypeEnum.DeviceType_Chrome_Extension
