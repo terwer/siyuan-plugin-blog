@@ -25,7 +25,18 @@
 
 import BrowserUtil from "./lib/browserUtil"
 
+/**
+ * 设备检测
+ *
+ * @author terwer
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 class DeviceDetection {
+  /**
+   * 检测移动端
+   * @private
+   */
   private static detectMobile() {
     let check = false
     if (BrowserUtil.isInBrowser) {
