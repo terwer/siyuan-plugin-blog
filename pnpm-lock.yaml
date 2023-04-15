@@ -195,7 +195,7 @@ importers:
         specifier: ^16.0.3
         version: 16.0.3
       esbuild:
-        specifier: ^0.16.9
+        specifier: ^0.16.17
         version: 0.16.17
       esbuild-plugin-copy:
         specifier: ^2.1.1
