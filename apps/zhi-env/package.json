@@ -5,7 +5,7 @@
   "description": "a cross-platform env config lib",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
-  "repository": "terwer/zhi-env",
+  "repository": "terwer/zhi",
   "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-env",
   "files": [
     "dist",
