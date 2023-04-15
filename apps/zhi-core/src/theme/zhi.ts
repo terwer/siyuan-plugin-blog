@@ -53,6 +53,7 @@ class Zhi {
    */
   public async init(): Promise<void> {
     try {
+      alert(this.runAs)
       this.logger.info(`Theme runAs ${this.runAs}`)
       this.logger.info("Theme inited.")
     } catch (e) {

@@ -25,9 +25,11 @@
 
 import DeviceDetection from "./deviceDetection"
 import DeviceTypeEnum from "./lib/deviceTypeEnum"
+import BrowserUtil from "./lib/browserUtil"
 
 /**
  * zhi-device-detection 入口
  */
 export default DeviceDetection
+export { BrowserUtil }
 export { DeviceTypeEnum }
