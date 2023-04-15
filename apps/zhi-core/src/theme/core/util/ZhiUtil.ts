@@ -23,7 +23,7 @@
  * questions.
  */
 
-import LogFactory from "zhi-log"
+import LogFactory, { DefaultLogger } from "zhi-log"
 import Env from "zhi-env"
 
 /**
@@ -68,7 +68,7 @@ class ZhiUtil {
   /**
    * 获取 zhi-log 实例
    */
-  public static zhiLog(loggerName: string) {
+  public static zhiLog(loggerName: string): DefaultLogger {
     // 先检测日志Map
     if (ZhiUtil.loggerMap) {
       // 日志不存在，生成一个新的缓存到Map
@@ -88,7 +88,7 @@ class ZhiUtil {
     }
 
     // 从Map缓存获取日志器
-    return ZhiUtil.loggerMap[loggerName]
+    return ZhiUtil.loggerMap[loggerName] as DefaultLogger
   }
 
   // /**

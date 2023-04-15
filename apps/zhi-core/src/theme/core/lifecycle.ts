@@ -29,7 +29,7 @@ import DependencyItem from "../models/DependencyItem"
  * zhi主题统一生命周期管理
  *
  * @author terwer
- * @since 1.0.0
+ * @since 0.1.0
  */
 class Lifecycle {
   public async load() {
