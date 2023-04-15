@@ -5,6 +5,7 @@
     "module": "esnext",
     "isolatedModules": false,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "outDir": "./lib"
   },
   "include": ["env.d.ts", "**/*.ts"],

@@ -24,60 +24,39 @@
  */
 
 import { DeviceTypeEnum } from "zhi-device-detection"
-import ZhiUtil from "./core/util/ZhiUtil"
-import { version } from "../../package.json"
-import DependencyItem from "./models/DependencyItem"
-import Bootstrap from "./core/Bootstrap"
 
 /**
- * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
+ * 依赖项类型定义
  *
  * @public
  * @author terwer
+ * @version 0.1.0
  * @since 0.1.0
  */
-class Zhi {
-  private readonly logger
-  private readonly runAs
-
+class DependencyItem {
   /**
-   * 主题初始化
-   *
-   * @param runAs - 运行模式
+   * 依赖库相对路径
    */
-  constructor(runAs: DeviceTypeEnum) {
-    this.logger = ZhiUtil.zhiLog("zhi-core")
-
-    this.runAs = runAs ?? DeviceTypeEnum.DeviceType_Node
-  }
-
-  private async main(args: string[]): Promise<DependencyItem[]> {
-    this.logger.debug("Parsing args...", args)
-    this.hello(this.runAs)
-    return await Bootstrap.start()
-  }
-
-  private hello(from: string): void {
-    this.logger.info(`Hello, zhi theme v${version}! You are from ${from}`)
-  }
-
+  libpath: string
   /**
-   * 主流程加载
+   * 格式
    */
-  public async init(): Promise<void> {
-    try {
-      this.logger.info(`Theme runAs ${this.runAs}`)
+  format: "cjs" | "esm" | "js"
+  /**
+   * 引入方式
+   */
+  importType: "require" | "import"
+  /**
+   * 支持的设备列表
+   */
+  runAs: DeviceTypeEnum[]
 
-      // 初始化第三方依赖
-      const dynamicImports = await this.main([])
-      for (const item of dynamicImports) {
-        this.logger.info("dependencyItem=>", item)
-      }
-      this.logger.info("Theme inited.")
-    } catch (e) {
-      this.logger.error("Theme load error=>", e)
-    }
+  constructor() {
+    this.libpath = ""
+    this.format = "cjs"
+    this.importType = "require"
+    this.runAs = [DeviceTypeEnum.DeviceType_Siyuan_MainWin, DeviceTypeEnum.DeviceType_Node]
   }
 }
 
-export default Zhi
+export default DependencyItem

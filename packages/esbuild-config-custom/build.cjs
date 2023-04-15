@@ -72,6 +72,9 @@ class ZhiBuild {
     })
     bundledEsbuildConfig.plugins.push(watchPlugin(isProduction ? "production" : "development"))
 
+    // https://github.com/Jarred-Sumner/esbuild-plugin-ifdef
+    // ifdef插件
+
     // 是否压缩
     bundledEsbuildConfig.minify = isProduction
     // 是否生成sourcemap

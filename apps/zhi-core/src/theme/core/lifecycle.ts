@@ -1,0 +1,75 @@
+/*
+ * Copyright (c) 2023, Terwer . All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Terwer designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Terwer in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+ * or visit www.terwer.space if you need additional information or have any
+ * questions.
+ */
+
+import DependencyItem from "../models/DependencyItem"
+
+/**
+ * zhi主题统一生命周期管理
+ *
+ * @author terwer
+ * @since 1.0.0
+ */
+class Lifecycle {
+  public async load() {
+    const allImports = <DependencyItem[]>[]
+
+    return allImports
+  }
+
+  /**
+   * 加载核心模块
+   *
+   * @private
+   */
+  private async loadCoreModules(): Promise<DependencyItem[]> {
+    const coreModulesImports = <DependencyItem[]>[]
+    return coreModulesImports
+  }
+
+  /**
+   * 加载挂件
+   *
+   * @private
+   */
+  private async loadWidgets(): Promise<DependencyItem[]> {
+    return Promise.resolve([])
+  }
+
+  /**
+   * 加载第三方库
+   *
+   * @private
+   */
+  private async loadVendors(): Promise<DependencyItem[]> {
+    const vendorImports = <DependencyItem[]>[]
+
+    // 字体图标
+    // const fontAwesomeImports = fontAwesome.initFontAwesome()
+    // vendorImports = vendorImports.concat(fontAwesomeImports)
+    return vendorImports
+  }
+}
+
+export default Lifecycle
