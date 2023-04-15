@@ -47,6 +47,9 @@ importers:
 
   apps/zhi-core:
     dependencies:
+      zhi-device-detection:
+        specifier: workspace:*
+        version: link:../zhi-device-detection
       zhi-env:
         specifier: workspace:*
         version: link:../zhi-env

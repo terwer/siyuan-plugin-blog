@@ -24,8 +24,10 @@
  */
 
 import DeviceDetection from "./deviceDetection"
+import DeviceTypeEnum from "./lib/deviceTypeEnum"
 
 /**
  * zhi-device-detection 入口
  */
 export default DeviceDetection
+export { DeviceTypeEnum }

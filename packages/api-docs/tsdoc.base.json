@@ -27,6 +27,11 @@
       "tagName": "@protected",
       "syntaxKind": "block",
       "allowMultiple": false
+    },
+    {
+      "tagName": "@version",
+      "syntaxKind": "block",
+      "allowMultiple": false
     }
   ],
 

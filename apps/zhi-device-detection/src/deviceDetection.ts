@@ -24,20 +24,60 @@
  */
 
 import BrowserUtil from "./lib/browserUtil"
+import SiyuanDevice from "./lib/siyuanDevice"
+import DeviceTypeEnum from "./lib/deviceTypeEnum"
 
 /**
  * 设备检测
  *
+ * @public
  * @author terwer
  * @version 0.1.0
  * @since 0.1.0
  */
 class DeviceDetection {
   /**
+   * 获取当前设备
+   */
+  public static getDevice() {
+    // 移动端
+    if (this.detectMobileDevice()) {
+      return DeviceTypeEnum.DeviceType_Mobile_Device
+    }
+
+    // 思源笔记挂件
+    if (SiyuanDevice.isInSiyuanWidget()) {
+      return DeviceTypeEnum.DeviceType_Siyuan_Widget
+    }
+
+    // 思源新窗口
+    if (SiyuanDevice.isInSiyuanNewWin()) {
+      return DeviceTypeEnum.DeviceType_Siyuan_NewWin
+    }
+
+    // 思源主窗口
+    if (BrowserUtil.isElectron()) {
+      return DeviceTypeEnum.DeviceType_Siyuan_MainWin
+    }
+
+    // Chrome浏览器插件
+    if (BrowserUtil.isInChromeExtension()) {
+      return DeviceTypeEnum.DeviceType_Chrome_Extension
+    }
+
+    // Node环境
+    if (BrowserUtil.isNode) {
+      return DeviceTypeEnum.DeviceType_Node
+    }
+
+    return DeviceTypeEnum.DeviceType_Chrome_Browser
+  }
+
+  /**
    * 检测移动端
    * @private
    */
-  private static detectMobile() {
+  private static detectMobileDevice() {
     let check = false
     if (BrowserUtil.isInBrowser) {
       ;(function (a) {

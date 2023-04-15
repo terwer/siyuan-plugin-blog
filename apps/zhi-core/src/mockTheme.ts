@@ -23,12 +23,23 @@
  * questions.
  */
 
-import { describe, it } from "@jest/globals"
-import MockTheme from "./mockTheme"
+import Zhi from "./theme/zhi"
+import DeviceDetection from "zhi-device-detection"
 
-describe("zhi-core", () => {
-  it("loadTheme", async () => {
-    const mockTheme = new MockTheme()
-    await mockTheme.loadTheme()
-  })
-})
+/**
+ * 仅仅提供Mock功能，请勿调用
+ *
+ * 主题使用的是 `index.ts`
+ *
+ * @author terwer
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+class MockTheme {
+  public async loadTheme() {
+    const zhi = new Zhi(DeviceDetection.getDevice())
+    await zhi.init()
+  }
+}
+
+export default MockTheme
