@@ -40,7 +40,8 @@ class ZhiBuild {
       plugins: [],
       define: {},
     }
-    // 热部署插件
+
+    // 监控构建插件
     const firstBuildFinished = new Set()
     let buildStartTime
     // Following the log format of https://github.com/connor4312/esbuild-problem-matchers
@@ -50,7 +51,7 @@ class ZhiBuild {
       setup(build) {
         build.onStart(() => {
           buildStartTime = Date.now()
-          status(`${type} build started.`)
+          // status(`${type} build started.`)
         })
         build.onEnd((result) => {
           result.errors.forEach((error) =>
@@ -58,21 +59,18 @@ class ZhiBuild {
               `> ${error.location.file}:${error.location.line}:${error.location.column}: error: ${error.text}`
             )
           )
-          firstBuildFinished.add(type)
-          status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
-          if (firstBuildFinished.size === 2) {
+          if (firstBuildFinished.size === 0) {
+            firstBuildFinished.add(type)
+            status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
+          }else{
             // esbuild problem matcher extension is listening for this log, once this is logged, it will open the Extension Host
             // So we have to assure only printing this when both extension and webview have been built
-            status(`build finished in ${Date.now() - buildStartTime} ms.`)
+            status(`build hot reloaded in ${Date.now() - buildStartTime} ms.`)
           }
         })
       },
     })
     bundledEsbuildConfig.plugins.push(watchPlugin(isProduction ? "production" : "development"))
-    if (isWatch) {
-      bundledEsbuildConfig.watch = true
-      console.log("watch mode enabled")
-    }
 
     // 是否压缩
     bundledEsbuildConfig.minify = isProduction
@@ -128,16 +126,43 @@ class ZhiBuild {
     }
 
     console.log("building is start, esbuildConfig=>", esbuildConfig)
-    await esbuild.build(esbuildConfig)
+    const context = await esbuild.context(esbuildConfig)
+
+    // Manually do an incremental build
+    const result = await context.rebuild()
+    // console.log("rebuilded, result=>", result)
+
+    // 热部署新版
+    // https://esbuild.github.io/api/#watch
+    // https://github.com/evanw/esbuild/releases/tag/v0.17.0
+    if (isWatch) {
+      // Enable watch mode
+      console.log("watch mode enabled")
+      await context.watch()
+
+      // Enable serve mode
+      await context.serve()
+      console.log("serve enabled")
+
+      console.log('watching...')
+    } else {
+      await context.dispose()
+      console.log("ZhiBuild process finished")
+    }
   }
 }
 
 /**
  * 构建入口
  */
-ZhiBuild.processBuild().catch((error) => {
-  console.error(`ZhiBuild process failed: ${error}`)
-  process.exit(1)
-})
+;(async () => {
+  try {
+    console.log("ZhiBuild is starting...")
+    await ZhiBuild.processBuild()
+  } catch (e) {
+    console.error(`ZhiBuild process failed: ${e}`)
+    process.exit(1)
+  }
+})()
 
 module.exports = ZhiBuild
