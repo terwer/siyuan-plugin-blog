@@ -102,7 +102,7 @@ class ZhiBuild {
       bundle: true,
       minify: true,
       sourcemap: true,
-      target: ["chrome58", "firefox57", "safari11", "edge16"],
+      // target: ["chrome58", "firefox57", "safari11", "edge16"],
       plugins: [],
     }
     // console.log("defaultEsbuildConfig=>", defaultEsbuildConfig)
@@ -123,7 +123,7 @@ class ZhiBuild {
       },
     }
     // some fix
-    if (esbuildConfig.platform === "node") {
+    if (esbuildConfig.target && esbuildConfig.platform === "node") {
       esbuildConfig.target = undefined
     }
 
