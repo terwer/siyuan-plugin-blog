@@ -2,7 +2,7 @@
   "name": "zhi-device-detection",
   "version": "0.1.0",
   "type": "module",
-  "description": "please input project description",
+  "description": "auto check environment whether in browser, browser extension, electron, node and more",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi",

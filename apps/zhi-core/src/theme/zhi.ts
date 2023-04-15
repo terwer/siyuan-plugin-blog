@@ -23,6 +23,9 @@
  * questions.
  */
 
+import { DeviceTypeEnum } from "zhi-device-detection"
+import ZhiUtil from "./core/util/ZhiUtil"
+
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
  *
@@ -31,10 +34,31 @@
  * @since 0.1.0
  */
 class Zhi {
+  private readonly logger
+  private readonly runAs
+
+  /**
+   * 主题初始化
+   *
+   * @param runAs - 运行模式
+   */
+  constructor(runAs: DeviceTypeEnum) {
+    this.logger = ZhiUtil.zhiLog("zhi-core")
+
+    this.runAs = runAs ?? DeviceTypeEnum.DeviceType_Node
+  }
+
   /**
    * 主流程加载
    */
-  public async init(): Promise<void> {}
+  public async init(): Promise<void> {
+    try {
+      this.logger.info(`Theme runAs ${this.runAs}`)
+      this.logger.info("Theme inited.")
+    } catch (e) {
+      this.logger.error("Theme load error=>", e)
+    }
+  }
 }
 
 export default Zhi

@@ -29,23 +29,18 @@
  */
 
 import Zhi from "./theme/zhi"
-import ZhiUtil from "./theme/core/util/ZhiUtil"
+import DeviceDetection from "zhi-device-detection"
 
 // 主题样式注入入口
 import "./style/common/fonts/webfont.css"
 import "./style/index.styl"
 
 /**
- * 主题入口，由思源笔记自动调用
+ * 主题入口，由思源笔记自动触发，请勿主动调用
  */
 ;(async () => {
-  const logger = ZhiUtil.zhiLog("zhi-core")
-  // const common = ZhiUtil.zhiCommon()
-
-  const zhi = new Zhi()
-  logger.info("hello, zhi theme")
-  // const zhi = new Zhi(common.deviceUtil.getDevice())
-  // await zhi.init()
+  const zhi = new Zhi(DeviceDetection.getDevice())
+  await zhi.init()
 })()
 
 export default Zhi
