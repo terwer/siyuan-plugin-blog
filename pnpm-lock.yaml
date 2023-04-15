@@ -76,6 +76,24 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tsconfig
 
+  apps/zhi-device-detection:
+    devDependencies:
+      api-docs:
+        specifier: workspace:*
+        version: link:../../packages/api-docs
+      esbuild-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/esbuild-config-custom
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      jest-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/jest-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
   apps/zhi-docs:
     devDependencies:
       '@vuepress/client':
