@@ -29,7 +29,7 @@ import LogFactory, { LogLevelEnum } from "zhi-log"
 import fs from "fs-extra"
 import path from "path"
 import { downloadTemplate } from "./download"
-import { modifyPackageJson } from "./modify"
+import modifyFiles from "./modify"
 import { prompt } from "enquirer"
 import Select from "enquirer/lib/prompts/select"
 
@@ -86,18 +86,16 @@ export const initCommand = () => {
           fs.removeSync(downloadPath)
         }
 
-        // 系在仓库并替换参数
+        // 下载仓库并替换参数
         await downloadTemplate(templateGitUrl, downloadPath, branch)
-        modifyPackageJson(downloadPath, { name, description, author })
+        modifyFiles(downloadPath, ["package.json", "README.md", "src/index.spec.ts"], { name, ...projectOptions })
 
         // 删除git信息
         fs.removeSync(path.join(downloadPath, ".git"))
-        // 删除模板
-        fs.removeSync(path.join(downloadPath, "package-template.json"))
         logger.info(".git cleaned.")
 
         logger.info("project created.")
-        logger.info("Now you can do `cd " + downloadPath + "`" + " and `pnpm install`")
+        logger.info("Now you can do `cd " + downloadPath + "`" + " and run `pnpm install`")
       } catch (error) {
         console.error(error)
       }

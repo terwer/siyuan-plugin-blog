@@ -30,24 +30,33 @@ import LogFactory, { LogLevelEnum } from "zhi-log"
 
 const logger = LogFactory.customLogFactory(LogLevelEnum.LOG_LEVEL_INFO, "zhi-cli").getLogger("init:modify")
 
-export const modifyPackageJson = function (downloadPath: string, options: any) {
-  const packagePath = path.join(downloadPath, "package.json")
-  logger.info("start modifying package.json ...")
-  if (fs.existsSync(packagePath)) {
-    const content = fs.readFileSync(packagePath).toString()
+const modifyTemplate = function (downloadPath: string, file: string, options: any) {
+  const templatePath = path.join(downloadPath, file)
+  logger.info(`start modifying ${file} ...`)
+  if (fs.existsSync(templatePath)) {
+    const content = fs.readFileSync(templatePath).toString()
     const template = handlebars.compile(content)
 
-    const param = {
-      name: options.name,
-      description: options.description,
-      author: options.author,
-    }
-
-    const result = template(param)
-    fs.writeFileSync(packagePath, result)
-    logger.info("modify package.json complete")
+    const result = template(options)
+    fs.writeFileSync(templatePath, result)
+    logger.info(`modify ${file} complete`)
   } else {
-    logger.error("modify package.json fail")
-    throw new Error("no package.json")
+    logger.error(`modify ${file} fail`)
+    throw new Error(`no ${file}`)
   }
 }
+
+/**
+ * 模板字符串替换
+ *
+ * @param downloadPath - 项目根路径
+ * @param fileList - 文件路径列表，注意：相对于项目根路径，例如：["package.json", "README.md"]
+ * @param options - 字符串Object
+ */
+const modifyFiles = (downloadPath: string, fileList: string[], options: any) => {
+  for (const file of fileList) {
+    modifyTemplate(downloadPath, file, options)
+  }
+}
+
+export default modifyFiles

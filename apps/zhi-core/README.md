@@ -1,5 +1,7 @@
 # zhi-core
 
+core module for zhi
+
 ## Thanks
 
 [esbuild-plugin-inline-image](https://github.com/natrim/esbuild-plugin-inline-image)
