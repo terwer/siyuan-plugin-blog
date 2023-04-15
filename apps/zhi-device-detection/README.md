@@ -58,5 +58,5 @@ pnpm test -F zhi-device-detection
 ## Publish
 
 ```
-pnpm publish -F zhi-device-detection --ver=0.1.0 --tag=latest
+pnpm publish -F zhi-device-detection --tag=latest
 ```

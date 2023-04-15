@@ -6,10 +6,20 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi",
-  "homepage": "terwer/zhi/tree/main/apps/zhi-device-detection",
-  "author": "please input author",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-device-detection",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "author": "terwer",
   "license": "GPL",
-  "keywords": [],
+  "keywords": [
+    "zhi",
+    "device",
+    "browser",
+    "node",
+    "electron"
+  ],
   "scripts": {
     "dev": "zhi-build --watch",
     "build": "zhi-build --production",
