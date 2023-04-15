@@ -129,16 +129,17 @@ class ZhiBuild {
     }
 
     console.log("building is start, esbuildConfig=>", esbuildConfig)
-    const context = await esbuild.context(esbuildConfig)
-
-    // Manually do an incremental build
-    const result = await context.rebuild()
-    // console.log("rebuilded, result=>", result)
 
     // 热部署新版
     // https://esbuild.github.io/api/#watch
     // https://github.com/evanw/esbuild/releases/tag/v0.17.0
     if (isWatch) {
+      const context = await esbuild.context(esbuildConfig)
+
+      // Manually do an incremental build
+      const result = await context.rebuild()
+      // console.log("rebuilded, result=>", result)
+
       // Enable watch mode
       console.log("watch mode enabled")
       await context.watch()
@@ -149,7 +150,7 @@ class ZhiBuild {
 
       console.log('watching...')
     } else {
-      await context.dispose()
+      await esbuild.build(esbuildConfig)
       console.log("ZhiBuild process finished")
     }
   }
