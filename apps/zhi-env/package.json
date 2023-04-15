@@ -1,12 +1,16 @@
 {
   "name": "zhi-env",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "type": "module",
   "description": "a cross-platform env config lib",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi-env",
   "homepage": "terwer/zhi/tree/main/apps/zhi-env",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "author": "terwer",
   "license": "GPL",
   "keywords": [
