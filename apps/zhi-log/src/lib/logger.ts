@@ -30,9 +30,7 @@ import callsites, { CallSite } from "callsites"
 import EnvHelper from "./envHelper"
 import Env from "zhi-env"
 import DefaultLogger from "./defaultLogger"
-import colors from "ansi-colors"
-import kleur from "kleur"
-import { BrowserUtil } from "zhi-device-detection"
+import crossChalk from "./crossChalk"
 
 /**
  * 日志工具类
@@ -66,36 +64,14 @@ class Logger {
     customLevel = customLevel ?? LogLevelEnum.LOG_LEVEL_INFO
     loglevel.setLevel(customLevel)
 
-    // 颜色
-    // polyfill due to https://github.com/vitejs/vite/issues/7385
-    const chalk = {
-      white: (str: string): string => {
-        return BrowserUtil.isElectron() ? colors.whiteBright(str) : kleur.white(str)
-      },
-      gray: (str: string): string => {
-        return BrowserUtil.isElectron() ? colors.gray(str) : kleur.gray(str)
-      },
-      blue: (str: string): string => {
-        return BrowserUtil.isElectron() ? colors.blue(str) : kleur.blue(str)
-      },
-      green: (str: string): string => {
-        return BrowserUtil.isElectron() ? colors.green(str) : kleur.green(str)
-      },
-      yellow: (str: string): string => {
-        return BrowserUtil.isElectron() ? colors.yellow(str) : kleur.yellow(str)
-      },
-      red: (str: string): string => {
-        return BrowserUtil.isElectron() ? colors.red(str) : kleur.red(str)
-      },
-    }
     const fmtLog = (level: LogLevelEnum, name: string, timestamp: Date, colorFn: any) => {
       const strarr = []
 
       // sign
       const logSign = sign ?? EnvHelper.getEnvLogger(env) ?? "zhi"
-      strarr.push(chalk.gray("[") + colorFn(logSign) + chalk.gray("]"))
+      strarr.push(crossChalk.gray("[") + colorFn(logSign) + crossChalk.gray("]"))
       // timestamp
-      strarr.push(chalk.gray("[") + chalk.gray(timestamp.toString()) + chalk.gray("]"))
+      strarr.push(crossChalk.gray("[") + crossChalk.gray(timestamp.toString()) + crossChalk.gray("]"))
       // level
       strarr.push(colorFn(level.toUpperCase().toString()))
       // name
@@ -111,22 +87,22 @@ class Logger {
 
         switch (level) {
           case LogLevelEnum.LOG_LEVEL_TRACE:
-            strarr = fmtLog(level, logName, timestamp, chalk.white)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.white)
             break
           case LogLevelEnum.LOG_LEVEL_DEBUG:
-            strarr = fmtLog(level, logName, timestamp, chalk.gray)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.gray)
             break
           case LogLevelEnum.LOG_LEVEL_INFO:
-            strarr = fmtLog(level, logName, timestamp, chalk.green)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.green)
             break
           case LogLevelEnum.LOG_LEVEL_WARN:
-            strarr = fmtLog(level, logName, timestamp, chalk.yellow)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.yellow)
             break
           case LogLevelEnum.LOG_LEVEL_ERROR:
-            strarr = fmtLog(level, logName, timestamp, chalk.red)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.red)
             break
           default:
-            strarr = fmtLog(LogLevelEnum.LOG_LEVEL_INFO, logName, timestamp, chalk.green)
+            strarr = fmtLog(LogLevelEnum.LOG_LEVEL_INFO, logName, timestamp, crossChalk.green)
             break
         }
 
