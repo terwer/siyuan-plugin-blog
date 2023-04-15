@@ -1,6 +1,6 @@
 {
   "name": "zhi-env",
-  "version": "1.13.3",
+  "version": "1.13.4",
   "type": "module",
   "description": "a cross-platform env config lib",
   "main": "./dist/index.js",
