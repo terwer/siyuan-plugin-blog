@@ -30,9 +30,10 @@ import { BrowserUtil } from "zhi-device-detection"
 /**
  * 跨平台，同时支持Node和浏览器的颜色解决方案
  *
+ * @public
  * @author terwer
  * @version 1.9.2
- * @static 1.9.2
+ * @since 1.9.2
  */
 // polyfill due to https://github.com/vitejs/vite/issues/7385
 const crossChalk = {

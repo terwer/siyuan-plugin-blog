@@ -25,7 +25,7 @@
 
 import { Command } from "commander"
 import { printVerboseHook } from "../utils"
-import LogFactory, { LogLevelEnum } from "zhi-log"
+import LogFactory, { crossChalk, LogLevelEnum } from "zhi-log"
 import fs from "fs-extra"
 import path from "path"
 import { downloadTemplate } from "./download"
@@ -95,7 +95,9 @@ export const initCommand = () => {
         logger.info(".git cleaned.")
 
         logger.info("project created.")
-        logger.info("Now you can do `cd " + downloadPath + "`" + " and run `pnpm install`")
+        const cdText = crossChalk.yellow(`cd ${downloadPath}`)
+        const installText = crossChalk.green(`pnpm install`)
+        logger.info(`Now you can do ${cdText} and run ${installText}`)
       } catch (error) {
         console.error(error)
       }
