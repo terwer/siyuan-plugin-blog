@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi",
-  "homepage": "terwer/zhi/tree/main/apps/zhi-log",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-log",
   "author": "terwer",
   "license": "GPL",
   "keywords": [

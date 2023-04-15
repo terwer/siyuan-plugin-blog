@@ -21,6 +21,9 @@ logger.error("error msg")
 ├── loglevel
 ├── callsites
 ├── loglevel-plugin-prefix
+├── zhi-device-detection
+├── ansi-colors
+├── kleur
 ```
 
 ## Dev
@@ -53,5 +56,5 @@ pnpm test -F zhi-log
 ## Publish
 
 ```
-pnpm publish -F zhi-log --ver=0.1.0 --tag=latest
+pnpm publish -F zhi-log --tag=latest
 ```
