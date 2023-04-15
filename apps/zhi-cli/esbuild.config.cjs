@@ -23,39 +23,19 @@
  * questions.
  */
 
-const path = require("path")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const { copy } = require("esbuild-plugin-copy")
-
-const distDir = "./dist"
 
 /**
  * 构建配置
  */
 module.exports = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(distDir, "index.cjs"),
+  outfile: "dist/index.cjs",
   bundle: true,
   format: "cjs",
   platform: "node",
   banner: {
     js: "#!/usr/bin/env node",
   },
-  plugins: [
-    dtsPlugin(),
-
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      resolveFrom: "cwd",
-      assets: [
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(distDir, "/README.md")],
-        },
-      ],
-      watch: true,
-    }),
-  ],
+  plugins: [dtsPlugin()],
 }

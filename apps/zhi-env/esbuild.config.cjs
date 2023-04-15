@@ -23,7 +23,6 @@
  * questions.
  */
 
-const path = require("path")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
 
 /**
