@@ -27,8 +27,7 @@ const path = require("path")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
 const { copy } = require("esbuild-plugin-copy")
 
-const baseDir = "./"
-const distDir = path.join(baseDir, "dist")
+const distDir = "./dist"
 
 /**
  * 构建配置
@@ -40,7 +39,7 @@ module.exports = {
   format: "cjs",
   platform: "node",
   banner: {
-    js: '#!/usr/bin/env node'
+    js: "#!/usr/bin/env node",
   },
   plugins: [
     dtsPlugin(),

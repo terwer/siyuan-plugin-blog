@@ -6,14 +6,19 @@
   "bin": {
     "zhi-cli": "dist/index.cjs"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "repository": "terwer/zhi-cli",
-  "homepage": "terwer/zhi-cli",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-cli",
   "author": "terwer",
   "license": "GPL",
   "keywords": [
     "zhi",
     "cli",
-    "zhi-cli"
+    "zhi-cli",
+    "command"
   ],
   "scripts": {
     "dev": "zhi-build --watch",
