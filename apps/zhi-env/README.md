@@ -129,5 +129,5 @@ pnpm test -F zhi-env
 ## Publish
 
 ```
-pnpm publish -F zhi-env --ver=0.1.0 --tag=latest
+pnpm publish -F zhi-env --tag latest
 ```
