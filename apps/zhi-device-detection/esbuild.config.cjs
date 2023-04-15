@@ -46,8 +46,7 @@ module.exports = {
   entryPoints: ["src/index.ts"],
   outfile: path.join(distDir, "index.js"),
   bundle: true,
-  format: "esm",
-  platform: "node",
+  format: "cjs",
   plugins: [
     dtsPlugin(),
     copy({

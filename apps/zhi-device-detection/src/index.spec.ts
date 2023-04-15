@@ -24,10 +24,10 @@
  */
 
 import { describe, expect, test } from "@jest/globals"
-import { hello } from "./index"
+import DeviceDetection from "./index"
 
-describe("zhi-cli", () => {
+describe("zhi-device-detection", () => {
   test("index", () => {
-    expect(hello()).toBe("hello world")
+    expect(DeviceDetection).toBeTruthy()
   })
 })
