@@ -1,15 +1,19 @@
 {
   "name": "zhi-env",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "type": "module",
-  "description": "please input project description",
+  "description": "a cross-platform env config lib",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi-env",
-  "homepage": "terwer/zhi-env",
-  "author": "please input author",
+  "homepage": "terwer/zhi/tree/main/apps/zhi-env",
+  "author": "terwer",
   "license": "GPL",
-  "keywords": [],
+  "keywords": [
+    "zhi",
+    "env",
+    "corss-env"
+  ],
   "scripts": {
     "dev": "zhi-build --watch",
     "build": "zhi-build --production",
