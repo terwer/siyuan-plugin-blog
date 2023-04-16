@@ -76,7 +76,7 @@ class Logger {
       strarr.push(colorFn(level.toUpperCase().toString()))
       // name
       strarr.push(colorFn(name))
-      strarr.push(colorFn(":"))
+      strarr.push(crossChalk.gray(":"))
       return strarr
     }
     prefix.reg(loglevel)
