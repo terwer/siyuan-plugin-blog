@@ -196,6 +196,35 @@ class SiyuanDevice {
   /**
    * 引入json
    *
+   * @param jsPath - js相对路径全路径
+   * @param type - 类型
+   */
+  public static async importJs(jsPath: string, type: BasePathTypeEnum) {
+    let fullJsonPath = jsPath
+    switch (type) {
+      case BasePathTypeEnum.BasePathType_Appearance:
+        fullJsonPath = this.joinPath(this.siyuanAppearanceRelativePath(), jsPath)
+        break
+      case BasePathTypeEnum.BasePathType_Data:
+        fullJsonPath = this.joinPath(this.siyuanDataRelativePath(), jsPath)
+        break
+      case BasePathTypeEnum.BasePathType_Themes:
+        fullJsonPath = this.joinPath(this.siyuanThemeRelativePath(), jsPath)
+        break
+      case BasePathTypeEnum.BasePathType_ZhiTheme:
+        fullJsonPath = this.joinPath(this.zhiThemeRelativePath(), jsPath)
+        break
+      default:
+        throw new Error("type must be provided")
+    }
+
+    const { default: data } = await import(fullJsonPath)
+    return data
+  }
+
+  /**
+   * 引入json
+   *
    * @param jsonPath - json相对路径全路径
    * @param type - 类型
    */
@@ -256,6 +285,15 @@ class SiyuanDevice {
    */
   public static async importZhiThemeJson(jsonPath: string) {
     return await this.importJson(jsonPath, BasePathTypeEnum.BasePathType_ZhiTheme)
+  }
+
+  /**
+   * 引入 zhi 主题的 js - 以 zhi 主题 的根路径为基本路径
+   *
+   * @param jsPath - 相对于 zhi 主题根路径的相对路径
+   */
+  public static async importZhiThemeJs(jsPath: string) {
+    return await this.importJs(jsPath, BasePathTypeEnum.BasePathType_ZhiTheme)
   }
   // =========================
   // import start

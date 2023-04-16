@@ -74,6 +74,20 @@ console.log("val=>", val)
 
 For unit tests
 
+- vitest<sup>recommend</sup>
+
+```ts
+// simple
+describe("zhiEnv", () => {
+  it("test env", () => {
+    const env = new Env(import.meta.env)
+    expect(env.getEnv(EnvConstants.NODE_ENV_KEY)).toEqual("test")
+  })
+})
+```
+
+- jest
+
 ```ts
 import { getNormalizedEnvDefines } from "../../../packages/esbuild-config-custom/esmUtils"
 

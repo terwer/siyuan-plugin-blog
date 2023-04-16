@@ -1,0 +1,15 @@
+{
+  "name": "vitest-config-custom",
+  "version": "0.1.0",
+  "description": "custom config for vitest",
+  "main": "index.cjs",
+  "keywords": [
+    "vite",
+    "vitest"
+  ],
+  "author": "terwer",
+  "license": "GPL",
+  "devDependencies": {
+    "vitest": "^0.30.1"
+  }
+}

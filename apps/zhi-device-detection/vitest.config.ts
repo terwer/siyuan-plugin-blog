@@ -23,8 +23,11 @@
  * questions.
  */
 
-const sharedConfig = require("jest-config-custom/babel.config.cjs")
+import { defineConfig } from "vitest/config"
 
-module.exports = {
-  ...sharedConfig,
-}
+export default defineConfig({
+  optimizeDeps: {
+    disabled: false,
+  },
+  test: {},
+})

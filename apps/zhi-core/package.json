@@ -32,7 +32,7 @@
     "eslint-config-custom": "workspace:*",
     "stylus": "^0.59.0",
     "tsconfig": "workspace:*",
-    "jest-config-custom": "workspace:*"
+    "vitest-config-custom": "workspace:*"
   },
   "dependencies": {
     "zhi-env": "workspace:*",

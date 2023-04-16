@@ -23,16 +23,11 @@
  * questions.
  */
 
-import { describe, expect, it } from "@jest/globals"
+import { describe, expect, it } from "vitest"
 import Env, { EnvConstants } from "./index"
-import { getNormalizedEnvDefines } from "../../../packages/esbuild-config-custom/esmUtils"
 
 describe("zhiEnv", () => {
   const NOT_EXIST_KEY = "NOT_EXIST_KEY"
-
-  beforeEach(() => {
-    getNormalizedEnvDefines(["NODE", "VITE_"])
-  })
 
   it("test env", () => {
     const env = new Env(import.meta.env)

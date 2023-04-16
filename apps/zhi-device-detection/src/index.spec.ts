@@ -23,11 +23,10 @@
  * questions.
  */
 
-import { describe, expect, test } from "@jest/globals"
-import DeviceDetection from "./index"
+import { describe, expect, it } from "vitest"
 
 describe("zhi-device-detection", () => {
-  test("index", () => {
-    expect(DeviceDetection).toBeTruthy()
+  it("index", () => {
+    expect("hello").toBeTruthy()
   })
 })

@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { describe, it } from "@jest/globals"
+import { describe, it } from "vitest"
 import MockTheme from "./mockTheme"
 
 describe("zhi-core", () => {

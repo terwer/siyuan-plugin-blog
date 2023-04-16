@@ -74,7 +74,18 @@ class Zhi {
    */
   public async init(): Promise<void> {
     try {
-      this.logger.info(`Theme runAs ${this.runAs}`)
+      this.logger.info(`Zhi Theme runAs ${this.runAs}`)
+
+      // 平台检测
+      if (
+        this.runAs !== DeviceTypeEnum.DeviceType_Siyuan_MainWin &&
+        this.runAs !== DeviceTypeEnum.DeviceType_Siyuan_Browser
+      ) {
+        this.logger.warn(
+          `Zhi Theme can only run as ${DeviceTypeEnum.DeviceType_Siyuan_MainWin} or ${DeviceTypeEnum.DeviceType_Siyuan_Browser}`
+        )
+        return
+      }
 
       // 初始化第三方依赖
       // import
@@ -88,9 +99,9 @@ class Zhi {
       for (const item of dynamicImports) {
         this.logger.info("dependencyItem=>", item)
       }
-      this.logger.info("Theme inited.")
+      this.logger.info("Zhi Theme inited.")
     } catch (e) {
-      this.logger.error("Theme load error=>", e)
+      this.logger.error("Zhi Theme load error=>", e)
     }
   }
 }
