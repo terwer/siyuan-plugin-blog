@@ -105,7 +105,25 @@
             ]
           }
         },
-        "plugins": {
+        "vendor": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "name",
+              "enabled"
+            ]
+          }
+        },
+        "plugin": {
           "type": "array",
           "items": {
             "type": "object",
@@ -128,7 +146,8 @@
         "core",
         "server",
         "web",
-        "plugins"
+        "vendor",
+        "plugin"
       ]
     }
   },

@@ -30,20 +30,24 @@ import { join } from "path"
 import minimist from "minimist"
 import { existsSync } from "fs"
 
-const loadDotenv = () => {
+const getEnvFilePath = () => {
   const args = minimist(process.argv.slice(2))
   const isWatch = args.watch ?? false
-  const envFile = (() => {
-    const testEnvFile = join(process.cwd(), ".env.test")
-    if (existsSync(testEnvFile)) {
-      console.log(`loading env variables from ${testEnvFile}`)
-      return testEnvFile
-    } else {
-      console.log(`loading env variables from .env.production`)
-      return join(process.cwd(), isWatch ? ".env.development" : ".env.production")
-    }
-  })()
-  dotenv.config({ path: envFile })
+  const isProduction = args.production ?? false
+
+  if (isWatch) {
+    return ".env.development"
+  } else if (isProduction) {
+    return ".env.production"
+  } else {
+    return ".env.test"
+  }
+}
+
+const loadDotenv = () => {
+  const envFilePath = getEnvFilePath()
+  console.log(`loading env variables from ${envFilePath}`)
+  dotenv.config({ path: join(process.cwd(), envFilePath) })
 }
 
 /**
