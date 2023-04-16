@@ -36,94 +36,54 @@ describe("JsonUtil", () => {
   })
 
   describe("validateJson", () => {
-    it("should return true when validating valid JSON data against a valid JSON schema", () => {
-      const jsonSchema = {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          age: {
-            type: "number",
-          },
-        },
-        required: ["name", "age"],
-      }
-      const jsonData = {
-        name: "John Doe",
-        age: 30,
-      }
+    const schema = {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        age: { type: "number" },
+      },
+      required: ["name", "age"],
+    }
+
+    it("should return true when the JSON data is valid", () => {
+      const data = { name: "John", age: 30 }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const result = jsonUtil.validateJson(jsonSchema, jsonData)
-      expect(result).toBe(true)
+      const result = jsonUtil.validateJson(schema, data)
+      expect(result.valid).toBe(true)
     })
 
-    it("should return false when validating invalid JSON data against a valid JSON schema", () => {
-      const jsonSchema = {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          age: {
-            type: "number",
-          },
-        },
-        required: ["name", "age"],
-      }
-      const jsonData = {
-        name: "John Doe",
-        age: "30", // age should be a number, not a string
-      }
+    it("should return false and an error message when the JSON data is invalid", () => {
+      const data = { name: "John" }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const result = jsonUtil.validateJson(jsonSchema, jsonData)
-      expect(result).toBe(false)
+      const result = jsonUtil.validateJson(schema, data)
+      expect(result.valid).toBe(false)
+      expect(result.error).toMatch(/data must have required property 'age'/)
     })
   })
 
   describe("validateObjectSchema", () => {
-    it("should return true when validating a valid data object against a valid schema object", () => {
-      const schemaObject = {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          age: {
-            type: "number",
-          },
-        },
-        required: ["name", "age"],
-      }
-      const dataObject = {
-        name: "John Doe",
-        age: 30,
-      }
-      const result = jsonUtil.validateObjectSchema(schemaObject, dataObject)
-      expect(result).toBe(true)
+    const schema = {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        age: { type: "number" },
+      },
+      required: ["name", "age"],
+    }
+
+    it("should return true when the object data is valid", () => {
+      const data = { name: "John", age: 30 }
+      const result = jsonUtil.validateObjectSchema(schema, data)
+      expect(result.valid).toBe(true)
     })
 
-    it("should return false when validating an invalid data object against a valid schema object", () => {
-      const schemaObject = {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          age: {
-            type: "number",
-          },
-        },
-        required: ["name", "age"],
-      }
-      const dataObject = {
-        name: "John Doe",
-        age: "30", // age should be a number, not a string
-      }
-      const result = jsonUtil.validateObjectSchema(schemaObject, dataObject)
-      expect(result).toBe(false)
+    it("should return false and an error message when the object data is invalid", () => {
+      const data = { name: "John" }
+      const result = jsonUtil.validateObjectSchema(schema, data)
+      expect(result.valid).toBe(false)
+      expect(result.error).toMatch(/data must have required property 'age'/)
     })
   })
 })

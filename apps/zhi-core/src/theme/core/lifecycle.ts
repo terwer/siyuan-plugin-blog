@@ -71,8 +71,11 @@ class Lifecycle {
     const zhiJson = await SiyuanDevice.importZhiThemeJson(this.ZHI_JSON)
     this.logger.debug("zhiSchema=>", zhiSchema)
     this.logger.debug("zhiJson=>", zhiJson)
-    if (!this.common.jsonUtil.validateObjectSchema(zhiSchema, zhiJson)) {
-      throw new Error(`${this.ZHI_JSON} is not valid, please check ${this.ZHI_JSON_SCHEMA}`)
+    const valiResult = this.common.jsonUtil.validateObjectSchema(zhiSchema, zhiJson)
+    if (!valiResult.valid) {
+      throw new Error(
+        `${this.ZHI_JSON} is not valid, error msg: ${valiResult.error ?? "None"}, please check ${this.ZHI_JSON_SCHEMA}`
+      )
     } else {
       this.logger.info(`Success, ${this.ZHI_JSON} is ok`)
     }

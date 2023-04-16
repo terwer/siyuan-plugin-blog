@@ -39,12 +39,22 @@ class JsonUtil {
     this.ajv = new Ajv()
   }
 
-  public validateJson<T>(schema: JSONSchemaType<T>, data: T): boolean {
-    return this.ajv.validate(schema, data)
+  public validateJson<T>(schema: JSONSchemaType<T>, data: T): { valid: boolean; error?: string } {
+    const valid = this.ajv.validate(schema, data)
+    if (valid) {
+      return { valid }
+    } else {
+      return { valid, error: this.ajv.errorsText() }
+    }
   }
 
-  public validateObjectSchema(schemaObject: object, dataObject: object): boolean {
-    return this.ajv.validate(schemaObject, dataObject)
+  public validateObjectSchema(schemaObject: object, dataObject: object): { valid: boolean; error?: string } {
+    const valid = this.ajv.validate(schemaObject, dataObject)
+    if (valid) {
+      return { valid }
+    } else {
+      return { valid, error: this.ajv.errorsText() }
+    }
   }
 }
 
