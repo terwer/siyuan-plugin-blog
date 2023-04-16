@@ -32,6 +32,7 @@
     "tsconfig": "workspace:*"
   },
   "dependencies": {
+    "ajv": "^8.12.0",
     "zhi-env": "workspace:*",
     "zhi-log": "workspace:*"
   }

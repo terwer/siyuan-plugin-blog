@@ -23,21 +23,29 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
+import Ajv, { JSONSchemaType } from "ajv"
 
 /**
- * 平台无关的通用工具类
+ * 校验 JSON schema
  *
  * @author terwer
- * @version 1.4.0
- * @since 1.3.0
+ * @version 1.5.0
+ * @since 1.5.0
  */
-class ZhiCommon {
-  public readonly jsonUtil
+class JsonUtil {
+  private ajv: Ajv
 
   constructor() {
-    this.jsonUtil = new JsonUtil()
+    this.ajv = new Ajv()
+  }
+
+  public validateJson<T>(schema: JSONSchemaType<T>, data: T): boolean {
+    return this.ajv.validate(schema, data)
+  }
+
+  public validateObjectSchema(schemaObject: object, dataObject: object): boolean {
+    return this.ajv.validate(schemaObject, dataObject)
   }
 }
 
-export default ZhiCommon
+export default JsonUtil

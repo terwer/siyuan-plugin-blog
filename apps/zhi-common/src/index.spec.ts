@@ -29,7 +29,9 @@ import ZhiCommonUtil from "./lib/ZhiCommonUtil"
 import { getNormalizedEnvDefines } from "../../../packages/esbuild-config-custom/esmUtils"
 
 describe("zhi-common", () => {
-  getNormalizedEnvDefines(["NODE", "VITE_"])
+  beforeEach(() => {
+    getNormalizedEnvDefines(["NODE", "VITE_"])
+  })
 
   it("index", () => {
     const logger = ZhiCommonUtil.zhiLog("zhi-common-test")

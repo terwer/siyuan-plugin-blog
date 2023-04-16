@@ -26,8 +26,13 @@
 import { describe, it } from "@jest/globals"
 import Env from "zhi-env"
 import LogFactory, { LogLevelEnum } from "./index"
+import { getNormalizedEnvDefines } from "../../../packages/esbuild-config-custom/esmUtils"
 
 describe("zhiLog", () => {
+  beforeEach(() => {
+    getNormalizedEnvDefines(["NODE", "VITE_"])
+  })
+
   it("test default log", function () {
     const logger = LogFactory.defaultLogger()
     logger.debug("This is debug log")

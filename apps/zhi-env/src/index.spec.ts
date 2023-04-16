@@ -29,7 +29,10 @@ import { getNormalizedEnvDefines } from "../../../packages/esbuild-config-custom
 
 describe("zhiEnv", () => {
   const NOT_EXIST_KEY = "NOT_EXIST_KEY"
-  getNormalizedEnvDefines(["NODE", "VITE_"])
+
+  beforeEach(() => {
+    getNormalizedEnvDefines(["NODE", "VITE_"])
+  })
 
   it("test env", () => {
     const env = new Env(import.meta.env)
