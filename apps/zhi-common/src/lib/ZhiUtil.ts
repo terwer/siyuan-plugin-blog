@@ -72,7 +72,7 @@ abstract class ZhiUtil {
    * @see {@link https://github.com/terwer/zhi/tree/main/apps/zhi-env#usage docs for zhi-env usage}
    */
   public static zhiEnv(): Env {
-    throw new Error("Method 'zhiEnv' must be implemented.")
+    throw new Error("Method 'zhiEnv' must be implemented")
   }
 
   /**
@@ -84,7 +84,7 @@ abstract class ZhiUtil {
   public static zhiLogWithSign(sign: string, loggerName: string): DefaultLogger {
     if (this.loggerMap[loggerName]) {
       // 日志存在，直接返回缓存
-      this.loggerMap[loggerName].debug("Zhi-log use cache.")
+      this.loggerMap[loggerName].debug("Zhi-log use cache")
       return this.loggerMap[loggerName]
     }
 
@@ -92,7 +92,7 @@ abstract class ZhiUtil {
     const env = this.zhiEnv()
     const logger = LogFactory.customSignLogFactory(sign, env).getLogger(loggerName)
     this.loggerMap[loggerName] = logger
-    logger.debug("Zhi-log add new logger.")
+    logger.debug("Zhi-log add new logger")
 
     return logger
   }
