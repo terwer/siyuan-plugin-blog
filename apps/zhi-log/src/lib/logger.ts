@@ -87,10 +87,10 @@ class Logger {
 
         switch (level) {
           case LogLevelEnum.LOG_LEVEL_TRACE:
-            strarr = fmtLog(level, logName, timestamp, crossChalk.white)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.gray)
             break
           case LogLevelEnum.LOG_LEVEL_DEBUG:
-            strarr = fmtLog(level, logName, timestamp, crossChalk.gray)
+            strarr = fmtLog(level, logName, timestamp, crossChalk.blue)
             break
           case LogLevelEnum.LOG_LEVEL_INFO:
             strarr = fmtLog(level, logName, timestamp, crossChalk.green)

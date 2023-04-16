@@ -26,16 +26,23 @@
 const dotenv = require("dotenv")
 const { join } = require("path")
 const minimist = require("minimist")
+const { existsSync } = require("fs")
 
 const loadDotenv = () => {
-  // 处理参数
-  const args = minimist(process.argv.slice(2))
-  const isWatch = args.watch ?? false
-  const isTest = args.test ?? false
-  const envFile = join(process.cwd(), isWatch || isTest ? `.env.development` : ".env.production")
-  console.log(`loading env variables from ${envFile}`)
-  dotenv.config({ path: envFile })
-}
+  const args = minimist(process.argv.slice(2));
+  const isWatch = args.watch ?? false;
+  const envFile = (() => {
+    const testEnvFile = join(process.cwd(), '.env.test');
+    if (existsSync(testEnvFile)) {
+      console.log(`loading env variables from ${testEnvFile}`);
+      return testEnvFile;
+    } else {
+      console.log(`loading env variables from .env.production`);
+      return join(process.cwd(), isWatch ? '.env.development' : '.env.production');
+    }
+  })();
+  dotenv.config({ path: envFile });
+};
 
 /**
  * 获取环境变量，仅构建工具使用

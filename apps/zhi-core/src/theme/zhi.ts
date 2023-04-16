@@ -69,6 +69,13 @@ class Zhi {
       this.logger.info(`Theme runAs ${this.runAs}`)
 
       // 初始化第三方依赖
+      // import
+      //   browser     esm path: "/[libpath]"
+      //   electron    esm path: "/[libpath]"
+      //
+      // require
+      //   browser     X
+      //   electron    cjs path: "[abspath][libpath]"
       const dynamicImports = await this.main([])
       for (const item of dynamicImports) {
         this.logger.info("dependencyItem=>", item)

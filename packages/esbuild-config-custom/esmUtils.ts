@@ -28,13 +28,21 @@ import dotenv from "dotenv"
 import { join } from "path"
 // @ts-ignore
 import minimist from "minimist"
+import { existsSync } from "fs"
 
 const loadDotenv = () => {
-  // 处理参数
   const args = minimist(process.argv.slice(2))
   const isWatch = args.watch ?? false
-  const isTest = args.test ?? false
-  const envFile = join(process.cwd(), isWatch || isTest ? `.env.development` : ".env.production")
+  const envFile = (() => {
+    const testEnvFile = join(process.cwd(), ".env.test")
+    if (existsSync(testEnvFile)) {
+      console.log(`loading env variables from ${testEnvFile}`)
+      return testEnvFile
+    } else {
+      console.log(`loading env variables from .env.production`)
+      return join(process.cwd(), isWatch ? ".env.development" : ".env.production")
+    }
+  })()
   dotenv.config({ path: envFile })
 }
 

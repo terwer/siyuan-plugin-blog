@@ -83,6 +83,13 @@ class BrowserUtil {
   }
 
   /**
+   * 是否有Node环境，目前包括 Electron 和 Node
+   */
+  public static hasNodeEnv = () => {
+    return BrowserUtil.isElectron() || BrowserUtil.isNode
+  }
+
+  /**
    * 检测是否运行在Chrome插件中
    */
   public static isInChromeExtension() {
