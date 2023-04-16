@@ -34,7 +34,7 @@
     "api-docs": "workspace:*",
     "esbuild-config-custom": "workspace:*",
     "eslint-config-custom": "workspace:*",
-    "jest-config-custom": "workspace:*",
+    "vitest-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   }
 }

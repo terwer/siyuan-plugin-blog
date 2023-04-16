@@ -39,6 +39,7 @@ class Lifecycle {
   private readonly logger
   private readonly common
   private ZHI_JSON_SCHEMA = "zhi-schema.json"
+  private ZHI_JS = "zhi.json"
   private ZHI_JSON = "zhi.json"
 
   constructor() {
@@ -67,7 +68,9 @@ class Lifecycle {
     // json读取
     // const { default: data } = await import("/appearance/themes/zhi/zhi-schema.json", { assert: { type: "json" } });data
     // const { default: data } = await import("/appearance/themes/zhi/zhi.json", { assert: { type: "json" } });data
+    // const { default: data } = await import("/appearance/themes/zhi/zhi.js");data
     const zhiSchema = await SiyuanDevice.importZhiThemeJson(this.ZHI_JSON_SCHEMA)
+    // const zhiJson = await SiyuanDevice.importZhiThemeJs(this.ZHI_JSON)
     const zhiJson = await SiyuanDevice.importZhiThemeJson(this.ZHI_JSON)
     this.logger.debug("zhiSchema=>", zhiSchema)
     this.logger.debug("zhiJson=>", zhiJson)

@@ -23,8 +23,21 @@
  * questions.
  */
 
-const sharedConfig = require("jest-config-custom/babel.config.cjs")
-
-module.exports = {
-  ...sharedConfig,
+export default {
+  dependencies: {
+    core: [
+      {
+        libpath: "core/plugin-system/plugin.js",
+        baseType: "ZhiTheme",
+        format: "cjs",
+        importType: "require",
+        runAs: ["Siyuan_MainWindow", "Siyuan_Browser"],
+        order: 1,
+      },
+    ],
+    server: [],
+    web: [],
+    vendor: [],
+    plugin: [],
+  },
 }
