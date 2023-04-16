@@ -25,7 +25,7 @@
 
 import DependencyItem from "../models/DependencyItem"
 import { SiyuanDevice } from "zhi-device-detection"
-import ZhiUtil from "./util/ZhiUtil"
+import ZhiCoreUtil from "./util/ZhiCoreUtil"
 
 /**
  * zhi主题统一生命周期管理
@@ -40,7 +40,7 @@ class Lifecycle {
   private ZHI_JSON = "zhi.json"
 
   constructor() {
-    this.logger = ZhiUtil.zhiLog("lifecycle")
+    this.logger = ZhiCoreUtil.zhiLog("lifecycle")
   }
 
   /**

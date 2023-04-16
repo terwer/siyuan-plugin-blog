@@ -23,11 +23,11 @@
  * questions.
  */
 
-import { DeviceTypeEnum } from "zhi-device-detection"
-import ZhiUtil from "./core/util/ZhiUtil"
-// import pkg from "../../package.json" assert { type: "json" }
+import { DeviceTypeEnum, SiyuanDevice } from "zhi-device-detection"
+import ZhiCoreUtil from "./core/util/ZhiCoreUtil"
 import DependencyItem from "./models/DependencyItem"
 import Bootstrap from "./core/Bootstrap"
+import { crossChalk } from "zhi-log"
 
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
@@ -39,6 +39,8 @@ import Bootstrap from "./core/Bootstrap"
 class Zhi {
   private readonly logger
   private readonly runAs
+  private pkgJson = {} as any
+  private ZHI_PACKAGE_JSON = "package.json"
 
   /**
    * 主题初始化
@@ -46,19 +48,25 @@ class Zhi {
    * @param runAs - 运行模式
    */
   constructor(runAs: DeviceTypeEnum) {
-    this.logger = ZhiUtil.zhiLog("zhi-core")
+    this.logger = ZhiCoreUtil.zhiLog("zhi-core")
 
     this.runAs = runAs ?? DeviceTypeEnum.DeviceType_Node
   }
 
   private async main(args: string[]): Promise<DependencyItem[]> {
     this.logger.debug("Parsing args...", args)
+    // 读取package.json
+    this.pkgJson = await SiyuanDevice.importZhiThemeJson(this.ZHI_PACKAGE_JSON)
     this.hello(this.runAs)
     return await Bootstrap.start()
   }
 
   private hello(from: string): void {
-    this.logger.info(`Hello, zhi theme v0.1.0! You are from ${from}`)
+    this.logger.info(
+      `Hello, this is zhi theme v${this.pkgJson.version}, ${this.pkgJson.description} by ${crossChalk.green(
+        this.pkgJson.author
+      )}! You are from ${from}`
+    )
   }
 
   /**

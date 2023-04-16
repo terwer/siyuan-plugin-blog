@@ -37,6 +37,7 @@
   "dependencies": {
     "zhi-env": "workspace:*",
     "zhi-log": "workspace:*",
-    "zhi-device-detection": "workspace:*"
+    "zhi-device-detection": "workspace:*",
+    "zhi-common": "workspace:*"
   }
 }

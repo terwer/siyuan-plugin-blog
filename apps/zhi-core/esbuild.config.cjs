@@ -59,6 +59,10 @@ module.exports = {
           from: ["./README.md"],
           to: [path.join(distDir, "/README.md")],
         },
+        {
+          from: ["./package.json"],
+          to: [path.join(distDir, "/package.json")],
+        },
       ],
       watch: true,
     }),
