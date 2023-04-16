@@ -25,11 +25,13 @@
 
 import DeviceDetection from "./deviceDetection"
 import DeviceTypeEnum from "./lib/deviceTypeEnum"
+import BasePathTypeEnum from "./lib/basePathTypeEnum"
 import BrowserUtil from "./lib/browserUtil"
+import SiyuanDevice from "./lib/siyuanDevice"
 
 /**
  * zhi-device-detection 入口
  */
 export default DeviceDetection
-export { BrowserUtil }
-export { DeviceTypeEnum }
+export { BrowserUtil, SiyuanDevice }
+export { DeviceTypeEnum, BasePathTypeEnum }

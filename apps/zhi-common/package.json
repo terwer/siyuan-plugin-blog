@@ -1,0 +1,39 @@
+{
+  "name": "zhi-common",
+  "version": "1.5.0",
+  "type": "module",
+  "description": "the library base for zhi related projects",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-common",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "common",
+    "libiary"
+  ],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-common",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-common && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-common/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-common\n---' | cat - ../zhi-docs/src/api/zhi-common/index.md > ../zhi-docs/src/api/zhi-common/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "jest-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*"
+  }
+}

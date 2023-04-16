@@ -1,6 +1,6 @@
 {
   "name": "zhi",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -18,7 +18,8 @@
     "apibuild": "pnpm build && pnpm doc && pnpm md && turbo run apibuild --filter zhi-docs"
   },
   "devDependencies": {
-    "turbo": "^1.9.1"
+    "turbo": "^1.9.1",
+    "esbuild": "^0.16.17"
   },
   "engines": {
     "node": ">=14.0.0"

@@ -23,47 +23,21 @@
  * questions.
  */
 
-import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device-detection"
+import JsonUtil from "./jsonUtil"
 
 /**
- * 依赖项类型定义
+ * 平台无关的通用工具类
  *
- * @public
  * @author terwer
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.4.0
+ * @since 1.3.0
  */
-class DependencyItem {
-  /**
-   * 依赖库相对路径
-   */
-  libpath: string
-  baseType: BasePathTypeEnum
-  /**
-   * 格式
-   */
-  format: "cjs" | "esm" | "js"
-  /**
-   * 引入方式
-   */
-  importType: "require" | "import"
-  /**
-   * 支持的设备列表
-   */
-  runAs: DeviceTypeEnum[]
-  /**
-   * 加载属性，数组越越靠前
-   */
-  order: number
+class ZhiCommon {
+  public readonly jsonUtil
 
   constructor() {
-    this.libpath = ""
-    this.baseType = BasePathTypeEnum.BasePathType_ZhiTheme
-    this.format = "cjs"
-    this.importType = "require"
-    this.runAs = [DeviceTypeEnum.DeviceType_Siyuan_MainWin, DeviceTypeEnum.DeviceType_Node]
-    this.order = 0
+    this.jsonUtil = new JsonUtil()
   }
 }
 
-export default DependencyItem
+export default ZhiCommon

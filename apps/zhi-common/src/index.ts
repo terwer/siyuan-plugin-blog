@@ -23,47 +23,8 @@
  * questions.
  */
 
-import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device-detection"
+import ZhiCommon from "./lib/zhi-common"
+import ZhiUtil from "./lib/ZhiUtil"
 
-/**
- * 依赖项类型定义
- *
- * @public
- * @author terwer
- * @version 0.1.0
- * @since 0.1.0
- */
-class DependencyItem {
-  /**
-   * 依赖库相对路径
-   */
-  libpath: string
-  baseType: BasePathTypeEnum
-  /**
-   * 格式
-   */
-  format: "cjs" | "esm" | "js"
-  /**
-   * 引入方式
-   */
-  importType: "require" | "import"
-  /**
-   * 支持的设备列表
-   */
-  runAs: DeviceTypeEnum[]
-  /**
-   * 加载属性，数组越越靠前
-   */
-  order: number
-
-  constructor() {
-    this.libpath = ""
-    this.baseType = BasePathTypeEnum.BasePathType_ZhiTheme
-    this.format = "cjs"
-    this.importType = "require"
-    this.runAs = [DeviceTypeEnum.DeviceType_Siyuan_MainWin, DeviceTypeEnum.DeviceType_Node]
-    this.order = 0
-  }
-}
-
-export default DependencyItem
+export default ZhiCommon
+export { ZhiUtil }

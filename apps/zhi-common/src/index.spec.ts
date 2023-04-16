@@ -23,47 +23,20 @@
  * questions.
  */
 
-import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device-detection"
+import { describe, expect, it } from "@jest/globals"
+import { hello } from "./index"
+import ZhiCommonUtil from "./lib/ZhiCommonUtil"
+import { getNormalizedEnvDefines } from "../../../packages/esbuild-config-custom/esmUtils"
 
-/**
- * 依赖项类型定义
- *
- * @public
- * @author terwer
- * @version 0.1.0
- * @since 0.1.0
- */
-class DependencyItem {
-  /**
-   * 依赖库相对路径
-   */
-  libpath: string
-  baseType: BasePathTypeEnum
-  /**
-   * 格式
-   */
-  format: "cjs" | "esm" | "js"
-  /**
-   * 引入方式
-   */
-  importType: "require" | "import"
-  /**
-   * 支持的设备列表
-   */
-  runAs: DeviceTypeEnum[]
-  /**
-   * 加载属性，数组越越靠前
-   */
-  order: number
+describe("zhi-common", () => {
+  beforeEach(() => {
+    getNormalizedEnvDefines(["NODE", "VITE_"])
+  })
 
-  constructor() {
-    this.libpath = ""
-    this.baseType = BasePathTypeEnum.BasePathType_ZhiTheme
-    this.format = "cjs"
-    this.importType = "require"
-    this.runAs = [DeviceTypeEnum.DeviceType_Siyuan_MainWin, DeviceTypeEnum.DeviceType_Node]
-    this.order = 0
-  }
-}
-
-export default DependencyItem
+  it("index", () => {
+    const logger = ZhiCommonUtil.zhiLog("zhi-common-test")
+    logger.debug("test common util debug")
+    logger.info("test common util")
+    expect(hello()).toBe("hello world")
+  })
+})

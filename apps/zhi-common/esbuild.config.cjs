@@ -24,26 +24,30 @@
  */
 
 const path = require("path")
-const minimist = require("minimist")
-const { copy } = require("esbuild-plugin-copy")
+// const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const stylePlugin = require("esbuild-style-plugin")
+const { copy } = require("esbuild-plugin-copy")
 
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
+// const args = minimist(process.argv.slice(2))
+// const isWatch = args.watch || args.w
 
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+// for dist
+const baseDir = "./"
+const distDir = path.join(baseDir, "dist")
+
+// for outer custom output for dev
+// const baseDir = isWatch ? "my-custom-absolute-path" : "./"
+// const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 /**
  * 构建配置
  */
 module.exports = {
   entryPoints: ["src/index.ts"],
-  outfile: path.join(distDir, "theme.js"),
+  outfile: path.join(distDir, "index.js"),
+  format: "esm",
   plugins: [
     dtsPlugin(),
-
     copy({
       // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
       // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
@@ -52,21 +56,15 @@ module.exports = {
         // copy folder
         {
           from: "./public/**/*",
-          to: [distDir],
+          to: [path.join(distDir, "assets")],
         },
         // copy one file
         {
           from: ["./README.md"],
           to: [path.join(distDir, "/README.md")],
         },
-        {
-          from: ["./package.json"],
-          to: [path.join(distDir, "/package.json")],
-        },
       ],
       watch: true,
     }),
-
-    stylePlugin(),
   ],
 }

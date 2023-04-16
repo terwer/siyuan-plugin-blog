@@ -23,47 +23,39 @@
  * questions.
  */
 
-import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device-detection"
+import Ajv, { JSONSchemaType } from "ajv"
 
 /**
- * 依赖项类型定义
+ * 校验 JSON schema
  *
- * @public
  * @author terwer
- * @version 0.1.0
- * @since 0.1.0
+ * @version 1.5.0
+ * @since 1.5.0
  */
-class DependencyItem {
-  /**
-   * 依赖库相对路径
-   */
-  libpath: string
-  baseType: BasePathTypeEnum
-  /**
-   * 格式
-   */
-  format: "cjs" | "esm" | "js"
-  /**
-   * 引入方式
-   */
-  importType: "require" | "import"
-  /**
-   * 支持的设备列表
-   */
-  runAs: DeviceTypeEnum[]
-  /**
-   * 加载属性，数组越越靠前
-   */
-  order: number
+class JsonUtil {
+  private ajv: Ajv
 
   constructor() {
-    this.libpath = ""
-    this.baseType = BasePathTypeEnum.BasePathType_ZhiTheme
-    this.format = "cjs"
-    this.importType = "require"
-    this.runAs = [DeviceTypeEnum.DeviceType_Siyuan_MainWin, DeviceTypeEnum.DeviceType_Node]
-    this.order = 0
+    this.ajv = new Ajv()
+  }
+
+  public validateJson<T>(schema: JSONSchemaType<T>, data: T): { valid: boolean; error?: string } {
+    const valid = this.ajv.validate(schema, data)
+    if (valid) {
+      return { valid }
+    } else {
+      return { valid, error: this.ajv.errorsText() }
+    }
+  }
+
+  public validateObjectSchema(schemaObject: object, dataObject: object): { valid: boolean; error?: string } {
+    const valid = this.ajv.validate(schemaObject, dataObject)
+    if (valid) {
+      return { valid }
+    } else {
+      return { valid, error: this.ajv.errorsText() }
+    }
   }
 }
 
-export default DependencyItem
+export default JsonUtil
