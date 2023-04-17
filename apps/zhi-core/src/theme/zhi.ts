@@ -91,10 +91,12 @@ class Zhi {
       // import
       //   browser     esm path: "/[libpath]"
       //   electron    esm path: "/[libpath]"
+      //   custom-path X
       //
       // require
       //   browser     X
       //   electron    cjs path: "[abspath][libpath]"
+      //   custom-path require-hacker
       const dynamicImports = await this.main([])
       for (const item of dynamicImports) {
         this.logger.info("dependencyItem=>", item)
