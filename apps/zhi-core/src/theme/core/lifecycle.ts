@@ -106,8 +106,13 @@ class Lifecycle {
    * @private
    */
   private async loadCoreModules(deps: object[]): Promise<DependencyItem[]> {
-    const coreModulesImports = <DependencyItem[]>[]
-    this.logger.info(`Registered ${deps.length} Core modules`)
+    const coreModulesImports: DependencyItem[] = deps.map((dep: object) => {
+      const dependency = new DependencyItem()
+      dependency.fromJson(dep)
+      return dependency
+    })
+
+    this.logger.info(`Registered ${coreModulesImports.length} Core modules`)
     return coreModulesImports
   }
 
@@ -117,8 +122,14 @@ class Lifecycle {
    * @private
    */
   private async loadBackendModules(deps: object[]): Promise<DependencyItem[]> {
-    this.logger.info(`Registered ${deps.length} Backend modules`)
-    return Promise.resolve([])
+    const backendModulesImports: DependencyItem[] = deps.map((dep: object) => {
+      const dependency = new DependencyItem()
+      dependency.fromJson(dep)
+      return dependency
+    })
+
+    this.logger.info(`Registered ${backendModulesImports.length} Backend modules`)
+    return backendModulesImports
   }
 
   /**
@@ -127,8 +138,14 @@ class Lifecycle {
    * @private
    */
   private async loadFrontendModules(deps: object[]): Promise<DependencyItem[]> {
-    this.logger.info(`Registered ${deps.length} frontend modules`)
-    return Promise.resolve([])
+    const frontendModulesImports: DependencyItem[] = deps.map((dep: object) => {
+      const dependency = new DependencyItem()
+      dependency.fromJson(dep)
+      return dependency
+    })
+
+    this.logger.info(`Registered ${frontendModulesImports.length} Frontend modules`)
+    return frontendModulesImports
   }
 
   /**
@@ -137,13 +154,13 @@ class Lifecycle {
    * @private
    */
   private async loadVendors(deps: object[]): Promise<DependencyItem[]> {
-    const vendorImports = <DependencyItem[]>[]
+    const vendorImports: DependencyItem[] = deps.map((dep: object) => {
+      const dependency = new DependencyItem()
+      dependency.fromJson(dep)
+      return dependency
+    })
 
-    // 字体图标
-    // const fontAwesomeImports = fontAwesome.initFontAwesome()
-    // vendorImports = vendorImports.concat(fontAwesomeImports)
-
-    this.logger.info(`Registered ${deps.length} Vendors`)
+    this.logger.info(`Registered ${vendorImports.length} Vendors`)
     return vendorImports
   }
 
@@ -153,7 +170,7 @@ class Lifecycle {
    */
   private async loadPlugins(deps: object[]): Promise<void> {
     this.logger.info("Loading plugins from zhi theme...")
-
+    // TODO
     this.logger.info(`Loaded ${deps.length} Plugins`)
   }
 }

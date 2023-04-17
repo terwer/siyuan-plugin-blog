@@ -99,7 +99,46 @@ class Zhi {
       //   custom-path require-hacker
       const dynamicImports = await this.main([])
       for (const item of dynamicImports) {
-        this.logger.info("dependencyItem=>", item)
+        // 类型校验
+        if (item.format !== "esm" && item.format !== "cjs" && item.format !== "js") {
+          this.logger.warn("Only esm, cjs supported, skip this lib!", item.libpath)
+          continue
+        }
+
+        // 运行环境校验
+        if (!item.runAs.includes(this.runAs)) {
+          this.logger.debug(
+            `I'm sorry because current runtime is ${this.runAs}, while lib's define runtime is ${item.runAs}`
+          )
+          this.logger.warn(`This lib can only run at ${item.runAs}, will skip!Lib is=>${item.libpath}`)
+          continue
+        }
+
+        this.logger.info(`Loading modules form zhi => ${item.libpath}`)
+        let lib
+        if (item.importType == "import") {
+          lib = await SiyuanDevice.importJs(item.libpath, item.baseType)
+          this.logger.debug(`Importing lib ${item.libpath} with basePath of ${item.baseType} ...`)
+        } else {
+          lib = SiyuanDevice.requireLib(item.libpath, false, item.baseType)
+          this.logger.debug(`Requiring lib ${item.libpath} with basePath of ${item.baseType} ...`)
+        }
+        // 如果有初始化方法，进行初始化
+        if (lib) {
+          const libObj = lib
+          this.logger.debug(`Current ${item.importType} lib Obj=>"`, libObj)
+          if (libObj.init) {
+            const res = await libObj.init()
+            if (res) {
+              this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
+            }
+          } else {
+            this.logger.debug(`No init method for ${item.importType} ${item.libpath}`)
+          }
+        } else {
+          this.logger.debug(`Lib entry is not a function => ${item.importType} ${item.libpath}`)
+        }
+        this.logger.info(`Success ${item.importType} ${item.libpath}`)
       }
       this.logger.info("Zhi Theme inited.")
     } catch (e) {
