@@ -240,9 +240,15 @@ importers:
       '@commitlint/prompt-cli':
         specifier: ^17.6.1
         version: registry.npmjs.org/@commitlint/prompt-cli@17.6.1
+      commitizen:
+        specifier: ^4.3.0
+        version: registry.npmjs.org/commitizen@4.3.0
       husky:
         specifier: ^8.0.3
         version: registry.npmjs.org/husky@8.0.3
+      inquirer:
+        specifier: '8'
+        version: registry.npmjs.org/inquirer@8.2.5
 
   packages/esbuild-config-custom:
     devDependencies:

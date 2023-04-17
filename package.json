@@ -18,8 +18,13 @@
     "apibuild": "pnpm build && pnpm doc && pnpm md && turbo run apibuild --filter zhi-docs",
     "prepare": "husky install",
     "commitinit": "npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'",
-    "commitcz": "git-cz",
+    "cz": "git-cz",
     "commit": "commit"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "devDependencies": {
     "turbo": "^1.9.1"
