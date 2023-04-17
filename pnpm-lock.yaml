@@ -249,6 +249,9 @@ importers:
       inquirer:
         specifier: '8'
         version: registry.npmjs.org/inquirer@8.2.5
+      is-ci:
+        specifier: ^3.0.1
+        version: registry.npmjs.org/is-ci@3.0.1
 
   packages/esbuild-config-custom:
     devDependencies:
@@ -9017,6 +9020,15 @@ packages:
     name: is-callable
     version: 1.2.7
     engines: {node: '>= 0.4'}
+    dev: true
+
+  registry.npmjs.org/is-ci@3.0.1:
+    resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/is-ci/-/is-ci-3.0.1.tgz}
+    name: is-ci
+    version: 3.0.1
+    hasBin: true
+    dependencies:
+      ci-info: registry.npmjs.org/ci-info@3.8.0
     dev: true
 
   registry.npmjs.org/is-core-module@2.12.0:

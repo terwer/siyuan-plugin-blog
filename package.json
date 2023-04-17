@@ -16,7 +16,7 @@
     "md": "turbo run md",
     "apidev": "pnpm build && pnpm doc && pnpm md && turbo run apidev --filter zhi-docs",
     "apibuild": "pnpm build && pnpm doc && pnpm md && turbo run apibuild --filter zhi-docs",
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "commitinit": "npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'",
     "cz": "git-cz",
     "commit": "commit"

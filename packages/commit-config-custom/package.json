@@ -23,6 +23,7 @@
     "@commitlint/prompt-cli": "^17.6.1",
     "commitizen": "^4.3.0",
     "husky": "^8.0.3",
-    "inquirer": "8"
+    "inquirer": "8",
+    "is-ci": "^3.0.1"
   }
 }
