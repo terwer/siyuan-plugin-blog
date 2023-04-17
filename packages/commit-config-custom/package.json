@@ -11,11 +11,6 @@
   ],
   "author": "terwer",
   "license": "GPL",
-  "scripts": {
-    "prepare": "husky install",
-    "commitinit": "npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'",
-    "commit": "commit"
-  },
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-angular": "^17.6.1",
@@ -23,6 +18,7 @@
     "@commitlint/prompt-cli": "^17.6.1",
     "commitizen": "^4.3.0",
     "husky": "^8.0.3",
-    "inquirer": "8"
+    "inquirer": "8",
+    "is-ci": "^3.0.1"
   }
 }
