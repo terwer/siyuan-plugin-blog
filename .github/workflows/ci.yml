@@ -39,6 +39,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Ignore ci hooks
+        run: pnpm ci --only=production --ignore-scripts
+
       - name: Install dependencies
         run: pnpm install
 
