@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/minimist": "^1.2.2",
     "dotenv": "^16.0.3",
-    "esbuild": "^0.17.16",
+    "esbuild": "^0.17.17",
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-plugin-d.ts": "^1.1.0",
     "esbuild-plugin-ifdef": "^1.0.1",
