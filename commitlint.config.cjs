@@ -1,7 +1,7 @@
 module.exports = {
   extends: ["@commitlint/config-angular"],
   rules: {
-    "type-enum": [2, "always", ["feat", "fix", "chore", "docs", "refactor", "revert"]],
+    "type-enum": [2, "always", ["feat", "fix", "refactor", "perf", "revert", "chore", "docs"]],
   },
   prompt: {
     settings: {},
@@ -27,6 +27,26 @@ module.exports = {
             title: "Bug Fixes",
             emoji: "🐛",
           },
+          refactor: {
+            description: "A code change that neither fixes a bug nor adds a feature",
+            title: "Code Refactoring",
+            emoji: "📦",
+          },
+          perf: {
+            description: "A code change that improves performance",
+            title: "Performance Improvements",
+            emoji: "🚀",
+          },
+          revert: {
+            description: "Reverts a previous commit",
+            title: "Reverts",
+            emoji: "🗑",
+          },
+          chore: {
+            description: "Other changes that don't modify src or test files",
+            title: "Chores",
+            emoji: "♻️",
+          },
           docs: {
             description: "Documentation only changes",
             title: "Documentation",
@@ -37,16 +57,6 @@ module.exports = {
               "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)",
             title: "Styles",
             emoji: "💎",
-          },
-          refactor: {
-            description: "A code change that neither fixes a bug nor adds a feature",
-            title: "Code Refactoring",
-            emoji: "📦",
-          },
-          perf: {
-            description: "A code change that improves performance",
-            title: "Performance Improvements",
-            emoji: "🚀",
           },
           test: {
             description: "Adding missing tests or correcting existing tests",
@@ -64,16 +74,6 @@ module.exports = {
               "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)",
             title: "Continuous Integrations",
             emoji: "⚙️",
-          },
-          chore: {
-            description: "Other changes that don't modify src or test files",
-            title: "Chores",
-            emoji: "♻️",
-          },
-          revert: {
-            description: "Reverts a previous commit",
-            title: "Reverts",
-            emoji: "🗑",
           },
         },
       },

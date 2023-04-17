@@ -5,7 +5,7 @@
         "libpath": "core/plugin-system/plugin.js",
         "baseType": "ZhiTheme",
         "format": "cjs",
-        "importType": "require",
+        "importType": "import",
         "runAs": ["Siyuan_MainWindow", "Siyuan_Browser"],
         "order": 1
       }

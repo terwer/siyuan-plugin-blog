@@ -64,6 +64,52 @@ class DependencyItem {
     this.runAs = [DeviceTypeEnum.DeviceType_Siyuan_MainWin, DeviceTypeEnum.DeviceType_Node]
     this.order = 0
   }
+
+  /**
+   * 将 json 转换为 DependencyItem
+   * @param jsonObj
+   */
+  public fromJson(jsonObj: any) {
+    // 从一个 JSON 对象中读取 libpath 属性并赋值给实例的 libpath 属性
+    this.libpath = jsonObj.libpath
+
+    // 读取并赋值 baseType 属性
+    if ("baseType" in jsonObj) {
+      this.baseType = jsonObj.baseType
+    }
+
+    // 读取并赋值 format 属性
+    if ("format" in jsonObj) {
+      this.format = jsonObj.format
+    }
+
+    // 读取并赋值 importType 属性
+    if ("importType" in jsonObj) {
+      this.importType = jsonObj.importType
+    }
+
+    // 读取并赋值 runAs 属性
+    if ("runAs" in jsonObj) {
+      if (Array.isArray(jsonObj.runAs)) {
+        // 将字符串数组转换为 DeviceTypeEnum[] 类型
+        this.runAs = jsonObj.runAs.map((item: string): DeviceTypeEnum => {
+          // 使用类型断言和类型检查，将字符串转换为 DeviceTypeEnum 类型
+          if (Object.values(DeviceTypeEnum).includes(item as DeviceTypeEnum)) {
+            return item as DeviceTypeEnum
+          } else {
+            throw new Error(`fromJson: "${item}" is not a valid 'DeviceTypeEnum' value.`)
+          }
+        })
+      } else {
+        throw new Error(`fromJson: "runAs" is not an array.`)
+      }
+    }
+
+    // 读取并赋值 order 属性
+    if ("order" in jsonObj) {
+      this.order = jsonObj.order
+    }
+  }
 }
 
 export default DependencyItem
