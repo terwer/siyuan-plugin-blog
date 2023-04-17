@@ -1,0 +1,26 @@
+{
+  "name": "commit-config-custom",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "commitlint custom config",
+  "main": "index.cjs",
+  "keywords": [
+    "commitlint",
+    "commit",
+    "lint"
+  ],
+  "author": "terwer",
+  "license": "GPL",
+  "scripts": {
+    "prepare": "husky install",
+    "commitinit": "npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'",
+    "commit": "commit"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-angular": "^17.6.1",
+    "@commitlint/cz-commitlint": "^17.5.0",
+    "@commitlint/prompt-cli": "^17.6.1",
+    "husky": "^8.0.3"
+  }
+}
