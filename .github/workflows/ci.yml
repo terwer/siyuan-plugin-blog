@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   build:
@@ -40,7 +41,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Ignore ci hooks
-        run: pnpm ci --only=production --ignore-scripts
+        run: npm ci --only=production --ignore-scripts
 
       - name: Install dependencies
         run: pnpm install
