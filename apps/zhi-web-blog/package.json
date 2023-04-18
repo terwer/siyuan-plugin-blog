@@ -1,0 +1,30 @@
+{
+  "name": "zhi-web-blog",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "a blog based on siyuan-note api",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-web-blog",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "zhi-blog",
+    "web",
+    "vue",
+    "nuxt",
+    "blog"
+  ],
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "eslint-config-custom": "workspace:*",
+    "nuxt": "^3.4.1"
+  }
+}
