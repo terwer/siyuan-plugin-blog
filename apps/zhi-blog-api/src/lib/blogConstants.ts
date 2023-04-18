@@ -23,12 +23,18 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+/**
+ * 博客通用常量定义
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class BlogConstants {
+  /**
+   * 博客类型
+   */
+  public static DEFAULT_BLOG_TYPE_KEY = "VITE_DEFAULT_TYPE"
+}
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+export default BlogConstants

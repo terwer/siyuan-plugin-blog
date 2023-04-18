@@ -23,12 +23,5 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
-
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+import BlogApi from "./blogApi"
+export default BlogApi

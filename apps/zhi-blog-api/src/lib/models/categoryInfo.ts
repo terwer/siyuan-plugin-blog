@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,12 +23,58 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+/**
+ * 通用分类模型定义
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class CategoryInfo {
+  /**
+   * 分类ID
+   */
+  categoryId: string
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+  /**
+   * 父分类ID
+   */
+  parentId: string
+
+  /**
+   * 分类名称
+   */
+  description: string
+
+  /**
+   * 分类英文名
+   */
+  categoryName: string
+
+  /**
+   * 分类详情
+   */
+  categoryDescription: string
+
+  /**
+   * 分类地址
+   */
+  htmlUrl: string
+
+  /**
+   * 分类订阅地址
+   */
+  rssUrl: string
+
+  constructor() {
+    this.categoryId = "-1"
+    this.parentId = "0"
+    this.description = "分类1"
+    this.categoryDescription = "这是测试分类1"
+    this.categoryName = "cate1"
+    this.htmlUrl = ""
+    this.rssUrl = ""
+  }
+}
+
+export default CategoryInfo

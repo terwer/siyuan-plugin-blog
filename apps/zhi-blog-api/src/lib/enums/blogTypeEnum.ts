@@ -23,12 +23,26 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+/**
+ * 博客类型枚举
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+enum BlogTypeEnum {
+  /**
+   * 思源笔记
+   */
+  BlogTypeEnum_Siyuan = "siyuan",
+  /**
+   * WordPress
+   */
+  BlogTypeEnum_Wordpress = "wordpress",
+  /**
+   * Metaweblog
+   */
+  BlogTypeEnum_Metaweblog = "metaweblog",
+}
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+export default BlogTypeEnum

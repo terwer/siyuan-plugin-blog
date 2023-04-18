@@ -23,12 +23,22 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+/**
+ * 文章状态枚举
+ */
+enum PostStatusEnum {
+  /**
+   * 已发布
+   */
+  PostStatusEnum_Publish = "publish",
+  /**
+   * 草稿
+   */
+  PostStatusEnum_Draft = "draft",
+  /**
+   * 继承
+   */
+  PostStatusEnum_Inherit = "inherit",
+}
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+export default PostStatusEnum

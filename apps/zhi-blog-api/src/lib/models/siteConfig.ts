@@ -23,12 +23,68 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+import UserBlog from "./userBlog"
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+/**
+ * 站点信息定义
+ */
+class SiteConfig {
+  /**
+   * 博客信息
+   */
+  userBlog: UserBlog
+
+  /**
+   * 域名
+   */
+  domain: string
+
+  /**
+   * 站点链接
+   */
+  weburl: string
+
+  /**
+   * 站点主题
+   */
+  webtheme: string
+
+  /**
+   * 站点名称
+   */
+  webname: string
+
+  /**
+   * 站点口号
+   */
+  webslogen: string
+
+  /**
+   * 关键字
+   */
+  keywords: string
+
+  /**
+   * 描述
+   */
+  description: string
+
+  /**
+   * 备案信息
+   */
+  beianinfo: string
+
+  constructor() {
+    this.userBlog = new UserBlog()
+    this.domain = ""
+    this.weburl = ""
+    this.webtheme = "default"
+    this.webname = "浅海拾贝"
+    this.webslogen = "寻找未知的技术拼图"
+    this.keywords = "软件架构、服务端开发、Java、Spring、Dubbo、Zookeeper、微服务"
+    this.description = "浅海拾贝致力于Java后端开发及服务端技术、软件架构、微服务技术分享的个人博客"
+    this.beianinfo = "粤ICP备18023717号-1"
+  }
+}
+
+export default SiteConfig

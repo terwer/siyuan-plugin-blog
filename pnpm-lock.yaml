@@ -8,6 +8,34 @@ importers:
         specifier: ^1.9.3
         version: registry.npmjs.org/turbo@1.9.3
 
+  apps/zhi-blog-api:
+    dependencies:
+      zhi-common:
+        specifier: workspace:*
+        version: link:../zhi-common
+      zhi-env:
+        specifier: workspace:*
+        version: link:../zhi-env
+      zhi-log:
+        specifier: workspace:*
+        version: link:../zhi-log
+    devDependencies:
+      api-docs:
+        specifier: workspace:*
+        version: link:../../packages/api-docs
+      esbuild-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/esbuild-config-custom
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      vitest-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/vitest-config-custom
+
   apps/zhi-cli:
     dependencies:
       commander:
@@ -406,6 +434,9 @@ importers:
 
   packages/vitest-config-custom:
     devDependencies:
+      vite:
+        specifier: ^4.2.2
+        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vitest:
         specifier: ^0.30.1
         version: registry.npmjs.org/vitest@0.30.1
@@ -4122,8 +4153,8 @@ packages:
     dependencies:
       '@nuxt/kit': registry.npmjs.org/@nuxt/kit@3.4.1
       '@rollup/plugin-replace': registry.npmjs.org/@rollup/plugin-replace@5.0.2(rollup@3.20.2)
-      '@vitejs/plugin-vue': registry.npmjs.org/@vitejs/plugin-vue@4.1.0(vite@4.2.1)(vue@3.2.47)
-      '@vitejs/plugin-vue-jsx': registry.npmjs.org/@vitejs/plugin-vue-jsx@3.0.1(vite@4.2.1)(vue@3.2.47)
+      '@vitejs/plugin-vue': registry.npmjs.org/@vitejs/plugin-vue@4.1.0(vite@4.2.2)(vue@3.2.47)
+      '@vitejs/plugin-vue-jsx': registry.npmjs.org/@vitejs/plugin-vue-jsx@3.0.1(vite@4.2.2)(vue@3.2.47)
       autoprefixer: registry.npmjs.org/autoprefixer@10.4.14(postcss@8.4.21)
       chokidar: registry.npmjs.org/chokidar@3.5.3
       clear: registry.npmjs.org/clear@0.1.0
@@ -4151,9 +4182,9 @@ packages:
       strip-literal: registry.npmjs.org/strip-literal@1.0.1
       ufo: registry.npmjs.org/ufo@1.1.1
       unplugin: registry.npmjs.org/unplugin@1.3.1
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vite-node: registry.npmjs.org/vite-node@0.30.1(@types/node@18.15.11)
-      vite-plugin-checker: registry.npmjs.org/vite-plugin-checker@0.5.6(vite@4.2.1)
+      vite-plugin-checker: registry.npmjs.org/vite-plugin-checker@0.5.6(vite@4.2.2)
       vue: registry.npmjs.org/vue@3.2.47
       vue-bundle-renderer: registry.npmjs.org/vue-bundle-renderer@1.0.3
     transitivePeerDependencies:
@@ -4807,6 +4838,7 @@ packages:
     resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/node/-/node-18.15.11.tgz}
     name: '@types/node'
     version: 18.15.11
+    dev: true
 
   registry.npmjs.org/@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz}
@@ -5361,7 +5393,7 @@ packages:
       - supports-color
     dev: true
 
-  registry.npmjs.org/@vitejs/plugin-vue-jsx@3.0.1(vite@4.2.1)(vue@3.2.47):
+  registry.npmjs.org/@vitejs/plugin-vue-jsx@3.0.1(vite@4.2.2)(vue@3.2.47):
     resolution: {integrity: sha512-+Jb7ggL48FSPS1uhPnJbJwWa9Sr90vQ+d0InW+AhBM22n+cfuYqJZDckBc+W3QSHe1WDvewMZfa4wZOtk5pRgw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@vitejs/plugin-vue-jsx/-/plugin-vue-jsx-3.0.1.tgz}
     id: registry.npmjs.org/@vitejs/plugin-vue-jsx/3.0.1
     name: '@vitejs/plugin-vue-jsx'
@@ -5374,7 +5406,7 @@ packages:
       '@babel/core': registry.npmjs.org/@babel/core@7.21.4
       '@babel/plugin-transform-typescript': registry.npmjs.org/@babel/plugin-transform-typescript@7.21.3(@babel/core@7.21.4)
       '@vue/babel-plugin-jsx': registry.npmjs.org/@vue/babel-plugin-jsx@1.1.1(@babel/core@7.21.4)
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vue: registry.npmjs.org/vue@3.2.47
     transitivePeerDependencies:
       - supports-color
@@ -5394,7 +5426,7 @@ packages:
       vue: registry.npmjs.org/vue@3.2.47
     dev: true
 
-  registry.npmjs.org/@vitejs/plugin-vue@4.1.0(vite@4.2.1)(vue@3.2.47):
+  registry.npmjs.org/@vitejs/plugin-vue@4.1.0(vite@4.2.2)(vue@3.2.47):
     resolution: {integrity: sha512-++9JOAFdcXI3lyer9UKUV4rfoQ3T1RN8yDqoCLar86s0xQct5yblxAE+yWgRnU5/0FOlVCpTZpYSBV/bGWrSrQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-4.1.0.tgz}
     id: registry.npmjs.org/@vitejs/plugin-vue/4.1.0
     name: '@vitejs/plugin-vue'
@@ -5404,7 +5436,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vue: registry.npmjs.org/vue@3.2.47
     dev: true
 
@@ -6399,7 +6431,7 @@ packages:
       typescript: registry.npmjs.org/typescript@5.0.4
       unist-util-visit: registry.npmjs.org/unist-util-visit@4.1.2
       vfile: registry.npmjs.org/vfile@5.3.7
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.1
       vitefu: registry.npmjs.org/vitefu@0.2.4(vite@4.2.1)
       yargs-parser: registry.npmjs.org/yargs-parser@21.1.1
       zod: registry.npmjs.org/zod@3.21.4
@@ -17892,7 +17924,7 @@ packages:
       mlly: registry.npmjs.org/mlly@1.2.0
       pathe: registry.npmjs.org/pathe@1.1.0
       picocolors: registry.npmjs.org/picocolors@1.0.0
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -17903,7 +17935,7 @@ packages:
       - terser
     dev: true
 
-  registry.npmjs.org/vite-plugin-checker@0.5.6(vite@4.2.1):
+  registry.npmjs.org/vite-plugin-checker@0.5.6(vite@4.2.2):
     resolution: {integrity: sha512-ftRyON0gORUHDxcDt2BErmsikKSkfvl1i2DoP6Jt2zDO9InfvM6tqO1RkXhSjkaXEhKPea6YOnhFaZxW3BzudQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/vite-plugin-checker/-/vite-plugin-checker-0.5.6.tgz}
     id: registry.npmjs.org/vite-plugin-checker/0.5.6
     name: vite-plugin-checker
@@ -17949,7 +17981,7 @@ packages:
       npm-run-path: registry.npmjs.org/npm-run-path@4.0.1
       strip-ansi: registry.npmjs.org/strip-ansi@6.0.1
       tiny-invariant: registry.npmjs.org/tiny-invariant@1.3.1
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vscode-languageclient: registry.npmjs.org/vscode-languageclient@7.0.0
       vscode-languageserver: registry.npmjs.org/vscode-languageserver@7.0.0
       vscode-languageserver-textdocument: registry.npmjs.org/vscode-languageserver-textdocument@1.0.8
@@ -17991,11 +18023,46 @@ packages:
       fsevents: registry.npmjs.org/fsevents@2.3.2
     dev: true
 
-  registry.npmjs.org/vite@4.2.1(@types/node@18.15.11):
+  registry.npmjs.org/vite@4.2.1:
     resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/vite/-/vite-4.2.1.tgz}
-    id: registry.npmjs.org/vite/4.2.1
     name: vite
     version: 4.2.1
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: registry.npmjs.org/esbuild@0.17.17
+      postcss: registry.npmjs.org/postcss@8.4.21
+      resolve: registry.npmjs.org/resolve@1.22.3
+      rollup: registry.npmjs.org/rollup@3.20.2
+    optionalDependencies:
+      fsevents: registry.npmjs.org/fsevents@2.3.2
+    dev: false
+
+  registry.npmjs.org/vite@4.2.2(@types/node@18.15.11):
+    resolution: {integrity: sha512-PcNtT5HeDxb3QaSqFYkEum8f5sCVe0R3WK20qxgIvNBZPXU/Obxs/+ubBMeE7nLWeCo2LDzv+8hRYSlcaSehig==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/vite/-/vite-4.2.2.tgz}
+    id: registry.npmjs.org/vite/4.2.2
+    name: vite
+    version: 4.2.2
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -18026,6 +18093,7 @@ packages:
       rollup: registry.npmjs.org/rollup@3.20.2
     optionalDependencies:
       fsevents: registry.npmjs.org/fsevents@2.3.2
+    dev: true
 
   registry.npmjs.org/vitefu@0.2.4(vite@4.2.1):
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/vitefu/-/vitefu-0.2.4.tgz}
@@ -18038,7 +18106,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.1
     dev: false
 
   registry.npmjs.org/vitest@0.30.1:
@@ -18097,7 +18165,7 @@ packages:
       strip-literal: registry.npmjs.org/strip-literal@1.0.1
       tinybench: registry.npmjs.org/tinybench@2.4.0
       tinypool: registry.npmjs.org/tinypool@0.4.0
-      vite: registry.npmjs.org/vite@4.2.1(@types/node@18.15.11)
+      vite: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vite-node: registry.npmjs.org/vite-node@0.30.1(@types/node@18.15.11)
       why-is-node-running: registry.npmjs.org/why-is-node-running@2.2.2
     transitivePeerDependencies:

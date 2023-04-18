@@ -23,12 +23,38 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+/**
+ * 博客信息定义
+ *
+ * @public
+ */
+class UserBlog {
+  /**
+   * 博客ID
+   */
+  blogid: string
+  /**
+   * 博客地址
+   */
+  url: string
+  /**
+   * 博客名称
+   */
+  blogName: string
+  /**
+   * 是否是管理员
+   */
+  isAdmin?: boolean
+  /**
+   * xmlrpc地址
+   */
+  xmlrpc?: string
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+  constructor() {
+    this.blogid = ""
+    this.url = ""
+    this.blogName = ""
+  }
+}
+
+export default UserBlog

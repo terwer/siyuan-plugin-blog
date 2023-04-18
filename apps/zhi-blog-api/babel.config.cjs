@@ -23,12 +23,8 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+const sharedConfig = require("jest-config-custom/babel.config.cjs")
 
-describe("zhi-device", () => {
-  it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
-  })
-})
+module.exports = {
+  ...sharedConfig,
+}

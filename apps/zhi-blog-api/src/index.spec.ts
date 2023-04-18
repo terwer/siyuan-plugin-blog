@@ -23,12 +23,10 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import DeviceDetection from "./index"
+import { describe, it } from "vitest"
 
-describe("zhi-device", () => {
+describe("zhi-blog-api", () => {
   it("index", () => {
-    // https://github.com/vitest-dev/vitest/issues/1610
-    // expect(DeviceDetection).toBeTruthy()
+    console.log("hello world")
   })
 })
