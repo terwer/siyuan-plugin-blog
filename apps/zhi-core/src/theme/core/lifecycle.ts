@@ -26,7 +26,6 @@
 import DependencyItem from "../models/DependencyItem"
 import { SiyuanDevice } from "zhi-device-detection"
 import ZhiCoreUtil from "./util/ZhiCoreUtil"
-import logger from "zhi-log/lib/lib/logger"
 
 /**
  * zhi主题统一生命周期管理
@@ -52,11 +51,10 @@ class Lifecycle {
    *
    * ```
    * 加载顺序如下：
-   * 1 核心模块-require-hacker、infra、browser-window、插件系统
+   * 1 核心模块-require-hacker、infra、browser-window、插件系统、内部插件
    * 2 后端模块
    * 3 前端模块
    * 4 第三方库
-   * 5 插件
    * ```
    */
   public async load() {
@@ -93,9 +91,6 @@ class Lifecycle {
     // 第三方组件
     const vendors = zhiJson.dependencies.vendor
     const vendorImports = await this.loadVendors(vendors)
-    // 插件-比较特殊，暂时不由核心加载，重新写加载逻辑
-    const plugins = zhiJson.dependencies.plugin
-    await this.loadPlugins(plugins)
 
     return allImports.concat(coreModuleImports).concat(backendImports).concat(frontendImports).concat(vendorImports)
   }
@@ -162,16 +157,6 @@ class Lifecycle {
 
     this.logger.info(`Registered ${vendorImports.length} Vendors`)
     return vendorImports
-  }
-
-  /**
-   * 加载插件 - 暂定由插件系统负责，如果顺序有问题，可由 zhi 接管
-   * @private
-   */
-  private async loadPlugins(deps: object[]): Promise<void> {
-    this.logger.info("Loading plugins from zhi theme...")
-    // TODO
-    this.logger.info(`Loaded ${deps.length} Plugins`)
   }
 }
 

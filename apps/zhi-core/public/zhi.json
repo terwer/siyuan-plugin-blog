@@ -4,10 +4,18 @@
       {
         "libpath": "core/plugin-system/plugin.js",
         "baseType": "ZhiTheme",
-        "format": "cjs",
+        "format": "esm",
         "importType": "import",
         "runAs": ["Siyuan_MainWindow", "Siyuan_Browser"],
         "order": 1
+      },
+      {
+        "libpath": "core/plugin-system/zhi-plugin-loader.js",
+        "baseType": "ZhiTheme",
+        "format": "esm",
+        "importType": "import",
+        "runAs": ["Siyuan_MainWindow", "Siyuan_Browser"],
+        "order": 2
       }
     ],
     "server": [],

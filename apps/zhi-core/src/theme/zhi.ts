@@ -28,6 +28,7 @@ import ZhiCoreUtil from "./core/util/ZhiCoreUtil"
 import DependencyItem from "./models/DependencyItem"
 import Bootstrap from "./core/Bootstrap"
 import { crossChalk } from "zhi-log"
+import ZhiUtil from "./core/util/ZhiCoreUtil"
 
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
@@ -87,6 +88,12 @@ class Zhi {
         return
       }
 
+      // 挂载一个日志对象，方便后续动态使用
+      if (typeof window !== "undefined") {
+        ;(window as any).zhiLog = ZhiUtil.zhiLog("zhi-core")
+        this.logger.info("ZhiLog mounted", (window as any).zhiLog)
+      }
+
       // 初始化第三方依赖
       // import
       //   browser     esm path: "/[libpath]"
@@ -129,19 +136,20 @@ class Zhi {
           this.logger.debug(`Current ${item.importType} lib ${item.libpath} Obj=>`, typeof libObj)
           if (typeof libObj == "function") {
             await libObj()
-            this.logger.info(`Init ${item.libpath} with default function`)
+            this.logger.info(`Inited ${item.libpath} with default function`)
           } else {
             if (libObj.init) {
               const res = await libObj.init()
               if (res) {
                 this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
               }
+              this.logger.info(`Inited ${item.libpath} with init function`)
             } else {
               this.logger.debug(`No init method for ${item.importType} ${item.libpath}`)
             }
           }
         } else {
-          this.logger.debug(`Lib entry is not a function => ${item.importType} ${item.libpath}`)
+          this.logger.debug(`Lib entry is not a function => ${item.importType} ${item.libpath}`, lib)
         }
         this.logger.info(`Success ${item.importType} ${item.libpath}`)
       }
