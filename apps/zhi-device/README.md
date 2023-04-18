@@ -1,11 +1,11 @@
-# zhi-device-detection
+# zhi-device
 
 auto check environment whether in browser, browser extension, electron, node and more
 
 ## Usage
 
 ```ts
-import DeviceDetection, { BrowserUtil, DeviceTypeEnum } from "zhi-device-detection"
+import DeviceDetection, { BrowserUtil, DeviceTypeEnum } from "zhi-device"
 
 console.log("isInBrowser=>", BrowserUtil.isInBrowser)
 
@@ -25,26 +25,26 @@ console.log("deviceType=>", deviceType)
 ## Deps
 
 ```
-## Congregations! zhi-device-detection need no deps, it is just pure js code 🎉
+## Congregations! zhi-device need no deps, it is just pure js code 🎉
 ```
 
 ## Dev
 
 ```bash
-pnpm dev -F zhi-device-detection
+pnpm dev -F zhi-device
 ```
 
 ## Build
 
 ```bash
-pnpm build -F zhi-device-detection
+pnpm build -F zhi-device
 ```
 
 ## Api
 
 ```bash
-pnpm doc -F zhi-device-detection
-pnpm md -F zhi-device-detection
+pnpm doc -F zhi-device
+pnpm md -F zhi-device
 ```
 
 ## Test
@@ -52,11 +52,11 @@ pnpm md -F zhi-device-detection
 Execute the unit tests via [jest](https://jestjs.io/docs/getting-started#via-ts-jest)
 
 ```bash
-pnpm test -F zhi-device-detection
+pnpm test -F zhi-device
 ```
 
 ## Publish
 
 ```
-pnpm publish -F zhi-device-detection --tag=latest
+pnpm publish -F zhi-device --tag=latest
 ```

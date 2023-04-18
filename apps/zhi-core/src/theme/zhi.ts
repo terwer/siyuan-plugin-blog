@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { DeviceTypeEnum, SiyuanDevice } from "zhi-device-detection"
+import { DeviceTypeEnum, SiyuanDevice } from "zhi-device"
 import ZhiCoreUtil from "./core/util/ZhiCoreUtil"
 import DependencyItem from "./models/DependencyItem"
 import Bootstrap from "./core/Bootstrap"

@@ -25,7 +25,7 @@
 
 import { describe, expect, it } from "vitest"
 
-describe("zhi-device-detection", () => {
+describe("zhi-device", () => {
   it("index", () => {
     expect("hello").toBeTruthy()
   })

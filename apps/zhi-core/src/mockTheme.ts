@@ -24,7 +24,7 @@
  */
 
 import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device-detection"
+import DeviceDetection from "zhi-device"
 
 /**
  * 仅仅提供Mock功能，请勿调用

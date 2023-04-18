@@ -29,7 +29,7 @@
  */
 
 import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device-detection"
+import DeviceDetection from "zhi-device"
 
 // 主题样式注入入口
 import "./style/common/fonts/webfont.css"

@@ -24,7 +24,7 @@
  */
 
 import DependencyItem from "../models/DependencyItem"
-import { SiyuanDevice } from "zhi-device-detection"
+import { SiyuanDevice } from "zhi-device"
 import ZhiCoreUtil from "./util/ZhiCoreUtil"
 
 /**

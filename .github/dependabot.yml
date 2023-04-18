@@ -146,7 +146,7 @@ updates:
       - "zhi-core"
 
   - package-ecosystem: npm
-    directory: "/apps/zhi-device-detection"
+    directory: "/apps/zhi-device"
     schedule:
       interval: daily
       time: "00:00"
@@ -161,7 +161,7 @@ updates:
       include: scope
     labels:
       - "npm dependencies"
-      - "zhi-device-detection"
+      - "zhi-device"
 
   - package-ecosystem: npm
     directory: "/apps/zhi-docs"
@@ -218,7 +218,7 @@ updates:
       - "zhi-log"
 
   - package-ecosystem: npm
-    directory: "/apps/zhi-server-modules-blog-astro"
+    directory: "/apps/zhi-server-blog-astro"
     schedule:
       interval: daily
       time: "00:00"

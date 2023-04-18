@@ -78,9 +78,9 @@ importers:
       zhi-common:
         specifier: workspace:*
         version: link:../zhi-common
-      zhi-device-detection:
+      zhi-device:
         specifier: workspace:*
-        version: link:../zhi-device-detection
+        version: link:../zhi-device
       zhi-env:
         specifier: workspace:*
         version: link:../zhi-env
@@ -110,7 +110,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vitest-config-custom
 
-  apps/zhi-device-detection:
+  apps/zhi-device:
     devDependencies:
       api-docs:
         specifier: workspace:*
@@ -184,9 +184,9 @@ importers:
       loglevel-plugin-prefix:
         specifier: ^0.8.4
         version: registry.npmjs.org/loglevel-plugin-prefix@0.8.4
-      zhi-device-detection:
+      zhi-device:
         specifier: workspace:*
-        version: link:../zhi-device-detection
+        version: link:../zhi-device
       zhi-env:
         specifier: workspace:*
         version: link:../zhi-env
@@ -228,7 +228,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vitest-config-custom
 
-  apps/zhi-server-modules-blog-astro:
+  apps/zhi-server-blog-astro:
     dependencies:
       astro:
         specifier: ^2.2.1

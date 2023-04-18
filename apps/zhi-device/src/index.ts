@@ -30,7 +30,7 @@ import BrowserUtil from "./lib/browserUtil"
 import SiyuanDevice from "./lib/siyuanDevice"
 
 /**
- * zhi-device-detection 入口
+ * zhi-device 入口
  */
 export default DeviceDetection
 export { BrowserUtil, SiyuanDevice }

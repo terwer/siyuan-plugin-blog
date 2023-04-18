@@ -1,12 +1,12 @@
 {
-  "name": "zhi-device-detection",
+  "name": "zhi-device",
   "version": "1.0.0",
   "type": "module",
   "description": "auto check environment whether in browser, browser extension, electron, node and more",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-device-detection",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-device",
   "files": [
     "dist",
     "README.md"
@@ -23,12 +23,12 @@
   "scripts": {
     "dev": "zhi-build --watch",
     "build": "zhi-build --production",
-    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-device-detection",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-device",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
-    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-device-detection && pnpm mdfix",
-    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-device-detection/index.md",
-    "mdfmt": "echo '---\ntitle: zhi-device-detection\n---' | cat - ../zhi-docs/src/api/zhi-device-detection/index.md > ../zhi-docs/src/api/zhi-device-detection/README.md"
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-device && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-device/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-device\n---' | cat - ../zhi-docs/src/api/zhi-device/index.md > ../zhi-docs/src/api/zhi-device/README.md"
   },
   "devDependencies": {
     "api-docs": "workspace:*",

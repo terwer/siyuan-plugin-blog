@@ -41,7 +41,7 @@
     "kleur": "^4.1.5",
     "loglevel": "^1.8.1",
     "loglevel-plugin-prefix": "^0.8.4",
-    "zhi-device-detection": "workspace:*",
+    "zhi-device": "workspace:*",
     "zhi-env": "workspace:*"
   }
 }
