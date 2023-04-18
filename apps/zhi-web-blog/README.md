@@ -35,4 +35,10 @@ Statically generate a site:
 pnpm generate
 ```
 
+for siyuan
+
+```bash
+pnpm siyuanBuild -F zhi-web-blog
+```
+
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

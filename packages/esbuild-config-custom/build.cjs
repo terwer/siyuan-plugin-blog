@@ -84,15 +84,16 @@ class ZhiBuild {
     bundledEsbuildConfig.sourcemap = isProduction ? false : "inline"
 
     // 环境变量
-    const defineEnv = {
-      NODE_ENV: isProduction ? "production" : "development",
-      ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-    }
-    bundledEsbuildConfig.define = {}
-    bundledEsbuildConfig.define = {
-      ...bundledEsbuildConfig.define,
-      "import.meta.env": JSON.stringify(defineEnv),
-    }
+    // vite读取解析会报错
+    // const defineEnv = {
+    //   NODE_ENV: isProduction ? "production" : "development",
+    //   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+    // }
+    // bundledEsbuildConfig.define = {}
+    // bundledEsbuildConfig.define = {
+    //   ...bundledEsbuildConfig.define,
+    //   "import.meta.env": JSON.stringify(defineEnv),
+    // }
     // ===================
     // 默认集成的配置结束
     // ===================

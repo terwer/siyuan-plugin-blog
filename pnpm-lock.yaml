@@ -326,6 +326,9 @@ importers:
       zhi-log:
         specifier: workspace:*
         version: link:../zhi-log
+      zhi-siyuan-api:
+        specifier: workspace:*
+        version: link:../zhi-siyuan-api
     devDependencies:
       '@iconify/json':
         specifier: ^2.2.51

@@ -24,7 +24,8 @@ const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
 ZhiWebBlogUtil.initEnv(env)
 const logger = ZhiWebBlogUtil.zhiLog("index-page")
-const common = ZhiWebBlogUtil.zhiCommon()
+logger.info("test")
+// const common = ZhiWebBlogUtil.zhiCommon()
 
 // const testPosts = reactive({
 //   posts: <Post[]>[],

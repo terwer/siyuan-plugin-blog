@@ -16,7 +16,9 @@
     "blog"
   ],
   "scripts": {
-    "build": "nuxt build",
+    "build": "pnpm generate",
+    "siyuanBuild": "BUILD_TYPE=siyuan pnpm generate",
+    "ssrbuild": "BUILD_TYPE=vercel nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -37,6 +39,7 @@
     "vue-instantsearch": "4.8.7",
     "zhi-common": "workspace:*",
     "zhi-env": "workspace:*",
-    "zhi-log": "workspace:*"
+    "zhi-log": "workspace:*",
+    "zhi-siyuan-api": "workspace:*"
   }
 }

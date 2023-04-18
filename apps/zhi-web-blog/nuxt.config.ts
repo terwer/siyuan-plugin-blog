@@ -1,5 +1,28 @@
+import path from "path"
+
 const isDev = process.env.NODE_ENV === "development"
+const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
+const isVercelBuild = process.env.BUILD_TYPE === "vercel"
+
+const appBase = isSiyuanBuild
+  ? "/appearance/themes/zhi/web/blog"
+  : isDev || isVercelBuild
+  ? "/"
+  : "/zhi/apps/zhi-web-blog/dist"
+const distDir = isSiyuanBuild
+  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/web/blog"
+  : "./dist"
+const isSsr = isVercelBuild
+// const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
+// const ssrServeStatic = isSiyuanBuild
+
 console.log("isDev=>", isDev)
+console.log("appBase=>", appBase)
+console.log("isSiyuanBuild=>", isSiyuanBuild)
+console.log("isVercelBuild=>", isVercelBuild)
+console.log("isSsr=>", isSsr)
+// console.log("ssrPreset=>", ssrPreset)
+// console.log("ssrServeStatic=>", ssrServeStatic)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,12 +39,22 @@ export default defineNuxtConfig({
   content: {
     // https://content.nuxtjs.org/api/configuration
   },
+  app: {
+    baseURL: appBase,
+    head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+    },
+  },
   css: ["~/assets/vdoing/styles/index.styl"],
-  ssr: false,
+  ssr: isSsr,
   nitro: {
-    // preset: isVercelBuild ? "vercel" : "node-server",
-    // 开启之后将进行静态伺服
-    serveStatic: !isDev,
+    output: {
+      publicDir: distDir,
+    },
+    //   preset: ssrPreset,
+    //   // 开启之后将进行静态伺服
+    //   serveStatic: ssrServeStatic,
   },
   meilisearch: {
     // hostUrl: process.env.MEILISEARCH_ENDPOINT ?? "http://localhost:3000/api/endpoint/meilisearch",
