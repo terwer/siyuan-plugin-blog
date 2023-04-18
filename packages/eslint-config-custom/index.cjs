@@ -16,7 +16,6 @@ module.exports = {
   //   "@next/next/no-html-link-for-pages": "off",
   // },
 
-  // parser: "vue-eslint-parser",
   parser: "@typescript-eslint/parser",
   parserOptions: {
     // 下面一行next项目可用，参考web
@@ -34,6 +33,15 @@ module.exports = {
         parser: "@typescript-eslint/parser",
       },
     },
+    // 下面的配置可重写 Vue
+    // {
+    //   files: ["*.vue"],
+    //   parser: "vue-eslint-parser",
+    //   // Parse the script in `.vue` as TypeScript by adding the following configuration.
+    //   parserOptions: {
+    //     parser: "@typescript-eslint/parser",
+    //   },
+    // },
   ],
 
   plugins: ["@typescript-eslint", "prettier"],

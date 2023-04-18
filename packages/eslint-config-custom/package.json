@@ -5,6 +5,7 @@
   "main": "index.cjs",
   "license": "GPL",
   "devDependencies": {
+    "@nuxt/eslint-config": "^0.1.1",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "astro-eslint-parser": "^0.13.3",
     "eslint": "^8.38.0",
