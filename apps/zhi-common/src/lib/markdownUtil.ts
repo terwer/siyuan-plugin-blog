@@ -23,35 +23,53 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
+import LuteAdaptor from "./md-adaptor/LuteAdaptor"
+import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor"
+import ZhiCommonUtil from "./ZhiCommonUtil"
+
 /**
- * 平台无关的通用工具类
+ * Markdown 处理工具类
  *
  * @author terwer
- * @version 1.4.0
- * @since 1.3.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
+class MarkdownUtil {
+  private readonly logger
+  public mdAdaptor
 
   constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
+    this.logger = ZhiCommonUtil.zhiLog("markdown-util")
+
+    const lute = new LuteAdaptor()
+    if (lute.isAvailable()) {
+      this.mdAdaptor = lute
+    } else {
+      this.mdAdaptor = new ShowdownAdaptor()
+    }
+  }
+
+  /**
+   * 获取当前 MD 解析器名称
+   */
+  private getCurrentAdaptorName() {
+    if (this.mdAdaptor instanceof LuteAdaptor) {
+      return "Lute"
+    } else if (this.mdAdaptor instanceof ShowdownAdaptor) {
+      return "Showdown"
+    }
+    return "None"
+  }
+
+  /**
+   * 渲染Markdown
+   *
+   * @param md - Markdown文本
+   */
+  public async renderHTML(md: string): Promise<string> {
+    this.logger.info(`Using ${this.getCurrentAdaptorName()} as markdown renderer`)
+    return await this.mdAdaptor.renderMarkdownStr(md)
   }
 }
 
-export default ZhiCommon
+export default MarkdownUtil

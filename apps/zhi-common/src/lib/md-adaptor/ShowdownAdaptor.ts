@@ -23,35 +23,39 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
+import MarkdownAdaptor from "./MarkdownAdaptor"
+import showdown from "showdown"
+import ZhiCommonUtil from "../ZhiCommonUtil"
+
 /**
- * 平台无关的通用工具类
+ * showdown 适配器
  *
  * @author terwer
- * @version 1.4.0
- * @since 1.3.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
+class ShowdownAdaptor implements MarkdownAdaptor {
+  private readonly logger
+  private readonly converter
 
   constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
+    this.logger = ZhiCommonUtil.zhiLog("lute-adaptor")
+
+    this.converter = new showdown.Converter()
+  }
+
+  isAvailable(): boolean {
+    return typeof showdown !== "undefined"
+  }
+
+  renderMarkdownStr(md: string): Promise<string> {
+    if (!this.isAvailable()) {
+      throw new Error("Showdown is not available")
+    }
+
+    this.logger.info("Showdown is rendering md to HTML...")
+    return Promise.resolve(this.converter.makeHtml(md))
   }
 }
 
-export default ZhiCommon
+export default ShowdownAdaptor

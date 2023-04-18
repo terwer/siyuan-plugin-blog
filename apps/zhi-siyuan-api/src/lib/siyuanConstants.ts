@@ -23,35 +23,23 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
 /**
- * 平台无关的通用工具类
+ * 预定义思源变量
  *
  * @author terwer
- * @version 1.4.0
- * @since 1.3.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
+class SiyuanConstants {
+  /**
+   * 思源 API 伺服地址
+   */
+  public static VITE_SIYUAN_API_URL_KEY = "VITE_SIYUAN_API_URL"
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
-  }
+  /**
+   * 思源 token
+   */
+  public static VITE_SIYUAN_AUTH_TOKEN_KEY = "VITE_SIYUAN_AUTH_TOKEN"
 }
 
-export default ZhiCommon
+export default SiyuanConstants

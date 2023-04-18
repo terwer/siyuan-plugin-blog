@@ -23,35 +23,48 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
+const path = require("path")
+// const minimist = require("minimist")
+const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const { copy } = require("esbuild-plugin-copy")
+
+// const args = minimist(process.argv.slice(2))
+// const isWatch = args.watch || args.w
+
+// for dist
+const baseDir = "./"
+const distDir = path.join(baseDir, "dist")
+
+// for outer custom output for dev
+// const baseDir = isWatch ? "my-custom-absolute-path" : "./"
+// const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+
 /**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @version 1.4.0
- * @since 1.3.0
+ * 构建配置
  */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
-
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
-  }
+module.exports = {
+  entryPoints: ["src/index.ts"],
+  outfile: path.join(distDir, "index.js"),
+  format: "esm",
+  plugins: [
+    dtsPlugin(),
+    copy({
+      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+      resolveFrom: "cwd",
+      assets: [
+        // copy folder
+        {
+          from: "./public/**/*",
+          to: [distDir],
+        },
+        // copy one file
+        {
+          from: ["./README.md"],
+          to: [path.join(distDir, "/README.md")],
+        },
+      ],
+      watch: true,
+    }),
+  ],
 }
-
-export default ZhiCommon

@@ -23,6 +23,7 @@ console.log("now=>", now)
 ├── showdown
 ├── compare-versions
 ├── ajv
+├── zhi-device
 ```
 
 ## Dev

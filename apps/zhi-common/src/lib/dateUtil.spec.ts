@@ -22,36 +22,44 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import JsonUtil from "./jsonUtil"
 import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
-/**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @version 1.4.0
- * @since 1.3.0
- */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
-  }
-}
+describe("DateUtil", () => {
+  const dateUtil = new DateUtil()
 
-export default ZhiCommon
+  it("formatIsoToZh", () => {
+    const isoDate = "2022-07-18T06:25:48.000Z"
+    const result = dateUtil.formatIsoToZh(isoDate)
+    const expectedZhDate = "2022-07-18 06:25:48"
+    expect(result).toEqual(expectedZhDate)
+  })
+
+  it("formatIsoToZhDate", () => {
+    const isoDate = "2022-07-18T06:25:48.000Z"
+    const result = dateUtil.formatIsoToZhDate(isoDate)
+    const expectedZhDate = "2022-07-18"
+    expect(result).toEqual(expectedZhDate)
+  })
+
+  it("formatIsoToZhTime", () => {
+    const isoDate = "2022-07-18T06:25:48.000Z"
+    const result = dateUtil.formatIsoToZhTime(isoDate)
+    const expectedZhDate = "06:25:48"
+    expect(result).toEqual(expectedZhDate)
+  })
+
+  it("nowZh", () => {
+    const result = dateUtil.nowZh()
+    console.log(result)
+  })
+
+  it("nowDateZh", () => {
+    const result = dateUtil.nowDateZh()
+    console.log(result)
+  })
+
+  it("nowTimeZh", () => {
+    const result = dateUtil.nowTimeZh()
+    console.log(result)
+  })
+})

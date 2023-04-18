@@ -23,35 +23,37 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
+import Env from "zhi-env"
+import SiyuanConfig from "./siyuanConfig"
+import SiyuanKernelApi from "./siyuanKernelApi"
+import SiyuanClientApi from "./siyuanClientApi"
+
 /**
- * 平台无关的通用工具类
+ * 思源笔记API
  *
  * @author terwer
- * @version 1.4.0
- * @since 1.3.0
+ * @since 1.0.0
  */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
+class SiyuanApi {
+  /**
+   * 思源笔记内核API
+   */
+  public readonly kernelApi
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
+  /**
+   * 思源笔记客户端API
+   */
+  public readonly clientApi
+
+  /**
+   * 构造思源 API对象
+   *
+   * @param cfg - 环境变量 或者 配置项
+   */
+  constructor(cfg: Env | SiyuanConfig) {
+    this.kernelApi = new SiyuanKernelApi(cfg)
+    this.clientApi = new SiyuanClientApi()
   }
 }
 
-export default ZhiCommon
+export default SiyuanApi

@@ -23,35 +23,51 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
 import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
-/**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @version 1.4.0
- * @since 1.3.0
- */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
-  }
-}
+describe("StrUtil", () => {
+  const strUtil = new StrUtil()
 
-export default ZhiCommon
+  it("f", () => {
+    const str = "test {0} str {1}"
+    const arg1 = "hello"
+    const arg2 = 123
+    const expected = "test hello str 123"
+    const result = strUtil.f(str, arg1, arg2)
+    expect(result).toEqual(expected)
+  })
+
+  it("f object", () => {
+    const str = "test {0} str {1}"
+    const arg1 = { name: "terwer", age: 18 }
+    const arg2 = 123
+    const expected = "test [object Object] str 123"
+    const result = strUtil.f(str, arg1, arg2)
+    expect(result).toEqual(expected)
+  })
+
+  it("f boolean", () => {
+    const str = "test {0} str {1}"
+    const arg1 = true
+    const arg2 = false
+    const expected = "test true str false"
+    const result = strUtil.f(str, arg1, arg2)
+    expect(result).toEqual(expected)
+  })
+
+  it("f number", () => {
+    const str = "test {0} str {1}"
+    const arg1 = 123
+    const arg2 = 456
+    const expected = "test 123 str 456"
+    const result = strUtil.f(str, arg1, arg2)
+    expect(result).toEqual(expected)
+  })
+
+  it("f no placeholders", () => {
+    const str = "test str"
+    const expected = "test str"
+    const result = strUtil.f(str)
+    expect(result).toEqual(expected)
+  })
+})

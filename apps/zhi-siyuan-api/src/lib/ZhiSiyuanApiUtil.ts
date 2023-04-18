@@ -23,35 +23,23 @@
  * questions.
  */
 
-import JsonUtil from "./jsonUtil"
-import DateUtil from "./dateUtil"
-import StrUtil from "./strUtil"
-import VersionUtil from "./versionUtil"
-import HtmlUtil from "./htmlUtil"
-import MarkdownUtil from "./markdownUtil"
-/**
- * 平台无关的通用工具类
- *
- * @author terwer
- * @version 1.4.0
- * @since 1.3.0
- */
-class ZhiCommon {
-  public readonly dateUtil
-  public readonly strUtil
-  public readonly versionUtil
-  public readonly htmlUtil
-  public readonly markdownUtil
-  public readonly jsonUtil
+import Env from "zhi-env"
+import { ZhiUtil } from "zhi-common"
 
-  constructor() {
-    this.dateUtil = new DateUtil()
-    this.strUtil = new StrUtil()
-    this.versionUtil = new VersionUtil()
-    this.htmlUtil = new HtmlUtil()
-    this.markdownUtil = new MarkdownUtil()
-    this.jsonUtil = new JsonUtil()
+/**
+ * 工具类统一入口，每个应用自己实现
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
+ */
+class ZhiSiyuanApiUtil extends ZhiUtil {
+  public static override zhiEnv(): Env {
+    if (!this.env) {
+      this.env = new Env(import.meta.env)
+    }
+    return this.env
   }
 }
 
-export default ZhiCommon
+export default ZhiSiyuanApiUtil
