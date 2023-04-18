@@ -23,15 +23,10 @@
  * questions.
  */
 
-import DeviceDetection from "./deviceDetection"
-import DeviceTypeEnum from "./lib/deviceTypeEnum"
-import BasePathTypeEnum from "./lib/basePathTypeEnum"
-import BrowserUtil from "./lib/browserUtil"
-import SiyuanDevice from "./lib/siyuanDevice"
+import { describe, it } from "vitest"
 
-/**
- * zhi-device-detection 入口
- */
-export default DeviceDetection
-export { BrowserUtil, SiyuanDevice }
-export { DeviceTypeEnum, BasePathTypeEnum }
+describe("zhi-plugin-blog", () => {
+  it("index", () => {
+    console.log("hello world")
+  })
+})

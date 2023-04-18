@@ -1,0 +1,31 @@
+{
+  "name": "zhi-plugin-blog",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "integrated blog feature based on the Siyuan API, no publishing or configuration required, ready to use out of the box",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-plugin-blog",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-plugin-blog",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-plugin-blog && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-plugin-blog/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-plugin-blog\n---' | cat - ../zhi-docs/src/api/zhi-plugin-blog/index.md > ../zhi-docs/src/api/zhi-plugin-blog/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "siyuan": "^0.7.1",
+    "tsconfig": "workspace:*",
+    "vitest-config-custom": "workspace:*"
+  }
+}

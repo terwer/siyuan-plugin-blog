@@ -5,8 +5,8 @@ importers:
   .:
     devDependencies:
       turbo:
-        specifier: ^1.9.1
-        version: registry.npmjs.org/turbo@1.9.1
+        specifier: ^1.9.3
+        version: registry.npmjs.org/turbo@1.9.3
 
   apps/zhi-cli:
     dependencies:
@@ -78,9 +78,9 @@ importers:
       zhi-common:
         specifier: workspace:*
         version: link:../zhi-common
-      zhi-device-detection:
+      zhi-device:
         specifier: workspace:*
-        version: link:../zhi-device-detection
+        version: link:../zhi-device
       zhi-env:
         specifier: workspace:*
         version: link:../zhi-env
@@ -110,7 +110,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vitest-config-custom
 
-  apps/zhi-device-detection:
+  apps/zhi-device:
     devDependencies:
       api-docs:
         specifier: workspace:*
@@ -184,9 +184,9 @@ importers:
       loglevel-plugin-prefix:
         specifier: ^0.8.4
         version: registry.npmjs.org/loglevel-plugin-prefix@0.8.4
-      zhi-device-detection:
+      zhi-device:
         specifier: workspace:*
-        version: link:../zhi-device-detection
+        version: link:../zhi-device
       zhi-env:
         specifier: workspace:*
         version: link:../zhi-env
@@ -207,7 +207,28 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vitest-config-custom
 
-  apps/zhi-server-modules-blog-astro:
+  apps/zhi-plugin-blog:
+    devDependencies:
+      api-docs:
+        specifier: workspace:*
+        version: link:../../packages/api-docs
+      esbuild-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/esbuild-config-custom
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      siyuan:
+        specifier: ^0.7.1
+        version: registry.npmjs.org/siyuan@0.7.1
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      vitest-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/vitest-config-custom
+
+  apps/zhi-server-blog-astro:
     dependencies:
       astro:
         specifier: ^2.2.1
@@ -12700,6 +12721,12 @@ packages:
       sax: registry.npmjs.org/sax@1.2.4
     dev: true
 
+  registry.npmjs.org/siyuan@0.7.1:
+    resolution: {integrity: sha512-Q7OZqpJ8h+axLDkn6afoAdKD6mHPAona/jsoUpf8UgFqHuOscNS6ub8RudhTCPKppDnQzBy5o35xhlecxnrbjQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/siyuan/-/siyuan-0.7.1.tgz}
+    name: siyuan
+    version: 0.7.1
+    dev: true
+
   registry.npmjs.org/slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/slash/-/slash-3.0.0.tgz}
     name: slash
@@ -13518,79 +13545,79 @@ packages:
       typescript: registry.npmjs.org/typescript@5.0.4
     dev: true
 
-  registry.npmjs.org/turbo-darwin-64@1.9.1:
-    resolution: {integrity: sha512-IX/Ph4CO80lFKd9pPx3BWpN2dynt6mcUFifyuHUNVkOP1Usza/G9YuZnKQFG6wUwKJbx40morFLjk1TTeLe04w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-1.9.1.tgz}
+  registry.npmjs.org/turbo-darwin-64@1.9.3:
+    resolution: {integrity: sha512-0dFc2cWXl82kRE4Z+QqPHhbEFEpUZho1msHXHWbz5+PqLxn8FY0lEVOHkq5tgKNNEd5KnGyj33gC/bHhpZOk5g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-1.9.3.tgz}
     name: turbo-darwin-64
-    version: 1.9.1
+    version: 1.9.3
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  registry.npmjs.org/turbo-darwin-arm64@1.9.1:
-    resolution: {integrity: sha512-6tCbmIboy9dTbhIZ/x9KIpje73nvxbiyVnHbr9xKnsxLJavD0xqjHZzbL5U2tHp8chqmYf0E4WYOXd+XCNg+OQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-1.9.1.tgz}
+  registry.npmjs.org/turbo-darwin-arm64@1.9.3:
+    resolution: {integrity: sha512-1cYbjqLBA2zYE1nbf/qVnEkrHa4PkJJbLo7hnuMuGM0bPzh4+AnTNe98gELhqI1mkTWBu/XAEeF5u6dgz0jLNA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-1.9.3.tgz}
     name: turbo-darwin-arm64
-    version: 1.9.1
+    version: 1.9.3
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  registry.npmjs.org/turbo-linux-64@1.9.1:
-    resolution: {integrity: sha512-ti8XofnJFO1XaadL92lYJXgxb0VBl03Yu9VfhxkOTywFe7USTLBkJcdvQ4EpFk/KZwLiTdCmT2NQVxsG4AxBiQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-1.9.1.tgz}
+  registry.npmjs.org/turbo-linux-64@1.9.3:
+    resolution: {integrity: sha512-UuBPFefawEwpuxh5pM9Jqq3q4C8M0vYxVYlB3qea/nHQ80pxYq7ZcaLGEpb10SGnr3oMUUs1zZvkXWDNKCJb8Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-1.9.3.tgz}
     name: turbo-linux-64
-    version: 1.9.1
+    version: 1.9.3
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  registry.npmjs.org/turbo-linux-arm64@1.9.1:
-    resolution: {integrity: sha512-XYvIbeiCCCr+ENujd2Jtck/lJPTKWb8T2MSL/AEBx21Zy3Sa7HgrQX6LX0a0pNHjaleHz00XXt1D0W5hLeP+tA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-1.9.1.tgz}
+  registry.npmjs.org/turbo-linux-arm64@1.9.3:
+    resolution: {integrity: sha512-vUrNGa3hyDtRh9W0MkO+l1dzP8Co2gKnOVmlJQW0hdpOlWlIh22nHNGGlICg+xFa2f9j4PbQlWTsc22c019s8Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-1.9.3.tgz}
     name: turbo-linux-arm64
-    version: 1.9.1
+    version: 1.9.3
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  registry.npmjs.org/turbo-windows-64@1.9.1:
-    resolution: {integrity: sha512-x7lWAspe4/v3XQ0gaFRWDX/X9uyWdhwFBPEfb8BA0YKtnsrPOHkV0mRHCRrXzvzjA7pcDCl2agGzb7o863O+Jg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-1.9.1.tgz}
+  registry.npmjs.org/turbo-windows-64@1.9.3:
+    resolution: {integrity: sha512-0BZ7YaHs6r+K4ksqWus1GKK3W45DuDqlmfjm/yuUbTEVc8szmMCs12vugU2Zi5GdrdJSYfoKfEJ/PeegSLIQGQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-1.9.3.tgz}
     name: turbo-windows-64
-    version: 1.9.1
+    version: 1.9.3
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  registry.npmjs.org/turbo-windows-arm64@1.9.1:
-    resolution: {integrity: sha512-QSLNz8dRBLDqXOUv/KnoesBomSbIz2Huef/a3l2+Pat5wkQVgMfzFxDOnkK5VWujPYXz+/prYz+/7cdaC78/kw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-1.9.1.tgz}
+  registry.npmjs.org/turbo-windows-arm64@1.9.3:
+    resolution: {integrity: sha512-QJUYLSsxdXOsR1TquiOmLdAgtYcQ/RuSRpScGvnZb1hY0oLc7JWU0llkYB81wVtWs469y8H9O0cxbKwCZGR4RQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-1.9.3.tgz}
     name: turbo-windows-arm64
-    version: 1.9.1
+    version: 1.9.3
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  registry.npmjs.org/turbo@1.9.1:
-    resolution: {integrity: sha512-Rqe8SP96e53y4Pk29kk2aZbA8EF11UtHJ3vzXJseadrc1T3V6UhzvAWwiKJL//x/jojyOoX1axnoxmX3UHbZ0g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo/-/turbo-1.9.1.tgz}
+  registry.npmjs.org/turbo@1.9.3:
+    resolution: {integrity: sha512-ID7mxmaLUPKG/hVkp+h0VuucB1U99RPCJD9cEuSEOdIPoSIuomcIClEJtKamUsdPLhLCud+BvapBNnhgh58Nzw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/turbo/-/turbo-1.9.3.tgz}
     name: turbo
-    version: 1.9.1
+    version: 1.9.3
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: registry.npmjs.org/turbo-darwin-64@1.9.1
-      turbo-darwin-arm64: registry.npmjs.org/turbo-darwin-arm64@1.9.1
-      turbo-linux-64: registry.npmjs.org/turbo-linux-64@1.9.1
-      turbo-linux-arm64: registry.npmjs.org/turbo-linux-arm64@1.9.1
-      turbo-windows-64: registry.npmjs.org/turbo-windows-64@1.9.1
-      turbo-windows-arm64: registry.npmjs.org/turbo-windows-arm64@1.9.1
+      turbo-darwin-64: registry.npmjs.org/turbo-darwin-64@1.9.3
+      turbo-darwin-arm64: registry.npmjs.org/turbo-darwin-arm64@1.9.3
+      turbo-linux-64: registry.npmjs.org/turbo-linux-64@1.9.3
+      turbo-linux-arm64: registry.npmjs.org/turbo-linux-arm64@1.9.3
+      turbo-windows-64: registry.npmjs.org/turbo-windows-64@1.9.3
+      turbo-windows-arm64: registry.npmjs.org/turbo-windows-arm64@1.9.3
     dev: true
 
   registry.npmjs.org/twikoo@1.6.15:

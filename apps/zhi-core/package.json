@@ -6,7 +6,7 @@
   "main": "./dist/theme.js",
   "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/dev/apps/zhi-core",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-core",
   "author": "terwer",
   "license": "GPL",
   "keywords": [
@@ -37,7 +37,7 @@
   "dependencies": {
     "zhi-env": "workspace:*",
     "zhi-log": "workspace:*",
-    "zhi-device-detection": "workspace:*",
+    "zhi-device": "workspace:*",
     "zhi-common": "workspace:*"
   }
 }

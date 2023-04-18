@@ -25,7 +25,7 @@
 
 import colors from "ansi-colors"
 import kleur from "kleur"
-import { BrowserUtil } from "zhi-device-detection"
+import { BrowserUtil } from "zhi-device"
 
 /**
  * 跨平台，同时支持Node和浏览器的颜色解决方案

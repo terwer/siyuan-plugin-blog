@@ -23,10 +23,15 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
+import DeviceDetection from "./deviceDetection"
+import DeviceTypeEnum from "./lib/deviceTypeEnum"
+import BasePathTypeEnum from "./lib/basePathTypeEnum"
+import BrowserUtil from "./lib/browserUtil"
+import SiyuanDevice from "./lib/siyuanDevice"
 
-describe("zhi-device-detection", () => {
-  it("index", () => {
-    expect("hello").toBeTruthy()
-  })
-})
+/**
+ * zhi-device 入口
+ */
+export default DeviceDetection
+export { BrowserUtil, SiyuanDevice }
+export { DeviceTypeEnum, BasePathTypeEnum }

@@ -28,7 +28,7 @@
     "commitizenEmoji": {}
   },
   "devDependencies": {
-    "turbo": "^1.9.1"
+    "turbo": "^1.9.3"
   },
   "engines": {
     "node": ">=14.0.0"

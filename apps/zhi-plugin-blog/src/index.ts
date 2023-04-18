@@ -23,23 +23,35 @@
  * questions.
  */
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device"
+import siyuan from "siyuan"
+import { IPluginCommand } from "siyuan/types"
 
-/**
- * 仅仅提供Mock功能，请勿调用
- *
- * 主题使用的是 `index.ts`
- *
- * @author terwer
- * @version 0.1.0
- * @since 0.1.0
- */
-class MockTheme {
-  public async loadTheme() {
-    const zhi = new Zhi(DeviceDetection.getDevice())
-    await zhi.init()
+const Plugin = siyuan.Plugin
+
+class ZhiBlog extends Plugin {
+  private logger
+  private readonly clientApi = siyuan.clientApi
+  private el!: HTMLElement
+
+  constructor() {
+    super()
+    this.logger = this.clientApi.createLogger("zhi-blog")
+  }
+
+  onload() {
+    this.el = document.createElement("button")
+    this.el.innerText = "ZhiBlog"
+    siyuan.clientApi.addToolbarRight(this.el)
+    this.logger.info("ZhiBlog load")
+  }
+
+  onunload() {
+    this.logger.info("ZhiBlog unload")
+  }
+
+  registerCommand(command: IPluginCommand) {
+    this.logger.info("ZhiBlog registerCommand", command)
   }
 }
 
-export default MockTheme
+export default ZhiBlog

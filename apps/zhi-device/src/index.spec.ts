@@ -23,23 +23,10 @@
  * questions.
  */
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device"
+import { describe, expect, it } from "vitest"
 
-/**
- * 仅仅提供Mock功能，请勿调用
- *
- * 主题使用的是 `index.ts`
- *
- * @author terwer
- * @version 0.1.0
- * @since 0.1.0
- */
-class MockTheme {
-  public async loadTheme() {
-    const zhi = new Zhi(DeviceDetection.getDevice())
-    await zhi.init()
-  }
-}
-
-export default MockTheme
+describe("zhi-device", () => {
+  it("index", () => {
+    expect("hello").toBeTruthy()
+  })
+})

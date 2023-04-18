@@ -21,7 +21,7 @@ logger.error("error msg")
 ├── loglevel
 ├── callsites
 ├── loglevel-plugin-prefix
-├── zhi-device-detection
+├── zhi-device
 ├── ansi-colors
 ├── kleur
 ```

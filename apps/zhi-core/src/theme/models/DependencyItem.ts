@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device-detection"
+import { BasePathTypeEnum, DeviceTypeEnum } from "zhi-device"
 
 /**
  * 依赖项类型定义
