@@ -76,7 +76,10 @@ class ZhiBuild {
     // ifdef插件
 
     // 是否压缩
-    bundledEsbuildConfig.minify = isProduction
+    // 压缩会去掉标记，所以仅在最终产物进行
+    // 可在最后使用的地方手动压缩
+    // https://github.com/evanw/esbuild/releases/tag/v0.16.14
+    bundledEsbuildConfig.minify = false
     // 是否生成sourcemap
     bundledEsbuildConfig.sourcemap = isProduction ? false : "inline"
 

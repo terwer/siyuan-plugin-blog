@@ -23,8 +23,20 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.51",
+    "@nuxt/content": "^2.5.2",
+    "@types/good-storage": "^1.1.0",
     "@types/node": "^18",
     "eslint-config-custom": "workspace:*",
-    "nuxt": "^3.4.1"
+    "nuxt": "^3.4.1",
+    "nuxt-meilisearch": "^0.1.7",
+    "unplugin-icons": "^0.16.1"
+  },
+  "dependencies": {
+    "good-storage": "^1.1.1",
+    "vue-instantsearch": "4.8.7",
+    "zhi-common": "workspace:*",
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*"
   }
 }

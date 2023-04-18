@@ -218,7 +218,7 @@ class SiyuanDevice {
         throw new Error("type must be provided")
     }
 
-    const { default: data } = await import(fullJsonPath)
+    const { default: data } = await import(/* @vite-ignore */ fullJsonPath)
     return data
   }
 
@@ -247,7 +247,7 @@ class SiyuanDevice {
         throw new Error("type must be provided")
     }
 
-    const { default: data } = await import(fullJsonPath, { assert: { type: "json" } })
+    const { default: data } = await import(/* @vite-ignore */ fullJsonPath, { assert: { type: "json" } })
     return data
   }
 
