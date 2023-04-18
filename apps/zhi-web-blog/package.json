@@ -40,6 +40,7 @@
     "zhi-common": "workspace:*",
     "zhi-env": "workspace:*",
     "zhi-log": "workspace:*",
+    "zhi-blog-api": "workspace:*",
     "zhi-siyuan-api": "workspace:*"
   }
 }

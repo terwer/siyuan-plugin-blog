@@ -29,7 +29,7 @@ import DropdownLink from "~/components/vdoing/DropdownLink.vue"
 import ZhiWebBlogUtil from "~/utils/ZhiWebBlogUtil"
 
 const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv)
+const env = new Env(nuxtEnv.public)
 ZhiWebBlogUtil.initEnv(env)
 const logger = ZhiWebBlogUtil.zhiLog("nav-links")
 

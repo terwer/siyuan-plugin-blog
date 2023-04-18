@@ -47,6 +47,23 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/vdoing/styles/index.styl"],
+  runtimeConfig: {
+    // default type
+    VITE_DEFAULT_TYPE: "siyuan",
+    // siyuan
+    VITE_SIYUAN_API_URL: "",
+    VITE_SIYUAN_AUTH_TOKEN: "",
+    // WordPress
+    VITE_WORDPRESS_API_URL: "",
+    VITE_WORDPRESS_USERNAME: "",
+    VITE_WORDPRESS_PASSWORD: "",
+    public: {
+      VITE_LOG_LEVEL: "INFO",
+      VITE_DEBUG_MODE: false,
+      // 保证思源笔记内部在 SPA 的情况下默认可用
+      VITE_SIYUAN_API_URL: "",
+    },
+  },
   ssr: isSsr,
   nitro: {
     output: {
