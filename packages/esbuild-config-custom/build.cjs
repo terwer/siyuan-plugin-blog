@@ -76,20 +76,24 @@ class ZhiBuild {
     // ifdef插件
 
     // 是否压缩
-    bundledEsbuildConfig.minify = isProduction
+    // 压缩会去掉标记，所以仅在最终产物进行
+    // 可在最后使用的地方手动压缩
+    // https://github.com/evanw/esbuild/releases/tag/v0.16.14
+    bundledEsbuildConfig.minify = false
     // 是否生成sourcemap
     bundledEsbuildConfig.sourcemap = isProduction ? false : "inline"
 
     // 环境变量
-    const defineEnv = {
-      NODE_ENV: isProduction ? "production" : "development",
-      ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-    }
-    bundledEsbuildConfig.define = {}
-    bundledEsbuildConfig.define = {
-      ...bundledEsbuildConfig.define,
-      "import.meta.env": JSON.stringify(defineEnv),
-    }
+    // vite读取解析会报错
+    // const defineEnv = {
+    //   NODE_ENV: isProduction ? "production" : "development",
+    //   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+    // }
+    // bundledEsbuildConfig.define = {}
+    // bundledEsbuildConfig.define = {
+    //   ...bundledEsbuildConfig.define,
+    //   "import.meta.env": JSON.stringify(defineEnv),
+    // }
     // ===================
     // 默认集成的配置结束
     // ===================

@@ -1,0 +1,47 @@
+<template>
+  <div>
+    <icon-accessibility />
+    <icon-account-box style="font-size: 2em; color: red" />
+
+    <!--
+    <div v-for="post in testPosts.posts">
+      <h1>
+        <NuxtLink :to="'/post/' + post.postid"> {{ post.title }} </NuxtLink>
+      </h1>
+    </div>
+    -->
+  </div>
+</template>
+
+<script setup lang="ts">
+import { version } from "~/package.json"
+import Env from "zhi-env"
+import ThemeFromEnum from "~/utils/enums/themeFromEnum"
+import IconAccessibility from "~icons/carbon/accessibility"
+import IconAccountBox from "~icons/mdi/account-box"
+
+const nuxtEnv = useRuntimeConfig()
+const env = new Env(nuxtEnv)
+ZhiWebBlogUtil.initEnv(env)
+const logger = ZhiWebBlogUtil.zhiLog("index-page")
+logger.info("test")
+// const common = ZhiWebBlogUtil.zhiCommon()
+
+// const testPosts = reactive({
+//   posts: <Post[]>[],
+// })
+
+function hello(from: string): void {
+  logger.debug("Nuxt env is ok")
+  // logger.info(common.strUtil.f("Hello, {0} {1} v{2}! You are from {3}", "zhi", "theme", version, from))
+}
+
+hello(ThemeFromEnum.ThemeFrom_Blog)
+
+// try {
+//   const { data } = await useFetch(SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS)
+//   testPosts.posts = <Post[]>(data.value as any).data
+// } catch (e) {
+//   logger.error(common.strUtil.f("{0} request error", SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS), e)
+// }
+</script>

@@ -28,6 +28,11 @@ import { IPluginCommand } from "siyuan/types"
 
 const Plugin = siyuan.Plugin
 
+/**
+ * 博客入口
+ *
+ * http://127.0.0.1:6806/appearance/themes/zhi/web/blog/
+ */
 class ZhiBlog extends Plugin {
   private logger
   private readonly clientApi = siyuan.clientApi

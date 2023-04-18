@@ -10,6 +10,7 @@
   "scripts": {
     "lint": "turbo run lint",
     "dev": "turbo run dev",
+    "siyuanBuild": "turbo run siyuanBuild",
     "build": "turbo run build",
     "preview": "turbo run preview",
     "doc": "turbo run doc",

@@ -60,6 +60,13 @@ abstract class ZhiUtil {
   protected static common: ZhiCommon | undefined
 
   /**
+   * 某些情况下，可能需要手动 init 之后才能用
+   */
+  public static initEnv(env: Env) {
+    this.env = env
+  }
+
+  /**
    * 获取 zhi-env 实例 - 必须在使用的时候重写此方法
    *
    * ```
@@ -89,7 +96,7 @@ abstract class ZhiUtil {
     }
 
     // 日志不存在，生成一个新的缓存到 Map
-    const env = this.zhiEnv()
+    const env = this.env
     const logger = LogFactory.customSignLogFactory(sign, env).getLogger(loggerName)
     this.loggerMap[loggerName] = logger
     logger.debug("Zhi-log add new logger")

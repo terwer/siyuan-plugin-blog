@@ -1,0 +1,36 @@
+{
+  "name": "zhi-siyuan-api",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "a siyuan-note api including both kernel and client",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-siyuan-api",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-siyuan-api",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-siyuan-api && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-siyuan-api/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-siyuan-api\n---' | cat - ../zhi-docs/src/api/zhi-siyuan-api/index.md > ../zhi-docs/src/api/zhi-siyuan-api/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "vitest-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*",
+    "zhi-common": "workspace:*",
+    "zhi-blog-api": "workspace:*"
+  }
+}

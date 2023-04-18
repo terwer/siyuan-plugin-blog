@@ -10,6 +10,8 @@
   "author": "terwer",
   "license": "GPL",
   "devDependencies": {
+    "jsdom": "^21.1.1",
+    "vite": "^4.2.2",
     "vitest": "^0.30.1"
   }
 }

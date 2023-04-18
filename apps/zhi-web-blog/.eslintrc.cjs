@@ -8,7 +8,8 @@ module.exports = {
     // Note: you must disable the base rule as it can report incorrect errors
     semi: "off",
     quotes: "off",
-    "@typescript-eslint/no-this-alias": "off",
     "prettier/prettier": "error",
+    "turbo/no-undeclared-env-vars": "off",
+    "vue/max-attributes-per-line": "off",
   },
 }
