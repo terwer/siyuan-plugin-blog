@@ -126,14 +126,19 @@ class Zhi {
         // 如果有初始化方法，进行初始化
         if (lib) {
           const libObj = lib
-          this.logger.debug(`Current ${item.importType} lib Obj=>"`, libObj)
-          if (libObj.init) {
-            const res = await libObj.init()
-            if (res) {
-              this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
-            }
+          this.logger.debug(`Current ${item.importType} lib ${item.libpath} Obj=>`, typeof libObj)
+          if (typeof libObj == "function") {
+            await libObj()
+            this.logger.info(`Init ${item.libpath} with default function`)
           } else {
-            this.logger.debug(`No init method for ${item.importType} ${item.libpath}`)
+            if (libObj.init) {
+              const res = await libObj.init()
+              if (res) {
+                this.logger.info(`Detected output from ${item.importType} lib ${item.libpath}=>`, res)
+              }
+            } else {
+              this.logger.debug(`No init method for ${item.importType} ${item.libpath}`)
+            }
           }
         } else {
           this.logger.debug(`Lib entry is not a function => ${item.importType} ${item.libpath}`)
