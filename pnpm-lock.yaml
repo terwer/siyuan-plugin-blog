@@ -228,7 +228,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vitest-config-custom
 
-  apps/zhi-server-blog-astro:
+  apps/zhi-server-blog:
     dependencies:
       astro:
         specifier: ^2.2.1

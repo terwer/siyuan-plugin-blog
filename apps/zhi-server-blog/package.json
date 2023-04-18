@@ -1,10 +1,10 @@
 {
-  "name": "zhi-server-blog-astro",
+  "name": "zhi-server-blog",
   "type": "module",
   "version": "1.0.0",
   "description": "a performance first blog",
   "repository": "terwer/zhi",
-  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-blog-astro",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-blog",
   "author": "terwer",
   "license": "GPL",
   "keywords": [
