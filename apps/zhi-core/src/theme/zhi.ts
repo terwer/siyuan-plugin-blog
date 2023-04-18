@@ -153,7 +153,7 @@ class Zhi {
         }
         this.logger.info(`Success ${item.importType} ${item.libpath}`)
       }
-      this.logger.info("Zhi Theme inited.")
+      this.logger.info("Zhi Theme inited")
     } catch (e) {
       this.logger.error("Zhi Theme load error=>", e)
     }

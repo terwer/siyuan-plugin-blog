@@ -207,6 +207,27 @@ importers:
         specifier: workspace:*
         version: link:../../packages/vitest-config-custom
 
+  apps/zhi-plugin-blog:
+    devDependencies:
+      api-docs:
+        specifier: workspace:*
+        version: link:../../packages/api-docs
+      esbuild-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/esbuild-config-custom
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      siyuan:
+        specifier: ^0.7.1
+        version: registry.npmjs.org/siyuan@0.7.1
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      vitest-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/vitest-config-custom
+
   apps/zhi-server-modules-blog-astro:
     dependencies:
       astro:
@@ -12698,6 +12719,12 @@ packages:
       '@types/sax': registry.npmjs.org/@types/sax@1.2.4
       arg: registry.npmjs.org/arg@5.0.2
       sax: registry.npmjs.org/sax@1.2.4
+    dev: true
+
+  registry.npmjs.org/siyuan@0.7.1:
+    resolution: {integrity: sha512-Q7OZqpJ8h+axLDkn6afoAdKD6mHPAona/jsoUpf8UgFqHuOscNS6ub8RudhTCPKppDnQzBy5o35xhlecxnrbjQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/siyuan/-/siyuan-0.7.1.tgz}
+    name: siyuan
+    version: 0.7.1
     dev: true
 
   registry.npmjs.org/slash@3.0.0:

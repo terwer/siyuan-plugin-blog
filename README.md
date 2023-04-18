@@ -22,6 +22,12 @@
 
 > ⚠️ WARNING 4: Except for the theme's core plugins, all plugins are disabled by default and need to be enabled in the plugin list before the first use.
 
+## Key benefits
+
+- Integrated blog feature based on the Siyuan API
+
+- No publishing, no configuration, ready to use out of the box
+
 ## Quick start
 
 You can download the `zhi` theme directly in the Market of siyuan-note, and then select the `zhi` theme
