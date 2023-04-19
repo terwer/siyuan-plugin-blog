@@ -1,14 +1,12 @@
-import path from "path"
-
 const isDev = process.env.NODE_ENV === "development"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 const isVercelBuild = process.env.BUILD_TYPE === "vercel"
 
 const appBase = isSiyuanBuild
-  ? "/appearance/themes/zhi/web/blog"
+  ? "/appearance/themes/zhi/web/blog/"
   : isDev || isVercelBuild
   ? "/"
-  : "/zhi/apps/zhi-web-blog/dist"
+  : "/zhi/apps/zhi-web-blog/dist/"
 const distDir = isSiyuanBuild
   ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/web/blog"
   : "./dist"
@@ -44,6 +42,7 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
+      link: [{ rel: "stylesheet", href: appBase + "lib/webfont/webfont.css" }],
     },
   },
   css: ["~/assets/vdoing/styles/index.styl"],
@@ -58,6 +57,7 @@ export default defineNuxtConfig({
     VITE_WORDPRESS_USERNAME: "",
     VITE_WORDPRESS_PASSWORD: "",
     public: {
+      VITE_APP_BASE: appBase,
       VITE_LOG_LEVEL: "INFO",
       VITE_DEBUG_MODE: false,
       // 保证思源笔记内部在 SPA 的情况下默认可用

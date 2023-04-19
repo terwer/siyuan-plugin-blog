@@ -1,7 +1,7 @@
 <template>
   <aside class="sidebar">
     <div v-if="computes.blogger" class="blogger">
-      <img :src="computes.blogger.value.avatar" />
+      <img :src="datas.appBase + computes.blogger.value.avatar" />
       <div class="blogger-info">
         <h3>{{ computes.blogger.value.name }}</h3>
 
@@ -36,9 +36,13 @@
 
 <script setup lang="ts">
 import NavLinks from "~/components/vdoing/NavLinks.vue"
+import Env from "zhi-env"
 
 // uses
 const appConfig = useAppConfig()
+const nuxtEnv = useRuntimeConfig()
+const env = new Env(nuxtEnv)
+ZhiWebBlogUtil.initEnv(env)
 
 // props
 const props = defineProps({
@@ -50,6 +54,7 @@ const props = defineProps({
 
 // datas
 const datas = reactive({
+  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
   isMobile: false,
 })
 

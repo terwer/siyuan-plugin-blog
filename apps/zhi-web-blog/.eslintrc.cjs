@@ -21,7 +21,9 @@ module.exports = {
     semi: "off",
     quotes: "off",
     "prettier/prettier": "error",
+    "prefer-const": "warn",
     "turbo/no-undeclared-env-vars": "off",
     "vue/max-attributes-per-line": "off",
+    "vue/multi-word-component-names": "off",
   },
 }
