@@ -23,12 +23,12 @@
  * questions.
  */
 
-import { DeviceTypeEnum, SiyuanDevice } from "zhi-device"
+import { BasePathTypeEnum, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
 import ZhiCoreUtil from "./core/util/ZhiCoreUtil"
+import ZhiUtil from "./core/util/ZhiCoreUtil"
 import DependencyItem from "./models/DependencyItem"
 import Bootstrap from "./core/Bootstrap"
 import { crossChalk } from "zhi-log"
-import ZhiUtil from "./core/util/ZhiCoreUtil"
 
 /**
  * 主题通用类（由theme.js动态调用，除了单元测试之外请勿主动调用）
@@ -92,6 +92,12 @@ class Zhi {
       if (typeof window !== "undefined") {
         ;(window as any).zhiLog = ZhiUtil.zhiLog("zhi-core")
         this.logger.info("ZhiLog mounted", (window as any).zhiLog)
+      }
+      // 挂载一个require对象
+      if (typeof window !== "undefined") {
+        ;(window as any).zhiRequire = function (libpath: string) {
+          return SiyuanDevice.requireLib(libpath, false, BasePathTypeEnum.BasePathType_ZhiTheme)
+        }
       }
 
       // 初始化第三方依赖

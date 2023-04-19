@@ -1,0 +1,30 @@
+{
+  "name": "zhi-server-legacy",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "a ssr solution using electron bundled node",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-legacy",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-legacy",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-server-legacy && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-server-legacy/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-server-legacy\n---' | cat - ../zhi-docs/src/api/zhi-server-legacy/index.md > ../zhi-docs/src/api/zhi-server-legacy/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "vitest-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}

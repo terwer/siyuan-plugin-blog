@@ -28,6 +28,8 @@
 
 - No publishing, no configuration, ready to use out of the box
 
+- Plugin system bundled, by design
+
 ## Quick start
 
 You can download the `zhi` theme directly in the Market of siyuan-note, and then select the `zhi` theme
