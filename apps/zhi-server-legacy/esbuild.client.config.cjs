@@ -27,12 +27,15 @@ const path = require("path")
 const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
 const { copy } = require("esbuild-plugin-copy")
+const stylePlugin = require("esbuild-style-plugin")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 
 // for outer custom output for dev
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy" : "./"
+const baseDir = isWatch
+  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
+  : "./"
 const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 /**
@@ -43,6 +46,7 @@ module.exports = {
   outfile: path.join(distDir, "app.js"),
   format: "esm",
   bundle: true,
+  external: ["*.woff", "*.woff2", "*.ttf"],
   plugins: [
     dtsPlugin(),
     copy({
@@ -63,5 +67,7 @@ module.exports = {
       ],
       watch: true,
     }),
+
+    stylePlugin(),
   ],
 }

@@ -23,15 +23,48 @@
  * questions.
  */
 
-import React, { useEffect, useState } from "react"
-import VdoingLayout from "./layouts/vdoing"
+import React from "react"
 
-export const App: React.FC = () => {
-  const [clientMessage, setClientMessage] = useState("")
+// 主题样式注入入口
+import "../assets/vdoing/fonts/webfont.css"
+import "../assets/vdoing/styles/index.styl"
 
-  useEffect(() => {
-    setClientMessage("Hello From React2")
-  })
-
-  return <VdoingLayout header={111} main={<h1>{clientMessage}</h1>} footer={333}></VdoingLayout>
+type VdoingLayoutProps = {
+  header: React.ReactNode
+  main: React.ReactNode
+  footer: React.ReactNode
+  props?: Record<string, any>
 }
+
+/**
+ * Vdoing 布局
+ *
+ * @param header - 头部
+ * @param main - 正文
+ * @param footer - 底部
+ * @param props - 参数
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ * @constructor
+ */
+const VdoingLayout: React.FC<VdoingLayoutProps> = ({ header, main, footer, props }) => {
+  return (
+    <div className={"theme-container"}>
+      <header>{header}</header>
+      <main>{main}</main>
+      <footer>{footer}</footer>
+      {props && (
+        <div>
+          {Object.entries(props).map(([key, value]) => (
+            <p key={key}>
+              {key}: {value}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default VdoingLayout

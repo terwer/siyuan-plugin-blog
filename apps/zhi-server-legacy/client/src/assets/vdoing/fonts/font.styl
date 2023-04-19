@@ -23,15 +23,5 @@
  * questions.
  */
 
-import React, { useEffect, useState } from "react"
-import VdoingLayout from "./layouts/vdoing"
-
-export const App: React.FC = () => {
-  const [clientMessage, setClientMessage] = useState("")
-
-  useEffect(() => {
-    setClientMessage("Hello From React2")
-  })
-
-  return <VdoingLayout header={111} main={<h1>{clientMessage}</h1>} footer={333}></VdoingLayout>
-}
+// 字体定义
+// webfont已经引用 LXGW 和 opensans ，这里还是可以在定义其他字体

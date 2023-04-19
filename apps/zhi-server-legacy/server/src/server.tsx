@@ -50,11 +50,13 @@ class ZhiSsrServer {
     app.get("/", (req, res) => {
       const app = ReactDOMServer.renderToString(<App />)
 
+      const staticV = "202304200051"
       const html = `
-        <html lang="en">
+        <html lang="zh">
         <head>
-        <title>zhi-blog-ssr</title>
-            <script src="app.js" async defer></script>
+            <title>zhi-blog-ssr</title>
+            <link rel="stylesheet" href="app.css?v=${staticV}">
+            <script src="app.js?v=${staticV}" async defer></script>
         </head>
         <body>
             <div id="app">${app}</div>

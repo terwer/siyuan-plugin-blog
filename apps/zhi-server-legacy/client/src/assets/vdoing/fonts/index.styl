@@ -23,15 +23,4 @@
  * questions.
  */
 
-import React, { useEffect, useState } from "react"
-import VdoingLayout from "./layouts/vdoing"
-
-export const App: React.FC = () => {
-  const [clientMessage, setClientMessage] = useState("")
-
-  useEffect(() => {
-    setClientMessage("Hello From React2")
-  })
-
-  return <VdoingLayout header={111} main={<h1>{clientMessage}</h1>} footer={333}></VdoingLayout>
-}
+@require "./font"

@@ -5,11 +5,11 @@ a ssr solution using electron bundled node
 
 ```js
 // siyuan console
-const server = zhiRequire("/server/legacy/server.cjs")
-server.start(3333)
+// const server = zhiRequire("/server/legacy/server.cjs")
+// server.default(3333)
 
 const server = await zhiImport("/server/legacy/server.js")
-server
+server()
 ```
 
 ## TODO

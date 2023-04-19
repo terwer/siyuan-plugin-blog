@@ -8,7 +8,12 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "paths": [
+      {
+        "~/*": "./*"
+      }
+    ]
   },
   "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
