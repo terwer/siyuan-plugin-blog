@@ -2,37 +2,37 @@
 
 a blog based on siyuan-note api
 
-## 快速上手
+## Quick start
 
-### 使用 docker-compose 部署 <sup>推荐</sup>
+### Use docker-compose for deploy <sup>recommended</sup>
 
 ```bash
 docker compose up --build
 ```
 
-### 本地启动
+### Development
 
 Start the development server on http://localhost:3000
 
 ```bash
 # Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
-pnpm install
-pnpm dev
+pnpm install -F zhi-web-blog
+pnpm dev -F zhi-web-blog
 ```
 
-### 生产环境
+### Production
 
 Build the application for production:
 
 ```bash
-pnpm build
-pnpm preview
+pnpm build -F zhi-web-blog
+pnpm preview -F zhi-web-blog
 ```
 
-Statically generate a site:
+for vercel:
 
 ```bash
-pnpm generate
+pnpm vercelBuild -F zhi-web-blog
 ```
 
 for siyuan

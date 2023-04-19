@@ -17,11 +17,15 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "siyuanBuild": "BUILD_TYPE=siyuan astro build",
+    "vercelBuild": "BUILD_TYPE=vercel astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint \"src/**/*.{js,ts,astro}\" --fix"
   },
   "dependencies": {
+    "@astrojs/node": "^5.1.1",
+    "@astrojs/vercel": "^3.2.4",
     "astro": "^2.2.1"
   },
   "devDependencies": {

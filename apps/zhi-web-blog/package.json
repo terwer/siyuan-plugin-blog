@@ -18,7 +18,7 @@
   "scripts": {
     "build": "pnpm generate",
     "siyuanBuild": "BUILD_TYPE=siyuan pnpm generate",
-    "ssrbuild": "BUILD_TYPE=vercel nuxt build",
+    "vercelBuild": "BUILD_TYPE=vercel nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
