@@ -23,11 +23,15 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import { hello } from "./index"
+// import { createRoot } from "react-dom/client"
+// import { App } from "./App"
+//
+// const container = document.getElementById("root")
+// const root = createRoot(container!)
+// root.render(<App />)
 
-describe("zhi-server-legacy", () => {
-  it("index", () => {
-    expect(hello()).toBe("hello world")
-  })
-})
+import { App } from "./App"
+import { hydrateRoot } from "react-dom/client"
+
+const container = document.getElementById("app")
+hydrateRoot(container!, <App />)

@@ -16,12 +16,13 @@ class ZhiBuild {
   static async processBuild() {
     // 处理参数
     const args = minimist(process.argv.slice(2))
+    const cfg = args.c ?? "esbuild.config.cjs"
     const isWatch = args.watch ?? false
     const isProduction = !isWatch
 
     // 读取用户定义的配置文件
     let userEsbuildConfig = {}
-    const esbuildConfigFile = path.join(process.cwd(), "esbuild.config.cjs")
+    const esbuildConfigFile = path.join(process.cwd(), cfg)
     console.log("reading user defined esbuild config from =>", esbuildConfigFile)
     if (existsSync(esbuildConfigFile)) {
       try {

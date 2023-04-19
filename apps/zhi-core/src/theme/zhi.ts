@@ -91,13 +91,21 @@ class Zhi {
       // 挂载一个日志对象，方便后续动态使用
       if (typeof window !== "undefined") {
         ;(window as any).zhiLog = ZhiUtil.zhiLog("zhi-core")
-        this.logger.info("ZhiLog mounted", (window as any).zhiLog)
+        this.logger.info("ZhiLog mounted")
       }
       // 挂载一个require对象
       if (typeof window !== "undefined") {
         ;(window as any).zhiRequire = function (libpath: string) {
           return SiyuanDevice.requireLib(libpath, false, BasePathTypeEnum.BasePathType_ZhiTheme)
         }
+        this.logger.info("zhiRequire mounted")
+      }
+      // 挂载一个import对象
+      if (typeof window !== "undefined") {
+        ;(window as any).zhiImport = async function (libpath: string) {
+          return await SiyuanDevice.importJs(libpath, BasePathTypeEnum.BasePathType_ZhiTheme)
+        }
+        this.logger.info("zhiImport mounted")
       }
 
       // 初始化第三方依赖

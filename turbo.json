@@ -8,13 +8,25 @@
     "dev": {
       "cache": false
     },
-    "siyuanBuild": {
+    "clientDev": {
+      "cache": false
+    },
+    "serverDev": {
       "cache": false
     },
     "build": {
       "cache": false,
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
+    },
+    "siyuanBuild": {
+      "cache": false
+    },
+    "clientBuild": {
+      "cache": false
+    },
+    "serverBuild": {
+      "cache": false
     },
     "test": {
       "dependsOn": ["^build"]

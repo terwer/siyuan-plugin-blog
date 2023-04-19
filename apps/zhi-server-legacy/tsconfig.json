@@ -6,8 +6,10 @@
     "moduleResolution": "node",
     "isolatedModules": false,
     "esModuleInterop": true,
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
     "outDir": "./lib"
   },
-  "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

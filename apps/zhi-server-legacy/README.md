@@ -5,10 +5,16 @@ a ssr solution using electron bundled node
 
 ```js
 // siyuan console
-// not work
-const app=require("/appearance/themes/zhi/server/legacy/index.cjs");app
-// work
-const app=require("/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy/index.cjs");app
-// work
-const app=zhiRequire("/server/legacy/index.cjs");app
+const server = zhiRequire("/server/legacy/server.cjs")
+server.start(3333)
+
+const server = await zhiImport("/server/legacy/server.js")
+server
+```
+
+## TODO
+
+```
+1 write express log to file
+2 port check
 ```
