@@ -317,6 +317,9 @@ importers:
       vue-instantsearch:
         specifier: 4.8.7
         version: registry.npmjs.org/vue-instantsearch@4.8.7(algoliasearch@4.17.0)(vue@3.2.47)
+      zhi-blog-api:
+        specifier: workspace:*
+        version: link:../zhi-blog-api
       zhi-common:
         specifier: workspace:*
         version: link:../zhi-common

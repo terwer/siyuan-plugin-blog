@@ -1,22 +1,23 @@
 <template>
   <div class="footer">
-    <div class="icons" v-if="computes.social.value && computes.social.value.icons">
+    <div v-if="computes.social.value && computes.social.value.icons" class="icons">
       <a
         v-for="(item, index) in computes.social.value.icons"
+        :key="index"
         :href="item.link"
         :title="item.title"
         :class="['iconfont', item.iconClass]"
-        :key="index"
         target="_blank"
-      ></a>
+      />
     </div>
 
     <!--Vdoing主题遵循MIT协议，完全开源且免费。如果您对主题的修改并不大，希望您保留主题的链接。-->
     Theme by
-    <a href="https://github.com/terwer/zhi-blog/" target="_blank" title="本站主题">Zhi</a>
+    <a href="https://github.com/terwer/zhi-blog/" target="_blank" title="本站主题">Zhi</a>. | Inspired by
+    <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank">Vdoing</a>
     <template v-if="computes.footer.value">
       | Copyright © {{ computes.footer.value.createYear }}-{{ new Date().getFullYear() }}
-      <span v-html="computes.footer.value.copyrightInfo"></span>
+      <span v-html="computes.footer.value.copyrightInfo" />
     </template>
   </div>
 </template>
@@ -52,7 +53,7 @@ const computes = {
       padding 0 10px
       font-size 1.3rem
   a
-    color inherit
+    color #11a8cd
     &:hover
       color $accentColor
 @media (min-width ($MQMobile + 1px))

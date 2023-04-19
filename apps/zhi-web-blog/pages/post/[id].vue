@@ -1,36 +1,35 @@
 <template>
   <div>
-    <!--
-    <div v-html="testPost.post.description"></div>
-    -->
-    This post
+    <h1>{{ currentPost.post.title }}</h1>
+    <div v-html="currentPost.post.description" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import Env from "zhi-env"
+import { SiYuanApiAdaptor } from "zhi-siyuan-api"
 
+// env
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
 ZhiWebBlogUtil.initEnv(env)
-const logger = ZhiWebBlogUtil.zhiLog("index-page")
-const common = ZhiWebBlogUtil.zhiCommon()
+// const logger = ZhiWebBlogUtil.zhiLog("index-page")
 
+// use
 const route = useRoute()
 
-// const testPost = reactive({
-//   post: <Post>{},
-// })
+// props
+const currentPost = reactive({
+  post: {} as Post,
+})
 
-// try {
-//   const res = await useFetch(SERVER_API_CONSTANTS.SERVER_API_GET_POST, {
-//     method: "post",
-//     body: {
-//       id: route.params.id.includes(".html") ? route.params.id.toString().replace(".html", "") : route.params.id,
-//     },
-//   })
-//   testPost.post = <Post>(res?.data.value as any).data
-// } catch (e) {
-//   logger.error(common.strUtil.f("{0} request error", SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS), e)
-// }
+const fetch_getPost = async () => {
+  const blogApi = new SiYuanApiAdaptor(env)
+  const postid = route.params.id.includes(".html") ? route.params.id.toString().replace(".html", "") : route.params.id
+  currentPost.post = await blogApi.getPost(postid)
+}
+
+onBeforeMount(async () => {
+  await fetch_getPost()
+})
 </script>

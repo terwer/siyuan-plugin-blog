@@ -56,7 +56,7 @@ interface IBlogApi {
    * 最新文章
    *
    * @param numOfPosts - 文章数目
-   * @param page - 页码（可选，部分平台不支持分页）
+   * @param page - 页码（可选，从0开始，部分平台不支持分页）
    * @param keyword - 关键字（可选，部分平台不支持搜索）
    * @see {@link https://codex.wordpress.org/XML-RPC_MetaWeblog_API#metaWeblog.getRecentPosts getRecentPosts}
    * @returns {Promise<Array<Post>>}

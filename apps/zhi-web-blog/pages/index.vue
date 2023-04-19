@@ -1,47 +1,60 @@
 <template>
   <div>
+    <!--
+    图标使用示例
+    import IconAccessibility from "~icons/carbon/accessibility"
+    import IconAccountBox from "~icons/mdi/account-box"
     <icon-accessibility />
     <icon-account-box style="font-size: 2em; color: red" />
-
-    <!--
-    <div v-for="post in testPosts.posts">
+    -->
+    <div v-for="post in recentPosts.posts">
       <h1>
-        <NuxtLink :to="'/post/' + post.postid"> {{ post.title }} </NuxtLink>
+        <NuxtLink :to="'/post/' + post.postid">
+          {{ post.title }}
+        </NuxtLink>
       </h1>
     </div>
-    -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { version } from "~/package.json"
 import Env from "zhi-env"
 import ThemeFromEnum from "~/utils/enums/themeFromEnum"
-import IconAccessibility from "~icons/carbon/accessibility"
-import IconAccountBox from "~icons/mdi/account-box"
+import { Post } from "zhi-blog-api"
+import { SiYuanApiAdaptor } from "zhi-siyuan-api"
 
+// env
 const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv)
+const env = new Env(nuxtEnv.public)
 ZhiWebBlogUtil.initEnv(env)
 const logger = ZhiWebBlogUtil.zhiLog("index-page")
-logger.info("test")
-// const common = ZhiWebBlogUtil.zhiCommon()
+const common = ZhiWebBlogUtil.zhiCommon()
 
-// const testPosts = reactive({
-//   posts: <Post[]>[],
-// })
+// use
+const route = useRoute()
+
+// props
+const recentPosts = reactive({
+  posts: [] as Post[],
+})
 
 function hello(from: string): void {
   logger.debug("Nuxt env is ok")
-  // logger.info(common.strUtil.f("Hello, {0} {1} v{2}! You are from {3}", "zhi", "theme", version, from))
+  logger.info(common.strUtil.f("Hello, {0} {1} v{2}! You are from {3}", "zhi", "theme", "v1.0.0", from))
 }
 
-hello(ThemeFromEnum.ThemeFrom_Blog)
+const fetch_getRecentPosts = async () => {
+  const num = 10
+  const page = route.query.p ?? 0
+  const keyword = ""
 
-// try {
-//   const { data } = await useFetch(SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS)
-//   testPosts.posts = <Post[]>(data.value as any).data
-// } catch (e) {
-//   logger.error(common.strUtil.f("{0} request error", SERVER_API_CONSTANTS.SERVER_API_GET_RECENT_POSTS), e)
-// }
+  logger.debug("current page", page)
+  const blogApi = new SiYuanApiAdaptor(env)
+  recentPosts.posts = await blogApi.getRecentPosts(num, page, keyword)
+}
+
+onBeforeMount(async () => {
+  hello(ThemeFromEnum.ThemeFrom_Blog)
+  await fetch_getRecentPosts()
+})
 </script>

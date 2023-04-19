@@ -1,25 +1,50 @@
 <template>
   <div
+    v-if="methods.hasBg()"
     class="body-bg"
-    :style="`background: url(${datas.bgImg}) center center / cover no-repeat;opacity:${datas.opacity}`"
-  ></div>
+    :style="`background: url(${appBase + datas.bgImg}) center center / cover no-repeat;opacity:${datas.opacity}`"
+  />
 </template>
 
 <script lang="ts" setup>
 import VdoingUtil from "~/utils/vdoingUtil"
+import Env from "zhi-env"
 
 const appConfig = useAppConfig()
+const nuxtEnv = useRuntimeConfig()
+const env = new Env(nuxtEnv)
+ZhiWebBlogUtil.initEnv(env)
 
 // datas
 const datas = reactive({
+  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
   bgImg: "",
   opacity: 0.5,
 })
 
+// methods
+const methods = {
+  hasBg: () => {
+    const { bodyBgImg } = appConfig.themeConfig
+    if (typeof bodyBgImg === "string") {
+      console.log(datas.bgImg)
+      return datas.bgImg !== ""
+    } else if (VdoingUtil.type(bodyBgImg) === "array") {
+      return datas.bgImg.length > 0
+    }
+    console.log(datas.bgImg)
+    return fasle
+  },
+}
+
 // lifecycle
 onMounted(() => {
-  let { bodyBgImg, bodyBgImgOpacity, bodyBgImgInterval = 15 } = appConfig.themeConfig
+  const { bodyBgImg, bodyBgImgOpacity, bodyBgImgInterval = 15 } = appConfig.themeConfig
 
+  // 没有背景忽略
+  if (!methods.hasBg()) {
+    return
+  }
   if (typeof bodyBgImg === "string") {
     datas.bgImg = bodyBgImg
   } else if (VdoingUtil.type(bodyBgImg) === "array") {

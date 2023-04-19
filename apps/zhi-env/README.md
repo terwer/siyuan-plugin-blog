@@ -33,6 +33,8 @@ import Env from "zhi-env"
 
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
+// 访问公共变量
+// const env = new Env(nuxtEnv.public)
 
 const val = env.getEnv("some-key")
 console.log("val=>", val)

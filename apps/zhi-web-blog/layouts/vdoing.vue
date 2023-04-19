@@ -69,7 +69,7 @@ import ZhiWebBlogUtil from "~/utils/ZhiWebBlogUtil"
 
 // zhi-util
 const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv)
+const env = new Env(nuxtEnv.public)
 ZhiWebBlogUtil.initEnv(env)
 const logger = ZhiWebBlogUtil.zhiLog("vdoing-layout")
 

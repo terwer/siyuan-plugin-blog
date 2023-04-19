@@ -6,7 +6,7 @@
       <img
         v-if="appConfig.themeConfig.logo"
         class="logo"
-        :src="appConfig.themeConfig.logo"
+        :src="datas.appBase + appConfig.themeConfig.logo"
         :alt="appConfig.siteTitle"
       />
       <div class="site-info">
@@ -32,11 +32,16 @@
 import SidebarButton from "~/components/vdoing/SidebarButton.vue"
 import NavLinks from "~/components/vdoing/NavLinks.vue"
 import MeiliSearchBox from "~/components/vdoing/MeiliSearchBox.vue"
+import Env from "zhi-env"
 
 const appConfig = useAppConfig()
+const nuxtEnv = useRuntimeConfig()
+const env = new Env(nuxtEnv)
+ZhiWebBlogUtil.initEnv(env)
 
 // datas
 const datas = reactive({
+  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
   isMobile: true,
   linksWrapMaxWidth: null,
 })
