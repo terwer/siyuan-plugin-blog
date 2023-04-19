@@ -67,7 +67,7 @@ class SiYuanApiAdaptor implements IBlogApi {
     return Promise.resolve([])
   }
 
-  public async getPost(postid: string, useSlug?: boolean): Promise<Post> {
+  public async getPost(postid: string, useSlug?: boolean, skipBody?: boolean): Promise<Post> {
     let pid = postid
     if (useSlug) {
       const pidObj = await this.siyuanKernelApi.getRootBlockBySlug(postid)
@@ -81,7 +81,6 @@ class SiYuanApiAdaptor implements IBlogApi {
     }
 
     const attrs = await this.siyuanKernelApi.getBlockAttrs(pid)
-    const md = await this.siyuanKernelApi.exportMdContent(pid)
 
     // 发布状态
     let isPublished = true
@@ -103,11 +102,16 @@ class SiYuanApiAdaptor implements IBlogApi {
     }
 
     // 渲染Markdown
-    let html = await this.common.markdownUtil.renderHTML(md.content)
-    // 移除挂件html
-    html = this.common.htmlUtil.removeWidgetTag(html)
-    if (this.cfg.fixTitle) {
-      html = this.common.htmlUtil.removeH1(html)
+    let html
+    // 如果忽略 body，则不进行转换
+    if (!skipBody) {
+      const md = await this.siyuanKernelApi.exportMdContent(pid)
+      html = await this.common.markdownUtil.renderHTML(md.content)
+      // 移除挂件html
+      html = this.common.htmlUtil.removeWidgetTag(html)
+      if (this.cfg.fixTitle) {
+        html = this.common.htmlUtil.removeH1(html)
+      }
     }
 
     // 适配公共属性
@@ -145,7 +149,7 @@ class SiYuanApiAdaptor implements IBlogApi {
 
       // 某些属性详情页控制即可
       const attrs = await this.siyuanKernelApi.getBlockAttrs(siyuanPost.root_id)
-      const page = await this.getPost(siyuanPost.root_id)
+      const page = await this.getPost(siyuanPost.root_id, false, true)
 
       // // 发布状态
       // let isPublished = true

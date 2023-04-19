@@ -8,12 +8,14 @@
 <script lang="ts" setup>
 import Env from "zhi-env"
 import { SiYuanApiAdaptor } from "zhi-siyuan-api"
+import ZhiWebBlogUtil from "~/utils/ZhiWebBlogUtil"
 
 // env
 const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv)
+const env = new Env(nuxtEnv.public)
 ZhiWebBlogUtil.initEnv(env)
-// const logger = ZhiWebBlogUtil.zhiLog("index-page")
+// const logger = ZhiWebBlogUtil.zhiLog("detail-page")
+await ZhiWebBlogUtil.importLute(env.getStringEnv("VITE_APP_BASE"), env.getStringEnv("VITE_STATIC_VERSION"))
 
 // use
 const route = useRoute()

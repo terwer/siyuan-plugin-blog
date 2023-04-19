@@ -41,7 +41,7 @@ import Env from "zhi-env"
 // uses
 const appConfig = useAppConfig()
 const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv)
+const env = new Env(nuxtEnv.public)
 ZhiWebBlogUtil.initEnv(env)
 
 // props

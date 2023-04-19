@@ -26,6 +26,7 @@
 import LuteAdaptor from "./md-adaptor/LuteAdaptor"
 import ShowdownAdaptor from "./md-adaptor/ShowdownAdaptor"
 import ZhiCommonUtil from "./ZhiCommonUtil"
+import MarkdownAdaptor from "./md-adaptor/MarkdownAdaptor"
 
 /**
  * Markdown 处理工具类
@@ -36,17 +37,10 @@ import ZhiCommonUtil from "./ZhiCommonUtil"
  */
 class MarkdownUtil {
   private readonly logger
-  public mdAdaptor
+  private mdAdaptor: MarkdownAdaptor = new ShowdownAdaptor()
 
   constructor() {
     this.logger = ZhiCommonUtil.zhiLog("markdown-util")
-
-    const lute = new LuteAdaptor()
-    if (lute.isAvailable()) {
-      this.mdAdaptor = lute
-    } else {
-      this.mdAdaptor = new ShowdownAdaptor()
-    }
   }
 
   /**
@@ -67,6 +61,12 @@ class MarkdownUtil {
    * @param md - Markdown文本
    */
   public async renderHTML(md: string): Promise<string> {
+    const luteNew = new LuteAdaptor()
+    this.logger.debug("Lute status =>", luteNew.isAvailable())
+    if (luteNew.isAvailable()) {
+      this.mdAdaptor = luteNew
+    }
+
     this.logger.info(`Using ${this.getCurrentAdaptorName()} as markdown renderer`)
     return await this.mdAdaptor.renderMarkdownStr(md)
   }

@@ -38,7 +38,7 @@ import { SiyuanDevice } from "zhi-device"
  * 2 test 环境
  * 在 setup.ts 引用 require("../public/lib/lute/lute.min.js")
  *
- * 3 es 环境
+ * 3 es 环境（不推荐）
  *
  *   ```
  *   // https://stackoverflow.com/a/73702082/4037224
@@ -58,6 +58,9 @@ import { SiyuanDevice } from "zhi-device"
  *
  *   2023-04-09 - lute version 2.7.5 - update at April 9, 2023 09:32
  *
+ * 4 Nuxt3 环境
+ *   参考：https://github.com/88250/lute/issues/191
+ *
  * @see {@link https://github.com/88250/lute/tree/master/javascript lute}
  *
  * @author terwer
@@ -70,38 +73,18 @@ class LuteAdaptor implements MarkdownAdaptor {
   constructor() {
     this.logger = ZhiCommonUtil.zhiLog("lute-adaptor")
 
-    // 这里做个判断，如果有问题，需要自己在global加一个require
-    // let nodeRequire
-    // if (Module.createRequire) {
-    //   nodeRequire = Module.createRequire(import.meta.url)
-    // } else {
-    //   nodeRequire = global.require
-    // }
-
-    // if (!nodeRequire) {
-    //   this.logger.error("Lute cannot be used because of no global.require")
-    // } else {
-    //   try {
-    //     nodeRequire("zhi-common/lute.min.cjs")
-    //   } catch (e) {
-    //     try {
-    //       nodeRequire("./lute.min.cjs")
-    //       this.logger.error("Try require Lute in current path, development only")
-    //     } catch (e) {
-    //       this.logger.error("Lute nodeRequire failed, will not use lute")
-    //     }
-    //   }
-    // }
     const syWin = SiyuanDevice.siyuanWindow()
+    this.logger.debug("syWin=>", syWin)
     if (syWin.Lute) {
-      this.logger.info("Detected Lute is bundled, will use!")
+      this.logger.debug("Detected Lute is bundled, will use!")
+    } else {
+      this.logger.debug("Lute is not available!")
     }
   }
 
   isAvailable(): boolean {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return typeof Lute !== "undefined"
+    const syWin = SiyuanDevice.siyuanWindow()
+    return typeof syWin.Lute !== "undefined"
   }
 
   /**
@@ -122,13 +105,12 @@ class LuteAdaptor implements MarkdownAdaptor {
    */
   public async renderMarkdownStr(md: string): Promise<string> {
     if (!this.isAvailable()) {
-      this.logger.error("Lute is not available, will request api")
+      this.logger.error("Lute is not available, will return original md")
       return md
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const luteObj = Lute as any
+    const syWin = SiyuanDevice.siyuanWindow()
+    const luteObj = syWin.Lute
     const lute = luteObj.New()
 
     const renderers = {

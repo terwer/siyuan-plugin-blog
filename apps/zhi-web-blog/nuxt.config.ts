@@ -13,6 +13,7 @@ const distDir = isSiyuanBuild
 const isSsr = isVercelBuild
 // const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
 // const ssrServeStatic = isSiyuanBuild
+const staticV = "202304191333"
 
 console.log("isDev=>", isDev)
 console.log("appBase=>", appBase)
@@ -42,7 +43,13 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      link: [{ rel: "stylesheet", href: appBase + "lib/webfont/webfont.css" }],
+      link: [{ rel: "stylesheet", href: appBase + "lib/webfont/webfont.css?v=" + staticV }],
+      // script: [
+      //   {
+      //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
+      //     body: true,
+      //   },
+      // ],
     },
   },
   css: ["~/assets/vdoing/styles/index.styl"],
@@ -57,6 +64,7 @@ export default defineNuxtConfig({
     VITE_WORDPRESS_USERNAME: "",
     VITE_WORDPRESS_PASSWORD: "",
     public: {
+      VITE_STATIC_VERSION: staticV,
       VITE_APP_BASE: appBase,
       VITE_LOG_LEVEL: "INFO",
       VITE_DEBUG_MODE: false,
