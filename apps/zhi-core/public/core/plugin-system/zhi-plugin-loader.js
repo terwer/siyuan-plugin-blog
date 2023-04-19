@@ -89,7 +89,7 @@ async function readDir(path) {
 
 async function scanPlugins(pluginFolder) {
   const res = await readDir(pluginFolder)
-  log("readDir res=>", res)
+  // log("readDir res=>", res)
   if (!res) {
     return []
   }
@@ -113,7 +113,7 @@ async function scanPlugins(pluginFolder) {
 async function getZhiInternalPlugins() {
   const container = window.pluginSystemIocContainer
   const pluginFileManager = container.get("PluginFileManager")
-  log("pluginFileManager=>", pluginFileManager)
+  // log("pluginFileManager=>", pluginFileManager)
 
   const plugins = await scanPlugins(zhiPluginBase)
   if (!plugins || !plugins.length) {
@@ -122,7 +122,7 @@ async function getZhiInternalPlugins() {
   }
   const req = []
   for (const p of plugins) {
-    log("Reading plugin from filesystem: " + p)
+    log("Reading zhi core plugin from filesystem: " + p)
     const key = pluginFileManager.getFolderName(p)
     const f = async () => {
       const [manifest, script] = await Promise.all([
@@ -143,14 +143,14 @@ async function init() {
   // await syncPlugins()
 
   const container = window.pluginSystemIocContainer
-  const pluginSystem = container.get("PluginSystem")
+  // const pluginSystem = container.get("PluginSystem")
   const pluginLoader = container.get("PluginLoader")
-  log("Check plugin system version", container)
-  log("pluginSystem=>", pluginSystem)
-  log("pluginLoader=>", pluginLoader)
+  // log("Check plugin system version", container)
+  // log("pluginSystem=>", pluginSystem)
+  // log("pluginLoader=>", pluginLoader)
 
   const zhiInternalPlugins = await getZhiInternalPlugins()
-  log("zhiInternalPlugins=>", zhiInternalPlugins)
+  // log("zhiInternalPlugins=>", zhiInternalPlugins)
   await pluginLoader.loadEnabledPlugins(zhiInternalPlugins)
   log(`Loaded zhi theme internal enabled plugins: ${zhiInternalPlugins.map((p) => p.key).join(",")}`)
 }

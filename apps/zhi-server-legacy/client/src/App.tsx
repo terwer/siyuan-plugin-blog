@@ -23,29 +23,15 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi-core 主题核心模块
- */
+import React, { useEffect, useState } from "react"
+import VdoingLayout from "./layouts/vdoing"
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device"
+export const App: React.FC = () => {
+  const [clientMessage, setClientMessage] = useState("")
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
+  useEffect(() => {
+    setClientMessage("Hello From React2")
+  })
 
-const loadTheme = async (): Promise<void> => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
+  return <VdoingLayout header={111} main={<h1>{clientMessage}</h1>} footer={333}></VdoingLayout>
 }
-
-/**
- * 主题入口，由思源笔记自动触发，请勿主动调用
- */
-;(async () => {
-  await loadTheme()
-})()
-
-// export default loadTheme
-// export { Zhi }

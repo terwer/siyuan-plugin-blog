@@ -23,29 +23,15 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi-core 主题核心模块
- */
+// import { createRoot } from "react-dom/client"
+// import { App } from "./App"
+//
+// const container = document.getElementById("root")
+// const root = createRoot(container!)
+// root.render(<App />)
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device"
+import { App } from "./App"
+import { hydrateRoot } from "react-dom/client"
 
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
-
-const loadTheme = async (): Promise<void> => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
-}
-
-/**
- * 主题入口，由思源笔记自动触发，请勿主动调用
- */
-;(async () => {
-  await loadTheme()
-})()
-
-// export default loadTheme
-// export { Zhi }
+const container = document.getElementById("app")
+hydrateRoot(container!, <App />)

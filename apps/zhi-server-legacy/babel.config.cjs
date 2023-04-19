@@ -23,29 +23,8 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi-core 主题核心模块
- */
+const sharedConfig = require("jest-config-custom/babel.config.cjs")
 
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device"
-
-// 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
-
-const loadTheme = async (): Promise<void> => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
+module.exports = {
+  ...sharedConfig,
 }
-
-/**
- * 主题入口，由思源笔记自动触发，请勿主动调用
- */
-;(async () => {
-  await loadTheme()
-})()
-
-// export default loadTheme
-// export { Zhi }

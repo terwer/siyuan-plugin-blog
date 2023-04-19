@@ -25,37 +25,30 @@
 
 const path = require("path")
 const minimist = require("minimist")
-const { copy } = require("esbuild-plugin-copy")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const { copy } = require("esbuild-plugin-copy")
 const stylePlugin = require("esbuild-style-plugin")
-const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
-const isProduction = args.production || args.prod
 
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
+// for outer custom output for dev
+const baseDir = isWatch
+  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
+  : "./"
 const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
-
-const defineEnv = {
-  NODE_ENV: isProduction ? "production" : "development",
-  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-}
-const coreDefine = {
-  "import.meta.env": JSON.stringify(defineEnv),
-}
 
 /**
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(distDir, "theme.js"),
+  entryPoints: ["client/src/index.tsx"],
+  outfile: path.join(distDir, "app.js"),
   format: "esm",
-  define: { ...coreDefine },
+  bundle: true,
+  external: ["*.woff", "*.woff2", "*.ttf"],
   plugins: [
     dtsPlugin(),
-
     copy({
       // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
       // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
@@ -70,10 +63,6 @@ module.exports = {
         {
           from: ["./README.md"],
           to: [path.join(distDir, "/README.md")],
-        },
-        {
-          from: ["./package.json"],
-          to: [path.join(distDir, "/package.json")],
         },
       ],
       watch: true,

@@ -23,29 +23,48 @@
  * questions.
  */
 
-/**
- * @packageDocumentation
- * zhi-core 主题核心模块
- */
-
-import Zhi from "./theme/zhi"
-import DeviceDetection from "zhi-device"
+import React from "react"
 
 // 主题样式注入入口
-import "./style/common/fonts/webfont.css"
-import "./style/index.styl"
+import "../assets/vdoing/fonts/webfont.css"
+import "../assets/vdoing/styles/index.styl"
 
-const loadTheme = async (): Promise<void> => {
-  const zhi = new Zhi(DeviceDetection.getDevice())
-  await zhi.init()
+type VdoingLayoutProps = {
+  header: React.ReactNode
+  main: React.ReactNode
+  footer: React.ReactNode
+  props?: Record<string, any>
 }
 
 /**
- * 主题入口，由思源笔记自动触发，请勿主动调用
+ * Vdoing 布局
+ *
+ * @param header - 头部
+ * @param main - 正文
+ * @param footer - 底部
+ * @param props - 参数
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ * @constructor
  */
-;(async () => {
-  await loadTheme()
-})()
+const VdoingLayout: React.FC<VdoingLayoutProps> = ({ header, main, footer, props }) => {
+  return (
+    <div className={"theme-container"}>
+      <header>{header}</header>
+      <main>{main}</main>
+      <footer>{footer}</footer>
+      {props && (
+        <div>
+          {Object.entries(props).map(([key, value]) => (
+            <p key={key}>
+              {key}: {value}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
-// export default loadTheme
-// export { Zhi }
+export default VdoingLayout

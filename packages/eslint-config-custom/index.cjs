@@ -51,6 +51,7 @@ module.exports = {
     semi: "off",
     quotes: "off",
     "@typescript-eslint/no-this-alias": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "prettier/prettier": "error",
   },
 }

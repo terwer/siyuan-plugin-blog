@@ -13,12 +13,18 @@ pnpm siyuanBuild -F zhi-server-blog
 inside siyuan console
 
 ```js
+// entry file path
+// http://127.0.0.1:6806/appearance/themes/zhi/server/blog/dist/server/entry.mjs
+// Not work
+// await import("/appearance/themes/zhi/server/blog/dist/server/entry.mjs")
+
+// This works, but need system environment for node.js
 await customCmd.executeCommand("PORT=3333 node", ["./dist/server/entry.mjs"], {
     cwd: "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/blog",
 })
 ```
 
-dev
+for dev
 
 ```bash
 cd apps/zhi-server-blog

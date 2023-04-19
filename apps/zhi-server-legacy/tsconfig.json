@@ -1,0 +1,20 @@
+{
+  "extends": "../../packages/tsconfig/base.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
+    "outDir": "./lib",
+    "paths": [
+      {
+        "~/*": "./*"
+      }
+    ]
+  },
+  "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
