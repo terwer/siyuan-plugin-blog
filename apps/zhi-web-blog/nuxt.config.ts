@@ -65,6 +65,12 @@ export default defineNuxtConfig({
     },
   },
   ssr: isSsr,
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
+  router: {
+    options: {
+      hashMode: true,
+    },
+  },
   nitro: {
     output: {
       publicDir: distDir,

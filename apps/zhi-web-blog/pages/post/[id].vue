@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ currentPost.post.title }}</h1>
-    <div v-html="currentPost.post.description"></div>
+    <div v-html="currentPost.post.description" />
   </div>
 </template>
 
@@ -13,14 +13,14 @@ import { SiYuanApiAdaptor } from "zhi-siyuan-api"
 const nuxtEnv = useRuntimeConfig()
 const env = new Env(nuxtEnv)
 ZhiWebBlogUtil.initEnv(env)
-const logger = ZhiWebBlogUtil.zhiLog("index-page")
+// const logger = ZhiWebBlogUtil.zhiLog("index-page")
 
 // use
 const route = useRoute()
 
 // props
 const currentPost = reactive({
-  post: <Post>{},
+  post: {} as Post,
 })
 
 const fetch_getPost = async () => {

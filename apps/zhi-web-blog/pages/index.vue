@@ -9,7 +9,9 @@
     -->
     <div v-for="post in recentPosts.posts">
       <h1>
-        <NuxtLink :to="'/post/' + post.postid"> {{ post.title }} </NuxtLink>
+        <NuxtLink :to="'/post/' + post.postid">
+          {{ post.title }}
+        </NuxtLink>
       </h1>
     </div>
   </div>
@@ -28,9 +30,12 @@ ZhiWebBlogUtil.initEnv(env)
 const logger = ZhiWebBlogUtil.zhiLog("index-page")
 const common = ZhiWebBlogUtil.zhiCommon()
 
+// use
+const route = useRoute()
+
 // props
 const recentPosts = reactive({
-  posts: <Post[]>[],
+  posts: [] as Post[],
 })
 
 function hello(from: string): void {
@@ -40,9 +45,10 @@ function hello(from: string): void {
 
 const fetch_getRecentPosts = async () => {
   const num = 10
-  const page = 1
+  const page = route.query.p ?? 0
   const keyword = ""
 
+  logger.debug("current page", page)
   const blogApi = new SiYuanApiAdaptor(env)
   recentPosts.posts = await blogApi.getRecentPosts(num, page, keyword)
 }

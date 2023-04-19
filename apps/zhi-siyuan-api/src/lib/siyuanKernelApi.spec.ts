@@ -139,4 +139,11 @@ describe("SiyuanKernelApi", () => {
     })
     console.log("result=>", result)
   })
+
+  it("getRootBlocks", async () => {
+    const env = new Env(import.meta.env)
+    const kernelApi = new SiyuanKernelApi(env)
+    const result = await kernelApi.getRootBlocks(0, 10, "")
+    console.log("result=>", result)
+  })
 })
