@@ -39,7 +39,7 @@ class ShowdownAdaptor implements MarkdownAdaptor {
   private readonly converter
 
   constructor() {
-    this.logger = ZhiCommonUtil.zhiLog("lute-adaptor")
+    this.logger = ZhiCommonUtil.zhiLog("showdown-adaptor")
 
     this.converter = new showdown.Converter()
   }

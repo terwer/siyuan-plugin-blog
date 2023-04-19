@@ -1,6 +1,6 @@
 {
   "name": "zhi-common",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "type": "module",
   "description": "the library base for zhi related projects",
   "main": "./dist/index.js",

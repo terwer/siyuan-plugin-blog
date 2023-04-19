@@ -33,6 +33,17 @@ import Env from "zhi-env"
  * @author terwer
  * @since 1.0.0
  */
-class ZhiWebBlogUtil extends ZhiUtil {}
+class ZhiWebBlogUtil extends ZhiUtil {
+  /**
+   * 引入Lute
+   *
+   * @param basePath - 基本路径
+   * @param staticV - 资源版本号
+   */
+  public static async importLute(basePath: string, staticV: string) {
+    const luteImportUrl = basePath + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV
+    await import(/* @vite-ignore */ luteImportUrl)
+  }
+}
 
 export default ZhiWebBlogUtil
