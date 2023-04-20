@@ -26,7 +26,6 @@
 const path = require("path")
 const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const { copy } = require("esbuild-plugin-copy")
 const stylePlugin = require("esbuild-style-plugin")
 
 const args = minimist(process.argv.slice(2))
@@ -53,18 +52,6 @@ module.exports = {
       // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
       // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
       resolveFrom: "cwd",
-      assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [distDir],
-        },
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(distDir, "/README.md")],
-        },
-      ],
       watch: true,
     }),
 
