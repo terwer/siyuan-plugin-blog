@@ -1,0 +1,10 @@
+{
+  "name": "zhi-server-ssr",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "./node_modules/.bin/next start ./ -p 3000"
+  },
+  "dependencies": {
+    "next": "^13.3.0"
+  }
+}
