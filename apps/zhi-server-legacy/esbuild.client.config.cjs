@@ -48,13 +48,6 @@ module.exports = {
   external: ["*.woff", "*.woff2", "*.ttf"],
   plugins: [
     dtsPlugin(),
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      resolveFrom: "cwd",
-      watch: true,
-    }),
-
     stylePlugin(),
   ],
 }
