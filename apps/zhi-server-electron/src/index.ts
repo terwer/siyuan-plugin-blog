@@ -5,7 +5,7 @@ import ZhiBrowserWindow from "./lib/browser-window"
  */
 const init = () => {
   const zhiBrowserWindow = new ZhiBrowserWindow()
-  zhiBrowserWindow.init()
+  zhiBrowserWindow.initBrowserWindow()
   return "ok"
 }
 

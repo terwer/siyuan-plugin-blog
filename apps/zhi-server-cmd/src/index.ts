@@ -1,6 +1,12 @@
+import Cmd from "./lib"
+
 /**
- * zhi-cli 入口
+ * zhi-server-cmd 入口
  */
-export function hello() {
-  return "hello world"
+const init = async () => {
+  const cmd = new Cmd()
+  await cmd.initCmd()
+  return "ok"
 }
+
+export default init

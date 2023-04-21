@@ -26,6 +26,14 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 pnpm preview -F zhi-server-ssr
 ```
 
+## Start
+
+```js
+await zhiCmd.executeCommand("./node_modules/.bin/next", ["start", "./", "-p", "3000"], {
+  cwd: "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/ssr",
+})
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

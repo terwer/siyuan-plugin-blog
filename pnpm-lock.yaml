@@ -285,6 +285,19 @@ importers:
         version: link:../../packages/eslint-config-custom
 
   apps/zhi-server-cmd:
+    dependencies:
+      zhi-common:
+        specifier: workspace:*
+        version: link:../zhi-common
+      zhi-device:
+        specifier: workspace:*
+        version: link:../zhi-device
+      zhi-env:
+        specifier: workspace:*
+        version: link:../zhi-env
+      zhi-log:
+        specifier: workspace:*
+        version: link:../zhi-log
     devDependencies:
       api-docs:
         specifier: workspace:*

@@ -24,20 +24,16 @@
  */
 
 const path = require("path")
-// const minimist = require("minimist")
+const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
 const { copy } = require("esbuild-plugin-copy")
 
-// const args = minimist(process.argv.slice(2))
-// const isWatch = args.watch || args.w
-
-// for dist
-const baseDir = "./"
-const distDir = path.join(baseDir, "dist")
+const args = minimist(process.argv.slice(2))
+const isWatch = args.watch || args.w
 
 // for outer custom output for dev
-// const baseDir = isWatch ? "my-custom-absolute-path" : "./"
-// const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/cmd" : "./"
+const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 /**
  * 构建配置

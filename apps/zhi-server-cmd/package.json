@@ -30,5 +30,11 @@
     "eslint-config-custom": "workspace:*",
     "vitest-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*",
+    "zhi-device": "workspace:*",
+    "zhi-common": "workspace:*"
   }
 }

@@ -23,11 +23,23 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import init from "./index"
+import { ZhiUtil } from "zhi-common"
+import Env from "zhi-env"
 
-describe("zhi-server-cmd", () => {
-  it("index", () => {
-    expect(init()).toBe("ok")
-  })
-})
+/**
+ * 工具类统一入口，每个应用自己实现
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
+ */
+class ZhiServerCmdUtil extends ZhiUtil {
+  public static override zhiEnv(): Env {
+    if (!this.env) {
+      this.env = new Env(import.meta.env)
+    }
+    return this.env
+  }
+}
+
+export default ZhiServerCmdUtil

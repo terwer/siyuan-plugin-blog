@@ -53,7 +53,7 @@ class ZhiBrowserWindow {
    * @author terwer
    * @since 1.0.0
    */
-  public init() {
+  public initBrowserWindow() {
     SiyuanDevice.siyuanWindow().zhiWindow = this.windowManager
     this.logger.info("zhiWindow mounted")
     return "ok"

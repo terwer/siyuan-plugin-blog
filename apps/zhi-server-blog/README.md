@@ -19,7 +19,7 @@ inside siyuan console
 // await import("/appearance/themes/zhi/server/blog/dist/server/entry.mjs")
 
 // This works, but need system environment for node.js
-await customCmd.executeCommand("PORT=3333 node", ["./dist/server/entry.mjs"], {
+await zhiCmd.executeCommand("PORT=3333 node", ["./dist/server/entry.mjs"], {
     cwd: "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/blog",
 })
 ```

@@ -26,6 +26,14 @@
         "importType": "import",
         "runAs": ["Siyuan_MainWindow"],
         "order": 3
+      },
+      {
+        "libpath": "server/cmd/index.js",
+        "baseType": "ZhiTheme",
+        "format": "esm",
+        "importType": "import",
+        "runAs": ["Siyuan_MainWindow"],
+        "order": 4
       }
     ],
     "web": [],

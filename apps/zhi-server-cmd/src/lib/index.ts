@@ -23,11 +23,29 @@
  * questions.
  */
 
-import { describe, expect, it } from "vitest"
-import init from "./index"
+import CustomCmd from "./customCmd"
+import ZhiServerCmdUtil from "./util/ZhiServerCmdUtil"
+import { SiyuanDevice } from "zhi-device"
 
-describe("zhi-server-cmd", () => {
-  it("index", () => {
-    expect(init()).toBe("ok")
-  })
-})
+class Cmd {
+  private readonly logger
+  private readonly common
+  constructor() {
+    this.logger = ZhiServerCmdUtil.zhiLog("cmd")
+    this.common = ZhiServerCmdUtil.zhiCommon()
+  }
+
+  /**
+   * 命令注册
+   *
+   * @author terwer
+   * @since 1.0.0
+   */
+  public async initCmd() {
+    SiyuanDevice.siyuanWindow().zhiCmd = new CustomCmd()
+    this.logger.info("zhiCmd mounted")
+    return "ok"
+  }
+}
+
+export default Cmd
