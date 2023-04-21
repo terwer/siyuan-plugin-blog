@@ -1,0 +1,40 @@
+{
+  "name": "zhi-server-cmd",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "enhanced cmd libiary",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-cmd",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "server",
+    "cmd"
+  ],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-cmd",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-server-cmd && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-server-cmd/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-server-cmd\n---' | cat - ../zhi-docs/src/api/zhi-server-cmd/index.md > ../zhi-docs/src/api/zhi-server-cmd/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "vitest-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*",
+    "zhi-device": "workspace:*",
+    "zhi-common": "workspace:*"
+  }
+}

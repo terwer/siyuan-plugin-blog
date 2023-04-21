@@ -1,0 +1,34 @@
+{
+  "name": "zhi-server-ssr",
+  "description": "a ssr blog",
+  "version": "0.1.0",
+  "private": true,
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-ssr",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "server",
+    "ssr"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "previewDev": "next start",
+    "preview": "bash ./preview.sh",
+    "lint": "next lint"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*"
+  },
+  "dependencies": {
+    "@types/node": "18.15.13",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "next": "13.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.4"
+  }
+}

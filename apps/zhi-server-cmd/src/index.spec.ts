@@ -23,31 +23,11 @@
  * questions.
  */
 
-const path = require("path")
-const minimist = require("minimist")
-const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const stylePlugin = require("esbuild-style-plugin")
+import { describe, expect, it } from "vitest"
+import init from "./index"
 
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-// for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
-
-/**
- * 构建配置
- */
-module.exports = {
-  entryPoints: ["client/src/index.tsx"],
-  outfile: path.join(distDir, "app.js"),
-  format: "esm",
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf"],
-  plugins: [
-    dtsPlugin(),
-    stylePlugin(),
-  ],
-}
+describe("zhi-server-cmd", () => {
+  it("index", () => {
+    expect(init()).toBe("ok")
+  })
+})

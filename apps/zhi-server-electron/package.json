@@ -1,0 +1,40 @@
+{
+  "name": "zhi-server-electron",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "a simple api for electron",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-electron",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "server",
+    "electron"
+  ],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-electron",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-server-electron && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-server-electron/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-server-electron\n---' | cat - ../zhi-docs/src/api/zhi-server-electron/index.md > ../zhi-docs/src/api/zhi-server-electron/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "vitest-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*",
+    "zhi-device": "workspace:*",
+    "zhi-common": "workspace:*"
+  }
+}

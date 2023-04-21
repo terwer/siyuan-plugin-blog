@@ -23,31 +23,41 @@
  * questions.
  */
 
-const path = require("path")
-const minimist = require("minimist")
-const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const stylePlugin = require("esbuild-style-plugin")
-
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-// for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+import ZhiServerElectronUtil from "../util/ZhiServerElectronUtil"
+import WindowManager from "./WindowManager"
+import { SiyuanDevice } from "zhi-device"
 
 /**
- * 构建配置
+ * 这里统一挂载一个方法，可以打开 Electron 的 BrowserWindow
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
  */
-module.exports = {
-  entryPoints: ["client/src/index.tsx"],
-  outfile: path.join(distDir, "app.js"),
-  format: "esm",
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf"],
-  plugins: [
-    dtsPlugin(),
-    stylePlugin(),
-  ],
+class ZhiBrowserWindow {
+  private readonly logger
+  private readonly common
+
+  private readonly windowManager
+
+  constructor() {
+    this.logger = ZhiServerElectronUtil.zhiLog("zhi-browser-window")
+    this.common = ZhiServerElectronUtil.zhiCommon()
+
+    this.windowManager = new WindowManager()
+  }
+
+  /**
+   * 挂载 BrowserWindow
+   *
+   * @author terwer
+   * @since 1.0.0
+   */
+  public initBrowserWindow() {
+    SiyuanDevice.siyuanWindow().zhiWindow = this.windowManager
+    this.logger.info("zhiWindow mounted")
+    return "ok"
+  }
 }
+
+export default ZhiBrowserWindow

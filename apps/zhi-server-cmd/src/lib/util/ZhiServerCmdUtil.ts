@@ -23,31 +23,23 @@
  * questions.
  */
 
-const path = require("path")
-const minimist = require("minimist")
-const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const stylePlugin = require("esbuild-style-plugin")
-
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
-
-// for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+import { ZhiUtil } from "zhi-common"
+import Env from "zhi-env"
 
 /**
- * 构建配置
+ * 工具类统一入口，每个应用自己实现
+ *
+ * @public
+ * @author terwer
+ * @since 1.0.0
  */
-module.exports = {
-  entryPoints: ["client/src/index.tsx"],
-  outfile: path.join(distDir, "app.js"),
-  format: "esm",
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf"],
-  plugins: [
-    dtsPlugin(),
-    stylePlugin(),
-  ],
+class ZhiServerCmdUtil extends ZhiUtil {
+  public static override zhiEnv(): Env {
+    if (!this.env) {
+      this.env = new Env(import.meta.env)
+    }
+    return this.env
+  }
 }
+
+export default ZhiServerCmdUtil

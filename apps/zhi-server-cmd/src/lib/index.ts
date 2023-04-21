@@ -23,31 +23,29 @@
  * questions.
  */
 
-const path = require("path")
-const minimist = require("minimist")
-const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const stylePlugin = require("esbuild-style-plugin")
+import CustomCmd from "./customCmd"
+import ZhiServerCmdUtil from "./util/ZhiServerCmdUtil"
+import { SiyuanDevice } from "zhi-device"
 
-const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
+class Cmd {
+  private readonly logger
+  private readonly common
+  constructor() {
+    this.logger = ZhiServerCmdUtil.zhiLog("cmd")
+    this.common = ZhiServerCmdUtil.zhiCommon()
+  }
 
-// for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
-
-/**
- * 构建配置
- */
-module.exports = {
-  entryPoints: ["client/src/index.tsx"],
-  outfile: path.join(distDir, "app.js"),
-  format: "esm",
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf"],
-  plugins: [
-    dtsPlugin(),
-    stylePlugin(),
-  ],
+  /**
+   * 命令注册
+   *
+   * @author terwer
+   * @since 1.0.0
+   */
+  public async initCmd() {
+    SiyuanDevice.siyuanWindow().zhiCmd = new CustomCmd()
+    this.logger.info("zhiCmd mounted")
+    return "ok"
+  }
 }
+
+export default Cmd
