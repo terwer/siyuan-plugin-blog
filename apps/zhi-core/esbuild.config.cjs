@@ -34,7 +34,8 @@ const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
 
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
+// const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
+const baseDir = isWatch ? "C:/Users/Terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi" : "./"
 const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 const defineEnv = {

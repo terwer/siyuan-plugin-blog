@@ -203,16 +203,16 @@ class SiyuanDevice {
     let fullJsonPath = jsPath
     switch (type) {
       case BasePathTypeEnum.BasePathType_Appearance:
-        fullJsonPath = this.joinPath(this.siyuanAppearanceRelativePath(), jsPath)
+        fullJsonPath = this.browserJoinPath(this.siyuanAppearanceRelativePath(), jsPath)
         break
       case BasePathTypeEnum.BasePathType_Data:
-        fullJsonPath = this.joinPath(this.siyuanDataRelativePath(), jsPath)
+        fullJsonPath = this.browserJoinPath(this.siyuanDataRelativePath(), jsPath)
         break
       case BasePathTypeEnum.BasePathType_Themes:
-        fullJsonPath = this.joinPath(this.siyuanThemeRelativePath(), jsPath)
+        fullJsonPath = this.browserJoinPath(this.siyuanThemeRelativePath(), jsPath)
         break
       case BasePathTypeEnum.BasePathType_ZhiTheme:
-        fullJsonPath = this.joinPath(this.zhiThemeRelativePath(), jsPath)
+        fullJsonPath = this.browserJoinPath(this.zhiThemeRelativePath(), jsPath)
         break
       default:
         throw new Error("type must be provided")
@@ -232,16 +232,16 @@ class SiyuanDevice {
     let fullJsonPath = jsonPath
     switch (type) {
       case BasePathTypeEnum.BasePathType_Appearance:
-        fullJsonPath = this.joinPath(this.siyuanAppearanceRelativePath(), jsonPath)
+        fullJsonPath = this.browserJoinPath(this.siyuanAppearanceRelativePath(), jsonPath)
         break
       case BasePathTypeEnum.BasePathType_Data:
-        fullJsonPath = this.joinPath(this.siyuanDataRelativePath(), jsonPath)
+        fullJsonPath = this.browserJoinPath(this.siyuanDataRelativePath(), jsonPath)
         break
       case BasePathTypeEnum.BasePathType_Themes:
-        fullJsonPath = this.joinPath(this.siyuanThemeRelativePath(), jsonPath)
+        fullJsonPath = this.browserJoinPath(this.siyuanThemeRelativePath(), jsonPath)
         break
       case BasePathTypeEnum.BasePathType_ZhiTheme:
-        fullJsonPath = this.joinPath(this.zhiThemeRelativePath(), jsonPath)
+        fullJsonPath = this.browserJoinPath(this.zhiThemeRelativePath(), jsonPath)
         break
       default:
         throw new Error("type must be provided")
@@ -295,6 +295,7 @@ class SiyuanDevice {
   public static async importZhiThemeJs(jsPath: string) {
     return await this.importJs(jsPath, BasePathTypeEnum.BasePathType_ZhiTheme)
   }
+
   // =========================
   // import start
   // =========================
@@ -312,6 +313,10 @@ class SiyuanDevice {
       }
     }
 
+    return this.browserJoinPath(...paths)
+  }
+
+  public static browserJoinPath(...paths: string[]): string {
     return paths.join(BrowserUtil.BrowserSeperator)
   }
 
@@ -345,7 +350,7 @@ class SiyuanDevice {
     if (!syWin) {
       throw new Error("Not in siyuan env")
     }
-    return BrowserUtil.isElectron() ? "/" : ""
+    return ""
   }
 
   /**
@@ -363,7 +368,7 @@ class SiyuanDevice {
     if (!syWin) {
       throw new Error("Not in siyuan env")
     }
-    return this.joinPath(BrowserUtil.isElectron() ? "/" : "", "appearance")
+    return this.browserJoinPath("", "appearance")
   }
 
   /**
@@ -395,7 +400,7 @@ class SiyuanDevice {
     if (!syWin) {
       throw new Error("Not in siyuan env")
     }
-    return this.joinPath(BrowserUtil.isElectron() ? "/" : "", "appearance", "themes")
+    return this.browserJoinPath("", "appearance", "themes")
   }
 
   /**
@@ -409,7 +414,7 @@ class SiyuanDevice {
    * zhi 主题目录 - 相对路径
    */
   public static zhiThemeRelativePath() {
-    return this.joinPath(this.siyuanThemeRelativePath(), "zhi")
+    return this.browserJoinPath(this.siyuanThemeRelativePath(), "zhi")
   }
 }
 
