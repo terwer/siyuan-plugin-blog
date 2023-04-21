@@ -41,7 +41,7 @@ const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["client/src/index.tsx"],
+  entryPoints: ["src/client/index.tsx"],
   outfile: path.join(distDir, "app.js"),
   format: "esm",
   bundle: true,

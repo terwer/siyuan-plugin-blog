@@ -23,15 +23,46 @@
  * questions.
  */
 
-import React, { useEffect, useState } from "react"
-import VdoingLayout from "./layouts/vdoing"
+import React from "react"
+import Base from "./base"
+import { NavLink } from "react-router-dom"
 
-export const App: React.FC = () => {
-  const [clientMessage, setClientMessage] = useState("")
-
-  useEffect(() => {
-    setClientMessage("Hello From React2")
-  })
-
-  return <VdoingLayout header={111} main={<h1>{clientMessage}</h1>} footer={333}></VdoingLayout>
+interface Styles {
+  container: React.CSSProperties
+  title: React.CSSProperties
+  link: React.CSSProperties
 }
+
+const styles: Styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 50,
+    color: "#444",
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  link: {
+    marginTop: 20,
+    fontSize: 20,
+    color: "#666",
+  },
+}
+
+const NotFound = () => {
+  return (
+    <Base>
+      <div style={styles.container}>
+        <div style={styles.title}>404 - Not Found</div>
+        <NavLink to="/" style={styles.link}>
+          Return to home page
+        </NavLink>
+      </div>
+    </Base>
+  )
+}
+
+export default NotFound

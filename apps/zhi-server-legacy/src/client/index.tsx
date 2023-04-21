@@ -23,15 +23,11 @@
  * questions.
  */
 
-// import { createRoot } from "react-dom/client"
-// import { App } from "./App"
-//
-// const container = document.getElementById("root")
-// const root = createRoot(container!)
-// root.render(<App />)
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import routes from "../routes"
 
-import { App } from "./App"
-import { hydrateRoot } from "react-dom/client"
-
+const router = createBrowserRouter(routes)
 const container = document.getElementById("app")
-hydrateRoot(container!, <App />)
+ReactDOM.hydrateRoot(container!, <RouterProvider router={router} />)

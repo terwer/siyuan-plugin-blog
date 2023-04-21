@@ -34,8 +34,6 @@ const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
 
-const isNodeBuild = false
-
 // for outer custom output for dev
 const baseDir = isWatch
   ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
@@ -58,9 +56,17 @@ module.exports = {
   outfile: path.join(distDir, "server.js"),
   format: "esm",
   define: { ...coreDefine },
-  // banner: {
-  //   js: ' (() => new EventSource("http://127.0.0.1:3232").addEventListener("change", e => { location.reload() }))();',
-  // },
+  banner: {
+    js: `
+        import path from "path";
+        import { fileURLToPath } from 'url';
+        import { createRequire as topLevelCreateRequire } from 'module';
+        
+        const require = topLevelCreateRequire(import.meta.url);
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        `,
+  },
   bundle: true,
   external: ["*.woff", "*.woff2", "*.ttf", ".styl"],
   platform: "node",

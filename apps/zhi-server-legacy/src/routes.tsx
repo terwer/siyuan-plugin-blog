@@ -22,10 +22,47 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
 
-const server = await zhiImport("/server/legacy/server.js")
-server()
+import React from "react"
+import { json, Route } from "react-router-dom"
+import NotFound from "./pages/404"
+import Home from "./pages/home"
+import Post from "./pages/post"
 
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()
+interface Route {
+  path: string
+  loader: () => Promise<any>
+  Component: React.FC
+}
+
+const routes: Route[] = [
+  {
+    path: "/",
+    loader: async () => {
+      return json({ message: "Welcome to React Router!" })
+    },
+    Component() {
+      return <Home />
+    },
+  },
+  {
+    path: "/post/:postId",
+    loader: async () => {
+      return json({ message: "Welcome to Post Detail!" })
+    },
+    Component() {
+      return <Post />
+    },
+  },
+  {
+    path: "*",
+    loader: async () => {
+      return json({})
+    },
+    Component() {
+      return <NotFound />
+    },
+  },
+]
+
+export default routes

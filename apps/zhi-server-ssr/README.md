@@ -29,8 +29,30 @@ pnpm preview -F zhi-server-ssr
 ## Start
 
 ```js
-await zhiCmd.executeCommand("./node_modules/.bin/next", ["start", "./", "-p", "3000"], {
-  cwd: "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/ssr",
+const basePath = SiyuanDevice.zhiThemePath()
+const result = await zhiCmd.executeCommand("./node_modules/.bin/next", ["start", "./", "-p", "3000"], {
+  cwd: `${basePath}/server/ssr`,
+  silent: true,
+  env: {
+    NODE_PATH: `${basePath}/server/ssr/node_modules`,
+  },
+})
+// console.log("blog server is serving...")
+
+const basePath = SiyuanDevice.zhiThemePath()
+await zhiCmd.executeCommandWithSpawn("./node_modules/.bin/next", ["start", "./", "-p", "3000"], {
+  cwd: `${basePath}/server/ssr`,
+  env: {
+    NODE_PATH: `${basePath}/server/ssr/node_modules`,
+  },
+})
+
+await zhiCmd.executeCommandWithBundledNode("./node_modules/next/dist/bin/next", ["start", "./", "-p", "3000"], {
+  cwd: `${basePath}/server/ssr`,
+  silent: true,
+  env: {
+    NODE_PATH: `${basePath}/server/ssr/node_modules`,
+  },
 })
 ```
 

@@ -22,10 +22,25 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
 
-const server = await zhiImport("/server/legacy/server.js")
-server()
+import React from "react"
+import Base from "./base"
+import { useLoaderData, useLocation } from "react-router-dom"
 
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()
+const Home: React.FC = () => {
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const page = queryParams.get("p") ?? 0
+
+  const data = useLoaderData() as any
+
+  return (
+    <Base>
+      <p>
+        This is home2 - {data.message} - {page}
+      </p>
+    </Base>
+  )
+}
+
+export default Home

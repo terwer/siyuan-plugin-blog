@@ -22,10 +22,33 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
 
-const server = await zhiImport("/server/legacy/server.js")
-server()
+import React from "react"
 
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()
+interface BaseProps {
+  children: React.ReactNode
+}
+
+/**
+ * 所有页面的基类
+ *
+ * @param children
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+const Base: React.FC<BaseProps> = ({ children }) => {
+  return (
+    <div>
+      <header>
+        <h1>This is the header</h1>
+      </header>
+      <main>{children}</main>
+      <footer>
+        <p>This is the footer</p>
+      </footer>
+    </div>
+  )
+}
+
+export default Base

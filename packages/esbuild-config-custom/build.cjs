@@ -5,6 +5,7 @@ const esbuild = require("esbuild")
 const minimist = require("minimist")
 const { existsSync } = require("fs")
 const getNormalizedEnvDefines = require("./utils.cjs")
+const { ServeOnRequestArgs } = require("esbuild")
 
 /**
  *  zhi 主题构建
@@ -63,7 +64,7 @@ class ZhiBuild {
           if (firstBuildFinished.size === 0) {
             firstBuildFinished.add(type)
             status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
-          }else{
+          } else {
             // esbuild problem matcher extension is listening for this log, once this is logged, it will open the Extension Host
             // So we have to assure only printing this when both extension and webview have been built
             status(`build hot reloaded in ${Date.now() - buildStartTime} ms.`)
@@ -148,12 +149,16 @@ class ZhiBuild {
       // Enable watch mode
       console.log("watch mode enabled")
       await context.watch()
+      console.log("esbuild is watching...")
 
       // Enable serve mode
-      await context.serve()
-      console.log("serve enabled")
+      // const servePost = 3232
+      // await context.serve({
+      //   port: servePost,
+      //   host: "127.0.0.1"
+      // })
+      // console.log(`esbuild is serving on ${servePost} ...`)
 
-      console.log('watching...')
     } else {
       await esbuild.build(esbuildConfig)
       console.log("ZhiBuild process finished")

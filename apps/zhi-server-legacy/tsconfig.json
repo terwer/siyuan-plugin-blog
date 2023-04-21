@@ -11,10 +11,10 @@
     "outDir": "./lib",
     "paths": [
       {
-        "~/*": "./*"
+        "~/*": "./*",
       }
     ]
   },
-  "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts", "**/*.tsx"],
+  "include": ["env.d.ts", "**/*.ts", "**/**/*.ts", "**/*.spec.ts", "**/**/*.spec.ts", "**/*.tsx", "**/**/*.tsx"],
   "exclude": ["node_modules"]
 }
