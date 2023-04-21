@@ -20,12 +20,20 @@
     ],
     "server": [
       {
-        "libpath": "server/legacy/start.js",
+        "libpath": "server/electron/index.js",
         "baseType": "ZhiTheme",
         "format": "esm",
         "importType": "import",
         "runAs": ["Siyuan_MainWindow"],
         "order": 3
+      },
+      {
+        "libpath": "server/legacy/start.js",
+        "baseType": "ZhiTheme",
+        "format": "esm",
+        "importType": "import",
+        "runAs": ["Siyuan_MainWindow"],
+        "order": 4
       }
     ],
     "web": [],

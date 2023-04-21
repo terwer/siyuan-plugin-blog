@@ -1,7 +1,17 @@
 {
   "name": "zhi-server-ssr",
+  "description": "a ssr blog",
   "version": "0.1.0",
   "private": true,
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-ssr",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [
+    "zhi",
+    "server",
+    "ssr"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
