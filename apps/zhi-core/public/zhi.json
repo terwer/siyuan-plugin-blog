@@ -36,7 +36,7 @@
         "order": 4
       },
       {
-        "libpath": "server/legacy/start.js",
+        "libpath": "server/custom/start.js",
         "baseType": "ZhiTheme",
         "format": "esm",
         "importType": "import",

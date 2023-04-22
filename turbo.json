@@ -31,6 +31,9 @@
     "serverBuild": {
       "cache": false
     },
+    "localBuild": {
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^build"]
     },

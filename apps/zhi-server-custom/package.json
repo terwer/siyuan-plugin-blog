@@ -1,0 +1,53 @@
+{
+  "name": "zhi-server-custom",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "a ssr solution using electron bundled node",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-custom",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [],
+  "scripts": {
+    "dev": "pnpm clientDev",
+    "clientDev": "zhi-build -c esbuild.client.config.cjs --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/static/blog",
+    "serverDev": "zhi-build -c esbuild.server.config.cjs --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/custom",
+    "nodeDev": "zhi-build -c esbuild.node.config.cjs --watch",
+    "build": "pnpm clientBuild && pnpm serverBuild",
+    "localBuild": "pnpm localClientBuild && pnpm localServerBuild",
+    "clientBuild": "zhi-build -c esbuild.client.config.cjs --production",
+    "localClientBuild": "zhi-build -c esbuild.client.config.cjs --production --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/static/blog",
+    "serverBuild": "zhi-build -c esbuild.server.config.cjs --production",
+    "localServerBuild": "zhi-build -c esbuild.server.config.cjs --production --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/custom",
+    "start": "node dist/server/server.js",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-custom",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-server-custom && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-server-custom/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-server-custom\n---' | cat - ../zhi-docs/src/api/zhi-server-custom/index.md > ../zhi-docs/src/api/zhi-server-custom/README.md"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@types/reload": "^3.2.0",
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "vitest-config-custom": "workspace:*"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
+    "zhi-common": "workspace:*",
+    "zhi-device": "workspace:*",
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*"
+  }
+}

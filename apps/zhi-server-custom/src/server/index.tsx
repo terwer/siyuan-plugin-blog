@@ -23,7 +23,7 @@
  * questions.
  */
 
-import ZhiServerLegacyUtil from "../util/ZhiServerLegacyUtil"
+import ZhiServerCustomUtil from "../util/ZhiServerCustomUtil"
 import { SiyuanDevice } from "zhi-device"
 import express from "express"
 import { createStaticHandler, createStaticRouter, StaticRouterProvider } from "react-router-dom/server"
@@ -44,8 +44,8 @@ class ZhiSsrServer {
   private readonly env
 
   constructor() {
-    this.env = ZhiServerLegacyUtil.zhiEnv()
-    this.logger = ZhiServerLegacyUtil.zhiLog("zhi-ssr-server")
+    this.env = ZhiServerCustomUtil.zhiEnv()
+    this.logger = ZhiServerCustomUtil.zhiLog("zhi-ssr-server")
   }
 
   init(base?: string, p?: number) {
@@ -55,7 +55,7 @@ class ZhiSsrServer {
     const handler = createStaticHandler(routes)
 
     // 指定静态文件目录
-    const staticPath = SiyuanDevice.joinPath(base ?? SiyuanDevice.zhiThemePath(), "/server/legacy")
+    const staticPath = SiyuanDevice.joinPath(base ?? SiyuanDevice.zhiThemePath(), "/static/blog")
     this.logger.info("staticPath=>", staticPath)
     app.use("/public", express.static(staticPath))
 
