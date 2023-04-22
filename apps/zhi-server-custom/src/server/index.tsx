@@ -104,6 +104,7 @@ class ZhiSsrServer {
       // `
       // }
       const template = <T extends { appHtml: string; staticV: string }>({ appHtml, staticV }: T) => `
+zhi
         <html lang="zh">
           <head>
             <title>zhi-blog-ssr</title>

@@ -23,39 +23,39 @@
  * questions.
  */
 
-const path = require("path")
-const minimist = require("minimist")
-const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const { copy } = require("esbuild-plugin-copy")
-const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
+import path from "path"
+import minimist from "minimist"
+import { dtsPlugin } from "esbuild-plugin-d.ts"
+import { copy } from "esbuild-plugin-copy"
+import vuePlugin from "esbuild-plugin-vue3"
+import aliasPlugin from "@chialab/esbuild-plugin-alias"
 
 const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
+const outDir = args.outDir || args.o
 
 // for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+const baseDir = outDir ?? "./"
+const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 
-const defineEnv = {
-  NODE_ENV: isProduction ? "production" : "development",
-  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-}
-const coreDefine = {
-  "import.meta.env": JSON.stringify(defineEnv),
-}
+// const defineEnv = {
+//   NODE_ENV: isProduction ? "production" : "development",
+//   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+// }
+// const coreDefine = {
+//   "import.meta.env": JSON.stringify(defineEnv),
+// }
 
 /**
  * 构建配置
  */
-module.exports = {
+export default {
   esbuildConfig: {
-    entryPoints: ["src/server/index.tsx"],
+    entryPoints: ["src/server/index.ts"],
     outfile: path.join(distDir, "server.js"),
     format: "esm",
-    define: { ...coreDefine },
+    platform: "node",
+    // define: { ...coreDefine },
     banner: {
       js: `
         import path from "path";
@@ -67,11 +67,12 @@ module.exports = {
         const __dirname = path.dirname(__filename);
         `,
     },
-    bundle: true,
-    external: ["*.woff", "*.woff2", "*.ttf", ".styl"],
-    platform: "node",
     plugins: [
       dtsPlugin(),
+      vuePlugin(),
+      aliasPlugin({
+        vue: "vue/dist/vue.esm-bundler.js",
+      }),
       copy({
         // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
         // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
@@ -79,13 +80,21 @@ module.exports = {
         assets: [
           // copy one file
           {
-            from: ["./node-start.mjs"],
-            to: [path.join(distDir, "/node-start.mjs")],
+            from: ["./public/start.js"],
+            to: [path.join(distDir, "/start.js")],
           },
         ],
         watch: true,
       }),
+      inlineImage({
+        limit: 5000,
+        extensions: ["png", "jpg", "jpeg", "gif", "svg", "webp"],
+      }),
     ],
   },
-  customConfig: {},
+  customConfig: {
+    distDir: distDir,
+    servePort: 3232,
+    isServe: true,
+  },
 }

@@ -9,10 +9,24 @@
   "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-vue3-ssr",
   "author": "terwer",
   "license": "GPL",
-  "keywords": [],
+  "keywords": [
+    "vue3",
+    "ssr",
+    "zhi",
+    "blog"
+  ],
   "scripts": {
-    "dev": "zhi-build --watch",
-    "build": "zhi-build --production",
+    "dev": "pnpm clientDev",
+    "clientDev": "zhi-build -c esbuild.client.config.mjs --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog",
+    "build": "pnpm clientBuild && pnpm serverBuild",
+    "localBuild": "pnpm localClientBuild && pnpm localServerBuild",
+    "nodeBuild": "pnpm clientBuild && pnpm nodeServerBuild",
+    "clientBuild": "zhi-build -c esbuild.client.config.mjs --production",
+    "localClientBuild": "zhi-build -c esbuild.client.config.mjs --production --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog",
+    "serverBuild": "zhi-build -c esbuild.server.config.mjs --production",
+    "nodeServerBuild": "zhi-build -c esbuild.node.config.mjs --production",
+    "localServerBuild": "zhi-build -c esbuild.server.config.mjs --production --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog",
+    "start": "node dist/server/server.js",
     "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-vue3-ssr",
     "lint": "eslint 'src/**/*.{ts,js}' --fix",
     "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
@@ -21,10 +35,17 @@
     "mdfmt": "echo '---\ntitle: zhi-server-vue3-ssr\n---' | cat - ../zhi-docs/src/api/zhi-server-vue3-ssr/index.md > ../zhi-docs/src/api/zhi-server-vue3-ssr/README.md"
   },
   "devDependencies": {
+    "@chialab/esbuild-plugin-alias": "^0.17.2",
     "api-docs": "workspace:*",
     "esbuild-config-custom": "workspace:*",
+    "esbuild-plugin-vue3": "^0.3.2",
     "eslint-config-custom": "workspace:*",
-    "vitest-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "vitest-config-custom": "workspace:*"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "vue": "^3.2.47",
+    "zhi-device": "workspace:*"
   }
 }

@@ -25,10 +25,21 @@
 
 import { Headers, Request, Response } from "node-fetch"
 
-// 安装nodemon
+// 1 构建代码
+// pnpm nodeBuild -F zhi-server-vue3-ssr
+
+// 2 拷贝客户端、服务端所有代码到同一个文件夹
+// 如果不复制代码，可跳过这一步
+// cp -r /Users/terwer/Documents/mydocs/zhi/apps/zhi-server-vue3-ssr/dist/ /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog
+// 注意后面的路径要和下面的 basePath 对应
+
+// 3 安装nodemon
 // pnpm init
 // pnpm install node-fetch nodemon -D
 // "dev": "nodemon node-start.mjs"
+
+// 4 运行
+// pnpm dev
 
 // 兼容 Node
 if (!global.fetch) {
@@ -38,8 +49,8 @@ if (!global.fetch) {
 }
 
 ; (async () => {
-  const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi"
+  const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog"
   const port = 3333
-  const server = await import(`file://${basePath}/server/custom/server.js`)
+  const server = await import(`file://${basePath}/server.js`)
   server.default(basePath, port)
 })()

@@ -18,6 +18,7 @@
     "clientBuild": "turbo run clientBuild",
     "serverBuild": "turbo run serverBuild",
     "localBuild": "turbo run localBuild",
+    "nodeBuild": "turbo run nodeBuild",
     "graph": " turbo run build --graph=dependency-graph.png",
     "preview": "turbo run preview",
     "doc": "turbo run doc",

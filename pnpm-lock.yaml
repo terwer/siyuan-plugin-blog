@@ -430,13 +430,29 @@ importers:
         version: link:../../packages/eslint-config-custom
 
   apps/zhi-server-vue3-ssr:
+    dependencies:
+      express:
+        specifier: ^4.18.2
+        version: registry.npmjs.org/express@4.18.2
+      vue:
+        specifier: ^3.2.47
+        version: registry.npmjs.org/vue@3.2.47
+      zhi-device:
+        specifier: workspace:*
+        version: link:../zhi-device
     devDependencies:
+      '@chialab/esbuild-plugin-alias':
+        specifier: ^0.17.2
+        version: registry.npmjs.org/@chialab/esbuild-plugin-alias@0.17.2
       api-docs:
         specifier: workspace:*
         version: link:../../packages/api-docs
       esbuild-config-custom:
         specifier: workspace:*
         version: link:../../packages/esbuild-config-custom
+      esbuild-plugin-vue3:
+        specifier: ^0.3.2
+        version: registry.npmjs.org/esbuild-plugin-vue3@0.3.2
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
@@ -583,6 +599,9 @@ importers:
       esbuild-plugin-ifdef:
         specifier: ^1.0.1
         version: registry.npmjs.org/esbuild-plugin-ifdef@1.0.1
+      esbuild-plugin-inline-image:
+        specifier: ^0.0.9
+        version: registry.npmjs.org/esbuild-plugin-inline-image@0.0.9
       minimist:
         specifier: ^1.2.8
         version: registry.npmjs.org/minimist@1.2.8
@@ -2477,6 +2496,43 @@ packages:
     resolution: {integrity: sha512-Tbsj02wXCbqGmzdnXNk0SOF19ChhRU70BsroIi4Pm6Ehp56in6vch94mfbdQ17DozxkL3BAVjbZ4Qc1a0HFRAg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@braintree/sanitize-url/-/sanitize-url-6.0.2.tgz}
     name: '@braintree/sanitize-url'
     version: 6.0.2
+    dev: true
+
+  registry.npmjs.org/@chialab/esbuild-plugin-alias@0.17.2:
+    resolution: {integrity: sha512-RzXMkX+9u+JTipK7xGf9WfZlxAC6GGBQ3FphpC6cRUTmxQOyC8phowMc+2POlc2jSSW1UM0RsSiV9XikPuV7eA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@chialab/esbuild-plugin-alias/-/esbuild-plugin-alias-0.17.2.tgz}
+    name: '@chialab/esbuild-plugin-alias'
+    version: 0.17.2
+    engines: {node: '>=13'}
+    dependencies:
+      '@chialab/esbuild-rna': registry.npmjs.org/@chialab/esbuild-rna@0.17.7
+      '@chialab/estransform': registry.npmjs.org/@chialab/estransform@0.17.3
+      '@chialab/node-resolve': registry.npmjs.org/@chialab/node-resolve@0.17.0
+    dev: true
+
+  registry.npmjs.org/@chialab/esbuild-rna@0.17.7:
+    resolution: {integrity: sha512-TxqTjRAHdZjpXTY+VU7H+qcxZklKfCp6p3i2TOHNLiNCjBDBM1DVWfEoY1dQsidM6BKriX4RCkT45OCEy9zpBQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@chialab/esbuild-rna/-/esbuild-rna-0.17.7.tgz}
+    name: '@chialab/esbuild-rna'
+    version: 0.17.7
+    engines: {node: '>=13'}
+    dependencies:
+      '@chialab/estransform': registry.npmjs.org/@chialab/estransform@0.17.3
+      '@chialab/node-resolve': registry.npmjs.org/@chialab/node-resolve@0.17.0
+    dev: true
+
+  registry.npmjs.org/@chialab/estransform@0.17.3:
+    resolution: {integrity: sha512-ZFCcDk85ZllhUiAMIzRFsLhrA2z8xwRyXyJBNMP/84+3czLEydSTzzBK9nXNGloOspwp+lL+EgPlFY8Ry693Bg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@chialab/estransform/-/estransform-0.17.3.tgz}
+    name: '@chialab/estransform'
+    version: 0.17.3
+    engines: {node: '>=13'}
+    dependencies:
+      '@parcel/source-map': registry.npmjs.org/@parcel/source-map@2.1.1
+    dev: true
+
+  registry.npmjs.org/@chialab/node-resolve@0.17.0:
+    resolution: {integrity: sha512-u9VwO/0djjXsM70aH/Wrx0BrXjtjhfNOxaDks32xa1mZP9T0CXZ0be5Sv3hXI9g5UeJbfvCyFJS2hfJEu7Ifgg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@chialab/node-resolve/-/node-resolve-0.17.0.tgz}
+    name: '@chialab/node-resolve'
+    version: 0.17.0
+    engines: {node: '>=13'}
     dev: true
 
   registry.npmjs.org/@cloudflare/kv-asset-handler@0.3.0:
@@ -4566,6 +4622,15 @@ packages:
       - vls
       - vti
       - vue-tsc
+    dev: true
+
+  registry.npmjs.org/@parcel/source-map@2.1.1:
+    resolution: {integrity: sha512-Ejx1P/mj+kMjQb8/y5XxDUn4reGdr+WyKYloBljpppUy8gs42T+BNoEOuRYqDVdgPc6NxduzIDoJS9pOFfV5Ew==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@parcel/source-map/-/source-map-2.1.1.tgz}
+    name: '@parcel/source-map'
+    version: 2.1.1
+    engines: {node: ^12.18.3 || >=14}
+    dependencies:
+      detect-libc: registry.npmjs.org/detect-libc@1.0.3
     dev: true
 
   registry.npmjs.org/@pkgr/utils@2.3.1:
@@ -9073,6 +9138,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  registry.npmjs.org/detect-libc@1.0.3:
+    resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/detect-libc/-/detect-libc-1.0.3.tgz}
+    name: detect-libc
+    version: 1.0.3
+    engines: {node: '>=0.10'}
+    hasBin: true
+    dev: true
+
   registry.npmjs.org/detect-libc@2.0.1:
     resolution: {integrity: sha512-463v3ZeIrcWtdgIg6vI6XUncguvr2TnGl4SzDXinkt9mSLpBJKXT3mW6xT3VQdDN11+WVs29pgvivTc4Lp8v+w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.1.tgz}
     name: detect-libc
@@ -9705,6 +9778,37 @@ packages:
     resolution: {integrity: sha512-dn1sf+WGIUBp4kxN+rJRYIXrmGTwRLyhWASmhl8IKKKPfIlWFE8hloAVnI6mM5jPF3+abDvkndYe+RZDFXItbA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/esbuild-plugin-ifdef/-/esbuild-plugin-ifdef-1.0.1.tgz}
     name: esbuild-plugin-ifdef
     version: 1.0.1
+    dev: true
+
+  registry.npmjs.org/esbuild-plugin-inline-image@0.0.9:
+    resolution: {integrity: sha512-pw3ZgN2phh32Z7BpKrhRDtmI+iVCl+Gc0BLOT9croXg1MnMjRuN7aXhIQirhLeK39erkIwfFlhy6xieroBGc1Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/esbuild-plugin-inline-image/-/esbuild-plugin-inline-image-0.0.9.tgz}
+    name: esbuild-plugin-inline-image
+    version: 0.0.9
+    dev: true
+
+  registry.npmjs.org/esbuild-plugin-vue3@0.3.2:
+    resolution: {integrity: sha512-KqZUPlIUS4vJLSexV3q5hgqIlsMWzlPtIuvZ1epZQvw/wJ/4vEPzEC1HQZduoHvUYvtnG703hsP1PsdpjTJ3ug==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/esbuild-plugin-vue3/-/esbuild-plugin-vue3-0.3.2.tgz}
+    name: esbuild-plugin-vue3
+    version: 0.3.2
+    peerDependencies:
+      cheerio: ^1.0.0-rc.10
+      html-minifier: ^4.0.0
+      pug: ^3.0.2
+      sass: ^1.35.2
+    peerDependenciesMeta:
+      cheerio:
+        optional: true
+      html-minifier:
+        optional: true
+      pug:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@vue/compiler-core': registry.npmjs.org/@vue/compiler-core@3.2.47
+      '@vue/compiler-sfc': registry.npmjs.org/@vue/compiler-sfc@3.2.47
+      esbuild: registry.npmjs.org/esbuild@0.14.54
+      typescript: registry.npmjs.org/typescript@4.9.5
     dev: true
 
   registry.npmjs.org/esbuild-style-plugin@1.6.1:

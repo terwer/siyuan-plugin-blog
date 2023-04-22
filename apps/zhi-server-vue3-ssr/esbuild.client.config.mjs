@@ -23,13 +23,17 @@
  * questions.
  */
 
-const path = require("path")
-const minimist = require("minimist")
-const {dtsPlugin} = require("esbuild-plugin-d.ts")
-const {copy} = require("esbuild-plugin-copy")
+import path from "path"
+import minimist from "minimist"
+import { dtsPlugin } from "esbuild-plugin-d.ts"
+import { copy } from "esbuild-plugin-copy"
+import stylePlugin from "esbuild-style-plugin"
+import vuePlugin from "esbuild-plugin-vue3"
+import aliasPlugin from "@chialab/esbuild-plugin-alias"
+import inlineImage from "esbuild-plugin-inline-image"
 
 const args = minimist(process.argv.slice(2))
-// const isProduction = args.production || args.prod
+const isProduction = args.production || args.prod
 const outDir = args.outDir || args.o
 
 // for outer custom output for dev
@@ -47,14 +51,19 @@ const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 /**
  * 构建配置
  */
-module.exports = {
+export default {
   esbuildConfig: {
-    entryPoints: ["src/index.ts"],
-    outfile: path.join(distDir, "index.js"),
+    entryPoints: ["src/client/index.ts"],
+    outfile: path.join(distDir, "app.js"),
     format: "esm",
     // define: { ...coreDefine },
     plugins: [
       dtsPlugin(),
+      stylePlugin(),
+      vuePlugin(),
+      aliasPlugin({
+        vue: "vue/dist/vue.esm-bundler.js",
+      }),
       copy({
         // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
         // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
@@ -67,13 +76,21 @@ module.exports = {
           // },
           // copy one file
           {
-            from: ["./README.md"],
-            to: [path.join(distDir, "/README.md")],
+            from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
+            to: [path.join(distDir, "/static.html")],
           },
         ],
         watch: true,
       }),
-    ]
+      inlineImage({
+        limit: 5000,
+        extensions: ["png", "jpg", "jpeg", "gif", "svg", "webp"],
+      }),
+    ],
   },
-  customConfig: {},
+  customConfig: {
+    distDir: distDir,
+    servePort: 3232,
+    isServe: true,
+  },
 }

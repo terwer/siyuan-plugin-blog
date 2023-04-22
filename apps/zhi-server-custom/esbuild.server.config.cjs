@@ -68,11 +68,7 @@ module.exports = {
           {
             from: ["./public/start.js"],
             to: [path.join(distDir, "/start.js")],
-          },
-          {
-            from: ["./public/node-start.mjs"],
-            to: [path.join(distDir, "/node-start.mjs")],
-          },
+          }
         ],
         watch: true,
       }),
