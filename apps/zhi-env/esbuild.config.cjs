@@ -29,8 +29,10 @@ const { dtsPlugin } = require("esbuild-plugin-d.ts")
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/index.js",
-  format: "esm",
-  plugins: [dtsPlugin()],
+  esbuildConfig: {
+    entryPoints: ["src/index.ts"],
+    outfile: "dist/index.js",
+    format: "esm",
+    plugins: [dtsPlugin()],
+  },
 }

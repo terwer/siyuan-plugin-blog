@@ -51,18 +51,15 @@ type VdoingLayoutProps = {
 const VdoingLayout: React.FC<VdoingLayoutProps> = ({ header, main, footer, props }) => {
   return (
     <div className={"theme-container"}>
-      <header>{header}</header>
+      <header>
+        <h1>This is the header</h1>
+        {header}
+      </header>
       <main>{main}</main>
-      <footer>{footer}</footer>
-      {props && (
-        <div>
-          {Object.entries(props).map(([key, value]) => (
-            <p key={key}>
-              {key}: {value}
-            </p>
-          ))}
-        </div>
-      )}
+      <footer>
+        <h1>This is the footer</h1>
+        {footer}
+      </footer>
     </div>
   )
 }

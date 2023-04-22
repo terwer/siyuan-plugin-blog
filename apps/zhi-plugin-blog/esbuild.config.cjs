@@ -33,40 +33,44 @@ const isWatch = args.watch || args.w
 
 // for outer custom output for dev
 // const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/plugin/zhi-blog" : "./"
-const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/storage/zhi/plugin/zhi-blog" : "./"
+const baseDir = isWatch
+  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/storage/zhi/plugin/zhi-blog"
+  : "./"
 const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
 /**
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(distDir, "main.js"),
-  format: "cjs",
-  external: ["siyuan"],
-  plugins: [
-    dtsPlugin(),
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      resolveFrom: "cwd",
-      assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [path.join(distDir, "assets")],
-        },
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(distDir, "/README.md")],
-        },
-        {
-          from: ["./manifest.json"],
-          to: [path.join(distDir, "/manifest.json")],
-        },
-      ],
-      watch: true,
-    }),
-  ],
+  esbuildConfig: {
+    entryPoints: ["src/index.ts"],
+    outfile: path.join(distDir, "main.js"),
+    format: "cjs",
+    external: ["siyuan"],
+    plugins: [
+      dtsPlugin(),
+      copy({
+        // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+        // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+        resolveFrom: "cwd",
+        assets: [
+          // copy folder
+          {
+            from: "./public/**/*",
+            to: [path.join(distDir, "assets")],
+          },
+          // copy one file
+          {
+            from: ["./README.md"],
+            to: [path.join(distDir, "/README.md")],
+          },
+          {
+            from: ["./manifest.json"],
+            to: [path.join(distDir, "/manifest.json")],
+          },
+        ],
+        watch: true,
+      }),
+    ],
+  },
 }

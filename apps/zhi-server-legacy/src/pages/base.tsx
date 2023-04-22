@@ -24,6 +24,7 @@
  */
 
 import React from "react"
+import VdoingLayout from "../layouts/vdoing"
 
 interface BaseProps {
   children: React.ReactNode
@@ -39,15 +40,11 @@ interface BaseProps {
  */
 const Base: React.FC<BaseProps> = ({ children }) => {
   return (
-    <div>
-      <header>
-        <h1>This is the header</h1>
-      </header>
-      <main>{children}</main>
-      <footer>
-        <p>This is the footer</p>
-      </footer>
-    </div>
+    <VdoingLayout
+      header={<div id={"base-header"}></div>}
+      main={<div id={"main"}>{children}</div>}
+      footer={<div id={"base-footer"}></div>}
+    ></VdoingLayout>
   )
 }
 

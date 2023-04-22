@@ -26,10 +26,13 @@
 const path = require("path")
 const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const { copy } = require("esbuild-plugin-copy")
 const stylePlugin = require("esbuild-style-plugin")
+const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
+const isProduction = args.production || args.prod
 
 // for outer custom output for dev
 const baseDir = isWatch
@@ -37,17 +40,51 @@ const baseDir = isWatch
   : "./"
 const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
+const defineEnv = {
+  NODE_ENV: isProduction ? "production" : "development",
+  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+}
+const coreDefine = {
+  "import.meta.env": JSON.stringify(defineEnv),
+}
+
 /**
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/client/index.tsx"],
-  outfile: path.join(distDir, "app.js"),
-  format: "esm",
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf"],
-  plugins: [
-    dtsPlugin(),
-    stylePlugin(),
-  ],
+  esbuildConfig: {
+    entryPoints: ["src/client/index.tsx"],
+    outfile: path.join(distDir, "app.js"),
+    format: "esm",
+    define: { ...coreDefine },
+    bundle: true,
+    external: ["*.woff", "*.woff2", "*.ttf"],
+    plugins: [
+      dtsPlugin(),
+      copy({
+        // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+        // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+        resolveFrom: "cwd",
+        assets: [
+          // copy folder
+          {
+            from: "./public/**/*",
+            to: [distDir],
+          },
+          // copy one file
+          // {
+          //   from: ["./README.md"],
+          //   to: [path.join(distDir, "/README.md")],
+          // },
+        ],
+        watch: true,
+      }),
+      stylePlugin(),
+    ],
+  },
+  customConfig: {
+    distDir: distDir,
+    servePort: 3232,
+    isServe: true
+  },
 }

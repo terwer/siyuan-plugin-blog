@@ -52,12 +52,13 @@ const coreDefine = {
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/server/index.tsx"],
-  outfile: path.join(distDir, "server.js"),
-  format: "esm",
-  define: { ...coreDefine },
-  banner: {
-    js: `
+  esbuildConfig: {
+    entryPoints: ["src/server/index.tsx"],
+    outfile: path.join(distDir, "server.js"),
+    format: "esm",
+    define: { ...coreDefine },
+    banner: {
+      js: `
         import path from "path";
         import { fileURLToPath } from 'url';
         import { createRequire as topLevelCreateRequire } from 'module';
@@ -66,31 +67,33 @@ module.exports = {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
         `,
-  },
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf", ".styl"],
-  platform: "node",
-  plugins: [
-    dtsPlugin(),
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      resolveFrom: "cwd",
-      assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [distDir],
-        },
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(distDir, "/README.md")],
-        },
-      ],
-      watch: true,
-    }),
+    },
+    bundle: true,
+    external: ["*.woff", "*.woff2", "*.ttf", ".styl"],
+    platform: "node",
+    plugins: [
+      dtsPlugin(),
+      copy({
+        // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+        // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+        resolveFrom: "cwd",
+        assets: [
+          // copy folder
+          {
+            from: "./public/**/*",
+            to: [distDir],
+          },
+          // copy one file
+          {
+            from: ["./README.md"],
+            to: [path.join(distDir, "/README.md")],
+          },
+        ],
+        watch: true,
+      }),
 
-    stylePlugin({ extract: false }),
-  ],
+      stylePlugin({ extract: false }),
+    ],
+  },
+  customConfig: {},
 }

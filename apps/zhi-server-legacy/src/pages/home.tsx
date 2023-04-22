@@ -37,7 +37,7 @@ const Home: React.FC = () => {
   return (
     <Base>
       <p>
-        This is home2 - {data.message} - {page}
+        This is home - {data.message} - page: {page}
       </p>
     </Base>
   )

@@ -26,15 +26,12 @@
 const path = require("path")
 const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const { copy } = require("esbuild-plugin-copy")
 const stylePlugin = require("esbuild-style-plugin")
 const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
-
-const isNodeBuild = false
 
 // for outer custom output for dev
 const baseDir = isWatch
@@ -54,37 +51,17 @@ const coreDefine = {
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/server/index.tsx"],
-  outfile: path.join(distDir, "server.js"),
-  format: "esm",
-  define: { ...coreDefine },
-  // banner: {
-  //   js: ' (() => new EventSource("http://127.0.0.1:3232").addEventListener("change", e => { location.reload() }))();',
-  // },
-  bundle: true,
-  external: ["*.woff", "*.woff2", "*.ttf", ".styl"],
-  platform: "node",
-  plugins: [
-    dtsPlugin(),
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      resolveFrom: "cwd",
-      assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [distDir],
-        },
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(distDir, "/README.md")],
-        },
-      ],
-      watch: true,
-    }),
-
-    stylePlugin({ extract: false }),
-  ],
+  esbuildConfig: {
+    entryPoints: ["src/server/index.tsx"],
+    outfile: path.join(distDir, "server.js"),
+    format: "esm",
+    define: { ...coreDefine },
+    bundle: true,
+    external: ["*.woff", "*.woff2", "*.ttf"],
+    platform: "node",
+    plugins: [dtsPlugin(), stylePlugin({ extract: false })],
+  },
+  customConfig: {
+    distDir: distDir,
+  },
 }

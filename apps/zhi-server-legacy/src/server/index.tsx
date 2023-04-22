@@ -74,26 +74,36 @@ class ZhiSsrServer {
       const appHtml = ReactDOMServer.renderToString(<StaticRouterProvider router={router} context={context} />)
 
       // 定义模板字符串
-      let template
+      // let template
       // 开发阶段不注入js，提高开发速度
-      if (this.env.isNodeDev()) {
-        template = <T extends { appHtml: string; staticV: string }>({ appHtml, staticV }: T) => `
-        <html lang="zh">
-          <head>
-            <title>zhi-blog-ssr1</title>
-            <link rel="stylesheet" href="/public/app.css?v=${staticV}">
-          </head>
-          <body>
-            <div id="app">${appHtml}</div>
-            <!--
-            <script src="/public/app.js?v=${staticV}" async defer></script>
-            -->
-            <script src="/reload/reload.js"></script>
-          </body>
-        </html>
-      `
-      } else {
-        template = <T extends { appHtml: string; staticV: string }>({ appHtml, staticV }: T) => `
+      // if (this.env.isNodeDev()) {
+      //   template = <T extends { appHtml: string; staticV: string }>({ appHtml, staticV }: T) => `
+      //   <html lang="zh">
+      //     <head>
+      //       <title>zhi-blog-ssr1</title>
+      //       <link rel="stylesheet" href="http://localhost:3232/app.css?v=${staticV}">
+      //     </head>
+      //     <body>
+      //       <div id="app">${appHtml}</div>
+      //       <script src="http://localhost:3232/app.js?v=${staticV}" async defer></script>
+      //     </body>
+      //   </html>
+      // `
+      // } else {
+      //   template = <T extends { appHtml: string; staticV: string }>({ appHtml, staticV }: T) => `
+      //   <html lang="zh">
+      //     <head>
+      //       <title>zhi-blog-ssr</title>
+      //       <link rel="stylesheet" href="/public/app.css?v=${staticV}">
+      //     </head>
+      //     <body>
+      //       <div id="app">${appHtml}</div>
+      //       <script src="/public/app.js?v=${staticV}" async defer></script>
+      //     </body>
+      //   </html>
+      // `
+      // }
+      const template = <T extends { appHtml: string; staticV: string }>({ appHtml, staticV }: T) => `
         <html lang="zh">
           <head>
             <title>zhi-blog-ssr</title>
@@ -105,7 +115,6 @@ class ZhiSsrServer {
           </body>
         </html>
       `
-      }
 
       // 定义静态文件版本号
       const staticV = "202304200051"
