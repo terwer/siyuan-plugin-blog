@@ -25,38 +25,34 @@
 
 const path = require("path")
 const minimist = require("minimist")
-const { dtsPlugin } = require("esbuild-plugin-d.ts")
-const { copy } = require("esbuild-plugin-copy")
-const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
+const {dtsPlugin} = require("esbuild-plugin-d.ts")
+const {copy} = require("esbuild-plugin-copy")
 
 const args = minimist(process.argv.slice(2))
-const isProduction = args.production || args.prod
+// const isProduction = args.production || args.prod
 const outDir = args.outDir || args.o
 
 // for outer custom output for dev
 const baseDir = outDir ?? "./"
 const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 
-const defineEnv = {
-  NODE_ENV: isProduction ? "production" : "development",
-  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-}
-const coreDefine = {
-  "import.meta.env": JSON.stringify(defineEnv),
-}
+// const defineEnv = {
+//   NODE_ENV: isProduction ? "production" : "development",
+//   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+// }
+// const coreDefine = {
+//   "import.meta.env": JSON.stringify(defineEnv),
+// }
 
 /**
  * 构建配置
  */
 module.exports = {
   esbuildConfig: {
-    entryPoints: ["src/server/index.tsx"],
-    outfile: path.join(distDir, "server.js"),
+    entryPoints: ["src/index.ts"],
+    outfile: path.join(distDir, "index.js"),
     format: "esm",
-    define: { ...coreDefine },
-    bundle: true,
-    external: ["*.woff", "*.woff2", "*.ttf", "*.styl"],
-    platform: "node",
+    // define: { ...coreDefine },
     plugins: [
       dtsPlugin(),
       copy({
@@ -64,21 +60,20 @@ module.exports = {
         // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
         resolveFrom: "cwd",
         assets: [
+          // copy folder
+          // {
+          //   from: "./public/**/*",
+          //   to: [distDir],
+          // },
           // copy one file
           {
-            from: ["./public/start.js"],
-            to: [path.join(distDir, "/start.js")],
-          },
-          {
-            from: ["./public/node-start.mjs"],
-            to: [path.join(distDir, "/node-start.mjs")],
+            from: ["./README.md"],
+            to: [path.join(distDir, "/README.md")],
           },
         ],
         watch: true,
       }),
-    ],
+    ]
   },
-  customConfig: {
-    distDir: distDir,
-  },
+  customConfig: {},
 }

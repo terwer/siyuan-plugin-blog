@@ -23,11 +23,6 @@
  * questions.
  */
 
-import React from "react"
-import "./Navbar.styl"
-
-const Navbar: React.FC = () => {
-  return <div className={"navbar"}>111</div>
+interface ImportMeta {
+  readonly env: ImportMetaEnv
 }
-
-export default Navbar

@@ -1,0 +1,30 @@
+{
+  "name": "zhi-server-vue3-ssr",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "a ssr blog using vue3 and esbuild",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": "terwer/zhi",
+  "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-vue3-ssr",
+  "author": "terwer",
+  "license": "GPL",
+  "keywords": [],
+  "scripts": {
+    "dev": "zhi-build --watch",
+    "build": "zhi-build --production",
+    "test": "jest --coverage=true --coverageDirectory=../../reports/test/zhi-server-vue3-ssr",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "doc": "../../packages/api-docs/node_modules/.bin/api-extractor run --local --verbose",
+    "md": "../../packages/api-docs/node_modules/.bin/api-documenter markdown -i temp -o ../zhi-docs/src/api/zhi-server-vue3-ssr && pnpm mdfix",
+    "mdfix": "pnpm mdfmt && rm ../zhi-docs/src/api/zhi-server-vue3-ssr/index.md",
+    "mdfmt": "echo '---\ntitle: zhi-server-vue3-ssr\n---' | cat - ../zhi-docs/src/api/zhi-server-vue3-ssr/index.md > ../zhi-docs/src/api/zhi-server-vue3-ssr/README.md"
+  },
+  "devDependencies": {
+    "api-docs": "workspace:*",
+    "esbuild-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "vitest-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}
