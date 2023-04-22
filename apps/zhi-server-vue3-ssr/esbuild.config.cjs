@@ -24,7 +24,7 @@
  */
 
 const path = require("path")
-// const minimist = require("minimist")
+const minimist = require("minimist")
 const {dtsPlugin} = require("esbuild-plugin-d.ts")
 const {copy} = require("esbuild-plugin-copy")
 
