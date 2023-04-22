@@ -28,6 +28,9 @@ import React from "react"
 // 主题样式注入入口
 import "../assets/vdoing/fonts/webfont.css"
 import "../assets/vdoing/styles/index.styl"
+// 布局样式
+import "./vdoing.styl"
+import Navbar from "../components/vdoing/Navbar"
 
 type VdoingLayoutProps = {
   header: React.ReactNode
@@ -52,10 +55,11 @@ const VdoingLayout: React.FC<VdoingLayoutProps> = ({ header, main, footer, props
   return (
     <div className={"theme-container"}>
       <header>
-        <h1>This is the header</h1>
+        <Navbar />
+        <div className={"head-placeholder"}></div>
         {header}
       </header>
-      <main>{main}</main>
+      <main className={"content-main"}>{main}</main>
       <footer>
         <h1>This is the footer</h1>
         {footer}

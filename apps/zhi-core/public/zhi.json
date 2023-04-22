@@ -34,14 +34,6 @@
         "importType": "import",
         "runAs": ["Siyuan_MainWindow"],
         "order": 4
-      },
-      {
-        "libpath": "server/custom/start.js",
-        "baseType": "ZhiTheme",
-        "format": "esm",
-        "importType": "import",
-        "runAs": ["Siyuan_MainWindow"],
-        "order": 5
       }
     ],
     "web": [],

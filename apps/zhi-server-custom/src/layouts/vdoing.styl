@@ -1,0 +1,44 @@
+@require "../assets/vdoing/styles/index"
+
+.head-placeholder
+  height 60px
+
+.custom-html-window
+  position fixed
+  bottom 0
+  display flex
+  overflow hidden
+  font-weight 350
+  @media (max-width 960px)
+    display none
+  .custom-wrapper
+    position relative
+    max-width 200px
+    max-height 400px
+    .close-but
+      cursor pointer
+      position absolute
+      right 0
+      top 0
+      font-size 1.5rem
+      line-height 1.5rem
+      width 1.5rem
+      height 1.5rem
+      opacity 0
+      transition all 0.2s
+      &:hover
+        opacity 0.9
+    &:hover
+      .close-but
+        opacity 0.7
+  &.custom-html-window-lb
+    left 0
+    z-index 99
+    &>*
+      align-self flex-end
+  &.custom-html-window-rb
+    right 80px
+    z-index 10
+    justify-content flex-end
+    &>*
+      align-self flex-end
