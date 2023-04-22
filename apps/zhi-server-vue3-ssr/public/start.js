@@ -22,24 +22,15 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
+/* eslint-disable */
 
-import { Headers, Request, Response } from "node-fetch"
+// 1 构建
+// pnpm localBuild -F zhi-server-vue3-ssr
 
-// 安装nodemon
-// pnpm init
-// pnpm install node-fetch nodemon -D
-// "dev": "nodemon node-start.mjs"
+// 思源控制台运行
+// siyuan console
+const server = await zhiImport("/dynamic/blog/server.js")
+server()
 
-// 兼容 Node
-if (!global.fetch) {
-  global.Headers = Headers
-  global.Request = Request
-  global.Response = Response
-}
-
-; (async () => {
-  const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi"
-  const port = 3333
-  const server = await import(`file://${basePath}/server/custom/server.js`)
-  server.default(basePath, port)
-})()
+// static only
+// http://127.0.0.1:3232/index.html

@@ -34,6 +34,9 @@
     "localBuild": {
       "cache": false
     },
+    "nodeBuild": {
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^build"]
     },

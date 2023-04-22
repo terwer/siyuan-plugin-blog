@@ -23,23 +23,6 @@
  * questions.
  */
 
-import { Headers, Request, Response } from "node-fetch"
+import { createApp } from "../app"
 
-// 安装nodemon
-// pnpm init
-// pnpm install node-fetch nodemon -D
-// "dev": "nodemon node-start.mjs"
-
-// 兼容 Node
-if (!global.fetch) {
-  global.Headers = Headers
-  global.Request = Request
-  global.Response = Response
-}
-
-; (async () => {
-  const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi"
-  const port = 3333
-  const server = await import(`file://${basePath}/server/custom/server.js`)
-  server.default(basePath, port)
-})()
+createApp().mount("#app")

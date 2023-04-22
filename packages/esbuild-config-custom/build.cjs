@@ -29,7 +29,13 @@ class ZhiBuild {
     console.log("reading user defined esbuild config from =>", esbuildConfigFile)
     if (existsSync(esbuildConfigFile)) {
       try {
-        const cfg = require(esbuildConfigFile)
+        // 兼容 mjs 和 cjs
+        const pkg = await import(esbuildConfigFile)
+        console.log("pkg=>", pkg)
+        let cfg = pkg
+        if (pkg.default) {
+          cfg = pkg.default
+        }
         userEsbuildConfig = cfg.esbuildConfig ?? {}
         customConfig = cfg.customConfig ?? {}
       } catch (error) {
@@ -48,7 +54,7 @@ class ZhiBuild {
     }
 
     // 监控构建插件
-    if(isWatch){
+    if (isWatch) {
       const firstBuildFinished = new Set()
       let buildStartTime
       // Following the log format of https://github.com/connor4312/esbuild-problem-matchers
