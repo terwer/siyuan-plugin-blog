@@ -23,15 +23,22 @@
  * questions.
  */
 
-import React, { useEffect, useState } from "react"
-import VdoingLayout from "./layouts/vdoing"
+import { Headers, Request, Response } from "node-fetch"
 
-export const App: React.FC = () => {
-  const [clientMessage, setClientMessage] = useState("")
+// 安装nodemon
+// pnpm install node-fetch nodemon -D
+// "dev": "nodemon index.mjs"
 
-  useEffect(() => {
-    setClientMessage("Hello From React2")
-  })
-
-  return <VdoingLayout header={111} main={<h1>{clientMessage}</h1>} footer={333}></VdoingLayout>
+// 兼容 Node
+if (!global.fetch) {
+  global.Headers = Headers
+  global.Request = Request
+  global.Response = Response
 }
+
+; (async () => {
+  const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi"
+  const port = 3333
+  const server = await import(`file://${basePath}/server/legacy/server.js`)
+  server.default(basePath, port)
+})()

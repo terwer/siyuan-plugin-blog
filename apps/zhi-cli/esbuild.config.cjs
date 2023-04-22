@@ -29,13 +29,15 @@ const { dtsPlugin } = require("esbuild-plugin-d.ts")
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/index.cjs",
-  bundle: true,
-  format: "cjs",
-  platform: "node",
-  banner: {
-    js: "#!/usr/bin/env node",
+  esbuildConfig: {
+    entryPoints: ["src/index.ts"],
+    outfile: "dist/index.cjs",
+    bundle: true,
+    format: "cjs",
+    platform: "node",
+    banner: {
+      js: "#!/usr/bin/env node",
+    },
+    plugins: [dtsPlugin()],
   },
-  plugins: [dtsPlugin()],
 }

@@ -50,36 +50,38 @@ const coreDefine = {
  * 构建配置
  */
 module.exports = {
-  entryPoints: ["src/index.ts"],
-  outfile: path.join(distDir, "theme.js"),
-  format: "esm",
-  define: { ...coreDefine },
-  plugins: [
-    dtsPlugin(),
+  esbuildConfig: {
+    entryPoints: ["src/index.ts"],
+    outfile: path.join(distDir, "theme.js"),
+    format: "esm",
+    define: { ...coreDefine },
+    plugins: [
+      dtsPlugin(),
 
-    copy({
-      // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
-      // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-      resolveFrom: "cwd",
-      assets: [
-        // copy folder
-        {
-          from: "./public/**/*",
-          to: [distDir],
-        },
-        // copy one file
-        {
-          from: ["./README.md"],
-          to: [path.join(distDir, "/README.md")],
-        },
-        {
-          from: ["./package.json"],
-          to: [path.join(distDir, "/package.json")],
-        },
-      ],
-      watch: true,
-    }),
+      copy({
+        // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+        // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+        resolveFrom: "cwd",
+        assets: [
+          // copy folder
+          {
+            from: "./public/**/*",
+            to: [distDir],
+          },
+          // copy one file
+          {
+            from: ["./README.md"],
+            to: [path.join(distDir, "/README.md")],
+          },
+          {
+            from: ["./package.json"],
+            to: [path.join(distDir, "/package.json")],
+          },
+        ],
+        watch: true,
+      }),
 
-    stylePlugin(),
-  ],
+      stylePlugin(),
+    ],
+  },
 }

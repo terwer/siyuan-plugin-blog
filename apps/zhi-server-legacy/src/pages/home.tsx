@@ -23,15 +23,24 @@
  * questions.
  */
 
-// import { createRoot } from "react-dom/client"
-// import { App } from "./App"
-//
-// const container = document.getElementById("root")
-// const root = createRoot(container!)
-// root.render(<App />)
+import React from "react"
+import Base from "./base"
+import { useLoaderData, useLocation } from "react-router-dom"
 
-import { App } from "./App"
-import { hydrateRoot } from "react-dom/client"
+const Home: React.FC = () => {
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const page = queryParams.get("p") ?? 0
 
-const container = document.getElementById("app")
-hydrateRoot(container!, <App />)
+  const data = useLoaderData() as any
+
+  return (
+    <Base>
+      <p>
+        This is home - {data.message} - page: {page}
+      </p>
+    </Base>
+  )
+}
+
+export default Home

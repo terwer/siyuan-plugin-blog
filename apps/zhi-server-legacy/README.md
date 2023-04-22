@@ -1,16 +1,23 @@
 # zhi-server-legacy
 a ssr solution using electron bundled node
 
+Note: this project is moved to [zhi-app-blog](https://github.com/terwer/zhi/tree/main/apps/zhi-app-blog)
+
 ## How to use
+
+only static
+
+http://127.0.0.1:6806/appearance/themes/zhi/server/legacy/
+
+ssr for siyuan console
 
 ```js
 // siyuan console
-// const server = zhiRequire("/server/legacy/server.cjs")
-// server.default(3333)
-
 const server = await zhiImport("/server/legacy/server.js")
 server()
 ```
+
+http://127.0.0.1:3333/
 
 ## TODO
 

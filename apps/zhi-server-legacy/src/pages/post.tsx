@@ -22,10 +22,23 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
 
-const server = await zhiImport("/server/legacy/server.js")
-server()
+import React from "react"
+import Base from "./base"
+import { useLoaderData, useParams } from "react-router-dom"
 
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()
+const Post: React.FC = () => {
+  const { postId } = useParams()
+
+  const data = useLoaderData() as any
+
+  return (
+    <Base>
+      <p>
+        This is a post - {data.message} - {postId}
+      </p>
+    </Base>
+  )
+}
+
+export default Post

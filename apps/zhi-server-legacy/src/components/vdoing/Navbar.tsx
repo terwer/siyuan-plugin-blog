@@ -22,10 +22,3 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
-
-const server = await zhiImport("/server/legacy/server.js")
-server()
-
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()

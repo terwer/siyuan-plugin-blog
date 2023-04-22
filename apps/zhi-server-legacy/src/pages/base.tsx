@@ -22,10 +22,30 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
 
-const server = await zhiImport("/server/legacy/server.js")
-server()
+import React from "react"
+import VdoingLayout from "../layouts/vdoing"
 
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()
+interface BaseProps {
+  children: React.ReactNode
+}
+
+/**
+ * 所有页面的基类
+ *
+ * @param children
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+const Base: React.FC<BaseProps> = ({ children }) => {
+  return (
+    <VdoingLayout
+      header={<div id={"base-header"}></div>}
+      main={<div id={"main"}>{children}</div>}
+      footer={<div id={"base-footer"}></div>}
+    ></VdoingLayout>
+  )
+}
+
+export default Base

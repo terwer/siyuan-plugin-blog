@@ -22,10 +22,46 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-/* eslint-disable */
 
-const server = await zhiImport("/server/legacy/server.js")
-server()
+import React from "react"
 
-// const server = await import("http://127.0.0.1:3232/server.js")
-// server.default()
+// 主题样式注入入口
+import "../assets/vdoing/fonts/webfont.css"
+import "../assets/vdoing/styles/index.styl"
+
+type VdoingLayoutProps = {
+  header: React.ReactNode
+  main: React.ReactNode
+  footer: React.ReactNode
+  props?: Record<string, any>
+}
+
+/**
+ * Vdoing 布局
+ *
+ * @param header - 头部
+ * @param main - 正文
+ * @param footer - 底部
+ * @param props - 参数
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ * @constructor
+ */
+const VdoingLayout: React.FC<VdoingLayoutProps> = ({ header, main, footer, props }) => {
+  return (
+    <div className={"theme-container"}>
+      <header>
+        <h1>This is the header</h1>
+        {header}
+      </header>
+      <main>{main}</main>
+      <footer>
+        <h1>This is the footer</h1>
+        {footer}
+      </footer>
+    </div>
+  )
+}
+
+export default VdoingLayout

@@ -23,8 +23,11 @@
  * questions.
  */
 
-const sharedConfig = require("jest-config-custom/babel.config.cjs")
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import routes from "../routes"
 
-module.exports = {
-  ...sharedConfig,
-}
+const router = createBrowserRouter(routes)
+const container = document.getElementById("app")
+ReactDOM.hydrateRoot(container!, <RouterProvider router={router} />)

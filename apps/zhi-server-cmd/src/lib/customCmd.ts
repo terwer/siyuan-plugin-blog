@@ -23,29 +23,6 @@
  * questions.
  */
 
-// import child_process from "child_process";
-//
-// const { exec } = require('child_process');
-//
-// function runCommand(command) {
-//     return new Promise((resolve, reject) => {
-//         exec(command, (error, stdout, stderr) => {
-//             if (error) {
-//                 reject(error);
-//             } else {
-//                 resolve(stdout.trim());
-//             }
-//         });
-//     });
-// }
-//
-// // 调用示例：执行 ls 命令，并输出其结果
-// runCommand('/Users/terwer/Downloads/n/node_modules/.bin/next -v').then((result) => {
-//     console.log(result);
-// }).catch((error) => {
-//     console.error(error);
-// });
-//
 import ZhiServerCmdUtil from "./util/ZhiServerCmdUtil"
 import { SiyuanDevice } from "zhi-device"
 
@@ -72,38 +49,40 @@ class CustomCmd {
    */
   async executeCommandWithBundledNode(
     command: string,
-    args: string[],
+    args?: string[],
     options?: any
   ): Promise<{ output: string; error: string }> {
     const { fork } = SiyuanDevice.requireLib("child_process")
 
     return new Promise((resolve, reject) => {
-      const child = fork(command, args, options)
+      const child = fork(command, args ?? [], options)
       let output = "" // 保存输出结果的变量
       let error = "" // 保存错误信息的变量
 
       // 获取子进程的标准输出流
-      child.stdout.on("data", function (data: string) {
-        output += data.toString()
-      })
+      child.stdout &&
+        child.stdout.on("data", function (data: string) {
+          output += data.toString()
+        })
 
       // 获取子进程的标准错误流
-      child.stderr.on("data", function (data: string) {
-        error += data.toString()
-      })
+      child.stderr &&
+        child.stderr.on("data", function (data: string) {
+          error += data.toString()
+        })
 
       // 监听子进程的关闭事件，捕获结果并返回一个对象
       child.on("close", (code: number) => {
         if (code === 0) {
           resolve({ output: output.trim(), error: error.trim() }) // 去除字符串两侧的空白字符并返回
         } else {
-          reject(new Error(`Child process exited with code ${code}`))
+          reject(new Error(`Child process closed with code ${code} => ${error}`))
         }
       })
 
       // 监听子进程的异常退出事件，并通过reject方法抛出错误对象
       child.on("exit", (code: number) => {
-        reject(new Error(`Child process exited with code ${code}`))
+        reject(new Error(`Child process exited with code ${code} => ${error}`))
       })
     })
   }
@@ -130,6 +109,46 @@ class CustomCmd {
           reject(err)
         } else {
           resolve(stdout.trim())
+        }
+      })
+    })
+  }
+
+  /**
+   * 自定义执行系统命令
+   *
+   * 示例：
+   * ```
+   * await customCmd.executeCommand("./node_modules/.bin/nuxt", ["preview"], { shell: true, cwd: '/Users/terwer/Downloads/nu' })
+   * await customCmd.executeCommand("node", ["./server/index.mjs"], { cwd: '/Users/terwer/Downloads/nu' })
+   * ```
+   *
+   * @param command - 命令
+   * @param args - 参数
+   * @param options - 选项
+   */
+  public async executeCommandWithSpawn(command: string, args?: string[], options = {}) {
+    const { spawn } = SiyuanDevice.requireLib("child_process")
+    return new Promise((resolve, reject) => {
+      const child = spawn(command, args, options)
+      let output = "" // 保存输出结果的变量
+      let error = "" // 保存错误信息的变量
+
+      // 监听子进程的 stdout、stderr 输出
+      child.stdout.on("data", (data: any) => {
+        output += data.toString()
+      })
+      child.stderr.on("data", (data: any) => {
+        error += data.toString()
+      })
+
+      // 监听子进程的退出事件
+      child.on("close", (code: number) => {
+        if (code === 0) {
+          resolve(output)
+        } else {
+          const errorMsg = `Command "${command}" failed with exit code ${code}. ${error}`
+          reject(new Error(errorMsg))
         }
       })
     })

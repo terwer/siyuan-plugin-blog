@@ -5,6 +5,8 @@ const esbuild = require("esbuild")
 const minimist = require("minimist")
 const { existsSync } = require("fs")
 const getNormalizedEnvDefines = require("./utils.cjs")
+const { ServeOnRequestArgs } = require("esbuild")
+const { createServer } = require("http")
 
 /**
  *  zhi 主题构建
@@ -22,11 +24,14 @@ class ZhiBuild {
 
     // 读取用户定义的配置文件
     let userEsbuildConfig = {}
+    let customConfig = {}
     const esbuildConfigFile = path.join(process.cwd(), cfg)
     console.log("reading user defined esbuild config from =>", esbuildConfigFile)
     if (existsSync(esbuildConfigFile)) {
       try {
-        userEsbuildConfig = require(esbuildConfigFile)
+        const cfg = require(esbuildConfigFile)
+        userEsbuildConfig = cfg.esbuildConfig ?? {}
+        customConfig = cfg.customConfig ?? {}
       } catch (error) {
         console.error(`Failed to load esbuild config: ${error}`)
         process.exit(1)
@@ -63,7 +68,7 @@ class ZhiBuild {
           if (firstBuildFinished.size === 0) {
             firstBuildFinished.add(type)
             status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
-          }else{
+          } else {
             // esbuild problem matcher extension is listening for this log, once this is logged, it will open the Extension Host
             // So we have to assure only printing this when both extension and webview have been built
             status(`build hot reloaded in ${Date.now() - buildStartTime} ms.`)
@@ -71,6 +76,11 @@ class ZhiBuild {
         })
       },
     })
+    if (customConfig.isServe) {
+      bundledEsbuildConfig.banner = {
+        js: `(() => new EventSource("http://localhost:${customConfig.servePort}/esbuild").addEventListener("change", e => { location.reload() }))();`,
+      }
+    }
     bundledEsbuildConfig.plugins.push(watchPlugin(isProduction ? "production" : "development"))
 
     // https://github.com/Jarred-Sumner/esbuild-plugin-ifdef
@@ -146,14 +156,23 @@ class ZhiBuild {
       // console.log("rebuilded, result=>", result)
 
       // Enable watch mode
-      console.log("watch mode enabled")
+      // console.log("watch mode enabled")
       await context.watch()
+      console.log("esbuild is watching...")
 
       // Enable serve mode
-      await context.serve()
-      console.log("serve enabled")
+      if (customConfig.isServe) {
+        await context.serve({
+          port: customConfig.servePort,
+          host: "127.0.0.1",
+          servedir: customConfig.distDir ?? process.cwd(),
+          onRequest: (args) => {
+            console.log(args)
+          },
+        })
 
-      console.log('watching...')
+        console.log(`esbuild is serving on ${customConfig.servePort} ...`)
+      }
     } else {
       await esbuild.build(esbuildConfig)
       console.log("ZhiBuild process finished")

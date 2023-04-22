@@ -24,47 +24,45 @@
  */
 
 import React from "react"
+import Base from "./base"
+import { NavLink } from "react-router-dom"
 
-// 主题样式注入入口
-import "../assets/vdoing/fonts/webfont.css"
-import "../assets/vdoing/styles/index.styl"
-
-type VdoingLayoutProps = {
-  header: React.ReactNode
-  main: React.ReactNode
-  footer: React.ReactNode
-  props?: Record<string, any>
+interface Styles {
+  container: React.CSSProperties
+  title: React.CSSProperties
+  link: React.CSSProperties
 }
 
-/**
- * Vdoing 布局
- *
- * @param header - 头部
- * @param main - 正文
- * @param footer - 底部
- * @param props - 参数
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- * @constructor
- */
-const VdoingLayout: React.FC<VdoingLayoutProps> = ({ header, main, footer, props }) => {
+const styles: Styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 50,
+    color: "#444",
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  link: {
+    marginTop: 20,
+    fontSize: 20,
+    color: "#666",
+  },
+}
+
+const NotFound = () => {
   return (
-    <div className={"theme-container"}>
-      <header>{header}</header>
-      <main>{main}</main>
-      <footer>{footer}</footer>
-      {props && (
-        <div>
-          {Object.entries(props).map(([key, value]) => (
-            <p key={key}>
-              {key}: {value}
-            </p>
-          ))}
-        </div>
-      )}
-    </div>
+    <Base>
+      <div style={styles.container}>
+        <div style={styles.title}>404 - Not Found</div>
+        <NavLink to="/" style={styles.link}>
+          Return to home page
+        </NavLink>
+      </div>
+    </Base>
   )
 }
 
-export default VdoingLayout
+export default NotFound

@@ -24,29 +24,53 @@
  */
 
 const path = require("path")
-// const minimist = require("minimist")
+const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
 const { copy } = require("esbuild-plugin-copy")
+const stylePlugin = require("esbuild-style-plugin")
+const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
-// const args = minimist(process.argv.slice(2))
-// const isWatch = args.watch || args.w
-
-// for dist
-const baseDir = "./"
-const distDir = path.join(baseDir, "dist")
+const args = minimist(process.argv.slice(2))
+const isWatch = args.watch || args.w
+const isProduction = args.production || args.prod
 
 // for outer custom output for dev
-// const baseDir = isWatch ? "my-custom-absolute-path" : "./"
-// const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+const baseDir = isWatch
+  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
+  : "./"
+const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+
+const defineEnv = {
+  NODE_ENV: isProduction ? "production" : "development",
+  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+}
+const coreDefine = {
+  "import.meta.env": JSON.stringify(defineEnv),
+}
 
 /**
  * 构建配置
  */
 module.exports = {
   esbuildConfig: {
-    entryPoints: ["src/index.ts"],
-    outfile: path.join(distDir, "index.js"),
+    entryPoints: ["src/server/index.tsx"],
+    outfile: path.join(distDir, "server.js"),
     format: "esm",
+    define: { ...coreDefine },
+    banner: {
+      js: `
+        import path from "path";
+        import { fileURLToPath } from 'url';
+        import { createRequire as topLevelCreateRequire } from 'module';
+        
+        const require = topLevelCreateRequire(import.meta.url);
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        `,
+    },
+    bundle: true,
+    external: ["*.woff", "*.woff2", "*.ttf", ".styl"],
+    platform: "node",
     plugins: [
       dtsPlugin(),
       copy({
@@ -57,7 +81,7 @@ module.exports = {
           // copy folder
           {
             from: "./public/**/*",
-            to: [path.join(distDir, "assets")],
+            to: [distDir],
           },
           // copy one file
           {
@@ -67,6 +91,9 @@ module.exports = {
         ],
         watch: true,
       }),
+
+      stylePlugin({ extract: false }),
     ],
   },
+  customConfig: {},
 }
