@@ -48,40 +48,42 @@ class ZhiBuild {
     }
 
     // 监控构建插件
-    const firstBuildFinished = new Set()
-    let buildStartTime
-    // Following the log format of https://github.com/connor4312/esbuild-problem-matchers
-    const status = (msg) => console.log(`${isWatch ? "[watch] " : ""}${msg}`)
-    const watchPlugin = (type) => ({
-      name: "watcher",
-      setup(build) {
-        build.onStart(() => {
-          buildStartTime = Date.now()
-          // status(`${type} build started.`)
-        })
-        build.onEnd((result) => {
-          result.errors.forEach((error) =>
-            console.error(
-              `> ${error.location.file}:${error.location.line}:${error.location.column}: error: ${error.text}`
+    if(isWatch){
+      const firstBuildFinished = new Set()
+      let buildStartTime
+      // Following the log format of https://github.com/connor4312/esbuild-problem-matchers
+      const status = (msg) => console.log(`${isWatch ? "[watch] " : ""}${msg}`)
+      const watchPlugin = (type) => ({
+        name: "watcher",
+        setup(build) {
+          build.onStart(() => {
+            buildStartTime = Date.now()
+            // status(`${type} build started.`)
+          })
+          build.onEnd((result) => {
+            result.errors.forEach((error) =>
+              console.error(
+                `> ${error.location.file}:${error.location.line}:${error.location.column}: error: ${error.text}`
+              )
             )
-          )
-          if (firstBuildFinished.size === 0) {
-            firstBuildFinished.add(type)
-            status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
-          } else {
-            // esbuild problem matcher extension is listening for this log, once this is logged, it will open the Extension Host
-            // So we have to assure only printing this when both extension and webview have been built
-            status(`build hot reloaded in ${Date.now() - buildStartTime} ms.`)
-          }
-        })
-      },
-    })
-    if (customConfig.isServe) {
-      bundledEsbuildConfig.banner = {
-        js: `(() => new EventSource("http://localhost:${customConfig.servePort}/esbuild").addEventListener("change", e => { location.reload() }))();`,
+            if (firstBuildFinished.size === 0) {
+              firstBuildFinished.add(type)
+              status(`${type} build finished in ${Date.now() - buildStartTime} ms.`)
+            } else {
+              // esbuild problem matcher extension is listening for this log, once this is logged, it will open the Extension Host
+              // So we have to assure only printing this when both extension and webview have been built
+              status(`build hot reloaded in ${Date.now() - buildStartTime} ms.`)
+            }
+          })
+        },
+      })
+      if (customConfig.isServe) {
+        bundledEsbuildConfig.banner = {
+          js: `(() => new EventSource("http://localhost:${customConfig.servePort}/esbuild").addEventListener("change", e => { location.reload() }))();`,
+        }
       }
+      bundledEsbuildConfig.plugins.push(watchPlugin(isProduction ? "production" : "development"))
     }
-    bundledEsbuildConfig.plugins.push(watchPlugin(isProduction ? "production" : "development"))
 
     // https://github.com/Jarred-Sumner/esbuild-plugin-ifdef
     // ifdef插件

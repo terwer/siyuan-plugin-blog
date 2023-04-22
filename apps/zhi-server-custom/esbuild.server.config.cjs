@@ -26,18 +26,17 @@
 const path = require("path")
 const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
+const { copy } = require("esbuild-plugin-copy")
 const stylePlugin = require("esbuild-style-plugin")
 const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
 const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
+const outDir = args.outDir || args.o
 
 // for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+const baseDir = outDir ?? "./"
+const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 
 const defineEnv = {
   NODE_ENV: isProduction ? "production" : "development",
@@ -59,7 +58,27 @@ module.exports = {
     bundle: true,
     external: ["*.woff", "*.woff2", "*.ttf"],
     platform: "node",
-    plugins: [dtsPlugin(), stylePlugin({ extract: false })],
+    plugins: [
+      dtsPlugin(),
+      copy({
+        // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+        // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+        resolveFrom: "cwd",
+        assets: [
+          // copy one file
+          {
+            from: ["./public/start.js"],
+            to: [path.join(distDir, "/start.js")],
+          },
+          {
+            from: ["./public/node-start.mjs"],
+            to: [path.join(distDir, "/node-start.mjs")],
+          },
+        ],
+        watch: true,
+      }),
+      stylePlugin({ extract: false }),
+    ],
   },
   customConfig: {
     distDir: distDir,

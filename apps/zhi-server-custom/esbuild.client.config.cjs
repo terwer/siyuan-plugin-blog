@@ -31,14 +31,12 @@ const stylePlugin = require("esbuild-style-plugin")
 const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
 const args = minimist(process.argv.slice(2))
-const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
+const outDir = args.outDir || args.o
 
 // for outer custom output for dev
-const baseDir = isWatch
-  ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/server/legacy"
-  : "./"
-const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+const baseDir = outDir ?? "./"
+const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 
 const defineEnv = {
   NODE_ENV: isProduction ? "production" : "development",
@@ -66,16 +64,11 @@ module.exports = {
         // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
         resolveFrom: "cwd",
         assets: [
-          // copy folder
-          {
-            from: "./public/**/*",
-            to: [distDir],
-          },
           // copy one file
-          // {
-          //   from: ["./README.md"],
-          //   to: [path.join(distDir, "/README.md")],
-          // },
+          {
+            from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
+            to: [path.join(distDir, "/index.html")],
+          },
         ],
         watch: true,
       }),
@@ -85,6 +78,6 @@ module.exports = {
   customConfig: {
     distDir: distDir,
     servePort: 3232,
-    isServe: true
+    isServe: true,
   },
 }

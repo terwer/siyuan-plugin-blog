@@ -33,7 +33,7 @@ import Env from "zhi-env"
  * @author terwer
  * @since 1.0.0
  */
-class ZhiServerLegacyUtil extends ZhiUtil {
+class ZhiServerCustomUtil extends ZhiUtil {
   public static override zhiEnv(): Env {
     if (!this.env) {
       this.env = new Env(import.meta.env)
@@ -42,4 +42,4 @@ class ZhiServerLegacyUtil extends ZhiUtil {
   }
 }
 
-export default ZhiServerLegacyUtil
+export default ZhiServerCustomUtil
