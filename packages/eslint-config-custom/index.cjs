@@ -34,14 +34,14 @@ module.exports = {
       },
     },
     // 下面的配置可重写 Vue
-    // {
-    //   files: ["*.vue"],
-    //   parser: "vue-eslint-parser",
-    //   // Parse the script in `.vue` as TypeScript by adding the following configuration.
-    //   parserOptions: {
-    //     parser: "@typescript-eslint/parser",
-    //   },
-    // },
+    {
+      files: ["*.vue"],
+      parser: "vue-eslint-parser",
+      // Parse the script in `.vue` as TypeScript by adding the following configuration.
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
+    },
   ],
 
   plugins: ["@typescript-eslint", "prettier"],

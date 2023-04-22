@@ -21,6 +21,7 @@
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-plugin-d.ts": "^1.1.0",
     "esbuild-plugin-ifdef": "^1.0.1",
+    "esbuild-plugin-inline-image": "^0.0.9",
     "minimist": "^1.2.8"
   }
 }

@@ -24,11 +24,9 @@
  */
 
 import { createSSRApp } from "vue"
+import Vue from "./App.vue"
 
 // 在服务器和客户端之间共享
 export function createApp() {
-  return createSSRApp({
-    data: () => ({ count: 1 }),
-    template: `<button @click="count++">{{ count }}</button>`,
-  })
+  return createSSRApp(Vue)
 }

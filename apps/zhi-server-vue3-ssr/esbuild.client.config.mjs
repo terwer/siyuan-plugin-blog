@@ -27,8 +27,10 @@ import path from "path"
 import minimist from "minimist"
 import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
+import stylePlugin from "esbuild-style-plugin"
 import vuePlugin from "esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
+import inlineImage from "esbuild-plugin-inline-image"
 
 const args = minimist(process.argv.slice(2))
 const isProduction = args.production || args.prod
@@ -57,6 +59,7 @@ export default {
     // define: { ...coreDefine },
     plugins: [
       dtsPlugin(),
+      stylePlugin(),
       vuePlugin(),
       aliasPlugin({
         vue: "vue/dist/vue.esm-bundler.js",
@@ -74,10 +77,14 @@ export default {
           // copy one file
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
-            to: [path.join(distDir, "/index.html")],
+            to: [path.join(distDir, "/static.html")],
           },
         ],
         watch: true,
+      }),
+      inlineImage({
+        limit: 5000,
+        extensions: ["png", "jpg", "jpeg", "gif", "svg", "webp"],
       }),
     ],
   },

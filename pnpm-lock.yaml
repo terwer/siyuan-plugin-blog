@@ -599,6 +599,9 @@ importers:
       esbuild-plugin-ifdef:
         specifier: ^1.0.1
         version: registry.npmjs.org/esbuild-plugin-ifdef@1.0.1
+      esbuild-plugin-inline-image:
+        specifier: ^0.0.9
+        version: registry.npmjs.org/esbuild-plugin-inline-image@0.0.9
       minimist:
         specifier: ^1.2.8
         version: registry.npmjs.org/minimist@1.2.8
@@ -673,7 +676,7 @@ importers:
         version: registry.npmjs.org/jsdom@21.1.1
       vite:
         specifier: ^4.2.2
-        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
+        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.13)
       vitest:
         specifier: ^0.30.1
         version: registry.npmjs.org/vitest@0.30.1(jsdom@21.1.1)
@@ -9775,6 +9778,12 @@ packages:
     resolution: {integrity: sha512-dn1sf+WGIUBp4kxN+rJRYIXrmGTwRLyhWASmhl8IKKKPfIlWFE8hloAVnI6mM5jPF3+abDvkndYe+RZDFXItbA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/esbuild-plugin-ifdef/-/esbuild-plugin-ifdef-1.0.1.tgz}
     name: esbuild-plugin-ifdef
     version: 1.0.1
+    dev: true
+
+  registry.npmjs.org/esbuild-plugin-inline-image@0.0.9:
+    resolution: {integrity: sha512-pw3ZgN2phh32Z7BpKrhRDtmI+iVCl+Gc0BLOT9croXg1MnMjRuN7aXhIQirhLeK39erkIwfFlhy6xieroBGc1Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/esbuild-plugin-inline-image/-/esbuild-plugin-inline-image-0.0.9.tgz}
+    name: esbuild-plugin-inline-image
+    version: 0.0.9
     dev: true
 
   registry.npmjs.org/esbuild-plugin-vue3@0.3.2:

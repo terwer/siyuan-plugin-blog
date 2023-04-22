@@ -8,6 +8,6 @@
     "esModuleInterop": true,
     "outDir": "./lib"
   },
-  "include": ["env.d.ts", "**/*.ts", "**/*.spec.ts"],
+  "include": ["**/*.d.ts", "**/*.ts", "**/*.spec.ts", "**/*.vue"],
   "exclude": ["node_modules"]
 }

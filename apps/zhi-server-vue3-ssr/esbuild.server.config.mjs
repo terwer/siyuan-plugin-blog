@@ -29,9 +29,10 @@ import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
 import vuePlugin from "esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
+import inlineImage from "esbuild-plugin-inline-image"
 
 const args = minimist(process.argv.slice(2))
-const isProduction = args.production || args.prod
+// const isProduction = args.production || args.prod
 const outDir = args.outDir || args.o
 
 // for outer custom output for dev
@@ -74,6 +75,10 @@ export default {
           },
         ],
         watch: true,
+      }),
+      inlineImage({
+        limit: 5000,
+        extensions: ["png", "jpg", "jpeg", "gif", "svg", "webp"],
       }),
     ],
   },

@@ -40,9 +40,12 @@ class ZhiVue3SsrServer {
 
     // 指定静态文件目录
     const staticPath = SiyuanDevice.joinPath(base ?? SiyuanDevice.zhiThemePath(), "/dynamic/blog")
-    // this.logger.info("staticPath=>", staticPath)
-    console.log("staticPath=>", staticPath)
-    app.use("/public", express.static(staticPath))
+    // // this.logger.info("staticPath=>", staticPath)
+    // console.log("staticPath=>", staticPath)
+    // app.use(".", express.static(staticPath))
+    // 先映射静态文件
+    // app.use(express.static(__dirname))
+    app.use(express.static(staticPath))
 
     app.get("/", (req, res) => {
       const app = createApp()
@@ -54,21 +57,20 @@ class ZhiVue3SsrServer {
         <html lang="zh">
           <head>
             <title>zhi-blog-ssr-dev</title>
-            <!--
-            <link rel="stylesheet" href="/public/app.css?v=${staticV}" />
-            -->
+            <link rel="stylesheet" href="./app.css?v=${staticV}" />
           </head>
           <body>
             <div id="app">${html}</div>
-            <script src="/public/app.js?v=${staticV}" async defer></script>
+            <script src="./app.js?v=${staticV}" async defer></script>
           </body>
         </html>
     `)
       })
     })
 
-    app.listen(3000, () => {
-      console.log("ready")
+    const port = p ?? 3000
+    app.listen(port, () => {
+      console.log(`ready ${port}...`)
     })
 
     return "ok"

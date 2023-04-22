@@ -86,6 +86,10 @@ export default {
         ],
         watch: true,
       }),
+      inlineImage({
+        limit: 5000,
+        extensions: ["png", "jpg", "jpeg", "gif", "svg", "webp"],
+      }),
     ],
   },
   customConfig: {
