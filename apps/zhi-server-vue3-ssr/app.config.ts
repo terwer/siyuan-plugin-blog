@@ -145,9 +145,9 @@ export const appConfig: AppConfig = {
 
     bodyBgImg: <string[] | string>[],
     // bodyBgImg: [
-    //     "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175828.jpeg",
-    //     "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175845.jpeg",
-    //     "https://ghproxy.com/https://raw.githubusercontent.com/xugaoyi/image_store/master/blog/20200507175846.jpeg",
+    //   "https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/project/vue3-ssr/20200507175828.jpeg",
+    //   "https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/project/vue3-ssr/20200507175845.jpeg",
+    //   "https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/project/vue3-ssr/20200507175846.jpeg",
     // ], // body背景大图，默认无。 单张图片 String | 多张图片 Array, 多张图片时隔bodyBgImgInterval切换一张。
     bodyBgImgOpacity: 0.5,
     // bodyBgImgOpacity: 0.5, // body背景图透明度，选值 0.1~1.0, 默认0.5
@@ -216,7 +216,7 @@ export const appConfig: AppConfig = {
     footer: {
       createYear: 2011, // 博客创建年份
       copyrightInfo:
-        'Terwer | <a href="https://github.com/terwer/zhi-blog/blob/main/LICENSE" target="_blank">GPL License</a>', // 博客版权信息、备案信息等，支持a标签或换行标签</br>
+        '<a href="https://blog.terwer.space" target="_blank">Terwer</a> | <a href="https://github.com/terwer/zhi-blog/blob/main/LICENSE" target="_blank">GPL License</a>', // 博客版权信息、备案信息等，支持a标签或换行标签</br>
     },
 
     // 扩展自动生成frontmatter。（当md文件的frontmatter不存在相应的字段时将自动添加。不会覆盖已有的数据。）

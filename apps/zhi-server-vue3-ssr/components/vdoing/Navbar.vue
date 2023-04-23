@@ -66,7 +66,7 @@ const computes = {
 }
 
 // lifecycle
-onBeforeMount(async () => {
+onBeforeMount(() => {
   datas.appBase = window.location.origin + env.getStringEnv("VITE_APP_BASE")
   // const deviceDetector = await import("next-vue-device-detector")
   // const d = deviceDetector.createDeviceDetector()

@@ -43,8 +43,28 @@
 
     <!-- 页脚 -->
     <footer>
-      <h1>This is the footer234</h1>
+      <Footer />
     </footer>
+
+    <!-- 主题切换、返回顶部 -->
+    <!--    <Buttons ref="buttons" @toggle-theme-mode="methods.toggleThemeMode" />-->
+
+    <!-- 自定义背景图 -->
+    <BodyBgImg v-if="appConfig.themeConfig.bodyBgImg" />
+
+    <!-- 自定义html插入左右下角的小窗口 -->
+    <div v-if="methods.windowLB" v-show="datas.showWindowLB" class="custom-html-window custom-html-window-lb">
+      <div class="custom-wrapper">
+        <span class="close-but" @click="datas.showWindowLB = false">×</span>
+        <div v-html="methods.windowLB()" />
+      </div>
+    </div>
+    <div v-if="methods.windowRB" v-show="datas.showWindowRB" class="custom-html-window custom-html-window-rb">
+      <div class="custom-wrapper">
+        <span class="close-but" @click="datas.showWindowRB = false">×</span>
+        <div v-html="methods.windowRB()" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -58,10 +78,11 @@ import Footer from "~/components/vdoing/Footer.vue"
 import storage from "good-storage"
 import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 import { useAppConfig } from "~/composables/useAppConfig"
-import { reactive, computed, onBeforeMount, onMounted, watch } from "vue"
+import { computed, onBeforeMount, onMounted, reactive, watch } from "vue"
+// import Buttons from "~/components/vdoing/Buttons.vue"
+import BodyBgImg from "~/components/vdoing/BodyBgImg.vue"
 
 // zhi-util
-const env = ZhiServerVue3SsrUtil.zhiEnv()
 const logger = ZhiServerVue3SsrUtil.zhiLog("vdoing-layout")
 
 // uses
@@ -182,11 +203,11 @@ const methods = {
   },
 
   windowLB: () => {
-    return "<p>test1</p>"
+    return undefined
     // return this.getHtmlStr('windowLB')
   },
   windowRB: () => {
-    return "<p>test2</p>"
+    return undefined
     // return this.getHtmlStr('windowRB')
   },
 

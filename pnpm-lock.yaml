@@ -437,6 +437,9 @@ importers:
       good-storage:
         specifier: ^1.1.1
         version: registry.npmjs.org/good-storage@1.1.1
+      lodash:
+        specifier: ^4.17.21
+        version: registry.npmjs.org/lodash@4.17.21
       vue:
         specifier: ^3.2.47
         version: registry.npmjs.org/vue@3.2.47
@@ -477,6 +480,9 @@ importers:
       '@types/good-storage':
         specifier: ^1.1.0
         version: registry.npmjs.org/@types/good-storage@1.1.0
+      '@types/lodash':
+        specifier: ^4.14.191
+        version: registry.npmjs.org/@types/lodash@4.14.191
       api-docs:
         specifier: workspace:*
         version: link:../../packages/api-docs
@@ -773,7 +779,7 @@ importers:
         version: registry.npmjs.org/jsdom@21.1.1
       vite:
         specifier: ^4.2.2
-        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.13)
+        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
       vitest:
         specifier: ^0.30.1
         version: registry.npmjs.org/vitest@0.30.1(jsdom@21.1.1)
@@ -5387,6 +5393,12 @@ packages:
     resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/linkify-it/-/linkify-it-3.0.2.tgz}
     name: '@types/linkify-it'
     version: 3.0.2
+    dev: true
+
+  registry.npmjs.org/@types/lodash@4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/lodash/-/lodash-4.14.191.tgz}
+    name: '@types/lodash'
+    version: 4.14.191
     dev: true
 
   registry.npmjs.org/@types/markdown-it-emoji@2.0.2:
@@ -13812,7 +13824,6 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz}
     name: lodash
     version: 4.17.21
-    dev: true
 
   registry.npmjs.org/log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/log-symbols/-/log-symbols-4.1.0.tgz}

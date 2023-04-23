@@ -1,17 +1,25 @@
 <template>
   <div class="buttons">
+    <!--
     <transition name="fade">
       <div
+        v-show="computes.showToTop.value"
         title="返回顶部"
         class="button blur go-to-top iconfont icon-fanhuidingbu"
-        v-show="computes.showToTop.value"
         @click="methods.scrollToTop"
       />
     </transition>
+    -->
     <div
+      v-show="computes.showToTop.value"
+      title="返回顶部"
+      class="button blur go-to-top iconfont icon-fanhuidingbu"
+      @click="methods.scrollToTop"
+    />
+    <div
+      v-show="datas.showCommentBut"
       title="去评论"
       class="button blur go-to-comment iconfont icon-pinglun"
-      v-show="datas.showCommentBut"
       @click="methods.scrollToComment"
     />
     <div
@@ -22,7 +30,7 @@
       @click="datas.showModeBox = true"
     >
       <transition name="mode">
-        <ul class="select-box" ref="modeBoxRef" v-show="datas.showModeBox" @click.stop @touchstart.stop>
+        <ul v-show="datas.showModeBox" ref="modeBoxRef" class="select-box" @click.stop @touchstart.stop>
           <li
             v-for="item in datas.modeList"
             :key="item.KEY"
@@ -41,6 +49,8 @@
 <script lang="ts" setup>
 import storage from "good-storage"
 import { debounce } from "lodash" // 本地存储
+import { computed, onMounted, reactive, ref } from "vue"
+import { useAppConfig } from "~/composables/useAppConfig"
 
 const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
 
@@ -48,7 +58,7 @@ const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
 const modeBoxRef = ref()
 
 // uses
-const route = useRoute()
+// const route = useRoute()
 const appConfig = useAppConfig()
 
 // datas
@@ -114,16 +124,16 @@ const methods = {
   },
 
   getCommentTop: () => {
-    setTimeout(() => {
-      let commentEl =
-        document.querySelector(datas.COMMENT_SELECTOR_1) ||
-        document.querySelector(datas.COMMENT_SELECTOR_2) ||
-        document.querySelector(datas.COMMENT_SELECTOR_3)
-      // if (commentEl) {
-      //   datas.showCommentBut = this.$frontmatter.comment !== false && this.$frontmatter.home !== true
-      //   this.commentTop = commentEl.offsetTop - 58
-      // }
-    }, 500)
+    // setTimeout(() => {
+    //   let commentEl =
+    //     document.querySelector(datas.COMMENT_SELECTOR_1) ||
+    //     document.querySelector(datas.COMMENT_SELECTOR_2) ||
+    //     document.querySelector(datas.COMMENT_SELECTOR_3)
+    //   // if (commentEl) {
+    //   //   datas.showCommentBut = this.$frontmatter.comment !== false && this.$frontmatter.home !== true
+    //   //   this.commentTop = commentEl.offsetTop - 58
+    //   // }
+    // }, 500)
   },
   scrollToComment: () => {
     // window.scrollTo({ top: datas.commentTop, behavior: 'smooth' })
@@ -197,13 +207,13 @@ onMounted(() => {
   }
 })
 
-watch(
-  () => route.params,
-  () => {
-    // datas.showCommentBut = false
-    // methods.getCommentTop()
-  }
-)
+// watch(
+//   () => route.params,
+//   () => {
+//     // datas.showCommentBut = false
+//     // methods.getCommentTop()
+//   }
+// )
 </script>
 
 <style lang="stylus">
