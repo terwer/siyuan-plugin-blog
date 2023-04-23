@@ -22,6 +22,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "docker-build": {
+      "cache": false
+    },
     "siyuanBuild": {
       "cache": false
     },

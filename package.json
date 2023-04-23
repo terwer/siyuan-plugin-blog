@@ -13,6 +13,7 @@
     "serverDev": "turbo run serverDev",
     "nodeDev": "turbo run nodeDev",
     "build": "turbo run build",
+    "docker-build": "turbo run docker-build",
     "siyuanBuild": "turbo run siyuanBuild",
     "clientBuild": "turbo run clientBuild",
     "serverBuild": "turbo run serverBuild",

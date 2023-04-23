@@ -18,6 +18,7 @@
     "nodeDev": "nodemon ./dist/node-start.mjs",
     "clientDev": "zhi-build -c esbuild.client.config.mjs --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog",
     "build": "pnpm clientBuild && pnpm serverBuild",
+    "docker-build": "docker compose up --build",
     "localBuild": "pnpm localClientBuild && pnpm localServerBuild",
     "nodeBuild": "pnpm clientBuild && pnpm nodeServerBuild",
     "clientBuild": "zhi-build -c esbuild.client.config.mjs --production",

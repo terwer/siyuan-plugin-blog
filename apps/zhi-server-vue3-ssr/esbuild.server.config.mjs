@@ -57,7 +57,7 @@ const coreDefine = {
 export default {
   esbuildConfig: {
     entryPoints: ["src/server/index.ts"],
-    outfile: path.join(distDir, "server.js"),
+    outfile: path.join(distDir, "server.mjs"),
     format: "esm",
     platform: "node",
     define: { ...coreDefine },

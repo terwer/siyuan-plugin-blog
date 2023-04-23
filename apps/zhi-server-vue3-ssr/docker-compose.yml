@@ -1,0 +1,12 @@
+version: "3"
+services:
+  vue-ssr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: no
+    # command: node node-start.mjs
+    user: vue3-ssr
+    image: terwer/vue3-ssr:latest

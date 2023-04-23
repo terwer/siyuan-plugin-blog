@@ -52,10 +52,11 @@ if (!global.fetch) {
   global.Response = Response
 }
 
-; (async () => {
+;(async () => {
   // const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog"
-  const basePath = "/Users/terwer/Documents/mydocs/zhi/apps/zhi-server-vue3-ssr/dist"
+  const devBasePath = "/Users/terwer/Documents/mydocs/zhi/apps/zhi-server-vue3-ssr/dist"
+  const basePath = process.env.BASE_PATH || devBasePath
   const port = 3333
-  const server = await import(`file://${basePath}/server.js`)
+  const server = await import(`file://${basePath}/server.mjs`)
   server.default(basePath, port)
 })()
