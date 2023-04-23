@@ -28,7 +28,7 @@ import minimist from "minimist"
 import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
 import stylePlugin from "esbuild-style-plugin"
-import vuePlugin from "esbuild-plugin-vue3"
+import vuePlugin from "@terwer/esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
 import inlineImage from "esbuild-plugin-inline-image"
 import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
@@ -59,6 +59,7 @@ export default {
     outfile: path.join(distDir, "app.js"),
     format: "esm",
     define: { ...coreDefine },
+    external: ["*.woff", "*.woff2", "*.ttf"],
     plugins: [
       dtsPlugin(),
       stylePlugin(),
@@ -79,7 +80,19 @@ export default {
           // copy one file
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
-            to: [path.join(distDir, "/static.html")],
+            to: [path.join(distDir, isProduction ? "/static.html" : "index.html")],
+          },
+          {
+            from: ["./assets/vdoing/fonts/font-vdoing.ttf"],
+            to: [path.join(distDir, "/fonts/font-vdoing.ttf")],
+          },
+          {
+            from: ["./assets/vdoing/fonts/font-vdoing.woff"],
+            to: [path.join(distDir, "/fonts/font-vdoing.woff")],
+          },
+          {
+            from: ["./assets/vdoing/fonts/font-vdoing.woff2"],
+            to: [path.join(distDir, "/fonts/font-vdoing.woff2")],
           },
         ],
         watch: true,

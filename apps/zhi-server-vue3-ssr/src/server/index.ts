@@ -99,7 +99,7 @@ class ZhiVue3SsrServer {
                 })
               })
               .catch((reason) => {
-                res.end("error, reason:" + reason)
+                res.end("error, reason is:" + reason)
               })
           })
         })

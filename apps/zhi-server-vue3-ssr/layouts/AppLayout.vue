@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2023, Terwer . All rights reserved.
+  - Copyright (c) 2022, Terwer . All rights reserved.
   - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
   -
   - This code is free software; you can redistribute it and/or modify it
@@ -24,5 +24,17 @@
   -->
 
 <template>
-  <div>This is home</div>
+  <keep-alive>
+    <component :is="layout">
+      <slot />
+    </component>
+  </keep-alive>
 </template>
+
+<script lang="ts" setup>
+// https://youtrack.jetbrains.com/issue/WEB-56972/Vue-library-components-not-resolved-when-installed-with-pnpm
+import { shallowRef } from "vue"
+import Vdoing from "./vdoing.vue"
+
+const layout = shallowRef(Vdoing) as any
+</script>

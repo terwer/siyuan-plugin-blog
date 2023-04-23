@@ -24,32 +24,15 @@
   -->
 
 <template>
-  <div>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/post">Post</router-link>
+  <AppLayout>
     <router-view v-slot="{ Component }">
       <Suspense>
         <component :is="Component" />
       </Suspense>
     </router-view>
-  </div>
-  <div>
-    <button @click="state.count++">count is: {{ state.count }}</button>
-  </div>
+  </AppLayout>
 </template>
 
-<script setup>
-import { reactive } from "vue"
-const state = reactive({ count: 0 })
+<script lang="ts" setup>
+import AppLayout from "~/layouts/AppLayout.vue"
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

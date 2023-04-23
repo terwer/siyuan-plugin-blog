@@ -37,16 +37,26 @@
   "devDependencies": {
     "@chialab/esbuild-plugin-alias": "^0.17.2",
     "api-docs": "workspace:*",
+    "@terwer/esbuild-plugin-vue3": "workspace:*",
     "esbuild-config-custom": "workspace:*",
-    "esbuild-plugin-vue3": "^0.3.2",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "vitest-config-custom": "workspace:*"
+    "vitest-config-custom": "workspace:*",
+    "unplugin-icons": "^0.16.1",
+    "@iconify/json": "^2.2.51",
+    "@types/good-storage": "^1.1.0"
   },
   "dependencies": {
     "express": "^4.18.2",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
-    "zhi-device": "workspace:*"
+    "zhi-device": "workspace:*",
+    "good-storage": "^1.1.1",
+    "vue-instantsearch": "4.8.7",
+    "zhi-common": "workspace:*",
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*",
+    "zhi-blog-api": "workspace:*",
+    "zhi-siyuan-api": "workspace:*"
   }
 }

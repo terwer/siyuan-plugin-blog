@@ -67,7 +67,7 @@ module.exports = {
           // copy one file
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
-            to: [path.join(distDir, "/index.html")],
+            to: [path.join(distDir, isProduction ? "/static.html" : "index.html")],
           },
         ],
         watch: true,

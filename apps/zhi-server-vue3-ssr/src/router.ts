@@ -24,8 +24,8 @@
  */
 
 import { createMemoryHistory, createRouter, createWebHistory } from "vue-router"
-import Home from "./pages/home.vue"
-import Post from "./pages/post.vue"
+import Home from "~/pages/home.vue"
+import Post from "~/pages/post.vue"
 
 function createPageRouter() {
   const historyMode = import.meta.env.SSR ? createMemoryHistory() : createWebHistory()

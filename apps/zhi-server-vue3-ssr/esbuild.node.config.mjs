@@ -27,7 +27,8 @@ import path from "path"
 import minimist from "minimist"
 import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
-import vuePlugin from "esbuild-plugin-vue3"
+import stylePlugin from "esbuild-style-plugin"
+import vuePlugin from "@terwer/esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
 import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
 
@@ -69,6 +70,7 @@ export default {
         const __dirname = path.dirname(__filename);
         `,
     },
+    external: ["*.woff", "*.woff2", "*.ttf"],
     plugins: [
       dtsPlugin(),
       vuePlugin(),
@@ -92,6 +94,7 @@ export default {
         limit: 5000,
         extensions: ["png", "jpg", "jpeg", "gif", "svg", "webp"],
       }),
+      stylePlugin({ extract: false }),
     ],
   },
   customConfig: {
