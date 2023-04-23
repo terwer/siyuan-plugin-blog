@@ -57,7 +57,7 @@ const props = defineProps({
 
 // datas
 const datas = reactive({
-  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
+  appBase: env.getStringEnv("VITE_APP_BASE"),
 })
 
 // computes
@@ -68,7 +68,9 @@ const computes = {
 }
 
 // lifecycle
-onBeforeMount(async () => {})
+onBeforeMount(async () => {
+  datas.appBase = window.location.origin + env.getStringEnv("VITE_APP_BASE")
+})
 </script>
 
 <style lang="stylus">
