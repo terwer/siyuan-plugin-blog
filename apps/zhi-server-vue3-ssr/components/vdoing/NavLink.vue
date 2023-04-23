@@ -1,21 +1,21 @@
 <template>
-  <NuxtLink
+  <router-link
+    v-if="!VdoingUtil.isExternal(computes.link.value)"
     class="nav-link"
     :to="computes.link.value"
-    @focusout.native="methods.focusoutAction"
-    v-if="!VdoingUtil.isExternal(computes.link.value)"
     :exact="computes.exact.value"
-    >{{ props.item.text }}</NuxtLink
+    @focusout.native="methods.focusoutAction"
+    >{{ props.item.text }}</router-link
   >
   <a
     v-else
     :href="computes.link.value"
-    @focusout="methods.focusoutAction"
     class="nav-link external"
     :target="VdoingUtil.isMailto(computes.link.value) || VdoingUtil.isTel(computes.link.value) ? '' : '_blank'"
     :rel="
       VdoingUtil.isMailto(computes.link.value) || VdoingUtil.isTel(computes.link.value) ? '' : 'noopener noreferrer'
     "
+    @focusout="methods.focusoutAction"
   >
     {{ props.item.text }}
     <OutboundLink />
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import VdoingUtil from "~/utils/vdoingUtil"
 import OutboundLink from "~/components/vdoing/OutboundLink.vue"
+import { computed } from "vue"
 
 const props = defineProps({
   item: {

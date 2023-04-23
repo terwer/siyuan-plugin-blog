@@ -1,33 +1,33 @@
 <template>
   <div class="dropdown-wrapper">
     <button class="dropdown-title" type="button" :aria-label="computes.dropdownAriaLabel.value" @click="methods.toggle">
-      <NuxtLink v-if="props.item.link" :to="props.item.link" class="link-title">{{ props.item.text }}</NuxtLink>
-      <span class="title" v-show="!props.item.link">{{ props.item.text }}</span>
+      <router-link v-if="props.item.link" :to="props.item.link" class="link-title">{{ props.item.text }}</router-link>
+      <span v-show="!props.item.link" class="title">{{ props.item.text }}</span>
       <span class="arrow" :class="datas.open ? 'down' : 'right'"></span>
     </button>
 
     <transition>
-      <ul class="nav-dropdown" v-show="datas.open">
-        <li class="dropdown-item" :key="subItem.link || index" v-for="(subItem, index) in props.item.items">
+      <ul v-show="datas.open" class="nav-dropdown">
+        <li v-for="(subItem, index) in props.item.items" :key="subItem.link || index" class="dropdown-item">
           <h4 v-if="subItem.type === 'links'">{{ subItem.text }}</h4>
 
-          <ul class="dropdown-subitem-wrapper" v-if="subItem.type === 'links'">
-            <li class="dropdown-subitem" :key="childSubItem.link" v-for="childSubItem in subItem.items">
+          <ul v-if="subItem.type === 'links'" class="dropdown-subitem-wrapper">
+            <li v-for="childSubItem in subItem.items" :key="childSubItem.link" class="dropdown-subitem">
               <NavLink
+                :item="childSubItem"
                 @focusout="
                   methods.isLastItemOfArray(childSubItem, subItem.items) &&
                     methods.isLastItemOfArray(subItem, props.item.items) &&
                     methods.toggle()
                 "
-                :item="childSubItem"
               />
             </li>
           </ul>
 
           <NavLink
             v-else
-            @focusout="methods.isLastItemOfArray(subItem, props.item.items) && methods.toggle()"
             :item="subItem"
+            @focusout="methods.isLastItemOfArray(subItem, props.item.items) && methods.toggle()"
           />
         </li>
       </ul>
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import last from "lodash/last"
-
+import { computed, onBeforeMount, reactive } from "vue"
 import NavLink from "~/components/vdoing/NavLink.vue"
 
 // props
@@ -49,7 +49,7 @@ const props = defineProps({
 })
 
 // uses
-const route = useRoute()
+// const route = useRoute()
 
 // datas
 const datas = reactive({
@@ -85,12 +85,12 @@ onBeforeMount(() => {
   })
 })
 
-watch(
-  () => route.params,
-  () => {
-    datas.open = false
-  }
-)
+// watch(
+//   () => route.params,
+//   () => {
+//     datas.open = false
+//   }
+// )
 </script>
 
 <style lang="stylus" scoped>

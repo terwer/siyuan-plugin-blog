@@ -1,8 +1,6 @@
 <template>
   <header class="navbar blur">
-    <!--
-    <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
-    -->
+    <SidebarButton @click="$emit('toggle-sidebar')" />
 
     <router-link to="/" class="home-link">
       <img
@@ -21,25 +19,22 @@
       </div>
     </router-link>
 
-    <!--
-    MeiliSearch
     <div class="links" :style="datas.linksWrapMaxWidth ? { 'max-width': datas.linksWrapMaxWidth + 'px' } : {}">
+      <!-- MeiliSearch
       <MeiliSearchBox v-if="computes.isMeilisearch" />
-      <client-only v-if="!datas.isMobile">
-        <NavLinks class="can-hide" />
-      </client-only>
+      -->
+      <NavLinks class="can-hide" />
     </div>
-    -->
   </header>
 </template>
 
 <script setup lang="ts">
-// import SidebarButton from "~/components/vdoing/SidebarButton.vue"
-// import NavLinks from "~/components/vdoing/NavLinks.vue"
+import NavLinks from "~/components/vdoing/NavLinks.vue"
 // import MeiliSearchBox from "~/components/vdoing/MeiliSearchBox.vue"
-import { reactive, computed, onBeforeMount, onMounted } from "vue"
+import { computed, onBeforeMount, onMounted, reactive } from "vue"
 import { useAppConfig } from "~/composables/useAppConfig"
 import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
+import SidebarButton from "~/components/vdoing/SidebarButton.vue"
 
 const env = ZhiServerVue3SsrUtil.zhiEnv()
 
@@ -71,7 +66,7 @@ onBeforeMount(() => {
   // const deviceDetector = await import("next-vue-device-detector")
   // const d = deviceDetector.createDeviceDetector()
   // datas.isMobile = d.mobile
-  datas.isMobile = false
+  datas.isMobile = true
 })
 
 onMounted(() => {

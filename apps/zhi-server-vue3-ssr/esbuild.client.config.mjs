@@ -46,6 +46,7 @@ const defineEnv = {
   NODE_ENV: isProduction ? "production" : "development",
   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
 }
+console.log(defineEnv)
 const coreDefine = {
   "import.meta.env": JSON.stringify(defineEnv),
   "import.meta.env.SSR": "false",
@@ -85,6 +86,10 @@ export default {
             to: [path.join(distDir, "/img")],
           },
           // copy one file
+          {
+            from: ["./public/favicon.ico"],
+            to: [path.join(distDir, "favicon.ico")],
+          },
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
             to: [path.join(distDir, isProduction ? "/static.html" : "index.html")],

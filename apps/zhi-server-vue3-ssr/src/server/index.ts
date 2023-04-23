@@ -89,8 +89,11 @@ class ZhiVue3SsrServer {
                   <!DOCTYPE html>
                   <html lang="zh">
                     <head>
-                      <title>zhi-blog-ssr-dev</title>
+                      <meta charset="UTF-8" />
+                      <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                      <link rel="icon" href="./favicon.ico">
                       <link rel="stylesheet" href="./app.css?v=${staticV}" />
+                      <title>zhi-blog-ssr-dev</title>
                     </head>
                     <body>
                       <div id="app">${appHtml}</div>

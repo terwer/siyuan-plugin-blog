@@ -36,7 +36,6 @@ const methods = {
 // lifecycle
 onMounted(() => {
   const { bodyBgImg, bodyBgImgOpacity, bodyBgImgInterval = 15 } = appConfig.themeConfig
-  console.log(methods.hasBg())
 
   // 没有背景忽略
   if (!methods.hasBg()) {

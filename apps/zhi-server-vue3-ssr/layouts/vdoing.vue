@@ -32,8 +32,26 @@
   >
     <!-- 页眉 -->
     <header>
-      <Navbar />
+      <!-- 顶部导航栏 -->
+      <Navbar v-if="computes.shouldShowNavbar" @toggle-sidebar="methods.toggleSidebar" />
       <div class="head-placeholder"></div>
+      <!-- 侧边栏 -->
+      <div class="sidebar-mask" @click="methods.toggleSidebar(false)"></div>
+      <!-- 滑动展开 -->
+      <div v-if="appConfig?.themeConfig?.sidebarHoverTriggerOpen !== false" class="sidebar-hover-trigger"></div>
+      <!-- 侧边栏内容 -->
+      <Sidebar v-show="datas.showSidebar" :items="computes.sidebarItems" @toggle-sidebar="methods.toggleSidebar">
+        <!--
+        <template #top v-if="sidebarSlotTop">
+          <div class="sidebar-slot sidebar-slot-top" v-html="sidebarSlotTop"></div>
+        </template>
+        <template #bottom v-if="sidebarSlotBottom">
+          <div class="sidebar-slot sidebar-slot-bottom" v-html="sidebarSlotBottom"></div>
+        </template>
+        <slot name="sidebar-top" #top />
+        <slot name="sidebar-bottom" #bottom />
+        -->
+      </Sidebar>
     </header>
 
     <!-- 正文 -->
@@ -47,7 +65,7 @@
     </footer>
 
     <!-- 主题切换、返回顶部 -->
-    <!--    <Buttons ref="buttons" @toggle-theme-mode="methods.toggleThemeMode" />-->
+    <Buttons ref="buttons" @toggle-theme-mode="methods.toggleThemeMode" />
 
     <!-- 自定义背景图 -->
     <BodyBgImg v-if="appConfig.themeConfig.bodyBgImg" />
@@ -79,8 +97,9 @@ import storage from "good-storage"
 import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 import { useAppConfig } from "~/composables/useAppConfig"
 import { computed, onBeforeMount, onMounted, reactive, watch } from "vue"
-// import Buttons from "~/components/vdoing/Buttons.vue"
+import Buttons from "~/components/vdoing/Buttons.vue"
 import BodyBgImg from "~/components/vdoing/BodyBgImg.vue"
+import Sidebar from "~/components/vdoing/Sidebar.vue"
 
 // zhi-util
 const logger = ZhiServerVue3SsrUtil.zhiLog("vdoing-layout")
@@ -124,7 +143,7 @@ const computes = {
     const userPageClass = {}
     const pc = [
       {
-        // 'no-navbar': !methods.shouldShowNavbar(),
+        // "no-navbar": !methods.shouldShowNavbar(),
         "hide-navbar": datas.hideNavbar, // 向下滚动隐藏导航栏
         "sidebar-open": datas.isSidebarOpen,
         "no-sidebar": !methods.shouldShowSidebar(),
@@ -295,6 +314,13 @@ watch(
 
 .head-placeholder
   height 60px
+
+.sidebar-hover-trigger
+  display none
+// display none
+@media (max-width $MQMobile)
+  .sidebar-hover-trigger
+    display block
 
 .custom-html-window
   position fixed

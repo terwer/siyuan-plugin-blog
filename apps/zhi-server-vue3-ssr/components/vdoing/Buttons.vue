@@ -1,6 +1,5 @@
 <template>
   <div class="buttons">
-    <!--
     <transition name="fade">
       <div
         v-show="computes.showToTop.value"
@@ -9,13 +8,6 @@
         @click="methods.scrollToTop"
       />
     </transition>
-    -->
-    <div
-      v-show="computes.showToTop.value"
-      title="返回顶部"
-      class="button blur go-to-top iconfont icon-fanhuidingbu"
-      @click="methods.scrollToTop"
-    />
     <div
       v-show="datas.showCommentBut"
       title="去评论"
@@ -217,7 +209,7 @@ onMounted(() => {
 </script>
 
 <style lang="stylus">
-@require "../assets/vdoing/styles/index"
+@require "../../assets/vdoing/styles/index"
 
 .yellowBorder
   // border: #FFE089 1px solid!important

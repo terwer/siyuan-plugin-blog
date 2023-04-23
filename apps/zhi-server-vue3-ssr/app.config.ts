@@ -173,7 +173,8 @@ export const appConfig: AppConfig = {
 
     // 侧边栏  'structuring' | { mode: 'structuring', collapsable: Boolean} | 'auto' | <自定义>    温馨提示：目录页数据依赖于结构化的侧边栏数据，如果你不设置为'structuring',将无法使用目录页
     sidebar: "structuring",
-    sidebarHoverTriggerOpen: undefined,
+    // 移动鼠标展开侧边栏
+    sidebarHoverTriggerOpen: true,
 
     // 文章默认的作者信息，(可在md文件中单独配置此信息) string | {name: string, link?: string}
     author: {
