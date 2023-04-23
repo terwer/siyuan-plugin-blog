@@ -27,6 +27,7 @@ const path = require("path")
 const minimist = require("minimist")
 const { dtsPlugin } = require("esbuild-plugin-d.ts")
 const { copy } = require("esbuild-plugin-copy")
+const stylePlugin = require("esbuild-style-plugin")
 const getNormalizedEnvDefines = require("esbuild-config-custom/utils.cjs")
 
 const args = minimist(process.argv.slice(2))
@@ -55,7 +56,7 @@ module.exports = {
     format: "esm",
     define: { ...coreDefine },
     bundle: true,
-    external: ["*.woff", "*.woff2", "*.ttf", "*.styl"],
+    external: ["*.woff", "*.woff2", "*.ttf"],
     platform: "node",
     plugins: [
       dtsPlugin(),
@@ -68,10 +69,11 @@ module.exports = {
           {
             from: ["./public/start.js"],
             to: [path.join(distDir, "/start.js")],
-          }
+          },
         ],
         watch: true,
       }),
+      stylePlugin({ extract: false }),
     ],
   },
   customConfig: {

@@ -41,6 +41,10 @@ import { Headers, Request, Response } from "node-fetch"
 // 4 运行
 // pnpm dev
 
+// 或者，直接 IDEA 源码调试
+// pnpm nodeBuild -F zhi-server-vue3-ssr
+// pnpm nodeDev -F zhi-server-vue3-ssr
+
 // 兼容 Node
 if (!global.fetch) {
   global.Headers = Headers
@@ -49,7 +53,8 @@ if (!global.fetch) {
 }
 
 ; (async () => {
-  const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog"
+  // const basePath = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog"
+  const basePath = "/Users/terwer/Documents/mydocs/zhi/apps/zhi-server-vue3-ssr/dist"
   const port = 3333
   const server = await import(`file://${basePath}/server.js`)
   server.default(basePath, port)

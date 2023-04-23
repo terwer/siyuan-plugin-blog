@@ -1,5 +1,11 @@
 module.exports = {
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "turbo", "prettier"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:vue/vue3-recommended",
+    "turbo",
+    "prettier",
+  ],
 
   // 这里是next的配置支持，需要在子项目安装下列依赖
   // pnpm add @babel/core@^7.0.0 -D
@@ -16,8 +22,10 @@ module.exports = {
   //   "@next/next/no-html-link-for-pages": "off",
   // },
 
-  parser: "@typescript-eslint/parser",
+  // https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
+  parser: "vue-eslint-parser",
   parserOptions: {
+    parser: "@typescript-eslint/parser",
     // 下面一行next项目可用，参考web
     // babelOptions: {
     //   presets: [require.resolve("next/babel")],
@@ -33,18 +41,9 @@ module.exports = {
         parser: "@typescript-eslint/parser",
       },
     },
-    // 下面的配置可重写 Vue
-    {
-      files: ["*.vue"],
-      parser: "vue-eslint-parser",
-      // Parse the script in `.vue` as TypeScript by adding the following configuration.
-      parserOptions: {
-        parser: "@typescript-eslint/parser",
-      },
-    },
   ],
 
-  plugins: ["@typescript-eslint", "prettier"],
+  plugins: ["@typescript-eslint", "vue", "prettier"],
 
   rules: {
     // Note: you must disable the base rule as it can report incorrect errors

@@ -23,6 +23,14 @@
  * questions.
  */
 
-import { createApp } from "../app"
+import createVueApp from "../app"
 
-createApp().mount("#app")
+const { app, router } = createVueApp()
+router.beforeEach(async function () {
+  // 页面刷新时执行该回调函数
+  console.log("beforeEach invoked")
+})
+
+router.isReady().then(function () {
+  app.mount("#app")
+})

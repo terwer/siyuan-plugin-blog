@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "type": "module",
   "description": "a ssr blog using vue3 and esbuild",
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
   "repository": "terwer/zhi",
   "homepage": "https://github.com/terwer/zhi/tree/main/apps/zhi-server-vue3-ssr",
   "author": "terwer",
@@ -17,6 +15,7 @@
   ],
   "scripts": {
     "dev": "pnpm clientDev",
+    "nodeDev": "nodemon ./dist/node-start.mjs",
     "clientDev": "zhi-build -c esbuild.client.config.mjs --watch --outDir=/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/conf/appearance/themes/zhi/dynamic/blog",
     "build": "pnpm clientBuild && pnpm serverBuild",
     "localBuild": "pnpm localClientBuild && pnpm localServerBuild",
@@ -36,16 +35,29 @@
   },
   "devDependencies": {
     "@chialab/esbuild-plugin-alias": "^0.17.2",
+    "@iconify/json": "^2.2.51",
+    "@terwer/esbuild-plugin-vue3": "workspace:*",
+    "@types/good-storage": "^1.1.0",
     "api-docs": "workspace:*",
     "esbuild-config-custom": "workspace:*",
-    "esbuild-plugin-vue3": "^0.3.2",
     "eslint-config-custom": "workspace:*",
+    "node-fetch": "^3.3.1",
+    "nodemon": "^2.0.22",
     "tsconfig": "workspace:*",
+    "unplugin-icons": "^0.16.1",
     "vitest-config-custom": "workspace:*"
   },
   "dependencies": {
     "express": "^4.18.2",
+    "good-storage": "^1.1.1",
     "vue": "^3.2.47",
-    "zhi-device": "workspace:*"
+    "vue-instantsearch": "4.8.7",
+    "vue-router": "^4.1.6",
+    "zhi-blog-api": "workspace:*",
+    "zhi-common": "workspace:*",
+    "zhi-device": "workspace:*",
+    "zhi-env": "workspace:*",
+    "zhi-log": "workspace:*",
+    "zhi-siyuan-api": "workspace:*"
   }
 }

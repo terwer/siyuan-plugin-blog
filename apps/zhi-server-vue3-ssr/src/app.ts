@@ -23,10 +23,27 @@
  * questions.
  */
 
-import { createSSRApp } from "vue"
-import Vue from "./App.vue"
+import { createApp, createSSRApp } from "vue"
+import createPageRouter from "./router"
+import App from "./App.vue"
+import { appConfigPlugin } from "~/plugins/app-config-plugin/appConfigProvider"
 
-// 在服务器和客户端之间共享
-export function createApp() {
-  return createSSRApp(Vue)
+/**
+ * 创建 Vue 的 App 实例，在服务器和客户端之间共享
+ */
+function createVueApp() {
+  // https://github.com/vuejs/core/issues/4034
+  // const app = createSSRApp(App)
+  const app = import.meta.env.SSR ? createSSRApp(App) : createApp(App)
+
+  // router
+  const router = createPageRouter()
+  app.use(router)
+
+  // app config support
+  app.use(appConfigPlugin)
+
+  return { app, router }
 }
+
+export default createVueApp

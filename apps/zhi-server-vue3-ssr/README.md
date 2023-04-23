@@ -3,4 +3,38 @@ a ssr blog using vue3 and esbuild
 
 ## How to use
 
-For more detail, please go to [zhi-cli](https://github.com/terwer/zhi/tree/dev/apps/zhi-cli)
+### Dev
+
+```bash
+pnpm dev -F zhi-server-vue3-ssr
+```
+
+### Node
+
+1 build
+
+```bash
+pnpm nodeBuild -F zhi-server-vue3-ssr
+```
+
+2 run
+
+```bash
+pnpm nodeDev -F zhi-server-vue3-ssr
+```
+
+### Siyuan console
+
+1 build
+
+```bash
+pnpm localBuild -F zhi-server-vue3-ssr
+```
+
+2 run
+
+```ts
+const server = await zhiImport("/dynamic/blog/server.js")
+server()
+```
+

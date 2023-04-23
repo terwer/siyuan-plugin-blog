@@ -28,9 +28,11 @@ import minimist from "minimist"
 import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
 import stylePlugin from "esbuild-style-plugin"
-import vuePlugin from "esbuild-plugin-vue3"
+import vuePlugin from "@terwer/esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
 import inlineImage from "esbuild-plugin-inline-image"
+import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
+import rimraf from "rimraf"
 
 const args = minimist(process.argv.slice(2))
 const isProduction = args.production || args.prod
@@ -40,13 +42,20 @@ const outDir = args.outDir || args.o
 const baseDir = outDir ?? "./"
 const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 
-// const defineEnv = {
-//   NODE_ENV: isProduction ? "production" : "development",
-//   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-// }
-// const coreDefine = {
-//   "import.meta.env": JSON.stringify(defineEnv),
-// }
+const defineEnv = {
+  NODE_ENV: isProduction ? "production" : "development",
+  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+}
+const coreDefine = {
+  "import.meta.env": JSON.stringify(defineEnv),
+  "import.meta.env.SSR": "false",
+}
+
+// 生产环境先删除
+if (isProduction) {
+  console.log("delete dist in in production=>", distDir)
+  rimraf.sync(distDir)
+}
 
 /**
  * 构建配置
@@ -56,7 +65,8 @@ export default {
     entryPoints: ["src/client/index.ts"],
     outfile: path.join(distDir, "app.js"),
     format: "esm",
-    // define: { ...coreDefine },
+    define: { ...coreDefine },
+    external: ["*.woff", "*.woff2", "*.ttf"],
     plugins: [
       dtsPlugin(),
       stylePlugin(),
@@ -70,14 +80,26 @@ export default {
         resolveFrom: "cwd",
         assets: [
           // copy folder
-          // {
-          //   from: "./public/**/*",
-          //   to: [distDir],
-          // },
+          {
+            from: "./public/img/*",
+            to: [path.join(distDir, "/img")],
+          },
           // copy one file
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
-            to: [path.join(distDir, "/static.html")],
+            to: [path.join(distDir, isProduction ? "/static.html" : "index.html")],
+          },
+          {
+            from: ["./assets/vdoing/fonts/font-vdoing.ttf"],
+            to: [path.join(distDir, "/fonts/font-vdoing.ttf")],
+          },
+          {
+            from: ["./assets/vdoing/fonts/font-vdoing.woff"],
+            to: [path.join(distDir, "/fonts/font-vdoing.woff")],
+          },
+          {
+            from: ["./assets/vdoing/fonts/font-vdoing.woff2"],
+            to: [path.join(distDir, "/fonts/font-vdoing.woff2")],
           },
         ],
         watch: true,
@@ -92,5 +114,8 @@ export default {
     distDir: distDir,
     servePort: 3232,
     isServe: true,
+    onZhiBuildSuccess: function () {
+      console.log("client build success")
+    },
   },
 }

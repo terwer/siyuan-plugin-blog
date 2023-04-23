@@ -6,8 +6,12 @@
     "moduleResolution": "node",
     "isolatedModules": false,
     "esModuleInterop": true,
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
-  "include": ["**/*.d.ts", "**/*.ts", "**/*.spec.ts", "**/*.vue"],
-  "exclude": ["node_modules"]
+  "include": ["./**/*.vue", "./**/*.ts", "./**/*.spec.ts"],
+  "exclude": ["./dist"]
 }

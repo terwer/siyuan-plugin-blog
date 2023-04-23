@@ -15,6 +15,7 @@
   "author": "terwer",
   "license": "GPL",
   "devDependencies": {
+    "@terwer/esbuild-plugin-vue3": "workspace:*",
     "@types/minimist": "^1.2.2",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.17",
@@ -22,6 +23,7 @@
     "esbuild-plugin-d.ts": "^1.1.0",
     "esbuild-plugin-ifdef": "^1.0.1",
     "esbuild-plugin-inline-image": "^0.0.9",
-    "minimist": "^1.2.8"
+    "minimist": "^1.2.8",
+    "rimraf": "^4.4.1"
   }
 }

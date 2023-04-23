@@ -24,7 +24,7 @@
  */
 import express from "express"
 import { renderToString } from "vue/server-renderer"
-import { createApp } from "../app"
+import createVueApp from "../app"
 import { SiyuanDevice } from "zhi-device"
 
 /**
@@ -36,40 +36,80 @@ import { SiyuanDevice } from "zhi-device"
  */
 class ZhiVue3SsrServer {
   init(base?: string, p?: number) {
-    const app = express()
+    const server = express()
 
     // 指定静态文件目录
-    const staticPath = SiyuanDevice.joinPath(base ?? SiyuanDevice.zhiThemePath(), "/dynamic/blog")
+    const staticPath = base ?? SiyuanDevice.joinPath(SiyuanDevice.zhiThemePath(), "/dynamic/blog")
     // // this.logger.info("staticPath=>", staticPath)
     // console.log("staticPath=>", staticPath)
     // app.use(".", express.static(staticPath))
     // 先映射静态文件
     // app.use(express.static(__dirname))
-    app.use(express.static(staticPath))
+    server.use(express.static(staticPath))
 
-    app.get("/", (req, res) => {
-      const app = createApp()
+    // 服务器端路由匹配
+    server.get("*", (req, res) => {
+      const context = {
+        url: req.url,
+      }
 
-      const staticV = "202304220051"
-      renderToString(app).then((html) => {
-        res.send(`
-        <!DOCTYPE html>
-        <html lang="zh">
-          <head>
-            <title>zhi-blog-ssr-dev</title>
-            <link rel="stylesheet" href="./app.css?v=${staticV}" />
-          </head>
-          <body>
-            <div id="app">${html}</div>
-            <script src="./app.js?v=${staticV}" async defer></script>
-          </body>
-        </html>
-    `)
-      })
+      const { app, router } = createVueApp()
+
+      console.log("ssr context=>", context)
+      router
+        .push(context.url)
+        .then(() => {
+          console.log("route pushed to=>", context.url)
+
+          router.isReady().then(() => {
+            console.log("router.isReady")
+            const matchedComponents = router.currentRoute.value.matched
+            console.log("matchedComponents=>", matchedComponents)
+            if (!matchedComponents.length) {
+              return res.status(404).end("Page Not Found")
+            }
+            Promise.all(
+              matchedComponents.map((component: any) => {
+                if (component.asyncData) {
+                  return component.asyncData({
+                    route: router.currentRoute.value,
+                  })
+                }
+              })
+            )
+              .then(() => {
+                console.log("start renderToString...")
+                const staticV = "202304220051"
+                renderToString(app, context).then((appHtml) => {
+                  console.log("appHtml=>", appHtml)
+                  res.send(`
+                  <!DOCTYPE html>
+                  <html lang="zh">
+                    <head>
+                      <title>zhi-blog-ssr-dev</title>
+                      <link rel="stylesheet" href="./app.css?v=${staticV}" />
+                    </head>
+                    <body>
+                      <div id="app">${appHtml}</div>
+                      <script type="module" src="./app.js?v=${staticV}" async defer></script>
+                    </body>
+                  </html>
+              `)
+                  res.end()
+                })
+              })
+              .catch((reason) => {
+                res.end("error, reason is:" + reason)
+              })
+          })
+        })
+        .catch((reason) => {
+          console.error("route push failed", reason)
+        })
     })
 
     const port = p ?? 3000
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`ready ${port}...`)
     })
 
