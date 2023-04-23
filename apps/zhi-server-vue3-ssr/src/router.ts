@@ -23,14 +23,30 @@
  * questions.
  */
 
-import createVueApp from "../app"
+import { createMemoryHistory, createRouter, createWebHistory } from "vue-router"
+import Home from "./pages/home.vue"
+import Post from "./pages/post.vue"
 
-const { app, router } = createVueApp()
-router.beforeEach(async function () {
-  // 页面刷新时执行该回调函数
-  console.log("beforeEach invoked")
-})
+function createPageRouter() {
+  const historyMode = import.meta.env.SSR ? createMemoryHistory() : createWebHistory()
+  console.log("isSSR=>", import.meta.env.SSR)
+  console.log("using historyMode=>", historyMode)
 
-router.isReady().then(function () {
-  app.mount("#app")
-})
+  return createRouter({
+    // use appropriate history implementation for server/client
+    // import.meta.env.SSR is injected by Vite.
+    history: historyMode,
+    routes: [
+      {
+        path: "/",
+        component: Home,
+      },
+      {
+        path: "/post",
+        component: Post,
+      },
+    ],
+  })
+}
+
+export default createPageRouter

@@ -437,6 +437,9 @@ importers:
       vue:
         specifier: ^3.2.47
         version: registry.npmjs.org/vue@3.2.47
+      vue-router:
+        specifier: ^4.1.6
+        version: registry.npmjs.org/vue-router@4.1.6(vue@3.2.47)
       zhi-device:
         specifier: workspace:*
         version: link:../zhi-device
@@ -6128,7 +6131,6 @@ packages:
     resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.5.0.tgz}
     name: '@vue/devtools-api'
     version: 6.5.0
-    dev: true
 
   registry.npmjs.org/@vue/reactivity-transform@3.2.47:
     resolution: {integrity: sha512-m8lGXw8rdnPVVIdIFhf0LeQ/ixyHkH5plYuS83yop5n7ggVJU+z5v0zecwEnX7fa7HNLBhh2qngJJkxpwEEmYA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@vue/reactivity-transform/-/reactivity-transform-3.2.47.tgz}
@@ -19728,7 +19730,6 @@ packages:
     dependencies:
       '@vue/devtools-api': registry.npmjs.org/@vue/devtools-api@6.5.0
       vue: registry.npmjs.org/vue@3.2.47
-    dev: true
 
   registry.npmjs.org/vue@3.2.47:
     resolution: {integrity: sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/vue/-/vue-3.2.47.tgz}

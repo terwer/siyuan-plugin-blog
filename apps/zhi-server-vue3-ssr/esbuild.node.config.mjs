@@ -29,6 +29,7 @@ import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
 import vuePlugin from "esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
+import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
 
 const args = minimist(process.argv.slice(2))
 const isProduction = args.production || args.prod
@@ -38,13 +39,14 @@ const outDir = args.outDir || args.o
 const baseDir = outDir ?? "./"
 const distDir = outDir ? baseDir : path.join(baseDir, "dist")
 
-// const defineEnv = {
-//   NODE_ENV: isProduction ? "production" : "development",
-//   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
-// }
-// const coreDefine = {
-//   "import.meta.env": JSON.stringify(defineEnv),
-// }
+const defineEnv = {
+  NODE_ENV: isProduction ? "production" : "development",
+  ...getNormalizedEnvDefines(["NODE", "VITE_"]),
+}
+const coreDefine = {
+  "import.meta.env": JSON.stringify(defineEnv),
+  "import.meta.env.SSR": "true",
+}
 
 /**
  * 构建配置
@@ -55,7 +57,7 @@ export default {
     outfile: path.join(distDir, "server.js"),
     format: "esm",
     platform: "node",
-    // define: { ...coreDefine },
+    define: { ...coreDefine },
     banner: {
       js: `
         import path from "path";

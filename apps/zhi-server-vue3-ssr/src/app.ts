@@ -24,9 +24,18 @@
  */
 
 import { createSSRApp } from "vue"
-import Vue from "./App.vue"
+import createPageRouter from "./router"
+import App from "./App.vue"
 
-// 在服务器和客户端之间共享
-export function createApp() {
-  return createSSRApp(Vue)
+/**
+ * 创建 Vue 的 App 实例，在服务器和客户端之间共享
+ */
+function createVueApp() {
+  const app = createSSRApp(App)
+
+  const router = createPageRouter()
+  app.use(router)
+  return { app, router }
 }
+
+export default createVueApp
