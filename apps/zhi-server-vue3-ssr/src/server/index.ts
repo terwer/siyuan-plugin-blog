@@ -39,7 +39,7 @@ class ZhiVue3SsrServer {
     const server = express()
 
     // 指定静态文件目录
-    const staticPath = SiyuanDevice.joinPath(base ?? SiyuanDevice.zhiThemePath(), "/dynamic/blog")
+    const staticPath = base ?? SiyuanDevice.joinPath(SiyuanDevice.zhiThemePath(), "/dynamic/blog")
     // // this.logger.info("staticPath=>", staticPath)
     // console.log("staticPath=>", staticPath)
     // app.use(".", express.static(staticPath))

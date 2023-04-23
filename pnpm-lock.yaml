@@ -486,6 +486,12 @@ importers:
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
+      node-fetch:
+        specifier: ^3.3.1
+        version: registry.npmjs.org/node-fetch@3.3.1
+      nodemon:
+        specifier: ^2.0.22
+        version: registry.npmjs.org/nodemon@2.0.22
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -641,6 +647,9 @@ importers:
       minimist:
         specifier: ^1.2.8
         version: registry.npmjs.org/minimist@1.2.8
+      rimraf:
+        specifier: ^4.4.1
+        version: registry.npmjs.org/rimraf@4.4.1
 
   packages/esbuild-plugin-vue3:
     dependencies:
@@ -764,7 +773,7 @@ importers:
         version: registry.npmjs.org/jsdom@21.1.1
       vite:
         specifier: ^4.2.2
-        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.11)
+        version: registry.npmjs.org/vite@4.2.2(@types/node@18.15.13)
       vitest:
         specifier: ^0.30.1
         version: registry.npmjs.org/vitest@0.30.1(jsdom@21.1.1)
@@ -3878,7 +3887,7 @@ packages:
       nopt: registry.npmjs.org/nopt@5.0.0
       npmlog: registry.npmjs.org/npmlog@5.0.1
       rimraf: registry.npmjs.org/rimraf@3.0.2
-      semver: registry.npmjs.org/semver@7.4.0
+      semver: registry.npmjs.org/semver@7.5.0
       tar: registry.npmjs.org/tar@6.1.13
     transitivePeerDependencies:
       - encoding
@@ -5849,7 +5858,7 @@ packages:
       debug: registry.npmjs.org/debug@4.3.4
       globby: registry.npmjs.org/globby@11.1.0
       is-glob: registry.npmjs.org/is-glob@4.0.3
-      semver: registry.npmjs.org/semver@7.4.0
+      semver: registry.npmjs.org/semver@7.5.0
       tsutils: registry.npmjs.org/tsutils@3.21.0(typescript@4.9.5)
       typescript: registry.npmjs.org/typescript@4.9.5
     transitivePeerDependencies:
@@ -5873,7 +5882,7 @@ packages:
       debug: registry.npmjs.org/debug@4.3.4
       globby: registry.npmjs.org/globby@11.1.0
       is-glob: registry.npmjs.org/is-glob@4.0.3
-      semver: registry.npmjs.org/semver@7.4.0
+      semver: registry.npmjs.org/semver@7.5.0
       tsutils: registry.npmjs.org/tsutils@3.21.0(typescript@5.0.4)
       typescript: registry.npmjs.org/typescript@5.0.4
     transitivePeerDependencies:
@@ -5897,7 +5906,7 @@ packages:
       debug: registry.npmjs.org/debug@4.3.4
       globby: registry.npmjs.org/globby@11.1.0
       is-glob: registry.npmjs.org/is-glob@4.0.3
-      semver: registry.npmjs.org/semver@7.4.0
+      semver: registry.npmjs.org/semver@7.5.0
       tsutils: registry.npmjs.org/tsutils@3.21.0(typescript@4.9.5)
       typescript: registry.npmjs.org/typescript@4.9.5
     transitivePeerDependencies:
@@ -5921,7 +5930,7 @@ packages:
       debug: registry.npmjs.org/debug@4.3.4
       globby: registry.npmjs.org/globby@11.1.0
       is-glob: registry.npmjs.org/is-glob@4.0.3
-      semver: registry.npmjs.org/semver@7.4.0
+      semver: registry.npmjs.org/semver@7.5.0
       tsutils: registry.npmjs.org/tsutils@3.21.0(typescript@5.0.4)
       typescript: registry.npmjs.org/typescript@5.0.4
     transitivePeerDependencies:
@@ -9165,6 +9174,21 @@ packages:
     dependencies:
       ms: registry.npmjs.org/ms@2.0.0
 
+  registry.npmjs.org/debug@3.2.7(supports-color@5.5.0):
+    resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/debug/-/debug-3.2.7.tgz}
+    id: registry.npmjs.org/debug/3.2.7
+    name: debug
+    version: 3.2.7
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: registry.npmjs.org/ms@2.1.3
+      supports-color: registry.npmjs.org/supports-color@5.5.0
+    dev: true
+
   registry.npmjs.org/debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/debug/-/debug-4.3.4.tgz}
     name: debug
@@ -11871,6 +11895,12 @@ packages:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz}
     name: ieee754
     version: 1.2.1
+
+  registry.npmjs.org/ignore-by-default@1.0.1:
+    resolution: {integrity: sha512-Ius2VYcGNk7T90CppJqcIkS5ooHUZyIQK+ClZfMfMNFEF9VSE73Fq+906u/CWu92x4gzZMWOwfFYckPObzdEbA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ignore-by-default/-/ignore-by-default-1.0.1.tgz}
+    name: ignore-by-default
+    version: 1.0.1
+    dev: true
 
   registry.npmjs.org/ignore@5.2.4:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ignore/-/ignore-5.2.4.tgz}
@@ -15100,6 +15130,25 @@ packages:
     name: node-releases
     version: 2.0.10
 
+  registry.npmjs.org/nodemon@2.0.22:
+    resolution: {integrity: sha512-B8YqaKMmyuCO7BowF1Z1/mkPqLk6cs/l63Ojtd6otKjMx47Dq1utxfRxcavH1I7VSaL8n5BUaoutadnsX3AAVQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/nodemon/-/nodemon-2.0.22.tgz}
+    name: nodemon
+    version: 2.0.22
+    engines: {node: '>=8.10.0'}
+    hasBin: true
+    dependencies:
+      chokidar: registry.npmjs.org/chokidar@3.5.3
+      debug: registry.npmjs.org/debug@3.2.7(supports-color@5.5.0)
+      ignore-by-default: registry.npmjs.org/ignore-by-default@1.0.1
+      minimatch: registry.npmjs.org/minimatch@3.1.2
+      pstree.remy: registry.npmjs.org/pstree.remy@1.1.8
+      semver: registry.npmjs.org/semver@5.7.1
+      simple-update-notifier: registry.npmjs.org/simple-update-notifier@1.1.0
+      supports-color: registry.npmjs.org/supports-color@5.5.0
+      touch: registry.npmjs.org/touch@3.1.0
+      undefsafe: registry.npmjs.org/undefsafe@2.0.5
+    dev: true
+
   registry.npmjs.org/non-layered-tidy-tree-layout@2.0.2:
     resolution: {integrity: sha512-gkXMxRzUH+PB0ax9dUN0yYF0S25BqeAYqhgMaLUFmpXLEk7Fcu8f4emJuOAY0V8kjDICxROIKsTAKsV/v355xw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/non-layered-tidy-tree-layout/-/non-layered-tidy-tree-layout-2.0.2.tgz}
     name: non-layered-tidy-tree-layout
@@ -16588,6 +16637,12 @@ packages:
     version: 1.9.0
     dev: true
 
+  registry.npmjs.org/pstree.remy@1.1.8:
+    resolution: {integrity: sha512-77DZwxQmxKnu3aR542U+X8FypNzbfJ+C5XQDk3uWjWxn6151aIMGthWYRXTqT1E5oJvg+ljaa2OJi+VfvCOQ8w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/pstree.remy/-/pstree.remy-1.1.8.tgz}
+    name: pstree.remy
+    version: 1.1.8
+    dev: true
+
   registry.npmjs.org/pug-attrs@3.0.0:
     resolution: {integrity: sha512-azINV9dUtzPMFQktvTXciNAfAuVh/L/JCl0vtPCwvOA21uZrC08K/UnmrL+SXGEVc1FwzjW62+xw5S/uaLj6cA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/pug-attrs/-/pug-attrs-3.0.0.tgz}
     name: pug-attrs
@@ -17709,6 +17764,13 @@ packages:
     version: 6.3.0
     hasBin: true
 
+  registry.npmjs.org/semver@7.0.0:
+    resolution: {integrity: sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/semver/-/semver-7.0.0.tgz}
+    name: semver
+    version: 7.0.0
+    hasBin: true
+    dev: true
+
   registry.npmjs.org/semver@7.3.8:
     resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/semver/-/semver-7.3.8.tgz}
     name: semver
@@ -17736,7 +17798,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: registry.npmjs.org/lru-cache@6.0.0
-    dev: true
 
   registry.npmjs.org/send@0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/send/-/send-0.18.0.tgz}
@@ -17899,6 +17960,15 @@ packages:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz}
     name: signal-exit
     version: 3.0.7
+
+  registry.npmjs.org/simple-update-notifier@1.1.0:
+    resolution: {integrity: sha512-VpsrsJSUcJEseSbMHkrsrAVSdvVS5I96Qo1QAQ4FxQ9wXFcB+pjj7FB7/us9+GcgfW4ziHtYMc1J0PLczb55mg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/simple-update-notifier/-/simple-update-notifier-1.1.0.tgz}
+    name: simple-update-notifier
+    version: 1.1.0
+    engines: {node: '>=8.10.0'}
+    dependencies:
+      semver: registry.npmjs.org/semver@7.0.0
+    dev: true
 
   registry.npmjs.org/sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz}
@@ -18754,6 +18824,15 @@ packages:
     version: 1.0.0
     dev: false
 
+  registry.npmjs.org/touch@3.1.0:
+    resolution: {integrity: sha512-WBx8Uy5TLtOSRtIq+M03/sKDrXCLHxwDcquSP2c43Le03/9serjQBIztjRz6FkJez9D/hleyAXTBGLwwZUw9lA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/touch/-/touch-3.1.0.tgz}
+    name: touch
+    version: 3.1.0
+    hasBin: true
+    dependencies:
+      nopt: registry.npmjs.org/nopt@1.0.10
+    dev: true
+
   registry.npmjs.org/tough-cookie@4.1.2:
     resolution: {integrity: sha512-G9fqXWoYFZgTc2z8Q5zaHy/vJMjm+WV0AkAeHxVCQiEB1b+dGvWzFW6QV07cY5jQ5gRkeid2qIkzkxUnmoQZUQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/tough-cookie/-/tough-cookie-4.1.2.tgz}
     name: tough-cookie
@@ -19229,6 +19308,12 @@ packages:
       estree-walker: registry.npmjs.org/estree-walker@3.0.3
       magic-string: registry.npmjs.org/magic-string@0.30.0
       unplugin: registry.npmjs.org/unplugin@1.3.1
+    dev: true
+
+  registry.npmjs.org/undefsafe@2.0.5:
+    resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/undefsafe/-/undefsafe-2.0.5.tgz}
+    name: undefsafe
+    version: 2.0.5
     dev: true
 
   registry.npmjs.org/undici@5.20.0:

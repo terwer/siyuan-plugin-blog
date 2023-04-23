@@ -185,6 +185,12 @@ class ZhiBuild {
       await esbuild.build(esbuildConfig)
       console.log("ZhiBuild process finished")
     }
+
+    // invoke success callback
+    if (customConfig.onZhiBuildSuccess) {
+      console.log("ZhiBuild detected success callback")
+      customConfig.onZhiBuildSuccess()
+    }
   }
 }
 

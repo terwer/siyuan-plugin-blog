@@ -30,7 +30,9 @@ import { copy } from "esbuild-plugin-copy"
 import stylePlugin from "esbuild-style-plugin"
 import vuePlugin from "@terwer/esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
+import inlineImage from "esbuild-plugin-inline-image"
 import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
+import rimraf from "rimraf"
 
 const args = minimist(process.argv.slice(2))
 const isProduction = args.production || args.prod
@@ -84,8 +86,8 @@ export default {
         assets: [
           // copy one file
           {
-            from: ["./public/start.js"],
-            to: [path.join(distDir, "/start.js")],
+            from: ["./public/node-start.mjs"],
+            to: [path.join(distDir, "/node-start.mjs")],
           },
         ],
         watch: true,
@@ -101,5 +103,11 @@ export default {
     distDir: distDir,
     servePort: 3232,
     isServe: true,
+    onZhiBuildSuccess: function () {
+      if (isProduction) {
+        console.log("node build success.do some cleanup.removing server.css ...")
+        rimraf.sync(path.join(distDir, "/server.css"))
+      }
+    },
   },
 }

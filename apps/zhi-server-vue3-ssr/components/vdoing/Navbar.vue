@@ -1,11 +1,10 @@
 <template>
   <header class="navbar blur">
-    111155555
-    {{ appConfig.siteTitle }}
     <!--
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
+    -->
 
-    <NuxtLink to="/" class="home-link">
+    <router-link to="/" class="home-link">
       <img
         v-if="appConfig.themeConfig.logo"
         class="logo"
@@ -20,8 +19,7 @@
           {{ appConfig.siteSlogan }}
         </div>
       </div>
-    </NuxtLink>
-    -->
+    </router-link>
 
     <!--
     MeiliSearch
@@ -43,12 +41,14 @@ import { reactive, computed, onBeforeMount, onMounted } from "vue"
 import { useAppConfig } from "~/composables/useAppConfig"
 import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 
-const appConfig = useAppConfig()
 const env = ZhiServerVue3SsrUtil.zhiEnv()
+
+// uses
+const appConfig = useAppConfig()
 
 // datas
 const datas = reactive({
-  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
+  appBase: env.getStringEnv("VITE_APP_BASE"),
   isMobile: true,
   linksWrapMaxWidth: null,
 })
@@ -67,6 +67,7 @@ const computes = {
 
 // lifecycle
 onBeforeMount(async () => {
+  datas.appBase = window.location.origin + env.getStringEnv("VITE_APP_BASE")
   // const deviceDetector = await import("next-vue-device-detector")
   // const d = deviceDetector.createDeviceDetector()
   // datas.isMobile = d.mobile

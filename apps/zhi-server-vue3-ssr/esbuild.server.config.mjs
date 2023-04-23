@@ -32,6 +32,7 @@ import vuePlugin from "@terwer/esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
 import inlineImage from "esbuild-plugin-inline-image"
 import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
+import rimraf from "rimraf"
 
 const args = minimist(process.argv.slice(2))
 const isProduction = args.production || args.prod
@@ -91,5 +92,11 @@ export default {
     distDir: distDir,
     servePort: 3232,
     isServe: true,
+    onZhiBuildSuccess: function () {
+      if (isProduction) {
+        console.log("server build success.do some cleanup.removing server.css ...")
+        rimraf.sync(path.join(distDir, "/server.css"))
+      }
+    },
   },
 }

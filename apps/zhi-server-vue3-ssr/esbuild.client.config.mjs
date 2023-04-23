@@ -32,6 +32,7 @@ import vuePlugin from "@terwer/esbuild-plugin-vue3"
 import aliasPlugin from "@chialab/esbuild-plugin-alias"
 import inlineImage from "esbuild-plugin-inline-image"
 import getNormalizedEnvDefines from "esbuild-config-custom/utils.cjs"
+import rimraf from "rimraf"
 
 const args = minimist(process.argv.slice(2))
 const isProduction = args.production || args.prod
@@ -48,6 +49,12 @@ const defineEnv = {
 const coreDefine = {
   "import.meta.env": JSON.stringify(defineEnv),
   "import.meta.env.SSR": "false",
+}
+
+// 生产环境先删除
+if (isProduction) {
+  console.log("delete dist in in production=>", distDir)
+  rimraf.sync(distDir)
 }
 
 /**
@@ -73,10 +80,10 @@ export default {
         resolveFrom: "cwd",
         assets: [
           // copy folder
-          // {
-          //   from: "./public/**/*",
-          //   to: [distDir],
-          // },
+          {
+            from: "./public/img/*",
+            to: [path.join(distDir, "/img")],
+          },
           // copy one file
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
@@ -107,5 +114,8 @@ export default {
     distDir: distDir,
     servePort: 3232,
     isServe: true,
+    onZhiBuildSuccess: function () {
+      console.log("client build success")
+    },
   },
 }

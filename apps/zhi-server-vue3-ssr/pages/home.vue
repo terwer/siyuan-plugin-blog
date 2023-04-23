@@ -25,7 +25,7 @@
 
 <template>
   <div>
-    This is home <router-link to="/">Home2</router-link> |
-    <router-link to="/post">Post</router-link>
+    <div>This is home</div>
+    <router-link to="/post" class="home-link">post </router-link>
   </div>
 </template>
