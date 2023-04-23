@@ -26,11 +26,14 @@
 import { createMemoryHistory, createRouter, createWebHistory } from "vue-router"
 import Home from "~/pages/home.vue"
 import Post from "~/pages/post.vue"
+import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 
 function createPageRouter() {
+  const logger = ZhiServerVue3SsrUtil.zhiLog("vue-router")
+
   const historyMode = import.meta.env.SSR ? createMemoryHistory() : createWebHistory()
-  console.log("isSSR=>", import.meta.env.SSR)
-  console.log("using historyMode=>", historyMode)
+  logger.info("isSSR=>", import.meta.env.SSR)
+  logger.debug("using historyMode=>", historyMode)
 
   return createRouter({
     // use appropriate history implementation for server/client

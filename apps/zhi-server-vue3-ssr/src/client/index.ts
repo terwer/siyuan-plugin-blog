@@ -24,11 +24,15 @@
  */
 
 import createVueApp from "../app"
+import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 
+const logger = ZhiServerVue3SsrUtil.zhiLog("ssr-client")
 const { app, router } = createVueApp()
-router.beforeEach(async function () {
+
+// 如果传递 next 可以拦截路由做跳转
+router.beforeEach(async function (to, from) {
   // 页面刷新时执行该回调函数
-  console.log("beforeEach invoked")
+  logger.debug(`beforeEach invoked, from:${from}, to:${to}`)
 })
 
 router.isReady().then(function () {

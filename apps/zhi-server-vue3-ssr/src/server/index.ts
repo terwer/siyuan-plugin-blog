@@ -26,6 +26,7 @@ import express from "express"
 import { renderToString } from "vue/server-renderer"
 import createVueApp from "../app"
 import { SiyuanDevice } from "zhi-device"
+import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 
 /**
  * HTTP 服务
@@ -35,16 +36,18 @@ import { SiyuanDevice } from "zhi-device"
  * @since 1.0.0
  */
 class ZhiVue3SsrServer {
+  private readonly logger
+
+  constructor() {
+    this.logger = ZhiServerVue3SsrUtil.zhiLog("ssr-server")
+  }
+
   init(base?: string, p?: number) {
     const server = express()
 
     // 指定静态文件目录
     const staticPath = base ?? SiyuanDevice.joinPath(SiyuanDevice.zhiThemePath(), "/dynamic/blog")
-    // // this.logger.info("staticPath=>", staticPath)
-    // console.log("staticPath=>", staticPath)
-    // app.use(".", express.static(staticPath))
-    // 先映射静态文件
-    // app.use(express.static(__dirname))
+    this.logger.info("staticPath=>", staticPath)
     server.use(express.static(staticPath))
 
     // 服务器端路由匹配
@@ -55,16 +58,16 @@ class ZhiVue3SsrServer {
 
       const { app, router } = createVueApp()
 
-      console.log("ssr context=>", context)
+      this.logger.debug("ssr context=>", context)
       router
         .push(context.url)
         .then(() => {
-          console.log("route pushed to=>", context.url)
+          this.logger.info("route pushed to=>", context.url)
 
           router.isReady().then(() => {
-            console.log("router.isReady")
+            this.logger.debug("router.isReady")
             const matchedComponents = router.currentRoute.value.matched
-            console.log("matchedComponents=>", matchedComponents)
+            this.logger.trace("matchedComponents=>", matchedComponents)
             if (!matchedComponents.length) {
               return res.status(404).end("Page Not Found")
             }
@@ -78,10 +81,10 @@ class ZhiVue3SsrServer {
               })
             )
               .then(() => {
-                console.log("start renderToString...")
+                this.logger.trace("start renderToString...")
                 const staticV = "202304220051"
                 renderToString(app, context).then((appHtml) => {
-                  console.log("appHtml=>", appHtml)
+                  this.logger.trace("appHtml=>", appHtml)
                   res.send(`
                   <!DOCTYPE html>
                   <html lang="zh">
@@ -104,13 +107,21 @@ class ZhiVue3SsrServer {
           })
         })
         .catch((reason) => {
-          console.error("route push failed", reason)
+          this.logger.error("route push failed", reason)
         })
     })
 
-    const port = p ?? 3000
-    server.listen(port, () => {
-      console.log(`ready ${port}...`)
+    // 监听端口
+    const listener = server.listen(p ?? 3333, () => {
+      let serveUrl
+      const addr = listener.address() ?? "unknown host"
+      if (typeof addr == "string") {
+        serveUrl = addr
+      } else {
+        const { port, address } = addr
+        serveUrl = `${address}:${port}`
+      }
+      this.logger.info(`Server is listening on ${serveUrl}`)
     })
 
     return "ok"
