@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { Headers, Request, Response } from "node-fetch"
+import { Headers, Request, Response } from "crosss-fetch"
 
 // 1 构建代码
 // pnpm nodeBuild -F zhi-server-vue3-ssr

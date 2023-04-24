@@ -49,5 +49,11 @@ pnpm nodeBuild -F zhi-server-vue3-ssr
 2 run
 
 ```bash
-pnpm docker-build -F zhi-server-vue3-ssr
+pnpm dockerBuild -F zhi-server-vue3-ssr
 ```
+
+### Vercel
+
+```bash
+pnpm vercelBuild -F zhi-server-vue3-ssr
+````

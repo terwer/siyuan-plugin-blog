@@ -4,5 +4,6 @@ module.exports = {
 
   rules: {
     "vue/multi-word-component-names": "off",
+    "turbo/no-undeclared-env-vars": "off"
   },
 }

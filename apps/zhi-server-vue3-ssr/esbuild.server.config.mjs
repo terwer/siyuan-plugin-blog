@@ -25,7 +25,6 @@
 
 import path from "path"
 import minimist from "minimist"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
 import stylePlugin from "esbuild-style-plugin"
 import vuePlugin from "@terwer/esbuild-plugin-vue3"
@@ -63,7 +62,6 @@ export default {
     define: { ...coreDefine },
     external: ["*.woff", "*.woff2", "*.ttf"],
     plugins: [
-      dtsPlugin(),
       vuePlugin(),
       aliasPlugin({
         vue: "vue/dist/vue.esm-bundler.js",

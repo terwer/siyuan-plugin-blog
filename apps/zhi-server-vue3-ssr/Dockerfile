@@ -1,5 +1,5 @@
-# Build the docker image with `pnpm docker-build -F zhi-server-vue3-ssr`.
-# Tip: Modify "docker-build" options in project.json to change docker build args.
+# Build the docker image with `pnpm dockerBuild -F zhi-server-vue3-ssr`.
+# Tip: Modify "dockerBuild" options in project.json to change docker build args.
 #
 # Run the container with `docker run -p 3000:3000 -t vue3-ssr`.
 FROM docker.io/node:lts-alpine
@@ -14,7 +14,7 @@ RUN addgroup --system vue3-ssr && \
     adduser --system -G vue3-ssr vue3-ssr
 
 RUN npm init --yes
-RUN npm install node-fetch
+RUN npm install crosss-fetch
 RUN chown -R vue3-ssr:vue3-ssr node_modules
 
 USER vue3-ssr
