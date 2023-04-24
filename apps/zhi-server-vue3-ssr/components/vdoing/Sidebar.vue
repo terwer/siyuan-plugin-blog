@@ -1,5 +1,6 @@
 <template>
   <aside class="sidebar">
+    <!-- 作者信息 -->
     <div v-if="computes.blogger" class="blogger">
       <img :src="datas.appBase + computes.blogger.value.avatar" />
       <div class="blogger-info">
@@ -20,10 +21,11 @@
     </div>
 
     <!-- 移动端Nav -->
-    <client-only v-if="datas.isMobile">
-      <NavLinks />
-    </client-only>
+    <NavLinks />
+
+    <!--
     <slot name="top" />
+    -->
 
     <!--
     <SidebarLinks :depth="0" :items="props.items" />
@@ -36,13 +38,14 @@
 
 <script setup lang="ts">
 import NavLinks from "~/components/vdoing/NavLinks.vue"
-import Env from "zhi-env"
+import { useAppConfig } from "~/composables/useAppConfig"
+import { computed, onBeforeMount, reactive } from "vue"
+import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
+
+const env = ZhiServerVue3SsrUtil.zhiEnv()
 
 // uses
 const appConfig = useAppConfig()
-const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv.public)
-ZhiWebBlogUtil.initEnv(env)
 
 // props
 const props = defineProps({
@@ -54,8 +57,7 @@ const props = defineProps({
 
 // datas
 const datas = reactive({
-  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
-  isMobile: false,
+  appBase: env.getStringEnv("VITE_APP_BASE"),
 })
 
 // computes
@@ -67,15 +69,12 @@ const computes = {
 
 // lifecycle
 onBeforeMount(async () => {
-  // const deviceDetector = await import("next-vue-device-detector")
-  // const d = deviceDetector.createDeviceDetector()
-  // datas.isMobile = d.mobile
-  datas.isMobile = false
+  datas.appBase = window.location.origin + env.getStringEnv("VITE_APP_BASE")
 })
 </script>
 
 <style lang="stylus">
-@require "../assets/vdoing/styles/index"
+@require "../../assets/vdoing/styles/index"
 
 .sidebar
   ul

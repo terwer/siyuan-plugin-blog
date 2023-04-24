@@ -1,4 +1,4 @@
-name: sync zhi-blog-astro
+name: sync zhi-server-blog
 
 on:
   push:

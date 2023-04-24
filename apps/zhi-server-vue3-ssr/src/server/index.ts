@@ -22,72 +22,73 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
+
 import express from "express"
-import { renderToString } from "vue/server-renderer"
-import createVueApp from "../app"
+import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
 import { SiyuanDevice } from "zhi-device"
+import createVueApp from "~/src/app"
+import { renderToString } from "vue/server-renderer"
 
 /**
- * HTTP 服务
+ * 通用的 express 实例
  *
  * @author terwer
  * @version 1.0.0
  * @since 1.0.0
  */
-class ZhiVue3SsrServer {
-  init(base?: string, p?: number) {
-    const server = express()
+export function createExpressServer() {
+  const logger = ZhiServerVue3SsrUtil.zhiLog("server-middleware")
+  const server = express()
 
-    // 指定静态文件目录
-    const staticPath = base ?? SiyuanDevice.joinPath(SiyuanDevice.zhiThemePath(), "/dynamic/blog")
-    // // this.logger.info("staticPath=>", staticPath)
-    // console.log("staticPath=>", staticPath)
-    // app.use(".", express.static(staticPath))
-    // 先映射静态文件
-    // app.use(express.static(__dirname))
-    server.use(express.static(staticPath))
+  // 指定静态文件目录
+  const staticPath = process.env.BASE_PATH ?? SiyuanDevice.joinPath(SiyuanDevice.zhiThemePath(), "/dynamic/blog")
+  logger.info("staticPath=>", staticPath)
+  server.use(express.static(staticPath))
 
-    // 服务器端路由匹配
-    server.get("*", (req, res) => {
-      const context = {
-        url: req.url,
-      }
+  // 服务器端路由匹配
+  server.get("*", (req, res) => {
+    const context = {
+      url: req.url,
+    }
 
-      const { app, router } = createVueApp()
+    const { app, router } = createVueApp()
 
-      console.log("ssr context=>", context)
-      router
-        .push(context.url)
-        .then(() => {
-          console.log("route pushed to=>", context.url)
+    logger.debug("ssr context=>", context)
+    router
+      .push(context.url)
+      .then(() => {
+        logger.info("route pushed to=>", context.url)
 
-          router.isReady().then(() => {
-            console.log("router.isReady")
-            const matchedComponents = router.currentRoute.value.matched
-            console.log("matchedComponents=>", matchedComponents)
-            if (!matchedComponents.length) {
-              return res.status(404).end("Page Not Found")
-            }
-            Promise.all(
-              matchedComponents.map((component: any) => {
-                if (component.asyncData) {
-                  return component.asyncData({
-                    route: router.currentRoute.value,
-                  })
-                }
-              })
-            )
-              .then(() => {
-                console.log("start renderToString...")
-                const staticV = "202304220051"
-                renderToString(app, context).then((appHtml) => {
-                  console.log("appHtml=>", appHtml)
-                  res.send(`
+        router.isReady().then(() => {
+          logger.debug("router.isReady")
+          const matchedComponents = router.currentRoute.value.matched
+          logger.trace("matchedComponents=>", matchedComponents)
+          if (!matchedComponents.length) {
+            return res.status(404).end("Page Not Found")
+          }
+          Promise.all(
+            matchedComponents.map((component: any) => {
+              if (component.asyncData) {
+                return component.asyncData({
+                  route: router.currentRoute.value,
+                })
+              }
+            })
+          )
+            .then(() => {
+              logger.trace("start renderToString...")
+              const staticV = "202304220051"
+              renderToString(app, context).then((appHtml) => {
+                logger.trace("appHtml=>", appHtml)
+                res.send(`
                   <!DOCTYPE html>
                   <html lang="zh">
                     <head>
-                      <title>zhi-blog-ssr-dev</title>
+                      <meta charset="UTF-8" />
+                      <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                      <link rel="icon" href="./favicon.ico">
                       <link rel="stylesheet" href="./app.css?v=${staticV}" />
+                      <title>zhi-blog-ssr-dev</title>
                     </head>
                     <body>
                       <div id="app">${appHtml}</div>
@@ -95,36 +96,18 @@ class ZhiVue3SsrServer {
                     </body>
                   </html>
               `)
-                  res.end()
-                })
+                res.end()
               })
-              .catch((reason) => {
-                res.end("error, reason is:" + reason)
-              })
-          })
+            })
+            .catch((reason) => {
+              res.end("error, reason is:" + reason)
+            })
         })
-        .catch((reason) => {
-          console.error("route push failed", reason)
-        })
-    })
+      })
+      .catch((reason) => {
+        logger.error("route push failed", reason)
+      })
+  })
 
-    const port = p ?? 3000
-    server.listen(port, () => {
-      console.log(`ready ${port}...`)
-    })
-
-    return "ok"
-  }
+  return server
 }
-
-/**
- * 服务入口
- *
- * @param basePath - 基本路径，默认是 zhi 主题路径，需要传递绝对路径
- * @param port - 端口
- */
-const init = (basePath?: string, port?: number) => {
-  return new ZhiVue3SsrServer().init(basePath, port)
-}
-
-export default init

@@ -21,18 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import Env from "zhi-env"
 import OutboundLink from "~/components/vdoing/OutboundLink.vue"
 import VdoingUtil from "~/utils/vdoingUtil"
 import NavLink from "~/components/vdoing/NavLink.vue"
 import DropdownLink from "~/components/vdoing/DropdownLink.vue"
-import ZhiWebBlogUtil from "~/utils/ZhiWebBlogUtil"
+import { useAppConfig } from "~/composables/useAppConfig"
+import { computed } from "vue"
 
-const nuxtEnv = useRuntimeConfig()
-const env = new Env(nuxtEnv.public)
-ZhiWebBlogUtil.initEnv(env)
-const logger = ZhiWebBlogUtil.zhiLog("nav-links")
+// const logger = ZhiServerVue3SsrUtil.zhiLog("nav-links")
 
+// uses
 const appConfig = useAppConfig()
 
 const computes = {

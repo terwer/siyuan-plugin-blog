@@ -34,7 +34,26 @@ pnpm localBuild -F zhi-server-vue3-ssr
 2 run
 
 ```ts
-const server = await zhiImport("/dynamic/blog/server.js")
+const server = await zhiImport("/dynamic/blog/server.mjs")
 server()
 ```
 
+### Docker
+
+1 build
+
+```bash
+pnpm nodeBuild -F zhi-server-vue3-ssr
+```
+
+2 run
+
+```bash
+pnpm dockerBuild -F zhi-server-vue3-ssr
+```
+
+### Vercel
+
+```bash
+pnpm vercelBuild -F zhi-server-vue3-ssr
+````

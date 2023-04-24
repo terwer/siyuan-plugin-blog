@@ -32,3 +32,11 @@ declare module "*.vue" {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+declare module "good-storage"
+
+declare module "~icons/*" {
+  import { FunctionalComponent, SVGAttributes } from "vue"
+  const component: FunctionalComponent<SVGAttributes>
+  export default component
+}

@@ -25,6 +25,7 @@
 
 import { ZhiUtil } from "zhi-common"
 import Env from "zhi-env"
+import { DefaultLogger } from "zhi-log"
 
 /**
  * 工具类统一入口，每个应用自己实现
@@ -39,6 +40,13 @@ class ZhiServerVue3SsrUtil extends ZhiUtil {
       this.env = new Env(import.meta.env)
     }
     return this.env
+  }
+
+  public static override zhiLog(loggerName: string): DefaultLogger {
+    const env = this.zhiEnv()
+    this.initEnv(env)
+
+    return super.zhiLog(loggerName)
   }
 }
 

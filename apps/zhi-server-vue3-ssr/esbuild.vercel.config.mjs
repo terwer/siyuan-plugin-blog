@@ -55,22 +55,11 @@ const coreDefine = {
  */
 export default {
   esbuildConfig: {
-    entryPoints: ["src/server/index.ts"],
-    outfile: path.join(distDir, "server.mjs"),
+    entryPoints: ["src/server/vercel.ts"],
+    outfile: path.join(distDir, "index.js"),
     format: "esm",
     platform: "node",
     define: { ...coreDefine },
-    banner: {
-      js: `
-        import path from "path";
-        import { fileURLToPath } from 'url';
-        import { createRequire as topLevelCreateRequire } from 'module';
-        
-        const require = topLevelCreateRequire(import.meta.url);
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = path.dirname(__filename);
-        `,
-    },
     external: ["*.woff", "*.woff2", "*.ttf"],
     plugins: [
       vuePlugin(),
@@ -84,8 +73,8 @@ export default {
         assets: [
           // copy one file
           {
-            from: ["./public/node-start.mjs"],
-            to: [path.join(distDir, "/node-start.mjs")],
+            from: ["./public/start.js"],
+            to: [path.join(distDir, "/start.js")],
           },
         ],
         watch: true,
@@ -103,8 +92,9 @@ export default {
     isServe: true,
     onZhiBuildSuccess: function () {
       if (isProduction) {
-        console.log("node build success.do some cleanup.removing server.css ...")
+        console.log("server build success.do some cleanup.removing server.css ...")
         rimraf.sync(path.join(distDir, "/server.css"))
+        rimraf.sync(path.join(distDir, "/start.js"))
       }
     },
   },

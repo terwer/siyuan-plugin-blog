@@ -431,12 +431,18 @@ importers:
 
   apps/zhi-server-vue3-ssr:
     dependencies:
+      cross-fetch:
+        specifier: ^3.1.5
+        version: registry.npmjs.org/cross-fetch@3.1.5
       express:
         specifier: ^4.18.2
         version: registry.npmjs.org/express@4.18.2
       good-storage:
         specifier: ^1.1.1
         version: registry.npmjs.org/good-storage@1.1.1
+      lodash:
+        specifier: ^4.17.21
+        version: registry.npmjs.org/lodash@4.17.21
       vue:
         specifier: ^3.2.47
         version: registry.npmjs.org/vue@3.2.47
@@ -477,6 +483,9 @@ importers:
       '@types/good-storage':
         specifier: ^1.1.0
         version: registry.npmjs.org/@types/good-storage@1.1.0
+      '@types/lodash':
+        specifier: ^4.14.191
+        version: registry.npmjs.org/@types/lodash@4.14.191
       api-docs:
         specifier: workspace:*
         version: link:../../packages/api-docs
@@ -486,9 +495,6 @@ importers:
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
-      node-fetch:
-        specifier: ^3.3.1
-        version: registry.npmjs.org/node-fetch@3.3.1
       nodemon:
         specifier: ^2.0.22
         version: registry.npmjs.org/nodemon@2.0.22
@@ -5389,6 +5395,12 @@ packages:
     version: 3.0.2
     dev: true
 
+  registry.npmjs.org/@types/lodash@4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/lodash/-/lodash-4.14.191.tgz}
+    name: '@types/lodash'
+    version: 4.14.191
+    dev: true
+
   registry.npmjs.org/@types/markdown-it-emoji@2.0.2:
     resolution: {integrity: sha512-2ln8Wjbcj/0oRi/6VnuMeWEHHuK8uapFttvcLmDIe1GKCsFBLOLBX+D+xhDa9oWOQV0IpvxwrSfKKssAqqroog==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/markdown-it-emoji/-/markdown-it-emoji-2.0.2.tgz}
     name: '@types/markdown-it-emoji'
@@ -8536,7 +8548,6 @@ packages:
       node-fetch: registry.npmjs.org/node-fetch@2.6.7
     transitivePeerDependencies:
       - encoding
-    dev: true
 
   registry.npmjs.org/cross-spawn@6.0.5:
     resolution: {integrity: sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/cross-spawn/-/cross-spawn-6.0.5.tgz}
@@ -13812,7 +13823,6 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz}
     name: lodash
     version: 4.17.21
-    dev: true
 
   registry.npmjs.org/log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/log-symbols/-/log-symbols-4.1.0.tgz}
@@ -15080,7 +15090,6 @@ packages:
         optional: true
     dependencies:
       whatwg-url: registry.npmjs.org/whatwg-url@5.0.0
-    dev: true
 
   registry.npmjs.org/node-fetch@2.6.9:
     resolution: {integrity: sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.9.tgz}

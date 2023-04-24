@@ -2,22 +2,20 @@
   <div
     v-if="methods.hasBg()"
     class="body-bg"
-    :style="`background: url(${appBase + datas.bgImg}) center center / cover no-repeat;opacity:${datas.opacity}`"
+    :style="`background: url(${datas.bgImg}) center center / cover no-repeat;opacity:${datas.opacity}`"
   />
 </template>
 
 <script lang="ts" setup>
 import VdoingUtil from "~/utils/vdoingUtil"
-import Env from "zhi-env"
-import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
-import { reactive } from "vue"
+import { onMounted, reactive } from "vue"
+import { useAppConfig } from "~/composables/useAppConfig"
 
+// uses
 const appConfig = useAppConfig()
-const env = ZhiServerVue3SsrUtil.zhiEnv()
 
 // datas
 const datas = reactive({
-  appBase: window.location.origin + env.getStringEnv("VITE_APP_BASE"),
   bgImg: "",
   opacity: 0.5,
 })
@@ -27,13 +25,11 @@ const methods = {
   hasBg: () => {
     const { bodyBgImg } = appConfig.themeConfig
     if (typeof bodyBgImg === "string") {
-      console.log(datas.bgImg)
-      return datas.bgImg !== ""
+      return bodyBgImg !== ""
     } else if (VdoingUtil.type(bodyBgImg) === "array") {
-      return datas.bgImg.length > 0
+      return bodyBgImg.length > 0
     }
-    console.log(datas.bgImg)
-    return fasle
+    return false
   },
 }
 

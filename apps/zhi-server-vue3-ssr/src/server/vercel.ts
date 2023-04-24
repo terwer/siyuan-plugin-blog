@@ -23,18 +23,30 @@
  * questions.
  */
 
-import createVueApp from "../app"
+import express from "express"
 import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
+import { createExpressServer } from "~/src/server/index"
 
-const logger = ZhiServerVue3SsrUtil.zhiLog("ssr-client")
-const { app, router } = createVueApp()
+const logger = ZhiServerVue3SsrUtil.zhiLog("vercel-middleware")
 
-// 如果传递 next 可以拦截路由做跳转
-router.beforeEach(async function (to, from) {
-  // 页面刷新时执行该回调函数
-  logger.debug(`beforeEach invoked, from:${from}, to:${to}`)
+const server = createExpressServer()
+// 解决req.body undefined
+server.use(express.json())
+
+/**
+ * CORS 在 vercel.json 配置，这里无需配置
+ */
+server.use(function (req, res, next) {
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials");
+  // res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    logger.debug("precheck request received")
+    res.send(200)
+  } else {
+    next()
+  }
 })
 
-router.isReady().then(function () {
-  app.mount("#app")
-})
+export default server

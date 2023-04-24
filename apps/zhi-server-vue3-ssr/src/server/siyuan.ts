@@ -23,18 +23,51 @@
  * questions.
  */
 
-import createVueApp from "../app"
 import ZhiServerVue3SsrUtil from "~/utils/ZhiServerVue3SsrUtil"
+import { createExpressServer } from "~/src/middleware"
 
-const logger = ZhiServerVue3SsrUtil.zhiLog("ssr-client")
-const { app, router } = createVueApp()
+/**
+ * HTTP 服务
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+class ZhiVue3SsrServer {
+  private readonly logger
 
-// 如果传递 next 可以拦截路由做跳转
-router.beforeEach(async function (to, from) {
-  // 页面刷新时执行该回调函数
-  logger.debug(`beforeEach invoked, from:${from}, to:${to}`)
-})
+  constructor() {
+    this.logger = ZhiServerVue3SsrUtil.zhiLog("ssr-server")
+  }
 
-router.isReady().then(function () {
-  app.mount("#app")
-})
+  init(base?: string, p?: number) {
+    const server = createExpressServer()
+
+    // 监听端口
+    const listener = server.listen(p ?? 3333, () => {
+      let serveUrl
+      const addr = listener.address() ?? "unknown host"
+      if (typeof addr == "string") {
+        serveUrl = addr
+      } else {
+        const { port, address } = addr
+        serveUrl = `${address}:${port}`
+      }
+      this.logger.info(`Server is listening on ${serveUrl}`)
+    })
+
+    return "ok"
+  }
+}
+
+/**
+ * 服务入口
+ *
+ * @param basePath - 基本路径，默认是 zhi 主题路径，需要传递绝对路径
+ * @param port - 端口
+ */
+const init = (basePath?: string, port?: number) => {
+  return new ZhiVue3SsrServer().init(basePath, port)
+}
+
+export default init

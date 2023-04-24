@@ -22,6 +22,12 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "dockerBuild": {
+      "cache": false
+    },
+    "vercelBuild": {
+      "cache": false
+    },
     "siyuanBuild": {
       "cache": false
     },

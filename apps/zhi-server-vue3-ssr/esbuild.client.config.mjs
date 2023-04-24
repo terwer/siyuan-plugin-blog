@@ -25,7 +25,6 @@
 
 import path from "path"
 import minimist from "minimist"
-import { dtsPlugin } from "esbuild-plugin-d.ts"
 import { copy } from "esbuild-plugin-copy"
 import stylePlugin from "esbuild-style-plugin"
 import vuePlugin from "@terwer/esbuild-plugin-vue3"
@@ -46,6 +45,7 @@ const defineEnv = {
   NODE_ENV: isProduction ? "production" : "development",
   ...getNormalizedEnvDefines(["NODE", "VITE_"]),
 }
+console.log(defineEnv)
 const coreDefine = {
   "import.meta.env": JSON.stringify(defineEnv),
   "import.meta.env.SSR": "false",
@@ -68,7 +68,6 @@ export default {
     define: { ...coreDefine },
     external: ["*.woff", "*.woff2", "*.ttf"],
     plugins: [
-      dtsPlugin(),
       stylePlugin(),
       vuePlugin(),
       aliasPlugin({
@@ -85,6 +84,10 @@ export default {
             to: [path.join(distDir, "/img")],
           },
           // copy one file
+          {
+            from: ["./public/favicon.ico"],
+            to: [path.join(distDir, "favicon.ico")],
+          },
           {
             from: [isProduction ? "./public/index-prod.html" : "./public/index.html"],
             to: [path.join(distDir, isProduction ? "/static.html" : "index.html")],
