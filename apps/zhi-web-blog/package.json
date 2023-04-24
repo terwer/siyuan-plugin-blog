@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "good-storage": "^1.1.1",
-    "vue-instantsearch": "4.8.7",
+    "vue-instantsearch": "4.8.10",
     "zhi-common": "workspace:*",
     "zhi-env": "workspace:*",
     "zhi-log": "workspace:*",
