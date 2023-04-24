@@ -51,7 +51,7 @@
     "good-storage": "^1.1.1",
     "lodash": "^4.17.21",
     "vue": "^3.2.47",
-    "vue-instantsearch": "4.8.7",
+    "vue-instantsearch": "4.8.10",
     "vue-router": "^4.1.6",
     "zhi-blog-api": "workspace:*",
     "zhi-common": "workspace:*",
