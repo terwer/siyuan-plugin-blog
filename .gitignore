@@ -1,12 +1,2 @@
-node_modules
-*.log*
-.nuxt
-.nitro
-.cache
-.output
-.env
-dist
-.DS_Store
-*.iml
-content
 .idea
+.DS_Store
