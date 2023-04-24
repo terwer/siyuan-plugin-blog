@@ -1,11 +1,13 @@
 const isDev = process.env.NODE_ENV === "development"
 const isTest = process.env.NODE_ENV === "test"
 const isVercelBuild = process.env.BUILD_TYPE === "vercel"
+const isNodeBuild = process.env.BUILD_TYPE === "node"
 let appBase = "/appearance/themes/zhi/blog/"
-if (isDev || isVercelBuild || isTest) {
+if (isDev || isVercelBuild || isNodeBuild || isTest) {
   appBase = "/"
 }
 console.log("isVercelBuild=>", isVercelBuild)
+console.log("isNodeBuild=>", isNodeBuild)
 console.log("isDev=>", isDev)
 console.log("isTest=>", isTest)
 console.log("appBase=>", appBase)
@@ -32,11 +34,6 @@ export default defineNuxtConfig({
       extends: "../tsconfig.base.json",
     },
   },
-  vite: {
-    build: {
-      minify: !isDev,
-    },
-  },
   app: {
     baseURL: appBase,
     head: {
@@ -59,15 +56,16 @@ export default defineNuxtConfig({
       VITE_DEBUG_MODE: false,
     },
   },
+  ssr: false,
   nitro: {
-    preset: "vercel",
+    preset: isVercelBuild ? "vercel" : "node-server",
     // 开启之后将进行静态伺服
     // serveStatic: !isDev,
   },
   css: ["~/assets/vdoing/styles/index.styl"],
   meilisearch: {
-    hostUrl: process.env.MEILISEARCH_ENDPOINT ?? "http://localhost:3000/api/endpoint/meilisearch",
-    // hostUrl: "http://localhost:7700",
+    // hostUrl: process.env.MEILISEARCH_ENDPOINT ?? "http://localhost:3000/api/endpoint/meilisearch",
+    hostUrl: "http://localhost:7700",
     searchApiKey: "<your_search_key>",
     adminApiKey: "<your_admin_key>",
     instantSearch: true, // default true
