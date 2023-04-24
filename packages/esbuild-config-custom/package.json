@@ -24,6 +24,6 @@
     "esbuild-plugin-ifdef": "^1.0.1",
     "esbuild-plugin-inline-image": "^0.0.9",
     "minimist": "^1.2.8",
-    "rimraf": "^4.4.1"
+    "rimraf": "^5.0.0"
   }
 }
