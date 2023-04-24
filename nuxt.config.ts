@@ -64,8 +64,8 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/vdoing/styles/index.styl"],
   meilisearch: {
-    hostUrl: process.env.MEILISEARCH_ENDPOINT ?? "http://localhost:3000/api/endpoint/meilisearch",
-    // hostUrl: "http://localhost:7700",
+    // hostUrl: process.env.MEILISEARCH_ENDPOINT ?? "http://localhost:3000/api/endpoint/meilisearch",
+    hostUrl: "http://localhost:7700",
     searchApiKey: "<your_search_key>",
     adminApiKey: "<your_admin_key>",
     instantSearch: true, // default true
