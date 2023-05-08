@@ -7,6 +7,4 @@ node_modules
 .env
 dist
 .DS_Store
-*.iml
-content
 .idea

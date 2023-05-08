@@ -1,9 +1,5 @@
 <template>
-  <NuxtLayout :name="layout">
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtWelcome />
+  </div>
 </template>
-
-<script setup lang="ts">
-const layout = "vdoing"
-</script>

@@ -1,38 +1,42 @@
-# zhi-blog
+# Nuxt 3 Minimal Starter
 
-a blog based on siyuan-note api
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## 快速上手
+## Setup
 
-### 使用 docker-compose 部署 <sup>推荐</sup>
-
-```bash
-docker compose up --build
-```
-
-### 本地启动
-
-Start the development server on http://localhost:3000
+Make sure to install the dependencies:
 
 ```bash
-# Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
+# yarn
+yarn install
+
+# npm
+npm install
+
+# pnpm
 pnpm install
-pnpm dev
 ```
 
-### 生产环境
+## Development Server
+
+Start the development server on `http://localhost:3000`
+
+```bash
+npm run dev
+```
+
+## Production
 
 Build the application for production:
 
 ```bash
-pnpm build
-pnpm preview
+npm run build
 ```
 
-Statically generate a site:
+Locally preview production build:
 
 ```bash
-pnpm generate
+npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
