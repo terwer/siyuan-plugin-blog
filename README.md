@@ -2,6 +2,8 @@
 
 a blog based on siyuan-note api
 
+[中文版](README_zh_CN.md)
+
 ## Quick start
 
 TODO
@@ -47,5 +49,3 @@ for docker
 ```bash
 docker compose up --build
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

@@ -1,44 +1,51 @@
 # siyuan-blog
 
-a blog based on siyuan-note api
+一个基于思源笔记API的博客
 
-## Quick start
+[English](README.md)
 
-### Use docker-compose for deploy <sup>recommended</sup>
+## 快速上手
+
+TODO
+
+## 从源码构建
+
+### 安装依赖
 
 ```bash
-docker compose up --build
+pnpm install
 ```
 
-### Development
+### 开发调试
 
-Start the development server on http://localhost:3000
+在思源笔记调试插件
 
 ```bash
-# Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
-pnpm install
 pnpm dev
 ```
 
-### Production
+调试博客
 
-Build the application for production:
+```bash
+pnpm blogDev
+```
+
+### 生产构建
+
+构建思源笔记版本
 
 ```bash
 pnpm build
-pnpm preview
 ```
 
-for vercel:
+构建 vercel 平台版本
 
 ```bash
 pnpm vercelBuild
 ```
 
-for siyuan
+构建 docker 平台版本
 
 ```bash
-pnpm siyuanBuild
+docker compose up --build
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
