@@ -1,9 +1,42 @@
-# zhi-blog
+# Nuxt 3 Minimal Starter
 
-a blog based on siyuan-note api
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## Notice
+## Setup
 
-This repository is synced from [zhi-blog](https://github.com/terwer/zhi/tree/main/apps/zhi-blog) automatically, so this repository is for mirror use only
+Make sure to install the dependencies:
 
-If you have any issues, you should refer to the source repo [here](https://github.com/terwer/zhi/tree/main/apps/zhi-blog)
+```bash
+# yarn
+yarn install
+
+# npm
+npm install
+
+# pnpm
+pnpm install
+```
+
+## Development Server
+
+Start the development server on `http://localhost:3000`
+
+```bash
+npm run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+npm run build
+```
+
+Locally preview production build:
+
+```bash
+npm run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
