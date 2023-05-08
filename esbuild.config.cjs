@@ -25,6 +25,7 @@
 const path = require("path")
 const minimist = require("minimist")
 const stylePlugin = require("esbuild-style-plugin")
+const {copy} = require("esbuild-plugin-copy")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
@@ -45,6 +46,41 @@ module.exports = {
     external: ['siyuan'],
     plugins: [
       stylePlugin(),
+
+      copy({
+        // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+        // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+        resolveFrom: "cwd",
+        assets: [
+          // copy folder
+          {
+            from: "./siyuan/i18n/*",
+            to: [path.join(distDir, "i18n")],
+          },
+          // copy one file
+          {
+            from: ["./README.md"],
+            to: [path.join(distDir, "/README.md")],
+          },
+          {
+            from: ["./README_zh_CN.md"],
+            to: [path.join(distDir, "/README_zh_CN.md")],
+          },
+          {
+            from: ["./preview.png"],
+            to: [path.join(distDir, "/preview.png")],
+          },
+          {
+            from: ["./icon.png"],
+            to: [path.join(distDir, "/icon.png")],
+          },
+          {
+            from: ["./plugin.json"],
+            to: [path.join(distDir, "/plugin.json")],
+          },
+        ],
+        watch: true,
+      }),
     ],
   },
 }

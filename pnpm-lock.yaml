@@ -7,17 +7,14 @@ dependencies:
 
 devDependencies:
   '@terwer/esbuild-config-custom':
-    specifier: ^1.0.4
-    version: 1.0.4(@types/minimist@1.2.2)(dotenv@16.0.3)(esbuild-plugin-copy@2.1.1)(esbuild-plugin-d.ts@1.1.0)(esbuild-plugin-ifdef@1.0.1)(esbuild-plugin-inline-image@0.0.9)(esbuild-plugin-vue3@0.3.2)(esbuild-style-plugin@1.6.2)(esbuild@0.17.18)(minimist@1.2.8)(rimraf@4.4.1)
+    specifier: ^1.0.5
+    version: 1.0.5(@types/minimist@1.2.2)(dotenv@16.0.3)(esbuild-plugin-copy@2.1.1)(esbuild-plugin-d.ts@1.1.0)(esbuild-plugin-ifdef@1.0.1)(esbuild-plugin-inline-image@0.0.9)(esbuild-plugin-vue3@0.3.2)(esbuild-style-plugin@1.6.2)(esbuild@0.17.18)(minimist@1.2.8)(rimraf@4.4.1)(stylus@0.59.0)
   '@types/node':
     specifier: ^18
     version: 18.0.0
   nuxt:
     specifier: ^3.4.3
     version: 3.4.3(@types/node@18.0.0)(stylus@0.59.0)(typescript@5.0.4)
-  stylus:
-    specifier: ^0.59.0
-    version: 0.59.0
   typescript:
     specifier: ^5.0.4
     version: 5.0.4
@@ -944,8 +941,8 @@ packages:
       rollup: 3.21.5
     dev: true
 
-  /@terwer/esbuild-config-custom@1.0.4(@types/minimist@1.2.2)(dotenv@16.0.3)(esbuild-plugin-copy@2.1.1)(esbuild-plugin-d.ts@1.1.0)(esbuild-plugin-ifdef@1.0.1)(esbuild-plugin-inline-image@0.0.9)(esbuild-plugin-vue3@0.3.2)(esbuild-style-plugin@1.6.2)(esbuild@0.17.18)(minimist@1.2.8)(rimraf@4.4.1):
-    resolution: {integrity: sha512-CoP+hV/eKnKDtdRgIRVXAoRXEFyFnTXVZziwRqBXb/KCZKJdhOy0X/bBErrR1iGlPB6Ol8yaDs9KAmzySLL+1Q==}
+  /@terwer/esbuild-config-custom@1.0.5(@types/minimist@1.2.2)(dotenv@16.0.3)(esbuild-plugin-copy@2.1.1)(esbuild-plugin-d.ts@1.1.0)(esbuild-plugin-ifdef@1.0.1)(esbuild-plugin-inline-image@0.0.9)(esbuild-plugin-vue3@0.3.2)(esbuild-style-plugin@1.6.2)(esbuild@0.17.18)(minimist@1.2.8)(rimraf@4.4.1)(stylus@0.59.0):
+    resolution: {integrity: sha512-dNj8fOcnp6fHHiouSOCb8S+LIC79CRwHu4nwfs70+bHJebTA6voITSHetbU25gxBtGcL7Qce/lalKn3HkI47tA==}
     hasBin: true
     peerDependencies:
       '@types/minimist': ^1.2.2
@@ -959,6 +956,7 @@ packages:
       esbuild-style-plugin: ^1.6.2
       minimist: ^1.2.8
       rimraf: ^4.4.1
+      stylus: ^0.59.0
     dependencies:
       '@types/minimist': 1.2.2
       dotenv: 16.0.3
@@ -971,6 +969,7 @@ packages:
       esbuild-style-plugin: 1.6.2
       minimist: 1.2.8
       rimraf: 4.4.1
+      stylus: 0.59.0
     dev: true
 
   /@trysound/sax@0.2.0:
