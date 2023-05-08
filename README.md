@@ -4,41 +4,48 @@ a blog based on siyuan-note api
 
 ## Quick start
 
-### Use docker-compose for deploy <sup>recommended</sup>
+TODO
+
+## Build from source
+
+### Setup
 
 ```bash
-docker compose up --build
+pnpm install
 ```
 
 ### Development
 
-Start the development server on http://localhost:3000
+for siyuan plugin
 
 ```bash
-# Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
-pnpm install
 pnpm dev
+```
+
+for blog
+
+```bash
+pnpm blogDev
 ```
 
 ### Production
 
-Build the application for production:
+for siyuan plugin
 
 ```bash
 pnpm build
-pnpm preview
 ```
 
-for vercel:
+for vercel
 
 ```bash
 pnpm vercelBuild
 ```
 
-for siyuan
+for docker
 
 ```bash
-pnpm siyuanBuild
+docker compose up --build
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
