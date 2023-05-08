@@ -25,7 +25,7 @@
 const path = require("path")
 const minimist = require("minimist")
 const stylePlugin = require("esbuild-style-plugin")
-const {copy} = require("esbuild-plugin-copy")
+const { copy } = require("esbuild-plugin-copy")
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
@@ -40,10 +40,8 @@ module.exports = {
     outfile: path.join(distDir, "index.js"),
     bundle: true,
     format: "cjs",
-    target: [
-      'es6'
-    ],
-    external: ['siyuan'],
+    target: ["es6"],
+    external: ["siyuan", "/plugins/publish-bridge/lib/zhi-electron/index.js"],
     plugins: [
       stylePlugin(),
 

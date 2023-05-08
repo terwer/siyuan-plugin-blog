@@ -22,14 +22,12 @@
  * SOFTWARE.
  */
 
-import { Plugin, showMessage, confirm, Dialog, Menu, fetchGet } from "siyuan"
+import { Dialog, Plugin } from "siyuan"
 import "./index.styl"
 import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 
 export default class SiyuanBlog extends Plugin {
-  private showBlog() {
-    const blogIndex = "/plugins/siyuan-blog/index.html"
-
+  private showBlog(blogIndex: string) {
     const contentHtml = `<style>
         iframe {
           width: 100%;
@@ -49,10 +47,20 @@ export default class SiyuanBlog extends Plugin {
   }
 
   onload() {
+    const win = window as any
     const deviceType: DeviceTypeEnum = DeviceDetection.getDevice()
     console.log(`you are from ${deviceType}`)
+    const blogIndex = "/plugins/siyuan-blog/index.html"
 
-    this.showBlog()
+    if (deviceType == DeviceTypeEnum.DeviceType_Siyuan_MainWin) {
+      import("/plugins/publish-bridge/lib/zhi-electron/index.js" as any).then((electron) => {
+        console.log(electron.default())
+        const zhiWin = win.zhiWindow
+        zhiWin.openBrowserWindow(blogIndex, undefined, undefined, true, false)
+      })
+    } else {
+      this.showBlog(blogIndex)
+    }
   }
 
   onunload() {
