@@ -13,12 +13,14 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@terwer/esbuild-config-custom": "^1.0.5",
-    "@types/node": "^18",
+    "@terwer/esbuild-config-custom": "latest",
+    "@terwer/eslint-config-custom": "latest",
+    "@types/node": "^18.16.5",
     "nuxt": "^3.4.3",
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "siyuan": "^0.7.1"
+    "siyuan": "^0.7.1",
+    "zhi-device": "^0.5.0"
   }
 }

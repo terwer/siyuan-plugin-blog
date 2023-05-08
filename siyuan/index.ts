@@ -22,73 +22,40 @@
  * SOFTWARE.
  */
 
-import {Plugin, showMessage, confirm, Dialog, Menu} from "siyuan";
-import "./index.styl";
+import { Plugin, showMessage, confirm, Dialog, Menu, fetchGet } from "siyuan"
+import "./index.styl"
+import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 
 export default class SiyuanBlog extends Plugin {
-    onload() {
-        console.log(this)
+  private showBlog() {
+    const blogIndex = "/plugins/siyuan-blog/index.html"
 
-        // this.eventBus.on("ws-main", ({detail}: any) => {
-        //     console.log("on ws-main", detail);
-        // });
-        //
-        // const topBarElement = this.addTopBar({
-        //     icon: "iconList",
-        //     title: this.i18n.addTopBarIcon,
-        //     position: "right",
-        //     callback: () => {
-        //         this.addMenu(topBarElement.getBoundingClientRect());
-        //     }
-        // });
-    }
+    const contentHtml = `<style>
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        </style>
+        <iframe src="${blogIndex}" width="100%"></iframe>`
 
-    onunload() {
-        // console.log(this.i18n.byePlugin);
-        // this.eventBus.off("ws-main", ({detail}: any) => {
-        //     console.log(detail);
-        // });
-    }
+    new Dialog({
+      title: this.i18n.siyuanBlog,
+      transparent: false,
+      content: contentHtml,
+      width: "90%",
+      height: "750px",
+    } as any)
+  }
 
-    private addMenu(rect: DOMRect) {
-        // const menu = new Menu("topBarSample", () => {
-        //     console.log(this.i18n.byeMenu);
-        // });
-        // menu.addItem({
-        //     label: "confirm",
-        //     click() {
-        //         confirm("Confirm", "Is this a confirm?", () => {
-        //             console.log("confirm");
-        //         }, () => {
-        //             console.log("cancel");
-        //         });
-        //     }
-        // });
-        // menu.addItem({
-        //     label: "showMessage",
-        //     click: () => {
-        //         showMessage(this.i18n.helloPlugin);
-        //     }
-        // });
-        // menu.addItem({
-        //     label: "Dialog",
-        //     click: () => {
-        //         new Dialog({
-        //             title: "Info",
-        //             content: '<div class="b3-dialog__content">This is a dialog</div>',
-        //             width: "360px",
-        //         });
-        //     }
-        // });
-        // menu.addSeparator();
-        // menu.addItem({
-        //     label: "readonly",
-        //     type: "readonly",
-        // });
-        // menu.open({
-        //     x: rect.right,
-        //     y: rect.bottom,
-        //     isLeft: true,
-        // });
-    }
+  onload() {
+    const deviceType: DeviceTypeEnum = DeviceDetection.getDevice()
+    console.log(`you are from ${deviceType}`)
+
+    this.showBlog()
+  }
+
+  onunload() {
+    console.log("siyuan blog unloaded")
+  }
 }
