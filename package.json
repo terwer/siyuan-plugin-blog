@@ -4,13 +4,21 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "pluginDev": "zhi-build --watch",
+    "pluginBuild": "zhi-build --production",
     "vercelBuild": "BUILD_TYPE=vercel nuxt generate",
-    "siyuanBuild": "BUILD_TYPE=siyuan nuxt generate",
+    "siyuanBuild": "BUILD_TYPE=siyuan nuxt generate && pnpm siyuanSync && pluginBuild",
+    "siyuanSync": "cp -r ./dist/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-blog",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@terwer/esbuild-config-custom": "^1.0.4",
     "@types/node": "^18",
     "nuxt": "^3.4.3",
+    "stylus": "^0.59.0",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "siyuan": "^0.7.1"
   }
 }

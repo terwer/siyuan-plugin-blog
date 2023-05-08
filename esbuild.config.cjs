@@ -22,26 +22,29 @@
  * SOFTWARE.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const isVercelBuild = process.env.BUILD_TYPE === "vercel"
-const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
-const isSsr = isDev || isVercelBuild
+const path = require("path")
+const minimist = require("minimist")
+const stylePlugin = require("esbuild-style-plugin")
 
-const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
-const ssrServeStatic = isSiyuanBuild
+const args = minimist(process.argv.slice(2))
+const isWatch = args.watch || args.w
+const isProduction = args.production || args.prod
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
-    ssr: isSsr,
-    // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-    router: {
-        options: {
-            hashMode: !isSsr,
-        },
-    },
-    nitro: {
-        preset: ssrPreset,
-        // 开启之后将进行静态伺服
-        serveStatic: ssrServeStatic,
-    },
-})
+const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-blog" : "./"
+const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
+
+module.exports = {
+  esbuildConfig: {
+    entryPoints: ["siyuan/index.ts"],
+    outfile: path.join(distDir, "index.js"),
+    bundle: true,
+    format: "cjs",
+    target: [
+      'es6'
+    ],
+    external: ['siyuan'],
+    plugins: [
+      stylePlugin(),
+    ],
+  },
+}
