@@ -1,42 +1,44 @@
-# Nuxt 3 Minimal Starter
+# siyuan-blog
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+a blog based on siyuan-note api
 
-## Setup
+## Quick start
 
-Make sure to install the dependencies:
+### Use docker-compose for deploy <sup>recommended</sup>
 
 ```bash
-# yarn
-yarn install
+docker compose up --build
+```
 
-# npm
-npm install
+### Development
 
-# pnpm
+Start the development server on http://localhost:3000
+
+```bash
+# Make sure you have `shamefully-hoist=true` in `.npmrc` before running pnpm install
 pnpm install
+pnpm dev
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`
-
-```bash
-npm run dev
-```
-
-## Production
+### Production
 
 Build the application for production:
 
 ```bash
-npm run build
+pnpm build
+pnpm preview
 ```
 
-Locally preview production build:
+for vercel:
 
 ```bash
-npm run preview
+pnpm vercelBuild
+```
+
+for siyuan
+
+```bash
+pnpm siyuanBuild
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
