@@ -38,7 +38,7 @@ import { Dialog } from "siyuan"
 export function initTopbar(pluginInstance: SiyuanBlog) {
   const topBarElement = pluginInstance.addTopBar({
     icon: icons.iconTopbar,
-    title: pluginInstance.i18n.kanbanGirl,
+    title: pluginInstance.i18n.siyuanBlog,
     position: "right",
     callback: () => {},
   })
@@ -54,17 +54,17 @@ const loadBlog = (pluginInstance: SiyuanBlog) => {
   console.log(`you are from ${deviceType}`)
   const blogIndex = "/plugins/siyuan-blog/index.html"
 
-  if (deviceType == DeviceTypeEnum.DeviceType_Siyuan_MainWin) {
-    const basePath = "/plugins/siyuan-blog"
-    import(`${basePath}/libs/zhi-electron/index.js`).then((electron) => {
-      console.log(electron.default())
-      const zhiWin = win.zhiWindow
-      const url = `${window.location.origin}${blogIndex}`
-      zhiWin.openBrowserWindow(url, undefined, undefined, true, false)
-    })
-  } else {
-    showBlog(pluginInstance, blogIndex)
-  }
+  // if (deviceType == DeviceTypeEnum.DeviceType_Siyuan_MainWin) {
+  //   const basePath = "/plugins/siyuan-blog"
+  //   import(`${basePath}/libs/zhi-electron/index.js`).then((electron) => {
+  //     console.log(electron.default())
+  //     const zhiWin = win.zhiWindow
+  //     const url = `${window.location.origin}${blogIndex}`
+  //     zhiWin.openBrowserWindow(url, undefined, undefined, true, false)
+  //   })
+  // } else {
+  showBlog(pluginInstance, blogIndex)
+  // }
 }
 
 const showBlog = (pluginInstance: SiyuanBlog, blogIndex: string) => {
@@ -81,7 +81,7 @@ const showBlog = (pluginInstance: SiyuanBlog, blogIndex: string) => {
     title: pluginInstance.i18n.siyuanBlog,
     transparent: false,
     content: contentHtml,
-    width: "90%",
-    height: "750px",
+    width: "60%",
+    height: "550px",
   } as any)
 }
