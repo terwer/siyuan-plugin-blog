@@ -1,6 +1,6 @@
 # siyuan-blog
 
-一个基于思源笔记API的博客
+你想要的notions分享功能，这里都有
 
 [English](README.md)
 

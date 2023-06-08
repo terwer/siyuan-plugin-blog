@@ -1,15 +1,15 @@
 {
   "name": "siyuan-blog",
   "author": "terwer",
-  "url": "https://github.com/terwer/siyuan-blog",
+  "url": "https://github.com/terwer/siyuan-plugin-blog",
   "version": "0.0.1",
   "displayName": {
     "default": "Siyuan Blog",
     "zh_CN": "博客插件"
   },
   "description": {
-    "default": "a blog based on siyuan-note api",
-    "zh_CN": "一个基于思源笔记API的博客"
+    "default": "The notions sharing function you want is here",
+    "zh_CN": "你想要的notions分享功能，这里都有"
   },
   "readme": {
     "default": "README.md",

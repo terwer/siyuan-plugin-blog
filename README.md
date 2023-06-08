@@ -1,6 +1,6 @@
 # siyuan-blog
 
-a blog based on siyuan-note api
+The notions sharing function you want is here
 
 [中文版](README_zh_CN.md)
 
