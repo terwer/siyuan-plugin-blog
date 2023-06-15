@@ -1,51 +1,63 @@
-# siyuan-blog
+# Nuxt 3 Minimal Starter
 
-The notions sharing function you want is here
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-[中文版](README_zh_CN.md)
+## Setup
 
-## Quick start
-
-TODO
-
-## Build from source
-
-### Setup
+Make sure to install the dependencies:
 
 ```bash
+# npm
+npm install
+
+# pnpm
 pnpm install
+
+# yarn
+yarn install
 ```
 
-### Development
+## Development Server
 
-for siyuan plugin
+Start the development server on `http://localhost:3000`:
 
 ```bash
-pnpm dev
+# npm
+npm run dev
+
+# pnpm
+pnpm run dev
+
+# yarn
+yarn dev
 ```
 
-for blog
+## Production
+
+Build the application for production:
 
 ```bash
-pnpm blogDev
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
 ```
 
-### Production
-
-for siyuan plugin
+Locally preview production build:
 
 ```bash
-pnpm build
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
 ```
 
-for vercel
-
-```bash
-pnpm vercelBuild
-```
-
-for docker
-
-```bash
-docker compose up --build
-```
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

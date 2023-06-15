@@ -1,26 +1,16 @@
 {
-  "name": "siyuan-blog",
+  "name": "siyuan-plugin-blog",
   "private": true,
   "scripts": {
-    "dev": "pnpm siyuanBuild && pnpm siyuanSync && pnpm pluginDev",
-    "build": "pnpm siyuanBuild && pnpm pluginBuild && pnpm siyuanSync",
-    "blogDev": "nuxt dev",
-    "pluginDev": "zhi-build --watch",
-    "pluginBuild": "zhi-build --production",
-    "vercelBuild": "BUILD_TYPE=vercel nuxt generate",
-    "siyuanBuild": "BUILD_TYPE=siyuan nuxt generate",
-    "siyuanSync": "cp -r ./dist/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-blog",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@terwer/esbuild-config-custom": "latest",
-    "@terwer/eslint-config-custom": "latest",
-    "@types/node": "^18.16.16",
-    "nuxt": "^3.5.3",
-    "typescript": "^5.1.3"
-  },
-  "dependencies": {
-    "siyuan": "^0.7.3",
-    "zhi-device": "^0.5.0"
+    "@nuxt/devtools": "latest",
+    "@types/node": "^18",
+    "nuxt": "^3.5.2"
   }
 }
