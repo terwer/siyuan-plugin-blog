@@ -1,4 +1,8 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
+  "include": [
+    "./.nuxt/nuxt.d.ts",
+    "**/*",
+    "node_modules/siyuan/siyuan.d.ts"
+  ]
 }

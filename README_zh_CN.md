@@ -1,51 +1,33 @@
-# siyuan-blog
-
-一个基于思源笔记API的博客
-
 [English](README.md)
 
-## 快速上手
+# 在线分享
 
-TODO
+<img src="./icon.png" width="160" height="160" alt="icon">
 
-## 从源码构建
+您梦寐以求的类 notion 分享功能，这里也有
 
-### 安装依赖
+## 更新历史
 
-```bash
-pnpm install
-```
+请参考 [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)
 
-### 开发调试
+## 捐赠
 
-在思源笔记调试插件
+如果您认可这个项目，请我喝一杯咖啡吧，这将鼓励我持续更新，并创作出更多好用的工具~
 
-```bash
-pnpm dev
-```
+### 微信
 
-调试博客
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
+</div>
 
-```bash
-pnpm blogDev
-```
+### 支付宝
 
-### 生产构建
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
+</div>
 
-构建思源笔记版本
+## 感谢
 
-```bash
-pnpm build
-```
+感谢来自开源社区提供的解决方案，简化了本项目的不少工作！
 
-构建 vercel 平台版本
-
-```bash
-pnpm vercelBuild
-```
-
-构建 docker 平台版本
-
-```bash
-docker compose up --build
-```
+- [notion](https://notion.so)

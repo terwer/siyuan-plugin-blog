@@ -23,8 +23,4 @@
  * questions.
  */
 
-module.exports = {
-    semi: false,
-    singleQuote: false,
-    printWidth: 120,
-}
+export const isDev = process.env.DEV_MODE === "true"

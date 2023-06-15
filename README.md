@@ -1,51 +1,33 @@
-# siyuan-blog
+[中文](README_zh_CN.md)
 
-a blog based on siyuan-note api
+# Share to web
 
-[中文版](README_zh_CN.md)
+<img src="./icon.png" width="160" height="160" alt="icon">
 
-## Quick start
+The notions sharing function you want is here too
 
-TODO
+## Changelog
 
-## Build from source
+Please refer to [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)
 
-### Setup
+## Donate
 
-```bash
-pnpm install
-```
+If you approve of this project, invite me to have a cup of coffee, which will encourage me to keep updating and create more useful tools~
 
-### Development
+### WeChat
 
-for siyuan plugin
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
+</div>
 
-```bash
-pnpm dev
-```
+### Alipay
 
-for blog
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
+</div>
 
-```bash
-pnpm blogDev
-```
+## Thanks
 
-### Production
+Thanks to the solutions provided by the open source community, which simplifies a lot of work for this project!
 
-for siyuan plugin
-
-```bash
-pnpm build
-```
-
-for vercel
-
-```bash
-pnpm vercelBuild
-```
-
-for docker
-
-```bash
-docker compose up --build
-```
+- [notion](https://notion.so)
