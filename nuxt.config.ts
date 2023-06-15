@@ -27,7 +27,7 @@ const isDev = process.env.NODE_ENV === "development"
 const isVercelBuild = process.env.BUILD_TYPE === "vercel"
 const isNodeBuild = process.env.BUILD_TYPE === "node"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
-const debugMode = process.env.DEBUG_MODE === "true" || isDev
+const debugMode = process.env.DEBUG_MODE === "true"
 
 const appBase = getAppBase(isSiyuanBuild, isNodeBuild, isVercelBuild, isDev)
 const isSsr = isNodeBuild || isVercelBuild
@@ -59,6 +59,7 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    define: { "process.env.DEV_MODE": `"${isDev || debugMode}"` },
     plugins: [],
   },
 
@@ -69,25 +70,26 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       link: [{ rel: "stylesheet", href: appBase + "lib/fonts/webfont.css?v=" + staticV }],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: debugMode
-        ? [
-            //   {
-            //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
-            //     body: true,
-            //   },
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [
-            //   {
-            //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
-            //     body: true,
-            //   },
-          ],
+      script:
+        isDev || debugMode
+          ? [
+              //   {
+              //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
+              //     body: true,
+              //   },
+              {
+                src: appBase + "libs/eruda/eruda.js",
+              },
+              {
+                children: "eruda.init();console.log('eruda inited');",
+              },
+            ]
+          : [
+              //   {
+              //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
+              //     body: true,
+              //   },
+            ],
     },
   },
 

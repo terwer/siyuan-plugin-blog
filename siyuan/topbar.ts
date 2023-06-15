@@ -45,7 +45,7 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
 
   topBarElement.addEventListener("click", async () => {
     const sharePage = "/plugins/siyuan-blog/#/share"
-    showPage(pluginInstance, sharePage)
+    showPage(pluginInstance, sharePage, pluginInstance.i18n.shareOptions)
   })
 
   // 添加右键菜单
@@ -63,7 +63,7 @@ const initContextMenu = async (pluginInstance: SiyuanBlog, rect: DOMRect) => {
   const menu = new Menu("blogContextMenu")
 
   menu.addItem({
-    iconHTML: icons.iconTopbar,
+    iconHTML: `<span class="font-awesome-icon">${icons.iconSetting}</span>`,
     label: pluginInstance.i18n.setting,
     click: () => {
       showSettingPage(pluginInstance)
@@ -72,11 +72,11 @@ const initContextMenu = async (pluginInstance: SiyuanBlog, rect: DOMRect) => {
 
   menu.addSeparator()
   menu.addItem({
-    iconHTML: icons.iconTopbar,
+    iconHTML: `<span class="iconfont-icon">${icons.iconHome}</span>`,
     label: pluginInstance.i18n.showHome,
     click: () => {
       const blogIndex = "/plugins/siyuan-blog/#/"
-      showPage(pluginInstance, blogIndex)
+      showPage(pluginInstance, blogIndex, pluginInstance.i18n.home)
     },
   })
 
@@ -93,10 +93,12 @@ const initContextMenu = async (pluginInstance: SiyuanBlog, rect: DOMRect) => {
 
 export const showSettingPage = (pluginInstance: SiyuanBlog) => {
   const settingPage = "/plugins/siyuan-blog/#/setting"
-  showPage(pluginInstance, settingPage)
+  showPage(pluginInstance, settingPage, pluginInstance.i18n.setting)
 }
 
-const showPage = (pluginInstance: SiyuanBlog, blogIndex: string) => {
+const showPage = (pluginInstance: SiyuanBlog, pageUrl: string, title?: string) => {
+  pluginInstance.logger.info("open page =>", pageUrl)
+
   const contentHtml = `<style>
         iframe {
           width: 100%;
@@ -104,10 +106,10 @@ const showPage = (pluginInstance: SiyuanBlog, blogIndex: string) => {
           border: none;
         }
         </style>
-        <iframe src="${blogIndex}" width="100%"></iframe>`
+        <iframe src="${pageUrl}" width="100%"></iframe>`
 
   new Dialog({
-    title: pluginInstance.i18n.siyuanBlog,
+    title: `${pluginInstance.i18n.siyuanBlog}${title ? " - " + title : ""}`,
     transparent: false,
     content: contentHtml,
     width: "60%",
