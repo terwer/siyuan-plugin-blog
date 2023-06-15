@@ -19,6 +19,10 @@ const isSsr = isDev || isVercelBuild
 const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
 const ssrServeStatic = isSiyuanBuild
 
+console.log("isSsr=>", isSsr)
+console.log("ssrPreset=>", ssrPreset)
+console.log("ssrServeStatic=>", ssrServeStatic)
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
