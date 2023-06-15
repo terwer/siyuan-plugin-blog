@@ -11,13 +11,23 @@ const getAppBase = (isSiyuanBuild: boolean, isDev: boolean, isVercelBuild: boole
 
 const isDev = process.env.NODE_ENV === "development"
 const isVercelBuild = process.env.BUILD_TYPE === "vercel"
+const isNodeBuild = process.env.BUILD_TYPE === "node"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 
 const appBase = getAppBase(isSiyuanBuild, isDev, isVercelBuild)
-const isSsr = isDev || isVercelBuild
+const isSsr = isDev || isNodeBuild || isVercelBuild
 
-const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
+const ssrPreset = isVercelBuild ? "vercel" : isDev || isNodeBuild ? "node-server" : undefined
 const ssrServeStatic = isSiyuanBuild
+
+console.log("isDev=>", isDev)
+console.log("isVercelBuild=>", isVercelBuild)
+console.log("isNodeBuild=>", isNodeBuild)
+console.log("isSiyuanBuild=>", isSiyuanBuild)
+console.log("appBase=>", appBase)
+console.log("isSsr=>", isSsr)
+console.log("ssrPreset=>", ssrPreset)
+console.log("ssrServeStatic=>", ssrServeStatic)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({

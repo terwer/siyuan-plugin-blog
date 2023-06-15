@@ -1,0 +1,6 @@
+version: '3'
+services:
+  nuxt3-blog:
+    image: terwer/nuxt3-blog:latest
+    ports:
+      - "3000:3000"
