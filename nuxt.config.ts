@@ -16,6 +16,9 @@ const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 const appBase = getAppBase(isSiyuanBuild, isDev, isVercelBuild)
 const isSsr = isDev || isVercelBuild
 
+const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
+const ssrServeStatic = isSiyuanBuild
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
@@ -49,5 +52,10 @@ export default defineNuxtConfig({
     options: {
       hashMode: !isSsr,
     },
+  },
+  nitro: {
+    preset: ssrPreset,
+    // 开启之后将进行静态伺服
+    serveStatic: ssrServeStatic,
   },
 })
