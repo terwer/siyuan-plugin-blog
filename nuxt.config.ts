@@ -19,6 +19,7 @@ const isSsr = isDev || isVercelBuild
 const ssrPreset = isVercelBuild ? "vercel" : isDev ? "node-server" : undefined
 const ssrServeStatic = isSiyuanBuild
 
+console.log("isDev=>", isDev)
 console.log("isVercelBuild=>", isVercelBuild)
 console.log("isSiyuanBuild=>", isSiyuanBuild)
 console.log("appBase=>", appBase)
