@@ -4,7 +4,7 @@
   "scripts": {
     "serve": "nuxt dev",
     "build": "pnpm pluginBuild && pnpm siyuanBuild",
-    "dev": "rm -rf ./dist && pnpm pluginBuild && pnpm siyuanBuild && pnpm siyuanSync",
+    "dev": "rm -rf ./dist && pnpm pluginBuild && DEBUG_MODE=true pnpm siyuanBuild && pnpm siyuanSync",
     "pluginBuild": "zhi-build --production",
     "vercelBuild": "BUILD_TYPE=vercel nuxt build",
     "nodeBuild": "BUILD_TYPE=node nuxt build",

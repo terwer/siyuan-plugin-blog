@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import "./assets/default/fonts/webfont.css"
 const layout = "default"
 </script>
 
@@ -9,6 +8,4 @@ const layout = "default"
   </NuxtLayout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

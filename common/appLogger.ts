@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { isDev } from "~/common/Constants.ts"
+import { isDev } from "~/common/Constants"
 import { simpleLogger } from "zhi-lib-base"
 
 /**
@@ -49,12 +49,13 @@ interface ILogger {
  * @since 1.0.0
  */
 export const createAppLogger = (name: string): ILogger => {
-  return simpleLogger(name, "picgo-plugin-app", isDev)
+  return simpleLogger(name, "siyuan-blog", isDev)
 }
 
 /**
  * 销毁日志
  */
 export const destroyLogger = (): void => {
-  ;(window as any).eruda.destroy()
+  const win = window as any
+  win.eruda.destroy()
 }
