@@ -1,7 +1,11 @@
-const getAppBase = (isSiyuanBuild: boolean, isDev: boolean, isVercelBuild: boolean): string => {
+const getAppBase = (isSiyuanBuild: boolean, isNodeBuild: boolean, isVercelBuild: boolean, isDev: boolean): string => {
   if (isSiyuanBuild) {
     return "/plugins/siyuan-blog/"
   } else if (isVercelBuild) {
+    return "/"
+  } else if (isNodeBuild) {
+    return "/"
+  } else if (isDev) {
     return "/"
   } else {
     // static
@@ -14,10 +18,10 @@ const isVercelBuild = process.env.BUILD_TYPE === "vercel"
 const isNodeBuild = process.env.BUILD_TYPE === "node"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 
-const appBase = getAppBase(isSiyuanBuild, isDev, isVercelBuild)
-const isSsr = isDev || isNodeBuild || isVercelBuild
+const appBase = getAppBase(isSiyuanBuild, isNodeBuild, isVercelBuild, isDev)
+const isSsr = isNodeBuild || isVercelBuild
 
-const ssrPreset = isVercelBuild ? "vercel" : isDev || isNodeBuild ? "node-server" : undefined
+const ssrPreset = isVercelBuild ? "vercel" : isNodeBuild ? "node-server" : undefined
 const ssrServeStatic = isSiyuanBuild
 
 console.log("isDev=>", isDev)
