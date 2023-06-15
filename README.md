@@ -1,63 +1,33 @@
-# Nuxt 3 Minimal Starter
+[中文](README_zh_CN.md)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Share to web
 
-## Setup
+<img src="./icon.png" width="160" height="160" alt="icon">
 
-Make sure to install the dependencies:
+The notions sharing function you want is here too
 
-```bash
-# npm
-npm install
+## Changelog
 
-# pnpm
-pnpm install
+Please refer to [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)
 
-# yarn
-yarn install
-```
+## Donate
 
-## Development Server
+If you approve of this project, invite me to have a cup of coffee, which will encourage me to keep updating and create more useful tools~
 
-Start the development server on `http://localhost:3000`:
+### WeChat
 
-```bash
-# npm
-npm run dev
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
+</div>
 
-# pnpm
-pnpm run dev
+### Alipay
 
-# yarn
-yarn dev
-```
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
+</div>
 
-## Production
+## Thanks
 
-Build the application for production:
+Thanks to the solutions provided by the open source community, which simplifies a lot of work for this project!
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [notion](https://notion.so)
