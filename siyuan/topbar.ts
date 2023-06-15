@@ -25,7 +25,7 @@
 import SiyuanBlog from "./index"
 import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 import { icons } from "./utils/svg"
-import { Dialog } from "siyuan"
+import { Dialog, Menu } from "siyuan"
 
 /**
  * 顶栏按钮
@@ -44,20 +44,59 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
   })
 
   topBarElement.addEventListener("click", async () => {
-    loadBlog(pluginInstance)
+    const sharePage = "/plugins/siyuan-blog/#/share"
+    showPage(pluginInstance, sharePage)
+  })
+
+  // 添加右键菜单
+  topBarElement.addEventListener("contextmenu", async () => {
+    let rect = topBarElement.getBoundingClientRect()
+    // 如果获取不到宽度，则使用更多按钮的宽度
+    if (rect.width === 0) {
+      rect = document?.querySelector("#barMore")?.getBoundingClientRect() as any
+    }
+    await initContextMenu(pluginInstance, rect)
   })
 }
 
-const loadBlog = (pluginInstance: SiyuanBlog) => {
-  const win = window as any
-  const deviceType: DeviceTypeEnum = DeviceDetection.getDevice()
-  console.log(`you are from ${deviceType}`)
-  const blogIndex = "/plugins/siyuan-blog/index.html"
+const initContextMenu = async (pluginInstance: SiyuanBlog, rect: DOMRect) => {
+  const menu = new Menu("blogContextMenu")
 
-  showBlog(pluginInstance, blogIndex)
+  menu.addItem({
+    iconHTML: icons.iconTopbar,
+    label: pluginInstance.i18n.setting,
+    click: () => {
+      showSettingPage(pluginInstance)
+    },
+  })
+
+  menu.addSeparator()
+  menu.addItem({
+    iconHTML: icons.iconTopbar,
+    label: pluginInstance.i18n.showHome,
+    click: () => {
+      const blogIndex = "/plugins/siyuan-blog/#/"
+      showPage(pluginInstance, blogIndex)
+    },
+  })
+
+  if (pluginInstance.isMobile) {
+    menu.fullscreen()
+  } else {
+    menu.open({
+      x: rect.right,
+      y: rect.bottom,
+      isLeft: true,
+    })
+  }
 }
 
-const showBlog = (pluginInstance: SiyuanBlog, blogIndex: string) => {
+export const showSettingPage = (pluginInstance: SiyuanBlog) => {
+  const settingPage = "/plugins/siyuan-blog/#/setting"
+  showPage(pluginInstance, settingPage)
+}
+
+const showPage = (pluginInstance: SiyuanBlog, blogIndex: string) => {
   const contentHtml = `<style>
         iframe {
           width: 100%;

@@ -22,14 +22,31 @@
  * SOFTWARE.
  */
 
-import { Plugin } from "siyuan"
+import { App, getFrontend, IObject, Plugin } from "siyuan"
+import { initTopbar, showSettingPage } from "./topbar"
+import { simpleLogger } from "zhi-lib-base"
+import { isDev } from "~/common/Constants"
 
 import "./index.styl"
-import { initTopbar } from "./topbar"
 
 export default class SiyuanBlog extends Plugin {
+  public isMobile
+  public logger
+
+  constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
+    super(options)
+
+    this.logger = simpleLogger("index", "custom-slug", isDev)
+    const frontEnd = getFrontend()
+    this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile"
+  }
+
   onload() {
     initTopbar(this)
+  }
+
+  openSetting() {
+    showSettingPage(this)
   }
 
   onunload() {
