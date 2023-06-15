@@ -6,7 +6,8 @@
     "build": "pnpm pluginBuild && pnpm siyuanBuild",
     "dev": "rm -rf ./dist && pnpm pluginBuild && pnpm siyuanBuild && pnpm siyuanSync",
     "pluginBuild": "zhi-build --production",
-    "siyuanBuild": "nuxt generate && cp -r .output/public/* ./dist",
+    "vercelBuild": "BUILD_TYPE=vercel nuxt generate",
+    "siyuanBuild": "BUILD_TYPE=siyuan nuxt generate && cp -r .output/public/* ./dist",
     "siyuanSync": "cp -r ./dist/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-blog",
     "postinstall": "nuxt prepare"
   },

@@ -9,6 +9,13 @@ const getAppBase = (isSiyuanBuild: boolean, isDev: boolean, isVercelBuild: boole
   }
 }
 
+const isDev = process.env.NODE_ENV === "development"
+const isVercelBuild = process.env.BUILD_TYPE === "vercel"
+const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
+
+const appBase = getAppBase(isSiyuanBuild, isDev, isVercelBuild)
+const isSsr = isDev || isVercelBuild
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
@@ -20,11 +27,27 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  app: {
+    baseURL: appBase,
+    head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+      // link: [{ rel: "stylesheet", href: appBase + "lib/webfont/webfont.css?v=" + staticV }],
+      // script: [
+      //   {
+      //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
+      //     body: true,
+      //   },
+      // ],
+    },
+  },
+
   // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-  ssr: false,
+  ssr: isSsr,
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
   router: {
     options: {
-      hashMode: true,
+      hashMode: !isSsr,
     },
   },
 })
