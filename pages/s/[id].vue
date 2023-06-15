@@ -5,9 +5,7 @@ const postid = route.params.id
 </script>
 
 <template>
-<div>{{ postid }}</div>
+  <div>{{ postid }}</div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
