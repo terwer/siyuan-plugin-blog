@@ -59,6 +59,12 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  i18n: {
+    // https://v8.i18n.nuxtjs.org/getting-started/basic-usage
+    // if you are using custom path, default
+    vueI18n: "./i18n.config.ts",
+  },
+
   app: {
     baseURL: appBase,
     head: {
@@ -93,7 +99,7 @@ export default defineNuxtConfig({
   css: ["~/assets/scss/index.scss"],
 
   // build modules
-  modules: ["@vueuse/nuxt", "@element-plus/nuxt", "@nuxtjs/color-mode"],
+  modules: ["@nuxtjs/i18n-edge", "@vueuse/nuxt", "@element-plus/nuxt", "@nuxtjs/color-mode"],
 
   // vueuse
   vueuse: {
@@ -117,6 +123,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  // https://github.com/element-plus/element-plus-nuxt-starter/blob/main/nuxt.config.ts
   elementPlus: {
     icon: "ElIcon",
     importStyle: "scss",
