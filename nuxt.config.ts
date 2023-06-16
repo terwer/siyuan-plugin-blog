@@ -146,9 +146,5 @@ export default defineNuxtConfig({
     preset: ssrPreset,
     // 开启之后将进行静态伺服
     serveStatic: ssrServeStatic,
-    output: {
-      // 静态构建放到 dist ，否则放到默认目录 .output/public
-      publicDir: ssrServeStatic ? path.join(__dirname, "dist") : path.join(__dirname, ".output", "public"),
-    },
   },
 })
