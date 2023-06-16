@@ -23,39 +23,25 @@
  * questions.
  */
 
-import { isDev } from "~/common/Constants"
-import { simpleLogger } from "zhi-lib-base"
-
-/**
- * 使用 eruda 更好的控制日志
- */
-window.console = isDev ? (window as any).eruda.get("console") : window.console
-
-/**
- * 简单的日志接口
- */
-interface ILogger {
-  debug: (msg: string, obj?: any) => void
-  info: (msg: string, obj?: any) => void
-  warn: (msg: string, obj?: any) => void
-  error: (msg: string | Error, obj?: any) => void
-}
-
-/**
- * 一个简单轻量级的日志记录器
- *
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export const createAppLogger = (name: string): ILogger => {
-  return simpleLogger(name, "siyuan-blog", isDev)
-}
-
-/**
- * 销毁日志
- */
-export const destroyLogger = (): void => {
-  const win = window as any
-  win.eruda.destroy()
+export default {
+  "syp.about": "关于作者",
+  "theme.mode.choose": "切换模式",
+  "theme.mode.dark": "暗黑模式",
+  "theme.mode.light": "浅色模式",
+  "setting.conf.export": "导出配置",
+  "setting.conf.import": "导入配置",
+  "setting.conf.clear": "清空配置",
+  "setting.conf.transport": "导入导出",
+  "main.opt.success": "操作成功",
+  "main.opt.failure": "操作失败",
+  "main.opt.edit": "编辑",
+  "main.opt.delete": "删除",
+  "main.opt.loading": "操作中...",
+  "main.opt.warning": "警告信息",
+  "main.opt.tip": "温馨提示",
+  "main.opt.ok": "确认",
+  "main.opt.cancel": "取消",
+  "main.opt.warning.tip": "此操作不可恢复，是否继续？",
+  "switch.active.text": "调试模式",
+  "switch.unactive.text": "正常模式",
 }

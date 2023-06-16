@@ -23,39 +23,25 @@
  * questions.
  */
 
-import { isDev } from "~/common/Constants"
-import { simpleLogger } from "zhi-lib-base"
-
-/**
- * 使用 eruda 更好的控制日志
- */
-window.console = isDev ? (window as any).eruda.get("console") : window.console
-
-/**
- * 简单的日志接口
- */
-interface ILogger {
-  debug: (msg: string, obj?: any) => void
-  info: (msg: string, obj?: any) => void
-  warn: (msg: string, obj?: any) => void
-  error: (msg: string | Error, obj?: any) => void
-}
-
-/**
- * 一个简单轻量级的日志记录器
- *
- * @author terwer
- * @version 1.0.0
- * @since 1.0.0
- */
-export const createAppLogger = (name: string): ILogger => {
-  return simpleLogger(name, "siyuan-blog", isDev)
-}
-
-/**
- * 销毁日志
- */
-export const destroyLogger = (): void => {
-  const win = window as any
-  win.eruda.destroy()
+export default {
+  "syp.about": "About me",
+  "theme.mode.choose": "Mode",
+  "theme.mode.dark": "Dark mode",
+  "theme.mode.light": "Light mode",
+  "setting.conf.export": "Export config",
+  "setting.conf.import": "Import config",
+  "setting.conf.clear": "Clear config",
+  "setting.conf.transport": "Transport",
+  "main.opt.success": "Success",
+  "main.opt.failure": "Error",
+  "main.opt.edit": "Edit",
+  "main.opt.delete": "Delete",
+  "main.opt.loading": "In operation...",
+  "main.opt.warning": "Warn tips",
+  "main.opt.tip": "Kind tips",
+  "main.opt.ok": "Confirm",
+  "main.opt.cancel": "Cancel",
+  "main.opt.warning.tip": "This operation cannot be undone, continue?",
+  "switch.active.text": "Debug",
+  "switch.unactive.text": "Normal",
 }

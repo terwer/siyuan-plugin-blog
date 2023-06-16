@@ -36,7 +36,7 @@ export default class SiyuanBlog extends Plugin {
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
 
-    this.logger = simpleLogger("index", "custom-slug", isDev)
+    this.logger = simpleLogger("index", "siyuan-blog", isDev)
     const frontEnd = getFrontend()
     this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile"
   }
