@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.5",
-    "@nuxt/devtools": "^0.6.0",
+    "@nuxt/devtools": "^0.6.1",
     "@nuxtjs/color-mode": "^3.2.0",
     "@nuxtjs/i18n-edge": "8.0.0-beta.12-28113576.7bc33c3",
     "@terwer/esbuild-config-custom": "^1.0.12",
