@@ -54,7 +54,6 @@ export default defineNuxtConfig({
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
   typescript: {
     strict: true,
-    shim: false,
   },
 
   devtools: {
@@ -72,27 +71,25 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      link: [{ rel: "stylesheet", href: appBase + "lib/fonts/webfont.css?v=" + staticV }],
+      link: [{ rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV }],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script:
         isDev || debugMode
           ? [
-              //   {
-              //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
-              //     body: true,
-              //   },
               {
                 src: appBase + "libs/eruda/eruda.js",
               },
               {
                 children: "eruda.init();console.log('eruda inited');",
               },
+              {
+                src: appBase + "libs/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
+              },
             ]
           : [
-              //   {
-              //     src: appBase + "lib/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
-              //     body: true,
-              //   },
+              {
+                src: appBase + "libs/lute/lute-1.7.5-20230410.min.js?v=" + staticV,
+              },
             ],
     },
   },

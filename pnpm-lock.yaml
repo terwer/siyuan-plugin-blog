@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -19,6 +23,9 @@ dependencies:
   zhi-lib-base:
     specifier: ^0.3.1
     version: 0.3.1
+  zhi-siyuan-api:
+    specifier: ^1.10.0
+    version: 1.10.0
 
 devDependencies:
   '@element-plus/nuxt':
@@ -2953,6 +2960,11 @@ packages:
     engines: {node: '>= 12'}
     dev: true
 
+  /commander@9.5.0:
+    resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
+    engines: {node: ^12.20.0 || >=14}
+    dev: false
+
   /commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
     dev: true
@@ -3012,6 +3024,14 @@ packages:
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
     dev: true
+
+  /cross-fetch@3.1.6:
+    resolution: {integrity: sha512-riRvo06crlE8HiqOwIpQhxwdOk4fOeR7FVM/wXoxchFEqMNUjvbs3bfo4OTgMEMHzppd4DxFBDbyySj8Cv781g==}
+    dependencies:
+      node-fetch: 2.6.11
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -5825,7 +5845,6 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
-    dev: true
 
   /node-fetch@3.3.1:
     resolution: {integrity: sha512-cRVc/kyto/7E5shrWca1Wsea4y6tL9iYJE5FBCius3JQfb/4P4I295PfhgbJQBLTx6lATE4z+wK0rPM4VS2uow==}
@@ -7274,6 +7293,13 @@ packages:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
 
+  /showdown@2.1.0:
+    resolution: {integrity: sha512-/6NVYu4U819R2pUIk79n67SYgJHWCce0a5xTP979WbNp0FL9MN1I1QK662IDU1b6JzKTvmhgI7T7JYIxBi3kMQ==}
+    hasBin: true
+    dependencies:
+      commander: 9.5.0
+    dev: false
+
   /signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
@@ -7736,7 +7762,6 @@ packages:
 
   /tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
-    dev: true
 
   /tr46@1.0.1:
     resolution: {integrity: sha512-dTpowEjclQ7Kgx5SdBkqRzVhERQXov8/l9Ft9dVM9fmg0W0KQSVaXX9T4i6twCPNtYiZM53lpSSUAwJbFPOHxA==}
@@ -8470,7 +8495,6 @@ packages:
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
-    dev: true
 
   /webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
@@ -8490,7 +8514,6 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-    dev: true
 
   /whatwg-url@7.1.0:
     resolution: {integrity: sha512-WUu7Rg1DroM7oQvGWfOiAK21n74Gg+T4elXEQYkOhtyLeWiJFoOGLXPKI/9gzIie9CtwVLm8wtw6YJdKyxSjeg==}
@@ -8671,10 +8694,29 @@ packages:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
     dev: true
 
+  /zhi-blog-api@1.6.10:
+    resolution: {integrity: sha512-rcXbBuwowNCXHnc5XaXsAF/MzxsIHpdQrHKnI70pd7HRgIlMf25tjsRd1ZDbRaOyKWrODvpdMoAIl3EdjvbkMA==}
+    dependencies:
+      zhi-lib-base: 0.4.1
+    dev: false
+
+  /zhi-common-markdown@0.1.2:
+    resolution: {integrity: sha512-qa4CX1qH4oIFwi+9QPZ8kDik9Vm16f9edbcmrfHqscjWmPi9C8bm20ZcHsX7go5RKXqhYmEHDlkVKdW9ViKXjg==}
+    dependencies:
+      showdown: 2.1.0
+      zhi-lib-base: 0.4.1
+    dev: false
+
   /zhi-common@1.11.0:
     resolution: {integrity: sha512-Z/T1ID0Z17rV0GrYw9WEBkf2bfD5kpC3mSbkCHt5cJuuBFYsYHq3QdktdOyDnG5ao1ZH02fHkm98IbspW/ZemQ==}
     dependencies:
       zhi-lib-base: 0.3.1
+    dev: false
+
+  /zhi-common@1.11.2:
+    resolution: {integrity: sha512-O67yy7ojeOhTWD1uahkoLcThSI9WJliHNYfLtNJoGH2FOp5f077NkO/pKfAXkBBmVD1XuZM1KlpmICb/NNAIzQ==}
+    dependencies:
+      zhi-lib-base: 0.4.1
     dev: false
 
   /zhi-device@2.3.0:
@@ -8685,6 +8727,22 @@ packages:
     resolution: {integrity: sha512-DYN8ebg9c18zBdpQvFtriWmrpYRyaYCJA6cG7ho57zPP4v4yhXWCn4NkPy2rOo9dJAkT57viHfrQp+GJbG6lVw==}
     dev: false
 
+  /zhi-lib-base@0.4.1:
+    resolution: {integrity: sha512-/wwfo0Z/86E5BW+mXN9amWAMEi0KLEoiOTNFb6BBtVuhDhypmZLRmfIvFk+E+UJU7bedTnkc6mRLAp7D+O9piw==}
+    dev: false
+
+  /zhi-siyuan-api@1.10.0:
+    resolution: {integrity: sha512-z+QvL6Lrw1zhI9jPQq+SWrgbKTXT62UKs8M/06K4T7+TDZwW1VPRWmpS2Y3TG0WizUBxwFaVprce3DyHeHKfAg==}
+    dependencies:
+      cross-fetch: 3.1.6
+      zhi-blog-api: 1.6.10
+      zhi-common: 1.11.2
+      zhi-common-markdown: 0.1.2
+      zhi-lib-base: 0.4.1
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /zip-stream@4.1.0:
     resolution: {integrity: sha512-zshzwQW7gG7hjpBlgeQP9RuyPGNxvJdzR8SUM3QhxCnLjWN2E7j3dOvpeDcQoETfHx0urRS7EtmVToql7YpU4A==}
     engines: {node: '>= 10'}
@@ -8693,7 +8751,3 @@ packages:
       compress-commons: 4.1.1
       readable-stream: 3.6.2
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
