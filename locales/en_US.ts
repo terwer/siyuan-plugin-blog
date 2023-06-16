@@ -44,4 +44,6 @@ export default {
   "main.opt.warning.tip": "This operation cannot be undone, continue?",
   "switch.active.text": "Debug",
   "switch.unactive.text": "Normal",
+  "blog.index.no.home": "Oh, you haven't set up your homepage yet!",
+  "blog.index.goto.set.home": "Go to set up my homepage now",
 }

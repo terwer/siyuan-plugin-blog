@@ -1,3 +1,5 @@
+import path from "path"
+
 const getAppBase = (isSiyuanBuild: boolean, isNodeBuild: boolean, isVercelBuild: boolean, isDev: boolean): string => {
   if (isSiyuanBuild) {
     return "/plugins/siyuan-blog/"
@@ -111,6 +113,8 @@ export default defineNuxtConfig({
     classSuffix: "",
   },
 
+  builder: "vite",
+
   vite: {
     define: { "process.env.DEV_MODE": `"${isDev || debugMode}"` },
     plugins: [],
@@ -142,5 +146,9 @@ export default defineNuxtConfig({
     preset: ssrPreset,
     // 开启之后将进行静态伺服
     serveStatic: ssrServeStatic,
+    output: {
+      // 静态构建放到 dist ，否则放到默认目录 .output/public
+      publicDir: ssrServeStatic ? path.join(__dirname, "dist") : path.join(__dirname, ".output", "public"),
+    },
   },
 })

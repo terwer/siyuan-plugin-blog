@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useVueI18n()
+
 const goSetting = async () => {
   await navigateTo("/setting")
 }
@@ -6,8 +8,8 @@ const goSetting = async () => {
 
 <template>
   <div>
-    <el-empty description="啊哦，您还没设置自己的主页哟！">
-      <el-button type="primary" @click="goSetting">马上去设置我的主页</el-button>
+    <el-empty :description="t('blog.index.no.home')">
+      <el-button type="primary" @click="goSetting">{{ t("blog.index.goto.set.home") }}</el-button>
     </el-empty>
   </div>
 </template>

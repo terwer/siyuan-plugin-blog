@@ -4,9 +4,13 @@ import Footer from "~/components/default/Footer.vue"
 </script>
 
 <template>
-  <div>
+  <el-container>
     <Header />
-    <slot />
-    <Footer />
-  </div>
+    <el-main>
+      <slot />
+    </el-main>
+    <el-footer>
+      <Footer />
+    </el-footer>
+  </el-container>
 </template>

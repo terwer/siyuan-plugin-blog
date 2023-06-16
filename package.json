@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "serve": "nuxt dev",
-    "build": "pnpm pluginBuild && pnpm siyuanBuild",
-    "dev": "rm -rf ./dist && pnpm pluginBuild && DEBUG_MODE=true pnpm siyuanBuild && pnpm siyuanSync",
+    "dev": "bash scripts/dev.sh",
+    "build": "bash scripts/build.sh",
     "pluginBuild": "zhi-build --production",
+    "siyuanBuild": "BUILD_TYPE=siyuan nuxt generate",
     "vercelBuild": "BUILD_TYPE=vercel nuxt build",
     "nodeBuild": "BUILD_TYPE=node nuxt build",
-    "siyuanBuild": "BUILD_TYPE=siyuan nuxt generate && cp -r .output/public/* ./dist",
-    "siyuanSync": "cp -r ./dist/* /Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-blog",
+    "dockerPackage": "bash scripts/docker.sh",
+    "syncVersion": "python scripts/version.py",
+    "parseChangelog": "python scripts/parse_changelog.py",
+    "prepareRelease": "pnpm syncVersion && pnpm parseChangelog",
+    "package": "python scripts/package.py",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
