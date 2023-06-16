@@ -5,6 +5,8 @@
 .cache
 dist
 .env.docker
+build
+__pycache__
 
 # Node dependencies
 node_modules

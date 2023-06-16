@@ -1,3 +1,5 @@
+import path from "path"
+
 const getAppBase = (isSiyuanBuild: boolean, isNodeBuild: boolean, isVercelBuild: boolean, isDev: boolean): string => {
   if (isSiyuanBuild) {
     return "/plugins/siyuan-blog/"
@@ -110,6 +112,8 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: "",
   },
+
+  builder: "vite",
 
   vite: {
     define: { "process.env.DEV_MODE": `"${isDev || debugMode}"` },
