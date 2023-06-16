@@ -52,15 +52,11 @@ export default defineNuxtConfig({
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
   typescript: {
     strict: true,
+    shim: false,
   },
 
   devtools: {
     enabled: true,
-  },
-
-  vite: {
-    define: { "process.env.DEV_MODE": `"${isDev || debugMode}"` },
-    plugins: [],
   },
 
   app: {
@@ -91,6 +87,40 @@ export default defineNuxtConfig({
               //   },
             ],
     },
+  },
+
+  // css
+  css: ["~/assets/scss/index.scss"],
+
+  // build modules
+  modules: ["@vueuse/nuxt", "@element-plus/nuxt", "@nuxtjs/color-mode"],
+
+  // vueuse
+  vueuse: {
+    ssrHandlers: true,
+  },
+
+  // colorMode
+  colorMode: {
+    classSuffix: "",
+  },
+
+  vite: {
+    define: { "process.env.DEV_MODE": `"${isDev || debugMode}"` },
+    plugins: [],
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/assets/scss/element/index.scss" as element;`,
+        },
+      },
+    },
+  },
+  elementPlus: {
+    icon: "ElIcon",
+    importStyle: "scss",
+    themes: ["dark"],
   },
 
   // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa

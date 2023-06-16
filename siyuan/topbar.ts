@@ -23,7 +23,6 @@
  */
 
 import SiyuanBlog from "./index"
-import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 import { icons } from "./utils/svg"
 import { Dialog, Menu } from "siyuan"
 
