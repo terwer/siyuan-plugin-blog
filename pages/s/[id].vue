@@ -6,7 +6,7 @@ import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("share-detail-page")
 const route = useRoute()
-const postid = route.params.id
+const env = useRuntimeConfig()
 
 // datas
 const currentPost = reactive({
@@ -15,8 +15,12 @@ const currentPost = reactive({
 const getPost = async () => {
   logger.info("Loading post from remote api...")
 
-  const env = useRuntimeConfig()
-  const siyuanConfig = new SiyuanConfig("http://127.0.0.1:6806", "")
+  logger.info("env=>", env)
+  logger.info("defaultType=>", env.public.defaultType)
+  logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
+  logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
+
+  const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
   const blogApi = new SiYuanApiAdaptor(siyuanConfig)
   const id = (route.params.id ?? "") as string
   const postid = id.replace(/\.html$/, "")
