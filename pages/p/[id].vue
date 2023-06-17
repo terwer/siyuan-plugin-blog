@@ -4,7 +4,6 @@ import { getFirstImageSrc, getSummery } from "~/utils/utils"
 import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("share-page")
-const { t } = useI18n()
 const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost()
 
@@ -21,7 +20,7 @@ if (headImage) {
   logger.info("get a head image from doc=>", headImage)
   seoMeta.ogImage = headImage
 }
-useServerSeoMeta(seoMeta)
+useSeoMeta(seoMeta)
 
 // https://stackoverflow.com/a/71781246/4037224
 const VNode = () =>

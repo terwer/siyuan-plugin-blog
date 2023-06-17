@@ -21,7 +21,7 @@ if (headImage) {
   logger.info("get a head image from doc=>", headImage)
   seoMeta.ogImage = headImage
 }
-useServerSeoMeta(seoMeta)
+useSeoMeta(seoMeta)
 
 // https://stackoverflow.com/a/71781246/4037224
 const VNode = () =>
