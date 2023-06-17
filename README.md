@@ -13,6 +13,10 @@ The notions sharing function you want is here too
 * **Personal homepage**: You can set a shared page as your homepage, which can be used as a custom blog homepage.
 * **Theme integration**: The default theme is [Zhihu](https://github.com/terwer/siyuan-theme-zhihu), and other themes will be supported in the future.
 * **SEO optimization**: support automatically generating titles, summaries, and cover images for better SEO
+* **Multiple Deployment Options**: Supports deployment as a plugin for the Siyuan note-taking software, self-deployment using Docker, and hosting on Vercel to meet different needs. For more details, please see the docs.
+  - [Beginner-Level] Siyuan Note Plugin: Zero configuration, ready to use out of the box, runs as a local SPA application and accesses the Siyuan ontology directly, resulting in extremely fast speed but not very SEO-friendly.
+  - [Expert-Level] Self-Deployment using Docker: Requires purchasing a server, SSR server-side rendering, SEO-friendly, high speed.
+  - [Cost-Free Option] Vercel Hosting: Requires purchasing a domain and may not be accessible in some countries, low cost, moderate speed.
 
 ## TODO
 
