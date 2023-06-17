@@ -91,4 +91,13 @@ export default defineNuxtConfig({
         : [],
     },
   },
+
+  // 环境变量
+  runtimeConfig: {
+    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    public: {
+      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
+      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
+    },
+  },
 })
