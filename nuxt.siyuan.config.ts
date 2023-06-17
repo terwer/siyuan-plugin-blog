@@ -67,17 +67,42 @@ export default defineNuxtConfig({
       hashMode: true,
     },
   },
-  // nitro: {
-  //   // 开启之后将进行静态伺服
-  //   serveStatic: true,
-  // },
+
+  css: ["~/assets/siyuan/style.styl"],
 
   app: {
     baseURL: appBase,
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      link: [{ rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV }],
+      htmlAttrs: {
+        lang: "zh_CN",
+        "data-theme-mode": "dark",
+        "data-light-theme": "Zhihu",
+        "data-dark-theme": "Zhihu",
+      },
+      link: [
+        { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        {
+          rel: "stylesheet",
+          href: "http://127.0.0.1:59541/stage/build/app/base.55870db539c2a1c02cb5.css?v=" + staticV,
+        },
+        {
+          rel: "stylesheet",
+          id: "themeDefaultStyle",
+          href: "http://127.0.0.1:59541/appearance/themes/midnight/theme.css?v=2.9.1",
+        },
+        {
+          rel: "stylesheet",
+          id: "themeStyle",
+          href: "http://127.0.0.1:59541/appearance/themes/Zhihu/theme.css?v=0.0.6",
+        },
+        {
+          rel: "stylesheet",
+          id: "protyleHljsStyle",
+          href: "http://127.0.0.1:59541/stage/protyle/js/highlight.js/styles/vs2015.min.css?v=11.5.0",
+        },
+      ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [

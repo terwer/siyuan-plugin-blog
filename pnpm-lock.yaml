@@ -11,9 +11,12 @@ dependencies:
   element-plus:
     specifier: ^2.3.6
     version: 2.3.6(vue@3.3.4)
+  vue-dompurify-html:
+    specifier: ^4.1.4
+    version: 4.1.4(vue@3.3.4)
   zhi-siyuan-api:
-    specifier: ^1.12.2
-    version: 1.12.2
+    specifier: ^1.13.0
+    version: 1.13.0
 
 devDependencies:
   '@element-plus/nuxt':
@@ -3457,6 +3460,10 @@ packages:
       domelementtype: 2.3.0
     dev: true
 
+  /dompurify@3.0.3:
+    resolution: {integrity: sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==}
+    dev: false
+
   /domutils@3.1.0:
     resolution: {integrity: sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==}
     dependencies:
@@ -4586,7 +4593,7 @@ packages:
       foreground-child: 3.1.1
       jackspeak: 2.2.1
       minimatch: 9.0.1
-      minipass: 5.0.0
+      minipass: 6.0.2
       path-scurry: 1.9.2
     dev: true
 
@@ -5734,6 +5741,11 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /minipass@6.0.2:
+    resolution: {integrity: sha512-MzWSV5nYVT7mVyWCwn2o7JH13w2TBRmmSqSRCKzTw+lmft9X4z+3wjvs06Tzijo5z4W/kahUCDpRXTF+ZrmF/w==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    dev: true
+
   /minizlib@2.1.2:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
     engines: {node: '>= 8'}
@@ -6448,7 +6460,7 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       lru-cache: 9.1.2
-      minipass: 5.0.0
+      minipass: 6.0.2
     dev: true
 
   /path-type@4.0.0:
@@ -8436,6 +8448,18 @@ packages:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
     dev: true
 
+  /vue-dompurify-html@4.1.4(vue@3.3.4):
+    resolution: {integrity: sha512-K0XDSZA4dmMMvAgW8yaCx1kAYQldmgXeHJaLPS0mlSKOu8B+onE06X4KfB5LGyX4jR3rlVosyWJczRBzR0sZ/g==}
+    peerDependencies:
+      vue: ^2.7.0 || ^3.0.0
+    dependencies:
+      dompurify: 3.0.3
+      vue: 3.3.4
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
+
   /vue-eslint-parser@9.3.1(eslint@8.43.0):
     resolution: {integrity: sha512-Clr85iD2XFZ3lJ52/ppmUDG/spxQu6+MAeHXjjyI4I1NUYZ9xmenQp4N0oaHJhrA8OOxltCVxMRfANGa70vU0g==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -8786,8 +8810,8 @@ packages:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
     dev: true
 
-  /zhi-blog-api@1.7.2:
-    resolution: {integrity: sha512-Oklh7J6Q7B3JhCmnc54rj9+X1QCvkIZf2hUlSjHUXcIw20llIWJhlhzm+Xuvu7q51o+YO122JFtDtR3hqn+ckQ==}
+  /zhi-blog-api@1.8.0:
+    resolution: {integrity: sha512-D/89on9BkLIzIInYmO270GBpSBwrj5ozIwIMckKIJ64/hJKZWWzph60/BXz1WDsy4v6EsRtzAP447pcvXJi3Yg==}
     dependencies:
       zhi-lib-base: 0.4.1
     dev: false
@@ -8802,10 +8826,10 @@ packages:
     resolution: {integrity: sha512-/wwfo0Z/86E5BW+mXN9amWAMEi0KLEoiOTNFb6BBtVuhDhypmZLRmfIvFk+E+UJU7bedTnkc6mRLAp7D+O9piw==}
     dev: false
 
-  /zhi-siyuan-api@1.12.2:
-    resolution: {integrity: sha512-mK5CyV3MU72ZyOhrlbd03Wx//3mguddutdLNHzrjqrhll+GzmUcK15XpHukzj2gNAEMCLANq7vFVKqSITFUY5w==}
+  /zhi-siyuan-api@1.13.0:
+    resolution: {integrity: sha512-jyiIBoY6FTVZp1APJbUeTKsGIYU9EI6UBMm8hmjaQKZ8hhma6wq2qhZHWdG1Je281TXNvoQ5AjhK/4kDHATRHg==}
     dependencies:
-      zhi-blog-api: 1.7.2
+      zhi-blog-api: 1.8.0
       zhi-common: 1.11.2
       zhi-lib-base: 0.4.1
     dev: false
