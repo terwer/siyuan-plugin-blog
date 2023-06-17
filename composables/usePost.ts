@@ -15,22 +15,27 @@ export const usePost = () => {
     post: {} as Post,
   })
 
-  // lifecycles
-  // https://vuejs.org/api/composition-api-lifecycle.html#onserverprefetch
-  onServerPrefetch(async () => {
-    const route = useRoute()
-    const id = (route.params.id ?? "") as string
-    currentPost.post = await getPost(id)
-  })
-  onBeforeMount(async () => {
-    const route = useRoute()
-    const id = (route.params.id ?? "") as string
+  /**
+   * 如果缓存已有直接返回，否则去远程抓取数据
+   */
+  const setCurrentPost = async () => {
     if (ObjectUtil.isEmptyObject(currentPost.post)) {
+      const route = useRoute()
+      const id = (route.params.id ?? "") as string
       currentPost.post = await getPost(id)
     } else {
       logger.info("Post already cached, skip fetch")
     }
+  }
+
+  // lifecycles
+  // https://vuejs.org/api/composition-api-lifecycle.html#onserverprefetch
+  onServerPrefetch(async () => {
+    await setCurrentPost()
+  })
+  onBeforeMount(async () => {
+    await setCurrentPost()
   })
 
-  return { currentPost }
+  return { currentPost, setCurrentPost }
 }

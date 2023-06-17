@@ -46,4 +46,5 @@ export default {
   "switch.unactive.text": "正常模式",
   "blog.index.no.home": "啊哦，您还没设置自己的主页哟！",
   "blog.index.goto.set.home": "马上去设置我的主页",
+  "blog.share": "在线分享",
 }

@@ -12,6 +12,7 @@ The notions sharing function you want is here too
 * **Permission control**: Only shared pages can be viewed, and pages that have not been shared cannot be viewed without permission.
 * **Personal homepage**: You can set a shared page as your homepage, which can be used as a custom blog homepage.
 * **Theme integration**: The default theme is [Zhihu](https://github.com/terwer/siyuan-theme-zhihu), and other themes will be supported in the future.
+* **SEO optimization**: support automatically generating titles, summaries, and cover images for better SEO
 
 ## TODO
 
