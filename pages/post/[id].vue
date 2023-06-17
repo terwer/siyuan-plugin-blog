@@ -1,7 +1,27 @@
 <script setup lang="ts">
 import { usePost } from "~/composables/usePost"
+import { getFirstImageSrc, getSummery } from "~/utils/utils"
+import { createAppLogger } from "~/common/appLogger"
 
-const { currentPost } = usePost()
+const logger = createAppLogger("share-page")
+const { currentPost, setCurrentPost } = usePost()
+await setCurrentPost()
+
+const title = currentPost.post.title
+const desc = getSummery(currentPost.post.description)
+const headImage = await getFirstImageSrc(currentPost.post.description)
+const seoMeta = {
+  title: title,
+  ogTitle: title,
+  description: desc,
+  ogDescription: desc,
+} as any
+if (headImage) {
+  logger.info("get a head image from doc=>", headImage)
+  seoMeta.ogImage = headImage
+}
+useSeoMeta(seoMeta)
+
 // https://stackoverflow.com/a/71781246/4037224
 const VNode = () =>
   h("div", {

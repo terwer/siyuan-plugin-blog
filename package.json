@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "cheerio": "1.0.0-rc.12",
     "element-plus": "^2.3.6",
     "highlight.js": "^11.6.0",
     "zhi-device": "^2.3.0",

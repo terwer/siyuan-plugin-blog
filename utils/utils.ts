@@ -23,28 +23,23 @@
  * questions.
  */
 
-export default {
-  "syp.about": "About me",
-  "theme.mode.choose": "Mode",
-  "theme.mode.dark": "Dark mode",
-  "theme.mode.light": "Light mode",
-  "setting.conf.export": "Export config",
-  "setting.conf.import": "Import config",
-  "setting.conf.clear": "Clear config",
-  "setting.conf.transport": "Transport",
-  "main.opt.success": "Success",
-  "main.opt.failure": "Error",
-  "main.opt.edit": "Edit",
-  "main.opt.delete": "Delete",
-  "main.opt.loading": "In operation...",
-  "main.opt.warning": "Warn tips",
-  "main.opt.tip": "Kind tips",
-  "main.opt.ok": "Confirm",
-  "main.opt.cancel": "Cancel",
-  "main.opt.warning.tip": "This operation cannot be undone, continue?",
-  "switch.active.text": "Debug",
-  "switch.unactive.text": "Normal",
-  "blog.index.no.home": "Oh, you haven't set up your homepage yet!",
-  "blog.index.goto.set.home": "Go to set up my homepage now",
-  "blog.share": "Share to web",
+import { HtmlUtil } from "zhi-common"
+import * as cheerio from "cheerio"
+
+export const getSummery = (html: string) => {
+  const text = HtmlUtil.removeMdWidgetTag(html)
+  return HtmlUtil.parseHtml(text, 250)
+}
+
+export const getFirstImageSrc = async (html: string) => {
+  // 初始化Cheerio实例
+  const $ = cheerio.load(html)
+  // 获取第一个<img>元素
+  const firstImg = $("img").first()
+  if (firstImg.length === 0) {
+    // 没有找到<img>元素，返回空字符串
+    return ""
+  }
+  // 返回<img>元素的src属性
+  return firstImg.attr("src") || ""
 }
