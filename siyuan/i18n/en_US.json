@@ -3,5 +3,6 @@
   "showHome": "Show home",
   "home": "Home",
   "setting": "Setting",
-  "shareOptions": "Share options"
+  "shareOptions": "Share options",
+  "browserOpen": "Open current page"
 }

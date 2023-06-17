@@ -23,29 +23,4 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
-
-/**
- * 文档相关
- */
-export const usePostApi = () => {
-  const logger = createAppLogger("use-post")
-  const env = useRuntimeConfig()
-
-  const getPost = async (id: string) => {
-    logger.info("Loading post from remote api...")
-
-    // logger.info("env=>", env)
-    // logger.info("defaultType=>", env.public.defaultType)
-    // logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
-    // logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
-
-    const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
-    const blogApi = new SiYuanApiAdaptor(siyuanConfig)
-    const postid = id.replace(/\.html$/, "")
-    return await blogApi.getPost(postid)
-  }
-
-  return { getPost }
-}
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#fff;color:#000}.hljs-comment,.hljs-quote,.hljs-variable{color:green}.hljs-built_in,.hljs-keyword,.hljs-name,.hljs-selector-tag,.hljs-tag{color:#00f}.hljs-addition,.hljs-attribute,.hljs-literal,.hljs-section,.hljs-string,.hljs-template-tag,.hljs-template-variable,.hljs-title,.hljs-type{color:#a31515}.hljs-deletion,.hljs-meta,.hljs-selector-attr,.hljs-selector-pseudo{color:#2b91af}.hljs-doctag{color:grey}.hljs-attr{color:red}.hljs-bullet,.hljs-link,.hljs-symbol{color:#00b0e8}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}

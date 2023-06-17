@@ -9,7 +9,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+const appBase = "/plugins/siyuan-blog/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode"],
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n-edge", "@element-plus/nuxt", "@nuxtjs/color-mode"],
 
   // vueuse
   vueuse: {
@@ -59,12 +59,49 @@ export default defineNuxtConfig({
     themes: ["dark"],
   },
 
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
+  ssr: false,
+  router: {
+    options: {
+      hashMode: true,
+    },
+  },
+
+  css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
+
   app: {
     baseURL: appBase,
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      link: [{ rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV }],
+      htmlAttrs: {
+        lang: "zh_CN",
+        "data-theme-mode": "dark",
+        "data-light-theme": "Zhihu",
+        "data-dark-theme": "Zhihu",
+      },
+      link: [
+        { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        {
+          rel: "stylesheet",
+          href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
+        },
+        {
+          rel: "stylesheet",
+          id: "themeDefaultStyle",
+          href: appBase + "resources/appearance/themes/midnight/theme.css?v=2.9.1",
+        },
+        {
+          rel: "stylesheet",
+          id: "themeStyle",
+          href: appBase + "resources/appearance/themes/Zhihu/theme.css?v=0.0.6",
+        },
+        {
+          rel: "stylesheet",
+          id: "protyleHljsStyle",
+          href: appBase + "resources/stage/protyle/js/highlight.js/styles/vs2015.min.css?v=11.5.0",
+        },
+      ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [

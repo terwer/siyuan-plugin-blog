@@ -39,6 +39,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "element-plus": "^2.3.6",
-    "zhi-siyuan-api": "^1.12.2"
+    "highlight.js": "^11.6.0",
+    "zhi-siyuan-api": "^1.13.0"
   }
 }

@@ -23,29 +23,23 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
+const getAvailableIP = (ips: string[]): string | null => {
+  const localIPs = ips.filter((ip) => ip !== "127.0.0.1")
+  return localIPs.length > 0 ? localIPs[0] : null
+}
 
-/**
- * 文档相关
- */
-export const usePostApi = () => {
-  const logger = createAppLogger("use-post")
-  const env = useRuntimeConfig()
+const getLocalIp = () => {
+  const win = window as any
+  const ips = win.siyuan.config.localIPs
+  return getAvailableIP(ips)
+}
 
-  const getPost = async (id: string) => {
-    logger.info("Loading post from remote api...")
-
-    // logger.info("env=>", env)
-    // logger.info("defaultType=>", env.public.defaultType)
-    // logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
-    // logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
-
-    const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
-    const blogApi = new SiYuanApiAdaptor(siyuanConfig)
-    const postid = id.replace(/\.html$/, "")
-    return await blogApi.getPost(postid)
+export const getAvailableOrigin = () => {
+  const win = window as any
+  const origin = win.location.origin
+  const localIp = getLocalIp()
+  if (localIp) {
+    return origin.replace(/(127.0.0.1|localhost)/, localIp)
   }
-
-  return { getPost }
+  return origin
 }
