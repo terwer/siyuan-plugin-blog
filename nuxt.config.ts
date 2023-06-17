@@ -41,7 +41,10 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    define: { "process.env.DEV_MODE": `"${isDev}"` },
+    define: {
+      "process.env.DEV_MODE": `"${isDev}"`,
+      "process.env.APP_BASE": `"${appBase}"`,
+    },
     plugins: [],
 
     css: {
@@ -122,6 +125,7 @@ export default defineNuxtConfig({
     public: {
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
+      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
     },
   },
 })

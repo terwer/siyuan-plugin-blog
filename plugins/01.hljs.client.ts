@@ -38,6 +38,7 @@ import { useHljs } from "~/plugins/hljs/useHljs"
 export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("hljs-plugin")
   const { hljs } = useHljs()
+  const env = useRuntimeConfig()
   logger.info("hljs plugin load")
 
   vueApp.directive("highlight", {
@@ -46,13 +47,13 @@ export default defineNuxtPlugin(({ vueApp }) => {
         const blocks = el.querySelectorAll("pre code")
         Array.prototype.forEach.call(blocks, hljs.highlightBlock)
         logger.info("hljs code highlighted")
-      }, 500)
+      }, env.public.waitTime ?? 500)
 
       setTimeout(() => {
         const blocks = el.querySelectorAll("div[class='hljs']")
         Array.prototype.forEach.call(blocks, hljs.highlightBlock)
         logger.info("hljs div highlighted")
-      }, 500)
+      }, env.public.waitTime ?? 500)
     },
   })
 })
