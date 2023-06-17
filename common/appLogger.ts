@@ -23,13 +23,15 @@
  * questions.
  */
 
-import { isDev } from "~/common/Constants"
-import { simpleLogger } from "zhi-lib-base"
+import {isDev} from "~/common/Constants"
+import {simpleLogger} from "zhi-lib-base"
 
 /**
  * 使用 eruda 更好的控制日志
  */
-window.console = isDev ? (window as any).eruda.get("console") : window.console
+if (typeof window !== "undefined") {
+  window.console = isDev ? (window as any).eruda.get("console") : window.console
+}
 
 /**
  * 简单的日志接口
@@ -50,12 +52,4 @@ interface ILogger {
  */
 export const createAppLogger = (name: string): ILogger => {
   return simpleLogger(name, "siyuan-blog", isDev)
-}
-
-/**
- * 销毁日志
- */
-export const destroyLogger = (): void => {
-  const win = window as any
-  win.eruda.destroy()
 }

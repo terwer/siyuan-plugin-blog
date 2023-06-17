@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useVueI18n } from "~/composables/useVueI18n"
 import { version } from "~/package.json"
 import { DateUtil } from "zhi-common"
+import { useI18n } from "vue-i18n"
 
-const { t } = useVueI18n()
+const { t } = useI18n()
 
 const color = useColorMode()
 const colorMode = computed({

@@ -23,4 +23,4 @@
  * questions.
  */
 
-export const isDev = process.env.DEV_MODE === "true"
+export const isDev = typeof process === "undefined" ? false : process?.env?.DEV_MODE === "true"
