@@ -25,6 +25,8 @@
 import SiyuanBlog from "./index"
 import { icons } from "./utils/svg"
 import { Dialog, Menu } from "siyuan"
+import PageUtil from "~/siyuan/utils/pageUtil"
+import {getAvailableOrigin} from "~/siyuan/utils/utils";
 
 /**
  * 顶栏按钮
@@ -75,7 +77,21 @@ const initContextMenu = async (pluginInstance: SiyuanBlog, rect: DOMRect) => {
     label: pluginInstance.i18n.showHome,
     click: () => {
       const blogIndex = "/plugins/siyuan-blog/#/"
-      showPage(pluginInstance, blogIndex, pluginInstance.i18n.home)
+      const origin = getAvailableOrigin()
+      // showPage(pluginInstance, blogIndex, pluginInstance.i18n.home)
+      window.open(`${origin}${blogIndex}`)
+    },
+  })
+
+  menu.addSeparator()
+  menu.addItem({
+    iconHTML: `<span class="font-awesome-icon">${icons.iconBrowser}</span>`,
+    label: pluginInstance.i18n.browserOpen,
+    click: () => {
+      const pageId = PageUtil.getPageId()
+      const blogIndex = `/plugins/siyuan-blog/#/s/${pageId}`
+      const origin = getAvailableOrigin()
+      window.open(`${origin}${blogIndex}`)
     },
   })
 

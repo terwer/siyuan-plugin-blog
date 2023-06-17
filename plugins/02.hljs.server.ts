@@ -23,8 +23,7 @@
  * questions.
  */
 
-import VueDOMPurifyHTML from "vue-dompurify-html"
-
-export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(VueDOMPurifyHTML)
+// stub - block nuxt getSSRProps error
+export default defineNuxtPlugin(({ vueApp }) => {
+  vueApp.directive("highlight", {})
 })

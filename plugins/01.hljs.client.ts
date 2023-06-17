@@ -24,28 +24,35 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
+import { useHljs } from "~/plugins/hljs/useHljs"
 
 /**
- * 文档相关
+ * 代码高亮插件
+ * https://github.com/nuxt/nuxt/issues/13382
+ * client = browser only
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 0.0.1
  */
-export const usePostApi = () => {
-  const logger = createAppLogger("use-post")
-  const env = useRuntimeConfig()
+export default defineNuxtPlugin(({ vueApp }) => {
+  const logger = createAppLogger("hljs-plugin")
+  const { hljs } = useHljs()
+  logger.info("hljs plugin load")
 
-  const getPost = async (id: string) => {
-    logger.info("Loading post from remote api...")
+  vueApp.directive("highlight", {
+    mounted(el, binding) {
+      setTimeout(() => {
+        const blocks = el.querySelectorAll("pre code")
+        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+        logger.info("hljs code highlighted")
+      }, 500)
 
-    // logger.info("env=>", env)
-    // logger.info("defaultType=>", env.public.defaultType)
-    // logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
-    // logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
-
-    const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
-    const blogApi = new SiYuanApiAdaptor(siyuanConfig)
-    const postid = id.replace(/\.html$/, "")
-    return await blogApi.getPost(postid)
-  }
-
-  return { getPost }
-}
+      setTimeout(() => {
+        const blocks = el.querySelectorAll("div[class='hljs']")
+        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+        logger.info("hljs div highlighted")
+      }, 500)
+    },
+  })
+})

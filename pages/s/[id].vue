@@ -3,7 +3,11 @@ import { usePost } from "~/composables/usePost"
 
 const { currentPost } = usePost()
 // https://stackoverflow.com/a/71781246/4037224
-const VNode = () => h("div", { class: "", innerHTML: currentPost.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? "" })
+const VNode = () =>
+  h("div", {
+    class: "",
+    innerHTML: currentPost.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? "",
+  })
 </script>
 
 <template>
@@ -25,13 +29,10 @@ const VNode = () => h("div", { class: "", innerHTML: currentPost.post.editorDom?
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
-        style="padding: 16px 96px 281.5px"
         data-doc-type="NodeDocument"
       >
-        <VNode />
+        <VNode v-highlight />
       </div>
     </div>
   </div>
 </template>
-
-<style scoped></style>

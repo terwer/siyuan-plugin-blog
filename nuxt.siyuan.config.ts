@@ -61,14 +61,13 @@ export default defineNuxtConfig({
 
   // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
   ssr: false,
-  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
   router: {
     options: {
       hashMode: true,
     },
   },
 
-  css: ["~/assets/siyuan/style.styl"],
+  css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
 
   app: {
     baseURL: appBase,
@@ -85,22 +84,22 @@ export default defineNuxtConfig({
         { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
         {
           rel: "stylesheet",
-          href: "http://127.0.0.1:59541/stage/build/app/base.55870db539c2a1c02cb5.css?v=" + staticV,
+          href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
         },
         {
           rel: "stylesheet",
           id: "themeDefaultStyle",
-          href: "http://127.0.0.1:59541/appearance/themes/midnight/theme.css?v=2.9.1",
+          href: appBase + "resources/appearance/themes/midnight/theme.css?v=2.9.1",
         },
         {
           rel: "stylesheet",
           id: "themeStyle",
-          href: "http://127.0.0.1:59541/appearance/themes/Zhihu/theme.css?v=0.0.6",
+          href: appBase + "resources/appearance/themes/Zhihu/theme.css?v=0.0.6",
         },
         {
           rel: "stylesheet",
           id: "protyleHljsStyle",
-          href: "http://127.0.0.1:59541/stage/protyle/js/highlight.js/styles/vs2015.min.css?v=11.5.0",
+          href: appBase + "resources/stage/protyle/js/highlight.js/styles/vs2015.min.css?v=11.5.0",
         },
       ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
