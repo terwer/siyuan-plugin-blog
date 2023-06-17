@@ -9,7 +9,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/plugins/siyuan-blog/"
+const appBase = "/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n-edge", "@element-plus/nuxt", "@nuxtjs/color-mode"],
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode"],
 
   // vueuse
   vueuse: {
@@ -41,30 +41,18 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    define: { "process.env.DEV_MODE": `"${isDev}"` },
-    plugins: [],
-
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@/assets/scss/element/index.scss" as element;`,
-        },
-      },
+    define: {
+      "process.env.DEV_MODE": `"${isDev}"`,
+      "process.env.APP_BASE": `"${appBase}"`,
     },
+    plugins: [],
   },
+
   // https://github.com/element-plus/element-plus-nuxt-starter/blob/main/nuxt.config.ts
   elementPlus: {
     icon: "ElIcon",
     importStyle: "scss",
     themes: ["dark"],
-  },
-
-  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-  ssr: false,
-  router: {
-    options: {
-      hashMode: true,
-    },
   },
 
   css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
@@ -122,6 +110,7 @@ export default defineNuxtConfig({
     public: {
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
+      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
     },
   },
 })
