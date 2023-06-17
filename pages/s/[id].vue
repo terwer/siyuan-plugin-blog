@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const route = useRoute()
+import { usePost } from "~/composables/usePost"
 
-const postid = route.params.id
+const { currentPost } = usePost()
 </script>
 
 <template>
-  <div>{{ postid }}</div>
+  <div>{{ currentPost.post.description }}</div>
 </template>
 
 <style scoped></style>
