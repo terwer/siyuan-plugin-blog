@@ -23,8 +23,9 @@
  * questions.
  */
 
-import { useStorageAsync } from "@vueuse/core"
 import CommonStorage from "~/stores/common/commonStorage"
+import { StorageSerializers } from "@vueuse/core"
+import { createAppLogger } from "~/common/appLogger"
 
 /**
  * https://vueuse.org/core/useStorageAsync/
@@ -32,8 +33,55 @@ import CommonStorage from "~/stores/common/commonStorage"
  * @param storageKey
  */
 export const useCommonStorageAsync = <T extends string | number | boolean | object | null>(storageKey: string) => {
+  const logger = createAppLogger("common-storage-async")
   const commonStorage = new CommonStorage(storageKey)
-  const commonStore = useStorageAsync<T>(commonStorage.key, {} as T, commonStorage, {})
+
+  // 获取 initialValue 类型对应的序列化器，如果不存在则使用默认序列化器
+  const initialValue = {} as T
+  const rawInit: T = toValue(initialValue)
+  const type = guessSerializerType<T>(rawInit) as
+    | "boolean"
+    | "object"
+    | "number"
+    | "any"
+    | "string"
+    | "map"
+    | "set"
+    | "date"
+  logger.info(`It is detected that the serialization type is ${type}`)
+  const serializer = StorageSerializers[type]
+
+  // 定义 commonStore 对象
+  const commonStore = {
+    async get(): Promise<T> {
+      const rawValue = (await commonStorage.getItem(commonStorage.key)) ?? "{}"
+      const ret = await serializer.read(rawValue)
+      return ret ?? {}
+    },
+    async set(value: T): Promise<void> {
+      await commonStorage.setItem(commonStorage.key, serializer.write(value))
+    },
+  }
 
   return { commonStore }
+}
+
+function guessSerializerType<T extends string | number | boolean | object | null>(rawInit: T) {
+  return rawInit == null
+    ? "any"
+    : rawInit instanceof Set
+    ? "set"
+    : rawInit instanceof Map
+    ? "map"
+    : rawInit instanceof Date
+    ? "date"
+    : typeof rawInit === "boolean"
+    ? "boolean"
+    : typeof rawInit === "string"
+    ? "string"
+    : typeof rawInit === "object"
+    ? "object"
+    : !Number.isNaN(rawInit)
+    ? "number"
+    : "any"
 }

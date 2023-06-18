@@ -9,7 +9,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/plugins/siyuan-blog/"
+const appBase = "/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n-edge", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt"],
 
   // vueuse
   vueuse: {
@@ -53,14 +53,6 @@ export default defineNuxtConfig({
     icon: "ElIcon",
     importStyle: "scss",
     themes: ["dark"],
-  },
-
-  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-  ssr: false,
-  router: {
-    options: {
-      hashMode: true,
-    },
   },
 
   css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],

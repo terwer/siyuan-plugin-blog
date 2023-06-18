@@ -26,27 +26,15 @@
 import { BrowserUtil } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { useSettingStore } from "~/stores/useSettingStore"
-import AppConfig from "~/app.config"
+
+// 创建日志记录器
+const logger = createAppLogger("use-theme-mode")
 
 export const useThemeMode = async () => {
-  // 创建日志记录器
-  const logger = createAppLogger("use-theme-mode")
   // 获取颜色模式和运行时配置
   const color = useColorMode()
   const env = useRuntimeConfig()
   const { getSetting, updateSetting } = useSettingStore()
-
-  // 在 mounted 生命周期中设置主题模式
-  onMounted(() => {
-    const isDark = color.value === "dark"
-    setThemeMode(isDark, true)
-  })
-
-  // =============================================================================================================
-  // Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(),
-  // make sure to register lifecycle hooks before the first await statement
-  // =============================================================================================================
-  const setting = await getSetting()
 
   // 根据浏览器模式设置 CSS 和主题模式
   const setCssAndThemeMode = (isDarkMode: boolean) => {
@@ -58,9 +46,57 @@ export const useThemeMode = async () => {
     document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
   }
 
+  // 获取颜色模式并暴露 computed 属性
+  const colorMode = computed({
+    get: () => {
+      return color.value === "dark"
+    },
+    set: (value) => {
+      color.value = value ? "dark" : "light"
+    },
+  })
+
+  const switchMode = () => {
+    const isDark = color.value === "dark"
+    setThemeMode(isDark, true)
+  }
+
+  // 切换暗黑模式
+  const toggleDark = async () => {
+    colorMode.value = !colorMode.value
+
+    const mode = colorMode.value ? "dark" : "light"
+    if (setting.theme && setting.theme.mode) {
+      setting.theme.mode = mode
+    } else {
+      setting.theme = {
+        mode: mode,
+      }
+    }
+    await updateSetting(setting)
+    switchMode()
+  }
+
+  // 在 mounted 生命周期中设置主题模式
+  onMounted(() => {
+    switchMode()
+  })
+
+  const setting = await getSetting()
+  const autoMode = colorMode.value ? "dark" : "light"
+  useHead({
+    htmlAttrs: {
+      "data-theme-mode": setting?.theme?.mode,
+      "data-light-theme": setting?.theme?.lightTheme,
+      "data-dark-theme": setting?.theme?.darkTheme,
+    },
+  })
+
+  // ==================================================
+  // private methods
+  // ==================================================
   // 设置主题模式
   const setThemeMode = (isDarkMode: boolean, isDelay = false) => {
-    // 更新前端
     if (BrowserUtil.isInBrowser) {
       // 使用 setTimeout 确保在 CSS 加载完成后再执行函数
       const waitTime = parseInt(env.public.waitTime ?? 500)
@@ -80,40 +116,6 @@ export const useThemeMode = async () => {
     }
     color.preference = isDarkMode ? "dark" : "light"
   }
-
-  // 获取颜色模式并暴露 computed 属性
-  const colorMode = computed({
-    get: () => {
-      return color.value === "dark"
-    },
-    set: (value) => {
-      setThemeMode(value)
-    },
-  })
-
-  // 切换暗黑模式
-  const toggleDark = async () => {
-    colorMode.value = !colorMode.value
-
-    // 更新用户设置
-    const newSetting: typeof AppConfig = {
-      ...setting,
-      ...{
-        theme: {
-          mode: colorMode.value ? "dark" : "light",
-        },
-      },
-    }
-    await updateSetting(newSetting)
-  }
-
-  useHead({
-    htmlAttrs: {
-      "data-theme-mode": setting.theme?.mode,
-      "data-light-theme": setting.theme?.lightTheme,
-      "data-dark-theme": setting.theme?.darkTheme,
-    },
-  })
 
   return { colorMode, toggleDark }
 }

@@ -27,6 +27,7 @@ import { StorageLikeAsync } from "@vueuse/core"
 import { createAppLogger } from "~/common/appLogger"
 import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
 import { SiyuanDevice } from "zhi-device"
+import { StrUtil } from "zhi-common"
 
 /**
  * 通用存储实现，实现了 `StorageLikeAsync` 接口。
@@ -38,12 +39,14 @@ import { SiyuanDevice } from "zhi-device"
  */
 class CommonStorage implements StorageLikeAsync {
   private readonly logger
-  private readonly useSiyuanApi = isUseSiyuanApi()
+  private readonly useSiyuanApi
   private readonly kernelApi
   public readonly key
 
   constructor(storageKey: string) {
     this.logger = createAppLogger("common-storage")
+    this.useSiyuanApi = isUseSiyuanApi()
+
     const env = useRuntimeConfig()
     const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
     this.kernelApi = new SiyuanKernelApi(siyuanConfig)
@@ -66,15 +69,29 @@ class CommonStorage implements StorageLikeAsync {
     this.logger.info(`Retrieving value for '${key}' from CommonStorage.`)
     let ret
     if (this.useSiyuanApi) {
-      // 如果当前运行在思源笔记中，则直接返回空字符串
-      this.logger.info(`SiYuan, Siyuan_Browser, Node LocalStorageAdaptor.getItem - Key '${key}' not found.`)
-      ret = "{}"
+      // 如果当前运行在思源笔记中，则直接返回 null
+      try {
+        ret = (await this.kernelApi.getFile(key, "text")) ?? ""
+        this.logger.info(`Use SiYuan Api LocalStorageAdaptor to getItem - Retrieving '${key}', Value: ${ret}`)
+      } catch (error) {
+        this.logger.error(`Failed to get value for key '${key}' from SiYuan Api LocalStorageAdaptor. Error:`, error)
+      }
     } else {
-      const win = SiyuanDevice.siyuanWindow()
-      const value = win.localStorage.getItem(key)
-      ret = value || "{}"
-      this.logger.info(`Browser LocalStorageAdaptor.getItem - Key '${key}' found, Value: ${ret}`)
+      try {
+        const win = SiyuanDevice.siyuanWindow()
+        const value = win.localStorage.getItem(key)
+        ret = value ?? ""
+        this.logger.info(`Use Browser LocalStorageAdaptor to getItem - Retrieving '${key}', Value: ${ret}`)
+      } catch (error) {
+        this.logger.error(`Failed to get value for key '${key}' from Browser LocalStorageAdaptor. Error:`, error)
+      }
     }
+
+    // 根据 ret 的值返回不同类型的结果
+    if (StrUtil.isEmptyString(ret)) {
+      ret = "{}"
+    }
+    this.logger.info(`Final getItem - '${key}', Value: '${ret}'`)
     return ret
   }
 
@@ -99,9 +116,12 @@ class CommonStorage implements StorageLikeAsync {
     this.logger.info(`Setting value for '${key}' in CommonStorage to '${value}'.`)
     if (this.useSiyuanApi) {
       // 如果当前运行在思源笔记中，则直接返回空字符串
-      this.logger.info(`SiYuan, Siyuan_Browser, Node LocalStorageAdaptor.setItem - Key '${key}', Value: '${value}'`)
+      await this.kernelApi.saveTextData(key, value)
+      this.logger.info(`Use SiYuan Api LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
     } else {
-      this.logger.info(`Browser LocalStorageAdaptor.setItem - Key '${key}', Value: '${value}'`)
+      const win = SiyuanDevice.siyuanWindow()
+      win.localStorage.setItem(key, value)
+      this.logger.info(`Use Browser LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
     }
   }
 }

@@ -61,15 +61,9 @@ export const isInSiyuanOrSiyuanNewWin = () => {
 }
 
 export const isUseSiyuanApi = () => {
-  const deviceType = DeviceDetection.getDevice()
-  // 五种情况，主窗口、挂件、新窗口、Node、Siyuan浏览器
-  const useSiyuanApi =
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_MainWin ||
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_NewWin ||
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_Widget ||
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_Browser ||
-    deviceType === DeviceTypeEnum.DeviceType_Node
-  logger.debug("deviceType=>", deviceType)
-  logger.debug("isUseSiyuanApi=>", String(useSiyuanApi))
-  return useSiyuanApi
+  const env = useRuntimeConfig()
+  const isUseSiyuanApi = env.public.defaultType === "siyuan"
+  logger.debug("defaultType=>", env.public.defaultType)
+  logger.debug("isUseSiyuanApi=>", String(isUseSiyuanApi))
+  return isUseSiyuanApi
 }

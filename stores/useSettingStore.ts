@@ -13,10 +13,7 @@ export const useSettingStore = defineStore("setting", () => {
   const { commonStore } = useCommonStorageAsync<typeof AppConfig>(storageKey)
 
   const getSetting = async (): Promise<typeof AppConfig> => {
-    // const appConfig: typeof AppConfig = useAppConfig()
-    // const storeSetting = commonStore.value
-    // const setting = { ...appConfig, ...storeSetting }
-    const setting = commonStore.value
+    const setting = await commonStore.get()
     logger.info("get data from setting=>", setting)
     return setting
   }
@@ -27,9 +24,8 @@ export const useSettingStore = defineStore("setting", () => {
    * @param setting - 需要修改的配置
    */
   const updateSetting = async (setting: Partial<typeof AppConfig>) => {
-    // updateAppConfig(setting)
     logger.info("update setting=>", setting)
-    commonStore.value = setting
+    await commonStore.set(setting)
   }
 
   return { getSetting, updateSetting }
