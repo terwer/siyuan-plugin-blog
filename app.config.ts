@@ -22,7 +22,21 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-export default defineAppConfig({
+
+type ThemeType = "dark" | "light"
+
+interface AppConfig {
+  theme?: {
+    mode?: ThemeType
+    lightTheme?: string
+    darkTheme?: string
+  }
+
+  // 加上字符串索引签名，兼容 AppConfigInput 约束
+  [key: string]: any
+}
+
+export default defineAppConfig<AppConfig>({
   theme: {
     mode: "dark",
     lightTheme: "Zhihu",

@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n-edge", "@element-plus/nuxt", "@nuxtjs/color-mode"],
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n-edge", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt"],
 
   // vueuse
   vueuse: {
@@ -72,7 +72,7 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       htmlAttrs: {
         lang: "zh_CN",
-        "data-theme-mode": "dark",
+        "data-theme-mode": "system",
         "data-light-theme": "Zhihu",
         "data-dark-theme": "Zhihu",
       },
