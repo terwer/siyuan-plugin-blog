@@ -71,6 +71,8 @@ export const useThemeMode = async () => {
     } else {
       setting.theme = {
         mode: mode,
+        lightTheme: "Zhihu",
+        darkTheme: "Zhihu",
       }
     }
     await updateSetting(setting)
@@ -83,12 +85,11 @@ export const useThemeMode = async () => {
   })
 
   const setting = await getSetting()
-  const autoMode = colorMode.value ? "dark" : "light"
   useHead({
     htmlAttrs: {
-      "data-theme-mode": setting?.theme?.mode,
-      "data-light-theme": setting?.theme?.lightTheme,
-      "data-dark-theme": setting?.theme?.darkTheme,
+      "data-theme-mode": setting?.theme?.mode ?? color.preference,
+      "data-light-theme": setting?.theme?.lightTheme ?? "Zhihu",
+      "data-dark-theme": setting?.theme?.darkTheme ?? "Zhihu",
     },
   })
 

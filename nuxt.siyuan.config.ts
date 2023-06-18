@@ -72,7 +72,7 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       htmlAttrs: {
         lang: "zh_CN",
-        "data-theme-mode": "dark",
+        "data-theme-mode": "system",
         "data-light-theme": "Zhihu",
         "data-dark-theme": "Zhihu",
       },
