@@ -23,23 +23,17 @@
  * questions.
  */
 
-type ThemeType = "dark" | "light"
+import { useStorageAsync } from "@vueuse/core"
+import CommonStorage from "~/stores/common/commonStorage"
 
-interface AppConfig {
-  theme?: {
-    mode?: ThemeType
-    lightTheme?: string
-    darkTheme?: string
-  }
+/**
+ * https://vueuse.org/core/useStorageAsync/
+ *
+ * @param storageKey
+ */
+export const useCommonStorageAsync = <T extends string | number | boolean | object | null>(storageKey: string) => {
+  const commonStorage = new CommonStorage(storageKey)
+  const commonStore = useStorageAsync<T>(commonStorage.key, {} as T, commonStorage, {})
 
-  // 加上字符串索引签名，兼容 AppConfigInput 约束
-  [key: string]: any
+  return { commonStore }
 }
-
-export default defineAppConfig<AppConfig>({
-  theme: {
-    mode: "dark",
-    lightTheme: "Zhihu",
-    darkTheme: "Zhihu",
-  },
-})

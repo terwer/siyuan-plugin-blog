@@ -6,7 +6,7 @@ import { useThemeMode } from "~/composables/useThemeMode"
 
 // uses
 const { t } = useI18n()
-const { colorMode, toggleDark } = useThemeMode()
+const { colorMode, toggleDark } = await useThemeMode()
 
 // datas
 const v = ref(version)

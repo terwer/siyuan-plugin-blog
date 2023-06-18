@@ -25,6 +25,10 @@
 
 import { HtmlUtil } from "zhi-common"
 import * as cheerio from "cheerio"
+import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
+import { createAppLogger } from "~/common/appLogger"
+
+const logger = createAppLogger("app-utils")
 
 export const getSummery = (html: string) => {
   const text = HtmlUtil.removeMdWidgetTag(html)
@@ -42,4 +46,30 @@ export const getFirstImageSrc = async (html: string) => {
   }
   // 返回<img>元素的src属性
   return firstImg.attr("src") || ""
+}
+
+export const isInSiyuanOrSiyuanNewWin = () => {
+  const deviceType = DeviceDetection.getDevice()
+  // 三种情况，主窗口、挂件、新窗口
+  const isSiyuanOrSiyuanNewWin =
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_MainWin ||
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_NewWin ||
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_Widget
+  logger.debug("deviceType=>", deviceType)
+  logger.debug("isSiyuanOrSiyuanNewWin=>", String(isSiyuanOrSiyuanNewWin))
+  return isSiyuanOrSiyuanNewWin
+}
+
+export const isUseSiyuanApi = () => {
+  const deviceType = DeviceDetection.getDevice()
+  // 五种情况，主窗口、挂件、新窗口、Node、Siyuan浏览器
+  const useSiyuanApi =
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_MainWin ||
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_NewWin ||
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_Widget ||
+    deviceType === DeviceTypeEnum.DeviceType_Siyuan_Browser ||
+    deviceType === DeviceTypeEnum.DeviceType_Node
+  logger.debug("deviceType=>", deviceType)
+  logger.debug("isUseSiyuanApi=>", String(useSiyuanApi))
+  return useSiyuanApi
 }
