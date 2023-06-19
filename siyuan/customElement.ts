@@ -24,13 +24,13 @@
  */
 
 /**
- * 绘制图区
+ * 内容区域
+ *
  * @returns element
  */
-export const viewElement = (pageUrl: string) => {
+export const contentElement = (pageUrl: string) => {
   // 包裹图层
   const divElement = document.createElement("div")
-  divElement.id = "blog-container"
 
   // 创建 <iframe> 元素
   const iframe = document.createElement("iframe")
@@ -39,15 +39,14 @@ export const viewElement = (pageUrl: string) => {
   iframe.height = "100%"
 
   divElement.appendChild(iframe)
-
   return divElement
 }
 
 export const contentHtml = (pageUrl: string) => `<style>
-        iframe {
-          width: 100%;
-          height: 100%;
-          border: none;
-        }
-        </style>
-        <iframe src="${pageUrl}" width="100%"></iframe>`
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  </style>
+  <iframe src="${pageUrl}" width="100%"></iframe>`
