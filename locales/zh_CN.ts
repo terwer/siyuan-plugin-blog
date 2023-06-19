@@ -72,7 +72,7 @@ export default {
   "share.to.web.before.tip": "向所有人发布和共享链接",
   "share.to.web.after.tip": "知道链接的任何人都可以查看",
   "share.copy.web.link": "复制网页链接",
-  "share.show.link.option": "显示链接选项",
+  "share.show.link.option": "链接选项",
   "share.other.option": "在此处设置其他选项",
   "share.other.option.link.expires": "允许链接过期",
   "share.link.expires.time.placeholder": "单位/秒，最多支持7天",

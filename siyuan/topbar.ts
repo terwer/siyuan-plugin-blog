@@ -172,6 +172,12 @@ const showPopView = (pluginInstance: SiyuanBlog, boxElement: HTMLElement, pageUr
   const popContentId = "pop-content"
   let popContent = document.getElementById(popContentId)
 
+  // 如果已经存在弹出框，则不需要再次创建，直接显示即可
+  if (popContent) {
+    popContent.style.opacity = "1"
+    return
+  }
+
   // 第一次点击，创建浮动框并显示
   popContent = document.createElement("div")
   popContent.id = popContentId
