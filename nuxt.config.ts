@@ -9,7 +9,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+const appBase = "/plugins/siyuan-blog/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -24,7 +24,14 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  modules: [
+    "@vueuse/nuxt",
+    "@nuxtjs/i18n-edge",
+    "@element-plus/nuxt",
+    "@nuxtjs/color-mode",
+    "@pinia/nuxt",
+    "@nuxt/image",
+  ],
 
   // vueuse
   vueuse: {
@@ -36,9 +43,12 @@ export default defineNuxtConfig({
   },
 
   // colorMode
+  // 格式是 `class="light-${classSuffix}"`，为空是 `class="light"`
   colorMode: {
     classSuffix: "",
   },
+
+  image: {},
 
   vite: {
     define: {
@@ -48,11 +58,12 @@ export default defineNuxtConfig({
     plugins: [],
   },
 
-  // https://github.com/element-plus/element-plus-nuxt-starter/blob/main/nuxt.config.ts
-  elementPlus: {
-    icon: "ElIcon",
-    importStyle: "scss",
-    themes: ["dark"],
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
+  ssr: false,
+  router: {
+    options: {
+      hashMode: true,
+    },
   },
 
   css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
@@ -73,21 +84,6 @@ export default defineNuxtConfig({
         {
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
-        },
-        {
-          rel: "stylesheet",
-          id: "themeDefaultStyle",
-          href: appBase + "resources/appearance/themes/midnight/theme.css?v=2.9.1",
-        },
-        {
-          rel: "stylesheet",
-          id: "themeStyle",
-          href: appBase + "resources/appearance/themes/Zhihu/theme.css?v=0.0.6",
-        },
-        {
-          rel: "stylesheet",
-          id: "protyleHljsStyle",
-          href: appBase + "resources/stage/protyle/js/highlight.js/styles/vs2015.min.css?v=11.5.0",
         },
       ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head

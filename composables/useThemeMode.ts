@@ -34,18 +34,10 @@ export const useThemeMode = async () => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
   const env = useRuntimeConfig()
+  const appBase = process.env.APP_BASE
   const { getSetting, updateSetting } = useSettingStore()
 
-  // 根据浏览器模式设置 CSS 和主题模式
-  const setCssAndThemeMode = (isDarkMode: boolean) => {
-    const version = "11.5.0"
-    const protyleHljsStyle = document.querySelector("#protyleHljsStyle") as any
-    protyleHljsStyle.href = `${process.env.APP_BASE}resources/stage/protyle/js/highlight.js/styles/vs${
-      isDarkMode ? "2015" : ""
-    }.min.css?v=${version}`
-    document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
-  }
-
+  // computes
   // 获取颜色模式并暴露 computed 属性
   const colorMode = computed({
     get: () => {
@@ -56,11 +48,7 @@ export const useThemeMode = async () => {
     },
   })
 
-  const switchMode = () => {
-    const isDark = color.value === "dark"
-    setThemeMode(isDark, true)
-  }
-
+  // methods
   // 切换暗黑模式
   const toggleDark = async () => {
     colorMode.value = !colorMode.value
@@ -79,43 +67,86 @@ export const useThemeMode = async () => {
     switchMode()
   }
 
-  // 在 mounted 生命周期中设置主题模式
-  onMounted(() => {
-    switchMode()
-  })
+  // 在 mounted 生命周期中处理加载后逻辑
+  // onMounted(() => {
+  // })
 
   const setting = await getSetting()
+  const siyuanV = "2.9.1"
+  const hljsV = "11.5.0"
+  const siyuanLightTheme = setting?.theme?.lightTheme ?? "Zhihu"
+  const siyuanDarkTheme = setting?.theme?.darkTheme ?? "Zhihu"
+  const siyuanThemeV = "0.0.6"
+  const detectedMode = setting?.theme?.mode ?? color.preference
+  const isDarkMode = detectedMode === "dark"
   useHead({
     htmlAttrs: {
-      "data-theme-mode": setting?.theme?.mode ?? color.preference,
-      "data-light-theme": setting?.theme?.lightTheme ?? "Zhihu",
-      "data-dark-theme": setting?.theme?.darkTheme ?? "Zhihu",
+      lang: setting.lang ?? "zh_CN",
+      "data-theme-mode": detectedMode,
+      "data-light-theme": siyuanLightTheme,
+      "data-dark-theme": siyuanDarkTheme,
     },
+    link: [
+      {
+        rel: "stylesheet",
+        id: "themeDefaultStyle",
+        href: `${appBase}resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
+      },
+      ...((siyuanLightTheme && siyuanLightTheme !== "daylight") || (siyuanDarkTheme && siyuanDarkTheme !== "midlight")
+        ? [
+            {
+              rel: "stylesheet",
+              id: "themeStyle",
+              href: `${appBase}resources/appearance/themes/${
+                isDarkMode ? siyuanDarkTheme : siyuanLightTheme
+              }/theme.css?v=${siyuanThemeV}`,
+            },
+          ]
+        : []),
+      {
+        rel: "stylesheet",
+        id: "protyleHljsStyle",
+        href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs${
+          isDarkMode ? "2015" : ""
+        }.min.css?v=${hljsV}`,
+      },
+    ],
   })
 
   // ==================================================
   // private methods
   // ==================================================
+  const switchMode = () => {
+    const isDarkMode = color.value === "dark"
+    setThemeMode(isDarkMode)
+  }
+
   // 设置主题模式
-  const setThemeMode = (isDarkMode: boolean, isDelay = false) => {
+  const setThemeMode = (isDarkMode: boolean) => {
     if (BrowserUtil.isInBrowser) {
-      // 使用 setTimeout 确保在 CSS 加载完成后再执行函数
-      const waitTime = parseInt(env.public.waitTime ?? 500)
-      if (isDelay) {
-        setTimeout(() => {
-          setCssAndThemeMode(isDarkMode)
-          // 记录日志
-          logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
-          logger.info(`Auto set mode, isDark => ${isDarkMode}`)
-        }, waitTime)
-      } else {
-        setCssAndThemeMode(isDarkMode)
-        // 记录日志
-        logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
-        logger.info(`Auto set mode, isDark => ${isDarkMode}`)
-      }
+      setCssAndThemeMode(isDarkMode)
+      // 记录日志
+      logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
+      logger.info(`Auto set mode, isDark => ${isDarkMode}`)
     }
+
     color.preference = isDarkMode ? "dark" : "light"
+  }
+
+  // 根据浏览器模式设置 CSS 和主题模式
+  const setCssAndThemeMode = (isDarkMode: boolean) => {
+    // 默认主题适配
+    const themeDefaultStyle = document.querySelector("#themeDefaultStyle") as any
+    themeDefaultStyle.href =
+      appBase + `resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`
+
+    // 代码块适配
+    const protyleHljsStyle = document.querySelector("#protyleHljsStyle") as any
+    protyleHljsStyle.href =
+      appBase + `resources/stage/protyle/js/highlight.js/styles/vs${isDarkMode ? "2015" : ""}.min.css?v=${hljsV}`
+
+    // 颜色模式属性
+    document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
   }
 
   return { colorMode, toggleDark }

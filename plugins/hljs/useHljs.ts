@@ -67,11 +67,11 @@ export const useHljs = () => {
   hljs.registerLanguage("md", markdown)
 
   // 代码复制
-  hljs.addPlugin(
-    new CopyButtonPlugin({
-      callback: (text: string, el: HTMLElement) => console.log("Copied to clipboard", text),
-    })
-  )
+  // hljs.addPlugin(
+  //   new CopyButtonPlugin({
+  //     callback: (text: string, el: HTMLElement) => console.log("Copied to clipboard", text),
+  //   })
+  // )
 
   return { hljs }
 }

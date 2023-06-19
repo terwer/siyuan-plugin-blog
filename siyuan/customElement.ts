@@ -23,44 +23,42 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { Post } from "zhi-blog-api"
-import { ObjectUtil } from "zhi-common"
-import { usePostApi } from "~/composables/api/usePostApi"
-
 /**
- * 文档相关
+ * 绘制图区
+ * @returns element
  */
-export const usePost = () => {
-  const logger = createAppLogger("use-post")
-  const { getPost } = usePostApi()
+export const viewElement = (pageUrl: string) => {
+  // 包裹图层
+  const divElement = document.createElement("div")
+  divElement.id = "blog-container"
 
-  // datas
-  const currentPost = reactive({
-    post: {} as Post,
-  })
-
-  /**
-   * 如果缓存已有直接返回，否则去远程抓取数据
-   */
-  const setCurrentPost = async (pageId?: string) => {
-    if (ObjectUtil.isEmptyObject(currentPost.post)) {
-      const route = useRoute()
-      const id = pageId ?? ((route.params.id ?? "") as string)
-      currentPost.post = await getPost(id)
-    } else {
-      logger.info("Post already cached, skip fetch")
+  // 创建 <style> 元素
+  const style = document.createElement("style")
+  style.innerHTML = `
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
-  }
+  `
 
-  // lifecycles
-  // https://vuejs.org/api/composition-api-lifecycle.html#onserverprefetch
-  onServerPrefetch(async () => {
-    await setCurrentPost()
-  })
-  onBeforeMount(async () => {
-    await setCurrentPost()
-  })
+  // 创建 <iframe> 元素
+  const iframe = document.createElement("iframe")
+  iframe.src = pageUrl
+  iframe.width = "100%"
 
-  return { currentPost, setCurrentPost }
+  // 将 <style> 和 <iframe> 元素添加到父级容器中
+  divElement.appendChild(style)
+  divElement.appendChild(iframe)
+
+  return divElement
 }
+
+export const contentHtml = (pageUrl: string) => `<style>
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        </style>
+        <iframe src="${pageUrl}" width="100%"></iframe>`

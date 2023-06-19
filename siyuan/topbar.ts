@@ -26,7 +26,8 @@ import SiyuanBlog from "./index"
 import { icons } from "./utils/svg"
 import { Dialog, Menu } from "siyuan"
 import PageUtil from "~/siyuan/utils/pageUtil"
-import {getAvailableOrigin} from "~/siyuan/utils/utils";
+import { getAvailableOrigin } from "~/siyuan/utils/utils"
+import { contentHtml, viewElement } from "~/siyuan/customElement"
 
 /**
  * 顶栏按钮
@@ -41,13 +42,16 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
     icon: icons.iconTopbar,
     title: pluginInstance.i18n.siyuanBlog,
     position: "right",
-    callback: () => {},
+    callback: async (evt) => {
+      const sharePage = "/plugins/siyuan-blog/#/share"
+      await addOpenView(pluginInstance, evt, sharePage)
+    },
   })
 
-  topBarElement.addEventListener("click", async () => {
-    const sharePage = "/plugins/siyuan-blog/#/share"
-    showPage(pluginInstance, sharePage, pluginInstance.i18n.shareOptions)
-  })
+  // topBarElement.addEventListener("click", async () => {
+  //   const sharePage = "/plugins/siyuan-blog/#/share"
+  //   showPage(pluginInstance, sharePage, pluginInstance.i18n.shareOptions)
+  // })
 
   // 添加右键菜单
   topBarElement.addEventListener("contextmenu", async () => {
@@ -113,21 +117,27 @@ export const showSettingPage = (pluginInstance: SiyuanBlog) => {
 
 const showPage = (pluginInstance: SiyuanBlog, pageUrl: string, title?: string) => {
   pluginInstance.logger.info("open page =>", pageUrl)
-
-  const contentHtml = `<style>
-        iframe {
-          width: 100%;
-          height: 100%;
-          border: none;
-        }
-        </style>
-        <iframe src="${pageUrl}" width="100%"></iframe>`
-
   new Dialog({
     title: `${pluginInstance.i18n.siyuanBlog}${title ? " - " + title : ""}`,
     transparent: false,
-    content: contentHtml,
+    content: contentHtml(pageUrl),
     width: "60%",
     height: "550px",
   } as any)
+}
+
+/**
+ * 分享选项显示区域
+ */
+const addOpenView = async (pluginInstance: SiyuanBlog, evt: MouseEvent, pageUrl: string) => {
+  pluginInstance.logger.info("show page =>", pageUrl)
+  const menu = new Menu()
+  menu.addItem({ element: viewElement(pageUrl) })
+  menu.open({
+    x: evt.x,
+    y: evt.y,
+    h: 550,
+    w: 750,
+    isLeft: true,
+  })
 }

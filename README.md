@@ -34,6 +34,7 @@ The notions sharing function you want is here too
 * [ ] Latex formula rendering
 * [ ] PlantUML chart support
 * [ ] Echarts chart support
+* [ ] Support for SVG with the ribbon, eg `<use xlink:href="#iconMore"></use>`
 
 ## Changelog
 
