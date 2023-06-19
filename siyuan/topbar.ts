@@ -45,9 +45,41 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
     callback: async (evt) => {},
   })
 
+  const adjustIframeHeight = (iframeId: string) => {
+    const iframe = document.getElementById(iframeId) as HTMLIFrameElement
+    let counter = 0
+    let lastHeight = "0px" // 将初始高度设为 "0px"
+
+    // 注册定时器
+    const interval = setInterval(() => {
+      const height = `${iframe?.contentWindow?.document.body.scrollHeight}px`
+      if (height === lastHeight) {
+        counter++
+        if (counter >= 5) {
+          clearInterval(interval)
+          console.log(`Stopped adjusting iframe height for ${iframeId}`)
+          return
+        }
+      } else {
+        counter = 0
+      }
+      lastHeight = height
+      console.log(`Calculated iframe height: ${height}`)
+      iframe.height = height
+    }, 200)
+
+    // 触发第一次load事件
+    if (iframe?.contentWindow?.document.readyState === "complete") {
+      console.log(`Dispatched load event for ${iframeId}.`)
+      iframe.dispatchEvent(new Event("load"))
+    }
+  }
+
   topBarElement.addEventListener("click", async () => {
-    const sharePage = "/plugins/siyuan-blog/#/share?id=" + PageUtil.getPageId() + "&origin=" + getAvailableOrigin()+"&isSsr=false"
+    const sharePage =
+      "/plugins/siyuan-blog/#/share?id=" + PageUtil.getPageId() + "&origin=" + getAvailableOrigin() + "&isSsr=false"
     showPopView(pluginInstance, topBarElement, sharePage)
+    adjustIframeHeight("content-iframe")
   })
 
   // topBarElement.addEventListener("click", async () => {

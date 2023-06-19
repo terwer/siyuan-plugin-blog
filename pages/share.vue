@@ -134,7 +134,7 @@ const goHelp = async () => {
     .item-left
       display inline-block
     .item-copy-link
-      width 90%
+      width 75%
       ::v-deep(.el-space__item)
         padding 0 !important
     .item-right
@@ -148,7 +148,7 @@ const goHelp = async () => {
     .expires-link-label
       margin-right 10px
     .expires-link-input
-      width 84%
+      width 60%
   .other-setting
     border-radius 4px
     background-color var(--b3-list-hover)

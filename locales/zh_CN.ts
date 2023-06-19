@@ -75,7 +75,7 @@ export default {
   "share.show.link.option": "显示链接选项",
   "share.other.option": "在此处设置其他选项",
   "share.other.option.link.expires": "允许链接过期",
-  "share.link.expires.time.placeholder": "若开启此功能，可设置链接过期时间，单位/秒，若开启最多支持7天",
+  "share.link.expires.time.placeholder": "单位/秒，最多支持7天",
   "share.help": "了解共享",
   "share.copy.link": "复制链接",
 }

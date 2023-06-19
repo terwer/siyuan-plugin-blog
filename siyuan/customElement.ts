@@ -29,14 +29,16 @@
  * @returns element
  */
 export const contentElement = (pageUrl: string) => {
+  console.log(`Loading iframe for ${pageUrl}...`)
+
   // 包裹图层
   const divElement = document.createElement("div")
 
   // 创建 <iframe> 元素
   const iframe = document.createElement("iframe")
+  iframe.id = "content-iframe"
   iframe.src = pageUrl
   iframe.width = "100%"
-  iframe.height = "100%"
 
   divElement.appendChild(iframe)
   return divElement
