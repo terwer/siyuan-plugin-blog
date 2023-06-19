@@ -87,9 +87,11 @@ const goHelp = async () => {
       </div>
     </div>
 
+    <!--
     <div class="share-item text-center other-setting">
       <div class="item-middle" @click="goSetting">{{ t("share.other.option") }}</div>
     </div>
+    -->
 
     <div class="share-item">
       <div class="item-left">
