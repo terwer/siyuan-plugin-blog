@@ -78,4 +78,5 @@ export default {
   "share.link.expires.time.placeholder": "单位/秒，最多支持7天",
   "share.help": "了解共享",
   "share.copy.link": "复制链接",
+  "share.set.home": "设为主页",
 }

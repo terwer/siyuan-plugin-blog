@@ -87,6 +87,18 @@ const goHelp = async () => {
       </div>
     </div>
 
+    <div class="share-item">
+      <div class="item-left">
+        <el-icon>
+          <el-icon-home-filled />
+        </el-icon>
+        {{ t("share.set.home") }}
+      </div>
+      <div class="item-right">
+        <el-switch />
+      </div>
+    </div>
+
     <!--
     <div class="share-item text-center other-setting">
       <div class="item-middle" @click="goSetting">{{ t("share.other.option") }}</div>

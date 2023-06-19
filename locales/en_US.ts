@@ -79,4 +79,5 @@ export default {
     "If this feature is enabled, you can set the link expiration time, unit/second, and support up to 7 days",
   "share.help": "Learn about sharing",
   "share.copy.link": "Copy link",
+  "share.set.home": "Set home",
 }
