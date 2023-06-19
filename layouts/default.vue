@@ -9,8 +9,11 @@ import Footer from "~/components/default/Footer.vue"
     <el-main>
       <slot />
     </el-main>
-    <el-footer>
-      <Footer />
-    </el-footer>
+    <Footer />
   </el-container>
 </template>
+
+<style lang="stylus">
+.el-container
+  display block !important
+</style>

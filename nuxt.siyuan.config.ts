@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   },
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
 
   // build modules
@@ -56,6 +56,12 @@ export default defineNuxtConfig({
       "process.env.APP_BASE": `"${appBase}"`,
     },
     plugins: [],
+  },
+
+  elementPlus: {
+    icon: "ElIcon",
+    importStyle: "scss",
+    themes: ["dark"],
   },
 
   // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa

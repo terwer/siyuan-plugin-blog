@@ -23,21 +23,19 @@ const goAbout = () => {
 </script>
 
 <template>
-  <div>
-    <div class="footer">
-      <div>
-        <span class="text"> &copy;2011-{{ nowYear }} </span>
-        <span class="text s-dark" @click="goGithub()">&nbsp;siyuan-plugin-blog&nbsp;</span>
+  <div class="footer">
+    <div>
+      <span class="text"> &copy;2011-{{ nowYear }} </span>
+      <span class="text s-dark" @click="goGithub()">&nbsp;siyuan-plugin-blog&nbsp;</span>
 
-        <span class="text">v{{ v }}&nbsp;</span>
+      <span class="text">v{{ v }}&nbsp;</span>
 
-        <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
+      <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
 
-        <span class="text">.</span>
-        <span class="text s-dark" @click="toggleDark()">{{
-          colorMode ? t("theme.mode.light") : t("theme.mode.dark")
-        }}</span>
-      </div>
+      <span class="text">.</span>
+      <span class="text s-dark" @click="toggleDark()">{{
+        colorMode ? t("theme.mode.light") : t("theme.mode.dark")
+      }}</span>
     </div>
   </div>
 </template>

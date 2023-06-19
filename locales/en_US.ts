@@ -68,4 +68,16 @@ export default {
   "siyuan.theme.light": "Light theme",
   "siyuan.theme.dark": "Dark theme",
   "siyuan.theme.select": "Select theme",
+  "share.to.web": "Share to web",
+  "share.to.web.before.tip": "Publish and share link to everyone",
+  "share.to.web.after.tip": "Anyone with the link can view",
+  "share.copy.web.link": "Copy web link",
+  "share.show.link.option": "Show link options",
+  "share.other.option": "Set other options here",
+  "share.other.option.link.expires": "Allow link expires",
+  "share.link.expires.time.placeholder":
+    "If this feature is enabled, you can set the link expiration time, unit/second, and support up to 7 days",
+  "share.help": "Learn about sharing",
+  "share.copy.link": "Copy link",
+  "share.set.home": "Set home",
 }

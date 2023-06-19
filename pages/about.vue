@@ -19,14 +19,13 @@ useSeoMeta(seoMeta)
   <div id="about">
     <h1>👨🏻 关于我</h1>
     <p>大家好，我是 <nuxt-link to="https://blog.terwer.space" target="_blank">terwer</nuxt-link> ， 一个后端老菜鸟。</p>
+    <p>{{ setting.siteDescription }}</p>
     <div class="sep"></div>
 
     <h1>🏹 技能</h1>
     <p>熟悉Java、Spring、Spring Cloud、Vue、React、Python 的拼写</p>
     <p>了解 Linux、windows、macOS 的开关机方式</p>
     <p>精通 Git 的 pull 和 push，并注册了 GitHub 帐号刷了一些 star</p>
-    <p>微信公众号：架构设计漫谈</p>
-    <nuxt-img src="https://img1.terwer.space/mp-qrcode.png" />
     <div class="sep"></div>
 
     <h1>✉️ 联系</h1>

@@ -20,6 +20,7 @@ module.exports = {
     semi: "off",
     quotes: "off",
     "no-undef": "off",
+    "no-extra-boolean-cast":"off",
     "vue/multi-word-component-names": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-var-requires": "off",
