@@ -14,7 +14,13 @@ useSeoMeta(seoMeta)
 </script>
 
 <template>
-  <div>share window</div>
+  <div>
+    <el-input />
+    <el-input />
+    <el-input />
+    <el-input />
+    <el-button></el-button>
+  </div>
 </template>
 
 <style scoped></style>

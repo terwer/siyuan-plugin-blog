@@ -44,7 +44,17 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
     position: "right",
     callback: async (evt) => {
       const sharePage = "/plugins/siyuan-blog/#/share"
-      await addOpenView(pluginInstance, evt, sharePage)
+      showPopView(pluginInstance, evt, sharePage)
+
+      // add blog-menu-root
+      const element = document.getElementById("blog-container")
+      if (element) {
+        const parentMenuRoot = element.closest("#commonMenu")
+        if (parentMenuRoot) {
+          parentMenuRoot.classList.add("blog-menu-root")
+          pluginInstance.logger.info("add blog-menu-root class to #commonMenu")
+        }
+      }
     },
   })
 
@@ -129,15 +139,13 @@ const showPage = (pluginInstance: SiyuanBlog, pageUrl: string, title?: string) =
 /**
  * 分享选项显示区域
  */
-const addOpenView = async (pluginInstance: SiyuanBlog, evt: MouseEvent, pageUrl: string) => {
-  pluginInstance.logger.info("show page =>", pageUrl)
+const showPopView = (pluginInstance: SiyuanBlog, evt: MouseEvent, pageUrl: string) => {
+  pluginInstance.logger.info("show pop view =>", pageUrl)
   const menu = new Menu()
   menu.addItem({ element: viewElement(pageUrl) })
   menu.open({
     x: evt.x,
     y: evt.y,
-    h: 550,
-    w: 750,
     isLeft: true,
   })
 }

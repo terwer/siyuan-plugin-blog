@@ -19,6 +19,7 @@ useSeoMeta(seoMeta)
   <div id="about">
     <h1>👨🏻 关于我</h1>
     <p>大家好，我是 <nuxt-link to="https://blog.terwer.space" target="_blank">terwer</nuxt-link> ， 一个后端老菜鸟。</p>
+    <p>{{ setting.siteDescription }}</p>
     <div class="sep"></div>
 
     <h1>🏹 技能</h1>

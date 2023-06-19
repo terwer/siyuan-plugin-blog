@@ -32,23 +32,12 @@ export const viewElement = (pageUrl: string) => {
   const divElement = document.createElement("div")
   divElement.id = "blog-container"
 
-  // 创建 <style> 元素
-  const style = document.createElement("style")
-  style.innerHTML = `
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  `
-
   // 创建 <iframe> 元素
   const iframe = document.createElement("iframe")
   iframe.src = pageUrl
   iframe.width = "100%"
+  iframe.height = "100%"
 
-  // 将 <style> 和 <iframe> 元素添加到父级容器中
-  divElement.appendChild(style)
   divElement.appendChild(iframe)
 
   return divElement
