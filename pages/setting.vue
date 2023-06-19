@@ -15,8 +15,14 @@ const { t } = useI18n()
         <default-setting-change-local />
       </el-tab-pane>
     </el-tabs>
-    <el-alert :title="t('setting.need.reload')" type="warning" />
+
+    <div class="setting-tips">
+      <el-alert :title="t('setting.need.reload')" type="warning" />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style lang="stylus" scoped>
+.setting-tips
+  margin-top 20px
+</style>
