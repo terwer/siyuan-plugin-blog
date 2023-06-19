@@ -29,31 +29,39 @@ import { getFirstImageSrc, getSummery } from "~/utils/utils"
 import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("share-page")
-const { t } = useI18n()
-const { currentPost, setCurrentPost } = usePost()
-await setCurrentPost()
 
 // props
 const props = defineProps({
   showTitleSign: Boolean,
+  overrideSeo: Boolean,
+  pageId: {
+    type: String,
+    default: undefined,
+  },
 })
 
+const { t } = useI18n()
+const { currentPost, setCurrentPost } = usePost()
+await setCurrentPost(props.pageId)
+
 // datas
-const titleSign = " - " + t("blog.share")
-const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
-const desc = getSummery(currentPost.post.description)
-const headImage = await getFirstImageSrc(currentPost.post.description)
-const seoMeta = {
-  title: title,
-  ogTitle: title,
-  description: desc,
-  ogDescription: desc,
-} as any
-if (headImage) {
-  logger.info("get a head image from doc=>", headImage)
-  seoMeta.ogImage = headImage
+if (!props.overrideSeo) {
+  const titleSign = " - " + t("blog.share")
+  const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
+  const desc = getSummery(currentPost.post.description)
+  const headImage = await getFirstImageSrc(currentPost.post.description)
+  const seoMeta = {
+    title: title,
+    ogTitle: title,
+    description: desc,
+    ogDescription: desc,
+  } as any
+  if (headImage) {
+    logger.info("get a head image from doc=>", headImage)
+    seoMeta.ogImage = headImage
+  }
+  useSeoMeta(seoMeta)
 }
-useSeoMeta(seoMeta)
 
 // https://stackoverflow.com/a/71781246/4037224
 const VNode = () =>
@@ -66,9 +74,8 @@ const VNode = () =>
 <template>
   <div class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-      <div class="protyle-title protyle-wysiwyg--attr" style="margin: 16px 96px 0">
+      <div class="protyle-title protyle-wysiwyg--attr">
         <div
-          style="margin: 20px 0"
           contenteditable="false"
           data-position="center"
           spellcheck="false"

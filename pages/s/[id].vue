@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import Detail from "~/components/default/Detail.vue"
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <detail :show-title-sign="true" />
+  <default-detail :show-title-sign="true" />
 </template>

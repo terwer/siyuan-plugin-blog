@@ -43,10 +43,10 @@ export const usePost = () => {
   /**
    * 如果缓存已有直接返回，否则去远程抓取数据
    */
-  const setCurrentPost = async () => {
+  const setCurrentPost = async (pageId?: string) => {
     if (ObjectUtil.isEmptyObject(currentPost.post)) {
       const route = useRoute()
-      const id = (route.params.id ?? "") as string
+      const id = pageId ?? ((route.params.id ?? "") as string)
       currentPost.post = await getPost(id)
     } else {
       logger.info("Post already cached, skip fetch")

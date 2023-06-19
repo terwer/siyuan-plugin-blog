@@ -5,9 +5,10 @@ const { t } = useI18n()
 const { getSetting } = useSettingStore()
 
 const setting = await getSetting()
+const title = `${t("syp.about")} - ${setting?.siteTitle ?? t("blog.site.title")}`
 const seoMeta = {
-  title: `${t("syp.about")} - ${setting?.siteTitle ?? t("blog.site.title")}`,
-  ogTitle: t("syp.about"),
+  title: title,
+  ogTitle: title,
   description: t("syp.about.desc"),
   ogDescription: t("syp.about.desc"),
 } as any

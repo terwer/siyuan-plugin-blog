@@ -24,6 +24,8 @@
  */
 
 export default {
+  "lang.choose": "Choose lang",
+  "lang.choose.placeholder": "Please select language",
   "syp.about": "About me",
   "syp.about.desc":
     "Hello, my name is Terwer, I have been in the back-end industry for many years, mainly focusing on the exploration of back-end technology stacks. Hope to meet more friends. Welcome to leave a message to communicate.",
@@ -34,6 +36,11 @@ export default {
   "setting.conf.import": "Import config",
   "setting.conf.clear": "Clear config",
   "setting.conf.transport": "Transport",
+  "setting.basic": "Basic settings",
+  "setting.preference": "Preferences",
+  "setting.system": "System settings",
+  "setting.basic.homePageId": "Home page ID",
+  "setting.need.reload": "Note: Refresh the page after the modification takes effect",
   "main.opt.success": "Success",
   "main.opt.failure": "Error",
   "main.opt.edit": "Edit",
@@ -42,6 +49,7 @@ export default {
   "main.opt.warning": "Warn tips",
   "main.opt.tip": "Kind tips",
   "main.opt.ok": "Confirm",
+  "main.opt.save": "Save",
   "main.opt.cancel": "Cancel",
   "main.opt.warning.tip": "This operation cannot be undone, continue?",
   "switch.active.text": "Debug",
@@ -49,6 +57,15 @@ export default {
   "blog.index.no.home": "Oh, you haven't set up your homepage yet!",
   "blog.index.goto.set.home": "Go to set up my homepage now",
   "blog.share": "Share to web",
+  "blog.share.options": "Share options",
+  "blog.share.setting": "Share setting",
+  "blog.site.title.label": "Home title",
   "blog.site.title": "Shallow sea shellfish",
+  "blog.site.slogan.label": "Home subtitle",
   "blog.site.slogan": "Find unknown technology puzzles",
+  "blog.site.desc.label": "Home description",
+  "siyuan.theme": "Theme",
+  "siyuan.theme.light": "Light theme",
+  "siyuan.theme.dark": "Dark theme",
+  "siyuan.theme.select": "Select theme",
 }

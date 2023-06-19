@@ -81,7 +81,7 @@ export const useThemeMode = async () => {
   const isDarkMode = detectedMode === "dark"
   useHead({
     htmlAttrs: {
-      lang: "zh_CN",
+      lang: setting.lang ?? "zh_CN",
       "data-theme-mode": detectedMode,
       "data-light-theme": siyuanLightTheme,
       "data-dark-theme": siyuanDarkTheme,
@@ -90,20 +90,25 @@ export const useThemeMode = async () => {
       {
         rel: "stylesheet",
         id: "themeDefaultStyle",
-        href: appBase + `resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
+        href: `${appBase}resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
       },
-      {
-        rel: "stylesheet",
-        id: "themeStyle",
-        href:
-          appBase +
-          `resources/appearance/themes/${isDarkMode ? siyuanDarkTheme : siyuanLightTheme}/theme.css?v=${siyuanThemeV}`,
-      },
+      ...((siyuanLightTheme && siyuanLightTheme !== "daylight") || (siyuanDarkTheme && siyuanDarkTheme !== "midlight")
+        ? [
+            {
+              rel: "stylesheet",
+              id: "themeStyle",
+              href: `${appBase}resources/appearance/themes/${
+                isDarkMode ? siyuanDarkTheme : siyuanLightTheme
+              }/theme.css?v=${siyuanThemeV}`,
+            },
+          ]
+        : []),
       {
         rel: "stylesheet",
         id: "protyleHljsStyle",
-        href:
-          appBase + `resources/stage/protyle/js/highlight.js/styles/vs${isDarkMode ? "2015" : ""}.min.css?v=${hljsV}`,
+        href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs${
+          isDarkMode ? "2015" : ""
+        }.min.css?v=${hljsV}`,
       },
     ],
   })
