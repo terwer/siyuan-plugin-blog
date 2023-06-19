@@ -1,8 +1,12 @@
 <script setup lang="ts">
-const { t } = useI18n()
+import { useSettingStore } from "~/stores/useSettingStore"
 
+const { t } = useI18n()
+const { getSetting } = useSettingStore()
+
+const setting = await getSetting()
 const seoMeta = {
-  title: `${t("syp.about")} - ${t("blog.site.title")}`,
+  title: `${t("syp.about")} - ${setting?.siteTitle ?? t("blog.site.title")}`,
   ogTitle: t("syp.about"),
   description: t("syp.about.desc"),
   ogDescription: t("syp.about.desc"),

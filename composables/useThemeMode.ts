@@ -117,23 +117,12 @@ export const useThemeMode = async () => {
   }
 
   // 设置主题模式
-  const setThemeMode = (isDarkMode: boolean, isDelay = false) => {
+  const setThemeMode = (isDarkMode: boolean) => {
     if (BrowserUtil.isInBrowser) {
-      // 使用 setTimeout 确保在 CSS 加载完成后再执行函数
-      const waitTime = parseInt(env.public.waitTime ?? 500)
-      if (isDelay) {
-        setTimeout(() => {
-          setCssAndThemeMode(isDarkMode)
-          // 记录日志
-          logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
-          logger.info(`Auto set mode, isDark => ${isDarkMode}`)
-        }, waitTime)
-      } else {
-        setCssAndThemeMode(isDarkMode)
-        // 记录日志
-        logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
-        logger.info(`Auto set mode, isDark => ${isDarkMode}`)
-      }
+      setCssAndThemeMode(isDarkMode)
+      // 记录日志
+      logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
+      logger.info(`Auto set mode, isDark => ${isDarkMode}`)
     }
 
     color.preference = isDarkMode ? "dark" : "light"

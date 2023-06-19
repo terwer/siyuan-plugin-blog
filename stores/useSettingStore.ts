@@ -10,12 +10,30 @@ import { useCommonStorageAsync } from "~/stores/common/useCommonStorageAsync"
 export const useSettingStore = defineStore("setting", () => {
   const logger = createAppLogger("use-setting-store")
   const storageKey = "/data/storage/petal/siyuan-blog/app.config.json"
-  const { commonStore } = useCommonStorageAsync<typeof AppConfig>(storageKey)
+  const initialValue = AppConfig
+  const { commonStore } = useCommonStorageAsync<typeof AppConfig>(storageKey, initialValue)
+  const settingRef = ref<typeof AppConfig | null>(null)
 
-  const getSetting = async (): Promise<typeof AppConfig> => {
+  const getSettingRef = computed(async () => {
     const setting = await commonStore.get()
     logger.info("get data from setting=>", setting)
+    settingRef.value = setting
     return setting
+  })
+
+  /**
+   * 获取配置
+   */
+  const getSetting = async (): Promise<typeof AppConfig> => {
+    if (settingRef.value === null) {
+      logger.info("Setting not initialized. Initializing now...")
+      // 如果设置还没有被初始化，则调用 getSettingRef 函数
+      const setting = getSettingRef.value
+      logger.info(`Loaded setting from remote api`)
+      return setting ?? {}
+    }
+    logger.info(`Loaded setting from cached.`)
+    return settingRef.value ?? {}
   }
 
   /**
@@ -26,6 +44,7 @@ export const useSettingStore = defineStore("setting", () => {
   const updateSetting = async (setting: Partial<typeof AppConfig>) => {
     logger.info("update setting=>", setting)
     await commonStore.set(setting)
+    settingRef.value = { ...settingRef.value, ...setting }
   }
 
   return { getSetting, updateSetting }

@@ -26,18 +26,22 @@
 import CommonStorage from "~/stores/common/commonStorage"
 import { StorageSerializers } from "@vueuse/core"
 import { createAppLogger } from "~/common/appLogger"
+import { ObjectUtil, StrUtil } from "zhi-common"
 
 /**
  * https://vueuse.org/core/useStorageAsync/
  *
- * @param storageKey
+ * @param storageKey - 存储key
+ * @param initialValue - 默认值
  */
-export const useCommonStorageAsync = <T extends string | number | boolean | object | null>(storageKey: string) => {
+export const useCommonStorageAsync = <T extends string | number | boolean | object | null>(
+  storageKey: string,
+  initialValue: T
+) => {
   const logger = createAppLogger("common-storage-async")
   const commonStorage = new CommonStorage(storageKey)
 
   // 获取 initialValue 类型对应的序列化器，如果不存在则使用默认序列化器
-  const initialValue = {} as T
   const rawInit: T = toValue(initialValue)
   const type = guessSerializerType<T>(rawInit) as
     | "boolean"
@@ -54,9 +58,17 @@ export const useCommonStorageAsync = <T extends string | number | boolean | obje
   // 定义 commonStore 对象
   const commonStore = {
     async get(): Promise<T> {
+      logger.debug("Fetching data from common storage...")
       const rawValue = (await commonStorage.getItem(commonStorage.key)) ?? "{}"
-      const ret = await serializer.read(rawValue)
-      return ret ?? {}
+      let ret = (await serializer.read(rawValue)) ?? {}
+
+      if (ObjectUtil.isEmptyObject(ret)) {
+        logger.info("Initial data not found in common storage. Setting initial value...")
+        await commonStorage.setItem(commonStorage.key, serializer.write(initialValue))
+        logger.info("Initial value set:", initialValue)
+        ret = initialValue
+      }
+      return ret
     },
     async set(value: T): Promise<void> {
       await commonStorage.setItem(commonStorage.key, serializer.write(value))
