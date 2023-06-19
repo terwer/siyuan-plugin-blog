@@ -3,6 +3,7 @@
 ## SSR
 
 ```
+http://localhost:3000/share?id=aaa&origin=ddd&isSsr=false
 http://localhost:3000/s/20230411223531-n81ogbh
 ```
 

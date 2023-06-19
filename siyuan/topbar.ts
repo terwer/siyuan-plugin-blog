@@ -46,7 +46,7 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
   })
 
   topBarElement.addEventListener("click", async () => {
-    const sharePage = "/plugins/siyuan-blog/#/share"
+    const sharePage = "/plugins/siyuan-blog/#/share?id=" + PageUtil.getPageId() + "&origin=" + getAvailableOrigin()+"&isSsr=false"
     showPopView(pluginInstance, topBarElement, sharePage)
   })
 
