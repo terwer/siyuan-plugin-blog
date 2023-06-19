@@ -25,6 +25,8 @@
 
 export default {
   "syp.about": "About me",
+  "syp.about.desc":
+    "Hello, my name is Terwer, I have been in the back-end industry for many years, mainly focusing on the exploration of back-end technology stacks. Hope to meet more friends. Welcome to leave a message to communicate.",
   "theme.mode.choose": "Mode",
   "theme.mode.dark": "Dark mode",
   "theme.mode.light": "Light mode",
@@ -47,4 +49,6 @@ export default {
   "blog.index.no.home": "Oh, you haven't set up your homepage yet!",
   "blog.index.goto.set.home": "Go to set up my homepage now",
   "blog.share": "Share to web",
+  "blog.site.title": "Shallow sea shellfish",
+  "blog.site.slogan": "Find unknown technology puzzles",
 }

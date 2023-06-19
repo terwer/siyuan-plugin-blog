@@ -24,7 +24,14 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n-edge", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  modules: [
+    "@vueuse/nuxt",
+    "@nuxtjs/i18n-edge",
+    "@element-plus/nuxt",
+    "@nuxtjs/color-mode",
+    "@pinia/nuxt",
+    "@nuxt/image",
+  ],
 
   // vueuse
   vueuse: {
@@ -40,6 +47,8 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: "",
   },
+
+  image: {},
 
   vite: {
     define: {

@@ -25,6 +25,8 @@
 
 export default {
   "syp.about": "关于作者",
+  "syp.about.desc":
+    "你们好，我叫 terwer，已在后端行业多年，主要专注于后端技术栈的探索。希望能认识更多朋友。欢迎大家留言交流。",
   "theme.mode.choose": "切换模式",
   "theme.mode.dark": "暗黑模式",
   "theme.mode.light": "浅色模式",
@@ -47,4 +49,6 @@ export default {
   "blog.index.no.home": "啊哦，您还没设置自己的主页哟！",
   "blog.index.goto.set.home": "马上去设置我的主页",
   "blog.share": "在线分享",
+  "blog.site.title": "浅海拾贝",
+  "blog.site.slogan": "寻找未知的技术拼图",
 }
