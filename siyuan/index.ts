@@ -29,6 +29,7 @@ import { isDev } from "~/common/Constants"
 
 import "./index.styl"
 import { icons } from "~/siyuan/utils/svg"
+import { registerIframeEvent } from "~/siyuan/iframeEvent"
 
 export default class SiyuanBlog extends Plugin {
   public isMobile
@@ -44,7 +45,10 @@ export default class SiyuanBlog extends Plugin {
   onload() {
     // 注册图标
     this.addIcons(icons.iconShare)
+    // 初始化顶部栏以及图标
     initTopbar(this)
+    // 注册 iframe 事件
+    registerIframeEvent()
   }
 
   openSetting() {

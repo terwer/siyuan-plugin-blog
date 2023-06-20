@@ -28,8 +28,6 @@ import { Dialog, Menu } from "siyuan"
 import PageUtil from "~/siyuan/utils/pageUtil"
 import { getAvailableOrigin } from "~/siyuan/utils/utils"
 import { contentElement, contentHtml } from "~/siyuan/customElement"
-import { adjustIframeHeight } from "~/siyuan/iframeEvent"
-import { popContentIframeId } from "~/siyuan/siyuanConstants"
 
 /**
  * 顶栏按钮
@@ -51,7 +49,6 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
     const sharePage =
       "/plugins/siyuan-blog/#/share?id=" + PageUtil.getPageId() + "&origin=" + getAvailableOrigin() + "&isSsr=false"
     showPopView(pluginInstance, topBarElement, sharePage)
-    adjustIframeHeight(popContentIframeId)
   })
 
   // topBarElement.addEventListener("click", async () => {
