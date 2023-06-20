@@ -4,6 +4,7 @@ import { useRouteQuery } from "@vueuse/router"
 import { createAppLogger } from "~/common/appLogger"
 import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
 import copy from "copy-to-clipboard"
+import { sendMessageToParent } from "~/utils/innerIframeEvent"
 
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
@@ -66,7 +67,7 @@ const copyWebLink = () => {
     </div>
     <el-divider class="share-split" />
 
-    <div class="el-page-header__content share-item">
+    <div class="el-page-header__content share-item" @click="sendMessageToParent('updateHeight')">
       <div class="flex items-center">
         <span class="share-icon">
           <el-icon>

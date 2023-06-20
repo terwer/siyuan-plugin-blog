@@ -24,19 +24,20 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { sendMessageToParent } from "~/utils/innerIframeEvent"
 
-export const useShareOptionToggle = (initialValue: boolean) => {
-  const logger = createAppLogger("use-share-option")
-  const optionState = ref(initialValue)
+const logger = createAppLogger("inner-iframe-event")
 
-  const optionToggle = () => {
-    optionState.value = !optionState.value
-    sendMessageToParent("updateHeight")
+export const sendMessageToParent = (type: string) => {
+  const win = window.self as any
+  if (!win.parent.siyuan) {
+    logger.info(`Not in siyuan-note plugin iframe environment, ignore message sending`)
+    return
   }
 
-  return {
-    optionState,
-    optionToggle,
-  }
+  // 获取当前窗口对象
+  const iframeWindow = window.self
+
+  // 向父窗口发送消息
+  iframeWindow.parent.postMessage({ type: type }, "*")
+  logger.info(`Sends a message to the parent window, type => ${type}`)
 }
