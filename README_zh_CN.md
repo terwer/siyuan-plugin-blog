@@ -2,9 +2,11 @@
 
 # 在线分享
 
-<img src="./icon.png" width="160" height="160" alt="icon">
+<img src="https://ghproxy.com/https://github.com/terwer/siyuan-plugin-blog/blob/main/icon.png" width="160" height="160" alt="icon">
 
-您梦寐以求的类 notion 分享功能，这里也有
+您梦寐以求的类 notion 分享功能，这里也有。基于思源笔记的本地化理念，本插件原生本地持局域网分享、并且可通过 docker 版插件支持远程分享。无需任何额外的服务端支持，有思源笔记即可。
+
+本插件的核心理念是：`一切皆页面` 。您可以设置是某个页面为主页。
 
 ## 核心特色
 

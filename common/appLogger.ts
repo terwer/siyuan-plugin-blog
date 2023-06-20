@@ -23,14 +23,15 @@
  * questions.
  */
 
-import {isDev} from "~/common/Constants"
-import {simpleLogger} from "zhi-lib-base"
+import { isDev } from "~/common/Constants"
+import { simpleLogger } from "zhi-lib-base"
 
 /**
  * 使用 eruda 更好的控制日志
  */
 if (typeof window !== "undefined") {
-  window.console = isDev ? (window as any).eruda.get("console") : window.console
+  const econole = (window as any)?.eruda?.get("console")
+  window.console = isDev && econole ? econole : window.console
 }
 
 /**

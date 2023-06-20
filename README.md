@@ -2,9 +2,11 @@
 
 # Share to web
 
-<img src="./icon.png" width="160" height="160" alt="icon">
+<img src="https://ghproxy.com/https://github.com/terwer/siyuan-plugin-blog/blob/main/icon.png" width="160" height="160" alt="icon">
 
-The notions sharing function you want is here too
+The notion like sharing feature you've always dreamed of is here, too. Based on the localization concept of Siyuan Notes, this plug-in is natively shared locally on a local area network and can be shared remotely through the docker plugin. No additional server-side support is required, just take Siyuan notes.
+
+The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
 
 ## Core Features
 
