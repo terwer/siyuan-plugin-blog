@@ -62,9 +62,15 @@ export const isInSiyuanOrSiyuanNewWin = () => {
 
 export const isUseSiyuanApi = () => {
   const env = useRuntimeConfig()
+  // docker - 在 .env.docker 配置 NUXT_PUBLIC_DEFAULT_TYPE=siyuan
+  // vercel - 在环境变量配置 NUXT_PUBLIC_DEFAULT_TYPE=siyuan
+  // node - 启动参数加 NUXT_PUBLIC_DEFAULT_TYPE=siyuan node .output/server.,js
+  // 插件SPA(PC客户端) - nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
+  // 插件SPA(Docker浏览器客户端)- nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
+  // 插件SPA(本地客户端浏览器)- nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
   const isUseSiyuanApi = env.public.defaultType === "siyuan"
-  logger.debug("defaultType=>", env.public.defaultType)
-  logger.debug("isUseSiyuanApi=>", String(isUseSiyuanApi))
+  logger.info("defaultType=>", env.public.defaultType)
+  logger.info("isUseSiyuanApi=>", String(isUseSiyuanApi))
   return isUseSiyuanApi
 }
 
@@ -75,14 +81,13 @@ export const checkExpires = (attrs: any) => {
   logger.info("expiredTime=>", expiredTime)
   logger.info("publishTime=>", publishTime)
   logger.info("now=>", now)
-  if (isNaN(expiredTime) || isNaN(publishTime)) {
-    return false
-  }
-  // 计算过期时间的时间戳
-  const expires = publishTime + Number(expiredTime) * 1000
-  // 是否过期
-  if (expires < now) {
-    return true
+  if (!isNaN(expiredTime) && !isNaN(publishTime) && expiredTime > 0 && publishTime > 0) {
+    // 计算过期时间的时间戳
+    const expires = publishTime + Number(expiredTime) * 1000
+    // 是否过期
+    if (expires < now) {
+      return true
+    }
   }
 
   return false

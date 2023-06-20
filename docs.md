@@ -74,7 +74,15 @@ http://localhost:3000
 ```
 pnpm nodeuild
 docker compose up --build
+docker push terwer/nuxt3-blog:1.2.0
 ```
+最简单的使用
+
+```
+docker compose -f docker-compose-hub.yml up --build --remove-orphans
+```
+
+搭配思源：https://github.com/terwer/my-note-docker/blob/main/docker-compose.yml
 
 直接使用已打包的，参考 `docker-compose-hub.yml`，可能需要配置 `.env.docker`，可以复制 `.env.docker.example`，然后修改即可
 

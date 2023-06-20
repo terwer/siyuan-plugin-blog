@@ -1,6 +1,8 @@
 version: '3'
 services:
   nuxt3-blog:
-    image: terwer/nuxt3-blog:latest
+    image: terwer/nuxt3-blog:1.2.0
     ports:
       - "3000:3000"
+    env_file:
+      - ./.env.docker

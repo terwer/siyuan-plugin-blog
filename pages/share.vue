@@ -126,7 +126,7 @@ const handleExpiresTime = async () => {
       })
     },
     () => {
-      if (isNaN(expiredTime) || expiredTime <= 0 || expiredTime > 7 * 24 * 60 * 60) {
+      if (isNaN(expiredTime) || expiredTime < 0 || expiredTime > 7 * 24 * 60 * 60) {
         ElMessage.error(t("share.link.expires.error"))
         return false
       }

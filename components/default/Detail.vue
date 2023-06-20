@@ -48,9 +48,9 @@ await setCurrentPost(props.pageId)
 
 // datas
 const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
-const shareEnabled = attrs["custom-publish-status"] === PostStatusEnum.PostStatusEnum_Publish
+const shareEnabled = attrs["custom-publish-status"] === "publish"
 const isExpires = checkExpires(attrs)
-logger.info("current document status isExpires=>", isExpires)
+logger.info(`current document status,shareEnabled => ${shareEnabled}, isExpires => ${isExpires}`)
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
   const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
