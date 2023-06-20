@@ -28,6 +28,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
 import { SiyuanDevice } from "zhi-device"
 import { StrUtil } from "zhi-common"
+import { isUseSiyuanApi } from "~/utils/utils"
 
 /**
  * 通用存储实现，实现了 `StorageLikeAsync` 接口。

@@ -108,11 +108,15 @@ export default defineNuxtConfig({
 
   // 环境变量
   runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    // siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    siyuanAuthToken: "",
     public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      // defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
+      defaultType: "siyuan",
+      // siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
+      siyuanApiUrl: "",
+      // waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      waitTime: "0",
     },
   },
 })

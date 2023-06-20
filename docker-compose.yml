@@ -10,4 +10,4 @@ services:
       - ./.env.docker
     restart: no
     user: nuxt3-blog
-    image: terwer/nuxt3-blog:latest
+    image: terwer/nuxt3-blog:1.2.0

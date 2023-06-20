@@ -2,7 +2,7 @@
 # Tip: Modify "dockerBuild" options in project.json to change docker build args.
 #
 # Run the container with `docker run -p 3000:3000 -t vue3-ssr`.
-FROM docker.io/node:lts-alpine
+FROM node:18-alpine
 
 # default env
 ENV HOST=0.0.0.0
@@ -20,6 +20,6 @@ COPY .output/ .
 
 # You can remove this install step if you build with `--bundle` option.
 # The bundled output will include external dependencies.
-# RUN npm --prefix vue3-ssr --omit=dev -f install
+# RUN npm --prefix nuxt3-blog --omit=dev -f install
 
 CMD [ "node", "server/index.mjs" ]
