@@ -25,6 +25,7 @@
 
 import { popContentIframeId } from "~/siyuan/siyuanConstants"
 import { createAppLogger } from "~/common/appLogger"
+import SiyuanBlog from "~/siyuan/index"
 
 const logger = createAppLogger("iframe-events")
 let added = false
@@ -69,7 +70,7 @@ const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
 /**
  * 注册 iframe 事件
  */
-export const registerIframeEvent = () => {
+export const registerIframeEvent = (pluginInstance: SiyuanBlog) => {
   // 监听 message 事件
   window.addEventListener("message", (event) => {
     const iframe = document.getElementById(popContentIframeId) as HTMLIFrameElement
@@ -79,6 +80,9 @@ export const registerIframeEvent = () => {
       const data = event.data
       // 判断消息类型
       if (data.type === "updateHeight") {
+        logger.info(`Try to cancel loading`)
+        pluginInstance.popView.cancelLoading()
+
         logger.info(`Received update height message from iframe`)
         const height = data.height
         // 更新 iframe 高度
