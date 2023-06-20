@@ -24,8 +24,8 @@
     "zh_CN": "在线分享"
   },
   "description": {
-    "default": "The notions sharing function you want is here too",
-    "zh_CN": "您梦寐以求的类 notion 分享功能，这里也有"
+    "default": "The notion like sharing feature you've always dreamed of is here, too. Based on the localization concept of Siyuan Notes, this plug-in is natively shared locally on a local area network and can be shared remotely through the docker plugin. No additional server-side support is required, just siyuan-note only.The core idea of this plugin is: Everything is a Page . You can set a page to be the home page.",
+    "zh_CN": "您梦寐以求的类 notion 分享功能，这里也有。基于思源笔记的本地化理念，本插件原生本地局域网分享、并且可通过 docker 版插件支持远程分享。无需任何额外的服务端支持，有思源笔记即可。本插件的核心理念是：一切皆页面 。您可以设置是某个页面为主页。"
   },
   "readme": {
     "default": "README.md",
