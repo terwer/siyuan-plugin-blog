@@ -24,28 +24,20 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
 
-/**
- * 文档相关
- */
-export const usePostApi = () => {
-  const logger = createAppLogger("use-post")
-  const env = useRuntimeConfig()
+const logger = createAppLogger("inner-iframe-event")
 
-  const getPost = async (id: string, useSlug?: boolean, skipBody?: boolean) => {
-    logger.info("Loading post from remote api...")
-
-    // logger.info("env=>", env)
-    // logger.info("defaultType=>", env.public.defaultType)
-    // logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
-    // logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
-
-    const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
-    const blogApi = new SiYuanApiAdaptor(siyuanConfig)
-    const postid = id.replace(/\.html$/, "")
-    return await blogApi.getPost(postid, useSlug, skipBody)
+export const sendMessageToParent = (type: string) => {
+  const win = window.self as any
+  if (!win.parent.siyuan) {
+    logger.info(`Not in siyuan-note plugin iframe environment, ignore message sending`)
+    return
   }
 
-  return { getPost }
+  // 获取当前窗口对象
+  const iframeWindow = window.self
+
+  // 向父窗口发送消息
+  iframeWindow.parent.postMessage({ type: type }, "*")
+  logger.info(`Sends a message to the parent window, type => ${type}`)
 }

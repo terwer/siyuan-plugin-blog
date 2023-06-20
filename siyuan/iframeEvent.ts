@@ -28,14 +28,16 @@ import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("iframe-events")
 let added = false
-export const adjustIframeHeight = (iframeId: string) => {
+export const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement
   let counter = 0
   let lastHeight = "0px" // 将初始高度设为 "0px"
 
   // 注册定时器
   const interval = setInterval(() => {
-    let height = `${iframe?.contentWindow?.document.body.scrollHeight}px`
+    // 获取id为__nuxt的元素高度
+    const iframeBody = iframe?.contentWindow?.document.getElementById("__nuxt") as HTMLElement
+    let height = `${customHeight ?? iframeBody.scrollHeight}px`
     if (height === lastHeight) {
       if (!added) {
         height = height + 10
@@ -73,8 +75,15 @@ window.addEventListener("message", (event) => {
     // 判断消息类型
     if (data.type === "updateHeight") {
       logger.info(`Received update height message from iframe`)
+      const height = data.height
       // 更新 iframe 高度
-      adjustIframeHeight(popContentIframeId)
+      if (height) {
+        iframe.height = `${height}px`
+        logger.info(`Updated iframe height to ${height}px`)
+      } else {
+        adjustIframeHeight(popContentIframeId)
+        logger.info(`Auto adjust iframe height to ${height}px`)
+      }
     }
   }
 })

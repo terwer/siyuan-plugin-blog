@@ -25,8 +25,10 @@
 
 <script setup lang="ts">
 import { usePost } from "~/composables/usePost"
-import { getFirstImageSrc, getSummery } from "~/utils/utils"
+import { checkExpires, getFirstImageSrc, getSummery } from "~/utils/utils"
 import { createAppLogger } from "~/common/appLogger"
+import { JsonUtil, StrUtil } from "zhi-common"
+import { PostStatusEnum } from "zhi-blog-api"
 
 const logger = createAppLogger("share-page")
 
@@ -45,6 +47,10 @@ const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost(props.pageId)
 
 // datas
+const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
+const shareEnabled = attrs["custom-publish-status"] === PostStatusEnum.PostStatusEnum_Publish
+const isExpires = checkExpires(attrs)
+logger.info("current document status isExpires=>", isExpires)
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
   const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
@@ -72,7 +78,10 @@ const VNode = () =>
 </script>
 
 <template>
-  <div class="fn__flex-1 protyle" data-loading="finished">
+  <div v-if="!shareEnabled || isExpires">
+    <el-empty :description="isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')"> </el-empty>
+  </div>
+  <div v-else class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
       <div class="protyle-title protyle-wysiwyg--attr">
         <div

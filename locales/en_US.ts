@@ -75,9 +75,15 @@ export default {
   "share.show.link.option": "Show link options",
   "share.other.option": "Set other options here",
   "share.other.option.link.expires": "Allow link expires",
-  "share.link.expires.time.placeholder":
-    "If this feature is enabled, you can set the link expiration time, unit/second, and support up to 7 days",
+  "share.link.expires.time.placeholder": "Units/sec, up to 7 days. 0 means permanent",
   "share.help": "Learn about sharing",
   "share.copy.link": "Copy link",
   "share.set.home": "Set home",
+  "share.share": "Share",
+  "blog.index.no.permission":
+    "Sorry, you don't have permission to view this page or the page has expired, please contact the author to reopen sharing!",
+  "blog.index.no.expires": "Sorry, the page has expired, please contact the author to reopen sharing!",
+  "blog.index.home.exists": "Sorry, the page is already set as the Page, please remove the Page before unsharing",
+  "share.link.expires.error":
+    "Please enter a number that must be legal and no older than 7 days! For perpetual effect, enter 0",
 }

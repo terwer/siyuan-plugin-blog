@@ -24,28 +24,19 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
+import { sendMessageToParent } from "~/utils/innerIframeEvent"
 
-/**
- * 文档相关
- */
-export const usePostApi = () => {
-  const logger = createAppLogger("use-post")
-  const env = useRuntimeConfig()
+export const useShareOptionToggle = (initialValue: boolean) => {
+  const logger = createAppLogger("use-share-option")
+  const optionState = ref(initialValue)
 
-  const getPost = async (id: string, useSlug?: boolean, skipBody?: boolean) => {
-    logger.info("Loading post from remote api...")
-
-    // logger.info("env=>", env)
-    // logger.info("defaultType=>", env.public.defaultType)
-    // logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
-    // logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
-
-    const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
-    const blogApi = new SiYuanApiAdaptor(siyuanConfig)
-    const postid = id.replace(/\.html$/, "")
-    return await blogApi.getPost(postid, useSlug, skipBody)
+  const optionToggle = () => {
+    optionState.value = !optionState.value
+    sendMessageToParent("updateHeight")
   }
 
-  return { getPost }
+  return {
+    optionState,
+    optionToggle,
+  }
 }
