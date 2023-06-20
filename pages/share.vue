@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettingStore } from "~/stores/useSettingStore"
 import { useRouteQuery } from "@vueuse/router"
-import {createAppLogger} from "~/common/appLogger";
+import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
@@ -35,8 +35,15 @@ const goHelp = async () => {
 }
 
 const sendMessageToParent = (type: string) => {
+  const win = window.self as any
+  if (!win.parent.siyuan) {
+    logger.info(`Not in siyuan-note plugin iframe environment, ignore message sending`)
+    return
+  }
+
   // 获取当前窗口对象
   const iframeWindow = window.self
+
   // 向父窗口发送消息
   iframeWindow.parent.postMessage({ type: type }, "*")
   logger.info(`Sends a message to the parent window, type => ${type}`)
@@ -75,10 +82,10 @@ const toggleOption = () => {
       </div>
     </div>
 
-    <div class="share-item">
+    <div class="share-item" @click="toggleOption">
       <div class="item-left item-copy-link">
         <el-space direction="vertical">
-          <el-text @click="toggleOption">
+          <el-text>
             {{ t("share.show.link.option") }}
             <el-icon>
               <el-icon-arrow-down />
