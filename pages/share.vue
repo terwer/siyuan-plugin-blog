@@ -4,11 +4,19 @@ import { useRouteQuery } from "@vueuse/router"
 import { createAppLogger } from "~/common/appLogger"
 import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
 import copy from "copy-to-clipboard"
-import { sendMessageToParent } from "~/utils/innerIframeEvent"
+import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
+import { PostStatusEnum } from "zhi-blog-api"
+import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
+import { useMethodAsync } from "~/composables/useMethodAsync"
+import { useMethod } from "~/composables/useMethod"
 
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
-const { getSetting } = useSettingStore()
+const { handleMethod } = useMethod()
+const { handleMethodAsync } = useMethodAsync()
+
+const { getSetting, updateSetting } = useSettingStore()
+const { blogApi, kernelApi } = useSiyuanApi()
 
 const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
@@ -23,6 +31,7 @@ const basePath = String(isSsr.value) === "true" ? "/plugins/siyuan-blog" : "/plu
 // })
 
 const setting = await getSetting()
+const post = await blogApi.getPost(id.value, false, true)
 const title = `${t("blog.share")} - ${t("blog.share.options")}`
 const seoMeta = {
   title: title,
@@ -31,25 +40,96 @@ const seoMeta = {
 useSeoMeta(seoMeta)
 
 // datas
+const attrs = JsonUtil.safeParse<any>(post?.attrs ?? "{}", {})
 const formData = reactive({
-  shareEnabled: false,
+  shareEnabled: attrs["custom-publish-status"] === PostStatusEnum.PostStatusEnum_Publish,
   shareLink: `${origin.value}${basePath}/s/${id.value}`,
   optionEnabled: false,
+  expiredTime: attrs["custom-expires"] ?? "0",
+  isHome: setting.homePageId === id.value,
 })
 const { optionState, optionToggle } = useShareOptionToggle(formData.optionEnabled)
 
 // methods
-const goSetting = async () => {
-  await navigateTo("/setting")
-}
+// const goSetting = async () => {
+//   await navigateTo("/setting")
+// }
 
 const goHelp = async () => {
   window.open("https://blog.terwer.space/docs")
 }
 
 const copyWebLink = () => {
-  copy(formData.shareLink)
-  ElMessage.success(t("main.opt.success"))
+  handleMethod(() => {
+    copy(formData.shareLink)
+  })
+}
+
+const handleShare = (val: any) => {
+  new Promise<void>((resolve, reject) => {
+    handleMethodAsync(
+      async () => {
+        // 分享
+        if (val) {
+          await kernelApi.setBlockAttrs(id.value, {
+            "custom-publish-status": PostStatusEnum.PostStatusEnum_Publish,
+            "custom-publish-time": new Date().getTime().toString(),
+          })
+        } else {
+          // 取消分享
+          await kernelApi.setBlockAttrs(id.value, {
+            "custom-publish-status": PostStatusEnum.PostStatusEnum_Draft,
+            "custom-publish-time": "",
+          })
+        }
+        resolve()
+      },
+      () => {
+        if (formData.isHome) {
+          formData.shareEnabled = true
+          ElMessage.error(t("blog.index.home.exists"))
+          return false
+        }
+        return true
+      }
+    ).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+const handleSetHome = (val: any) => {
+  new Promise<void>((resolve, reject) => {
+    handleMethodAsync(async () => {
+      if (val) {
+        setting.homePageId = id.value
+      } else {
+        setting.homePageId = undefined
+      }
+      await updateSetting(setting)
+      resolve()
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+const handleExpiresTime = async () => {
+  const expiredTime = Number(toRaw(formData.expiredTime))
+  await handleMethodAsync(
+    async () => {
+      await kernelApi.setBlockAttrs(id.value, {
+        "custom-expires": expiredTime.toString(),
+      })
+    },
+    () => {
+      if (isNaN(expiredTime) || expiredTime <= 0 || expiredTime > 7 * 24 * 60 * 60) {
+        ElMessage.error(t("share.link.expires.error"))
+        return false
+      }
+      return true
+    }
+  )
 }
 </script>
 
@@ -61,13 +141,13 @@ const copyWebLink = () => {
         <el-icon style="vertical-align: middle">
           <el-icon-user-filled />
         </el-icon>
-        {{ t("share.share") }}
+        {{ post.title }}
       </div>
       <div class="item-right"></div>
     </div>
     <el-divider class="share-split" />
 
-    <div class="el-page-header__content share-item" @click="sendMessageToParent('updateHeight')">
+    <div class="el-page-header__content share-item">
       <div class="flex items-center">
         <span class="share-icon">
           <el-icon>
@@ -79,7 +159,7 @@ const copyWebLink = () => {
           {{ t("share.to.web.before.tip") }}
         </span>
         <span class="item-right">
-          <el-switch v-model="formData.shareEnabled" />
+          <el-switch v-model="formData.shareEnabled" @change="handleShare" />
         </span>
       </div>
     </div>
@@ -111,15 +191,15 @@ const copyWebLink = () => {
         <div class="item-right"></div>
       </div>
 
-      <div v-if="optionState" class="share-item">
+      <div v-if="optionState" class="share-item expires-link-item">
         <div class="expires-link expires-link-label">
           {{ t("share.other.option.link.expires") }}
         </div>
         <div class="expires-link expires-link-input">
-          <el-input :placeholder="t('share.link.expires.time.placeholder')" />
+          <el-input v-model="formData.expiredTime" :placeholder="t('share.link.expires.time.placeholder')" />
         </div>
         <div class="item-right">
-          <el-switch />
+          <el-button type="primary" @click="handleExpiresTime">{{ t("main.opt.save") }}</el-button>
         </div>
       </div>
       <el-divider class="share-split" />
@@ -132,7 +212,7 @@ const copyWebLink = () => {
           {{ t("share.set.home") }}
         </div>
         <div class="item-right">
-          <el-switch />
+          <el-switch v-model="formData.isHome" @change="handleSetHome" />
         </div>
       </div>
       <el-divider class="share-split" />
@@ -210,4 +290,12 @@ const copyWebLink = () => {
   .share-subject
     font-size 14px
     font-weight 600
+  ::v-deep(.el-switch)
+    display inline-block
+  .expires-link-item
+    ::v-deep(.el-switch)
+      display inline-flex
+  .el-page-header__content
+    ::v-deep(.el-switch)
+      display inline-flex
 </style>

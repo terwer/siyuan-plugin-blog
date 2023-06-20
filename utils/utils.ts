@@ -67,3 +67,23 @@ export const isUseSiyuanApi = () => {
   logger.debug("isUseSiyuanApi=>", String(isUseSiyuanApi))
   return isUseSiyuanApi
 }
+
+export const checkExpires = (attrs: any) => {
+  const expiredTime = Number(attrs["custom-expires"])
+  const publishTime = Number(attrs["custom-publish-time"])
+  const now = new Date().getTime()
+  logger.info("expiredTime=>", expiredTime)
+  logger.info("publishTime=>", publishTime)
+  logger.info("now=>", now)
+  if (isNaN(expiredTime) || isNaN(publishTime)) {
+    return false
+  }
+  // 计算过期时间的时间戳
+  const expires = publishTime + Number(expiredTime) * 1000
+  // 是否过期
+  if (expires < now) {
+    return true
+  }
+
+  return false
+}

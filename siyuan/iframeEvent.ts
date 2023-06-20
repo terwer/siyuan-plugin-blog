@@ -35,7 +35,9 @@ export const adjustIframeHeight = (iframeId: string) => {
 
   // 注册定时器
   const interval = setInterval(() => {
-    let height = `${iframe?.contentWindow?.document.body.scrollHeight}px`
+    // 获取id为__nuxt的元素高度
+    const iframeBody = iframe?.contentWindow?.document.getElementById("__nuxt") as HTMLElement
+    let height = `${iframeBody.scrollHeight}px`
     if (height === lastHeight) {
       if (!added) {
         height = height + 10
