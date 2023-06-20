@@ -28,11 +28,11 @@ import { simpleLogger } from "zhi-lib-base"
 import { isDev } from "~/common/Constants"
 
 import "./index.styl"
+import { icons } from "~/siyuan/utils/svg"
 
 export default class SiyuanBlog extends Plugin {
   public isMobile
   public logger
-
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
 
@@ -42,6 +42,8 @@ export default class SiyuanBlog extends Plugin {
   }
 
   onload() {
+    // 注册图标
+    this.addIcons(icons.iconShare)
     initTopbar(this)
   }
 

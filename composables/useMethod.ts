@@ -23,14 +23,28 @@
  * questions.
  */
 
-import { normalize } from "pathe"
+import { createAppLogger } from "~/common/appLogger"
 
 /**
- * 多语言封装，解决 CSP
- *
- * https://github.com/intlify/vue-i18n-next/issues/543
+ * 通用的可处理异常的方法-同步
  */
-export const useVueI18n = () => {
+export const useMethod = () => {
+  const logger = createAppLogger("use-method")
   const { t } = useI18n()
-  return { t }
+
+  const handleMethod = (methodCall: () => any) => {
+    try {
+      methodCall()
+      ElMessage.success(t("main.opt.success"))
+    } catch (e) {
+      logger.error(t("main.opt.failure"), e)
+      ElMessage({
+        type: "error",
+        message: t("main.opt.failure") + e,
+      })
+      throw e
+    }
+  }
+
+  return { handleMethod }
 }

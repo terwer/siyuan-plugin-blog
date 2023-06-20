@@ -1,11 +1,5 @@
-<script setup lang="ts">
-const route = useRoute()
-
-const postid = route.params.id
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>{{ postid }}</div>
+  <default-detail :show-title-sign="true" />
 </template>
-
-<style scoped></style>

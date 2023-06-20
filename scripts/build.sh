@@ -1,6 +1,9 @@
 #!/usr/bin/sh
 
-pnpm siyuanBuild
+# 使用 Siyuan 构建配置
+echo "Using Siyuan build config as SSE and SPA build."
+cp nuxt.siyuan.config.ts nuxt.config.ts
+nuxt generate
 echo "Nuxt build finished."
 pnpm pluginBuild
 echo "Plugin build finished."
@@ -16,4 +19,4 @@ find ./dist/_nuxt -type f -name 'entry.*.js' -exec \
   sed -i -E 's/\/__i18n__\/prerender/\/plugins\/siyuan-blog\/__i18n__\/prerender/g' {} \;
 echo "The i18n path has been replaced"
 
-echo "Siyuan build success."
+echo "Siyuan build finished."
