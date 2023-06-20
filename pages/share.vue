@@ -69,6 +69,9 @@ const handleShare = (val: any) => {
   new Promise<void>((resolve, reject) => {
     handleMethodAsync(
       async () => {
+        // 自适应高度
+        sendMessageToParent("updateHeight")
+
         // 分享
         if (val) {
           await kernelApi.setBlockAttrs(id.value, {
