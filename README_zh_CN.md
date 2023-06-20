@@ -10,6 +10,8 @@
 
 本插件的核心理念是：`一切皆页面` 。您可以设置某个页面为主页。
 
+[帮助文档](https://blog.terwer.space/s/20230621001422-xsimx5v)
+
 ## 核心特色
 
 - **一键分享**：支持一键分享文档到局域网，如果需要远程分享，可使用 docker 部署在服务器，然后安装插件
@@ -18,7 +20,7 @@
 - **个人主页**：支持设置已分享的某个页面为主页，可作为自定义博客主页
 - **主题集成**：默认集成 默认主题 和 [Zhihu](https://github.com/terwer/siyuan-theme-zhihu) 主题，后续可支持切换其他主题
 - **SEO优化**：支持自动生成标题、摘要、首图，便于SEO
-- **多种部署**：支持思源笔记插件、docker自部署、Vercel托管满足各种人群的需求，详情请看 [docs](https://ghproxy.com/https://github.com/terwer/siyuan-plugin-blog/blob/main/docs)
+- **多种部署**：支持思源笔记插件、docker自部署、Vercel托管满足各种人群的需求，详情请看 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
   - [入门级]思源笔记插件：零配置，开箱即用，本地SPA应用，直接访问思源本体，因此速度极快，但是SEO不太友好
   - [高手级]docker自部署：需要自己购买服务器，SSR服务端渲染，SEO友好，速度快
   - [白嫖级]Vercel托管：需要自己购买域名，否则可能无法访问，成本低，速度适中
