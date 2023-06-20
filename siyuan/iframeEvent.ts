@@ -25,19 +25,21 @@
 
 import { popContentIframeId } from "~/siyuan/siyuanConstants"
 import { createAppLogger } from "~/common/appLogger"
+import SiyuanBlog from "~/siyuan/index"
 
 const logger = createAppLogger("iframe-events")
 let added = false
-export const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
+const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement
   let counter = 0
   let lastHeight = "0px" // 将初始高度设为 "0px"
+  const defaultHeight = 350
 
   // 注册定时器
   const interval = setInterval(() => {
     // 获取id为__nuxt的元素高度
     const iframeBody = iframe?.contentWindow?.document.getElementById("__nuxt") as HTMLElement
-    let height = `${customHeight ?? iframeBody.scrollHeight}px`
+    let height = `${customHeight ?? iframeBody?.scrollHeight ?? defaultHeight}px`
     if (height === lastHeight) {
       if (!added) {
         height = height + 10
@@ -65,25 +67,38 @@ export const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
   }
 }
 
-// 监听 message 事件
-window.addEventListener("message", (event) => {
-  const iframe = document.getElementById(popContentIframeId) as HTMLIFrameElement
+/**
+ * 注册 iframe 事件
+ */
+export const registerIframeEvent = (pluginInstance: SiyuanBlog) => {
+  // 监听 message 事件
+  window.addEventListener("message", (event) => {
+    const iframe = document.getElementById(popContentIframeId) as HTMLIFrameElement
 
-  // 判断是否是来自指定 iframe 的消息
-  if (event.source === iframe.contentWindow) {
-    const data = event.data
-    // 判断消息类型
-    if (data.type === "updateHeight") {
-      logger.info(`Received update height message from iframe`)
-      const height = data.height
-      // 更新 iframe 高度
-      if (height) {
-        iframe.height = `${height}px`
-        logger.info(`Updated iframe height to ${height}px`)
+    // 判断是否是来自指定 iframe 的消息
+    if (event.source === iframe.contentWindow) {
+      const data = event.data
+      // 判断消息类型
+      if (data.type === "updateHeight") {
+        logger.info(`Try to cancel loading`)
+        pluginInstance.popView.cancelLoading()
+
+        logger.info(`Received update height message from iframe`)
+        const height = data.height
+        // 更新 iframe 高度
+        if (height) {
+          iframe.height = `${height}px`
+          logger.info(`Updated iframe height to ${height}px`)
+        } else {
+          adjustIframeHeight(popContentIframeId)
+          logger.info(`Auto adjust iframe height to ${height}px`)
+        }
       } else {
-        adjustIframeHeight(popContentIframeId)
-        logger.info(`Auto adjust iframe height to ${height}px`)
+        logger.warn(`Unknown message type, ignore`)
       }
+    } else {
+      logger.warn(`message is not from contentWindow, ignore`)
     }
-  }
-})
+  })
+  logger.info("iframe event registered in plugin main")
+}

@@ -9,7 +9,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+const appBase = "/plugins/siyuan-blog/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -24,7 +24,14 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt", "@nuxt/image"],
+  modules: [
+    "@vueuse/nuxt",
+    "@nuxtjs/i18n-edge",
+    "@element-plus/nuxt",
+    "@nuxtjs/color-mode",
+    "@pinia/nuxt",
+    "@nuxt/image",
+  ],
 
   // vueuse
   vueuse: {
@@ -55,6 +62,14 @@ export default defineNuxtConfig({
     icon: "ElIcon",
     importStyle: "scss",
     themes: ["dark"],
+  },
+
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
+  ssr: false,
+  router: {
+    options: {
+      hashMode: true,
+    },
   },
 
   css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
@@ -93,11 +108,15 @@ export default defineNuxtConfig({
 
   // 环境变量
   runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    // siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    siyuanAuthToken: "",
     public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      // defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
+      defaultType: "siyuan",
+      // siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
+      siyuanApiUrl: "",
+      // waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      waitTime: "0",
     },
   },
 })

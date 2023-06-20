@@ -28,8 +28,6 @@ import { Dialog, Menu } from "siyuan"
 import PageUtil from "~/siyuan/utils/pageUtil"
 import { getAvailableOrigin } from "~/siyuan/utils/utils"
 import { contentElement, contentHtml } from "~/siyuan/customElement"
-import { adjustIframeHeight } from "~/siyuan/iframeEvent"
-import { popContentIframeId } from "~/siyuan/siyuanConstants"
 
 /**
  * 顶栏按钮
@@ -50,8 +48,10 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
   topBarElement.addEventListener("click", async () => {
     const sharePage =
       "/plugins/siyuan-blog/#/share?id=" + PageUtil.getPageId() + "&origin=" + getAvailableOrigin() + "&isSsr=false"
-    showPopView(pluginInstance, topBarElement, sharePage)
-    adjustIframeHeight(popContentIframeId)
+    const popView = showPopView(pluginInstance, topBarElement, sharePage, {
+      showLoading: true,
+    })
+    pluginInstance.popView = popView
   })
 
   // topBarElement.addEventListener("click", async () => {
@@ -139,8 +139,14 @@ const showPage = (pluginInstance: SiyuanBlog, pageUrl: string, title?: string) =
  * @param pluginInstance 插件实例对象
  * @param boxElement 被点击的 box 元素
  * @param pageUrl 当前页面的 URL
+ * @param options
  */
-const showPopView = (pluginInstance: SiyuanBlog, boxElement: HTMLElement, pageUrl: string) => {
+const showPopView = (
+  pluginInstance: SiyuanBlog,
+  boxElement: HTMLElement,
+  pageUrl: string,
+  options: { showLoading?: boolean; cancelLoading?: any } = {}
+) => {
   const popContentId = "pop-content"
   let popContent = document.getElementById(popContentId)
 
@@ -170,8 +176,28 @@ const showPopView = (pluginInstance: SiyuanBlog, boxElement: HTMLElement, pageUr
   popContent.style.opacity = "0"
   popContent.style.transition = "opacity 0.3s ease-in-out"
 
+  // 添加loading效果
+  if (options.showLoading) {
+    const loadingElement = document.createElement("div")
+    loadingElement.className = "loading-spinner"
+    for (let i = 0; i < 4; i++) {
+      const divElement = document.createElement("div")
+      loadingElement.appendChild(divElement)
+    }
+    popContent.appendChild(loadingElement)
+
+    // 定义cancelLoading函数，用于取消loading
+    const cancelLoading = () => {
+      popContent?.removeChild(loadingElement)
+    }
+
+    // 在option中添加cancelLoading函数
+    options.cancelLoading = cancelLoading
+  }
+
   // 填充内容
-  popContent.innerHTML = contentElement(pageUrl).innerHTML
+  const content = contentElement(pageUrl)
+  popContent.appendChild(content)
 
   document.body.appendChild(popContent)
 
@@ -204,4 +230,6 @@ const showPopView = (pluginInstance: SiyuanBlog, boxElement: HTMLElement, pageUr
       }
     }, 300) // 等待 300ms，即过渡时间，然后再删除浮动框
   }
+
+  return options
 }

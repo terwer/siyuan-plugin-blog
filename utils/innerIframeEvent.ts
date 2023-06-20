@@ -27,7 +27,7 @@ import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("inner-iframe-event")
 
-export const sendMessageToParent = (type: string) => {
+export const sendMessageToParent = (type: string, height?: number) => {
   const win = window.self as any
   if (!win.parent.siyuan) {
     logger.info(`Not in siyuan-note plugin iframe environment, ignore message sending`)
@@ -38,6 +38,6 @@ export const sendMessageToParent = (type: string) => {
   const iframeWindow = window.self
 
   // 向父窗口发送消息
-  iframeWindow.parent.postMessage({ type: type }, "*")
+  iframeWindow.parent.postMessage({ type: type, height: height }, "*")
   logger.info(`Sends a message to the parent window, type => ${type}`)
 }
