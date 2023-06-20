@@ -23,34 +23,4 @@
  * questions.
  */
 
-import { popContentIframeId } from "~/siyuan/siyuanConstants"
-
-/**
- * 内容区域
- *
- * @returns element
- */
-export const contentElement = (pageUrl: string) => {
-  console.log(`Loading iframe for ${pageUrl}...`)
-
-  // 包裹图层
-  const divElement = document.createElement("div")
-
-  // 创建 <iframe> 元素
-  const iframe = document.createElement("iframe")
-  iframe.id = popContentIframeId
-  iframe.src = pageUrl
-  iframe.width = "100%"
-
-  divElement.appendChild(iframe)
-  return divElement
-}
-
-export const contentHtml = (pageUrl: string) => `<style>
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-  </style>
-  <iframe src="${pageUrl}" width="100%"></iframe>`
+export const popContentIframeId = "siyuan-blog-content-iframe"
