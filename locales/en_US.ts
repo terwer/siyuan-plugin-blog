@@ -80,4 +80,5 @@ export default {
   "share.help": "Learn about sharing",
   "share.copy.link": "Copy link",
   "share.set.home": "Set home",
+  "share.share": "Share",
 }

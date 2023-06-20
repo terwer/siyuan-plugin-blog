@@ -79,4 +79,5 @@ export default {
   "share.help": "了解共享",
   "share.copy.link": "复制链接",
   "share.set.home": "设为主页",
+  "share.share": "分享",
 }

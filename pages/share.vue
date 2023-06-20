@@ -2,6 +2,8 @@
 import { useSettingStore } from "~/stores/useSettingStore"
 import { useRouteQuery } from "@vueuse/router"
 import { createAppLogger } from "~/common/appLogger"
+import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
+import copy from "copy-to-clipboard"
 
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
@@ -11,6 +13,14 @@ const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
 const isSsr = useRouteQuery("isSsr", "")
 const basePath = String(isSsr.value) === "true" ? "/plugins/siyuan-blog" : "/plugins/siyuan-blog/#"
+
+// lifecycles
+// onBeforeMount(() => {
+//   const mainEl = document.querySelector(".el-main") as any
+//   mainEl.style.margin = "0"
+//   mainEl.style.padding = "0"
+// })
+
 const setting = await getSetting()
 const title = `${t("blog.share")} - ${t("blog.share.options")}`
 const seoMeta = {
@@ -21,9 +31,11 @@ useSeoMeta(seoMeta)
 
 // datas
 const formData = reactive({
-  shared: false,
+  shareEnabled: false,
   shareLink: `${origin.value}${basePath}/s/${id.value}`,
+  optionEnabled: false,
 })
+const { optionState, optionToggle } = useShareOptionToggle(formData.optionEnabled)
 
 // methods
 const goSetting = async () => {
@@ -34,28 +46,26 @@ const goHelp = async () => {
   window.open("https://blog.terwer.space/docs")
 }
 
-const sendMessageToParent = (type: string) => {
-  const win = window.self as any
-  if (!win.parent.siyuan) {
-    logger.info(`Not in siyuan-note plugin iframe environment, ignore message sending`)
-    return
-  }
-
-  // 获取当前窗口对象
-  const iframeWindow = window.self
-
-  // 向父窗口发送消息
-  iframeWindow.parent.postMessage({ type: type }, "*")
-  logger.info(`Sends a message to the parent window, type => ${type}`)
-}
-
-const toggleOption = () => {
-  sendMessageToParent("updateHeight")
+const copyWebLink = () => {
+  copy(formData.shareLink)
+  ElMessage.success(t("main.opt.success"))
 }
 </script>
 
 <template>
   <div id="share">
+    <div class="share-item share-subject">
+      <div class="item-left">
+        {{ t("share.share") }}
+        <el-icon style="vertical-align: middle">
+          <el-icon-user-filled />
+        </el-icon>
+        {{ t("share.share") }}
+      </div>
+      <div class="item-right"></div>
+    </div>
+    <el-divider class="share-split" />
+
     <div class="el-page-header__content share-item">
       <div class="flex items-center">
         <span class="share-icon">
@@ -64,67 +74,74 @@ const toggleOption = () => {
           </el-icon>
         </span>
         <span class="text-large font-600 mr-3 share-title"> {{ t("share.to.web") }} </span>
-        <span class="text-sm mr-2 share-description" style="color: var(--el-text-color-regular)">
+        <span class="text-sm mr-2 share-description">
           {{ t("share.to.web.before.tip") }}
         </span>
         <span class="item-right">
-          <el-switch v-model="formData.shared" />
+          <el-switch v-model="formData.shareEnabled" />
         </span>
       </div>
     </div>
+    <el-divider class="share-split" />
 
-    <div class="share-item">
-      <div class="item-left item-copy-link">
-        <el-input v-model="formData.shareLink" />
+    <div v-if="formData.shareEnabled">
+      <div class="share-item">
+        <div class="item-left item-copy-link">
+          <el-input v-model="formData.shareLink" />
+        </div>
+        <div class="item-right">
+          <el-button type="default" @click="copyWebLink">{{ t("share.copy.web.link") }}</el-button>
+        </div>
       </div>
-      <div class="item-right">
-        <el-button type="default">{{ t("share.copy.web.link") }}</el-button>
-      </div>
-    </div>
+      <el-divider class="share-split" />
 
-    <div class="share-item" @click="toggleOption">
-      <div class="item-left item-copy-link">
-        <el-space direction="vertical">
-          <el-text>
-            {{ t("share.show.link.option") }}
-            <el-icon>
-              <el-icon-arrow-down />
-            </el-icon>
-          </el-text>
-        </el-space>
+      <div class="share-item" @click="optionToggle">
+        <div class="item-left item-copy-link">
+          <el-space direction="vertical">
+            <el-text>
+              {{ t("share.show.link.option") }}
+              <el-icon>
+                <el-icon-arrow-up v-if="optionState" />
+                <el-icon-arrow-down v-else />
+              </el-icon>
+            </el-text>
+          </el-space>
+        </div>
+        <div class="item-right"></div>
       </div>
-      <div class="item-right"></div>
-    </div>
 
-    <div class="share-item">
-      <div class="expires-link expires-link-label">
-        {{ t("share.other.option.link.expires") }}
+      <div v-if="optionState" class="share-item">
+        <div class="expires-link expires-link-label">
+          {{ t("share.other.option.link.expires") }}
+        </div>
+        <div class="expires-link expires-link-input">
+          <el-input :placeholder="t('share.link.expires.time.placeholder')" />
+        </div>
+        <div class="item-right">
+          <el-switch />
+        </div>
       </div>
-      <div class="expires-link expires-link-input">
-        <el-input :placeholder="t('share.link.expires.time.placeholder')" />
-      </div>
-      <div class="item-right">
-        <el-switch />
-      </div>
-    </div>
+      <el-divider class="share-split" />
 
-    <div class="share-item">
-      <div class="item-left">
-        <el-icon>
-          <el-icon-home-filled />
-        </el-icon>
-        {{ t("share.set.home") }}
+      <div class="share-item">
+        <div class="item-left">
+          <el-icon>
+            <el-icon-home-filled />
+          </el-icon>
+          {{ t("share.set.home") }}
+        </div>
+        <div class="item-right">
+          <el-switch />
+        </div>
       </div>
-      <div class="item-right">
-        <el-switch />
-      </div>
-    </div>
+      <el-divider class="share-split" />
 
-    <!--
-    <div class="share-item text-center other-setting">
-      <div class="item-middle" @click="goSetting">{{ t("share.other.option") }}</div>
+      <!--
+      <div class="share-item text-center other-setting">
+        <div class="item-middle" @click="goSetting">{{ t("share.other.option") }}</div>
+      </div>
+      -->
     </div>
-    -->
 
     <div class="share-item">
       <div class="item-left">
@@ -149,6 +166,8 @@ const toggleOption = () => {
 <style lang="stylus" scoped>
 .text-center
   text-align center
+.share-split
+  margin 2px 0
 
 #share
   .share-item
@@ -187,5 +206,7 @@ const toggleOption = () => {
   .other-setting
     border-radius 4px
     background-color var(--b3-list-hover)
-    //background var(--b3-theme-background)
+  .share-subject
+    font-size 14px
+    font-weight 600
 </style>
