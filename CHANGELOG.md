@@ -1,7 +1,11 @@
 # Changelog
 
-## [1.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.3.0...v1.4.0) (2023-06-21)
+## [1.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.4.0...v1.5.0) (2023-06-21)
 ### Features
+* 支持内部链接和外部链接 ([605abd8](https://github.com/terwer/siyuan-plugin-blog/commit/605abd89bdf7edd9762586ce30d00dd3241069c7))
+* 支持任务列表
+* 增加打开主页链接
+## [1.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.3.0...v1.4.0) (2023-06-21)
 * 支持设置自定义域名 ([bf17949](https://github.com/terwer/siyuan-plugin-blog/commit/bf179498a893c156511478dd7ccd46aa9728f09c))
 ### Bug Fixes
 * 修复未打开浮窗时可能出现的报错问题 ([f379a9d](https://github.com/terwer/siyuan-plugin-blog/commit/f379a9d5ddae19b30a98865d227162ec9255d0c8))
