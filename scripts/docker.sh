@@ -3,7 +3,7 @@
 # 使用 Docker 构建配置
 echo "Using Docker build config as SSR build."
 
-APP_VERSION=1.3.0
+APP_VERSION=1.4.0
 
 # 兼容 node 的构建
 pnpm nodeBuild

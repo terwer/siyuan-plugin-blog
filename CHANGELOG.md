@@ -1,27 +1,15 @@
 # Changelog
 
 ## [1.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.3.0...v1.4.0) (2023-06-21)
-
-
 ### Features
-
 * 支持设置自定义域名 ([bf17949](https://github.com/terwer/siyuan-plugin-blog/commit/bf179498a893c156511478dd7ccd46aa9728f09c))
-
-
 ### Bug Fixes
-
 * 修复未打开浮窗时可能出现的报错问题 ([f379a9d](https://github.com/terwer/siyuan-plugin-blog/commit/f379a9d5ddae19b30a98865d227162ec9255d0c8))
-
-
 ### Miscellaneous
-
 * 优化 docker 打包脚本 ([b42f2f3](https://github.com/terwer/siyuan-plugin-blog/commit/b42f2f310ab84763a409e4b6c91f2225abf517cc))
-
 ## [1.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.2.1...v1.3.0) (2023-06-21)
-### Features
 * 支持显示图片 ([a9a8a0d](https://github.com/terwer/siyuan-plugin-blog/commit/a9a8a0d4e4563fd68653c9639e7f2f2f5b729f26))
 ## [1.2.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.2.0...v1.2.1) (2023-06-20)
-### Bug Fixes
 * 修复 docker 版本、vercel 版本和插件版本存储不一致的问题 ([6478186](https://github.com/terwer/siyuan-plugin-blog/commit/6478186babf740cc0efa1cd8ebae3402ca33213e))
 * 修正帮助文档链接 404 问题 ([99b1863](https://github.com/terwer/siyuan-plugin-blog/commit/99b1863fdfa6d853865b826f3acdf3b775bf969d))
 * 修正请求慢的时候无法加载浮窗问题 ([8de41e6](https://github.com/terwer/siyuan-plugin-blog/commit/8de41e60b0d72486a3ee983921588d89325c5541))
@@ -81,7 +69,6 @@
 * 集成图标模块 ([b814e0d](https://github.com/terwer/siyuan-plugin-blog/commit/b814e0d251378aa445e7c611881693428665c2d8))
 * 修复依赖问题 ([3090ea0](https://github.com/terwer/siyuan-plugin-blog/commit/3090ea0f7ebf40a6dfcb3e95a9d17a18a21f6074))
 * 修复工具类引用问题 ([dfaaf95](https://github.com/terwer/siyuan-plugin-blog/commit/dfaaf95b80019086b02ad389b5a9a1983ac91c72))
-### Miscellaneous
 * adapt vercel build ([d82b50f](https://github.com/terwer/siyuan-plugin-blog/commit/d82b50fa99a5ec53557ad14d5da3902ef699d9e7))
 * add meilisearch_endpoint ([97398b5](https://github.com/terwer/siyuan-plugin-blog/commit/97398b56c48f9ad8ff72e816eb46a3e967d3ed8e))
 * add preset ([c3ee89b](https://github.com/terwer/siyuan-plugin-blog/commit/c3ee89b8fc750ec39ce0e35874a7c640c1b81aba))
