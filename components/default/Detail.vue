@@ -25,10 +25,10 @@
 
 <script setup lang="ts">
 import { usePost } from "~/composables/usePost"
-import { checkExpires, getFirstImageSrc, getSummery } from "~/utils/utils"
+import { checkExpires, getSummery } from "~/utils/utils"
 import { createAppLogger } from "~/common/appLogger"
-import { JsonUtil, StrUtil } from "zhi-common"
-import { PostStatusEnum } from "zhi-blog-api"
+import { JsonUtil } from "zhi-common"
+import { useDom } from "~/composables/useDom"
 
 const logger = createAppLogger("share-page")
 
@@ -43,6 +43,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+const { getFirstImageSrc } = useDom()
 const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost(props.pageId)
 
@@ -55,7 +56,7 @@ if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
   const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
   const desc = getSummery(currentPost.post.description)
-  const headImage = await getFirstImageSrc(currentPost.post.description)
+  const headImage = getFirstImageSrc(currentPost.post.description)
   const seoMeta = {
     title: title,
     ogTitle: title,
@@ -100,7 +101,7 @@ const VNode = () =>
         contenteditable="false"
         data-doc-type="NodeDocument"
       >
-        <VNode v-highlight />
+        <VNode v-highlight v-beauty />
       </div>
     </div>
   </div>

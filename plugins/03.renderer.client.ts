@@ -24,10 +24,10 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { useHljs } from "~/plugins/hljs/useHljs"
+import { StrUtil } from "zhi-common"
 
 /**
- * 代码高亮插件
+ * 页面渲染插件(图片、链接、公式等) - 客户端
  * https://github.com/nuxt/nuxt/issues/13382
  * client = browser only
  *
@@ -36,25 +36,31 @@ import { useHljs } from "~/plugins/hljs/useHljs"
  * @since 0.0.1
  */
 export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("hljs-client-plugin")
-  const { hljs } = useHljs()
-  const env = useRuntimeConfig()
-  logger.info("hljs plugin load")
+  const logger = createAppLogger("renderer-client-plugin")
 
-  vueApp.directive("highlight", {
-    mounted(el, binding) {
-      const w = Number(env.public.waitTime ?? "500")
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("pre code")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs code highlighted")
-      }, w)
+  vueApp.directive("beauty", (el: HTMLElement) => {
+    if (process.env.SSR === "true") {
+      logger.warn("SSR is enabled, render is dealed with nitro, so the client conversion is ignored")
+      return
+    }
 
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("div[class='hljs']")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs div highlighted")
-      }, w)
-    },
+    logger.info("render:html Start dealing with resource images on client", el)
+    // assets
+    const imgs = el.querySelectorAll("img")
+    if (imgs && imgs.length > 0) {
+      imgs.forEach((img) => {
+        const src = img.getAttribute("src") ?? ""
+        if (src.indexOf("assets") > -1) {
+          const env = useRuntimeConfig()
+          const imagePrefix = env.public.siyuanApiUrl
+          const origin = window.location.origin
+          const baseUrl = StrUtil.isEmptyString(imagePrefix) ? origin : imagePrefix
+          const imgUrl = [baseUrl, src].join("/")
+
+          img.setAttribute("src", imgUrl)
+        }
+      })
+      logger.info("The local image has been processed and the picture display has been repaired.")
+    }
   })
 })

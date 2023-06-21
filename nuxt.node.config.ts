@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
+      "process.env.SSR": `"true"`,
     },
     plugins: [],
   },
@@ -95,8 +96,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
     public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
+      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "siyuan",
+      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
     },
   },

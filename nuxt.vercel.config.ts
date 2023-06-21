@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
+      "process.env.SSR": `"true"`,
     },
     plugins: [],
   },

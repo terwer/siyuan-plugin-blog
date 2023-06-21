@@ -22,24 +22,3 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-const getAvailableIP = (ips: string[]): string | null => {
-  const localIPs = ips.filter((ip) => ip !== "127.0.0.1")
-  return localIPs.length > 0 ? localIPs[0] : null
-}
-
-const getLocalIp = () => {
-  const win = window as any
-  const ips = win.siyuan.config.localIPs
-  return getAvailableIP(ips)
-}
-
-export const getAvailableOrigin = () => {
-  const win = window as any
-  const origin = win.location.origin
-  const localIp = getLocalIp()
-  if (localIp) {
-    return origin.replace(/(127.0.0.1|localhost)/, localIp)
-  }
-  return origin
-}
