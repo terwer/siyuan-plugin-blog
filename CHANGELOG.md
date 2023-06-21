@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.2.1...v1.3.0) (2023-06-21)
+
+
+### Features
+
+* 支持显示图片 ([a9a8a0d](https://github.com/terwer/siyuan-plugin-blog/commit/a9a8a0d4e4563fd68653c9639e7f2f2f5b729f26))
+
 ## [1.2.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.2.0...v1.2.1) (2023-06-20)
 ### Bug Fixes
 * 修复 docker 版本、vercel 版本和插件版本存储不一致的问题 ([6478186](https://github.com/terwer/siyuan-plugin-blog/commit/6478186babf740cc0efa1cd8ebae3402ca33213e))
