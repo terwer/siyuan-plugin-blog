@@ -6,7 +6,7 @@ import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
 import copy from "copy-to-clipboard"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { PostStatusEnum } from "zhi-blog-api"
-import { JsonUtil } from "zhi-common"
+import { JsonUtil, StrUtil } from "zhi-common"
 import { useMethodAsync } from "~/composables/useMethodAsync"
 import { useMethod } from "~/composables/useMethod"
 import { sendMessageToParent } from "~/utils/innerIframeEvent"
@@ -44,7 +44,7 @@ useSeoMeta(seoMeta)
 const attrs = JsonUtil.safeParse<any>(post?.attrs ?? "{}", {})
 const formData = reactive({
   shareEnabled: attrs["custom-publish-status"] === PostStatusEnum.PostStatusEnum_Publish,
-  shareLink: `${origin.value}${basePath}/s/${id.value}`,
+  shareLink: `${StrUtil.isEmptyString(setting?.siteUrl) ? origin.value : setting.siteUrl}${basePath}/s/${id.value}`,
   optionEnabled: false,
   expiredTime: attrs["custom-expires"] ?? "0",
   isHome: setting.homePageId === id.value,

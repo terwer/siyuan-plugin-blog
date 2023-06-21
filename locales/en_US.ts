@@ -59,6 +59,10 @@ export default {
   "blog.share": "Share to web",
   "blog.share.options": "Share options",
   "blog.share.setting": "Share setting",
+  "blog.site.url.label": "Custom domain",
+  "blog.site.url": "Custom domain",
+  "blog.site.url.placeholder":
+    "Please fill in the complete address (if the port, you need to include the port), make sure that the domain name has been resolved, for example: http://siyuan.terwergreen.com:6808",
   "blog.site.title.label": "Home title",
   "blog.site.title": "Shallow sea shellfish",
   "blog.site.slogan.label": "Home subtitle",

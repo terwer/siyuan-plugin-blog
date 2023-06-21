@@ -59,6 +59,10 @@ export default {
   "blog.share": "在线分享",
   "blog.share.options": "分享选项",
   "blog.share.setting": "分享设置",
+  "blog.site.url.label": "自定义域名",
+  "blog.site.url": "自定义域名",
+  "blog.site.url.placeholder":
+    "请填写完整地址(如有端口，需要包括端口)，需确保域名已经解析，例如：http://siyuan.terwergreen.com:6808",
   "blog.site.title.label": "主页标题",
   "blog.site.title": "浅海拾贝",
   "blog.site.slogan.label": "主页副标题",
