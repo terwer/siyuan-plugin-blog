@@ -73,8 +73,8 @@ http://localhost:3000
 
 ```
 pnpm nodeuild
-docker compose up --build
-docker push terwer/nuxt3-blog:1.2.0
+docker compose up --build --remove-orphans
+docker push terwer/nuxt3-blog:1.3.0
 ```
 最简单的使用
 

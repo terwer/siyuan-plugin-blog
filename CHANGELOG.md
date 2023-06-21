@@ -1,12 +1,8 @@
 # Changelog
 
 ## [1.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.2.1...v1.3.0) (2023-06-21)
-
-
 ### Features
-
 * 支持显示图片 ([a9a8a0d](https://github.com/terwer/siyuan-plugin-blog/commit/a9a8a0d4e4563fd68653c9639e7f2f2f5b729f26))
-
 ## [1.2.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.2.0...v1.2.1) (2023-06-20)
 ### Bug Fixes
 * 修复 docker 版本、vercel 版本和插件版本存储不一致的问题 ([6478186](https://github.com/terwer/siyuan-plugin-blog/commit/6478186babf740cc0efa1cd8ebae3402ca33213e))
@@ -14,7 +10,6 @@
 * 修正请求慢的时候无法加载浮窗问题 ([8de41e6](https://github.com/terwer/siyuan-plugin-blog/commit/8de41e60b0d72486a3ee983921588d89325c5541))
 * 添加浮窗 loading 提升用户体验 ([7690aaf](https://github.com/terwer/siyuan-plugin-blog/commit/7690aaf5f237c1dca2d0314de6391100b53d8f53))
 ## [1.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.1.2...v1.2.0) (2023-06-20)
-### Features
 * [#51](https://github.com/terwer/siyuan-plugin-blog/issues/51) 修改配置默认值 ([c138880](https://github.com/terwer/siyuan-plugin-blog/commit/c138880a513a4c7becaea59d783aaac645d83630))
 * add siyuan build ([8b8766f](https://github.com/terwer/siyuan-plugin-blog/commit/8b8766fcfc068ac5bacd1f2b90ea66256eb21605))
 * add vercel build ([a3e1dd4](https://github.com/terwer/siyuan-plugin-blog/commit/a3e1dd45468aa59c8fbfd10ac26752f2bdb87614))
