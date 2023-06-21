@@ -50,7 +50,7 @@ export const isUseSiyuanApi = () => {
   const env = useRuntimeConfig()
   // docker - 在 .env.docker 配置 NUXT_PUBLIC_DEFAULT_TYPE=siyuan
   // vercel - 在环境变量配置 NUXT_PUBLIC_DEFAULT_TYPE=siyuan
-  // node - 启动参数加 NUXT_PUBLIC_DEFAULT_TYPE=siyuan node NUXT_PUBLIC_SIYUAN_API_URL=http://127.0.0.1:6806 .output/server.,js
+  // node - 启动参数加 NUXT_PUBLIC_DEFAULT_TYPE=siyuan node NUXT_PUBLIC_SIYUAN_API_URL=http://127.0.0.1:6806
   // 插件SPA(PC客户端) - nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
   // 插件SPA(Docker浏览器客户端)- nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
   // 插件SPA(本地客户端浏览器)- nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
