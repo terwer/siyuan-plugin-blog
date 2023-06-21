@@ -3,10 +3,13 @@ import { version } from "~/package.json"
 import { DateUtil } from "zhi-common"
 import { useI18n } from "vue-i18n"
 import { useThemeMode } from "~/composables/useThemeMode"
+import { useSiyuanDevice } from "~/composables/useSiyuanDevice"
+import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
 
 // uses
 const { t } = useI18n()
 const { colorMode, toggleDark } = await useThemeMode()
+const { getHome } = useBaseUrl()
 
 // datas
 const v = ref(version)
@@ -20,6 +23,12 @@ const goGithub = () => {
 const goAbout = () => {
   window.open("https://blog.terwer.space/about")
 }
+
+// methods
+const goHome = async () => {
+  const home = getHome()
+  window.open(home)
+}
 </script>
 
 <template>
@@ -30,6 +39,9 @@ const goAbout = () => {
 
       <span class="text">v{{ v }}&nbsp;</span>
 
+      <span class="text s-dark" @click="goHome()">{{ t("go.home") }}</span>
+
+      <span class="text">.</span>
       <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
 
       <span class="text">.</span>

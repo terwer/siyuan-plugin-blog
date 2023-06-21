@@ -25,13 +25,14 @@
 
 import * as cheerio from "cheerio"
 import { createAppLogger } from "~/common/appLogger"
-import { Cheerio } from "cheerio"
+import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
 
 /**
  * DOM 相关操作钩子
  */
-export const useDom = () => {
+export const useServerAssets = () => {
   const logger = createAppLogger("use-dom")
+  const { getServerBaseUrl } = useBaseUrl()
 
   /**
    * 获取HTML代码中第一个<img>元素的src属性值
@@ -64,17 +65,16 @@ export const useDom = () => {
    * @param {string} html - HTML 代码
    * @returns {string} 添加前缀后的 HTML 代码
    */
-  const addAssetsPrefix = (html: string): string => {
-    const env = useRuntimeConfig()
-    const imagePrefix = env.public.siyuanApiUrl
-    logger.debug("imagePrefix=>", imagePrefix)
+  const addServerAssetsPrefix = (html: string): string => {
+    const baseUrl = getServerBaseUrl()
+    logger.debug("baseUrl=>", baseUrl)
 
     // 使用 cheerio 加载 HTML 代码
     const $ = cheerio.load(html)
     const images = $("img")
     for (const image of images) {
       const src = image.attribs["src"]
-      const newImageUrl = [imagePrefix, src].join("/")
+      const newImageUrl = [baseUrl, src].join("/")
       logger.debug("image src=>", src)
       logger.debug("newImageUrl=>", newImageUrl)
 
@@ -85,5 +85,5 @@ export const useDom = () => {
     return $.html()
   }
 
-  return { getFirstImageSrc, addAssetsPrefix }
+  return { getFirstImageSrc, addServerAssetsPrefix }
 }

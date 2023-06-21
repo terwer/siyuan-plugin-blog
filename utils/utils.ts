@@ -24,7 +24,6 @@
  */
 
 import { HtmlUtil } from "zhi-common"
-import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 
 const logger = createAppLogger("app-utils")
@@ -32,18 +31,6 @@ const logger = createAppLogger("app-utils")
 export const getSummery = (html: string) => {
   const text = HtmlUtil.removeMdWidgetTag(html)
   return HtmlUtil.parseHtml(text, 250)
-}
-
-export const isInSiyuanOrSiyuanNewWin = () => {
-  const deviceType = DeviceDetection.getDevice()
-  // 三种情况，主窗口、挂件、新窗口
-  const isSiyuanOrSiyuanNewWin =
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_MainWin ||
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_NewWin ||
-    deviceType === DeviceTypeEnum.DeviceType_Siyuan_Widget
-  logger.debug("deviceType=>", deviceType)
-  logger.debug("isSiyuanOrSiyuanNewWin=>", String(isSiyuanOrSiyuanNewWin))
-  return isSiyuanOrSiyuanNewWin
 }
 
 export const isUseSiyuanApi = () => {

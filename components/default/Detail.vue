@@ -28,7 +28,7 @@ import { usePost } from "~/composables/usePost"
 import { checkExpires, getSummery } from "~/utils/utils"
 import { createAppLogger } from "~/common/appLogger"
 import { JsonUtil } from "zhi-common"
-import { useDom } from "~/composables/useDom"
+import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 
 const logger = createAppLogger("share-page")
 
@@ -43,7 +43,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
-const { getFirstImageSrc } = useDom()
+const { getFirstImageSrc } = useServerAssets()
 const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost(props.pageId)
 
@@ -101,7 +101,7 @@ const VNode = () =>
         contenteditable="false"
         data-doc-type="NodeDocument"
       >
-        <VNode v-highlight v-beauty />
+        <VNode v-highlight v-beauty v-domparser />
       </div>
     </div>
   </div>

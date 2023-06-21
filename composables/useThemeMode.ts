@@ -76,7 +76,7 @@ export const useThemeMode = async () => {
   const hljsV = "11.5.0"
   const siyuanLightTheme = setting?.theme?.lightTheme ?? "Zhihu"
   const siyuanDarkTheme = setting?.theme?.darkTheme ?? "Zhihu"
-  const siyuanThemeV = "0.0.6"
+  const siyuanThemeV = "0.0.7"
   const detectedMode = setting?.theme?.mode ?? color.preference
   const isDarkMode = detectedMode === "dark"
   useHead({
