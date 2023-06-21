@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 # 使用 Vercel 构建配置
 echo "Using Vercel build config as SSR build."

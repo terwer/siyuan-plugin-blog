@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 # 使用 Node 构建配置
 echo "Using Node build config as SSR serve"

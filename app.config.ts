@@ -27,6 +27,7 @@ type ThemeType = "system" | "dark" | "light"
 
 interface AppConfig {
   lang?: string
+  siteUrl?: string
   siteTitle?: string
   siteSlogan?: string
   siteDescription?: string
@@ -44,6 +45,7 @@ interface AppConfig {
 
 export default defineAppConfig<AppConfig>({
   lang: "zh_CN",
+  siteUrl: "",
   siteTitle: "浅海拾贝",
   siteSlogan: "寻找未知的技术拼图",
   siteDescription: "专注于Java后端开发及服务端、软件架构、微服务、自然语言处理等领域的技术分享。",

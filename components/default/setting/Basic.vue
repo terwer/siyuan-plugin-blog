@@ -41,6 +41,7 @@ useSeoMeta(seoMeta)
 
 // datas
 const formData = reactive({
+  siteUrl: setting.siteUrl,
   homePageId: setting.homePageId,
   themes: {
     light: [
@@ -71,6 +72,7 @@ const formData = reactive({
 // methods
 const onSubmit = async () => {
   try {
+    setting.siteUrl = formData.siteUrl
     setting.homePageId = formData.homePageId
     setting.theme ||= {}
     setting.theme.lightTheme = formData.lightTheme
@@ -90,6 +92,9 @@ const onSubmit = async () => {
 <template>
   <div class="basic-setting">
     <el-form label-width="85px">
+      <el-form-item :label="t('blog.site.url.label')">
+        <el-input v-model="formData.siteUrl" :placeholder="t('blog.site.url.placeholder')" />
+      </el-form-item>
       <el-form-item :label="t('setting.basic.homePageId')">
         <el-input v-model="formData.homePageId" />
       </el-form-item>

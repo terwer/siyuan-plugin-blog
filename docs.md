@@ -60,7 +60,7 @@ pnpm nodeBuild
 接着启动 node 服务器
 
 ```
-node .output/server/index.mjs
+NUXT_PUBLIC_DEFAULT_TYPE=siyuan node NUXT_PUBLIC_SIYUAN_API_URL=http://127.0.0.1:6806 node .output/server/index.mjs
 ```
 
 然后打开
@@ -74,7 +74,7 @@ http://localhost:3000
 ```
 pnpm nodeuild
 docker compose up --build --remove-orphans
-docker push terwer/nuxt3-blog:1.3.0
+docker push terwer/nuxt3-blog:latest
 ```
 最简单的使用
 

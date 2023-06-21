@@ -74,6 +74,10 @@ export const registerIframeEvent = (pluginInstance: SiyuanBlog) => {
   // 监听 message 事件
   window.addEventListener("message", (event) => {
     const iframe = document.getElementById(popContentIframeId) as HTMLIFrameElement
+    if (!iframe) {
+      logger.debug(`popContent not show, ignore`)
+      return
+    }
 
     // 判断是否是来自指定 iframe 的消息
     if (event.source === iframe.contentWindow) {
