@@ -23,11 +23,11 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { useHljs } from "~/plugins/hljs/useHljs"
+import { createAppLogger } from "../../common/appLogger"
+import { useDom } from "../../composables/useDom"
 
 /**
- * 代码高亮插件
+ * 页面渲染插件(图片、链接等) - 服务端
  * https://github.com/nuxt/nuxt/issues/13382
  * client = browser only
  *
@@ -35,26 +35,13 @@ import { useHljs } from "~/plugins/hljs/useHljs"
  * @version 1.0.0
  * @since 0.0.1
  */
-export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("hljs-client-plugin")
-  const { hljs } = useHljs()
-  const env = useRuntimeConfig()
-  logger.info("hljs plugin load")
+export default defineNitroPlugin((nitroApp) => {
+  const logger = createAppLogger("renderer-nitro-plugin")
+  const { addAssetsPrefix } = useDom()
 
-  vueApp.directive("highlight", {
-    mounted(el, binding) {
-      const w = Number(env.public.waitTime ?? "500")
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("pre code")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs code highlighted")
-      }, w)
-
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("div[class='hljs']")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs div highlighted")
-      }, w)
-    },
+  nitroApp.hooks.hook("render:html", (html) => {
+    // assets
+    logger.info("render:html Start dealing with resource images on nitro server")
+    html.body[0] = addAssetsPrefix(html.body[0])
   })
 })

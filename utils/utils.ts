@@ -24,7 +24,6 @@
  */
 
 import { HtmlUtil } from "zhi-common"
-import * as cheerio from "cheerio"
 import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 
@@ -33,19 +32,6 @@ const logger = createAppLogger("app-utils")
 export const getSummery = (html: string) => {
   const text = HtmlUtil.removeMdWidgetTag(html)
   return HtmlUtil.parseHtml(text, 250)
-}
-
-export const getFirstImageSrc = async (html: string) => {
-  // 初始化Cheerio实例
-  const $ = cheerio.load(html)
-  // 获取第一个<img>元素
-  const firstImg = $("img").first()
-  if (firstImg.length === 0) {
-    // 没有找到<img>元素，返回空字符串
-    return ""
-  }
-  // 返回<img>元素的src属性
-  return firstImg.attr("src") || ""
 }
 
 export const isInSiyuanOrSiyuanNewWin = () => {
@@ -64,7 +50,7 @@ export const isUseSiyuanApi = () => {
   const env = useRuntimeConfig()
   // docker - 在 .env.docker 配置 NUXT_PUBLIC_DEFAULT_TYPE=siyuan
   // vercel - 在环境变量配置 NUXT_PUBLIC_DEFAULT_TYPE=siyuan
-  // node - 启动参数加 NUXT_PUBLIC_DEFAULT_TYPE=siyuan node .output/server.,js
+  // node - 启动参数加 NUXT_PUBLIC_DEFAULT_TYPE=siyuan node NUXT_PUBLIC_SIYUAN_API_URL=http://127.0.0.1:6806 .output/server.,js
   // 插件SPA(PC客户端) - nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
   // 插件SPA(Docker浏览器客户端)- nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
   // 插件SPA(本地客户端浏览器)- nuxt.siyuan.config.ts 写死 NUXT_PUBLIC_DEFAULT_TYPE: siyuan
@@ -78,9 +64,9 @@ export const checkExpires = (attrs: any) => {
   const expiredTime = Number(attrs["custom-expires"])
   const publishTime = Number(attrs["custom-publish-time"])
   const now = new Date().getTime()
-  logger.info("expiredTime=>", expiredTime)
-  logger.info("publishTime=>", publishTime)
-  logger.info("now=>", now)
+  // logger.info("expiredTime=>", expiredTime)
+  // logger.info("publishTime=>", publishTime)
+  // logger.info("now=>", now)
   if (!isNaN(expiredTime) && !isNaN(publishTime) && expiredTime > 0 && publishTime > 0) {
     // 计算过期时间的时间戳
     const expires = publishTime + Number(expiredTime) * 1000

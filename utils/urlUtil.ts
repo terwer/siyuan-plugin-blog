@@ -23,38 +23,25 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { useHljs } from "~/plugins/hljs/useHljs"
+import { SiyuanDevice } from "zhi-device"
 
-/**
- * 代码高亮插件
- * https://github.com/nuxt/nuxt/issues/13382
- * client = browser only
- *
- * @author terwer
- * @version 1.0.0
- * @since 0.0.1
- */
-export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("hljs-client-plugin")
-  const { hljs } = useHljs()
-  const env = useRuntimeConfig()
-  logger.info("hljs plugin load")
+const getAvailableIP = (ips: string[]): string | null => {
+  const localIPs = ips.filter((ip) => ip !== "127.0.0.1")
+  return localIPs.length > 0 ? localIPs[0] : null
+}
 
-  vueApp.directive("highlight", {
-    mounted(el, binding) {
-      const w = Number(env.public.waitTime ?? "500")
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("pre code")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs code highlighted")
-      }, w)
+const getLocalIp = () => {
+  const win = SiyuanDevice.siyuanWindow()
+  const ips = win.siyuan.config.localIPs
+  return getAvailableIP(ips)
+}
 
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("div[class='hljs']")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs div highlighted")
-      }, w)
-    },
-  })
-})
+export const getAvailableOrigin = () => {
+  const win = SiyuanDevice.siyuanWindow()
+  const origin = win.location.origin
+  const localIp = getLocalIp()
+  if (localIp) {
+    return origin.replace(/(127.0.0.1|localhost)/, localIp)
+  }
+  return origin
+}

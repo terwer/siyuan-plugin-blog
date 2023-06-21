@@ -26,7 +26,7 @@ import SiyuanBlog from "./index"
 import { icons } from "./utils/svg"
 import { Dialog, Menu } from "siyuan"
 import PageUtil from "~/siyuan/utils/pageUtil"
-import { getAvailableOrigin } from "~/siyuan/utils/utils"
+import { getAvailableOrigin } from "~/utils/urlUtil"
 import { contentElement, contentHtml } from "~/siyuan/customElement"
 
 /**
