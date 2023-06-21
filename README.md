@@ -27,21 +27,25 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 ## TODO
 
-* [ ] Support setting a sharing password for a single page
-* [ ] Integrate popular themes that are currently available
-* [ ] Support document alias access
-* [ ] Support replacing image hosting links
-* [ ] Display MD original text
-* [ ] Display KMD original text
-* [ ] Document tree for sub-documents
-* [ ] Page outline
-* [ ] Tags and summaries
-* [ ] Custom properties
-* [ ] Image zoom effect
-* [ ] Latex formula rendering
-* [ ] PlantUML chart support
-* [ ] Echarts chart support
-* [ ] Support for SVG with the ribbon, eg `<use xlink:href="#iconMore"></use>`
+- [X] Support for replacing image links
+- [X] Support for custom domain names
+- [X] Support for internal and external links
+- [X] Support task list
+- [ ] Bulk management of shared pages
+- [ ] Support single page setting sharing password
+- [ ] Integrate popular topics that are currently available
+- [ ] Document alias access is supported
+- [ ] Support displaying MD originals
+- [ ] Support displaying KMD original text
+- [ ] Sub document tree
+- [ ] Page outline
+- [ ] tags, summary
+- [ ] Custom properties
+- [ ] Image enlargement effect
+- [ ] Latex formula rendering
+- [ ] plantuml chart support
+- [ ] echats chart support
+- [ ] Support svg with svOrigin, e.g. '<use xlink:href="#iconMore'>'</use>
 
 ## Changelog
 

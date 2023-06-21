@@ -24,30 +24,30 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { StrUtil } from "zhi-common"
-import { useClientAssets } from "~/plugins/renderer/useClientAssets"
+import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
 
 /**
- * 页面渲染插件(图片、链接、公式等) - 客户端
- * https://github.com/nuxt/nuxt/issues/13382
- * client = browser only
- *
- * @author terwer
- * @version 1.0.0
- * @since 0.0.1
+ * 处理客户端资源文件地址
  */
-export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("renderer-client-plugin")
-  const { addClientAssetsPrefix } = useClientAssets()
+export const useClientAssets = () => {
+  const logger = createAppLogger("hljs-client-plugin")
+  const { getClientBaseUrl } = useBaseUrl()
 
-  vueApp.directive("beauty", (el: HTMLElement) => {
-    if (process.env.SSR === "true") {
-      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
-      return
+  const addClientAssetsPrefix = (el: HTMLElement) => {
+    const imgs = el.querySelectorAll("img")
+    if (imgs && imgs.length > 0) {
+      imgs.forEach((img) => {
+        const src = img.getAttribute("src") ?? ""
+        if (src.indexOf("assets") > -1) {
+          const baseUrl = getClientBaseUrl()
+          const imgUrl = [baseUrl, src].join("/")
+
+          img.setAttribute("src", imgUrl)
+        }
+      })
+      logger.info("The local image has been processed and the picture display has been repaired.")
     }
+  }
 
-    // assets
-    logger.info("Start handling images on client", el)
-    addClientAssetsPrefix(el)
-  })
-})
+  return { addClientAssetsPrefix }
+}

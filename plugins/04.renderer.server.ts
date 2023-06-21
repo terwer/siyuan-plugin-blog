@@ -23,9 +23,6 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { useHljs } from "~/plugins/hljs/useHljs"
-
 // stub - block nuxt getSSRProps error
 export default defineNuxtPlugin(({ vueApp }) => {
   vueApp.directive("beauty", {})

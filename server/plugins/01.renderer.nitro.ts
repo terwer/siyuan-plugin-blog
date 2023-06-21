@@ -24,7 +24,7 @@
  */
 
 import { createAppLogger } from "../../common/appLogger"
-import { useDom } from "../../composables/useDom"
+import { useServerAssets } from "../../plugins/renderer/useServerAssets"
 
 /**
  * 页面渲染插件(图片、链接等) - 服务端
@@ -37,11 +37,11 @@ import { useDom } from "../../composables/useDom"
  */
 export default defineNitroPlugin((nitroApp) => {
   const logger = createAppLogger("renderer-nitro-plugin")
-  const { addAssetsPrefix } = useDom()
+  const { addServerAssetsPrefix } = useServerAssets()
 
   nitroApp.hooks.hook("render:html", (html) => {
     // assets
-    logger.info("render:html Start dealing with resource images on nitro server")
-    html.body[0] = addAssetsPrefix(html.body[0])
+    logger.info("Start handling images on nitro server")
+    html.body[0] = addServerAssetsPrefix(html.body[0])
   })
 })

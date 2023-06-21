@@ -23,31 +23,7 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { StrUtil } from "zhi-common"
-import { useClientAssets } from "~/plugins/renderer/useClientAssets"
-
-/**
- * 页面渲染插件(图片、链接、公式等) - 客户端
- * https://github.com/nuxt/nuxt/issues/13382
- * client = browser only
- *
- * @author terwer
- * @version 1.0.0
- * @since 0.0.1
- */
+// stub - block nuxt getSSRProps error
 export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("renderer-client-plugin")
-  const { addClientAssetsPrefix } = useClientAssets()
-
-  vueApp.directive("beauty", (el: HTMLElement) => {
-    if (process.env.SSR === "true") {
-      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
-      return
-    }
-
-    // assets
-    logger.info("Start handling images on client", el)
-    addClientAssetsPrefix(el)
-  })
+  vueApp.directive("domparser", {})
 })
