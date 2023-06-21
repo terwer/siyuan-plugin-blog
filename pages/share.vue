@@ -6,9 +6,10 @@ import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
 import copy from "copy-to-clipboard"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { PostStatusEnum } from "zhi-blog-api"
-import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
+import { JsonUtil } from "zhi-common"
 import { useMethodAsync } from "~/composables/useMethodAsync"
 import { useMethod } from "~/composables/useMethod"
+import { sendMessageToParent } from "~/utils/innerIframeEvent"
 
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
@@ -56,7 +57,7 @@ const { optionState, optionToggle } = useShareOptionToggle(formData.optionEnable
 // }
 
 const goHelp = async () => {
-  window.open("https://blog.terwer.space/docs")
+  window.open("https://blog.terwer.space/s/20230621001422-xsimx5v")
 }
 
 const copyWebLink = () => {
