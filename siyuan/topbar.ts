@@ -23,11 +23,11 @@
  */
 
 import SiyuanBlog from "./index"
-import { icons } from "./utils/svg"
-import { Dialog, Menu } from "siyuan"
+import {icons} from "./utils/svg"
+import {Dialog, Menu} from "siyuan"
 import PageUtil from "~/siyuan/utils/pageUtil"
-import { getAvailableOrigin } from "~/utils/urlUtil"
-import { contentElement, contentHtml } from "~/siyuan/customElement"
+import {getAvailableOrigin} from "~/utils/urlUtil"
+import {contentElement, contentHtml} from "~/siyuan/customElement"
 
 /**
  * 顶栏按钮
@@ -48,10 +48,10 @@ export function initTopbar(pluginInstance: SiyuanBlog) {
   topBarElement.addEventListener("click", async () => {
     const sharePage =
       "/plugins/siyuan-blog/#/share?id=" + PageUtil.getPageId() + "&origin=" + getAvailableOrigin() + "&isSsr=false"
-    const popView = showPopView(pluginInstance, topBarElement, sharePage, {
+    pluginInstance.popViewLoaded = false
+    pluginInstance.popView = showPopView(pluginInstance, topBarElement, sharePage, {
       showLoading: true,
     })
-    pluginInstance.popView = popView
   })
 
   // topBarElement.addEventListener("click", async () => {
@@ -187,12 +187,10 @@ const showPopView = (
     popContent.appendChild(loadingElement)
 
     // 定义cancelLoading函数，用于取消loading
-    const cancelLoading = () => {
+    // 在option中添加cancelLoading函数
+    options.cancelLoading = () => {
       popContent?.removeChild(loadingElement)
     }
-
-    // 在option中添加cancelLoading函数
-    options.cancelLoading = cancelLoading
   }
 
   // 填充内容
