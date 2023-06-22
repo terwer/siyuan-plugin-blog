@@ -30,8 +30,8 @@ dependencies:
     specifier: ^2.3.0
     version: 2.3.0
   zhi-siyuan-api:
-    specifier: ^1.22.0
-    version: 1.22.0
+    specifier: ^1.23.0
+    version: 1.23.0
 
 devDependencies:
   '@element-plus/nuxt':
@@ -9017,8 +9017,8 @@ packages:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
     dev: true
 
-  /zhi-blog-api@1.10.0:
-    resolution: {integrity: sha512-KMY8FpSf8zf9nzc9zBfYy0dLHea5myQpfuNd9IbUvJGX2GfYsgf5NljujDvuwojtv99escl0j57Cz2AChFMMLw==}
+  /zhi-blog-api@1.11.0:
+    resolution: {integrity: sha512-16feAh1ek/jSqRvxgZS6szdPgvgZBYSisbcCYur30TB2q1oI/g+wYgV9nFSgr8IyrJ6/jzZSClRFLivNCz+z1g==}
     dependencies:
       zhi-lib-base: 0.4.1
     dev: false
@@ -9037,10 +9037,10 @@ packages:
     resolution: {integrity: sha512-/wwfo0Z/86E5BW+mXN9amWAMEi0KLEoiOTNFb6BBtVuhDhypmZLRmfIvFk+E+UJU7bedTnkc6mRLAp7D+O9piw==}
     dev: false
 
-  /zhi-siyuan-api@1.22.0:
-    resolution: {integrity: sha512-VRJiJOp+Bp3xsAkfGQwSUHfaW2hiF9XspXCP/2KOWa7UeVbm5ED7aPxPOYpj4XdVmQLUbCkuLKi6VMv7Qy7AIA==}
+  /zhi-siyuan-api@1.23.0:
+    resolution: {integrity: sha512-2GLwHOK5N75cQB3ROP6pkqdycMlFQc5k6uG4/N5avPr4gbKZxovO/P4+ENpQaCMUgFzzuecfrrbB0YwcCJ4DCA==}
     dependencies:
-      zhi-blog-api: 1.10.0
+      zhi-blog-api: 1.11.0
       zhi-common: 1.11.2
       zhi-lib-base: 0.4.1
     dev: false

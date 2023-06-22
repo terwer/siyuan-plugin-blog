@@ -3,7 +3,6 @@ import { version } from "~/package.json"
 import { DateUtil } from "zhi-common"
 import { useI18n } from "vue-i18n"
 import { useThemeMode } from "~/composables/useThemeMode"
-import { useSiyuanDevice } from "~/composables/useSiyuanDevice"
 import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
 
 // uses

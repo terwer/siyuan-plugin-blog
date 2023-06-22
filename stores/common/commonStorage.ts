@@ -23,12 +23,11 @@
  * questions.
  */
 
-import { StorageLikeAsync } from "@vueuse/core"
-import { createAppLogger } from "~/common/appLogger"
-import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
-import { SiyuanDevice } from "zhi-device"
-import { StrUtil } from "zhi-common"
-import { isUseSiyuanApi } from "~/utils/utils"
+import {StorageLikeAsync} from "@vueuse/core"
+import {createAppLogger} from "~/common/appLogger"
+import {SiyuanDevice} from "zhi-device"
+import {StrUtil} from "zhi-common"
+import {useSiyuanApi} from "~/composables/api/useSiyuanApi"
 
 /**
  * 通用存储实现，实现了 `StorageLikeAsync` 接口。
@@ -40,19 +39,18 @@ import { isUseSiyuanApi } from "~/utils/utils"
  */
 class CommonStorage implements StorageLikeAsync {
   private readonly logger
-  private readonly useSiyuanApi
+  private readonly storageViaSiyuanApi
   private readonly kernelApi
   public readonly key
 
   constructor(storageKey: string) {
     this.logger = createAppLogger("common-storage")
-    this.useSiyuanApi = isUseSiyuanApi()
 
-    const env = useRuntimeConfig()
-    const siyuanConfig = new SiyuanConfig(env.public.siyuanApiUrl, env.siyuanAuthToken)
-    this.kernelApi = new SiyuanKernelApi(siyuanConfig)
+    const { isStorageViaSiyuanApi, kernelApi } = useSiyuanApi()
+    this.storageViaSiyuanApi = isStorageViaSiyuanApi()
+    this.kernelApi = kernelApi
 
-    if (this.useSiyuanApi) {
+    if (this.storageViaSiyuanApi) {
       this.key = storageKey
     } else {
       const fileName = storageKey.split("/").pop() ?? ""
@@ -69,7 +67,7 @@ class CommonStorage implements StorageLikeAsync {
   public async getItem(key: string): Promise<string | null> {
     this.logger.info(`Retrieving value for '${key}' from CommonStorage.`)
     let ret
-    if (this.useSiyuanApi) {
+    if (this.storageViaSiyuanApi) {
       // 如果当前运行在思源笔记中，则直接返回 null
       try {
         ret = (await this.kernelApi.getFile(key, "text")) ?? ""
@@ -115,7 +113,7 @@ class CommonStorage implements StorageLikeAsync {
    */
   public async setItem(key: string, value: string): Promise<void> {
     this.logger.info(`Setting value for '${key}' in CommonStorage to '${value}'.`)
-    if (this.useSiyuanApi) {
+    if (this.storageViaSiyuanApi) {
       // 如果当前运行在思源笔记中，则直接返回空字符串
       await this.kernelApi.saveTextData(key, value)
       this.logger.info(`Use SiYuan Api LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
