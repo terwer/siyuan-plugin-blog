@@ -44,7 +44,7 @@
     "@pinia/nuxt": "^0.4.11",
     "cheerio": "1.0.0-rc.12",
     "copy-to-clipboard": "^3.3.3",
-    "element-plus": "^2.3.6",
+    "element-plus": "^2.3.7",
     "highlight.js": "^11.8.0",
     "pinia": "^2.1.4",
     "zhi-device": "^2.3.0",
