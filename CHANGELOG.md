@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.6.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.5.0...v1.6.0) (2023-06-25)
+
+
+### Features
+
+* PC客户端支持切换ip [实验性] ([de35c96](https://github.com/terwer/siyuan-plugin-blog/commit/de35c96f22552671b66caefef486d152a853374c))
+* 支持临时开启预览权限，仅发布工具使用 [实验性] ([87c2c52](https://github.com/terwer/siyuan-plugin-blog/commit/87c2c522e4cdd74856ab0a70965416b021e30f51))
+* 支持临时开启预览权限，仅发布工具使用 [实验性] ([2cde705](https://github.com/terwer/siyuan-plugin-blog/commit/2cde705b8f8f0aa2adebff559938089d54a9f1a8))
+* 支持配置 siyuan-api 请求 cookie [实验性] ([9b092c4](https://github.com/terwer/siyuan-plugin-blog/commit/9b092c4cab4439d2e78d868a373713592aa8dc61))
+* 支持配置 siyuan-api 请求 cookie [实验性] ([487fbf5](https://github.com/terwer/siyuan-plugin-blog/commit/487fbf5bece5d8bab94f5e90c28d4170a59589c5))
+* 解决链接展示不明显问题 ([0f1d622](https://github.com/terwer/siyuan-plugin-blog/commit/0f1d6227f1d8c376075ee14d041e92ddaf243bd1))
+
+
+### Bug Fixes
+
+* **deps:** bump element-plus from 2.3.6 to 2.3.7 ([7ca61d4](https://github.com/terwer/siyuan-plugin-blog/commit/7ca61d4df08e1ed1a38f3553cb315ad5c3d947dd))
+* **deps:** bump zhi-siyuan-api from 1.22.0 to 1.23.0 ([4716dba](https://github.com/terwer/siyuan-plugin-blog/commit/4716dba0e7328262db782d1f11b471ad134b2a03))
+* 解决自动计算高度报错问题 ([e8ecbd8](https://github.com/terwer/siyuan-plugin-blog/commit/e8ecbd8ab7b8a23f9cf4934cd89810b58cb787b0))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump @nuxt/devtools from 0.6.1 to 0.6.2 ([017ecc2](https://github.com/terwer/siyuan-plugin-blog/commit/017ecc2a3953d76757ac9868781aa1917055a241))
+* **deps-dev:** bump @nuxtjs/color-mode from 3.2.0 to 3.3.0 ([4e2e34f](https://github.com/terwer/siyuan-plugin-blog/commit/4e2e34f3114ee381813fe12e2e765e6c48aec162))
+* **deps-dev:** bump @nuxtjs/i18n-edge ([de8a643](https://github.com/terwer/siyuan-plugin-blog/commit/de8a64360136530efe18c9534d7912aed852d74d))
+* **deps-dev:** bump sass from 1.63.5 to 1.63.6 ([5f14820](https://github.com/terwer/siyuan-plugin-blog/commit/5f1482039f9ec6f1c8e4dec370826a1e879efa3a))
+
 ## [1.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.4.0...v1.5.0) (2023-06-21)
 ### Features
 * 支持内部链接和外部链接 ([605abd8](https://github.com/terwer/siyuan-plugin-blog/commit/605abd89bdf7edd9762586ce30d00dd3241069c7))
