@@ -26,7 +26,7 @@
 import CommonStorage from "~/stores/common/commonStorage"
 import { StorageSerializers } from "@vueuse/core"
 import { createAppLogger } from "~/common/appLogger"
-import { ObjectUtil, StrUtil } from "zhi-common"
+import { ObjectUtil } from "zhi-common"
 
 /**
  * https://vueuse.org/core/useStorageAsync/

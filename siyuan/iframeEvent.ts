@@ -28,8 +28,7 @@ import { createAppLogger } from "~/common/appLogger"
 import SiyuanBlog from "~/siyuan/index"
 
 const logger = createAppLogger("iframe-events")
-let added = false
-const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
+const adjustIframeHeight = (pluginInstance: SiyuanBlog, iframeId: string, customHeight?: number) => {
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement
   let counter = 0
   let lastHeight = "0px" // 将初始高度设为 "0px"
@@ -41,9 +40,9 @@ const adjustIframeHeight = (iframeId: string, customHeight?: number) => {
     const iframeBody = iframe?.contentWindow?.document.getElementById("__nuxt") as HTMLElement
     let height = `${customHeight ?? iframeBody?.scrollHeight ?? defaultHeight}px`
     if (height === lastHeight) {
-      if (!added) {
+      if (!pluginInstance.isAddHeight) {
         height = height + 10
-        added = true
+        pluginInstance.isAddHeight = true
         logger.info(`Added 10px height for ${iframeId}`)
       }
       counter++
@@ -85,7 +84,10 @@ export const registerIframeEvent = (pluginInstance: SiyuanBlog) => {
       // 判断消息类型
       if (data.type === "updateHeight") {
         logger.info(`Try to cancel loading`)
-        pluginInstance.popView.cancelLoading()
+        if (!pluginInstance.popViewLoaded) {
+          pluginInstance.popView.cancelLoading()
+          pluginInstance.popViewLoaded = true
+        }
 
         logger.info(`Received update height message from iframe`)
         const height = data.height
@@ -94,7 +96,7 @@ export const registerIframeEvent = (pluginInstance: SiyuanBlog) => {
           iframe.height = `${height}px`
           logger.info(`Updated iframe height to ${height}px`)
         } else {
-          adjustIframeHeight(popContentIframeId)
+          adjustIframeHeight(pluginInstance, popContentIframeId)
           logger.info(`Auto adjust iframe height to ${height}px`)
         }
       } else {

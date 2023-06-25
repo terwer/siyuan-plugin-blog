@@ -41,8 +41,6 @@ export const useServerAssets = () => {
    * @returns {string} 第一个<img>元素的src属性值，如果不存在则返回空字符串
    */
   const getFirstImageSrc = (html: string): string => {
-    logger.info(`getFirstImageSrc called with argument ${html}`) // 记录日志
-
     // 使用 cheerio 加载 HTML 代码
     const $ = cheerio.load(html)
 

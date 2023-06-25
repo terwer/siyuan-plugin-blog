@@ -111,6 +111,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
     siyuanAuthToken: "",
+    // siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
+    siyuanCookie: "",
     public: {
       // defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
       defaultType: "siyuan",

@@ -89,4 +89,7 @@ export default {
   "blog.index.home.exists": "对不起，该页面已设置为主页，请先移除主页再取消分享",
   "share.link.expires.error": "请输入必须为一个合法且不大于 7 天的数字！如需永久生效，请输入0",
   "go.home": "打开主页",
+  "form.select": "请选择",
+  "form.nodata": "暂无数据",
+  "change.ip.title": "切换IP",
 }

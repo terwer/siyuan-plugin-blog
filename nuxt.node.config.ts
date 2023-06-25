@@ -95,6 +95,7 @@ export default defineNuxtConfig({
   // 环境变量
   runtimeConfig: {
     siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
     public: {
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "siyuan",
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",

@@ -49,7 +49,7 @@ await setCurrentPost(props.pageId)
 
 // datas
 const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
-const shareEnabled = attrs["custom-publish-status"] === "publish"
+const shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
 const isExpires = checkExpires(attrs)
 logger.info(`current document status,shareEnabled => ${shareEnabled}, isExpires => ${isExpires}`)
 if (!props.overrideSeo) {

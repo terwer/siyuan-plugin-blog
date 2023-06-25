@@ -35,6 +35,8 @@ export default class SiyuanBlog extends Plugin {
   public isMobile
   public logger
   public popView: any
+  public popViewLoaded = false
+  public isAddHeight = false
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)

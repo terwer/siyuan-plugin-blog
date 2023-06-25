@@ -82,6 +82,11 @@ docker push terwer/nuxt3-blog:latest
 docker compose -f docker-compose-hub.yml up --build --remove-orphans
 ```
 
+```
+Error response from daemon: network 84c2ef99951fa08c37c3bf3f6b484bf149bfb283142a306ba285af4053961eaa not found 
+--force-recreate
+```
+
 搭配思源：https://github.com/terwer/my-note-docker/blob/main/docker-compose.yml
 
 直接使用已打包的，参考 `docker-compose-hub.yml`，可能需要配置 `.env.docker`，可以复制 `.env.docker.example`，然后修改即可
