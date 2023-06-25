@@ -10,6 +10,7 @@ import { JsonUtil, StrUtil } from "zhi-common"
 import { useMethodAsync } from "~/composables/useMethodAsync"
 import { useMethod } from "~/composables/useMethod"
 import { sendMessageToParent } from "~/utils/innerIframeEvent"
+import { getAllIps } from "~/utils/urlUtil"
 
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
@@ -40,6 +41,12 @@ const seoMeta = {
 } as any
 useSeoMeta(seoMeta)
 
+// 初始化 ip
+const url = new URL(origin.value)
+const hostname = url.hostname
+const ips = getAllIps()
+ips.push(hostname)
+
 // datas
 const attrs = JsonUtil.safeParse<any>(post?.attrs ?? "{}", {})
 const formData = reactive({
@@ -48,6 +55,10 @@ const formData = reactive({
   optionEnabled: false,
   expiredTime: attrs["custom-expires"] ?? "0",
   isHome: setting.homePageId === id.value,
+  ip: hostname,
+  ipList: ips.map((ip: string) => {
+    return { value: ip, label: ip }
+  }),
 })
 const { optionState, optionToggle } = useShareOptionToggle(formData.optionEnabled)
 
@@ -135,6 +146,12 @@ const handleExpiresTime = async () => {
     }
   )
 }
+
+const handleIpChange = (val: string) => {
+  const url = new URL(formData.shareLink)
+  url.hostname = val
+  formData.shareLink = url.toString()
+}
 </script>
 
 <template>
@@ -195,6 +212,20 @@ const handleExpiresTime = async () => {
         <div class="item-right"></div>
       </div>
 
+      <div v-if="optionState" class="share-item">
+        <div class="item-left">
+          <span class="change-ip-title">{{ t("change.ip.title") }}</span>
+          <el-select
+            v-model="formData.ip"
+            class="m-2"
+            :placeholder="t('form.select')"
+            no-data-text="t('form.nodata')"
+            @change="handleIpChange"
+          >
+            <el-option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </div>
+      </div>
       <div v-if="optionState" class="share-item expires-link-item">
         <div class="expires-link expires-link-label">
           {{ t("share.other.option.link.expires") }}
@@ -302,4 +333,6 @@ const handleExpiresTime = async () => {
   .el-page-header__content
     ::v-deep(.el-switch)
       display inline-flex
+.change-ip-title
+  margin-right 10px
 </style>

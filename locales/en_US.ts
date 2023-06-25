@@ -91,4 +91,7 @@ export default {
   "share.link.expires.error":
     "Please enter a number that must be legal and no older than 7 days! For perpetual effect, enter 0",
   "go.home": "Go home",
+  "form.select": "Select",
+  "form.nodata": "No data",
+  "change.ip.title": "Change IP",
 }
