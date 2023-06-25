@@ -23,11 +23,11 @@
  * questions.
  */
 
-import {StorageLikeAsync} from "@vueuse/core"
-import {createAppLogger} from "~/common/appLogger"
-import {SiyuanDevice} from "zhi-device"
-import {StrUtil} from "zhi-common"
-import {useSiyuanApi} from "~/composables/api/useSiyuanApi"
+import { StorageLikeAsync } from "@vueuse/core"
+import { createAppLogger } from "~/common/appLogger"
+import { SiyuanDevice } from "zhi-device"
+import { StrUtil } from "zhi-common"
+import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 
 /**
  * 通用存储实现，实现了 `StorageLikeAsync` 接口。
