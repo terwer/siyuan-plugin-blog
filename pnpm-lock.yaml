@@ -26,8 +26,8 @@ dependencies:
     specifier: ^2.3.0
     version: 2.3.0
   zhi-siyuan-api:
-    specifier: ^1.23.0
-    version: 1.23.0
+    specifier: ^1.25.5
+    version: 1.25.5
 
 devDependencies:
   '@element-plus/nuxt':
@@ -9013,32 +9013,32 @@ packages:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
     dev: true
 
-  /zhi-blog-api@1.11.0:
-    resolution: {integrity: sha512-16feAh1ek/jSqRvxgZS6szdPgvgZBYSisbcCYur30TB2q1oI/g+wYgV9nFSgr8IyrJ6/jzZSClRFLivNCz+z1g==}
+  /zhi-blog-api@1.13.5:
+    resolution: {integrity: sha512-yn1Hi+heSYlciWTLmZWWYkaWrJRhoKonuOmxfB4xRUFF6fbPFmZjLfPHow5o/1QFZNYkpFJGZIH0MtHcG7VnQw==}
     dependencies:
-      zhi-lib-base: 0.4.1
+      zhi-lib-base: 0.4.2
     dev: false
 
-  /zhi-common@1.11.2:
-    resolution: {integrity: sha512-O67yy7ojeOhTWD1uahkoLcThSI9WJliHNYfLtNJoGH2FOp5f077NkO/pKfAXkBBmVD1XuZM1KlpmICb/NNAIzQ==}
+  /zhi-common@1.11.4:
+    resolution: {integrity: sha512-/WP415KjoAVhrz8eNk4rUMB49u8dbSWIht3+3WoJDstNSzyVAHHp1u7GpAtAdHOXxQwWjOnQ9pcoK+Kh7ZEWPA==}
     dependencies:
-      zhi-lib-base: 0.4.1
+      zhi-lib-base: 0.4.2
     dev: false
 
   /zhi-device@2.3.0:
     resolution: {integrity: sha512-we04mMt4BEqeKDxoqdJQsDFYImYlcp/yaAIkpxpMGg+9tBURfNeHPHIHkFias9VbM8yuk6xjAX6B2xJjvYE/iw==}
     dev: false
 
-  /zhi-lib-base@0.4.1:
-    resolution: {integrity: sha512-/wwfo0Z/86E5BW+mXN9amWAMEi0KLEoiOTNFb6BBtVuhDhypmZLRmfIvFk+E+UJU7bedTnkc6mRLAp7D+O9piw==}
+  /zhi-lib-base@0.4.2:
+    resolution: {integrity: sha512-kfKgN4hb5efUf+k5Y9028CVV1p/hsnK0NbRsxI3uwJoTlHfTBjfi6ZfrkhDn+XEnEYeWidO75sx4RdcnT7C3KA==}
     dev: false
 
-  /zhi-siyuan-api@1.23.0:
-    resolution: {integrity: sha512-2GLwHOK5N75cQB3ROP6pkqdycMlFQc5k6uG4/N5avPr4gbKZxovO/P4+ENpQaCMUgFzzuecfrrbB0YwcCJ4DCA==}
+  /zhi-siyuan-api@1.25.5:
+    resolution: {integrity: sha512-0kMD0lNtWL4UMdoFjNHTZlgU6Qc9r5pjnY732CM6NEUkahgO0kkELJE0EbHtTQ6tXmdsb6GkuJJIQ16qPhRIUg==}
     dependencies:
-      zhi-blog-api: 1.11.0
-      zhi-common: 1.11.2
-      zhi-lib-base: 0.4.1
+      zhi-blog-api: 1.13.5
+      zhi-common: 1.11.4
+      zhi-lib-base: 0.4.2
     dev: false
 
   /zip-stream@4.1.0:
