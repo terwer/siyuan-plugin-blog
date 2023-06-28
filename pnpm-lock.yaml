@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -79,8 +83,8 @@ devDependencies:
     specifier: ^1.63.6
     version: 1.63.6
   siyuan:
-    specifier: ^0.7.4
-    version: 0.7.4
+    specifier: ^0.7.5
+    version: 0.7.5
   stylus:
     specifier: ^0.59.0
     version: 0.59.0
@@ -7606,8 +7610,8 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: true
 
-  /siyuan@0.7.4:
-    resolution: {integrity: sha512-Lj+GgxRqjB0YZt4XmBBOgoMrZ9Cwd82h/CxHACi2t23baXC7W2zYG8eYWkZMDcLy50gQC94PzuLZrq9pZIeasw==}
+  /siyuan@0.7.5:
+    resolution: {integrity: sha512-Ea/Waisy1KSo9uOGJAFKyS9BB8fYacRKBB5z9HRp9wnAlAS674WKf/5y/RY3/fFJaqkCvlFTbb6Kr6xl8HXdQw==}
     dev: true
 
   /slash@3.0.0:
@@ -9049,7 +9053,3 @@ packages:
       compress-commons: 4.1.1
       readable-stream: 3.6.2
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
