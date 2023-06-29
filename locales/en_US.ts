@@ -94,4 +94,16 @@ export default {
   "form.select": "Select",
   "form.nodata": "No data",
   "change.ip.title": "Change IP",
+  "share.accessCodeEnabled.tip0": "Special Notes:",
+  "share.accessCodeEnabled.tip1":
+    "1. If you have detected that you have enabled the authorization code, the sharing function is limited in this case, please make sure that you have understood the function limitations.",
+  "share.accessCodeEnabled.tip2": "The specific manifestations are:",
+  "share.accessCodeEnabled.tip3":
+    "(1) The document is shared statically, and it cannot be automatically updated after sharing, and you need to manually re-enable sharing if there is an update;",
+  "share.accessCodeEnabled.tip4": "(2) Sharing expiration is not supported, only sharing and unsharing are supported.",
+  "share.accessCodeEnabled.tip5": "(3) Does not support modifying the theme and does not support SEO.",
+  "share.accessCodeEnabled.tip6":
+    "2. If you need to experience the full function, you can cancel the authorization code and then share it.",
+  "share.accessCodeEnabled.tip7":
+    "3. If you really need to use the authorization code, you can ignore this prompt, but please make sure that you have fully understood the functional limitations in this mode.",
 }
