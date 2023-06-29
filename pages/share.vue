@@ -5,7 +5,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
 import copy from "copy-to-clipboard"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
-import { PostStatusEnum } from "zhi-blog-api"
+import { Post, PostStatusEnum } from "zhi-blog-api"
 import { JsonUtil, StrUtil } from "zhi-common"
 import { useMethodAsync } from "~/composables/useMethodAsync"
 import { useMethod } from "~/composables/useMethod"
@@ -94,6 +94,7 @@ const handleShare = (val: any) => {
         // 自适应高度
         sendMessageToParent("updateHeight")
 
+        const shareJsonFile = `/data/public/siyuan-blog/${id.value}.json`
         if (val) {
           // 分享
           await kernelApi.setBlockAttrs(id.value, {
@@ -103,8 +104,12 @@ const handleShare = (val: any) => {
 
           // 保存一份 MD 文档到 public 解决授权码问题
           if (formData.accessCodeEnabled) {
-            const sDom = post.editorDom ?? "<h1>404 Not Found</h1>"
-            await kernelApi.saveTextData(`/data/public/s/${id.value}.html`, sDom)
+            // 只暴露有限的属性
+            const sPost = new Post()
+            sPost.title = post.title
+            sPost.editorDom = post.editorDom
+            const sJson = JSON.stringify(sPost) ?? "{}"
+            await kernelApi.saveTextData(shareJsonFile, sJson)
             logger.info("save shared md to public")
           } else {
             logger.info("shared in public mode")
@@ -118,7 +123,7 @@ const handleShare = (val: any) => {
 
           // 删除 MD
           if (formData.accessCodeEnabled) {
-            await kernelApi.removeFile(`/data/public/s/${id.value}.html`)
+            await kernelApi.removeFile(shareJsonFile)
             logger.info("removed md due to disable sharing")
           } else {
             logger.info("disable share in public mode")
