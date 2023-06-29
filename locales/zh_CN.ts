@@ -92,4 +92,12 @@ export default {
   "form.select": "请选择",
   "form.nodata": "暂无数据",
   "change.ip.title": "切换IP",
+  "share.accessCodeEnabled.tip0": "特别提示：",
+  "share.accessCodeEnabled.tip1": "1、检测到您已开启授权码，此情况下分享功能受限，请确保已了解功能限制。",
+  "share.accessCodeEnabled.tip2": "具体表现为：",
+  "share.accessCodeEnabled.tip3": "(1)文档为静态分享，分享过后无法自动更新，有更新需要手动重新开启共享；",
+  "share.accessCodeEnabled.tip4": "(2)不支持分享过期，仅支持分享与取消分享。",
+  "share.accessCodeEnabled.tip5": "(3)不支持修改主题，不支持SEO。",
+  "share.accessCodeEnabled.tip6": "2、如需体验完整功能，可取消授权码后再分享。",
+  "share.accessCodeEnabled.tip7": "3、如果确实需要使用授权码，可忽略此提示，但请确保您已经完全了解此模式下的功能限制。",
 }
