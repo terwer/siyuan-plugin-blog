@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.6.0...v1.7.0) (2023-06-29)
+
+
+### Features
+
+* 修正图标大小展示异常问题 ([3141c4b](https://github.com/terwer/siyuan-plugin-blog/commit/3141c4b434c91b84071b3def734189a6aad01923))
+* 支持授权码模式下的分享 ([364df0e](https://github.com/terwer/siyuan-plugin-blog/commit/364df0e78770004c7671281b22065f0e6e99edc9))
+* 支持授权码模式下的分享（实验性） ([d759412](https://github.com/terwer/siyuan-plugin-blog/commit/d7594127fecb1bd4838c7f22cc35bb738353ef87))
+
+
+### Bug Fixes
+
+* **deps:** bump zhi-siyuan-api from 1.23.0 to 1.25.5 ([cdd7274](https://github.com/terwer/siyuan-plugin-blog/commit/cdd7274071ada5417901ab0b0945bfa945763755))
+* 修复布局问题 ([1bd2a2a](https://github.com/terwer/siyuan-plugin-blog/commit/1bd2a2a07e006612cf331ddfd5d057fd1055ce62))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump @nuxt/devtools from 0.6.2 to 0.6.4 ([1eda6a9](https://github.com/terwer/siyuan-plugin-blog/commit/1eda6a907487fc24c78346521169905bb914833f))
+* **deps-dev:** bump @vueuse/nuxt from 10.2.0 to 10.2.1 ([c186148](https://github.com/terwer/siyuan-plugin-blog/commit/c186148ef3588c430e98a0da42c5d7072239c9da))
+* **deps-dev:** bump @vueuse/router from 10.2.0 to 10.2.1 ([cc8a45c](https://github.com/terwer/siyuan-plugin-blog/commit/cc8a45c159c9353a322a936f91fbd55afcca8fe1))
+* **deps-dev:** bump nuxt from 3.5.3 to 3.6.1 ([485e00b](https://github.com/terwer/siyuan-plugin-blog/commit/485e00b77039e4ec14e5aeefd53397128eb8b06d))
+* **deps-dev:** bump siyuan from 0.7.4 to 0.7.5 ([68cc374](https://github.com/terwer/siyuan-plugin-blog/commit/68cc3747f3dd35f639805907d96579b7a38b249d))
+* **deps-dev:** bump typescript from 5.1.3 to 5.1.6 ([ae525ba](https://github.com/terwer/siyuan-plugin-blog/commit/ae525ba05c8a1cf14000c4b5a195ae306bd1b2fa))
+
 ## [1.6.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.5.0...v1.6.0) (2023-06-25)
 ### Features
 * pc客户端支持切换ip [实验性] ([de35c96](https://github.com/terwer/siyuan-plugin-blog/commit/de35c96f22552671b66caefef486d152a853374c))
