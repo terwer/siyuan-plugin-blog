@@ -26,14 +26,22 @@ const isSsr = useRouteQuery("isSsr", "")
 const basePath = String(isSsr.value) === "true" ? "/plugins/siyuan-blog" : "/plugins/siyuan-blog/#"
 
 // lifecycles
-// onBeforeMount(() => {
-//   const mainEl = document.querySelector(".el-main") as any
-//   mainEl.style.margin = "0"
-//   mainEl.style.padding = "0"
-// })
+onMounted(() => {
+  // const mainEl = document.querySelector(".el-main") as any
+  // mainEl.style.margin = "0"
+  // mainEl.style.padding = "0"
+
+  // const win = SiyuanDevice.siyuanWindow()
+  const win = window.parent as any
+  formData.accessCodeEnabled = win?.siyuan?.config?.accessAuthCode !== ""
+  if (formData.accessCodeEnabled) {
+    formData.shareLink = `${shareOrigin}${basePath}/static/${id.value}`
+    logger.warn("accessAuthCode is enabled, share is in limited stated.")
+  }
+})
 
 const setting = await getSetting()
-const post = await blogApi.getPost(id.value, false, true)
+const post = await blogApi.getPost(id.value, false, false)
 const title = `${t("blog.share")} - ${t("blog.share.options")}`
 const seoMeta = {
   title: title,
@@ -49,9 +57,11 @@ ips.push(hostname)
 
 // datas
 const attrs = JsonUtil.safeParse<any>(post?.attrs ?? "{}", {})
+const shareOrigin = StrUtil.isEmptyString(setting?.siteUrl) ? origin.value : setting.siteUrl
 const formData = reactive({
+  accessCodeEnabled: false,
   shareEnabled: attrs["custom-publish-status"] === PostStatusEnum.PostStatusEnum_Publish,
-  shareLink: `${StrUtil.isEmptyString(setting?.siteUrl) ? origin.value : setting.siteUrl}${basePath}/s/${id.value}`,
+  shareLink: `${shareOrigin}${basePath}/s/${id.value}`,
   optionEnabled: false,
   expiredTime: attrs["custom-expires"] ?? "0",
   isHome: setting.homePageId === id.value,
@@ -84,18 +94,35 @@ const handleShare = (val: any) => {
         // 自适应高度
         sendMessageToParent("updateHeight")
 
-        // 分享
         if (val) {
+          // 分享
           await kernelApi.setBlockAttrs(id.value, {
             "custom-publish-status": PostStatusEnum.PostStatusEnum_Publish,
             "custom-publish-time": new Date().getTime().toString(),
           })
+
+          // 保存一份 MD 文档到 public 解决授权码问题
+          if (formData.accessCodeEnabled) {
+            const sDom = post.editorDom ?? "<h1>404 Not Found</h1>"
+            await kernelApi.saveTextData(`/data/public/s/${id.value}.html`, sDom)
+            logger.info("save shared md to public")
+          } else {
+            logger.info("shared in public mode")
+          }
         } else {
           // 取消分享
           await kernelApi.setBlockAttrs(id.value, {
             "custom-publish-status": PostStatusEnum.PostStatusEnum_Draft,
             "custom-publish-time": "",
           })
+
+          // 删除 MD
+          if (formData.accessCodeEnabled) {
+            await kernelApi.removeFile(`/data/public/s/${id.value}.html`)
+            logger.info("removed md due to disable sharing")
+          } else {
+            logger.info("disable share in public mode")
+          }
         }
         resolve()
       },
@@ -275,6 +302,24 @@ const handleIpChange = (val: string) => {
         <el-button :icon="Share" type="text">{{ t("share.copy.link") }}</el-button>
       </div>
       -->
+    </div>
+
+    <div v-if="formData.accessCodeEnabled" class="share-item">
+      <div class="el-alert el-alert--error is-light" role="alert">
+        <div class="el-alert__content">
+          <div class="el-alert__title">
+            <div>{{ t("share.accessCodeEnabled.tip0") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip1") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip2") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip3") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip4") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip5") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip6") }}</div>
+            <div>{{ t("share.accessCodeEnabled.tip7") }}</div>
+          </div>
+        </div>
+      </div>
+      <el-alert type="error" style="display: none"></el-alert>
     </div>
   </div>
 </template>

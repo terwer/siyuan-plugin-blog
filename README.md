@@ -24,6 +24,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
   - [Beginner-Level] siyuan-note Plugin: Zero configuration, ready to use out of the box, runs as a local SPA application and accesses the Siyuan ontology directly, resulting in extremely fast speed but not very SEO-friendly.
   - [Expert-Level] Self-Deployment using Docker: Requires purchasing a server, SSR server-side rendering, SEO-friendly, high speed.
   - [Cost-Free Option] Vercel Hosting: Requires purchasing a domain and may not be accessible in some countries, low cost, moderate speed.
+* **Sharing mode (experimental)**: Public note sharing is supported by default, and limited sharing functions can be supported after enabling the authorization code.
 
 ## TODO
 
@@ -46,6 +47,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 - [ ] plantuml chart support
 - [ ] echats chart support
 - [ ] Support svg with svOrigin, e.g. '<use xlink:href="#iconMore'>'</use>
+- [X] Support enabling sharing under authorization code (experimental)
 
 ## Changelog
 
