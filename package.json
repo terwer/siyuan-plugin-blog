@@ -37,7 +37,7 @@
     "sass": "^1.63.6",
     "siyuan": "^0.7.4",
     "stylus": "^0.59.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
