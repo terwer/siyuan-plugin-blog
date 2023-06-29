@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import Header from "~/components/default/Header.vue"
-import Footer from "~/components/default/Footer.vue"
 import { createAppLogger } from "~/common/appLogger"
 import { sendMessageToParent } from "~/utils/innerIframeEvent"
 
@@ -32,11 +30,11 @@ onMounted(() => {
 
 <template>
   <el-container>
-    <Header />
+    <default-header />
     <el-main>
       <slot />
     </el-main>
-    <Footer />
+    <default-footer />
   </el-container>
 </template>
 

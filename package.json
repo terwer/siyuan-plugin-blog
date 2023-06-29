@@ -6,6 +6,7 @@
   "scripts": {
     "serve": "bash scripts/serve.sh",
     "dev": "bash scripts/dev.sh",
+    "devPrivate": "bash scripts/dev_private.sh",
     "pluginDev": "zhi-build --watch",
     "build": "bash scripts/build.sh",
     "nodeBuild": "bash scripts/node.sh",
@@ -33,9 +34,9 @@
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-style-plugin": "^1.6.2",
     "minimist": "^1.2.8",
-    "nuxt": "^3.5.3",
+    "nuxt": "^3.6.1",
     "sass": "^1.63.6",
-    "siyuan": "^0.7.4",
+    "siyuan": "^0.7.5",
     "stylus": "^0.59.0",
     "typescript": "^5.1.3"
   },
@@ -48,6 +49,6 @@
     "highlight.js": "^11.8.0",
     "pinia": "^2.1.4",
     "zhi-device": "^2.3.0",
-    "zhi-siyuan-api": "^1.23.0"
+    "zhi-siyuan-api": "^1.25.5"
   }
 }
