@@ -33,7 +33,7 @@
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-style-plugin": "^1.6.2",
     "minimist": "^1.2.8",
-    "nuxt": "^3.5.3",
+    "nuxt": "^3.6.1",
     "sass": "^1.63.6",
     "siyuan": "^0.7.4",
     "stylus": "^0.59.0",
