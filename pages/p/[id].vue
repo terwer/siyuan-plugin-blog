@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  layout: "default",
+})
+</script>
 
 <template>
   <default-detail :show-title-sign="false" />

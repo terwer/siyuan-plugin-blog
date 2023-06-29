@@ -2,6 +2,10 @@
 import { useSettingStore } from "~/stores/useSettingStore"
 import { StrUtil } from "zhi-common"
 
+definePageMeta({
+  layout: "default",
+})
+
 const { t } = useI18n()
 const { getSetting } = useSettingStore()
 

@@ -12,6 +12,10 @@ import { useMethod } from "~/composables/useMethod"
 import { sendMessageToParent } from "~/utils/innerIframeEvent"
 import { getAllIps } from "~/utils/urlUtil"
 
+definePageMeta({
+  layout: "default",
+})
+
 const logger = createAppLogger("share-page")
 const { t } = useI18n()
 const { handleMethod } = useMethod()
