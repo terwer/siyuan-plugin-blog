@@ -14,6 +14,10 @@ const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  experimental: {
+    inlineSSRStyles: false,
+  },
+
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
   typescript: {
     strict: true,
