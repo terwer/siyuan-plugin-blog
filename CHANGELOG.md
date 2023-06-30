@@ -1,13 +1,15 @@
 # Changelog
 
+## [1.7.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.0...v1.7.1) (2023-06-30)
+### Bug Fixes
+* 修复 vercel 样式错乱问题 ([0bb9ca4](https://github.com/terwer/siyuan-plugin-blog/commit/0bb9ca4747c5ff3181f8ffdb0dd56023ee824795))
+* 修复布局问题 ([1bd2a2a](https://github.com/terwer/siyuan-plugin-blog/commit/1bd2a2a07e006612cf331ddfd5d057fd1055ce62))
 ## [1.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.6.0...v1.7.0) (2023-06-29)
 ### Features
 * 修正图标大小展示异常问题 ([3141c4b](https://github.com/terwer/siyuan-plugin-blog/commit/3141c4b434c91b84071b3def734189a6aad01923))
 * 支持授权码模式下的分享 ([364df0e](https://github.com/terwer/siyuan-plugin-blog/commit/364df0e78770004c7671281b22065f0e6e99edc9))
 * 支持授权码模式下的分享（实验性） ([d759412](https://github.com/terwer/siyuan-plugin-blog/commit/d7594127fecb1bd4838c7f22cc35bb738353ef87))
-### Bug Fixes
 * **deps:** bump zhi-siyuan-api from 1.23.0 to 1.25.5 ([cdd7274](https://github.com/terwer/siyuan-plugin-blog/commit/cdd7274071ada5417901ab0b0945bfa945763755))
-* 修复布局问题 ([1bd2a2a](https://github.com/terwer/siyuan-plugin-blog/commit/1bd2a2a07e006612cf331ddfd5d057fd1055ce62))
 ### Miscellaneous
 * **deps-dev:** bump @nuxt/devtools from 0.6.2 to 0.6.4 ([1eda6a9](https://github.com/terwer/siyuan-plugin-blog/commit/1eda6a907487fc24c78346521169905bb914833f))
 * **deps-dev:** bump @vueuse/nuxt from 10.2.0 to 10.2.1 ([c186148](https://github.com/terwer/siyuan-plugin-blog/commit/c186148ef3588c430e98a0da42c5d7072239c9da))
