@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.0...v1.7.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* 修复 vercel 样式错乱问题 ([0bb9ca4](https://github.com/terwer/siyuan-plugin-blog/commit/0bb9ca4747c5ff3181f8ffdb0dd56023ee824795))
+* 修复布局问题 ([1f53d70](https://github.com/terwer/siyuan-plugin-blog/commit/1f53d705eb54292214578b34a396bfc7578b2589))
+
 ## [1.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.6.0...v1.7.0) (2023-06-29)
 ### Features
 * 修正图标大小展示异常问题 ([3141c4b](https://github.com/terwer/siyuan-plugin-blog/commit/3141c4b434c91b84071b3def734189a6aad01923))
