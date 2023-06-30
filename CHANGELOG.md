@@ -7,7 +7,6 @@
 ## [1.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.6.0...v1.7.0) (2023-06-29)
 ### Features
 * 修正图标大小展示异常问题 ([3141c4b](https://github.com/terwer/siyuan-plugin-blog/commit/3141c4b434c91b84071b3def734189a6aad01923))
-* 支持授权码模式下的分享 ([364df0e](https://github.com/terwer/siyuan-plugin-blog/commit/364df0e78770004c7671281b22065f0e6e99edc9))
 * 支持授权码模式下的分享（实验性） ([d759412](https://github.com/terwer/siyuan-plugin-blog/commit/d7594127fecb1bd4838c7f22cc35bb738353ef87))
 * **deps:** bump zhi-siyuan-api from 1.23.0 to 1.25.5 ([cdd7274](https://github.com/terwer/siyuan-plugin-blog/commit/cdd7274071ada5417901ab0b0945bfa945763755))
 ### Miscellaneous
