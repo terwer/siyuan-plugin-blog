@@ -85,9 +85,9 @@ const formData = reactive({
 await getPostData()
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
-  const title = `${formData.post.title}${props.showTitleSign ? titleSign : ""}`
-  const desc = getSummery(formData.post.description)
-  const headImage = getFirstImageSrc(formData.post.description)
+  const title = `${formData?.post?.title ?? "404 Not Found"}${props.showTitleSign ? titleSign : ""}`
+  const desc = getSummery(formData?.post?.description ?? "")
+  const headImage = getFirstImageSrc(formData?.post?.description ?? "")
   const seoMeta = {
     title: title,
     ogTitle: title,
