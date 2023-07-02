@@ -47,7 +47,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     // }
 
     // assets
-    logger.info("Start handling images on client", el)
+    logger.info("Start handling images on client")
     addClientAssetsPrefix(el)
   })
 })
