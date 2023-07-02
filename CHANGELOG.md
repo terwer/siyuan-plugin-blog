@@ -1,11 +1,21 @@
 # Changelog
 
-## [1.7.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.0...v1.7.1) (2023-06-30)
+## [1.8.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.1...v1.8.0) (2023-07-02)
+### Features
+* 授权码模式分享支持过期时间 ([ab622a0](https://github.com/terwer/siyuan-plugin-blog/commit/ab622a0f3e95371a3f34893565e9a53a8169e5a7))
+* 授权码模式的分享支持图片 ([9b94c7f](https://github.com/terwer/siyuan-plugin-blog/commit/9b94c7f59c7df818d38d94c3097a1316a2d60d9e))
+* 重构项目，统一处理公开分享与授权码模式下的分享逻辑 ([6c0c651](https://github.com/terwer/siyuan-plugin-blog/commit/6c0c651bb87fda6f451fd19bc776ccb322f3e922))
 ### Bug Fixes
+* 优化功能提示 ([a3efbb9](https://github.com/terwer/siyuan-plugin-blog/commit/a3efbb94237e3886e6e2395708688e7229835000))
+* 修复公共分享模式ssr报错问题 ([7c70974](https://github.com/terwer/siyuan-plugin-blog/commit/7c70974d35141889befe488518377ba7d0e561f2))
+* 修复授权码分享模式ssr报错问题 ([6dfcd58](https://github.com/terwer/siyuan-plugin-blog/commit/6dfcd584524687e2ab759ea35dabee483ae194f6))
+* 修复授权码模式下取消分享页面显示异常问题 ([611c95b](https://github.com/terwer/siyuan-plugin-blog/commit/611c95bf09927b27ac005cc931d22162cf6cf45a))
+* 修复授权码模式下的内链跳转 ([5f2a7b6](https://github.com/terwer/siyuan-plugin-blog/commit/5f2a7b651bbe06f192d3ed29e4278c36049d3a69))
+* 修复无序列表未展示图标问题 ([f65dd77](https://github.com/terwer/siyuan-plugin-blog/commit/f65dd778b76480943c828953f1fc0a7a8de6eb4d))
+## [1.7.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.0...v1.7.1) (2023-06-30)
 * 修复 vercel 样式错乱问题 ([0bb9ca4](https://github.com/terwer/siyuan-plugin-blog/commit/0bb9ca4747c5ff3181f8ffdb0dd56023ee824795))
 * 修复布局问题 ([1bd2a2a](https://github.com/terwer/siyuan-plugin-blog/commit/1bd2a2a07e006612cf331ddfd5d057fd1055ce62))
 ## [1.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.6.0...v1.7.0) (2023-06-29)
-### Features
 * 修正图标大小展示异常问题 ([3141c4b](https://github.com/terwer/siyuan-plugin-blog/commit/3141c4b434c91b84071b3def734189a6aad01923))
 * 支持授权码模式下的分享（实验性） ([d759412](https://github.com/terwer/siyuan-plugin-blog/commit/d7594127fecb1bd4838c7f22cc35bb738353ef87))
 * **deps:** bump zhi-siyuan-api from 1.23.0 to 1.25.5 ([cdd7274](https://github.com/terwer/siyuan-plugin-blog/commit/cdd7274071ada5417901ab0b0945bfa945763755))
