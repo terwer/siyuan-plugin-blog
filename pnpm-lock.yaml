@@ -30,8 +30,8 @@ dependencies:
     specifier: ^2.3.0
     version: 2.3.0
   zhi-siyuan-api:
-    specifier: ^1.25.6
-    version: 1.25.6
+    specifier: ^1.26.0
+    version: 1.26.0
 
 devDependencies:
   '@element-plus/nuxt':
@@ -9337,8 +9337,8 @@ packages:
     resolution: {integrity: sha512-kfKgN4hb5efUf+k5Y9028CVV1p/hsnK0NbRsxI3uwJoTlHfTBjfi6ZfrkhDn+XEnEYeWidO75sx4RdcnT7C3KA==}
     dev: false
 
-  /zhi-siyuan-api@1.25.6:
-    resolution: {integrity: sha512-cgMRiKFxWuDGbTfeJv4uECU4tQJ38BJ/zOb33g7hdkyvrM4fyp3KX1W0KwEtrgFmw1L8qMKuyyCEioZPdkQuEQ==}
+  /zhi-siyuan-api@1.26.0:
+    resolution: {integrity: sha512-pF9jwJwLWa/QQntCDGFnoMeAh+kiYqqcxP8C48vlx0tlD0bpVEloFGx5m6jsuzdNYArOsoydDDN/pkj4kIXR+Q==}
     dependencies:
       zhi-blog-api: 1.13.5
       zhi-common: 1.11.5

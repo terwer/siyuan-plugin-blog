@@ -53,14 +53,20 @@ const goSetting = async () => {
 </script>
 
 <template>
-  <div v-if="StrUtil.isEmptyString(homePageId)">
-    <el-empty :description="t('blog.index.no.home')">
-      <el-button type="primary" @click="goSetting">{{ t("blog.index.goto.set.home") }}</el-button>
-    </el-empty>
-  </div>
-  <div v-else>
-    <default-home :page-id="homePageId" />
-  </div>
+  <el-container>
+    <default-header />
+    <el-main>
+      <div v-if="StrUtil.isEmptyString(homePageId)">
+        <el-empty :description="t('blog.index.no.home')">
+          <el-button type="primary" @click="goSetting">{{ t("blog.index.goto.set.home") }}</el-button>
+        </el-empty>
+      </div>
+      <div v-else>
+        <default-home :page-id="homePageId" />
+      </div>
+    </el-main>
+    <default-footer />
+  </el-container>
 </template>
 
 <style scoped></style>

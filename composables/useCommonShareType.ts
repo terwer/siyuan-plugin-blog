@@ -28,33 +28,19 @@ import { ShareType } from "~/models/ShareType"
 import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
 import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
+import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
   const { kernelApi } = useSiyuanApi()
-  const route = useRoute()
-
-  const fetchText = async (fileUrl: string) => {
-    const res = await fetch(fileUrl)
-    return await res.text()
-  }
+  const { fetchPublicText } = useAuthModeFetch()
+  const shareTypeJsonFile = "share-type.json"
 
   /**
    * 获取分享类型
    */
   const getShareType = async () => {
-    let resText
-    if (process.env.SSR === "true") {
-      logger.warn("SSR mode, using kernel api for fetching")
-      const kernelShareTypeFile = `/data/public/siyuan-blog/share-type.json`
-      resText = await kernelApi.getFile(kernelShareTypeFile, "text")
-      console.log("get shareType text from kernel=>", resText)
-    } else {
-      const shareTypeFetchFile = `/public/siyuan-blog/share-type.json`
-      resText = await fetchText(shareTypeFetchFile)
-      logger.info("get shareType text from store", resText)
-    }
-
+    const resText = await fetchPublicText(shareTypeJsonFile)
     const shareType = JsonUtil.safeParse(resText, {} as any)
     logger.info("get shareType from store", shareType)
     if (ObjectUtil.isEmptyObject(shareType)) {
@@ -70,7 +56,7 @@ export const useCommonShareType = () => {
   }
 
   const updateShareType = async (shareType: ShareTypeEnum) => {
-    const shareTypeFile = `/data/public/siyuan-blog/share-type.json`
+    const shareTypeFile = `/data/public/siyuan-blog/${shareTypeJsonFile}`
     const sType = new ShareType()
     sType.shareType = shareType
     const sJson = JSON.stringify(sType) ?? "{}"
@@ -79,7 +65,7 @@ export const useCommonShareType = () => {
   }
 
   const removeShareType = async () => {
-    const shareTypeFile = `/data/public/siyuan-blog/share-type.json`
+    const shareTypeFile = `/data/public/siyuan-blog/${shareTypeJsonFile}`
     await kernelApi.removeFile(shareTypeFile)
   }
 

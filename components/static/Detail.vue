@@ -29,6 +29,7 @@ import { Post } from "zhi-blog-api"
 import { createAppLogger } from "~/common/appLogger"
 import { getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
+import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -48,15 +49,15 @@ const { t } = useI18n()
 const route = useRoute()
 const id = props.pageId ?? ((route.params.id ?? "") as string)
 const { getFirstImageSrc } = useServerAssets()
+const { fetchPublicText } = useAuthModeFetch()
 
 // datas
 const getPostData = async () => {
-  const mdResponse = await fetch(`/public/siyuan-blog/${id}.json`)
-  const mdText = await mdResponse.text()
-  formData.post = JsonUtil.safeParse<Post>(mdText, {} as Post)
+  const resText = await fetchPublicText(`${id}.json`)
+  formData.post = JsonUtil.safeParse<Post>(resText, {} as Post)
   formData.shareEnabled = !ObjectUtil.isEmptyObject(formData.post)
-  logger.info("post=>", formData.post)
-  logger.info(`shareEnabled=>${formData.shareEnabled}`)
+  // logger.info("post=>", formData.post)
+  // logger.info(`shareEnabled=>${formData.shareEnabled}`)
 }
 
 const formData = reactive({
