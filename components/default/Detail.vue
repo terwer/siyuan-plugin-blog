@@ -52,10 +52,16 @@ const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost(props.pageId)
 
 // datas
+const formData = reactive({
+  shareEnabled: true,
+  isExpires: false,
+})
+
 const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
-const shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
-const isExpires = checkExpires(attrs)
-logger.info(`current document status,shareEnabled => ${shareEnabled}, isExpires => ${isExpires}`)
+formData.shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
+formData.isExpires = checkExpires(attrs)
+logger.info(`current document status,shareEnabled => ${formData.shareEnabled}, isExpires => ${formData.isExpires}`)
+
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
   const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
@@ -83,8 +89,9 @@ const VNode = () =>
 </script>
 
 <template>
-  <div v-if="!shareEnabled || isExpires">
-    <el-empty :description="isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')"> </el-empty>
+  <div v-if="!formData.shareEnabled || formData.isExpires">
+    <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
+    </el-empty>
   </div>
   <div v-else class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">

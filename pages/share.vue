@@ -52,7 +52,7 @@ const { getSetting, updateSetting } = useSettingStore()
 const { blogApi, kernelApi } = useSiyuanApi()
 const { getShareType, isPrivateShare } = useShareType()
 const { updateShareType } = useCommonShareType()
-const { openStaticShare, closeStaticShare } = useStaticShare()
+const { openStaticShare, closeStaticShare, updateStaticShare } = useStaticShare()
 
 const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
@@ -183,6 +183,11 @@ const handleExpiresTime = async () => {
       await kernelApi.setBlockAttrs(id.value, {
         "custom-expires": expiredTime.toString(),
       })
+
+      if (formData.accessCodeEnabled) {
+        await updateStaticShare(id.value)
+        logger.info("updated static share in auth mode")
+      }
     },
     () => {
       if (isNaN(expiredTime) || expiredTime < 0 || expiredTime > 7 * 24 * 60 * 60) {

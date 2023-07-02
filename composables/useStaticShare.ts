@@ -32,7 +32,19 @@ import { Post } from "zhi-blog-api"
  */
 export const useStaticShare = () => {
   const logger = createAppLogger("use-static-share")
-  const { kernelApi } = useSiyuanApi()
+  const { blogApi, kernelApi } = useSiyuanApi()
+
+  const updateSharePage = async (pageId: string, post: Post) => {
+    const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
+
+    // 只暴露有限的属性
+    const sPost = new Post()
+    sPost.attrs = post.attrs
+    sPost.title = post.title
+    sPost.editorDom = post.editorDom
+    const sJson = JSON.stringify(sPost) ?? "{}"
+    await kernelApi.saveTextData(shareJsonFile, sJson)
+  }
 
   /**
    * 打开静态分享
@@ -41,14 +53,17 @@ export const useStaticShare = () => {
    * @param {Post} post - 文章对象
    */
   const openStaticShare = async (pageId: string, post: Post) => {
-    const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
+    await updateSharePage(pageId, post)
+  }
 
-    // 只暴露有限的属性
-    const sPost = new Post()
-    sPost.title = post.title
-    sPost.editorDom = post.editorDom
-    const sJson = JSON.stringify(sPost) ?? "{}"
-    await kernelApi.saveTextData(shareJsonFile, sJson)
+  /**
+   * 更新分享
+   *
+   * @param pageId - 文档ID
+   */
+  const updateStaticShare = async (pageId: string) => {
+    const post = await blogApi.getPost(pageId, false, false)
+    await updateSharePage(pageId, post)
   }
 
   /**
@@ -61,5 +76,5 @@ export const useStaticShare = () => {
     await kernelApi.removeFile(shareJsonFile)
   }
 
-  return { openStaticShare, closeStaticShare }
+  return { openStaticShare, closeStaticShare, updateStaticShare }
 }

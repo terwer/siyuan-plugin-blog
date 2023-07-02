@@ -27,7 +27,7 @@
 import { JsonUtil, ObjectUtil } from "zhi-common"
 import { Post } from "zhi-blog-api"
 import { createAppLogger } from "~/common/appLogger"
-import { getSummery } from "~/utils/utils"
+import { checkExpires, getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 
@@ -52,20 +52,24 @@ const { getFirstImageSrc } = useServerAssets()
 const { fetchPublicText } = useAuthModeFetch()
 
 // datas
+const formData = reactive({
+  post: {} as Post,
+  shareEnabled: true,
+  isExpires: false,
+})
+
 const getPostData = async () => {
   const resText = await fetchPublicText(`${id}.json`)
   formData.post = JsonUtil.safeParse<Post>(resText, {} as Post)
   formData.shareEnabled = !ObjectUtil.isEmptyObject(formData.post)
   // logger.info("post=>", formData.post)
   // logger.info(`shareEnabled=>${formData.shareEnabled}`)
+
+  const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
+  formData.isExpires = checkExpires(attrs)
 }
-
-const formData = reactive({
-  post: {} as Post,
-  shareEnabled: true,
-})
-
 await getPostData()
+
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
   const title = `${formData?.post?.title ?? "404 Not Found"}${props.showTitleSign ? titleSign : ""}`
@@ -94,8 +98,9 @@ const VNode = () =>
 </script>
 
 <template>
-  <div v-if="!formData.shareEnabled">
-    <el-empty :description="t('blog.index.no.permission')"> </el-empty>
+  <div v-if="!formData.shareEnabled || formData.isExpires">
+    <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
+    </el-empty>
   </div>
   <div v-else class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
