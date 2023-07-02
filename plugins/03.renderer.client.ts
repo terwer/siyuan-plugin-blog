@@ -40,13 +40,13 @@ export default defineNuxtPlugin(({ vueApp }) => {
   const { addClientAssetsPrefix } = useClientAssets()
 
   vueApp.directive("beauty", (el: HTMLElement) => {
-    if (process.env.SSR === "true") {
-      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
-      return
-    }
+    // if (process.env.SSR === "true") {
+    //   logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
+    //   return
+    // }
 
     // assets
-    logger.info("Start handling images on client", el)
+    logger.info("Start handling images on client")
     addClientAssetsPrefix(el)
   })
 })
