@@ -26,6 +26,7 @@
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { createAppLogger } from "~/common/appLogger"
 import { Post } from "zhi-blog-api"
+import { useStaticClientAssets } from "~/plugins/renderer/useStaticClientAssets"
 
 /**
  * 静态分析相关处理（开启授权码模式）
@@ -33,9 +34,15 @@ import { Post } from "zhi-blog-api"
 export const useStaticShare = () => {
   const logger = createAppLogger("use-static-share")
   const { blogApi, kernelApi } = useSiyuanApi()
+  const { downloadAssetsToPublic } = useStaticClientAssets()
 
   const updateSharePage = async (pageId: string, post: Post) => {
     const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
+    const pubicAssetsFolder = `/data/public/siyuan-blog/${pageId}`
+
+    // 保存图片附件
+    await downloadAssetsToPublic(post.editorDom, pubicAssetsFolder)
+    logger.info("assets downloaded success")
 
     // 只暴露有限的属性
     const sPost = new Post()
@@ -44,7 +51,21 @@ export const useStaticShare = () => {
     sPost.editorDom = post.editorDom
     const sJson = JSON.stringify(sPost) ?? "{}"
     await kernelApi.saveTextData(shareJsonFile, sJson)
+    logger.info("static share success")
   }
+
+  const removeSharePage = async (pageId: string) => {
+    const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
+    const pubicAssetsFolder = `/data/public/siyuan-blog/assets/${pageId}`
+
+    // 移除文档信息
+    await kernelApi.removeFile(shareJsonFile)
+
+    // 移除附件信息
+    await kernelApi.removeFile(pubicAssetsFolder)
+    logger.info("static share data removed success")
+  }
+  // ===========================================================================================
 
   /**
    * 打开静态分享
@@ -72,8 +93,7 @@ export const useStaticShare = () => {
    * @param {string} pageId - 页面ID
    */
   const closeStaticShare = async (pageId: string) => {
-    const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
-    await kernelApi.removeFile(shareJsonFile)
+    await removeSharePage(pageId)
   }
 
   return { openStaticShare, closeStaticShare, updateStaticShare }

@@ -116,12 +116,16 @@ const VNode = () =>
         </div>
       </div>
       <div
+        v-highlight
+        v-sbeauty
+        v-sdomparser
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
         data-doc-type="NodeDocument"
+        :data-page-id="id"
       >
-        <VNode v-highlight v-sbeauty v-sdomparser />
+        <VNode />
       </div>
     </div>
   </div>

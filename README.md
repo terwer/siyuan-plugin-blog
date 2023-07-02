@@ -10,7 +10,9 @@ Based on the localization concept of siyuan-note , this plugin is natively share
 
 The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
 
-> Important: Version 1.8.0+ unifies the sharing logic in public sharing and authorization code mode, so you need to initialize the sharing type to avoid the old sharing link access exception, you only need to open the sharing pop-up window once, and it will be automatically initialized after opening.
+> Important:
+> 1. Version 1.8.0+ unifies the sharing logic in public sharing and authorization code mode, so you need to initialize the sharing type to avoid the old sharing link access exception, you only need to open the sharing pop-up window once, and it will be automatically initialized after opening.
+> 2. Sharing in 1.8.0+ authorization code mode can also support image display, go and try it 😄
 
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
@@ -34,6 +36,8 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 - [X] Support for custom domain names
 - [X] Support for internal and external links
 - [X] Support task list
+- [X] Support enabling sharing under authorization code (experimental)
+- [X] Unordered list style adaptation
 - [ ] Bulk management of shared pages
 - [ ] Support single page setting sharing password
 - [ ] Integrate popular topics that are currently available
@@ -49,8 +53,6 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 - [ ] plantuml chart support
 - [ ] echats chart support
 - [ ] Support svg with svOrigin, e.g. '<use xlink:href="#iconMore'>'</use>
-- [X] Support enabling sharing under authorization code (experimental)
-- [X] Unordered list style adaptation
 
 ## Changelog
 

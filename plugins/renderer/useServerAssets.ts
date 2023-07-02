@@ -31,7 +31,7 @@ import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
  * DOM 相关操作钩子
  */
 export const useServerAssets = () => {
-  const logger = createAppLogger("use-dom")
+  const logger = createAppLogger("use-server-assets")
   const { getServerBaseUrl } = useBaseUrl()
 
   /**

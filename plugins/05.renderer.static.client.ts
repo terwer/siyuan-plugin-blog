@@ -25,6 +25,7 @@
 
 import { createAppLogger } from "~/common/appLogger"
 import { useClientAssets } from "~/plugins/renderer/useClientAssets"
+import { useStaticClientAssets } from "~/plugins/renderer/useStaticClientAssets"
 
 /**
  * 页面渲染插件(图片、链接、公式等) - 客户端
@@ -36,14 +37,14 @@ import { useClientAssets } from "~/plugins/renderer/useClientAssets"
  * @since 0.0.1
  */
 export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("renderer-client-plugin")
-  const { addClientAssetsPrefix } = useClientAssets()
+  const logger = createAppLogger("renderer-static-client-plugin")
+  const { addClientAssetsPrefix } = useStaticClientAssets()
 
   vueApp.directive("sbeauty", (el: HTMLElement) => {
-    if (process.env.SSR === "true") {
-      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
-      return
-    }
+    // if (process.env.SSR === "true") {
+    //   logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
+    //   return
+    // }
 
     // assets
     logger.info("Start handling images on client", el)

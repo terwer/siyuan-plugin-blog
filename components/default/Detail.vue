@@ -47,6 +47,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+const route = useRoute()
 const { getFirstImageSrc } = useServerAssets()
 const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost(props.pageId)
@@ -57,6 +58,7 @@ const formData = reactive({
   isExpires: false,
 })
 
+const id = props.pageId ?? ((route.params.id ?? "") as string)
 const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
 formData.shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
 formData.isExpires = checkExpires(attrs)
@@ -107,12 +109,16 @@ const VNode = () =>
         </div>
       </div>
       <div
+        v-highlight
+        v-beauty
+        v-domparser
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
         data-doc-type="NodeDocument"
+        :data-page-id="id"
       >
-        <VNode v-highlight v-beauty v-domparser />
+        <VNode />
       </div>
     </div>
   </div>

@@ -36,12 +36,12 @@ import { useServerAssets } from "../../plugins/renderer/useServerAssets"
  * @since 0.0.1
  */
 export default defineNitroPlugin((nitroApp) => {
-  const logger = createAppLogger("renderer-nitro-plugin")
-  const { addServerAssetsPrefix } = useServerAssets()
-
-  nitroApp.hooks.hook("render:html", (html) => {
-    // assets
-    logger.info("Start handling images on nitro server")
-    html.body[0] = addServerAssetsPrefix(html.body[0])
-  })
+  // const logger = createAppLogger("renderer-nitro-plugin")
+  // const { addServerAssetsPrefix } = useServerAssets()
+  //
+  // nitroApp.hooks.hook("render:html", (html) => {
+  //   // assets
+  //   logger.info("Start handling images on nitro server")
+  //   html.body[0] = addServerAssetsPrefix(html.body[0])
+  // })
 })
