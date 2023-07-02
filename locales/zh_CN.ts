@@ -92,6 +92,7 @@ export default {
   "form.select": "请选择",
   "form.nodata": "暂无数据",
   "change.ip.title": "切换IP",
+  "share.accessCodeEnabled.tip": "特别提示：检测到您已开启授权码，若文档或者设置有更新，需重新分享，请知悉。",
   "share.accessCodeEnabled.tip0": "特别提示：",
   "share.accessCodeEnabled.tip1": "1、检测到您已开启授权码，此情况下分享功能受限，请确保已了解功能限制。",
   "share.accessCodeEnabled.tip2": "具体表现为：",

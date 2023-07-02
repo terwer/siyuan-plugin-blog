@@ -24,17 +24,14 @@
   -->
 
 <script setup lang="ts">
-import { usePost } from "~/composables/usePost"
-import { checkExpires, getSummery } from "~/utils/utils"
+import { JsonUtil, ObjectUtil } from "zhi-common"
+import { Post } from "zhi-blog-api"
 import { createAppLogger } from "~/common/appLogger"
-import { JsonUtil } from "zhi-common"
+import { getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 
-const logger = createAppLogger("share-page")
-
-definePageMeta({
-  layout: "default",
-})
+// https://github.com/nuxt/nuxt/issues/15346
+// 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
 
 // props
 const props = defineProps({
@@ -46,21 +43,33 @@ const props = defineProps({
   },
 })
 
+const logger = createAppLogger("static-share-page")
 const { t } = useI18n()
+const route = useRoute()
+const id = props.pageId ?? ((route.params.id ?? "") as string)
 const { getFirstImageSrc } = useServerAssets()
-const { currentPost, setCurrentPost } = usePost()
-await setCurrentPost(props.pageId)
 
 // datas
-const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
-const shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
-const isExpires = checkExpires(attrs)
-logger.info(`current document status,shareEnabled => ${shareEnabled}, isExpires => ${isExpires}`)
+const getPostData = async () => {
+  const mdResponse = await fetch(`/public/siyuan-blog/${id}.json`)
+  const mdText = await mdResponse.text()
+  formData.post = JsonUtil.safeParse<Post>(mdText, {} as Post)
+  formData.shareEnabled = !ObjectUtil.isEmptyObject(formData.post)
+  logger.info("post=>", formData.post)
+  logger.info(`shareEnabled=>${formData.shareEnabled}`)
+}
+
+const formData = reactive({
+  post: {} as Post,
+  shareEnabled: true,
+})
+
+await getPostData()
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
-  const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
-  const desc = getSummery(currentPost.post.description)
-  const headImage = getFirstImageSrc(currentPost.post.description)
+  const title = `${formData?.post?.title ?? "404 Not Found"}${props.showTitleSign ? titleSign : ""}`
+  const desc = getSummery(formData?.post?.description ?? "")
+  const headImage = getFirstImageSrc(formData?.post?.description ?? "")
   const seoMeta = {
     title: title,
     ogTitle: title,
@@ -74,17 +83,18 @@ if (!props.overrideSeo) {
   useSeoMeta(seoMeta)
 }
 
-// https://stackoverflow.com/a/71781246/4037224
+onMounted(async () => {})
+
 const VNode = () =>
   h("div", {
     class: "",
-    innerHTML: currentPost.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? "",
+    innerHTML: formData.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? "",
   })
 </script>
 
 <template>
-  <div v-if="!shareEnabled || isExpires">
-    <el-empty :description="isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')"> </el-empty>
+  <div v-if="!formData.shareEnabled">
+    <el-empty :description="t('blog.index.no.permission')"> </el-empty>
   </div>
   <div v-else class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
@@ -96,7 +106,7 @@ const VNode = () =>
           class="protyle-title__input"
           data-render="true"
         >
-          {{ currentPost.post.title }}
+          {{ formData.post.title }}
         </div>
       </div>
       <div
@@ -105,8 +115,10 @@ const VNode = () =>
         contenteditable="false"
         data-doc-type="NodeDocument"
       >
-        <VNode v-highlight v-beauty v-domparser />
+        <VNode v-highlight v-sbeauty v-sdomparser />
       </div>
     </div>
   </div>
 </template>
+
+<style scoped></style>

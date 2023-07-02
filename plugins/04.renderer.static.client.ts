@@ -39,7 +39,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("renderer-client-plugin")
   const { addClientAssetsPrefix } = useClientAssets()
 
-  vueApp.directive("beauty", (el: HTMLElement) => {
+  vueApp.directive("sbeauty", (el: HTMLElement) => {
     if (process.env.SSR === "true") {
       logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
       return

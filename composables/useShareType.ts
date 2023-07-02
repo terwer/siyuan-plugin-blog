@@ -23,30 +23,29 @@
  * questions.
  */
 
-import { createAppLogger } from "~/common/appLogger"
-import { useClientAssets } from "~/plugins/renderer/useClientAssets"
+import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
 
 /**
- * 页面渲染插件(图片、链接、公式等) - 客户端
- * https://github.com/nuxt/nuxt/issues/13382
- * client = browser only
- *
- * @author terwer
- * @version 1.0.0
- * @since 0.0.1
+ * 自定义hook，用于获取分享类型
  */
-export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("renderer-client-plugin")
-  const { addClientAssetsPrefix } = useClientAssets()
+export const useShareType = () => {
+  /**
+   * 获取分享类型
+   */
+  const getShareType = () => {
+    const win = window.parent as any
+    const accessCodeEnabled = win?.siyuan?.config?.accessAuthCode !== ""
+    return accessCodeEnabled ? ShareTypeEnum.ShareType_Private : ShareTypeEnum.ShareType_Public
+  }
 
-  vueApp.directive("beauty", (el: HTMLElement) => {
-    if (process.env.SSR === "true") {
-      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
-      return
-    }
+  /**
+   * 判断是否为私有分享
+   *
+   * @returns {boolean} 是否为私有分享
+   */
+  const isPrivateShare = (): boolean => {
+    return getShareType() === ShareTypeEnum.ShareType_Private
+  }
 
-    // assets
-    logger.info("Start handling images on client", el)
-    addClientAssetsPrefix(el)
-  })
-})
+  return { getShareType, isPrivateShare }
+}

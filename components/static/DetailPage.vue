@@ -24,22 +24,21 @@
   -->
 
 <script setup lang="ts">
-import { useCommonShareType } from "~/composables/useCommonShareType"
-import { createAppLogger } from "~/common/appLogger"
-
-definePageMeta({
-  layout: false,
-})
-
-const logger = createAppLogger("s-page")
-const { isPrivateShare } = useCommonShareType()
-
-// datas
-const isPrivate = await isPrivateShare()
-logger.info(`isPrivate=>${isPrivate}`)
+// https://github.com/nuxt/nuxt/issues/15346
+// 由于布局是个宏，不能动态设置了，因此只能写死
 </script>
 
 <template>
-  <static-home-page v-if="isPrivate" />
-  <default-home-page v-else />
+  <el-container>
+    <static-header />
+    <el-main>
+      <static-detail :show-title-sign="true" />
+    </el-main>
+    <static-footer />
+  </el-container>
 </template>
+
+<style lang="stylus">
+.el-container
+  display block !important
+</style>

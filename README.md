@@ -12,8 +12,6 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
-> Important: Due to the 1.7.0+ new authorization code mode sharing dependency 2.9.3 ontology changes, this version only supports more than 2.9.3+ clients, lower than this version, please use the old version of the plugin!
-
 ## Core Features
 
 * **One-click sharing**: You can share your documents to the local area network with just one click. If you need to share remotely, you can deploy it on a server using Docker and then install the plugin.
@@ -50,6 +48,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 - [ ] echats chart support
 - [ ] Support svg with svOrigin, e.g. '<use xlink:href="#iconMore'>'</use>
 - [X] Support enabling sharing under authorization code (experimental)
+- [X] Unordered list style adaptation
 
 ## Changelog
 

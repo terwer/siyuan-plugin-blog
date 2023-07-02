@@ -23,30 +23,43 @@
  * questions.
  */
 
+import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { createAppLogger } from "~/common/appLogger"
-import { useClientAssets } from "~/plugins/renderer/useClientAssets"
+import { Post } from "zhi-blog-api"
 
 /**
- * 页面渲染插件(图片、链接、公式等) - 客户端
- * https://github.com/nuxt/nuxt/issues/13382
- * client = browser only
- *
- * @author terwer
- * @version 1.0.0
- * @since 0.0.1
+ * 静态分析相关处理（开启授权码模式）
  */
-export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("renderer-client-plugin")
-  const { addClientAssetsPrefix } = useClientAssets()
+export const useStaticShare = () => {
+  const logger = createAppLogger("use-static-share")
+  const { kernelApi } = useSiyuanApi()
 
-  vueApp.directive("beauty", (el: HTMLElement) => {
-    if (process.env.SSR === "true") {
-      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
-      return
-    }
+  /**
+   * 打开静态分享
+   *
+   * @param {string} pageId - 页面ID
+   * @param {Post} post - 文章对象
+   */
+  const openStaticShare = async (pageId: string, post: Post) => {
+    const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
 
-    // assets
-    logger.info("Start handling images on client", el)
-    addClientAssetsPrefix(el)
-  })
-})
+    // 只暴露有限的属性
+    const sPost = new Post()
+    sPost.title = post.title
+    sPost.editorDom = post.editorDom
+    const sJson = JSON.stringify(sPost) ?? "{}"
+    await kernelApi.saveTextData(shareJsonFile, sJson)
+  }
+
+  /**
+   * 关闭静态分享
+   *
+   * @param {string} pageId - 页面ID
+   */
+  const closeStaticShare = async (pageId: string) => {
+    const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
+    await kernelApi.removeFile(shareJsonFile)
+  }
+
+  return { openStaticShare, closeStaticShare }
+}
