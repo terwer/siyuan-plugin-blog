@@ -43,25 +43,22 @@ export const useCommonShareType = () => {
    * 获取分享类型
    */
   const getShareType = async () => {
-    const shareTypeFetchFile = `/public/siyuan-blog/share-type.json`
-    const resText = await fetchText(shareTypeFetchFile)
-    logger.info("get shareType text from store", resText)
-    const shareType = JsonUtil.safeParse(resText, {} as any)
-    logger.info("get shareType from store", shareType)
-
-    if (ObjectUtil.isEmptyObject(shareType)) {
-      // 这时候需要再兼容历史数据
-      const id = (route.params.id ?? "") as string
-      const resPText = await fetchText(`/public/siyuan-blog/${id}.json`)
-      if (StrUtil.isEmptyString(resPText)) {
-        return ShareTypeEnum.ShareType_Public
-      } else {
-        return ShareTypeEnum.ShareType_Private
-      }
+    let resText
+    if (process.env.SSR === "true") {
+      logger.warn("SSR mode, using kernel api for fetching")
+      const kernelShareTypeFile = `/data/public/siyuan-blog/share-type.json`
+      resText = await kernelApi.getFile(kernelShareTypeFile, "text")
+      console.log("get shareType text from kernel=>", resText)
+    } else {
+      const shareTypeFetchFile = `/public/siyuan-blog/share-type.json`
+      resText = await fetchText(shareTypeFetchFile)
+      logger.info("get shareType text from store", resText)
     }
 
-    if (shareType.shareType === "private") {
-      return ShareTypeEnum.ShareType_Private
+    const shareType = JsonUtil.safeParse(resText, {} as any)
+    logger.info("get shareType from store", shareType)
+    if (ObjectUtil.isEmptyObject(shareType)) {
+      return ShareTypeEnum.ShareType_Public
     }
 
     return shareType.shareType
@@ -78,7 +75,7 @@ export const useCommonShareType = () => {
     sType.shareType = shareType
     const sJson = JSON.stringify(sType) ?? "{}"
     await kernelApi.saveTextData(shareTypeFile, sJson)
-    logger.info("inited shareType in public dir", sJson)
+    logger.info("IMPORTANT NOTICE: inited shareType in public dir", sJson)
   }
 
   const removeShareType = async () => {
