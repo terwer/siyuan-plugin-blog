@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.1...v1.8.2) (2023-07-02)
+
+
+### Bug Fixes
+
+* 优化消息提示 ([1f0c1f5](https://github.com/terwer/siyuan-plugin-blog/commit/1f0c1f5c28fbb8e768a47022c37d29495aeea03e))
+
 ## [1.8.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.0...v1.8.1) (2023-07-02)
 ### Bug Fixes
 * 修复 vercel 图片错误问题 ([a99a3c4](https://github.com/terwer/siyuan-plugin-blog/commit/a99a3c45a3b884cdd72f8355e6f9c5895860e8f4))
