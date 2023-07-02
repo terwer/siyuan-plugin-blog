@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.0...v1.8.1) (2023-07-02)
+
+
+### Bug Fixes
+
+* 修复 vercel 图片错误问题 ([a99a3c4](https://github.com/terwer/siyuan-plugin-blog/commit/a99a3c45a3b884cdd72f8355e6f9c5895860e8f4))
+* 更新设备支持 ([11e1893](https://github.com/terwer/siyuan-plugin-blog/commit/11e18930b7661c7216e1872e867ae5eff31e178a))
+
 ## [1.8.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.1...v1.8.0) (2023-07-02)
 ### Features
 * 授权码模式分享支持过期时间 ([ab622a0](https://github.com/terwer/siyuan-plugin-blog/commit/ab622a0f3e95371a3f34893565e9a53a8169e5a7))
