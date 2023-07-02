@@ -10,6 +10,8 @@ Based on the localization concept of siyuan-note , this plugin is natively share
 
 The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
 
+> Important: Version 1.8.0+ unifies the sharing logic in public sharing and authorization code mode, so you need to initialize the sharing type to avoid the old sharing link access exception, you only need to open the sharing pop-up window once, and it will be automatically initialized after opening.
+
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
 ## Core Features

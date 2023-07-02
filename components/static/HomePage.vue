@@ -44,22 +44,23 @@ const seoMeta = {
 useSeoMeta(seoMeta)
 
 const homePageId = setting?.homePageId ?? undefined
-
-// methods
-const goSetting = async () => {
-  await navigateTo("/setting")
-}
 </script>
 
 <template>
-  <div v-if="StrUtil.isEmptyString(homePageId)">
-    <el-empty :description="t('blog.index.no.home')">
-      <el-button type="primary" @click="goSetting">{{ t("blog.index.goto.set.home") }}</el-button>
-    </el-empty>
-  </div>
-  <div v-else>
-    <static-home :page-id="homePageId" />
-  </div>
+  <el-container>
+    <static-header />
+    <el-main>
+      <div v-if="StrUtil.isEmptyString(homePageId)">
+        <el-empty :description="t('blog.index.no.home')">
+          <el-alert type="warning" :description="t('blog.index.goto.set.home.static')" :closable="false"></el-alert>
+        </el-empty>
+      </div>
+      <div v-else>
+        <static-home :page-id="homePageId" />
+      </div>
+    </el-main>
+    <static-footer />
+  </el-container>
 </template>
 
 <style lang="stylus">

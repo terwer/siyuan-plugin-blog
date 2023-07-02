@@ -34,11 +34,5 @@ const props = defineProps({
 </script>
 
 <template>
-  <el-container>
-    <static-header />
-    <el-main>
-      <static-detail :page-id="props.pageId" :override-seo="true" />
-    </el-main>
-    <static-footer />
-  </el-container>
+  <static-detail :page-id="props.pageId" :override-seo="true" />
 </template>
