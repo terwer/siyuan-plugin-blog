@@ -203,10 +203,6 @@ const handleIpChange = (val: string) => {
 
 <template>
   <div id="share">
-    <div v-if="formData.accessCodeEnabled" class="share-item">
-      <el-alert type="warning" :description="t('share.accessCodeEnabled.tip')"></el-alert>
-    </div>
-
     <div class="share-item share-subject">
       <div class="item-left">
         {{ t("share.share") }}
@@ -327,6 +323,25 @@ const handleIpChange = (val: string) => {
       </div>
       -->
     </div>
+    <el-divider class="share-split" />
+
+    <div class="share-item">
+      <div class="item-left">
+        <el-space direction="vertical">
+          <el-text>
+            <el-icon>
+              <el-icon-apple />
+            </el-icon>
+            <span v-if="formData.accessCodeEnabled" class="share-warn-tip">
+              {{ t("share.accessCodeEnabled.tip") }}
+            </span>
+            <span v-else>
+              {{ t("share.public.tip") }}
+            </span>
+          </el-text>
+        </el-space>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -386,4 +401,7 @@ const handleIpChange = (val: string) => {
       display inline-flex
 .change-ip-title
   margin-right 10px
+.share-warn-tip
+  color: red;
+  padding-left: 6px;
 </style>
