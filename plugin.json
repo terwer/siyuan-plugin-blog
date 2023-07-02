@@ -12,9 +12,7 @@
   ],
   "frontends": [
     "desktop",
-    "desktop-window",
-    "browser-desktop",
-    "browser-mobile"
+    "browser-desktop"
   ],
   "displayName": {
     "default": "Share to web",
