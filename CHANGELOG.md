@@ -1,19 +1,14 @@
 # Changelog
 
 ## [1.8.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.0...v1.8.1) (2023-07-02)
-
-
 ### Bug Fixes
-
 * 修复 vercel 图片错误问题 ([a99a3c4](https://github.com/terwer/siyuan-plugin-blog/commit/a99a3c45a3b884cdd72f8355e6f9c5895860e8f4))
 * 更新设备支持 ([11e1893](https://github.com/terwer/siyuan-plugin-blog/commit/11e18930b7661c7216e1872e867ae5eff31e178a))
-
 ## [1.8.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.1...v1.8.0) (2023-07-02)
 ### Features
 * 授权码模式分享支持过期时间 ([ab622a0](https://github.com/terwer/siyuan-plugin-blog/commit/ab622a0f3e95371a3f34893565e9a53a8169e5a7))
 * 授权码模式的分享支持图片 ([9b94c7f](https://github.com/terwer/siyuan-plugin-blog/commit/9b94c7f59c7df818d38d94c3097a1316a2d60d9e))
 * 重构项目，统一处理公开分享与授权码模式下的分享逻辑 ([6c0c651](https://github.com/terwer/siyuan-plugin-blog/commit/6c0c651bb87fda6f451fd19bc776ccb322f3e922))
-### Bug Fixes
 * 优化功能提示 ([a3efbb9](https://github.com/terwer/siyuan-plugin-blog/commit/a3efbb94237e3886e6e2395708688e7229835000))
 * 修复公共分享模式ssr报错问题 ([7c70974](https://github.com/terwer/siyuan-plugin-blog/commit/7c70974d35141889befe488518377ba7d0e561f2))
 * 修复授权码分享模式ssr报错问题 ([6dfcd58](https://github.com/terwer/siyuan-plugin-blog/commit/6dfcd584524687e2ab759ea35dabee483ae194f6))
