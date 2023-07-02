@@ -47,15 +47,23 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+const route = useRoute()
 const { getFirstImageSrc } = useServerAssets()
 const { currentPost, setCurrentPost } = usePost()
 await setCurrentPost(props.pageId)
 
 // datas
+const formData = reactive({
+  shareEnabled: true,
+  isExpires: false,
+})
+
+const id = props.pageId ?? ((route.params.id ?? "") as string)
 const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
-const shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
-const isExpires = checkExpires(attrs)
-logger.info(`current document status,shareEnabled => ${shareEnabled}, isExpires => ${isExpires}`)
+formData.shareEnabled = attrs["custom-publish-status"] === "publish" || attrs["custom-publish-status"] === "preview"
+formData.isExpires = checkExpires(attrs)
+logger.info(`current document status,shareEnabled => ${formData.shareEnabled}, isExpires => ${formData.isExpires}`)
+
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
   const title = `${currentPost.post.title}${props.showTitleSign ? titleSign : ""}`
@@ -83,8 +91,9 @@ const VNode = () =>
 </script>
 
 <template>
-  <div v-if="!shareEnabled || isExpires">
-    <el-empty :description="isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')"> </el-empty>
+  <div v-if="!formData.shareEnabled || formData.isExpires">
+    <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
+    </el-empty>
   </div>
   <div v-else class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
@@ -100,12 +109,16 @@ const VNode = () =>
         </div>
       </div>
       <div
+        v-highlight
+        v-beauty
+        v-domparser
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
         data-doc-type="NodeDocument"
+        :data-page-id="id"
       >
-        <VNode v-highlight v-beauty v-domparser />
+        <VNode />
       </div>
     </div>
   </div>

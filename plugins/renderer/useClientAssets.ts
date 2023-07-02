@@ -30,7 +30,7 @@ import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
  * 处理客户端资源文件地址
  */
 export const useClientAssets = () => {
-  const logger = createAppLogger("hljs-client-plugin")
+  const logger = createAppLogger("use-client-assets")
   const { getClientBaseUrl } = useBaseUrl()
 
   const addClientAssetsPrefix = (el: HTMLElement) => {
