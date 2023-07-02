@@ -94,6 +94,8 @@ export default {
   "form.select": "Select",
   "form.nodata": "No data",
   "change.ip.title": "Change IP",
+  "share.accessCodeEnabled.tip":
+    "Special note: If you have enabled the authorization code after detection, please know if the document or settings are updated and need to be shared again.",
   "share.accessCodeEnabled.tip0": "Special Notes:",
   "share.accessCodeEnabled.tip1":
     "1. If you have detected that you have enabled the authorization code, the sharing function is limited in this case, please make sure that you have understood the function limitations.",

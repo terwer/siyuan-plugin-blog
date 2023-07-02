@@ -24,8 +24,7 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { useSvg } from "~/plugins/domparser/useSvg"
-import { useBlockRef } from "~/plugins/domparser/useBlockRef"
+import { useClientAssets } from "~/plugins/renderer/useClientAssets"
 
 /**
  * 页面渲染插件(图片、链接、公式等) - 客户端
@@ -37,27 +36,17 @@ import { useBlockRef } from "~/plugins/domparser/useBlockRef"
  * @since 0.0.1
  */
 export default defineNuxtPlugin(({ vueApp }) => {
-  const logger = createAppLogger("domparser-client-plugin")
-  const { addSvgToPage } = useSvg()
-  const { convertAllLinks } = useBlockRef()
+  const logger = createAppLogger("renderer-client-plugin")
+  const { addClientAssetsPrefix } = useClientAssets()
 
-  vueApp.directive("domparser", (el: HTMLElement) => {
-    // svg
-    logger.info("Start handling svg on client")
-    addSvgToPage([
-      // 任务列表未选中
-      `<symbol id="iconUncheck" viewBox="0 0 32 32">
-    <path d="M30.72-0h-29.44c-0.708 0-1.28 0.572-1.28 1.28v29.44c0 0.708 0.572 1.28 1.28 1.28h29.44c0.708 0 1.28-0.572 1.28-1.28v-29.44c0-0.708-0.572-1.28-1.28-1.28zM29.12 29.12h-26.24v-26.24h26.24v26.24z"></path>
-  </symbol>`,
-      // 任务列表已选中
-      `<symbol id="iconCheck" viewBox="0 0 32 32">
-    <path d="M12.844 21.828c0.234 0.323 0.61 0.531 1.034 0.531s0.8-0.208 1.031-0.527l0.003-0.004 8.424-11.68c0.152-0.212 0-0.508-0.26-0.508h-1.876c-0.408 0-0.796 0.196-1.036 0.532l-6.284 8.72-2.848-3.952c-0.24-0.332-0.624-0.532-1.036-0.532h-1.876c-0.26 0-0.412 0.296-0.26 0.508l4.984 6.912z"></path>
-    <path d="M30.72 0h-29.44c-0.708 0-1.28 0.572-1.28 1.28v29.44c0 0.708 0.572 1.28 1.28 1.28h29.44c0.708 0 1.28-0.572 1.28-1.28v-29.44c0-0.708-0.572-1.28-1.28-1.28zM29.12 29.12h-26.24v-26.24h26.24v26.24z"></path>
-  </symbol>`,
-    ])
+  vueApp.directive("sbeauty", (el: HTMLElement) => {
+    if (process.env.SSR === "true") {
+      logger.warn("SSR is enabled, render is handled with nitro, so the client conversion is ignored")
+      return
+    }
 
-    // block ref links
-    logger.info("Start handling links on client")
-    convertAllLinks(el)
+    // assets
+    logger.info("Start handling images on client", el)
+    addClientAssetsPrefix(el)
   })
 })

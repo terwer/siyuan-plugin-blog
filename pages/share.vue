@@ -1,3 +1,28 @@
+<!--
+  - Copyright (c) 2023, Terwer . All rights reserved.
+  - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  -
+  - This code is free software; you can redistribute it and/or modify it
+  - under the terms of the GNU General Public License version 2 only, as
+  - published by the Free Software Foundation.  Terwer designates this
+  - particular file as subject to the "Classpath" exception as provided
+  - by Terwer in the LICENSE file that accompanied this code.
+  -
+  - This code is distributed in the hope that it will be useful, but WITHOUT
+  - ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  - FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  - version 2 for more details (a copy is included in the LICENSE file that
+  - accompanied this code).
+  -
+  - You should have received a copy of the GNU General Public License version
+  - 2 along with this work; if not, write to the Free Software Foundation,
+  - Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  -
+  - Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+  - or visit www.terwer.space if you need additional information or have any
+  - questions.
+  -->
+
 <script setup lang="ts">
 import { useSettingStore } from "~/stores/useSettingStore"
 import { useRouteQuery } from "@vueuse/router"
@@ -5,12 +30,14 @@ import { createAppLogger } from "~/common/appLogger"
 import { useShareOptionToggle } from "~/composables/useShareOptionToggle"
 import copy from "copy-to-clipboard"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
-import { Post, PostStatusEnum } from "zhi-blog-api"
+import { PostStatusEnum } from "zhi-blog-api"
 import { JsonUtil, StrUtil } from "zhi-common"
 import { useMethodAsync } from "~/composables/useMethodAsync"
 import { useMethod } from "~/composables/useMethod"
 import { sendMessageToParent } from "~/utils/innerIframeEvent"
 import { getAllIps } from "~/utils/urlUtil"
+import { useStaticShare } from "~/composables/useStaticShare"
+import { useShareType } from "~/composables/useShareType"
 
 definePageMeta({
   layout: "default",
@@ -23,6 +50,9 @@ const { handleMethodAsync } = useMethodAsync()
 
 const { getSetting, updateSetting } = useSettingStore()
 const { blogApi, kernelApi } = useSiyuanApi()
+const { getShareType, isPrivateShare } = useShareType()
+const { updateShareType } = useCommonShareType()
+const { openStaticShare, closeStaticShare } = useStaticShare()
 
 const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
@@ -30,18 +60,10 @@ const isSsr = useRouteQuery("isSsr", "")
 const basePath = String(isSsr.value) === "true" ? "/plugins/siyuan-blog" : "/plugins/siyuan-blog/#"
 
 // lifecycles
-onMounted(() => {
-  // const mainEl = document.querySelector(".el-main") as any
-  // mainEl.style.margin = "0"
-  // mainEl.style.padding = "0"
-
-  // const win = SiyuanDevice.siyuanWindow()
-  const win = window.parent as any
-  formData.accessCodeEnabled = win?.siyuan?.config?.accessAuthCode !== ""
-  if (formData.accessCodeEnabled) {
-    formData.shareLink = `${shareOrigin}${basePath}/static/${id.value}`
-    logger.warn("accessAuthCode is enabled, share is in limited stated.")
-  }
+onMounted(async () => {
+  const shareType = getShareType()
+  await updateShareType(shareType)
+  formData.accessCodeEnabled = isPrivateShare()
 })
 
 const setting = await getSetting()
@@ -76,11 +98,6 @@ const formData = reactive({
 })
 const { optionState, optionToggle } = useShareOptionToggle(formData.optionEnabled)
 
-// methods
-// const goSetting = async () => {
-//   await navigateTo("/setting")
-// }
-
 const goHelp = async () => {
   window.open("https://blog.terwer.space/s/20230621001422-xsimx5v")
 }
@@ -98,7 +115,6 @@ const handleShare = (val: any) => {
         // 自适应高度
         sendMessageToParent("updateHeight")
 
-        const shareJsonFile = `/data/public/siyuan-blog/${id.value}.json`
         if (val) {
           // 分享
           await kernelApi.setBlockAttrs(id.value, {
@@ -106,14 +122,9 @@ const handleShare = (val: any) => {
             "custom-publish-time": new Date().getTime().toString(),
           })
 
-          // 保存一份 MD 文档到 public 解决授权码问题
+          // 保存文档分享数据到 public 解决授权码问题
           if (formData.accessCodeEnabled) {
-            // 只暴露有限的属性
-            const sPost = new Post()
-            sPost.title = post.title
-            sPost.editorDom = post.editorDom
-            const sJson = JSON.stringify(sPost) ?? "{}"
-            await kernelApi.saveTextData(shareJsonFile, sJson)
+            await openStaticShare(id.value, post)
             logger.info("save shared md to public")
           } else {
             logger.info("shared in public mode")
@@ -127,7 +138,7 @@ const handleShare = (val: any) => {
 
           // 删除 MD
           if (formData.accessCodeEnabled) {
-            await kernelApi.removeFile(shareJsonFile)
+            await closeStaticShare(id.value)
             logger.info("removed md due to disable sharing")
           } else {
             logger.info("disable share in public mode")
@@ -192,6 +203,10 @@ const handleIpChange = (val: string) => {
 
 <template>
   <div id="share">
+    <div v-if="formData.accessCodeEnabled" class="share-item">
+      <el-alert type="warning" :description="t('share.accessCodeEnabled.tip')"></el-alert>
+    </div>
+
     <div class="share-item share-subject">
       <div class="item-left">
         {{ t("share.share") }}
@@ -311,24 +326,6 @@ const handleIpChange = (val: string) => {
         <el-button :icon="Share" type="text">{{ t("share.copy.link") }}</el-button>
       </div>
       -->
-    </div>
-
-    <div v-if="formData.accessCodeEnabled" class="share-item">
-      <div class="el-alert el-alert--error is-light" role="alert">
-        <div class="el-alert__content">
-          <div class="el-alert__title">
-            <div>{{ t("share.accessCodeEnabled.tip0") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip1") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip2") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip3") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip4") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip5") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip6") }}</div>
-            <div>{{ t("share.accessCodeEnabled.tip7") }}</div>
-          </div>
-        </div>
-      </div>
-      <el-alert type="error" style="display: none"></el-alert>
     </div>
   </div>
 </template>

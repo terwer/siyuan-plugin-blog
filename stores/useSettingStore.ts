@@ -2,6 +2,8 @@ import { defineStore } from "pinia"
 import AppConfig from "~/app.config"
 import { createAppLogger } from "~/common/appLogger"
 import { useCommonStorageAsync } from "~/stores/common/useCommonStorageAsync"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
+import { useCommonShareType } from "~/composables/useCommonShareType"
 
 /**
  * 设置配置存储
@@ -13,6 +15,9 @@ export const useSettingStore = defineStore("setting", () => {
   const initialValue = AppConfig
   const { commonStore } = useCommonStorageAsync<typeof AppConfig>(storageKey, initialValue)
   const settingRef = ref<typeof AppConfig | null>(null)
+
+  const { isPrivateShare } = useCommonShareType()
+  const { updateStaticSetting } = useStaticSettingStore()
 
   const getSettingRef = computed(async () => {
     const setting = await commonStore.get()
@@ -45,6 +50,12 @@ export const useSettingStore = defineStore("setting", () => {
     logger.info("update setting=>", setting)
     await commonStore.set(setting)
     settingRef.value = { ...settingRef.value, ...setting }
+
+    const isPrivate = await isPrivateShare()
+    if (isPrivate) {
+      // 授权码模式写入配置
+      await updateStaticSetting(setting)
+    }
   }
 
   return { getSetting, updateSetting }

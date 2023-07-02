@@ -24,22 +24,23 @@
   -->
 
 <script setup lang="ts">
-import { useCommonShareType } from "~/composables/useCommonShareType"
-import { createAppLogger } from "~/common/appLogger"
-
-definePageMeta({
-  layout: false,
+// props
+const props = defineProps({
+  pageId: {
+    type: String,
+    default: undefined,
+  },
 })
-
-const logger = createAppLogger("s-page")
-const { isPrivateShare } = useCommonShareType()
-
-// datas
-const isPrivate = await isPrivateShare()
-logger.info(`isPrivate=>${isPrivate}`)
 </script>
 
 <template>
-  <static-home-page v-if="isPrivate" />
-  <default-home-page v-else />
+  <el-container>
+    <default-header />
+    <el-main>
+      <default-detail :page-id="props.pageId" :override-seo="true" />
+    </el-main>
+    <default-footer />
+  </el-container>
 </template>
+
+<style scoped></style>
