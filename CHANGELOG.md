@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.3](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.2...v1.8.3) (2023-07-03)
+
+
+### Bug Fixes
+
+* 修复取消分享错误 ([ea0d550](https://github.com/terwer/siyuan-plugin-blog/commit/ea0d550bdaa91b91a636eded634c35954d62072a))
+
 ## [1.8.2](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.1...v1.8.2) (2023-07-02)
 ### Bug Fixes
 * 优化消息提示 ([1f0c1f5](https://github.com/terwer/siyuan-plugin-blog/commit/1f0c1f5c28fbb8e768a47022c37d29495aeea03e))
