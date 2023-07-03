@@ -56,13 +56,16 @@ export const useStaticShare = () => {
 
   const removeSharePage = async (pageId: string) => {
     const shareJsonFile = `/data/public/siyuan-blog/${pageId}.json`
-    const pubicAssetsFolder = `/data/public/siyuan-blog/assets/${pageId}`
+    const pubicAssetsFolder = `/data/public/siyuan-blog/${pageId}`
 
     // 移除文档信息
     await kernelApi.removeFile(shareJsonFile)
+    logger.info("static doc data removed success")
 
     // 移除附件信息
     await kernelApi.removeFile(pubicAssetsFolder)
+    logger.info("static attachment data removed success")
+
     logger.info("static share data removed success")
   }
   // ===========================================================================================
