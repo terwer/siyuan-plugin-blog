@@ -50,8 +50,8 @@ devDependencies:
     specifier: 8.0.0-beta.12
     version: 8.0.0-beta.12(vue-router@4.2.2)(vue@3.3.4)
   '@nuxtjs/i18n-edge':
-    specifier: 8.0.0-beta.12-28122654.89ddb67
-    version: 8.0.0-beta.12-28122654.89ddb67(vue-router@4.2.2)(vue@3.3.4)
+    specifier: 8.0.0-beta.12-28140575.2040351
+    version: 8.0.0-beta.12-28140575.2040351(vue-router@4.2.2)(vue@3.3.4)
   '@terwer/esbuild-config-custom':
     specifier: ^1.0.12
     version: 1.0.12(@types/minimist@1.2.2)(dotenv@16.3.1)(esbuild-plugin-copy@2.1.1)(esbuild-plugin-d.ts@1.1.0)(esbuild-plugin-ifdef@1.0.1)(esbuild-plugin-inline-image@0.0.9)(esbuild-plugin-vue3@0.3.2)(esbuild-style-plugin@1.6.2)(esbuild@0.17.19)(minimist@1.2.8)(rimraf@4.4.1)(stylus@0.59.0)
@@ -1055,8 +1055,8 @@ packages:
     engines: {node: '>= 16'}
     dev: true
 
-  /@intlify/shared@9.3.0-beta.20:
-    resolution: {integrity: sha512-RucSPqh8O9FFxlYUysQTerSw0b9HIRpyoN1Zjogpm0qLiHK+lBNSa5sh1nCJ4wSsNcjphzgpLQCyR60GZlRV8g==}
+  /@intlify/shared@9.3.0-beta.21:
+    resolution: {integrity: sha512-VcE3XKBlQXHKRKAGP7YB/7n0TFH4EibJSGJ+t4rZuC8gTL6r/eqYM1fsw3JJFe70wamqx1oEmd2Hu/pnPlsfiQ==}
     engines: {node: '>= 16'}
     dev: true
 
@@ -1628,8 +1628,8 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxtjs/i18n-edge@8.0.0-beta.12-28122654.89ddb67(vue-router@4.2.2)(vue@3.3.4):
-    resolution: {integrity: sha512-w42BRK0V9jstCCaUAE2UoJ/f83hnUI47ngypb85UzOgDMahQv+fKszdaZuN3ZVbQ84oOWmqswreJYBrCagqwog==}
+  /@nuxtjs/i18n-edge@8.0.0-beta.12-28140575.2040351(vue-router@4.2.2)(vue@3.3.4):
+    resolution: {integrity: sha512-2WqF6yFaGr1Nk9eTr0OUxGiR47R51kwohw0h5G6NSsk1XuA++KG0jxoFB3quaP48v1rbo9HP4Cg5JDOE7pedlQ==}
     engines: {node: ^14.16.0 || >=16.11.0}
     dependencies:
       '@intlify/bundle-utils': 5.5.0(vue-i18n@9.3.0-beta.19)
@@ -9003,7 +9003,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      '@intlify/shared': 9.3.0-beta.20
+      '@intlify/shared': 9.3.0-beta.21
       '@intlify/vue-i18n-bridge': 0.8.0(vue-i18n@9.3.0-beta.17)
       '@intlify/vue-router-bridge': 0.8.0(vue-router@4.2.2)(vue@3.3.4)
       ufo: 1.1.2
@@ -9034,7 +9034,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      '@intlify/shared': 9.3.0-beta.20
+      '@intlify/shared': 9.3.0-beta.21
       '@intlify/vue-i18n-bridge': 0.8.0(vue-i18n@9.3.0-beta.19)
       '@intlify/vue-router-bridge': 0.8.0(vue-router@4.2.2)(vue@3.3.4)
       ufo: 1.1.2
