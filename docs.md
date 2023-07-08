@@ -72,7 +72,7 @@ http://localhost:3000
 ## docker生产环境构建
 
 ```
-pnpm nodeuild
+pnpm nodeBuild
 docker compose up --build --remove-orphans
 docker push terwer/nuxt3-blog:latest
 ```
