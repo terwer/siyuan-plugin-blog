@@ -24,8 +24,8 @@ dependencies:
     specifier: ^11.8.0
     version: 11.8.0
   pinia:
-    specifier: ^2.1.4
-    version: 2.1.4(typescript@5.1.6)(vue@3.3.4)
+    specifier: ^2.1.6
+    version: 2.1.6(typescript@5.1.6)(vue@3.3.4)
   zhi-device:
     specifier: ^2.3.0
     version: 2.3.0
@@ -1055,8 +1055,8 @@ packages:
     engines: {node: '>= 16'}
     dev: true
 
-  /@intlify/shared@9.3.0-beta.20:
-    resolution: {integrity: sha512-RucSPqh8O9FFxlYUysQTerSw0b9HIRpyoN1Zjogpm0qLiHK+lBNSa5sh1nCJ4wSsNcjphzgpLQCyR60GZlRV8g==}
+  /@intlify/shared@9.3.0-beta.24:
+    resolution: {integrity: sha512-AKxJ8s7eKIQWkNaf4wyyoLRwf4puCuQgjSChlDJm5JBEt6T8HGgnYTJLRXu6LD/JACn3Qwu6hM/XRX1c9yvjmQ==}
     engines: {node: '>= 16'}
     dev: true
 
@@ -1722,7 +1722,7 @@ packages:
     resolution: {integrity: sha512-bhuNFngJpmBCdAqWguezNJ/oJFR7wvKieqiZrmmdmPR07XjsidAw8RLXHMZE9kUm32M9E6T057OBbG/22jERTg==}
     dependencies:
       '@nuxt/kit': 3.6.1
-      pinia: 2.1.4(typescript@5.1.6)(vue@3.3.4)
+      pinia: 2.1.6(typescript@5.1.6)(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - rollup
@@ -6916,8 +6916,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinia@2.1.4(typescript@5.1.6)(vue@3.3.4):
-    resolution: {integrity: sha512-vYlnDu+Y/FXxv1ABo1vhjC+IbqvzUdiUC3sfDRrRyY2CQSrqqaa+iiHmqtARFxJVqWQMCJfXx1PBvFs9aJVLXQ==}
+  /pinia@2.1.6(typescript@5.1.6)(vue@3.3.4):
+    resolution: {integrity: sha512-bIU6QuE5qZviMmct5XwCesXelb5VavdOWKWaB17ggk++NUwQWWbP5YnsONTk3b752QkW9sACiR81rorpeOMSvQ==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
@@ -9003,7 +9003,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      '@intlify/shared': 9.3.0-beta.20
+      '@intlify/shared': 9.3.0-beta.24
       '@intlify/vue-i18n-bridge': 0.8.0(vue-i18n@9.3.0-beta.17)
       '@intlify/vue-router-bridge': 0.8.0(vue-router@4.2.2)(vue@3.3.4)
       ufo: 1.1.2
@@ -9034,7 +9034,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      '@intlify/shared': 9.3.0-beta.20
+      '@intlify/shared': 9.3.0-beta.24
       '@intlify/vue-i18n-bridge': 0.8.0(vue-i18n@9.3.0-beta.19)
       '@intlify/vue-router-bridge': 0.8.0(vue-router@4.2.2)(vue@3.3.4)
       ufo: 1.1.2
