@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.5](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.4...v1.8.5) (2023-08-10)
+
+
+### Bug Fixes
+
+* 修复vercel部署缺失样式问题 ([901642a](https://github.com/terwer/siyuan-plugin-blog/commit/901642a3c32d88a4dab7ee28449c1e36f2dd9579))
+
 ## [1.8.4](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.3...v1.8.4) (2023-08-10)
 ### Bug Fixes
 * **deps:** bump pnpm/action-setup from 2.2.4 to 2.4.0 ([30aefbf](https://github.com/terwer/siyuan-plugin-blog/commit/30aefbf89f3a58498d6e9e5adf2a0112c01e73c6))
