@@ -23,18 +23,22 @@
  * questions.
  */
 
-import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
+import { JsonUtil, ObjectUtil } from "zhi-common"
 import { ShareType } from "~/models/ShareType"
 import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
 import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
+import { usePost } from "~/composables/usePost"
+import { useRouteQuery } from "@vueuse/router"
 
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
   const { kernelApi } = useSiyuanApi()
   const { fetchPublicText } = useAuthModeFetch()
   const shareTypeJsonFile = "share-type.json"
+  const route = useRoute()
+  const id = (route.params.id ?? "") as string
 
   /**
    * 获取分享类型
@@ -43,7 +47,15 @@ export const useCommonShareType = () => {
     const resText = await fetchPublicText(shareTypeJsonFile)
     const shareType = JsonUtil.safeParse(resText, {} as any)
     logger.info("get shareType from store", shareType)
-    if (ObjectUtil.isEmptyObject(shareType)) {
+
+    // 预览当做公共分享处理，因为在内部
+    const { currentPost, setCurrentPost } = usePost()
+    await setCurrentPost(id)
+    const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
+    const isPreview = attrs["custom-publish-status"] === "preview"
+    logger.info(`get custom-publish-status isPreview=> ${isPreview}`)
+
+    if (ObjectUtil.isEmptyObject(shareType) || isPreview) {
       return ShareTypeEnum.ShareType_Public
     }
 

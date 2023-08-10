@@ -19,7 +19,7 @@ find ./dist/_nuxt -type f -name 'entry.*.js' -exec \
 echo "The i18n path has been replaced"
 
 # 复制最终文件
-rsync -av ./dist/ /Users/terwer/Documents/mydocs/my-note-docker-private/workspace/SiYuan/data/plugins/siyuan-blog/
+rsync -av ./dist/ /Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-blog/
 echo "All assets are copied."
 
 echo "Siyuan dev build finished."

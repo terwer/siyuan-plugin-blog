@@ -31,6 +31,7 @@ const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w
 const isProduction = args.production || args.prod
 
+// const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-blog" : "./"
 const baseDir = isWatch ? "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-blog" : "./"
 const distDir = isWatch ? baseDir : path.join(baseDir, "dist")
 
