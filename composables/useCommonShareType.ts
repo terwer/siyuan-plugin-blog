@@ -47,20 +47,26 @@ export const useCommonShareType = () => {
     const shareType = JsonUtil.safeParse(resText, {} as any)
     logger.info("get shareType from store", shareType)
 
+    if (ObjectUtil.isEmptyObject(shareType)) {
+      return ShareTypeEnum.ShareType_Public
+    }
+
     // 预览当做公共分享处理，因为在内部
     // 要考虑不在分享页面的情况
     const id = (route.params.id ?? "") as string
     if (!StrUtil.isEmptyString(id)) {
-      const { currentPost, setCurrentPost } = usePost()
-      await setCurrentPost(id)
-      const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
-      const isPreview = attrs["custom-publish-status"] === "preview"
-      logger.info(`get custom-publish-status isPreview=> ${isPreview}`)
-      return ShareTypeEnum.ShareType_Public
-    }
-
-    if (ObjectUtil.isEmptyObject(shareType)) {
-      return ShareTypeEnum.ShareType_Public
+      try {
+        const { currentPost, setCurrentPost } = usePost()
+        await setCurrentPost(id)
+        const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})
+        const isPreview = attrs["custom-publish-status"] === "preview"
+        logger.info(`get custom-publish-status isPreview=> ${isPreview}`)
+        if (isPreview) {
+          return ShareTypeEnum.ShareType_Public
+        }
+      } catch (e) {
+        logger.info("Not in inner, ignore")
+      }
     }
 
     return shareType.shareType
