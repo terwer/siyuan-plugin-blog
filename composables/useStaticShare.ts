@@ -29,7 +29,7 @@ import { Post } from "zhi-blog-api"
 import { useStaticClientAssets } from "~/plugins/renderer/useStaticClientAssets"
 
 /**
- * 静态分析相关处理（开启授权码模式）
+ * 静态分享相关处理（开启授权码模式）
  */
 export const useStaticShare = () => {
   const logger = createAppLogger("use-static-share")

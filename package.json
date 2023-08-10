@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "bash scripts/serve.sh",
     "dev": "bash scripts/dev.sh",
-    "devPrivate": "bash scripts/dev_private.sh",
+    "devTest": "bash scripts/dev_test.sh",
     "pluginDev": "zhi-build --watch",
     "build": "bash scripts/build.sh",
     "nodeBuild": "bash scripts/node.sh",
