@@ -62,6 +62,7 @@ export default defineNuxtConfig({
     themes: ["dark"],
   },
 
+  // https://github.com/nuxt/nuxt/issues/21840
   css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
 
   app: {
@@ -101,8 +102,8 @@ export default defineNuxtConfig({
     siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
     siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
     public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "siyuan",
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
+      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
+      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
       waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
     },
   },
