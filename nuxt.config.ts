@@ -1,42 +1,88 @@
-/*
- * Copyright (c) 2023, Terwer . All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Terwer designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Terwer in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
- * or visit www.terwer.space if you need additional information or have any
- * questions.
- */
+const generateDynamicV = () => {
+  const now = new Date()
+  const year = now.getFullYear().toString()
+  const month = (now.getMonth() + 1).toString().padStart(2, "0")
+  const day = now.getDate().toString().padStart(2, "0")
+  const hour = now.getHours().toString().padStart(2, "0")
+  const minute = now.getMinutes().toString().padStart(2, "0")
+  return year + month + day + hour + minute
+}
 
 const isDev = process.env.NODE_ENV === "development"
 const appBase = "/"
+const staticV = generateDynamicV()
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  experimental: {
+    inlineSSRStyles: false,
+  },
+
+  // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
+  typescript: {
+    strict: true,
+  },
+
+  devtools: {
+    enabled: false,
+  },
+
+  // build modules
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt", "@nuxt/image"],
+
+  // vueuse
+  vueuse: {
+    ssrHandlers: true,
+  },
 
   i18n: {
     vueI18n: "./i18n.ts",
   },
 
-  elementPlus: {},
+  // colorMode
+  // 格式是 `class="light-${classSuffix}"`，为空是 `class="light"`
+  colorMode: {
+    classSuffix: "",
+  },
+
+  image: {},
+
+  vite: {
+    define: {
+      "process.env.DEV_MODE": `"${isDev}"`,
+      "process.env.APP_BASE": `"${appBase}"`,
+      "process.env.SSR": `"true"`,
+    },
+    plugins: [],
+  },
+
+  elementPlus: {
+    icon: "ElIcon",
+    importStyle: "scss",
+    themes: ["dark"],
+  },
+
+  // https://github.com/nuxt/nuxt/issues/21840
+  css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
 
   app: {
+    baseURL: appBase,
     head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+      htmlAttrs: {
+        lang: "zh_CN",
+        "data-theme-mode": "system",
+        "data-light-theme": "Zhihu",
+        "data-dark-theme": "Zhihu",
+      },
+      link: [
+        { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        {
+          rel: "stylesheet",
+          href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
+        },
+      ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
@@ -61,4 +107,4 @@ export default {
       waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
     },
   },
-}
+})

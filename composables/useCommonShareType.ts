@@ -30,6 +30,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { usePost } from "~/composables/usePost"
+import { useRouteQuery } from "@vueuse/router"
 
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
@@ -47,8 +48,9 @@ export const useCommonShareType = () => {
     logger.info("get shareType from store", shareType)
 
     // 预览当做公共分享处理，因为在内部
+    // 要考虑不在分享页面的情况
     const id = (route.params.id ?? "") as string
-    if (StrUtil.isEmptyString(id)) {
+    if (!StrUtil.isEmptyString(id)) {
       const { currentPost, setCurrentPost } = usePost()
       await setCurrentPost(id)
       const attrs = JsonUtil.safeParse<any>(currentPost.post?.attrs ?? "{}", {})

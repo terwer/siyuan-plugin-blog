@@ -1,8 +1,8 @@
 import AppConfig from "~/app.config"
-import { createAppLogger } from "~/common/appLogger"
-import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
-import { JsonUtil } from "zhi-common"
-import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
+import {createAppLogger} from "~/common/appLogger"
+import {useSiyuanApi} from "~/composables/api/useSiyuanApi"
+import {JsonUtil} from "zhi-common"
+import {useAuthModeFetch} from "~/composables/useAuthModeFetch"
 
 /**
  * 设置配置存储
