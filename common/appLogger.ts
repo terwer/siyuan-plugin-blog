@@ -23,42 +23,34 @@
  * questions.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+import { isDev } from "~/common/Constants"
+import { simpleLogger } from "zhi-lib-base"
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+/**
+ * 使用 eruda 更好的控制日志
+ */
+if (typeof window !== "undefined") {
+  const econole = (window as any)?.eruda?.get("console")
+  window.console = isDev && econole ? econole : window.console
+}
 
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
+/**
+ * 简单的日志接口
+ */
+interface ILogger {
+  debug: (msg: string, obj?: any) => void
+  info: (msg: string, obj?: any) => void
+  warn: (msg: string, obj?: any) => void
+  error: (msg: string | Error, obj?: any) => void
+}
 
-  elementPlus: {},
-
-  app: {
-    head: {
-      // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: isDev
-        ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [],
-    },
-  },
-
-  // 环境变量
-  runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-    },
-  },
+/**
+ * 一个简单轻量级的日志记录器
+ *
+ * @author terwer
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+export const createAppLogger = (name: string): ILogger => {
+  return simpleLogger(name, "siyuan-blog", isDev)
 }

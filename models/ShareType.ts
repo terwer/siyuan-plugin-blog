@@ -23,42 +23,8 @@
  * questions.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
-
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
-
-  elementPlus: {},
-
-  app: {
-    head: {
-      // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: isDev
-        ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [],
-    },
-  },
-
-  // 环境变量
-  runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-    },
-  },
+export class ShareType {
+  public shareType = ShareTypeEnum.ShareType_Public
 }

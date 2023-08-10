@@ -16,5 +16,15 @@
     "element-plus": "^2.3.9",
     "nuxt": "^3.6.5",
     "stylus": "^0.59.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "@vueuse/core": "^10.3.0",
+    "add": "^2.0.6",
+    "pinia": "^2.1.6",
+    "zhi-common": "^1.14.1",
+    "zhi-device": "^2.3.0",
+    "zhi-lib-base": "^0.4.4",
+    "zhi-siyuan-api": "^2.0.20"
   }
 }

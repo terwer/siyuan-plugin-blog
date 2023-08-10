@@ -23,42 +23,36 @@
  * questions.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+type ThemeType = "system" | "dark" | "light"
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+interface AppConfig {
+  lang?: string
+  siteUrl?: string
+  siteTitle?: string
+  siteSlogan?: string
+  siteDescription?: string
+  homePageId?: string
 
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
+  theme?: {
+    mode?: ThemeType
+    lightTheme?: string
+    darkTheme?: string
+  }
 
-  elementPlus: {},
-
-  app: {
-    head: {
-      // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: isDev
-        ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [],
-    },
-  },
-
-  // 环境变量
-  runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-    },
-  },
+  // 加上字符串索引签名，兼容 AppConfigInput 约束
+  [key: string]: any
 }
+
+export default defineAppConfig<AppConfig>({
+  lang: "zh_CN",
+  siteUrl: "",
+  siteTitle: "浅海拾贝",
+  siteSlogan: "寻找未知的技术拼图",
+  siteDescription: "专注于Java后端开发及服务端、软件架构、微服务、自然语言处理等领域的技术分享。",
+
+  theme: {
+    mode: "system",
+    lightTheme: "Zhihu",
+    darkTheme: "Zhihu",
+  },
+})

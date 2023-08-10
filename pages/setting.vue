@@ -35,22 +35,13 @@ definePageMeta({
   <div>
     <el-tabs tab-position="left">
       <el-tab-pane :label="t('setting.basic')">
-        <!--
         <default-setting-basic />
-        -->
-        111
       </el-tab-pane>
       <el-tab-pane :label="t('setting.preference')">
-        <!--
         <default-setting-preference />
-        -->
-        222
       </el-tab-pane>
       <el-tab-pane :label="t('setting.system')">
-        <!--
         <default-setting-change-local />
-        -->
-        333
       </el-tab-pane>
     </el-tabs>
 

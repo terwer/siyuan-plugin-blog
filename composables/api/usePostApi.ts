@@ -23,42 +23,27 @@
  * questions.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+import { createAppLogger } from "~/common/appLogger"
+import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+/**
+ * 文档相关
+ */
+export const usePostApi = () => {
+  const logger = createAppLogger("use-post")
+  const { blogApi } = useSiyuanApi()
 
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
+  const getPost = async (id: string, useSlug?: boolean, skipBody?: boolean) => {
+    logger.info("Loading post from remote api...")
 
-  elementPlus: {},
+    // logger.info("env=>", env)
+    // logger.info("defaultType=>", env.public.defaultType)
+    // logger.info("siyuanApiUrl=>", env.public.siyuanApiUrl)
+    // logger.info("siyuanAuthToken=>", env.siyuanAuthToken)
 
-  app: {
-    head: {
-      // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: isDev
-        ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [],
-    },
-  },
+    const postid = id.replace(/\.html$/, "")
+    return await blogApi.getPost(postid, useSlug, skipBody)
+  }
 
-  // 环境变量
-  runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-    },
-  },
+  return { getPost }
 }

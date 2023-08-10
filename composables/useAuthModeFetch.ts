@@ -23,42 +23,25 @@
  * questions.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+import { createAppLogger } from "~/common/appLogger"
+import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+export const useAuthModeFetch = () => {
+  const logger = createAppLogger("use-auth-mode-fetch")
+  const { kernelApi } = useSiyuanApi()
 
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
+  /**
+   * 获取文本
+   *
+   * @param filename - 获取相对于 public/siyuan-blog 目录的文本
+   */
+  const fetchPublicText = async (filename: string) => {
+    const shareTypeFetchFile = `/public/siyuan-blog/${filename}`
+    logger.info("getPublicFile in auth mode", shareTypeFetchFile)
+    const resText = await kernelApi.getPublicFile(shareTypeFetchFile)
+    logger.debug("get text from auth mode", resText)
+    return resText
+  }
 
-  elementPlus: {},
-
-  app: {
-    head: {
-      // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: isDev
-        ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [],
-    },
-  },
-
-  // 环境变量
-  runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-    },
-  },
+  return { fetchPublicText }
 }

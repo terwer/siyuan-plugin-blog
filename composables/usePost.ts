@@ -23,42 +23,44 @@
  * questions.
  */
 
-const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+import { createAppLogger } from "~/common/appLogger"
+import { Post } from "zhi-blog-api"
+import { ObjectUtil } from "zhi-common"
+import { usePostApi } from "~/composables/api/usePostApi"
 
-export default {
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+/**
+ * 文档相关
+ */
+export const usePost = () => {
+  const logger = createAppLogger("use-post")
+  const { getPost } = usePostApi()
 
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
+  // datas
+  const currentPost = reactive({
+    post: {} as Post,
+  })
 
-  elementPlus: {},
+  /**
+   * 如果缓存已有直接返回，否则去远程抓取数据
+   */
+  const setCurrentPost = async (pageId?: string) => {
+    if (ObjectUtil.isEmptyObject(currentPost.post)) {
+      const route = useRoute()
+      const id = pageId ?? ((route.params.id ?? "") as string)
+      currentPost.post = await getPost(id)
+    } else {
+      logger.info("Post already cached, skip fetch")
+    }
+  }
 
-  app: {
-    head: {
-      // https://nuxt.com/docs/api/configuration/nuxt-config#head
-      script: isDev
-        ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
-          ]
-        : [],
-    },
-  },
+  // lifecycles
+  // https://vuejs.org/api/composition-api-lifecycle.html#onserverprefetch
+  onServerPrefetch(async () => {
+    await setCurrentPost()
+  })
+  onBeforeMount(async () => {
+    await setCurrentPost()
+  })
 
-  // 环境变量
-  runtimeConfig: {
-    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-    },
-  },
+  return { currentPost, setCurrentPost }
 }
