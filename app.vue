@@ -23,19 +23,8 @@
   - questions.
   -->
 
-<script setup lang="ts"></script>
-
 <template>
-  <el-container>
-    <static-header />
-    <el-main>
-      <slot />
-    </el-main>
-    <static-footer />
-  </el-container>
+  <div>
+    <NuxtWelcome />
+  </div>
 </template>
-
-<style lang="stylus">
-.el-container
-  display block !important
-</style>
