@@ -23,10 +23,8 @@
  * questions.
  */
 
-export default {
-  modules: ["@nuxtjs/i18n"],
-
-  i18n: {
-    vueI18n: "./i18n.ts",
-  },
+module.exports = {
+    semi: false,
+    singleQuote: false,
+    printWidth: 120,
 }

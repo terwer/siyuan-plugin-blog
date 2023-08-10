@@ -1,5 +1,8 @@
 {
-  "private": true,
+  "name": "siyuan-blog",
+  "version": "1.8.4",
+  "description": "The notions sharing function you want is here too",
+  "type": "module",
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
@@ -7,6 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/i18n": "8.0.0-beta.12",
+    "@terwer/eslint-config-custom": "^1.3.6",
     "nuxt": "^3.6.5"
   }
 }
