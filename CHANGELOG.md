@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.8.4](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.3...v1.8.4) (2023-08-10)
+
+
+### Bug Fixes
+
+* **deps:** bump pnpm/action-setup from 2.2.4 to 2.4.0 ([30aefbf](https://github.com/terwer/siyuan-plugin-blog/commit/30aefbf89f3a58498d6e9e5adf2a0112c01e73c6))
+* 修复授权码模式发布预览失效问题 ([91fe1b0](https://github.com/terwer/siyuan-plugin-blog/commit/91fe1b09bc0d3f1200cfb82f74982b042146ceae))
+* 升级依赖 ([5c9df8a](https://github.com/terwer/siyuan-plugin-blog/commit/5c9df8ab0c6955b5dd830a10375b18dd378a2276))
+* 更新183 版本 docker 镜像 ([0d20e35](https://github.com/terwer/siyuan-plugin-blog/commit/0d20e35b8527b0691251eb7a1af3d83e6877f2d4))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump @nuxt/devtools from 0.6.7 to 0.7.6 ([6c7c117](https://github.com/terwer/siyuan-plugin-blog/commit/6c7c1171381a958e528f5ffcfc5dd63cf71f7d80))
+
 ## [1.8.3](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.2...v1.8.3) (2023-07-03)
 ### Bug Fixes
 * 修复取消分享错误 ([ea0d550](https://github.com/terwer/siyuan-plugin-blog/commit/ea0d550bdaa91b91a636eded634c35954d62072a))
