@@ -97,6 +97,10 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    preset: "vercel",
+  },
+
   // 环境变量
   runtimeConfig: {
     siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
