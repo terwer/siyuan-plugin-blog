@@ -27,8 +27,8 @@ dependencies:
     specifier: ^2.1.6
     version: 2.1.6(typescript@5.1.6)(vue@3.3.4)
   zhi-device:
-    specifier: ^2.3.0
-    version: 2.3.0
+    specifier: ^2.3.1
+    version: 2.3.1
   zhi-siyuan-api:
     specifier: ^2.0.20
     version: 2.0.20
@@ -9341,8 +9341,8 @@ packages:
       zhi-lib-base: 0.4.4
     dev: false
 
-  /zhi-device@2.3.0:
-    resolution: {integrity: sha512-we04mMt4BEqeKDxoqdJQsDFYImYlcp/yaAIkpxpMGg+9tBURfNeHPHIHkFias9VbM8yuk6xjAX6B2xJjvYE/iw==}
+  /zhi-device@2.3.1:
+    resolution: {integrity: sha512-HLNroA/bIHrEPQTaOC0gZyR42FpaxSJb/lc+LqWvtlazsxeOiYAc9HhFHBwJFdbikMqCogFWVFtGG7OMLYmaKg==}
     dev: false
 
   /zhi-lib-base@0.4.4:
