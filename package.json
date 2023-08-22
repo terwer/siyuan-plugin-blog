@@ -49,6 +49,6 @@
     "highlight.js": "^11.8.0",
     "pinia": "^2.1.6",
     "zhi-device": "^2.3.0",
-    "zhi-siyuan-api": "^2.0.20"
+    "zhi-siyuan-api": "^2.4.4"
   }
 }
