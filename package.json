@@ -35,7 +35,7 @@
     "esbuild-style-plugin": "^1.6.2",
     "minimist": "^1.2.8",
     "nuxt": "^3.6.5",
-    "sass": "^1.65.1",
+    "sass": "^1.69.1",
     "siyuan": "^0.7.9",
     "stylus": "^0.59.0",
     "typescript": "^5.1.6"
