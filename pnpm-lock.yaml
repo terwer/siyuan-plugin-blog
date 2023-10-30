@@ -30,8 +30,8 @@ dependencies:
     specifier: ^2.3.0
     version: 2.3.0
   zhi-siyuan-api:
-    specifier: ^2.0.20
-    version: 2.0.20
+    specifier: ^2.12.0
+    version: 2.12.0
 
 devDependencies:
   '@element-plus/nuxt':
@@ -1052,8 +1052,8 @@ packages:
     engines: {node: '>= 16'}
     dev: true
 
-  /@intlify/shared@9.3.0-beta.25:
-    resolution: {integrity: sha512-Zg+ECV9RPdp227tCJOgvPb+S3i651nf4kKHsMojSyWCppVK/4NFuDrBG2lIQSQL6Iq5LKVr5MkezHCW2NBTQRg==}
+  /@intlify/shared@9.4.1:
+    resolution: {integrity: sha512-A51elBmZWf1FS80inf/32diO9DeXoqg9GR9aUDHFcfHoNDuT46Q+fpPOdj8jiJnSHSBh8E1E+6qWRhAZXdK3Ng==}
     engines: {node: '>= 16'}
     dev: true
 
@@ -9030,7 +9030,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      '@intlify/shared': 9.3.0-beta.25
+      '@intlify/shared': 9.4.1
       '@intlify/vue-i18n-bridge': 0.8.0(vue-i18n@9.3.0-beta.17)
       '@intlify/vue-router-bridge': 0.8.0(vue-router@4.2.4)(vue@3.3.4)
       ufo: 1.2.0
@@ -9061,7 +9061,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      '@intlify/shared': 9.3.0-beta.25
+      '@intlify/shared': 9.4.1
       '@intlify/vue-i18n-bridge': 0.8.0(vue-i18n@9.3.0-beta.19)
       '@intlify/vue-router-bridge': 0.8.0(vue-router@4.2.4)(vue@3.3.4)
       ufo: 1.2.0
@@ -9325,36 +9325,37 @@ packages:
     resolution: {integrity: sha512-irug8fXNKjqazkA27cFQs7C6/ZD3qNiEzLC56kDyzQART/Z9GMGfg8h2i6fb9c8ZWnIx/QgOgFJxK3A/CYHG0g==}
     dev: true
 
-  /zhi-blog-api@1.20.17:
-    resolution: {integrity: sha512-OnAEh0SHmkQvDPmfM1UBcvvXHk4fwUVgXb4w2F6bqO+RDye8B49VaPSwvLUyNI7MaHIFbIyE1yFcupJd3P3/uQ==}
+  /zhi-blog-api@1.50.0:
+    resolution: {integrity: sha512-emzAvC+L/K+i9JaN8U34lHFTiU7ekBJwWsFIIEVqsc3v7iQZqHCyXboSYUeLD8NpPfrVtb+et+VBI3WhjDTt+A==}
     dependencies:
-      zhi-lib-base: 0.4.4
+      zhi-common: 1.25.0
+      zhi-lib-base: 0.8.0
     dev: false
 
-  /zhi-common@1.14.1:
-    resolution: {integrity: sha512-euAUWXtwrbOx+6IP3w9JLwoHtI9Ntv7bUvLePK1yKpJk/83DzRmRj/ymzl31ppnVYUL/Vkb00OT/VhFiqV2P1w==}
+  /zhi-common@1.25.0:
+    resolution: {integrity: sha512-ydNkyFEgxL45hSeR7qf8z9A+WL88DIYoTLZ46ogMySKqrnkdt3Py/Kju6mROTJ6dDWvgKoV0OcjBE0pQHKD9XQ==}
     dependencies:
       js-yaml: 4.1.0
       shorthash2: 1.0.3
       transliteration: 2.3.5
       vue: 3.3.4
-      zhi-lib-base: 0.4.4
+      zhi-lib-base: 0.8.0
     dev: false
 
   /zhi-device@2.3.0:
     resolution: {integrity: sha512-we04mMt4BEqeKDxoqdJQsDFYImYlcp/yaAIkpxpMGg+9tBURfNeHPHIHkFias9VbM8yuk6xjAX6B2xJjvYE/iw==}
     dev: false
 
-  /zhi-lib-base@0.4.4:
-    resolution: {integrity: sha512-adu1KXVDRjsE/tshAXUeRW62VkaNIb0AOcYXnjgHODsw2gJlkxbvVn2wISuboCiwKv1JsD5gbmxdzSkRyJiC5Q==}
+  /zhi-lib-base@0.8.0:
+    resolution: {integrity: sha512-3Ky5p6KvLWpXy2tlb/JIfSEKLSe5w43PBLM6g+hNcWwpL9S62emgcpUAHzGWBbC0vlLBLungt2LOsmwAfhrZ0w==}
     dev: false
 
-  /zhi-siyuan-api@2.0.20:
-    resolution: {integrity: sha512-pJD6LSvy7tzZfriNPcGX3/VLiToGVbWYDTvle/cauNHKgkNeY/8FnKLWqa0R+WjSiEHGls7WkUKWUUqrJtiSOw==}
+  /zhi-siyuan-api@2.12.0:
+    resolution: {integrity: sha512-eJw2WG7IassTFNQcUrEj9e8AFgI7mmbw2H+at6B5+GalRBwgD7/V+0t6bp7mNbbZR37GLiu5pBFrOgzk3/+PHA==}
     dependencies:
-      zhi-blog-api: 1.20.17
-      zhi-common: 1.14.1
-      zhi-lib-base: 0.4.4
+      zhi-blog-api: 1.50.0
+      zhi-common: 1.25.0
+      zhi-lib-base: 0.8.0
     dev: false
 
   /zip-stream@4.1.0:
