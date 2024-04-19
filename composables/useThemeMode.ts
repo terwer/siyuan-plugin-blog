@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { BrowserUtil } from "zhi-device"
+import { BrowserUtil, SiyuanDevice } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { useSettingStore } from "~/stores/useSettingStore"
 
@@ -68,8 +68,7 @@ export const useThemeMode = async () => {
   }
 
   // 在 mounted 生命周期中处理加载后逻辑
-  // onMounted(() => {
-  // })
+  onMounted(() => {})
 
   const setting = await getSetting()
   const siyuanV = "2.9.1"
@@ -77,8 +76,11 @@ export const useThemeMode = async () => {
   const siyuanLightTheme = setting?.theme?.lightTheme ?? "Zhihu"
   const siyuanDarkTheme = setting?.theme?.darkTheme ?? "Zhihu"
   const siyuanThemeV = "0.0.7"
-  const detectedMode = setting?.theme?.mode ?? color.preference
-  const isDarkMode = detectedMode === "dark"
+  const win = SiyuanDevice.siyuanWindow()
+  const isDarkMode = win.matchMedia("(prefers-color-scheme: dark)").matches
+  const detectedMode = isDarkMode ? "dark" : "light"
+  // const detectedMode  setting?.theme?.mode ?? color.preference
+  // const isDarkMode = detectedMode === "dark"
   useHead({
     htmlAttrs: {
       lang: setting.lang ?? "zh_CN",
