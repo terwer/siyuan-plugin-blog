@@ -105,6 +105,7 @@ const goHelp = async () => {
 const copyWebLink = () => {
   handleMethod(() => {
     copy(formData.shareLink)
+    ElMessage.info("注意：如果是非 127.0.0.1 环境，请通过 设置->关于->网络伺服 打开伺服")
   })
 }
 
@@ -244,7 +245,21 @@ const handleIpChange = (val: string) => {
           <el-input v-model="formData.shareLink" />
         </div>
         <div class="item-right">
-          <el-button type="default" @click="copyWebLink">{{ t("share.copy.web.link") }}</el-button>
+          <el-button @click="copyWebLink">{{ t("share.copy.web.link") }}</el-button>
+        </div>
+      </div>
+      <div class="share-item">
+        <div class="item-left">
+          <span class="change-ip-title">{{ t("change.ip.title") }}</span>
+          <el-select
+            v-model="formData.ip"
+            class="m-2"
+            :placeholder="t('form.select')"
+            no-data-text="t('form.nodata')"
+            @change="handleIpChange"
+          >
+            <el-option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </div>
       </div>
       <el-divider class="share-split" />
@@ -264,20 +279,6 @@ const handleIpChange = (val: string) => {
         <div class="item-right"></div>
       </div>
 
-      <div v-if="optionState" class="share-item">
-        <div class="item-left">
-          <span class="change-ip-title">{{ t("change.ip.title") }}</span>
-          <el-select
-            v-model="formData.ip"
-            class="m-2"
-            :placeholder="t('form.select')"
-            no-data-text="t('form.nodata')"
-            @change="handleIpChange"
-          >
-            <el-option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
-        </div>
-      </div>
       <div v-if="optionState" class="share-item expires-link-item">
         <div class="expires-link expires-link-label">
           {{ t("share.other.option.link.expires") }}

@@ -20,7 +20,7 @@ const goGithub = () => {
 }
 
 const goAbout = () => {
-  window.open("https://blog.terwer.space/about")
+  window.open("https://terwer.space/about")
 }
 
 // methods

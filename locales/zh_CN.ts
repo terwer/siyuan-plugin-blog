@@ -93,6 +93,6 @@ export default {
   "form.select": "请选择",
   "form.nodata": "暂无数据",
   "change.ip.title": "切换IP",
-  "share.accessCodeEnabled.tip": "特别提示：检测到您已开启授权码，若文档或者设置有更新，需重新分享，请知悉。",
+  "share.accessCodeEnabled.tip": "特别提示：为安全起见，1.9.0+ 将使用静态分享，若文档有更新，需重新分享，请知悉。",
   "share.public.tip": "当前处于公共分享模式",
 }

@@ -74,7 +74,7 @@ export const useCommonShareType = () => {
 
   const isPrivateShare = async () => {
     const shareType = await getShareType()
-    return shareType === ShareTypeEnum.ShareType_Private
+    return shareType === ShareTypeEnum.ShareType_Static
   }
 
   const updateShareType = async (shareType: ShareTypeEnum) => {

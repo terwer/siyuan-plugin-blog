@@ -34,9 +34,7 @@ const props = defineProps({
 </script>
 
 <template>
-
-      <default-detail :page-id="props.pageId" :override-seo="true" />
-
+  <default-detail :page-id="props.pageId" :override-seo="true" />
 </template>
 
 <style scoped></style>

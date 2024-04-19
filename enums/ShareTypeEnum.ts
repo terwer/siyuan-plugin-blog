@@ -28,12 +28,14 @@
  */
 export enum ShareTypeEnum {
   /**
-   * 公共分享
+   * 公共分享，已废弃，不安全
+   *
+   * @deprecated see ttps://github.com/siyuan-note/siyuan/pull/9634
    */
   ShareType_Public = "public",
 
   /**
-   * 私有分享
+   * 静态分享
    */
-  ShareType_Private = "private",
+  ShareType_Static = "private",
 }
