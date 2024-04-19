@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "bash scripts/serve.sh",
     "dev": "bash scripts/dev.sh",
-    "devTest": "bash scripts/dev_test.sh",
+    "makeLink": "python scripts/make_dev_link.py",
     "pluginDev": "zhi-build --watch",
     "build": "bash scripts/build.sh",
     "nodeBuild": "bash scripts/node.sh",
