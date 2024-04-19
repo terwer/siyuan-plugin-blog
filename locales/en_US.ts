@@ -98,4 +98,7 @@ export default {
   "share.accessCodeEnabled.tip":
     "Special note: If you have enabled the authorization code after detection, please know if the document or settings are updated and need to be shared again.",
   "share.public.tip": "Currently in public sharing mode",
+  "share.static.tip":
+    "Gentle reminder: Should access prove elusive, consider IP switching. In environments beyond 127.0.0.1, kindly navigate to Settings->About->Network Servers to initiate server activation.",
+  "share.setting": "Setting",
 }

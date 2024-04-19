@@ -24,40 +24,63 @@
   -->
 
 <script setup lang="ts">
-import BackPage from "~/components/common/BackPage.vue"
+// uses
+import { useRoute, useRouter } from "vue-router"
+import { ref } from "vue"
+import { createAppLogger } from "~/common/appLogger"
+import { ArrowLeft } from "@element-plus/icons-vue"
 
-const { t } = useI18n()
+const logger = createAppLogger("back-page")
+const router = useRouter()
+const { query } = useRoute()
 
-definePageMeta({
-  layout: "default",
+// props
+const props = defineProps({
+  title: {
+    type: String,
+    default: "",
+  },
+  hasBackEmit: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+// datas
+const showBack = ref(query.showBack === "true")
+
+// emits
+const emit = defineEmits(["backEmit"])
+
+const onBack = () => {
+  if (emit && props.hasBackEmit) {
+    logger.info("using backEmit do back")
+    emit("backEmit")
+  } else {
+    logger.warn("no backEmit, using router handle back")
+    router.back()
+  }
+}
 </script>
 
 <template>
-  <back-page title="偏好设置">
-    <div class="setting-body">
-      <el-tabs tab-position="left">
-        <el-tab-pane :label="t('setting.basic')">
-          <default-setting-basic />
-        </el-tab-pane>
-        <el-tab-pane :label="t('setting.preference')">
-          <default-setting-preference />
-        </el-tab-pane>
-        <el-tab-pane :label="t('setting.system')">
-          <default-setting-change-local />
-        </el-tab-pane>
-      </el-tabs>
-
-      <div class="setting-tips">
-        <el-alert :title="t('setting.need.reload')" type="warning" />
-      </div>
+  <div id="page-body">
+    <div v-if="showBack" class="page-head">
+      <el-page-header :icon="ArrowLeft" title="返回" @click="onBack">
+        <template #content>
+          <div class="flex items-center">
+            <span class="text-large font-600 mr-3">{{ props.title }}</span>
+          </div>
+        </template>
+      </el-page-header>
     </div>
-  </back-page>
+    <div class="page-content-box">
+      <slot />
+    </div>
+  </div>
 </template>
 
-<style lang="stylus" scoped>
-.setting-tips
-  margin-top 20px
-.setting-body
-  padding-top 10px
+<style scoped lang="stylus">
+#page-body
+  margin 10px 20px
 </style>

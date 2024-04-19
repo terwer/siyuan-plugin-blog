@@ -20,7 +20,7 @@ const goGithub = () => {
 }
 
 const goAbout = () => {
-  window.open("https://blog.terwer.space/about")
+  window.open("https://terwer.space/about")
 }
 
 // methods
@@ -44,9 +44,9 @@ const goHome = async () => {
       <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
 
       <span class="text">.</span>
-      <span class="text s-dark" @click="toggleDark()">{{
-        colorMode ? t("theme.mode.light") : t("theme.mode.dark")
-      }}</span>
+      <span class="text s-dark" @click="toggleDark()">
+        {{ colorMode ? t("theme.mode.light") : t("theme.mode.dark") }}
+      </span>
     </div>
   </div>
 </template>

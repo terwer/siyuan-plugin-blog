@@ -58,6 +58,7 @@ const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
 const isSsr = useRouteQuery("isSsr", "")
 const basePath = String(isSsr.value) === "true" ? "/plugins/siyuan-blog" : "/plugins/siyuan-blog/#"
+const route = useRouter()
 
 // lifecycles
 onMounted(async () => {
@@ -108,7 +109,6 @@ const goHelp = async () => {
 const copyWebLink = () => {
   handleMethod(() => {
     copy(formData.shareLink)
-    ElMessage.info("注意：如果是非 127.0.0.1 环境，请通过 设置->关于->网络伺服 打开伺服")
   })
 }
 
@@ -208,6 +208,10 @@ const handleIpChange = (val: string) => {
   url.hostname = val
   formData.shareLink = url.toString()
 }
+
+const goSetting = () => {
+  route.push("/setting?showBack=true")
+}
 </script>
 
 <template>
@@ -264,6 +268,9 @@ const handleIpChange = (val: string) => {
             <el-option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
+        <div class="change-ip-tip">
+          {{ t("share.static.tip") }}
+        </div>
       </div>
       <el-divider class="share-split" />
 
@@ -317,20 +324,22 @@ const handleIpChange = (val: string) => {
 
     <div class="share-item">
       <div class="item-left">
-        <el-space direction="vertical">
+        <el-space direction="horizontal">
           <el-text @click="goHelp">
             <el-icon>
               <el-icon-help />
             </el-icon>
             {{ t("share.help") }}
           </el-text>
+
+          <el-text @click="goSetting">
+            <el-icon>
+              <el-icon-setting />
+            </el-icon>
+            {{ t("share.setting") }}
+          </el-text>
         </el-space>
       </div>
-      <!--
-      <div class="item-right">
-        <el-button :icon="Share" type="text">{{ t("share.copy.link") }}</el-button>
-      </div>
-      -->
     </div>
     <el-divider class="share-split" />
 
@@ -414,4 +423,11 @@ const handleIpChange = (val: string) => {
   color #ea4aaa
 .share-warn-tip
   padding-left 6px
+.change-ip-tip
+  color red
+  font-size 13px
+  padding-top 10px
+.setting-btn
+  padding-left 10px
+  font-size 13px
 </style>
