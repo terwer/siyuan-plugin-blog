@@ -75,8 +75,9 @@ export const getAllIps = () => {
   }
 
   const v4IPs = ips.filter((ip: string) => !ip.startsWith("[") && !ip.endsWith("]"))
+  logger.info("v4IPs =>", v4IPs)
   const uniqueIPs = Array.from(new Set(v4IPs)) as any[]
-  logger.info("getAll v4Ips =>", uniqueIPs)
+  logger.info("uniqueIPs =>", uniqueIPs)
   return uniqueIPs
 }
 

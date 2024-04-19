@@ -79,7 +79,10 @@ useSeoMeta(seoMeta)
 const url = new URL(origin.value)
 const hostname = url.hostname
 const ips = getAllIps()
-ips.push(hostname)
+// 确保不会重复
+if (!ips.includes(hostname)) {
+  ips.push(hostname)
+}
 
 // datas
 const attrs = JsonUtil.safeParse<any>(post?.attrs ?? "{}", {})
