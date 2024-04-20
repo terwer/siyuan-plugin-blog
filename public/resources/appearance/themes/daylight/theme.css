@@ -26,57 +26,70 @@
 :root {
     /* 主色 */
     --b3-theme-primary: #3575f0;
-    --b3-theme-primary-light: rgba(53, 117, 240, 0.54);
-    --b3-theme-primary-lighter: rgba(53, 117, 240, 0.38);
-    --b3-theme-primary-lightest: rgba(53, 117, 240, 0.12);
+    --b3-theme-primary-light: rgba(53, 117, 240, .54);
+    --b3-theme-primary-lighter: rgba(53, 117, 240, .38);
+    --b3-theme-primary-lightest: rgba(53, 117, 240, .12);
     --b3-theme-secondary: #f3a92f;
     --b3-theme-background: #fff;
     --b3-theme-background-light: #dfe0e1;
-    --b3-theme-surface: #f7f8fa;
+    --b3-theme-surface: #f6f6f6;
     --b3-theme-surface-light: rgba(243, 243, 243, .86);
-    --b3-theme-surface-lighter: rgba(0, 0, 0, .06);
+    --b3-theme-surface-lighter: #e0e0e0;
     --b3-theme-error: #d23f31;
+    --b3-theme-success: #65b84d;
 
     /* 文字颜色 */
     --b3-theme-on-primary: #fff;
     --b3-theme-on-secondary: #fff;
-    --b3-theme-on-background: #202124;
+    --b3-theme-on-background: #222;
     --b3-theme-on-surface: #5f6368;
     --b3-theme-on-surface-light: rgba(95, 99, 104, .68);
     --b3-theme-on-error: #fff;
 
     /* 字体 */
     --b3-font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", "Hiragino Sans GB", "Microsoft Yahei", sans-serif, "Apple Color Emoji", "Noto Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
-    --b3-font-family-code: "JetBrainsMono-Regular", mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Noto Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+    --b3-font-family-protyle: var(--b3-font-family);
+    --b3-font-family-code: "JetBrainsMono-Regular", mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, var(--b3-font-family);
     --b3-font-family-graph: mononoki;
     --b3-font-family-emoji: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji";
     --b3-font-family-math: KaTeX_Math;
 
     /* 顶部工具栏 */
-    --b3-toolbar-background: #2b2d30;
-    --b3-toolbar-blur-background: #373a41;
-    --b3-toolbar-color: #9aa0a6;
-    --b3-toolbar-hover: #383a42;
+    --b3-toolbar-background: var(--b3-theme-surface);
+    --b3-toolbar-blur-background: #fcfcfc;
+    --b3-toolbar-color: var(--b3-theme-on-surface);
+    --b3-toolbar-hover: var(--b3-theme-background-light);
     --b3-toolbar-left-mac: 69px;
 
     /* 线条 */
-    --b3-border-color: rgba(0, 0, 0, .1);
+    --b3-border-color: var(--b3-theme-surface-lighter);
+    --b3-border-radius: 6px;
+    --b3-border-radius-b: 12px;
 
     /* 滚动条 */
     --b3-scroll-color: rgba(0, 0, 0, .2);
 
     /* 列表 */
-    --b3-list-hover: #e9eaea;
+    --b3-list-hover: rgba(0, 0, 0, .075);
     --b3-list-icon-hover: rgba(33, 34, 36, .1);
 
     /* 菜单 */
-    --b3-menu-background: #f8f9fa;
+    --b3-menu-background: var(--b3-theme-surface);
 
     /* 提示 */
-    --b3-tooltips-color: rgba(0, 0, 0, 0.54);
+    --b3-tooltips-background: rgba(0, 0, 0, .9);
+    --b3-tooltips-color: var(--b3-theme-background-light);
+    --b3-tooltips-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+
+    /* av */
+    --b3-av-hover: #e8e8e9;
+    --b3-av-background-hl: #e8eefc;
+
+    /* 为空提示 */
+    --b3-empty-color: var(--b3-theme-on-surface-light);
 
     /* 遮罩 */
-    --b3-mask-background: rgba(0, 0, 0, 0.78);
+    --b3-mask-background: rgba(220, 220, 220, .4);
 
     /* 卡片背景 */
     --b3-card-error-color: rgb(97, 26, 21);
@@ -109,24 +122,25 @@
     --b3-font-background5: #e2e3e4;
     --b3-font-background6: #acd0fc;
     --b3-font-background7: #fdeed6;
-    --b3-font-background8: rgba(255, 193, 153, 0.5);
+    --b3-font-background8: #fae1cf;
     --b3-font-background9: #fdd5e7;
     --b3-font-background10: #e6c7e6;
     --b3-font-background11: #def0d9;
-    --b3-font-background12: rgba(253, 198, 200, 0.5);
+    --b3-font-background12: #fae3e4;
     --b3-font-background13: var(--b3-theme-on-background);
 
     /* 动画效果 */
     --b3-transition: all .2s cubic-bezier(0, 0, .2, 1) 0ms;
     --b3-width-transition: width .2s cubic-bezier(0, 0, .2, 1) 0ms;
+    --b3-color-transition: color .2s cubic-bezier(0, 0, .2, 1) 0ms;
 
     /* 下拉菜单 */
     --b3-select-background: url("data:image/svg+xml;utf8,<svg fill='rgba(95, 99, 104, .68)' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right 2px center var(--b3-theme-background);
 
     /* 阴影 */
-    --b3-point-shadow: 0 3px 6px rgba(140, 149, 159, 0.15);
-    --b3-dialog-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
-    --b3-button-shadow: 0px 5px 5px -3px rgb(0 0 0 / 0.2), 0px 8px 10px 1px rgb(0 0 0 / 0.14), 0px 3px 14px 2px rgb(0 0 0 / 0.12);
+    --b3-point-shadow: 0 0 1px 0 rgba(0, 0, 0, .1), 0 0 2px 0 rgba(0, 0, 0, .2);
+    --b3-dialog-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+    --b3-button-shadow: 0 5px 5px -3px rgb(0 0 0 / .2), 0 8px 10px 1px rgb(0 0 0 / .14), 0 3px 14px 2px rgb(0 0 0 / .12);
 
     /* 图表颜色 */
     --b3-graph-p-point: #076f7e;
@@ -168,7 +182,7 @@
     --b3-protyle-inline-mark-background: rgb(252, 212, 126);
     --b3-protyle-inline-mark-color: #202124;
     --b3-protyle-inline-tag-color: #5f6368;
-    --b3-protyle-inline-blockref-color: #8250df;
+    --b3-protyle-inline-blockref-color: #8957e5;
     --b3-protyle-inline-fileref-color: #21862e;
 
     /* PDF */
@@ -177,11 +191,11 @@
     --b3-pdf-offset: 0;
     --b3-pdf-background1: var(--b3-theme-error);
     --b3-pdf-background2: #f5822e;
-    --b3-pdf-background3: var(--b3-theme-secondary);
-    --b3-pdf-background4: #65b84d;
-    --b3-pdf-background5: #f5539e;
-    --b3-pdf-background6: var(--b3-theme-primary);
-    --b3-pdf-background7: #944194;
+    --b3-pdf-background3: #FACA5A;
+    --b3-pdf-background4: #7CC868;
+    --b3-pdf-background5: #FC5C88;
+    --b3-pdf-background6: #69B0F2;
+    --b3-pdf-background7: #C885DA;
     --b3-pdf-dark: #212224;
 }
 
@@ -190,6 +204,6 @@
     mix-blend-mode: multiply;
 }
 
-.b3-typography div.hljs, .protyle-wysiwyg div.hljs {
+.b3-typography .hljs, .protyle-wysiwyg .hljs {
     background-color: #f8f9fa;
 }

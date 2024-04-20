@@ -37,6 +37,7 @@ interface AppConfig {
     mode?: ThemeType
     lightTheme?: string
     darkTheme?: string
+    themeVersion?: string
   }
 
   // 加上字符串索引签名，兼容 AppConfigInput 约束

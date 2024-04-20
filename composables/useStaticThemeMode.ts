@@ -25,14 +25,19 @@
 
 import { BrowserUtil } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
+import { CONSTANTS } from "~/utils/constants"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
 
+/**
+ * 注意：静态模式不能查询，只能通过参数传递进来
+ */
 export const useStaticThemeMode = async () => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
-  const env = useRuntimeConfig()
+  // const env = useRuntimeConfig()
+
   const appBase = process.env.APP_BASE
 
   // computes
@@ -57,11 +62,11 @@ export const useStaticThemeMode = async () => {
   // onMounted(() => {
   // })
 
-  const siyuanV = "2.9.1"
-  const hljsV = "11.5.0"
-  const siyuanLightTheme = "Zhihu"
-  const siyuanDarkTheme = "Zhihu"
-  const siyuanThemeV = "0.0.7"
+  const siyuanV = CONSTANTS.SIYUAN_VERSION
+  const hljsV = CONSTANTS.HLJS_VERSION
+  const siyuanLightTheme = "Zhihu" as string
+  const siyuanDarkTheme = "Zhihu" as string
+  const siyuanThemeV = "0.1.1"
   const detectedMode = color.preference
   const isDarkMode = detectedMode === "dark"
   useHead({
@@ -77,13 +82,17 @@ export const useStaticThemeMode = async () => {
         id: "themeDefaultStyle",
         href: `${appBase}resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
       },
-      {
-        rel: "stylesheet",
-        id: "themeStyle",
-        href: `${appBase}resources/appearance/themes/${
-          isDarkMode ? siyuanDarkTheme : siyuanLightTheme
-        }/theme.css?v=${siyuanThemeV}`,
-      },
+      ...(siyuanLightTheme !== "daylight" && siyuanDarkTheme !== "midlight"
+        ? [
+            {
+              rel: "stylesheet",
+              id: "themeStyle",
+              href: `${appBase}resources/appearance/themes/${
+                isDarkMode ? siyuanDarkTheme : siyuanLightTheme
+              }/theme.css?v=${siyuanThemeV}`,
+            },
+          ]
+        : []),
       {
         rel: "stylesheet",
         id: "protyleHljsStyle",
