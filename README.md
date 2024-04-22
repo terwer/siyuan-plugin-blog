@@ -40,7 +40,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 - [X] Unordered list style adaptation
 - [ ] Bulk management of shared pages
 - [ ] Support single page setting sharing password
-- [ ] Integrate popular topics that are currently available
+- [X] Integrate popular topics that are currently available
 - [ ] Document alias access is supported
 - [ ] Support displaying MD originals
 - [ ] Support displaying KMD original text
@@ -49,10 +49,10 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 - [ ] tags, summary
 - [ ] Custom properties
 - [ ] Image enlargement effect
-- [ ] Latex formula rendering
+- [X] Latex formula rendering
 - [ ] plantuml chart support
 - [ ] echats chart support
-- [ ] Support svg with svOrigin, e.g. '<use xlink:href="#iconMore'>'</use>
+- [X] Support svg with svOrigin, e.g. '<use xlink:href="#iconMore'>'</use>
 
 ## Changelog
 
