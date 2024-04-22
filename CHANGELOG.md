@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.9.0...v1.9.1) (2024-04-22)
+
+
+### Bug Fixes
+
+* formulate only parse once ([ea32c03](https://github.com/terwer/siyuan-plugin-blog/commit/ea32c03f14899739bd3c628f1a2d4751f5f29614))
+
 ## [1.9.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.5...v1.9.0) (2024-04-22)
 ### Features
 * adapt new theme ([858c08c](https://github.com/terwer/siyuan-plugin-blog/commit/858c08c5a2f493a57246f53f1e4e29e9906bfa46))
