@@ -44,7 +44,7 @@ definePageMeta({
           <setting-preference />
         </el-tab-pane>
         <el-tab-pane :label="t('setting.system')">
-          <setting-change-local />
+          <setting-system />
         </el-tab-pane>
       </el-tabs>
 

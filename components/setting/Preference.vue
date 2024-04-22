@@ -26,6 +26,7 @@
 <script setup lang="ts">
 import { createAppLogger } from "~/common/appLogger"
 import { useSettingStore } from "~/stores/useSettingStore"
+import { version } from "~/package.json"
 
 const logger = createAppLogger("preference-page")
 const { t } = useI18n()
@@ -38,6 +39,14 @@ const formData = reactive({
   siteTitle: setting?.siteTitle ?? t("blog.site.title"),
   siteSlogan: setting?.siteSlogan ?? t("blog.site.slogan"),
   siteDescription: setting?.siteDescription ?? "",
+  footer:
+    setting.footer ??
+    `<div class="footer">
+    <span class="text"> ©2011-${new Date().getFullYear()}</span><span class="text s-dark">&nbsp;siyuan-plugin-blog&nbsp;</span>
+    <span class="text">v${version}&nbsp;</span>
+    <span class="text s-dark"><a href="https://terwer.space/about" target="_blank">关于作者</a></span>
+</div>`,
+  shareTemplate: setting.shareTemplate ?? "我给你分享了一篇文章：[title] （有效期 [expired]）\n 打开链接：[url]",
 })
 
 // methods
@@ -46,6 +55,8 @@ const onSubmit = async () => {
     setting.siteTitle = formData.siteTitle
     setting.siteSlogan = formData.siteSlogan
     setting.siteDescription = formData.siteDescription
+    setting.footer = formData.footer
+    setting.shareTemplate = formData.shareTemplate
     await updateSetting(setting)
     ElMessage.success(t("main.opt.success"))
   } catch (e) {
@@ -68,7 +79,26 @@ const onSubmit = async () => {
         <el-input v-model="formData.siteSlogan" />
       </el-form-item>
       <el-form-item :label="t('blog.site.desc.label')">
-        <el-input v-model="formData.siteDescription" :rows="4" type="textarea" />
+        <el-input v-model="formData.siteDescription" :rows="2" type="textarea" />
+      </el-form-item>
+
+      <el-divider border-style="dashed" />
+
+      <el-form-item :label="t('share.template.footer')">
+        <el-input
+          v-model="formData.footer"
+          type="textarea"
+          :rows="2"
+          :placeholder="t('share.template.footer.placeholder')"
+        />
+      </el-form-item>
+      <el-form-item :label="t('share.template.link')">
+        <el-input
+          v-model="formData.shareTemplate"
+          type="textarea"
+          :rows="2"
+          :placeholder="t('share.template.link.placeholder')"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">{{ t("main.opt.save") }}</el-button>

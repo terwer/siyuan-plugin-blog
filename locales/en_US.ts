@@ -102,4 +102,9 @@ export default {
   "share.static.tip":
     "Gentle reminder: Should access prove elusive, consider IP switching. In environments beyond 127.0.0.1, kindly navigate to Settings->About->Network Servers to initiate server activation.",
   "share.setting": "Setting",
+  "share.template.footer": "Footer Information",
+  "share.template.footer.placeholder": "Leave blank to omit the footer, supports HTML. Refresh required for updates.",
+  "share.template.link": "Template for Sharing",
+  "share.template.link.placeholder":
+    "Template for the shared prompt information, supports placeholders [title] [url] [expired]",
 }

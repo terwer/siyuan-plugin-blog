@@ -32,6 +32,8 @@ interface AppConfig {
   siteSlogan?: string
   siteDescription?: string
   homePageId?: string
+  footer?: string
+  shareTemplate?: string
 
   theme?: {
     mode?: ThemeType

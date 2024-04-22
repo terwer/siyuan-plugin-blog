@@ -34,12 +34,12 @@ const { t, locale } = useI18n()
 const langs = [
   {
     value: "zh_CN",
-    label: "简体中文",
+    label: "简体中文"
   },
   {
     value: "en_US",
-    label: "English",
-  },
+    label: "English"
+  }
 ]
 
 const setting = await getSetting()

@@ -99,4 +99,8 @@ export default {
   "share.static.tip":
     "温馨提示：如果无法访问可通过切换IP（PC）、或者在下方「偏好设置->设置自定义域名」（PC、Docker）解决，外网访问需在「设置->关于->网络伺服」打开伺服",
   "share.setting": "偏好设置",
+  "share.template.footer": "底部信息",
+  "share.template.footer.placeholder": "留空则不显示底部，支持 HTML。更新需重新分享",
+  "share.template.link": "分享模板",
+  "share.template.link.placeholder": "分享出去的提示信息模板，支持占位符 [title] [url] [expired]",
 }
