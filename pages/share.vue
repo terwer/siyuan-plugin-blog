@@ -111,7 +111,12 @@ const copyWebLink = () => {
     const shareTemplate =
       (StrUtil.isEmptyString(setting.shareTemplate) ? formData.shareLink : setting.shareTemplate) ?? formData.shareLink
     const copyText = shareTemplate
-      .replace(/\[expired]/g, StrUtil.isEmptyString(formData.expiredTime) ? "永久" : formData.expiredTime)
+      .replace(
+        /\[expired]/g,
+        StrUtil.isEmptyString(formData.expiredTime) || formData.expiredTime.toString().trim() === "0"
+          ? "永久"
+          : formData.expiredTime
+      )
       .replace(/\[title]/g, post.title)
       .replace(/\[url]/g, formData.shareLink)
 

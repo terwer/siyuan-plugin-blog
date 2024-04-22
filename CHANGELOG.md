@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.9.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.9.0...v1.9.1) (2024-04-22)
+### Bug Fixes
+* formulate only parse once ([ea32c03](https://github.com/terwer/siyuan-plugin-blog/commit/ea32c03f14899739bd3c628f1a2d4751f5f29614))
 ## [1.9.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.5...v1.9.0) (2024-04-22)
 ### Features
 * adapt new theme ([858c08c](https://github.com/terwer/siyuan-plugin-blog/commit/858c08c5a2f493a57246f53f1e4e29e9906bfa46))
@@ -9,7 +12,6 @@
 * allow custom footer ([a5e3c1f](https://github.com/terwer/siyuan-plugin-blog/commit/a5e3c1f719584163bc0475fe46df0fc95b17be60))
 * support formulate ([dbe9285](https://github.com/terwer/siyuan-plugin-blog/commit/dbe9285920149eee4c8c3944fed8bf109069327a))
 * use global static share, allow select ip ([17aeb51](https://github.com/terwer/siyuan-plugin-blog/commit/17aeb511e85e05a30bf93e49c9e652ff70b4402b))
-### Bug Fixes
 * auth error ([9fdfe20](https://github.com/terwer/siyuan-plugin-blog/commit/9fdfe20bc5823d1b8a6bfbf9389cffbdd0f85e34))
 * color mode not auto set ([5abe90e](https://github.com/terwer/siyuan-plugin-blog/commit/5abe90ebc16397024ca868e2c4f3373e79333046))
 ## [1.8.5](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.4...v1.8.5) (2023-08-10)
