@@ -108,7 +108,14 @@ const goHelp = async () => {
 
 const copyWebLink = () => {
   handleMethod(() => {
-    copy(formData.shareLink)
+    const shareTemplate =
+      (StrUtil.isEmptyString(setting.shareTemplate) ? formData.shareLink : setting.shareTemplate) ?? formData.shareLink
+    const copyText = shareTemplate
+      .replace(/\[expired]/g, StrUtil.isEmptyString(formData.expiredTime) ? "永久" : formData.expiredTime)
+      .replace(/\[title]/g, post.title)
+      .replace(/\[url]/g, formData.shareLink)
+
+    copy(copyText)
   })
 }
 

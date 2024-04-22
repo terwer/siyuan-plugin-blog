@@ -27,6 +27,7 @@
 import { createAppLogger } from "~/common/appLogger"
 import { useSettingStore } from "~/stores/useSettingStore"
 import { version } from "~/package.json"
+import { StrUtil } from "zhi-common"
 
 const logger = createAppLogger("preference-page")
 const { t } = useI18n()
@@ -46,7 +47,9 @@ const formData = reactive({
     <span class="text">v${version}&nbsp;</span>
     <span class="text s-dark"><a href="https://terwer.space/about" target="_blank">关于作者</a></span>
 </div>`,
-  shareTemplate: setting.shareTemplate ?? "我给你分享了一篇文章：[title] （有效期 [expired]）\n 打开链接：[url]",
+  shareTemplate: StrUtil.isEmptyString(setting.shareTemplate)
+    ? "我给你分享了一篇文章：[title] （有效期 [expired] 秒）\n 打开链接：[url]"
+    : setting.shareTemplate,
 })
 
 // methods
