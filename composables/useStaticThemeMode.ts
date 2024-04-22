@@ -27,6 +27,9 @@ import { BrowserUtil } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { CONSTANTS } from "~/utils/constants"
 import { useRoute } from "vue-router"
+import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
+import { JsonUtil } from "zhi-common"
+import AppConfig from "~/app.config"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -39,6 +42,7 @@ export const useStaticThemeMode = async () => {
   const color = useColorMode()
   // const env = useRuntimeConfig()
   const { query } = useRoute()
+  const { fetchPublicText } = useAuthModeFetch()
   const appBase = process.env.APP_BASE
 
   // computes
@@ -63,11 +67,13 @@ export const useStaticThemeMode = async () => {
   // onMounted(() => {
   // })
 
+  const resText = await fetchPublicText(`static.app.config.json`)
+  const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
   const siyuanV = CONSTANTS.SIYUAN_VERSION
   const hljsV = CONSTANTS.HLJS_VERSION
-  const siyuanLightTheme = (query.lightTheme ?? "Zhihu") as string
-  const siyuanDarkTheme = (query.darkTheme ?? "Zhihu") as string
-  const siyuanThemeV = (query.themeVersion ?? "0.1.1") as string
+  const siyuanLightTheme = (query.lightTheme ?? setting.theme?.lightTheme ?? "Zhihu") as string
+  const siyuanDarkTheme = (query.darkTheme ?? setting.theme?.darkTheme ?? "Zhihu") as string
+  const siyuanThemeV = (query.themeVersion ?? setting.theme?.themeVersion ?? "0.1.1") as string
   const detectedMode = color.preference
   const isDarkMode = detectedMode === "dark"
   useHead({
