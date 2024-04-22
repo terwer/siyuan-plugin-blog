@@ -24,6 +24,9 @@
  */
 
 import { DeviceDetection, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
+import { createAppLogger } from "~/common/appLogger"
+
+const logger = createAppLogger("url-utils")
 
 const getIPv4List = () => {
   const win = SiyuanDevice.siyuanWindow()
@@ -58,15 +61,8 @@ const getLocalIp = () => {
 }
 
 export const getAllIps = () => {
-  if (typeof window === "undefined") {
-    return []
-  }
-  const win = window as any
-  if (typeof win.siyuan === "undefined" || typeof win.parent.siyuan === "undefined") {
-    return []
-  }
   const syWin = SiyuanDevice.siyuanWindow()
-  const ips = syWin.siyuan.config.localIPs
+  const ips = syWin?.siyuan?.config?.localIPs ?? []
 
   const deviceType = DeviceDetection.getDevice()
   if (
@@ -78,7 +74,11 @@ export const getAllIps = () => {
     ips.push(...ipv4s)
   }
 
-  return ips
+  const v4IPs = ips.filter((ip: string) => !ip.startsWith("[") && !ip.endsWith("]"))
+  logger.info("v4IPs =>", v4IPs)
+  const uniqueIPs = Array.from(new Set(v4IPs)) as any[]
+  logger.info("uniqueIPs =>", uniqueIPs)
+  return uniqueIPs
 }
 
 export const getAvailableOrigin = () => {

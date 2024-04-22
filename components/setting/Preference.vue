@@ -24,59 +24,42 @@
   -->
 
 <script setup lang="ts">
-import { useSettingStore } from "~/stores/useSettingStore"
 import { createAppLogger } from "~/common/appLogger"
+import { useSettingStore } from "~/stores/useSettingStore"
+import { version } from "~/package.json"
+import { StrUtil } from "zhi-common"
 
-const logger = createAppLogger("setting-page")
+const logger = createAppLogger("preference-page")
 const { t } = useI18n()
 const { getSetting, updateSetting } = useSettingStore()
 
 const setting = await getSetting()
-const title = `${t("blog.share")} - ${t("blog.share.setting")}`
-const seoMeta = {
-  title: title,
-  ogTitle: title,
-} as any
-useSeoMeta(seoMeta)
 
 // datas
 const formData = reactive({
-  siteUrl: setting.siteUrl,
-  homePageId: setting.homePageId,
-  themes: {
-    light: [
-      {
-        value: "daylight",
-        label: "daylight",
-      },
-      {
-        value: "Zhihu",
-        label: "Zhihu",
-      },
-    ],
-    dark: [
-      {
-        value: "midlight",
-        label: "midlight",
-      },
-      {
-        value: "Zhihu",
-        label: "Zhihu",
-      },
-    ],
-  },
-  lightTheme: setting?.theme?.lightTheme ?? "Zhihu",
-  darkTheme: setting?.theme?.darkTheme ?? "Zhihu",
+  siteTitle: setting?.siteTitle ?? t("blog.site.title"),
+  siteSlogan: setting?.siteSlogan ?? t("blog.site.slogan"),
+  siteDescription: setting?.siteDescription ?? "",
+  footer:
+    setting.footer ??
+    `<div class="footer">
+    <span class="text"> ©2011-${new Date().getFullYear()}</span><span class="text s-dark">&nbsp;siyuan-plugin-blog&nbsp;</span>
+    <span class="text">v${version}&nbsp;</span>
+    <span class="text s-dark"><a href="https://terwer.space/about" target="_blank">关于作者</a></span>
+</div>`,
+  shareTemplate: StrUtil.isEmptyString(setting.shareTemplate)
+    ? "我给你分享了一篇文章：[title] （有效期 [expired] 秒）\n 打开链接：[url]"
+    : setting.shareTemplate,
 })
 
 // methods
 const onSubmit = async () => {
   try {
-    setting.siteUrl = formData.siteUrl
-    setting.homePageId = formData.homePageId
-    setting.theme ||= {}
-    setting.theme.lightTheme = formData.lightTheme
-    setting.theme.darkTheme = formData.darkTheme
+    setting.siteTitle = formData.siteTitle
+    setting.siteSlogan = formData.siteSlogan
+    setting.siteDescription = formData.siteDescription
+    setting.footer = formData.footer
+    setting.shareTemplate = formData.shareTemplate
     await updateSetting(setting)
     ElMessage.success(t("main.opt.success"))
   } catch (e) {
@@ -90,23 +73,33 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <div class="basic-setting">
+  <div class="preference-setting">
     <el-form label-width="85px">
-      <el-form-item :label="t('blog.site.url.label')">
-        <el-input v-model="formData.siteUrl" :placeholder="t('blog.site.url.placeholder')" />
+      <el-form-item :label="t('blog.site.title.label')">
+        <el-input v-model="formData.siteTitle" />
       </el-form-item>
-      <el-form-item :label="t('setting.basic.homePageId')">
-        <el-input v-model="formData.homePageId" />
+      <el-form-item :label="t('blog.site.slogan.label')">
+        <el-input v-model="formData.siteSlogan" />
       </el-form-item>
-      <el-form-item :label="t('siyuan.theme.light')">
-        <el-select v-model="formData.lightTheme" class="m-2" :placeholder="t('siyuan.theme.select')">
-          <el-option v-for="item in formData.themes.light" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
+      <el-form-item :label="t('blog.site.desc.label')">
+        <el-input v-model="formData.siteDescription" :rows="2" type="textarea" />
       </el-form-item>
-      <el-form-item :label="t('siyuan.theme.dark')">
-        <el-select v-model="formData.darkTheme" class="m-2" :placeholder="t('siyuan.theme.select')">
-          <el-option v-for="item in formData.themes.dark" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
+
+      <el-form-item :label="t('share.template.footer')">
+        <el-input
+          v-model="formData.footer"
+          type="textarea"
+          :rows="2"
+          :placeholder="t('share.template.footer.placeholder')"
+        />
+      </el-form-item>
+      <el-form-item :label="t('share.template.link')">
+        <el-input
+          v-model="formData.shareTemplate"
+          type="textarea"
+          :rows="2"
+          :placeholder="t('share.template.link.placeholder')"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">{{ t("main.opt.save") }}</el-button>

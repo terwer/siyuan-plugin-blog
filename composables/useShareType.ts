@@ -24,18 +24,33 @@
  */
 
 import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
+import { createAppLogger } from "~/common/appLogger"
 
 /**
  * 自定义hook，用于获取分享类型
  */
 export const useShareType = () => {
+  const logger = createAppLogger("use-share-type")
+
   /**
    * 获取分享类型
    */
   const getShareType = () => {
+    // const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    // logger.info(`check isLocalhost => ${isLocalhost}, window.location.hostname = `, window.location.hostname)
+    // // 为安全起见，非 127.0.0.1 分享全部采用静态
+    // // 因为 https://github.com/siyuan-note/siyuan/pull/9634 导致公共分享不可用了
+    // if (!isLocalhost) {
+    //   logger.warn(
+    //     "当前不是本地环境，无法实现公共分享，将使用静态，详情请参考：https://github.com/siyuan-note/siyuan/pull/9634"
+    //   )
+    // }
+
+    // 为安全起见，全部采用静态分享
     const win = window.parent as any
-    const accessCodeEnabled = win?.siyuan?.config?.accessAuthCode !== ""
-    return accessCodeEnabled ? ShareTypeEnum.ShareType_Private : ShareTypeEnum.ShareType_Public
+    const accessAuthCodeEnabled = win?.siyuan?.config?.accessAuthCode !== ""
+    logger.info(`accessAuthCodeEnabled => ${accessAuthCodeEnabled}`)
+    return ShareTypeEnum.ShareType_Static
   }
 
   /**
@@ -44,7 +59,7 @@ export const useShareType = () => {
    * @returns {boolean} 是否为私有分享
    */
   const isPrivateShare = (): boolean => {
-    return getShareType() === ShareTypeEnum.ShareType_Private
+    return getShareType() === ShareTypeEnum.ShareType_Static
   }
 
   return { getShareType, isPrivateShare }

@@ -28,7 +28,7 @@ import { useSvg } from "~/plugins/domparser/useSvg"
 import { useBlockRef } from "~/plugins/domparser/useBlockRef"
 
 /**
- * 页面渲染插件(图片、链接、公式等) - 客户端
+ * 页面渲染插件(图标等) - 客户端
  * https://github.com/nuxt/nuxt/issues/13382
  * client = browser only
  *

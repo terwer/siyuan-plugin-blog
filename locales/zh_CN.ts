@@ -32,6 +32,7 @@ export default {
   "theme.mode.choose": "切换模式",
   "theme.mode.dark": "暗黑模式",
   "theme.mode.light": "浅色模式",
+  "siyuan.theme.version": "主题版本",
   "setting.conf.export": "导出配置",
   "setting.conf.import": "导入配置",
   "setting.conf.clear": "清空配置",
@@ -93,6 +94,13 @@ export default {
   "form.select": "请选择",
   "form.nodata": "暂无数据",
   "change.ip.title": "切换IP",
-  "share.accessCodeEnabled.tip": "特别提示：检测到您已开启授权码，若文档或者设置有更新，需重新分享，请知悉。",
+  "share.accessCodeEnabled.tip": "特别提示：为安全起见，1.9.0+ 将使用静态分享，若文档有更新，需重新分享，请知悉。",
   "share.public.tip": "当前处于公共分享模式",
+  "share.static.tip":
+    "温馨提示：如果无法访问可通过切换IP（PC）、或者在下方「偏好设置->设置自定义域名」（PC、Docker）解决，外网访问需在「设置->关于->网络伺服」打开伺服",
+  "share.setting": "偏好设置",
+  "share.template.footer": "底部信息",
+  "share.template.footer.placeholder": "留空则不显示底部，支持 HTML。更新需重新分享",
+  "share.template.link": "分享模板",
+  "share.template.link.placeholder": "分享出去的提示信息模板，支持占位符 [title] [url] [expired]",
 }

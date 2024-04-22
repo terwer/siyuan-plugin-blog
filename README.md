@@ -58,6 +58,10 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 Please refer to [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)
 
+## Development
+
+Please refer to [DEVELOPMENT](./DEVELOPMENT.md)
+
 ## Donate
 
 If you approve of this project, invite me to have a cup of coffee, which will encourage me to keep updating and create more useful tools~

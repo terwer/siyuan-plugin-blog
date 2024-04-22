@@ -58,6 +58,7 @@ const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
 const isSsr = useRouteQuery("isSsr", "")
 const basePath = String(isSsr.value) === "true" ? "/plugins/siyuan-blog" : "/plugins/siyuan-blog/#"
+const route = useRouter()
 
 // lifecycles
 onMounted(async () => {
@@ -79,7 +80,10 @@ useSeoMeta(seoMeta)
 const url = new URL(origin.value)
 const hostname = url.hostname
 const ips = getAllIps()
-ips.push(hostname)
+// 确保不会重复
+if (!ips.includes(hostname)) {
+  ips.push(hostname)
+}
 
 // datas
 const attrs = JsonUtil.safeParse<any>(post?.attrs ?? "{}", {})
@@ -104,7 +108,14 @@ const goHelp = async () => {
 
 const copyWebLink = () => {
   handleMethod(() => {
-    copy(formData.shareLink)
+    const shareTemplate =
+      (StrUtil.isEmptyString(setting.shareTemplate) ? formData.shareLink : setting.shareTemplate) ?? formData.shareLink
+    const copyText = shareTemplate
+      .replace(/\[expired]/g, StrUtil.isEmptyString(formData.expiredTime) ? "永久" : formData.expiredTime)
+      .replace(/\[title]/g, post.title)
+      .replace(/\[url]/g, formData.shareLink)
+
+    copy(copyText)
   })
 }
 
@@ -204,6 +215,10 @@ const handleIpChange = (val: string) => {
   url.hostname = val
   formData.shareLink = url.toString()
 }
+
+const goSetting = () => {
+  route.push("/setting?showBack=true")
+}
 </script>
 
 <template>
@@ -244,7 +259,24 @@ const handleIpChange = (val: string) => {
           <el-input v-model="formData.shareLink" />
         </div>
         <div class="item-right">
-          <el-button type="default" @click="copyWebLink">{{ t("share.copy.web.link") }}</el-button>
+          <el-button @click="copyWebLink">{{ t("share.copy.web.link") }}</el-button>
+        </div>
+      </div>
+      <div class="share-item">
+        <div class="item-left">
+          <span class="change-ip-title">{{ t("change.ip.title") }}</span>
+          <el-select
+            v-model="formData.ip"
+            class="m-2"
+            :placeholder="t('form.select')"
+            no-data-text="t('form.nodata')"
+            @change="handleIpChange"
+          >
+            <el-option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </div>
+        <div class="change-ip-tip">
+          {{ t("share.static.tip") }}
         </div>
       </div>
       <el-divider class="share-split" />
@@ -264,20 +296,6 @@ const handleIpChange = (val: string) => {
         <div class="item-right"></div>
       </div>
 
-      <div v-if="optionState" class="share-item">
-        <div class="item-left">
-          <span class="change-ip-title">{{ t("change.ip.title") }}</span>
-          <el-select
-            v-model="formData.ip"
-            class="m-2"
-            :placeholder="t('form.select')"
-            no-data-text="t('form.nodata')"
-            @change="handleIpChange"
-          >
-            <el-option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
-        </div>
-      </div>
       <div v-if="optionState" class="share-item expires-link-item">
         <div class="expires-link expires-link-label">
           {{ t("share.other.option.link.expires") }}
@@ -313,20 +331,22 @@ const handleIpChange = (val: string) => {
 
     <div class="share-item">
       <div class="item-left">
-        <el-space direction="vertical">
+        <el-space direction="horizontal">
           <el-text @click="goHelp">
             <el-icon>
               <el-icon-help />
             </el-icon>
             {{ t("share.help") }}
           </el-text>
+
+          <el-text @click="goSetting">
+            <el-icon>
+              <el-icon-setting />
+            </el-icon>
+            {{ t("share.setting") }}
+          </el-text>
         </el-space>
       </div>
-      <!--
-      <div class="item-right">
-        <el-button :icon="Share" type="text">{{ t("share.copy.link") }}</el-button>
-      </div>
-      -->
     </div>
     <el-divider class="share-split" />
 
@@ -410,4 +430,11 @@ const handleIpChange = (val: string) => {
   color #ea4aaa
 .share-warn-tip
   padding-left 6px
+.change-ip-tip
+  color red
+  font-size 13px
+  padding-top 10px
+.setting-btn
+  padding-left 10px
+  font-size 13px
 </style>

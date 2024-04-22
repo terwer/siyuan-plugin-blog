@@ -23,9 +23,10 @@
  * questions.
  */
 
-import { BrowserUtil } from "zhi-device"
+import { BrowserUtil, SiyuanDevice } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { useSettingStore } from "~/stores/useSettingStore"
+import { CONSTANTS } from "~/utils/constants"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -68,17 +69,19 @@ export const useThemeMode = async () => {
   }
 
   // 在 mounted 生命周期中处理加载后逻辑
-  // onMounted(() => {
-  // })
+  onMounted(() => {})
 
   const setting = await getSetting()
-  const siyuanV = "2.9.1"
-  const hljsV = "11.5.0"
+  const siyuanV = CONSTANTS.SIYUAN_VERSION
+  const hljsV = CONSTANTS.HLJS_VERSION
   const siyuanLightTheme = setting?.theme?.lightTheme ?? "Zhihu"
   const siyuanDarkTheme = setting?.theme?.darkTheme ?? "Zhihu"
-  const siyuanThemeV = "0.0.7"
-  const detectedMode = setting?.theme?.mode ?? color.preference
-  const isDarkMode = detectedMode === "dark"
+  const siyuanThemeV = setting?.theme?.themeVersion ?? "0.1.1"
+  const win = SiyuanDevice.siyuanWindow()
+  const isDarkMode = win?.matchMedia("(prefers-color-scheme: dark)").matches
+  const detectedMode = isDarkMode ? "dark" : "light"
+  // const detectedMode  setting?.theme?.mode ?? color.preference
+  // const isDarkMode = detectedMode === "dark"
   useHead({
     htmlAttrs: {
       lang: setting.lang ?? "zh_CN",
@@ -92,7 +95,7 @@ export const useThemeMode = async () => {
         id: "themeDefaultStyle",
         href: `${appBase}resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
       },
-      ...((siyuanLightTheme && siyuanLightTheme !== "daylight") || (siyuanDarkTheme && siyuanDarkTheme !== "midlight")
+      ...(siyuanLightTheme !== "daylight" && siyuanDarkTheme !== "midlight"
         ? [
             {
               rel: "stylesheet",

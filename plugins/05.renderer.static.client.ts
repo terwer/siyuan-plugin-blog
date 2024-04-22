@@ -26,6 +26,7 @@
 import { createAppLogger } from "~/common/appLogger"
 import { useClientAssets } from "~/plugins/renderer/useClientAssets"
 import { useStaticClientAssets } from "~/plugins/renderer/useStaticClientAssets"
+import { useClientFormulate } from "~/plugins/renderer/useClientFormulate"
 
 /**
  * 页面渲染插件(图片、链接、公式等) - 客户端
@@ -39,6 +40,7 @@ import { useStaticClientAssets } from "~/plugins/renderer/useStaticClientAssets"
 export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("renderer-static-client-plugin")
   const { addClientAssetsPrefix } = useStaticClientAssets()
+  const { renderFormulate } = useClientFormulate()
 
   vueApp.directive("sbeauty", (el: HTMLElement) => {
     // if (process.env.SSR === "true") {
@@ -47,7 +49,11 @@ export default defineNuxtPlugin(({ vueApp }) => {
     // }
 
     // assets
-    logger.info("Start handling images on client")
+    logger.info("Start handling images on static client")
     addClientAssetsPrefix(el)
+
+    // 公式（Formulate）
+    logger.info("Start handling formula on static client")
+    renderFormulate(el)
   })
 })

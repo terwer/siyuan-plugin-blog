@@ -30,7 +30,6 @@ import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { usePost } from "~/composables/usePost"
-import { useRouteQuery } from "@vueuse/router"
 
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
@@ -64,8 +63,8 @@ export const useCommonShareType = () => {
         if (isPreview) {
           return ShareTypeEnum.ShareType_Public
         }
-      } catch (e) {
-        logger.info("Not in inner, ignore")
+      } catch (e: any) {
+        logger.info("Not in inner, ignore =>", e.toString())
       }
     }
 
@@ -74,7 +73,7 @@ export const useCommonShareType = () => {
 
   const isPrivateShare = async () => {
     const shareType = await getShareType()
-    return shareType === ShareTypeEnum.ShareType_Private
+    return shareType === ShareTypeEnum.ShareType_Static
   }
 
   const updateShareType = async (shareType: ShareTypeEnum) => {

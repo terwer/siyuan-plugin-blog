@@ -55,7 +55,7 @@ export const useStaticClientAssets = () => {
     }
   }
 
-  const downloadAssetsToPublic = async (html, saveFolder) => {
+  const downloadAssetsToPublic = async (html: string, saveFolder: string) => {
     try {
       const baseUrl = getClientBaseUrl()
 
@@ -77,11 +77,11 @@ export const useStaticClientAssets = () => {
   }
 
   // =========================================================================
-  const getImageBlob = async (url) => {
+  const getImageBlob = async (url: string) => {
     try {
       const response = await fetch(url)
       return await response.blob()
-    } catch (error) {
+    } catch (e: any) {
       logger.error("image read error", e)
       return ""
     }

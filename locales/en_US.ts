@@ -72,6 +72,7 @@ export default {
   "siyuan.theme": "Theme",
   "siyuan.theme.light": "Light theme",
   "siyuan.theme.dark": "Dark theme",
+  "siyuan.theme.version": "Theme version",
   "siyuan.theme.select": "Select theme",
   "share.to.web": "Share to web",
   "share.to.web.before.tip": "Publish and share link to everyone",
@@ -98,4 +99,12 @@ export default {
   "share.accessCodeEnabled.tip":
     "Special note: If you have enabled the authorization code after detection, please know if the document or settings are updated and need to be shared again.",
   "share.public.tip": "Currently in public sharing mode",
+  "share.static.tip":
+    "Gentle reminder: Should access prove elusive, consider IP switching. In environments beyond 127.0.0.1, kindly navigate to Settings->About->Network Servers to initiate server activation.",
+  "share.setting": "Setting",
+  "share.template.footer": "Footer Information",
+  "share.template.footer.placeholder": "Leave blank to omit the footer, supports HTML. Refresh required for updates.",
+  "share.template.link": "Template for Sharing",
+  "share.template.link.placeholder":
+    "Template for the shared prompt information, supports placeholders [title] [url] [expired]",
 }

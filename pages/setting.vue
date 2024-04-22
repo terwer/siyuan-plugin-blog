@@ -24,6 +24,8 @@
   -->
 
 <script setup lang="ts">
+import BackPage from "~/components/common/BackPage.vue"
+
 const { t } = useI18n()
 
 definePageMeta({
@@ -32,26 +34,30 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <el-tabs tab-position="left">
-      <el-tab-pane :label="t('setting.basic')">
-        <default-setting-basic />
-      </el-tab-pane>
-      <el-tab-pane :label="t('setting.preference')">
-        <default-setting-preference />
-      </el-tab-pane>
-      <el-tab-pane :label="t('setting.system')">
-        <default-setting-change-local />
-      </el-tab-pane>
-    </el-tabs>
+  <back-page title="偏好设置">
+    <div class="setting-body">
+      <el-tabs tab-position="left">
+        <el-tab-pane :label="t('setting.basic')">
+          <setting-basic />
+        </el-tab-pane>
+        <el-tab-pane :label="t('setting.preference')">
+          <setting-preference />
+        </el-tab-pane>
+        <el-tab-pane :label="t('setting.system')">
+          <setting-system />
+        </el-tab-pane>
+      </el-tabs>
 
-    <div class="setting-tips">
-      <el-alert :title="t('setting.need.reload')" type="warning" />
+      <div class="setting-tips">
+        <el-alert :title="t('setting.need.reload')" type="warning" />
+      </div>
     </div>
-  </div>
+  </back-page>
 </template>
 
 <style lang="stylus" scoped>
 .setting-tips
   margin-top 20px
+.setting-body
+  padding-top 10px
 </style>
