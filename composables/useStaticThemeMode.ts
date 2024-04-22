@@ -26,6 +26,7 @@
 import { BrowserUtil } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { CONSTANTS } from "~/utils/constants"
+import { useRoute } from "vue-router"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -37,7 +38,7 @@ export const useStaticThemeMode = async () => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
   // const env = useRuntimeConfig()
-
+  const { query } = useRoute()
   const appBase = process.env.APP_BASE
 
   // computes
@@ -64,9 +65,9 @@ export const useStaticThemeMode = async () => {
 
   const siyuanV = CONSTANTS.SIYUAN_VERSION
   const hljsV = CONSTANTS.HLJS_VERSION
-  const siyuanLightTheme = "Zhihu" as string
-  const siyuanDarkTheme = "Zhihu" as string
-  const siyuanThemeV = "0.1.1"
+  const siyuanLightTheme = (query.lightTheme ?? "Zhihu") as string
+  const siyuanDarkTheme = (query.darkTheme ?? "Zhihu") as string
+  const siyuanThemeV = (query.themeVersion ?? "0.1.1") as string
   const detectedMode = color.preference
   const isDarkMode = detectedMode === "dark"
   useHead({

@@ -72,6 +72,7 @@ export default {
   "siyuan.theme": "Theme",
   "siyuan.theme.light": "Light theme",
   "siyuan.theme.dark": "Dark theme",
+  "siyuan.theme.version": "Theme version",
   "siyuan.theme.select": "Select theme",
   "share.to.web": "Share to web",
   "share.to.web.before.tip": "Publish and share link to everyone",

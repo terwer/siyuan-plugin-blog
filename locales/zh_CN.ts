@@ -32,6 +32,7 @@ export default {
   "theme.mode.choose": "切换模式",
   "theme.mode.dark": "暗黑模式",
   "theme.mode.light": "浅色模式",
+  "siyuan.theme.version": "主题版本",
   "setting.conf.export": "导出配置",
   "setting.conf.import": "导入配置",
   "setting.conf.clear": "清空配置",

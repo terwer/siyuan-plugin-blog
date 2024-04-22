@@ -53,6 +53,10 @@ const formData = reactive({
         value: "Zhihu",
         label: "Zhihu",
       },
+      {
+        value: "Savor",
+        label: "写未",
+      },
     ],
     dark: [
       {
@@ -63,10 +67,20 @@ const formData = reactive({
         value: "Zhihu",
         label: "Zhihu",
       },
+      {
+        value: "Savor",
+        label: "写未",
+      },
     ],
   },
   lightTheme: setting?.theme?.lightTheme ?? "Zhihu",
   darkTheme: setting?.theme?.darkTheme ?? "Zhihu",
+  versionMap: {
+    midlight: "3.0.10",
+    daylight: "3.0.10",
+    Zhihu: "0.1.1",
+    Savor: "3.9.2",
+  } as any,
 })
 
 // methods
@@ -77,6 +91,7 @@ const onSubmit = async () => {
     setting.theme ||= {}
     setting.theme.lightTheme = formData.lightTheme
     setting.theme.darkTheme = formData.darkTheme
+    setting.theme.themeVersion = formData.versionMap[toRaw(setting.theme.lightTheme)] ?? "0.1.1"
     await updateSetting(setting)
     ElMessage.success(t("main.opt.success"))
   } catch (e) {

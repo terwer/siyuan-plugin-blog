@@ -38,13 +38,13 @@ definePageMeta({
     <div class="setting-body">
       <el-tabs tab-position="left">
         <el-tab-pane :label="t('setting.basic')">
-          <default-setting-basic />
+          <setting-basic />
         </el-tab-pane>
         <el-tab-pane :label="t('setting.preference')">
-          <default-setting-preference />
+          <setting-preference />
         </el-tab-pane>
         <el-tab-pane :label="t('setting.system')">
-          <default-setting-change-local />
+          <setting-change-local />
         </el-tab-pane>
       </el-tabs>
 
