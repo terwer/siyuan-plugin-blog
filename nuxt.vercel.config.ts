@@ -82,6 +82,11 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
         },
+        {
+          rel: "stylesheet",
+          href: appBase + "libs/katex/0.16.10/katex.min.css?v=" + staticV,
+          crossorigin: "anonymous",
+        },
       ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
@@ -92,8 +97,17 @@ export default defineNuxtConfig({
             {
               children: "eruda.init();console.log('eruda inited');",
             },
+            {
+              defer: true,
+              src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
           ]
-        : [],
+        : [
+            {
+              defer: true,
+              src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
+          ],
     },
   },
 
