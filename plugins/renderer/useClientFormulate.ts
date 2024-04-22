@@ -9,11 +9,14 @@ const useClientFormulate = () => {
 
   const renderFormulate = (el: HTMLElement) => {
     // 内联公式
-    const inlineMathElement = document.querySelector('span[data-type="inline-math"][data-subtype="math"]')
-    if (inlineMathElement) {
-      const inlineContentValue = inlineMathElement.getAttribute("data-content")
-      win.katex.render(inlineContentValue, inlineMathElement, {
-        throwOnError: false,
+    const inlineMathElements = document.querySelectorAll('span[data-type="inline-math"][data-subtype="math"]')
+    console.log(inlineMathElements)
+    if (inlineMathElements) {
+      inlineMathElements.forEach((inlineMathElement) => {
+        const inlineContentValue = inlineMathElement.getAttribute("data-content")
+        win.katex.render(inlineContentValue, inlineMathElement, {
+          throwOnError: false,
+        })
       })
     }
     // 替换

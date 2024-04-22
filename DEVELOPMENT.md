@@ -12,6 +12,12 @@ serve
 
 ```bash
 pnpm serve
+
+# available links for serve test
+# http://localhost:4000/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
+#
+# http://localhost:4000
+# http://localhost:4000/s/20240408194841-jmgbco2
 ```
 
 dev
