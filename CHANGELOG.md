@@ -1,31 +1,18 @@
 # Changelog
 
 ## [1.9.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.5...v1.9.0) (2024-04-22)
-
-
 ### Features
-
 * adapt new theme ([858c08c](https://github.com/terwer/siyuan-plugin-blog/commit/858c08c5a2f493a57246f53f1e4e29e9906bfa46))
-* adapt savor theme ([7e31895](https://github.com/terwer/siyuan-plugin-blog/commit/7e31895562d4c6431fc70469f8686a386530a311))
-* adapt savor theme ([4a75ec7](https://github.com/terwer/siyuan-plugin-blog/commit/4a75ec7a222dd25f2de839803959bbcd6d101875))
 * adapt savor theme ([417659c](https://github.com/terwer/siyuan-plugin-blog/commit/417659c2c0ab1d2ac9196f246c5a7d5e7b732cd5))
 * add development guide ([0c82999](https://github.com/terwer/siyuan-plugin-blog/commit/0c829999dcf35bdce78901ad14f9defd6273c0a7))
-* add share setting ([cf3e8ab](https://github.com/terwer/siyuan-plugin-blog/commit/cf3e8ab6e06882cd15e2388627ff9e4a7e6861de))
 * add share setting ([56513d5](https://github.com/terwer/siyuan-plugin-blog/commit/56513d5184f6e748c9ad314c42fdaf50647c24a1))
-* allow custom footer ([dd4b446](https://github.com/terwer/siyuan-plugin-blog/commit/dd4b446f46ec2c1d466d40470536a74973ce6ac5))
 * allow custom footer ([a5e3c1f](https://github.com/terwer/siyuan-plugin-blog/commit/a5e3c1f719584163bc0475fe46df0fc95b17be60))
-* support Formulate ([dbe9285](https://github.com/terwer/siyuan-plugin-blog/commit/dbe9285920149eee4c8c3944fed8bf109069327a))
-* use global static share, allow select ip ([a26e3cf](https://github.com/terwer/siyuan-plugin-blog/commit/a26e3cf93384a53fbb5afcec4bf312296a21d4f4))
+* support formulate ([dbe9285](https://github.com/terwer/siyuan-plugin-blog/commit/dbe9285920149eee4c8c3944fed8bf109069327a))
 * use global static share, allow select ip ([17aeb51](https://github.com/terwer/siyuan-plugin-blog/commit/17aeb511e85e05a30bf93e49c9e652ff70b4402b))
-
-
 ### Bug Fixes
-
 * auth error ([9fdfe20](https://github.com/terwer/siyuan-plugin-blog/commit/9fdfe20bc5823d1b8a6bfbf9389cffbdd0f85e34))
 * color mode not auto set ([5abe90e](https://github.com/terwer/siyuan-plugin-blog/commit/5abe90ebc16397024ca868e2c4f3373e79333046))
-
 ## [1.8.5](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.4...v1.8.5) (2023-08-10)
-### Bug Fixes
 * 修复vercel部署缺失样式问题 ([901642a](https://github.com/terwer/siyuan-plugin-blog/commit/901642a3c32d88a4dab7ee28449c1e36f2dd9579))
 ## [1.8.4](https://github.com/terwer/siyuan-plugin-blog/compare/v1.8.3...v1.8.4) (2023-08-10)
 * **deps:** bump pnpm/action-setup from 2.2.4 to 2.4.0 ([30aefbf](https://github.com/terwer/siyuan-plugin-blog/commit/30aefbf89f3a58498d6e9e5adf2a0112c01e73c6))
@@ -42,7 +29,6 @@
 * 修复 vercel 图片错误问题 ([a99a3c4](https://github.com/terwer/siyuan-plugin-blog/commit/a99a3c45a3b884cdd72f8355e6f9c5895860e8f4))
 * 更新设备支持 ([11e1893](https://github.com/terwer/siyuan-plugin-blog/commit/11e18930b7661c7216e1872e867ae5eff31e178a))
 ## [1.8.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.7.1...v1.8.0) (2023-07-02)
-### Features
 * 授权码模式分享支持过期时间 ([ab622a0](https://github.com/terwer/siyuan-plugin-blog/commit/ab622a0f3e95371a3f34893565e9a53a8169e5a7))
 * 授权码模式的分享支持图片 ([9b94c7f](https://github.com/terwer/siyuan-plugin-blog/commit/9b94c7f59c7df818d38d94c3097a1316a2d60d9e))
 * 重构项目，统一处理公开分享与授权码模式下的分享逻辑 ([6c0c651](https://github.com/terwer/siyuan-plugin-blog/commit/6c0c651bb87fda6f451fd19bc776ccb322f3e922))
