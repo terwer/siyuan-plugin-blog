@@ -3,6 +3,7 @@ import { useSettingStore } from "~/stores/useSettingStore"
 
 const { getSetting } = useSettingStore()
 const setting = await getSetting()
+await useThemeMode()
 
 const VNode = () =>
   h("div", {

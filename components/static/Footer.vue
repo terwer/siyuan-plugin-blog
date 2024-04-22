@@ -6,6 +6,7 @@ import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 const { fetchPublicText } = useAuthModeFetch()
 const resText = await fetchPublicText(`static.app.config.json`)
 const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+await useStaticThemeMode()
 
 const VNode = () =>
   h("div", {

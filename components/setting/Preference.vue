@@ -82,8 +82,6 @@ const onSubmit = async () => {
         <el-input v-model="formData.siteDescription" :rows="2" type="textarea" />
       </el-form-item>
 
-      <el-divider border-style="dashed" />
-
       <el-form-item :label="t('share.template.footer')">
         <el-input
           v-model="formData.footer"
