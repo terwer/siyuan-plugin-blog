@@ -27,6 +27,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { Post } from "zhi-blog-api"
 import { ObjectUtil } from "zhi-common"
 import { usePostApi } from "~/composables/api/usePostApi"
+import { SiyuanDevice } from "zhi-device"
 
 /**
  * 文档相关
@@ -44,6 +45,13 @@ export const usePost = () => {
    * 如果缓存已有直接返回，否则去远程抓取数据
    */
   const setCurrentPost = async (pageId?: string) => {
+    const win = SiyuanDevice.siyuanWindow()
+    if (!win.origin) {
+      throw new Error("server mode, ignore")
+    }
+    if (!win?.origin?.includes("127.0.0.1") && !win?.origin?.includes("localhost")) {
+      throw new Error("only local service is allowed for preview")
+    }
     if (ObjectUtil.isEmptyObject(currentPost.post)) {
       const route = useRoute()
       const id = pageId ?? ((route.params.id ?? "") as string)
@@ -52,15 +60,6 @@ export const usePost = () => {
       logger.info("Post already cached, skip fetch")
     }
   }
-
-  // lifecycles
-  // https://vuejs.org/api/composition-api-lifecycle.html#onserverprefetch
-  onServerPrefetch(async () => {
-    await setCurrentPost()
-  })
-  onBeforeMount(async () => {
-    await setCurrentPost()
-  })
 
   return { currentPost, setCurrentPost }
 }

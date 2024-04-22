@@ -38,9 +38,7 @@ export const useAuthModeFetch = () => {
   const fetchPublicText = async (filename: string) => {
     const shareTypeFetchFile = `/public/siyuan-blog/${filename}`
     logger.info("getPublicFile in auth mode", shareTypeFetchFile)
-    const resText = await kernelApi.getPublicFile(shareTypeFetchFile)
-    logger.debug("get text from auth mode", resText)
-    return resText
+    return await kernelApi.getPublicFile(shareTypeFetchFile)
   }
 
   return { fetchPublicText }

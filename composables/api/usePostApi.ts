@@ -24,7 +24,6 @@
  */
 
 import { createAppLogger } from "~/common/appLogger"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 
 /**
