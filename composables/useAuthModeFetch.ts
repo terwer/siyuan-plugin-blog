@@ -48,7 +48,31 @@ export const useAuthModeFetch = () => {
    * @param id - 文档 ID
    */
   const fetchProviderPostMeta = async (id: string): Promise<string> => {
-    return "{}"
+    const apiBase = env.public.providerUrl
+    const url = "/api/share/getDoc"
+    const reqUrl = `${apiBase}${url}`
+    const params = {
+      fdId: id,
+    }
+    let resText = "{}"
+    try {
+      const res = await fetch(reqUrl, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(params),
+      })
+      const resJson = await res.json()
+      if (resJson.code === 0) {
+        resText = JSON.stringify(resJson.data)
+      } else {
+        ElMessage.error("文档获取失败，错误信息如下=>" + resJson.msg)
+      }
+    } catch (e) {
+      logger.error(`fetch provider config ${reqUrl}`, e)
+    }
+    return resText
   }
 
   /**
@@ -92,7 +116,7 @@ export const useAuthModeFetch = () => {
       logger.info(`fetch config text ${filename} in normal mode`)
       resText = await fetchPublicText(filename)
     }
-    logger.info("resText=>", resText)
+    logger.debug("resText=>", { resText: resText })
     return resText
   }
 

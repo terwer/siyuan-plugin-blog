@@ -62,7 +62,9 @@ const formData = reactive({
 
 const getPostData = async () => {
   const resText = await fetchPostMeta(id, providerMode)
-  formData.post = JsonUtil.safeParse<Post>(resText, {} as Post)
+  const currentPost = JsonUtil.safeParse<Post>(resText, {} as Post)
+  logger.info("currentPost=>", currentPost)
+  formData.post = currentPost
   formData.shareEnabled = !ObjectUtil.isEmptyObject(formData.post)
   // logger.info("post=>", formData.post)
   // logger.info(`shareEnabled=>${formData.shareEnabled}`)

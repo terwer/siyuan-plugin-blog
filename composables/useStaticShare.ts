@@ -41,7 +41,7 @@ export const useStaticShare = () => {
     const pubicAssetsFolder = `/data/public/siyuan-blog/${pageId}`
 
     // 保存图片附件
-    await downloadAssetsToPublic(post.editorDom, pubicAssetsFolder)
+    await downloadAssetsToPublic(post.editorDom ?? "", pubicAssetsFolder)
     logger.info("assets downloaded success")
 
     // 只暴露有限的属性
