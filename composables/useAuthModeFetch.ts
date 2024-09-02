@@ -60,7 +60,7 @@ export const useAuthModeFetch = () => {
   }
 
   const fetchPostMeta = async (id: string, providerMode: boolean): Promise<string> => {
-    let resText = "{}"
+    let resText: string
     if (providerMode) {
       logger.info("fetch text in provider mode")
       resText = await fetchProviderPostMeta(id)
@@ -81,6 +81,7 @@ export const useAuthModeFetch = () => {
       logger.info("fetch config text in normal mode")
       resText = await fetchPublicText(filename)
     }
+    logger.info("resText=>", resText)
     return resText
   }
 

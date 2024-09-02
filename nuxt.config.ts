@@ -118,4 +118,6 @@ export default defineNuxtConfig({
       providerUrl: process.env.NUXT_PROVIDER_URL ?? "http://127.0.0.1:8000",
     },
   },
+
+  compatibilityDate: "2024-09-02",
 })

@@ -123,4 +123,8 @@ export default defineNuxtConfig({
       providerUrl: process.env.NUXT_PROVIDER_URL,
     },
   },
+
+  compatibilityDate: {
+    vercel: "2024-09-02",
+  },
 })
