@@ -65,7 +65,8 @@ export const useAuthModeFetch = () => {
       })
       const resJson = await res.json()
       if (resJson.code === 0) {
-        resText = JSON.stringify(resJson.data)
+        const dataJson = JSON.parse(resJson.data)
+        resText = JSON.stringify(dataJson.post)
       } else {
         ElMessage.error("文档获取失败，错误信息如下=>" + resJson.msg)
       }
@@ -108,6 +109,7 @@ export const useAuthModeFetch = () => {
   }
 
   const fetchConfig = async (filename: string, providerMode: boolean): Promise<string> => {
+    console.log("providerMode=>", providerMode)
     let resText: string
     if (providerMode) {
       logger.info(`fetch config text ${filename} in provider mode`)

@@ -3,6 +3,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { JsonUtil } from "zhi-common"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
+import { useProviderMode } from "~/composables/useProviderMode"
 
 /**
  * 设置配置存储
@@ -13,13 +14,13 @@ export const useStaticSettingStore = () => {
   const staticSettingFile = "static.app.config.json"
   const { kernelApi } = useSiyuanApi()
   const env = useRuntimeConfig()
-  const providerMode = env.public.providerMode === "true"
   const { fetchConfig } = useAuthModeFetch()
-
+  const { providerMode } = useProviderMode()
   /**
    * 获取配置
    */
   const getStaticSetting = async (): Promise<typeof AppConfig> => {
+    console.log("env.public", env.public)
     const resText = await fetchConfig(staticSettingFile, providerMode)
     logger.debug("get static setting text", resText)
     const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)

@@ -30,6 +30,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { checkExpires, getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
+import { useProviderMode } from "~/composables/useProviderMode"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -45,13 +46,12 @@ const props = defineProps({
 })
 
 const logger = createAppLogger("static-share-page")
-const env = useRuntimeConfig()
 const { t } = useI18n()
 const route = useRoute()
 const id = props.pageId ?? ((route.params.id ?? "") as string)
-const providerMode = env.public.providerMode === "true"
 const { getFirstImageSrc } = useServerAssets()
 const { fetchPostMeta } = useAuthModeFetch()
+const { providerMode } = useProviderMode()
 
 // datas
 const formData = reactive({

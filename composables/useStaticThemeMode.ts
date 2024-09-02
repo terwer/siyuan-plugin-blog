@@ -30,6 +30,7 @@ import { useRoute } from "vue-router"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { JsonUtil } from "zhi-common"
 import AppConfig from "~/app.config"
+import { useProviderMode } from "~/composables/useProviderMode"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -40,9 +41,8 @@ const logger = createAppLogger("use-theme-mode")
 export const useStaticThemeMode = async () => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
-  const env = useRuntimeConfig()
   const { query } = useRoute()
-  const providerMode = env.public.providerMode === "true"
+  const { providerMode } = useProviderMode()
   const appBase = process.env.APP_BASE
   const { fetchConfig } = useAuthModeFetch()
 

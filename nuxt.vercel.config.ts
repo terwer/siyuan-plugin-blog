@@ -119,8 +119,8 @@ export default defineNuxtConfig({
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
       waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-      providerMode: process.env.NUXT_PROVIDER_MODE,
-      providerUrl: process.env.NUXT_PROVIDER_URL,
+      providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE,
+      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL,
     },
   },
 
