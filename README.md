@@ -11,18 +11,17 @@ Based on the localization concept of siyuan-note , this plugin is natively share
 The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
 
 > Important Notice:
-> 1. Version 2.0.0 introduces support for VIP versions, distinguished as follows:    
-     /s/[id] - Regular Link  
-     /static/[id] - Regular Link  
-     /p/[id] - Regular Link  
-     /post/[id] - Regular Link  
-     -----------------------------------------------------------------------------------  
-     /link/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
-     /doc/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
-     /article/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
-     /x/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
-     /a/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
-     /d/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"
+> 1. Version 2.0.0 introduces support for VIP versions, add mode link rules as follows:    
+     /s/[id]
+     /static/[id]
+     /p/[id]
+     /post/[id]
+     /link/[id]
+     /doc/[id]
+     /article/[id]
+     /x/[id]
+     /a/[id]
+     /d/[id]
 
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
