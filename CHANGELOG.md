@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/v1.9.1...v2.0.0) (2024-09-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* add VIP provider mode
+
+### Features
+
+* add VIP provider mode ([f6f174f](https://github.com/terwer/siyuan-plugin-blog/commit/f6f174fcc6cb896d71a2a0d810c32fff51aa7534))
+
+
+### Bug Fixes
+
+* **deps:** bump actions/cache from 3 to 4 ([f9129f9](https://github.com/terwer/siyuan-plugin-blog/commit/f9129f9c01b06533d12dfffeddfb7b9d79c0bfa8))
+* **deps:** bump pnpm/action-setup from 2 to 4 ([01547ef](https://github.com/terwer/siyuan-plugin-blog/commit/01547efc43138ead39eb656e6cca710e57f0b6aa))
+* upgrade pnpm to 9.6.0 ([1f0e947](https://github.com/terwer/siyuan-plugin-blog/commit/1f0e9476e48a0e77773f28b62493d41309030569))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump siyuan from 0.7.9 to 1.0.2 ([6e0973b](https://github.com/terwer/siyuan-plugin-blog/commit/6e0973bf79e601dcf7190fe1e42746f07de41dde))
+* update deps ([7e37065](https://github.com/terwer/siyuan-plugin-blog/commit/7e3706555817c2b3841992acdd5721f8419665db))
+
 ## [1.9.1](https://github.com/terwer/siyuan-plugin-blog/compare/v1.9.0...v1.9.1) (2024-04-22)
 ### Bug Fixes
 * formulate only parse once ([ea32c03](https://github.com/terwer/siyuan-plugin-blog/commit/ea32c03f14899739bd3c628f1a2d4751f5f29614))
