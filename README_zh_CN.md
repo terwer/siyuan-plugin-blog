@@ -22,6 +22,7 @@
      /x/[id]  
      /a/[id]  
      /d/[id]    
+> 2. 在线分享专业版即将上线，敬请期待：https://github.com/terwerinc/siyuan-plugin-share-pro
 
 [帮助文档](https://blog.terwer.space/s/20230621001422-xsimx5v)
 

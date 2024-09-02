@@ -22,6 +22,8 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
      /x/[id]  
      /a/[id]  
      /d/[id]  
+> 2. Share pro is coming soon, please visit：https://github.com/terwerinc/siyuan-plugin-share-pro
+
 
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
