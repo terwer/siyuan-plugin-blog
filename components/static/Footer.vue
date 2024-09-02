@@ -2,15 +2,12 @@
 import { JsonUtil } from "zhi-common"
 import AppConfig from "~/app.config"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
-import { useRoute } from "vue-router"
+import { useProviderMode } from "~/composables/useProviderMode"
 
-const env = useRuntimeConfig()
-const providerMode = env.public.providerMode === "true"
+const { providerMode } = useProviderMode()
 const { fetchConfig } = useAuthModeFetch()
 const resText = await fetchConfig(`static.app.config.json`, providerMode)
 const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
-console.log(resText)
-console.log(setting)
 await useStaticThemeMode()
 
 const VNode = () =>

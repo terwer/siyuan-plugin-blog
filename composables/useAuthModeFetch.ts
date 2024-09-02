@@ -108,6 +108,7 @@ export const useAuthModeFetch = () => {
   }
 
   const fetchConfig = async (filename: string, providerMode: boolean): Promise<string> => {
+    console.log("providerMode=>",providerMode)
     let resText: string
     if (providerMode) {
       logger.info(`fetch config text ${filename} in provider mode`)

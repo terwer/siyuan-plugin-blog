@@ -30,15 +30,15 @@ import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { usePost } from "~/composables/usePost"
+import { useProviderMode } from "~/composables/useProviderMode"
 
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
   const { kernelApi } = useSiyuanApi()
   const { fetchConfig } = useAuthModeFetch()
+  const { providerMode } = useProviderMode()
   const shareTypeJsonFile = "share-type.json"
   const route = useRoute()
-  const env = useRuntimeConfig()
-  const providerMode = env.public.providerMode === "true"
 
   /**
    * 获取分享类型
