@@ -9,6 +9,8 @@ const providerMode = env.public.providerMode === "true"
 const { fetchConfig } = useAuthModeFetch()
 const resText = await fetchConfig(`static.app.config.json`, providerMode)
 const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+console.log(resText)
+console.log(setting)
 await useStaticThemeMode()
 
 const VNode = () =>

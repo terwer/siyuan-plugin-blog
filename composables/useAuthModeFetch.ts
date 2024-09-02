@@ -29,6 +29,7 @@ import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-auth-mode-fetch")
   const { kernelApi } = useSiyuanApi()
+  const env = useRuntimeConfig()
 
   /**
    * 获取文本
@@ -53,10 +54,20 @@ export const useAuthModeFetch = () => {
   /**
    * 远程获取配置文本
    *
-   * @param id - 文档 ID
+   * @param filename - 文件名
    */
-  const fetchProviderConfig = async (id: string): Promise<string> => {
-    return "{}"
+  const fetchProviderConfig = async (filename: string): Promise<string> => {
+    const apiBase = env.public.providerUrl
+    const url = `/settings/share/${filename}`
+    const reqUrl = `${apiBase}${url}`
+    let resText = ""
+    try {
+      const res = await fetch(reqUrl)
+      resText = await res.text()
+    } catch (e) {
+      logger.error(`fetch provider config ${reqUrl}`, e)
+    }
+    return resText
   }
 
   const fetchPostMeta = async (id: string, providerMode: boolean): Promise<string> => {
@@ -73,12 +84,12 @@ export const useAuthModeFetch = () => {
   }
 
   const fetchConfig = async (filename: string, providerMode: boolean): Promise<string> => {
-    let resText = "{}"
+    let resText: string
     if (providerMode) {
-      logger.info("fetch config text in provider mode")
+      logger.info(`fetch config text ${filename} in provider mode`)
       resText = await fetchProviderConfig(filename)
     } else {
-      logger.info("fetch config text in normal mode")
+      logger.info(`fetch config text ${filename} in normal mode`)
       resText = await fetchPublicText(filename)
     }
     logger.info("resText=>", resText)
