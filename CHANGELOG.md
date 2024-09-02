@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.0...siyuan-blog-v2.0.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* prepare new version ([aaab10b](https://github.com/terwer/siyuan-plugin-blog/commit/aaab10b0ab9d8c35e5544c3d6f877c1ade4bbfc1))
+
 ## [2.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v1.9.1...siyuan-blog-v2.0.0) (2024-09-02)
 
 
