@@ -17,9 +17,9 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
      /p/[id] - Regular Link  
      /post/[id] - Regular Link  
      -----------------------------------------------------------------------------------  
+     /link/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
      /doc/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
      /article/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
-     /share/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
      /x/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
      /a/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
      /d/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"

@@ -46,7 +46,6 @@ const props = defineProps({
 })
 
 const logger = createAppLogger("static-share-page")
-const env = useRuntimeConfig()
 const { t } = useI18n()
 const route = useRoute()
 const id = props.pageId ?? ((route.params.id ?? "") as string)
