@@ -12,16 +12,16 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 > Important Notice:
 > 1. Version 2.0.0 introduces support for VIP versions, add mode link rules as follows:    
-     /s/[id]
-     /static/[id]
-     /p/[id]
-     /post/[id]
-     /link/[id]
-     /doc/[id]
-     /article/[id]
-     /x/[id]
-     /a/[id]
-     /d/[id]
+     /s/[id]  
+     /static/[id]  
+     /p/[id]  
+     /post/[id]  
+     /link/[id]  
+     /doc/[id]  
+     /article/[id]  
+     /x/[id]  
+     /a/[id]  
+     /d/[id]  
 
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
