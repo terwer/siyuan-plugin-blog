@@ -12,16 +12,16 @@
 
 > 重要提示：
 > 1. 2.0.0，新增适配 VIP 版本，新增更多链接形式如下：    
-     /s/[id]
-     /static/[id]
-     /p/[id]
-     /post/[id]
-     /link/[id] 
-     /doc/[id]
-     /article/[id] 
-     /x/[id]
-     /a/[id]
-     /d/[id]  
+     /s/[id]  
+     /static/[id]  
+     /p/[id]  
+     /post/[id]  
+     /link/[id]   
+     /doc/[id]  
+     /article/[id]   
+     /x/[id]  
+     /a/[id]  
+     /d/[id]    
 
 [帮助文档](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
