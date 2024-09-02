@@ -138,6 +138,8 @@ export default defineNuxtConfig({
       siyuanApiUrl: "",
       // waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
       waitTime: "0",
+      providerMode: "false",
+      providerUrl: "http://127.0.0.1:8000",
     },
   },
 })

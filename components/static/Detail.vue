@@ -45,11 +45,13 @@ const props = defineProps({
 })
 
 const logger = createAppLogger("static-share-page")
+const env = useRuntimeConfig()
 const { t } = useI18n()
 const route = useRoute()
 const id = props.pageId ?? ((route.params.id ?? "") as string)
+const providerMode = env.public.providerMode === "true"
 const { getFirstImageSrc } = useServerAssets()
-const { fetchPublicText } = useAuthModeFetch()
+const { fetchPostMeta } = useAuthModeFetch()
 
 // datas
 const formData = reactive({
@@ -59,7 +61,7 @@ const formData = reactive({
 })
 
 const getPostData = async () => {
-  const resText = await fetchPublicText(`${id}.json`)
+  const resText = await fetchPostMeta(id, providerMode)
   formData.post = JsonUtil.safeParse<Post>(resText, {} as Post)
   formData.shareEnabled = !ObjectUtil.isEmptyObject(formData.post)
   // logger.info("post=>", formData.post)

@@ -118,6 +118,8 @@ export default defineNuxtConfig({
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "siyuan",
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      providerMode: process.env.NUXT_PROVIDER_MODE ?? "false",
+      providerUrl: process.env.NUXT_PROVIDER_URL ?? "http://127.0.0.1:8000",
     },
   },
 })
