@@ -10,9 +10,19 @@ Based on the localization concept of siyuan-note , this plugin is natively share
 
 The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
 
-> Important:
-> 1. Version 1.8.0+ unifies the sharing logic in public sharing and authorization code mode, so you need to initialize the sharing type to avoid the old sharing link access exception, you only need to open the sharing pop-up window once, and it will be automatically initialized after opening.
-> 2. Sharing in 1.8.0+ authorization code mode can also support image display, go and try it 😄
+> Important Notice:
+> 1. Version 2.0.0 introduces support for VIP versions, distinguished as follows:    
+     /s/[id] - Regular Link  
+     /static/[id] - Regular Link  
+     /p/[id] - Regular Link  
+     /post/[id] - Regular Link  
+     -----------------------------------------------------------------------------------  
+     /doc/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
+     /article/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
+     /share/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
+     /x/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
+     /a/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"  
+     /d/[id]  - VIP Exclusive Link, "Only used when deploying in VIP Service Provider mode"
 
 [docs](https://blog.terwer.space/s/20230621001422-xsimx5v)
 
@@ -29,6 +39,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
   - [Expert-Level] Self-Deployment using Docker: Requires purchasing a server, SSR server-side rendering, SEO-friendly, high speed.
   - [Cost-Free Option] Vercel Hosting: Requires purchasing a domain and may not be accessible in some countries, low cost, moderate speed.
 * **Sharing mode (experimental)**: Public note sharing is supported by default, and limited sharing functions can be supported after enabling the authorization code.
+* **VIP Service Provider Mode**<sup>2.0.0+</sup>: Allows deploying this project as a VIP service provider, requiring backend sharing service(eg. https://github.com/terwerinc/siyuan-note-service) support.
 
 ## TODO
 
