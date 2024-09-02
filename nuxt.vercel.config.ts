@@ -14,10 +14,6 @@ const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  experimental: {
-    inlineSSRStyles: false,
-  },
-
   // https://nuxt.com/docs/guide/concepts/typescript#nuxttsconfigjson
   typescript: {
     strict: true,
@@ -123,6 +119,12 @@ export default defineNuxtConfig({
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
       waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      providerMode: process.env.NUXT_PROVIDER_MODE,
+      providerUrl: process.env.NUXT_PROVIDER_URL,
     },
+  },
+
+  compatibilityDate: {
+    vercel: "2024-09-02",
   },
 })

@@ -29,6 +29,7 @@ import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-auth-mode-fetch")
   const { kernelApi } = useSiyuanApi()
+  const env = useRuntimeConfig()
 
   /**
    * 获取文本
@@ -41,5 +42,83 @@ export const useAuthModeFetch = () => {
     return await kernelApi.getPublicFile(shareTypeFetchFile)
   }
 
-  return { fetchPublicText }
+  /**
+   * 远程获取文档元数据文本
+   *
+   * @param id - 文档 ID
+   */
+  const fetchProviderPostMeta = async (id: string): Promise<string> => {
+    const apiBase = env.public.providerUrl
+    const url = "/api/share/getDoc"
+    const reqUrl = `${apiBase}${url}`
+    const params = {
+      fdId: id,
+    }
+    let resText = "{}"
+    try {
+      const res = await fetch(reqUrl, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(params),
+      })
+      const resJson = await res.json()
+      if (resJson.code === 0) {
+        resText = JSON.stringify(resJson.data)
+      } else {
+        ElMessage.error("文档获取失败，错误信息如下=>" + resJson.msg)
+      }
+    } catch (e) {
+      logger.error(`fetch provider config ${reqUrl}`, e)
+    }
+    return resText
+  }
+
+  /**
+   * 远程获取配置文本
+   *
+   * @param filename - 文件名
+   */
+  const fetchProviderConfig = async (filename: string): Promise<string> => {
+    const apiBase = env.public.providerUrl
+    const url = `/settings/share/${filename}`
+    const reqUrl = `${apiBase}${url}`
+    let resText = ""
+    try {
+      const res = await fetch(reqUrl)
+      resText = await res.text()
+    } catch (e) {
+      logger.error(`fetch provider config ${reqUrl}`, e)
+    }
+    return resText
+  }
+
+  const fetchPostMeta = async (id: string, providerMode: boolean): Promise<string> => {
+    let resText: string
+    if (providerMode) {
+      logger.info("fetch text in provider mode")
+      resText = await fetchProviderPostMeta(id)
+    } else {
+      logger.info("fetch text in normal mode")
+      const filename = `${id}.json`
+      resText = await fetchPublicText(filename)
+    }
+    return resText
+  }
+
+  const fetchConfig = async (filename: string, providerMode: boolean): Promise<string> => {
+    let resText: string
+    if (providerMode) {
+      logger.info(`fetch config text ${filename} in provider mode`)
+      resText = await fetchProviderConfig(filename)
+    } else {
+      logger.info(`fetch config text ${filename} in normal mode`)
+      resText = await fetchPublicText(filename)
+    }
+    logger.debug("resText=>", { resText: resText })
+    return resText
+  }
+
+  return { fetchPostMeta, fetchConfig }
 }

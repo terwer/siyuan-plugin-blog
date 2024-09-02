@@ -34,15 +34,21 @@ import { usePost } from "~/composables/usePost"
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
   const { kernelApi } = useSiyuanApi()
-  const { fetchPublicText } = useAuthModeFetch()
+  const { fetchConfig } = useAuthModeFetch()
   const shareTypeJsonFile = "share-type.json"
   const route = useRoute()
+  const env = useRuntimeConfig()
+  const providerMode = env.public.providerMode === "true"
 
   /**
    * 获取分享类型
    */
   const getShareType = async () => {
-    const resText = await fetchPublicText(shareTypeJsonFile)
+    if (providerMode) {
+      return ShareTypeEnum.ShareType_Static
+    }
+
+    const resText = await fetchConfig(shareTypeJsonFile, providerMode)
     const shareType = JsonUtil.safeParse(resText, {} as any)
     logger.info("get shareType from store", shareType)
 

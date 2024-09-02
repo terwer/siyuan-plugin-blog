@@ -40,10 +40,11 @@ const logger = createAppLogger("use-theme-mode")
 export const useStaticThemeMode = async () => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
-  // const env = useRuntimeConfig()
+  const env = useRuntimeConfig()
   const { query } = useRoute()
-  const { fetchPublicText } = useAuthModeFetch()
+  const providerMode = env.public.providerMode === "true"
   const appBase = process.env.APP_BASE
+  const { fetchConfig } = useAuthModeFetch()
 
   // computes
   // 获取颜色模式并暴露 computed 属性
@@ -67,7 +68,7 @@ export const useStaticThemeMode = async () => {
   // onMounted(() => {
   // })
 
-  const resText = await fetchPublicText(`static.app.config.json`)
+  const resText = await fetchConfig(`static.app.config.json`, providerMode)
   const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
   const siyuanV = CONSTANTS.SIYUAN_VERSION
   const hljsV = CONSTANTS.HLJS_VERSION
