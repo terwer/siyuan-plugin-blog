@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.1...siyuan-blog-v2.1.0) (2024-09-12)
+
+
+### Features
+
+* adapt style ([86dcd91](https://github.com/terwer/siyuan-plugin-blog/commit/86dcd91dcceeea835d5d0d965ed11eb7bf2316b1))
+
+
+### Bug Fixes
+
+* update theme to 0.1.2 ([fa4a6b7](https://github.com/terwer/siyuan-plugin-blog/commit/fa4a6b7999b5892094162fa7db814f60d7063f2b))
+* update theme to 0.1.2 ([8d05f2f](https://github.com/terwer/siyuan-plugin-blog/commit/8d05f2fec04a3a5086c6dddb0c8ce86ac39a12d8))
+
 ## [2.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.0...siyuan-blog-v2.0.1) (2024-09-02)
 ### Bug Fixes
 * prepare new version ([aaab10b](https://github.com/terwer/siyuan-plugin-blog/commit/aaab10b0ab9d8c35e5544c3d6f877c1ade4bbfc1))
