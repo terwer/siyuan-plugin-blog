@@ -74,7 +74,7 @@ export const useStaticThemeMode = async () => {
   const hljsV = CONSTANTS.HLJS_VERSION
   const siyuanLightTheme = (query.lightTheme ?? setting.theme?.lightTheme ?? "Zhihu") as string
   const siyuanDarkTheme = (query.darkTheme ?? setting.theme?.darkTheme ?? "Zhihu") as string
-  const siyuanThemeV = (query.themeVersion ?? setting.theme?.themeVersion ?? "0.1.1") as string
+  const siyuanThemeV = (query.themeVersion ?? setting.theme?.themeVersion ?? "0.1.2") as string
   const detectedMode = color.preference
   const isDarkMode = detectedMode === "dark"
   useHead({
