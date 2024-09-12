@@ -76,7 +76,7 @@ export const useThemeMode = async () => {
   const hljsV = CONSTANTS.HLJS_VERSION
   const siyuanLightTheme = setting?.theme?.lightTheme ?? "Zhihu"
   const siyuanDarkTheme = setting?.theme?.darkTheme ?? "Zhihu"
-  const siyuanThemeV = setting?.theme?.themeVersion ?? "0.1.1"
+  const siyuanThemeV = setting?.theme?.themeVersion ?? "0.1.2"
   const win = SiyuanDevice.siyuanWindow()
   const isDarkMode = win?.matchMedia("(prefers-color-scheme: dark)").matches
   const detectedMode = isDarkMode ? "dark" : "light"

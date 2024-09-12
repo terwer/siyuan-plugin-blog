@@ -59,7 +59,8 @@ html[data-theme-mode="green"] {
     font-family: var(--b3-font-family-code);
     border-top: .5px solid var(--b3-border-color);
     border-radius: 0 0 5px 5px !important;
-    background: var(--zhi-code-content-bg)
+    background: var(--zhi-code-content-bg);
+    white-space: pre;
 }
 
 .code-block .protyle-action::after {
