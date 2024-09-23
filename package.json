@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.10",
-    "@nuxt/devtools": "^1.4.1",
+    "@nuxt/devtools": "^1.5.0",
     "@nuxt/image": "1.8.0",
     "@nuxtjs/color-mode": "^3.4.4",
     "@nuxtjs/i18n": "^8.5.1",
