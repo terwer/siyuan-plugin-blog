@@ -23,7 +23,7 @@
     "@element-plus/nuxt": "^1.0.10",
     "@nuxt/devtools": "^1.4.1",
     "@nuxt/image": "1.8.0",
-    "@nuxtjs/color-mode": "^3.4.4",
+    "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/i18n": "^8.5.1",
     "@nuxtjs/i18n-edge": "^8.5.1-28742882.44db8e8",
     "@terwer/esbuild-config-custom": "^1.2.0",
