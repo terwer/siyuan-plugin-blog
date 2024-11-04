@@ -114,6 +114,7 @@ export const useAuthModeFetch = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        group: "GENERAL",
         docId: id,
         key: filename,
       }),
