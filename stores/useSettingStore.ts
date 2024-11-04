@@ -4,6 +4,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { useCommonStorageAsync } from "~/stores/common/useCommonStorageAsync"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 import { useCommonShareType } from "~/composables/useCommonShareType"
+import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 
 /**
  * 设置配置存储
@@ -15,6 +16,7 @@ export const useSettingStore = defineStore("setting", () => {
   const initialValue = AppConfig
   const { commonStore } = useCommonStorageAsync<typeof AppConfig>(storageKey, initialValue)
   const settingRef = ref<typeof AppConfig | null>(null)
+  const { kernelApi } = useSiyuanApi()
 
   const { isPrivateShare } = useCommonShareType()
   const { updateStaticSetting } = useStaticSettingStore()
@@ -41,6 +43,25 @@ export const useSettingStore = defineStore("setting", () => {
     return settingRef.value ?? {}
   }
 
+  const updatePublicSetting = async (setting: Partial<typeof AppConfig>) => {
+    logger.info("update public setting=>", setting)
+    await commonStore.set(setting)
+  }
+
+  const setExtraSettingData = async (setting: Partial<typeof AppConfig>, data: Record<string, unknown>) => {
+    logger.info("update extra setting data=>", data)
+    try {
+      const customCss = await kernelApi.siyuanRequest("/api/snippet/getSnippet", { type: "css", enabled: 2 })
+      logger.info("get custom css", customCss)
+      if (customCss.snippets) {
+        setting.customCss = customCss.snippets
+      }
+    } catch (e) {
+      logger.error("get custom css error", e)
+    }
+    return setting
+  }
+
   /**
    * 修改配置
    *
@@ -48,13 +69,16 @@ export const useSettingStore = defineStore("setting", () => {
    */
   const updateSetting = async (setting: Partial<typeof AppConfig>) => {
     logger.info("update setting=>", setting)
-    await commonStore.set(setting)
+    // 设置额外信息
+    setting = await setExtraSettingData(setting, setting)
     settingRef.value = { ...settingRef.value, ...setting }
 
     const isPrivate = await isPrivateShare()
     if (isPrivate) {
       // 授权码模式写入配置
       await updateStaticSetting(setting)
+    } else {
+      await updatePublicSetting(setting)
     }
   }
 

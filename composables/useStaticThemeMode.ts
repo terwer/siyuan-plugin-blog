@@ -46,6 +46,9 @@ export const useStaticThemeMode = async () => {
   const appBase = process.env.APP_BASE
   const { fetchConfig } = useAuthModeFetch()
 
+  // 在 mounted 生命周期中处理加载后逻辑
+  onMounted(() => {})
+
   // computes
   // 获取颜色模式并暴露 computed 属性
   const colorMode = computed({
@@ -63,10 +66,6 @@ export const useStaticThemeMode = async () => {
     colorMode.value = !colorMode.value
     switchMode()
   }
-
-  // 在 mounted 生命周期中处理加载后逻辑
-  // onMounted(() => {
-  // })
 
   const resText = await fetchConfig(`static.app.config.json`, providerMode)
   const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
@@ -106,8 +105,16 @@ export const useStaticThemeMode = async () => {
         id: "protyleHljsStyle",
         href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs${
           isDarkMode ? "2015" : ""
-        }.min.css?v=${hljsV}`,
+        }.min2.css?v=${hljsV}`,
       },
+    ],
+    style: [
+      ...(setting.customCss
+        ? setting.customCss.map((css: any) => ({
+            id: css.name,
+            children: css.content,
+          }))
+        : []),
     ],
   })
 
@@ -145,6 +152,28 @@ export const useStaticThemeMode = async () => {
 
     // 颜色模式属性
     document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
+
+    // 自定义样式适配
+    setCustomCss()
+  }
+
+  const setCustomCss = () => {
+    // 自定义样式适配
+    // customCss: [
+    //     {
+    //       name: "custom.css",
+    //       content: "body { background-color: #f5f5f5; }",
+    //     },
+    //   ],
+    const customCss = setting.customCss
+    if (customCss) {
+      for (const css of customCss) {
+        const style = document.createElement("style")
+        style.id = css.name
+        style.innerHTML = css.content
+        document.head.appendChild(style)
+      }
+    }
   }
 
   return { colorMode, toggleDark }
