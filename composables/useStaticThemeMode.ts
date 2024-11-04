@@ -105,7 +105,7 @@ export const useStaticThemeMode = async () => {
         id: "protyleHljsStyle",
         href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs${
           isDarkMode ? "2015" : ""
-        }.min2.css?v=${hljsV}`,
+        }.min.css?v=${hljsV}`,
       },
     ],
     style: [

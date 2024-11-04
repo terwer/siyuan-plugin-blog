@@ -108,6 +108,7 @@ export const useAuthModeFetch = () => {
     const reqUrl = `${apiBase}${url}`
     let resText = ""
     const res = await fetch(reqUrl, {
+      method: "POST",
       body: JSON.stringify({
         docId: id,
         key: filename,
@@ -141,7 +142,7 @@ export const useAuthModeFetch = () => {
       try {
         resText = await fetchProviderConfigForCurrentUser(filename)
       } catch (e) {
-        logger.info("cannot find setting for current user, use default")
+        logger.warn("cannot find setting for current user, use default")
         resText = await fetchProviderConfig(filename)
       }
     } else {
