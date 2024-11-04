@@ -1,27 +1,14 @@
 # Changelog
 
 ## [2.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.1.0...siyuan-blog-v2.2.0) (2024-11-04)
-
-
 ### Features
-
 * support custom css ([6e68dd5](https://github.com/terwer/siyuan-plugin-blog/commit/6e68dd578fe0451fe9ab2512f4358eb75797c43e))
-
-
 ### Bug Fixes
-
-* support some custom setting in provider mode ([292a8ef](https://github.com/terwer/siyuan-plugin-blog/commit/292a8ef67e136b939f560f6a0590f969ad05afe3))
 * support some custom setting in provider mode ([0e350cc](https://github.com/terwer/siyuan-plugin-blog/commit/0e350cc4908b57d1e15401335aa7cea479b2848d))
-
-
 ### Miscellaneous
-
-* update docs ([c4f47ab](https://github.com/terwer/siyuan-plugin-blog/commit/c4f47aba9ea24a4f863987687dadf36fb97b7be4))
-
+* update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 ## [2.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.1...siyuan-blog-v2.1.0) (2024-09-12)
-### Features
 * adapt style ([86dcd91](https://github.com/terwer/siyuan-plugin-blog/commit/86dcd91dcceeea835d5d0d965ed11eb7bf2316b1))
-### Bug Fixes
 * update theme to 0.1.2 ([8d05f2f](https://github.com/terwer/siyuan-plugin-blog/commit/8d05f2fec04a3a5086c6dddb0c8ce86ac39a12d8))
 ## [2.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.0...siyuan-blog-v2.0.1) (2024-09-02)
 * prepare new version ([aaab10b](https://github.com/terwer/siyuan-plugin-blog/commit/aaab10b0ab9d8c35e5544c3d6f877c1ade4bbfc1))
@@ -160,7 +147,6 @@
 * 适配 vercel - i18n ([773b052](https://github.com/terwer/siyuan-plugin-blog/commit/773b052e9efd68e4af66bf1e76de0dc440903319))
 * 适配 vercel - i18n and element-plus ([7ffb242](https://github.com/terwer/siyuan-plugin-blog/commit/7ffb242af3d47d6f92921a048b76227e888de7a9))
 * 适配 vercel - pina and api ([b8eacd5](https://github.com/terwer/siyuan-plugin-blog/commit/b8eacd5a90fb1f363a1ea12623da9042e55a1ef9))
-### Miscellaneous
 * adapt vercel build ([d82b50f](https://github.com/terwer/siyuan-plugin-blog/commit/d82b50fa99a5ec53557ad14d5da3902ef699d9e7))
 * add meilisearch_endpoint ([97398b5](https://github.com/terwer/siyuan-plugin-blog/commit/97398b56c48f9ad8ff72e816eb46a3e967d3ed8e))
 * add preset ([c3ee89b](https://github.com/terwer/siyuan-plugin-blog/commit/c3ee89b8fc750ec39ce0e35874a7c640c1b81aba))
@@ -203,7 +189,6 @@
 * remove static preset ([2a1ef1b](https://github.com/terwer/siyuan-plugin-blog/commit/2a1ef1b4199a8e11535239b896281de998bade9e))
 * set repo as a mirror ([609d383](https://github.com/terwer/siyuan-plugin-blog/commit/609d383e859861971188b200375d124e2fef698c))
 * update deps ([7e37065](https://github.com/terwer/siyuan-plugin-blog/commit/7e3706555817c2b3841992acdd5721f8419665db))
-* update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 * upgrade release please to 4 ([8c2b8f9](https://github.com/terwer/siyuan-plugin-blog/commit/8c2b8f991227ba11227b63fd05a822aadeb94eaf))
 * 优化 docker 打包脚本 ([b42f2f3](https://github.com/terwer/siyuan-plugin-blog/commit/b42f2f310ab84763a409e4b6c91f2225abf517cc))
 * 修改项目说明 ([c45182e](https://github.com/terwer/siyuan-plugin-blog/commit/c45182ed2303cbad4d8b1ce68932e13fc80ccf04))
