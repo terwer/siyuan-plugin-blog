@@ -35,9 +35,9 @@ export const useStaticSettingStore = () => {
    */
   const updateStaticSetting = async (setting: Partial<typeof AppConfig>) => {
     logger.debug("update static setting=>", setting)
-    const shareTypeFile = `/data/public/siyuan-blog/${staticSettingFile}`
+    const settingFile = `/data/public/siyuan-blog/${staticSettingFile}`
     const sJson = JSON.stringify(setting) ?? "{}"
-    await kernelApi.saveTextData(shareTypeFile, sJson)
+    await kernelApi.saveTextData(settingFile, sJson)
     logger.debug("inited static setting in public dir", sJson)
   }
 

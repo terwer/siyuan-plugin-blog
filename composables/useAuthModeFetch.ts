@@ -30,6 +30,7 @@ export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-auth-mode-fetch")
   const { kernelApi } = useSiyuanApi()
   const env = useRuntimeConfig()
+  const route = useRoute()
 
   /**
    * 获取文本
@@ -95,6 +96,30 @@ export const useAuthModeFetch = () => {
     return resText
   }
 
+  /**
+   * 远程获取配置文本
+   *
+   * @param filename - 文件名
+   */
+  const fetchProviderConfigForCurrentUser = async (filename: string): Promise<string> => {
+    const id = (route.params.id ?? "") as string
+    const apiBase = env.public.providerUrl
+    const url = `/api/settings/share`
+    const reqUrl = `${apiBase}${url}`
+    let resText = ""
+    const res = await fetch(reqUrl, {
+      body: JSON.stringify({
+        docId: id,
+        key: filename,
+      }),
+    })
+    resText = await res.text()
+    if (!res.ok) {
+      throw new Error("fetch provider config error")
+    }
+    return resText
+  }
+
   const fetchPostMeta = async (id: string, providerMode: boolean): Promise<string> => {
     let resText: string
     if (providerMode) {
@@ -113,7 +138,12 @@ export const useAuthModeFetch = () => {
     let resText: string
     if (providerMode) {
       logger.info(`fetch config text ${filename} in provider mode`)
-      resText = await fetchProviderConfig(filename)
+      try {
+        resText = await fetchProviderConfigForCurrentUser(filename)
+      } catch (e) {
+        logger.info("cannot find setting for current user, use default")
+        resText = await fetchProviderConfig(filename)
+      }
     } else {
       logger.info(`fetch config text ${filename} in normal mode`)
       resText = await fetchPublicText(filename)

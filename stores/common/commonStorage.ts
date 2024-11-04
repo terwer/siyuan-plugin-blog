@@ -23,10 +23,10 @@
  * questions.
  */
 
-import { StorageLikeAsync } from "@vueuse/core"
+import { type StorageLikeAsync } from "@vueuse/core"
 import { createAppLogger } from "~/common/appLogger"
 import { SiyuanDevice } from "zhi-device"
-import { StrUtil } from "zhi-common"
+import { JsonUtil, StrUtil } from "zhi-common"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 
 /**
@@ -114,7 +114,6 @@ class CommonStorage implements StorageLikeAsync {
   public async setItem(key: string, value: string): Promise<void> {
     this.logger.info(`Setting value for '${key}' in CommonStorage to '${value}'.`)
     if (this.storageViaSiyuanApi) {
-      // 如果当前运行在思源笔记中，则直接返回空字符串
       await this.kernelApi.saveTextData(key, value)
       this.logger.info(`Use SiYuan Api LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
     } else {

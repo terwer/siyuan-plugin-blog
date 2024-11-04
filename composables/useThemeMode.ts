@@ -52,6 +52,7 @@ export const useThemeMode = async () => {
   // methods
   // 切换暗黑模式
   const toggleDark = async () => {
+    debugger
     colorMode.value = !colorMode.value
 
     const mode = colorMode.value ? "dark" : "light"
@@ -114,6 +115,14 @@ export const useThemeMode = async () => {
         }.min.css?v=${hljsV}`,
       },
     ],
+    style: [
+      ...(setting.customCss
+        ? setting.customCss.map((css: any) => ({
+            id: css.name,
+            children: css.content,
+          }))
+        : []),
+    ],
   })
 
   // ==================================================
@@ -150,6 +159,24 @@ export const useThemeMode = async () => {
 
     // 颜色模式属性
     document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
+
+    // 自定义样式适配
+    // customCss: [
+    //     {
+    //       name: "custom.css",
+    //       content: "body { background-color: #f5f5f5; }",
+    //     },
+    //   ],
+    const customCss = setting.customCss
+    debugger
+    if (customCss) {
+      for (const css of customCss) {
+        const style = document.createElement("style")
+        style.id = css.name
+        style.innerHTML = css.content
+        document.head.appendChild(style)
+      }
+    }
   }
 
   return { colorMode, toggleDark }
