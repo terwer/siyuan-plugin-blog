@@ -107,14 +107,19 @@ export const useAuthModeFetch = () => {
     const url = `/api/settings/share`
     const reqUrl = `${apiBase}${url}`
     let resText = ""
+    logger.info(`fetch config text ${filename} in provider mode, reqUrl=>${reqUrl}`)
     const res = await fetch(reqUrl, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         docId: id,
         key: filename,
       }),
     })
     resText = await res.text()
+    logger.info("fetch config text in provider mode finish=>", { resText: resText })
     if (!res.ok) {
       throw new Error("fetch provider config error")
     }
@@ -141,6 +146,7 @@ export const useAuthModeFetch = () => {
       logger.info(`fetch config text ${filename} in provider mode`)
       try {
         resText = await fetchProviderConfigForCurrentUser(filename)
+        logger.info("success fetch config in  provider mode")
       } catch (e) {
         logger.warn("cannot find setting for current user, use default")
         resText = await fetchProviderConfig(filename)
@@ -149,7 +155,7 @@ export const useAuthModeFetch = () => {
       logger.info(`fetch config text ${filename} in normal mode`)
       resText = await fetchPublicText(filename)
     }
-    logger.debug("resText=>", { resText: resText })
+    logger.info("finally resText by fetchConfig=>", { resText: resText })
     return resText
   }
 
