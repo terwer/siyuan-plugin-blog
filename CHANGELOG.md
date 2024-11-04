@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.1.0...siyuan-blog-v2.2.0) (2024-11-04)
+
+
+### Features
+
+* support custom css ([6e68dd5](https://github.com/terwer/siyuan-plugin-blog/commit/6e68dd578fe0451fe9ab2512f4358eb75797c43e))
+
+
+### Bug Fixes
+
+* support some custom setting in provider mode ([292a8ef](https://github.com/terwer/siyuan-plugin-blog/commit/292a8ef67e136b939f560f6a0590f969ad05afe3))
+* support some custom setting in provider mode ([0e350cc](https://github.com/terwer/siyuan-plugin-blog/commit/0e350cc4908b57d1e15401335aa7cea479b2848d))
+
+
+### Miscellaneous
+
+* update docs ([c4f47ab](https://github.com/terwer/siyuan-plugin-blog/commit/c4f47aba9ea24a4f863987687dadf36fb97b7be4))
+
 ## [2.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.1...siyuan-blog-v2.1.0) (2024-09-12)
 ### Features
 * adapt style ([86dcd91](https://github.com/terwer/siyuan-plugin-blog/commit/86dcd91dcceeea835d5d0d965ed11eb7bf2316b1))
