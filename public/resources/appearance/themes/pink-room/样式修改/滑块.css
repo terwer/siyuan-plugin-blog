@@ -1,0 +1,8 @@
+.b3-switch:checked {
+    background-color: #37b3c7;
+}
+
+.b3-switch:checked:after {
+    background-color: #26f1cd;
+    border-color: #2a9dd4bd;
+}

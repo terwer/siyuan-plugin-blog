@@ -1,0 +1,21 @@
+/* ----代码块相关样式---- */
+/* 设置代码块背景色为浅色 */
+.b3-typography div.hljs, .protyle-wysiwyg div.hljs {
+    background-color: #ffffff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* 为代码块设置阴影和圆角 */
+.b3-typography .code-block, .protyle-wysiwyg .code-block{
+    box-shadow: 0px 0px 6px 1px #c6979772;
+    border-radius: 5px;
+}
+
+/* 代码块左边部分样式，设置统一圆角以让代码块整体阴影能正常显示 */
+.protyle-linenumber__rows{
+    border-right: 1px solid #e3bfc5;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-sizing:border-box;
+}

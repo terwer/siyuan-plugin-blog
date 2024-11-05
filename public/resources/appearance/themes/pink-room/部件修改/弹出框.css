@@ -1,0 +1,70 @@
+/* 此文件修改设置面板、页签切换面板 */
+
+.config__tab-wrap{
+    border-radius: 0;
+}
+
+.b3-dialog__container{
+    border-radius: 0;
+}
+
+.b3-dialog__container:not(:has(.card__main)) {
+    border-radius: 0.8em;
+    border: 1px solid #d1c0c0;
+    box-shadow: 0 0 0 0.22em #f3ebdd,0 0 0 0.28em #a3968c,var(--b3-dialog-shadow);
+    background-color: #fbf9f1;;
+}
+
+
+
+.config__tab-wrap {
+    border-radius: 0.8em;
+    padding: 0.3em 0.3em 0.3em 0;
+    background-color: #fcf9f0;
+}
+
+.config__tab-container {
+    overflow: auto;
+    box-sizing: border-box;
+    height: 100%;
+    box-shadow: inset 0 0 0.15em 0.04em #a19893;
+    border-radius: 0.8em;
+    background-color: #fafafa;
+}
+
+.config__panel>.b3-tab-bar .config__tab-hr{
+    background: #c3adad55;
+}
+
+
+
+/* 页签切换菜单 */
+.switch-doc .b3-list:last-child {
+    border: none;
+    background-color: #fbf7f5;
+    box-shadow: inset 0 0 3px 1px #a3968c;
+    border-radius: 0.3em;
+    padding: 0.6em;
+    min-width: 20em;
+}
+.switch-doc .b3-list:first-child{
+    margin-right: 0.5em;
+}
+.switch-doc>:nth-child(1){
+    height: 2px;
+    background-color: #fdf9f0;
+}
+
+.switch-doc>:nth-child(2){
+    background-color: #fdf9f0;
+    padding: 0.3em;
+}
+
+.switch-doc .b3-list--background .b3-list-item {
+    margin-bottom: 8px !important;
+}
+
+
+.b3-dialog__container:has(.search__header){
+    box-shadow: 0 0 0 0.22em #f9dcdc,0 0 0 0.28em #ad7979,var(--b3-dialog-shadow);
+}

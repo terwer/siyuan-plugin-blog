@@ -1,0 +1,5 @@
+/* 防止此问题：https://github.com/StarDustSheep/pink-room/issues/31 */
+/* 必须是4级 */
+.protyle-toolbar{
+    z-index: 4;
+}

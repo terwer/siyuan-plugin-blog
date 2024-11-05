@@ -1,0 +1,4 @@
+/* 为文档编辑区设置接近白色不是纯白的颜色 */
+.protyle-content {
+    background-color: hsl(0 1% 98% / 1);
+}

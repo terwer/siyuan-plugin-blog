@@ -1,0 +1,66 @@
+/* 为超级块设置边框、底色、顶部颜色识别区、底部间距*/
+/* .protyle-wysiwyg [data-node-id].sb {
+    background-color: #fffef9;
+    border-radius: 5px;
+    padding: 0.1em 0.2em 0.1em 0.2em;
+    margin-bottom: 15px !important;
+    border-top-style: solid;
+    border-top-color: #70e3f3cf;
+    border-top-width: 5px;
+    outline: 0.5px solid #b36e3fd4;
+} */
+
+/* 超级块样式 2.0 */
+.protyle-wysiwyg [data-node-id].sb {
+    background-color: #fffef9;
+    border-radius: 4px;
+    padding: 0.1em 0.2em 0.1em 0.2em;
+    margin-bottom: 15px !important;
+    box-shadow: inset 0 0 0 1px #ba744561, 0 0 0 3px #fffef9, 0 0 0px 4px #974a188a;
+}
+
+/* 使得超级块中的超级块不会有边框、边距等样式 */
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"] .sb, .protyle-wysiwyg [data-node-id].sb[data-sb-layout="row"] .sb {
+    margin: 0em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    border-radius: 0em;
+    box-shadow: none;
+    background-color: #fffef900;
+    border: none;
+    outline: none;
+}
+
+
+
+/* 使用自定义属性取消超级块边框 */
+[custom-wbk="1"].sb:not(.sb:has(.sb)){
+    outline: none;
+    background-color: transparent ;
+    border: none ;
+    margin: 0px !important;
+    padding: 0px;
+}
+
+.protyle-wysiwyg [custom-wbk="1"][data-node-id].sb{
+    outline: none;
+    background-color: transparent;
+    border: none ;
+    margin: 0px !important;
+    padding: 0px;
+}
+
+
+/* .fn__flex-1.protyle.protyle-content{
+    box-shadow: inset 5px 0px 5px 0px #d3c8c3;
+} */
+
+/* 让超级块中的超级块的边距稍微窄一点 */
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout=col]>div{
+    margin-right: 0.4em;
+}
+
+/* 超级块制为闪卡的时候，需要让其左边有正确的标记样式 */
+.protyle-wysiwyg [data-node-id].sb[custom-riff-decks]{
+    box-shadow: inset 0 0 0 1px #ba744561, 0 0 0 3px #fffef9, 0.9px 1px 0px 3px #c59b80, 0.9px -1px 0px 3px #c59b80, -2px 0px 0px 4px var(--room-falshcard-mark-color);
+}
