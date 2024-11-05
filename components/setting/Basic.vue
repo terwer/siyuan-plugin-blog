@@ -76,10 +76,10 @@ const formData = reactive({
   lightTheme: setting?.theme?.lightTheme ?? "Zhihu",
   darkTheme: setting?.theme?.darkTheme ?? "Zhihu",
   versionMap: {
-    midlight: "3.0.10",
-    daylight: "3.0.10",
+    midlight: "3.1.10",
+    daylight: "3.1.10",
     Zhihu: "0.1.1",
-    Savor: "3.9.2",
+    Savor: "4.2.3",
   } as any,
 })
 

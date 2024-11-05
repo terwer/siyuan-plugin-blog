@@ -167,8 +167,8 @@
 	--S-toolbar-closeWindow-hover: #e81123;
 	--S-toolbar-closeWindow-svg: #fff;
 	/* dock栏 */
-	--S-dock-color: rgb(55, 53, 47, .5);
-	--S-dock-background: rgb(0, 0, 0, 0);
+	--S-dock-color: rgb(55, 53, 47, .3);
+	--S-dock-background: #f4f1eb;
 	--S-dockright-item-active-background: #f4f1eb;
 	--S-dockleft-item-active-background: #f4f1eb;
 	--S-dock-item-active-color: #ff533f;
@@ -188,7 +188,6 @@
 	--S-list-background-activefocus:  rgba(235, 131, 131, 0.15);
 	
 	--b3-flex-column-padding:6px 0px 2px 0px;
-	--b3-list-item-radius: 3px;
 	/* 大纲数字 */
 	--h1-list-graphic: #eb8383;
 	--h2-list-graphic: #ae9acb;
@@ -209,13 +208,13 @@
 	--S-protyle-breadcrumb-arrow: rgba(174,172,166);
 	/* 头图按钮 */
 	--S-icons-tooltips: rgba(55, 53, 47, 0.5);
-	--S-icons-tooltips-hover: var(--b3-list-background);
+	--S-icons-tooltips-hover: var(--S-list-background);
 	--S-img-icons-tooltips: var(--b3-theme-on-surface);
 	--S-img-icons-tooltips-bg: var(--b3-theme-background);
 	--S-img-icons-span: rgba(0, 0, 0, .5);
 	/* 块标 */
 	--b3-gutters-color: rgba(211,209,203);
-	--S-gutters-background: var(--b3-toolbar-item-hover);
+	--S-gutters-background: var(--S-toolbar-item-hover);
 	/* 弹出工具条字体颜色选择 */
 	--b3-color--square: var(--b3-border-color);
 	/* 任务列表 */
@@ -224,7 +223,7 @@
 	/* 引述 */
 	--b3-bq-background: #f4f1eb;
 	/* 块引用 */
-	--b3-block-ref-background: var(--b3-toolbar-item-hover);
+	--b3-block-ref-background: var(--S-toolbar-item-hover);
 	/* 代码块 */
 	--S-linenumber-rows: rgba(237, 236, 233);
 	--S-code-block-hljs: var(--S-fn__flex-shrink-background);						  
@@ -243,7 +242,7 @@
 	/*ctrlp*/
 	--b3-list-item--meta: #9b9a97;
 	/*底栏状态*/
-	--S-status-msg-background: #e0dfda;
+	--S-status-msg-background: #eeeae3;
 }
 
 

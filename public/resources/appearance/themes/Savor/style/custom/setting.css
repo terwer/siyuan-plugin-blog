@@ -53,24 +53,31 @@
 #savorToolbar{
 	width:24px;
 	height:24px;
-	margin:3px 0px 4px 4px;
+	margin:4px 0px 4px 2px;
 	border-radius:4px;
-	overflow:hidden;
 	background:var(--S-settings);
 	position:relative;
 }
-
+.toolbar--browser #savorToolbar{
+	right: 4px;
+}
+#savorToolbar>div{
+	display: none;
+}
 #savorToolbar:hover{
-	overflow:visible;
 	background-color:var(--S-toolbar-item-hover);
 }
+#savorToolbar:hover>div{
+	display:block;
+}
+
 #savorToolbar:after{
 	content: "";
 	background-color:var(--b3-theme-background);
 	position:absolute;
 	width:136px;
-	height:218px;
-	top:22px;
+    height: 218px;
+    top: 23px;
 	left:-112px;
 	z-index:5;
 	border-radius:6px;

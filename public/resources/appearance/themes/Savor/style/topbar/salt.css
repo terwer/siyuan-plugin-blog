@@ -22,6 +22,9 @@
     /* 线条 */
     --b3-border-color: rgba(0, 0, 0, .1);
 
+    --b3-toolbar-color: var(--b3-theme-background);
+    --b3-toolbar-background: var(--S-toolbar-background);
+
     /* 滚动条 */
     --b3-scroll-color: rgba(98, 122, 123, 0.14);
 	--b3-scroll-color-hover: rgba(98, 122, 123 ,0.6);
@@ -165,14 +168,17 @@
 	--S-toolbar-barWorkspace-hover:var(--S-dockleft-item-active-background);
 	--S-toolbar-closeWindow-hover: #e81123;
 	--S-toolbar-closeWindow-svg: #fff;
+
+
 	/* dock栏 */
-	--S-dock-color: rgb(37, 40, 48);
-	--S-dock-background: var(--S-toolbar-background);
+	--S-dock-color: rgba(37, 40, 48, .3);
+	--S-dock-background: rgb(215, 224, 224);
 	--S-dockright-item-active-background: var(--b3-theme-background);
 	--S-dockleft-item-active-background: rgb(215, 224, 224);
 	--S-dock-item-active-color: #eb8383;
 	--S-dock-item-hover-background: rgb(182, 200, 201);
 	
+    --S-topfixed-background: var(--b3-theme-background);
 	/* 侧栏面板 */
 	--S-fn__flex-column-background: var(--b3-theme-background);
 	--S-fn__flex-shrink-background: rgb(215, 224, 224);
@@ -187,7 +193,6 @@
 	--S-list-background-activefocus:  rgba(235, 131, 131, 0.15);
 	
 	--S-flex-column-padding:6px 0px 2px 0px;
-	--S-list-item-radius: 3px;
 	/* 大纲数字 */
 	--h1-list-graphic: #eb8383;
 	--h2-list-graphic: #ae9acb;
@@ -209,7 +214,7 @@
 
 	/* 头图按钮 */
 	--S-icons-tooltips: rgba(37, 40, 48, 0.5);
-	--S-icons-tooltips-hover: var(--b3-list-background);
+	--S-icons-tooltips-hover: var(--S-list-background);
 	--S-img-icons-tooltips: var(--b3-theme-on-surface);
 	--S-img-icons-tooltips-bg: var(--b3-theme-background);
 	--S-img-icons-span: rgba(0, 0, 0, .5);
@@ -270,12 +275,7 @@
 }
 
 
-.dock__item:not(.dock__item--active){
-	color: var(--b3-theme-background)!important;
-}
-.dock__item:not(.dock__item--active):hover {
-    color: var(--S-dock-color)!important;
-}
+
 #dockBottom:not(.fn__none)+#status .toolbar__item:not(#barDock) svg{
 	color: var(--b3-theme-background)!important;
 }
@@ -286,11 +286,6 @@
 	color: var(--b3-theme-background)!important;
 }
 
-
-#dockLeft.fn__none+#layouts{
-	border-radius:0px;
-	margin:0;
-}
 
 .status #barDock svg{
 	color:var(--b3-theme-on-background);
@@ -308,4 +303,11 @@
 }
 .layout__dockl .layout__resize.fn__none:after{
 	background-color: var(--S-fn__flex-shrink-background);
+}
+.dock#dockRight{
+    background-color: var(--S-fn__flex-column-background);
+}
+
+.toolbar__window .toolbar__item{
+    color: var(--b3-theme-on-background);
 }
