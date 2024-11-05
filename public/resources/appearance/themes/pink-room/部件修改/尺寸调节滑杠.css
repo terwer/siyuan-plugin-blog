@@ -1,0 +1,27 @@
+/* 上下调节尺寸滑杠 */
+.layout__resize{
+    height: 12px;
+}
+.layout__resize:after{
+    background-color:var(--room-surface-lightcolor);
+}
+
+
+/* 左右调节尺寸滑杠 */
+.layout__resize--lr.layout__resize{
+    width: 14px;
+    height: 100%;
+}
+.layout__resize--lr:after{
+    background-color: var(--room-surface-lightcolor);
+}
+
+
+
+/* 此段代码防止侧栏中调节滑杠没有颜色直接露出底部背景 */
+/* z-index设为-1是为了防止遮盖内容区域 */
+/* .layout--float .layout__resize {
+    background-color: var(--room-surface-lightcolor);
+    background-color: var(--room-surface-lightcolor);
+    z-index: -1;
+} */

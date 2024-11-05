@@ -1,0 +1,16 @@
+/* 移动侧边滑块栏位置以让线条和侧边大纲区域贴合 */
+.pdf__outer #sidebarResizer{
+    right: -3px;
+}
+
+
+/* 为PDF中的书页添加外阴影以增加点质感 */
+.pdfViewer .textLayer{
+    box-shadow: 0px 0px 3px 1px rgb(128 128 128 / 50%);
+}
+
+
+/* 使用比默认的米色稍暗一点的颜色 */
+.pdf__outer #viewerContainer:not(.pdfPresentationMode){
+    background-color: #f3ece2;
+}

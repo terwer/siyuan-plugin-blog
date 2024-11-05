@@ -1,0 +1,16 @@
+:root {
+    --custom-code-background: #ffffff61;
+    --custom-code-hover: #5f7b8c;
+    --custon-code-language-color: #7e888d;
+}
+
+.b3-typography .code-block,
+.protyle-wysiwyg .code-block {
+    box-shadow: 0 0 0 2px #050b19f0;
+}
+.protyle-wysiwyg .code-block .protyle-action__language {
+    color: var(--custon-code-language-color);
+}
+
+
+

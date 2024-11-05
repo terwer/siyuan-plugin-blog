@@ -1,0 +1,10 @@
+
+/* 兼容工具栏PLUS和伪面包屑插件同时开启的状态 https://github.com/StarDustSheep/pink-room/issues/38 */
+.og-fake-doc-breadcrumb-container.protyle-breadcrumb ~ .protyle-toolbar{
+    top: 63px !important;
+    left: -2px !important;
+}
+/* 防止工具栏元素溢出 */
+.og-fake-doc-breadcrumb-container ~ .protyle-toolbar{
+        z-index: 3;
+}

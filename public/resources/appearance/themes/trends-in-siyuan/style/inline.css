@@ -1,0 +1,13 @@
+.b3-typography mark:hover,
+.b3-typography span[data-type~=mark]:hover,
+.protyle-wysiwyg mark:hover,
+.protyle-wysiwyg span[data-type~=mark]:hover {
+    background-color: var(--b3-theme-primary-lighter);
+}
+
+.b3-typography u,
+.b3-typography span[data-type~=u],
+.protyle-wysiwyg u,
+.protyle-wysiwyg span[data-type~=u] {
+    border-bottom: 2px solid var(--b3-theme-secondary);
+}

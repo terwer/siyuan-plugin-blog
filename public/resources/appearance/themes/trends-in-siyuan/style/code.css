@@ -1,0 +1,21 @@
+.b3-typography pre,
+.protyle-wysiwyg div.code-block {
+    background-color: var(--b3-theme-background);
+    border: 2px solid var(--b3-theme-primary-light);
+    border-radius: 0px;
+}
+
+
+.b3-typography pre>code,
+.b3-typography div.hljs,
+.protyle-wysiwyg div.code-block>.hljs {
+    border-radius: 0px;
+}
+
+.protyle-linenumber__rows {
+    border-radius: 0px;
+    padding-right: 0.5em;
+}
+.protyle-linenumber__rows>span{
+    color: black;
+}

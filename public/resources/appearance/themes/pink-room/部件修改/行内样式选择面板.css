@@ -1,0 +1,159 @@
+/* ————————————字体菜单样式———————————— */
+
+/* ———————为字体菜单中13种背景色选项图标设置数字编号，以方便选择———————— */
+/* 为所有背景色图标设置一些统一属性 */
+.color__square[data-type="color"]:before{
+    position: absolute;
+    font-size: 80%;
+    z-index: 2;
+    top: 16px;
+    margin-left: 0px;
+    font-weight: bold;
+    color:var(--b3-theme-on-surface);
+}
+
+
+.color__square{
+    position: relative;
+}
+
+.color__square[style="color:var(--b3-font-color1)"]:before{ 
+    content: "1";
+}
+
+.color__square[style="color:var(--b3-font-color2)"]:before{ 
+    content: "2";
+}
+.color__square[style="color:var(--b3-font-color3)"]:before{ 
+    content: "3";
+}
+.color__square[style="color:var(--b3-font-color4)"]:before{ 
+    content: "4";
+
+}
+.color__square[style="color:var(--b3-font-color5)"]:before{ 
+    content: "5";
+}
+.color__square[style="color:var(--b3-font-color6)"]:before{ 
+    content: "6";
+}
+.color__square[style="color:var(--b3-font-color7)"]:before{ 
+    content: "7";
+}
+.color__square[style="color:var(--b3-font-color8)"]:before{ 
+    content: "8";
+}
+.color__square[style="color:var(--b3-font-color9)"]:before{ 
+    content: "9";
+}
+.color__square[style="color:var(--b3-font-color10)"]:before{ 
+    content: "10";
+}
+.color__square[style="color:var(--b3-font-color11)"]:before{ 
+    content: "11";
+}
+.color__square[style="color:var(--b3-font-color12)"]:before{ 
+    content: "12";
+}
+
+.color__square[style="color:var(--b3-font-color13)"]:before{ 
+    content: "13";
+}
+
+/* 为所有背景色数字图标图标设置一些统一属性 */
+.color__square[data-type="backgroundColor"]:before{
+    position: absolute;
+    font-size: 80%;
+    z-index: 2;
+    top: 16px;
+    margin-left: 0px;
+    font-weight:bold;
+    color:var(--b3-theme-on-surface)
+}
+
+/* 为每个底色图标设置编号 */
+.color__square[style="background-color:var(--b3-font-background1)"]:before{ 
+    content: "1";
+}
+
+.color__square[style="background-color:var(--b3-font-background2)"]:before{ 
+    content: "2";
+}
+.color__square[style="background-color:var(--b3-font-background3)"]:before{ 
+    content: "3";
+}
+.color__square[style="background-color:var(--b3-font-background4)"]:before{ 
+    content: "4";
+
+}
+.color__square[style="background-color:var(--b3-font-background5)"]:before{ 
+    content: "5";
+}
+.color__square[style="background-color:var(--b3-font-background6)"]:before{ 
+    content: "6";
+}
+.color__square[style="background-color:var(--b3-font-background7)"]:before{ 
+    content: "7";
+}
+.color__square[style="background-color:var(--b3-font-background8)"]:before{ 
+    content: "8";
+}
+.color__square[style="background-color:var(--b3-font-background9)"]:before{ 
+    content: "9";
+}
+.color__square[style="background-color:var(--b3-font-background10)"]:before{ 
+    content: "10";
+}
+.color__square[style="background-color:var(--b3-font-background11)"]:before{ 
+    content: "11";
+}
+.color__square[style="background-color:var(--b3-font-background12)"]:before{ 
+    content: "12";
+}
+.color__square[style="background-color:var(--b3-font-background13)"]:before{ 
+    content: "13";
+}
+
+
+/* 增加字色、底色方块图标的下边距以放下上面的文字 */
+.protyle-font>.fn__flex{
+    margin-bottom: 15px;
+}
+/* 使部分同级元素没有下边距，如有边距则有无用且多余的空白空间 */
+/* .protyle-font > div:nth-child(8){
+    margin-bottom: 10px;
+}
+.protyle-font > div:nth-child(10){
+    margin-bottom: 0px;
+} */
+
+
+/* 在字体颜色\底色菜单栏中设置分界线的通用属性 */
+/* .protyle-font>div:nth-child(2):before,.protyle-font> div:nth-child(4):before,.protyle-font> div:nth-child(6):before,.protyle-font>div:nth-child(8):before{
+    content: '';
+    position: absolute;
+    bottom: auto;
+    right: auto;
+    height: 1px;
+    width: 100%;
+    left:0px;
+    background-color: #d3d3d3b1;
+} */
+
+/* 在字体颜色\底色菜单栏中设置分界线，以方便区分不同区域 */
+/* .protyle-font> div:nth-child(2):before{
+    left: 0px;
+    top: 80px;
+}
+.protyle-font> div:nth-child(4):before{
+    left: 0px;
+    top: 144px;
+}
+.protyle-font> div:nth-child(6):before{
+    left: 0px;
+    top: 207px;
+}
+.protyle-font> div:nth-child(8):before{
+    left: 0px;
+    top: 259px;
+} */

@@ -57,6 +57,18 @@ const formData = reactive({
         value: "Savor",
         label: "写未",
       },
+      {
+        value: "Tsundoku",
+        label: "積読",
+      },
+      {
+        value: "pink-room",
+        label: "粉色小屋",
+      },
+      {
+        value: "Trends",
+        label: "Trends",
+      },
     ],
     dark: [
       {
@@ -71,15 +83,30 @@ const formData = reactive({
         value: "Savor",
         label: "写未",
       },
+      {
+        value: "Tsundoku",
+        label: "積読",
+      },
+      {
+        value: "pink-room",
+        label: "粉色小屋",
+      },
+      {
+        value: "trends-in-siyuan",
+        label: "Trends",
+      },
     ],
   },
   lightTheme: setting?.theme?.lightTheme ?? "Zhihu",
   darkTheme: setting?.theme?.darkTheme ?? "Zhihu",
   versionMap: {
-    midlight: "3.0.10",
-    daylight: "3.0.10",
-    Zhihu: "0.1.1",
-    Savor: "3.9.2",
+    midlight: "3.1.10",
+    daylight: "3.1.10",
+    Zhihu: "0.1.3",
+    Savor: "4.2.3",
+    Tsundoku: "2.3.5",
+    "pink-room": "0.9.4",
+    "trends-in-siyuan": "0.4.0",
   } as any,
 })
 

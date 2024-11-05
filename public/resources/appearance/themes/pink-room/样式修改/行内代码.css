@@ -1,0 +1,13 @@
+/* 行内代码块 */
+.fn__code, .b3-typography code:not(.hljs), .b3-typography span[data-type~=code], .protyle-wysiwyg code:not(.hljs), .protyle-wysiwyg span[data-type~=code] {
+    margin: 0px 0.1rem 0px 0.1rem;
+    color: rgb(98 41 0 / 87%);
+    background-color: rgb(252 247 226);
+    font-size: 0.85em;
+    border-radius: 0.3em;
+    vertical-align: 0.5px;
+    padding: 0.1em 0.2em 0.1em 0.2em;
+    border: solid 1px;
+    border-color: rgb(166 128 102);
+}
+

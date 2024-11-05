@@ -1,0 +1,158 @@
+/* 加了可能也没什么意义的 */
+.layout{
+    /* margin: 0 0.2rem 0 0.2rem; */
+    background-color: var(--room-surface-lightcolor);
+}
+
+
+.fn__flex-column.fn__flex.fn__flex-1 .fn__flex-1.layout-tab-container{
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    /* margin-left: 0.3rem; */
+}
+
+
+.fn__flex-column.fn__flex.fn__flex-1 .fn__flex-1.layout-tab-container::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+    box-shadow: inset 0 0 3px rgb(133 72 72);
+    border-radius: 0.5rem;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+.layout--float.layout__dockl, .layout--float.layout__dockr{
+    z-index: 4;
+    border: none;
+}
+
+.layout--float .fn__flex-1.fn__flex{
+    background:none;
+}
+
+.layout--float .fn__flex-column.fn__flex.fn__flex-1 .fn__flex-1.layout-tab-container{
+    margin-left:0;
+}
+
+
+
+
+
+/* ————决定界面整体颜色，以及软件失焦状态颜色———— */
+
+/* 软件底部使用亮色做为基底 */
+body{
+    /* background-color: var(--room-surface-lightcolor); */
+}
+/* 影响区域同上，在离开思源软件操作时切换到暗一点的颜色 */
+tool.body--blur{
+    background-color: var(--room-surface-lightcolor-blur);
+}
+
+
+/* 顶部工具条使用偏深一点的颜色，不使用亮色，以防止失衡 */
+.toolbar{
+    background-color: #f8c5c4;
+    /* margin-bottom: 5px; */
+}
+
+body>.fn__flex-1.fn__flex {
+    /* padding-top: 5px; */
+}
+
+/* 影响区域同上，在离开思源软件操作时切换到暗一点的颜色 */
+body.body--blur .toolbar{
+    background-color: var(--room-surface-lightcolor-blur);
+}
+
+
+/* 停靠栏使用统一亮色 */
+.dock{
+    background-color: var(--room-surface-lightcolor); 
+ }
+/* 影响区域同上，在离开思源软件操作时切换到暗一点的颜色 */
+body.body--blur .dock{
+    /* background-color: var(--room-surface-lightcolor-blur);  */
+ }
+
+
+/* 状态栏使用统一亮色 */
+.status{
+    background-color: var(--room-surface-lightcolor);
+}
+/* 影响区域同上，在离开思源软件操作时切换到暗一点的颜色 */
+body.body--blur .status{
+    /* background-color: var(--room-surface-lightcolor-blur); */
+}
+
+
+
+/* 下面的代码很混乱，是我在软件里一点点试出来能兼容各种使用情况的，我自己都看不太懂 */
+body.body--blur .fn__flex-1.fn__flex{
+    /* background-color: var(--room-surface-lightcolor-blur); */
+}
+/* body.body--blur .layout__center.fn__flex.fn__flex-1 .layout-tab-container.fn__flex-1:not(.layout--float){
+    background-color: var(--room-surface-lightcolor-blur);
+} */
+
+body>.fn__flex-1.fn__flex{
+    background-color: transparent;
+}
+
+
+fn__flex-column fn__flex fn__flex-1{
+    padding-top: 5px;
+}
+
+/* 兼容性不好，暂时关闭 */
+/* .layout__center.fn__flex.fn__flex-1 .layout-tab-container.fn__flex-1:not(.layout-tab-container.fn__flex-1:has(#searchHistoryBtn)){
+    background-color: var(--room-surface-lightcolor);
+} */
+
+.fn__flex-column.fn__flex-shrink.layout--float,.fn__flex-column .layout__dockr.layout--float{
+    background-color: var(--room-surface-lightcolor);
+}
+
+
+
+
+
+/* 取消一部分界面元素的边线，使其融合 */
+.dock#dockRight{
+    border-left: none;
+}
+.dock#dockLeft{
+    border-right: none;
+}
+.status{
+    border-top: none;
+}
+
+/* 太高了不优雅 */
+.block__icons{
+    min-height: 35px;
+}
+
+/* 修改侧栏宽度，使整体界面更轻快 */
+.dock--vertical{
+    width: 36px;
+}
+
+
+/* 修改面包屑内元素外边距，以使得面包屑图标上下边距适中 */
+/* 如不使用:not排除，则在悬浮窗中会有多余的滚动条 */
+/* 以后考虑用更加好的方法来实现 */
+.fn__flex-1.protyle:not(.block__popover .fn__flex-1.protyle) .protyle-breadcrumb__item{
+    margin: 5px 0 3px 0px;
+}
+
+
+/* 为了兼容背景图插件 */
+.fn__flex-column.fn__flex.fn__flex-1{
+    padding-top: 5px;
+    min-height: 90%;
+}

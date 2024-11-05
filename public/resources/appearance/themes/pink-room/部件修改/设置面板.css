@@ -1,0 +1,103 @@
+.fn__flex-1.fn__flex.config__panel{
+    /* background-color: var(--b3-theme-surface) !important; */
+}
+
+.fn__flex-1.fn__flex.config__panel .layout-tab-bar.fn__flex{
+    padding-top: 8px;
+    padding-left: 5px;
+}
+
+
+/* 出现文本框的地方背景直接用白色 */
+.b3-text-field, .pcr-app .pcr-interaction .pcr-result{
+    background-color: #fff4de54;
+}
+
+
+/* 集市下载好的内容，用来提示背景没必要加在这个元素上 */
+.b3-card--current .b3-card__info, .b3-card--current .b3-card__actions{
+    background: none;
+}
+/* 集市中已经下载好的内容 */
+/* 颜色为手选，似乎只能手选 */
+.b3-card--current {
+    background-color: #f1e5db;
+    border: 1px solid #dbcbbe;
+}
+
+/* 手选另外一个颜色用来告诉用户你鼠标放在卡片上了 */
+.b3-card:hover{
+    background-color: #f27d7d66;
+}
+
+/* 集市中的介绍页面中的引述块的外阴影无处可显示 */
+.b3-typography {
+    padding: 0 0.3em 0;
+}
+
+
+.b3-text-field, .pcr-app .pcr-interaction .pcr-result{
+    box-shadow: inset 0 0 0 .6px #856464c2;
+}   
+
+
+
+.config__panel>.b3-tab-bar .b3-list-item {
+    line-height: 38px;
+    margin: 0 0.5em 0.4em 0.5em !important;
+    border-radius: 0.2em;
+    background-color: white;
+    box-shadow: 0 0 0 1px #c9bdb1;
+}
+
+
+
+/*  修改集市中卡片的视觉效果 */
+.b3-card {
+    box-shadow: 0 0 0.15em 0.05em #a69094;
+}
+.b3-card:hover {
+    background-color: #f5bcc070;
+    transform: translate(0px, -2px);
+    box-shadow: 0 0 0.15em 0.05em #a69094;
+}
+
+
+.config__panel>.b3-tab-bar .config__tab-title>.b3-list-item__graphic{
+    height: 23px;
+    width: 23px;
+    padding-left: 0px;
+
+}
+
+.config__panel>.b3-tab-bar .config__tab-title{
+font-size: 1.3em;
+color: #a78882;
+}
+
+
+
+
+.config__tab-container--top {
+    margin-top: 0px;
+}
+
+.config__tab-container--full {
+    margin-top: 0;
+}
+
+.config-account__center--text{
+    background-color: transparent;
+}
+
+
+/* 增大设置界面中资源面板中列表和左边的间距，默认情况下过于狭窄 */
+.config-assets__list {
+    margin-left: 0.6em;
+}
+
+
+/* 设置面板中用于分隔的线条 */
+.config__tab-container .b3-label:not(.b3-label--inner){
+    box-shadow: 0 15px 0 0 #fafafa,0 16px 0 0 var(--b3-border-color);
+}

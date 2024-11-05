@@ -1,0 +1,121 @@
+/*** ———————————————修改设置了底色/背景色的文字部分的样式————————————————— ***/
+
+/* 为不同底色/背景色区域设置一部分相同的样式 */
+[style*="var(--b3-font-background1);"] {
+    background-color: hsl(358deg 76% 84%) !important;
+    color: hsl(0deg 23% 42%) !important;
+    /* opacity: 80%; */
+}
+
+[style*="var(--b3-font-background2);"] {
+    background-color: #ff8d8d !important;
+    color: #882c37 !important;
+    /* opacity: 90%; */
+}
+
+[style*="var(--b3-font-background3);"] {
+    background-color: hsl(0deg 100% 71%) !important;
+    color: #500012 !important;
+}
+
+[style*="var(--b3-font-background4);"] {
+    background-color: #b5cf94 !important;
+    color: #596d41 !important;
+    opacity: 80%;
+}
+
+[style*="var(--b3-font-background5);"] {
+    background-color: hsl(86deg 64% 70%) !important;
+    color: #40641f !important;
+    opacity: 90%;
+}
+
+[style*="var(--b3-font-background6);"] {
+    background-color: #b8f15b !important;
+    color: #036323 !important;
+}
+
+[style*="var(--b3-font-background7);"] {
+    color: #41667b !important;
+    background-color: rgb(137 196 218) !important;
+    /* opacity: 80%; */
+}
+
+[style*="var(--b3-font-background8);"] {
+    color: #1f5a6c!important;
+    background-color: rgb(123 214 237) !important;
+    /* opacity: 90%; */
+}
+
+[style*="var(--b3-font-background9);"] {
+    color: rgb(25 82 141)!important;
+    background-color: rgb(110 233 255) !important;
+}
+
+[style*="var(--b3-font-background10);"] {
+    background-color: hsl(277deg 55% 87%) !important;
+    color: hsl(281deg 22% 49%) !important;
+    /* opacity: 80%; */
+}
+
+[style*="var(--b3-font-background11);"] {
+    background-color: hsl(277deg 100% 85%) !important;
+    color: hsl(281deg 44% 32%) !important;
+}
+
+[style*="var(--b3-font-background12);"] {
+    background-color: rgb(207 110 255) !important;
+    color: hsl(282deg 90% 15%) !important;
+}
+
+
+
+
+/* 修改字色菜单中底色的图标颜色 */
+
+.color__square[style*="background-color:var(--b3-font-background1)"]{
+    background-color:#e26681 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background2)"]{
+    background-color:#e63965 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background3)"]{
+    background-color:#dd0e42 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background4)"]{
+    background-color:#8ec181 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background5)"]{
+    background-color:#5d9c35 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background6)"]{
+    background-color:#007a16 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background7)"]{
+    background-color:#68aeca !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background8)"]{
+    background-color:#2c98ce !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background9)"]{
+    background-color:#006ec2 !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background10)"]{
+    background-color:#a379dc !important;
+}
+
+.color__square[style*="background-color:var(--b3-font-background11)"]{
+    background-color:#7c51b8 !important;
+}
+.color__square[style*="background-color:var(--b3-font-background12)"]{
+    background-color:#703cd7 !important;
+}

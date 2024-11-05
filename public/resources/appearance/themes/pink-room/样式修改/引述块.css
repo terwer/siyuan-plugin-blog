@@ -1,0 +1,56 @@
+/* 让引述块背景色不那么刺眼 */
+/* 修改引述块默认底色 */
+/* 提高上下边距以防止多个引述块竖排的时候没有间隙的问题 */
+.b3-typography blockquote, .b3-typography .bq, .protyle-wysiwyg blockquote, .protyle-wysiwyg .bq{
+    margin: 8px 0;
+    border-radius: 0em;
+    border-width: 0px;
+    /* border-style: dashed; */
+    border-color: transparent;
+    box-shadow: 0px 0px 2px 1px;
+    color: #41454c;
+    font-family: "仓耳今楷03","霞鹜文楷";
+    background-color: white;
+}
+
+/* 内边框线 */
+.bq::after,blockquote::after{
+    content: "";
+    height: calc(100% - 8px);
+    width: calc(100% - 8px);
+    background-color: #ff000000;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    border-color: rgba(128, 128, 128, 0.459);
+    border-width: 1px;
+    border-style: solid;
+    pointer-events: none;
+}
+
+.bq,blockquote{
+    position:relative
+}
+
+
+
+
+
+
+.bq .li>.protyle-action{
+    color: #5c6b86f0 !important;
+}
+
+
+
+
+.bq .li>.protyle-action{
+    color: #5c6b86f0 !important;
+}
+
+
+.b3-typography blockquote, .b3-typography .bq, .protyle-wysiwyg blockquote, .protyle-wysiwyg .bq{
+    padding: 8px;
+}

@@ -1,0 +1,23 @@
+/* 为笔记本添加外边框 */
+.b3-list--mobile ul.b3-list.b3-list--background {
+    border-radius: 0.7em;
+    margin: 10px 10px 6px 12px;
+    outline: 0.2em solid rgba(178, 100, 100, 0.512);
+    background-color: white;
+}
+
+/* 调整笔记本圆角 */
+.b3-list--mobile .b3-list--background .b3-list-item--focus{
+    border-radius: 0.7em;
+}
+
+
+/* 修改列表项字号大小 */
+.b3-list--mobile .b3-list-item{
+    font-size: 19px;
+    line-height: 40px;
+    min-height: 54px;
+}
+
+
+

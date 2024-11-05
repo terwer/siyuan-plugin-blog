@@ -1,0 +1,10 @@
+
+.protyle-wysiwyg [data-node-id].render-node[data-type=NodeBlockQueryEmbed] {
+    background-color: #ebdad763;
+    box-shadow: 0px 0px 3px 2px inset #d2c5ca;
+    border-radius: 5px;
+}
+
+.protyle-wysiwyg [data-node-id].render-node[data-type=NodeBlockQueryEmbed] {
+    border-left: none !important;
+}
