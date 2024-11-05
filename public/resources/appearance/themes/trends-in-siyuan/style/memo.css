@@ -1,0 +1,4 @@
+.b3-typography span[data-type~=inline-memo], .protyle-wysiwyg span[data-type~=inline-memo] {
+    background-color: var(--b3-theme-primary-lighter);
+    border-bottom: 3px solid var(--b3-theme-primary);
+}

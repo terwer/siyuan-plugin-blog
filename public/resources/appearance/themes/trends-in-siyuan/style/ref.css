@@ -1,0 +1,35 @@
+.protyle-wysiwyg [data-node-id] span[data-type~="block-ref"]::before {
+    content: "[";
+    color: var(--b3-theme-on-background);
+    display: inline-block;
+    text-align: center;
+    margin: 0 0 0 0.125em;
+    padding: 0;
+    position: inherit;
+    font-size: 1em;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type~="block-ref"]::after {
+    content: "]";
+    color: var(--b3-theme-on-background);
+    display: inline-block;
+    text-align: center;
+    margin: 0 0.125em 0 0;
+    padding: 0;
+    position: inherit;
+    font-size: 1em;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type~=a] {
+    border-bottom: 1px solid var(--b3-protyle-inline-link-color);
+}
+
+
+.protyle-wysiwyg [data-node-id] .def--mark {
+    background-color: var(--b3-theme-background);
+    border-color: var(--b3-theme-secondary);
+    border-width: 3px;
+    padding: 2px;
+    border-style: solid;
+}
+

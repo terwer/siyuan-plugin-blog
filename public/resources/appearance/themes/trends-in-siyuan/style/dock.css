@@ -1,0 +1,46 @@
+/* 左右 Docker 面板 */
+div.layout-tab-container {
+    background: var(--b3-theme-background);
+}
+
+
+.layout__resize--lr::after {
+    width: 5px;
+}
+
+
+
+.layout__dockl>div.fn__flex:not(:first-child),
+.layout__dockr>div.fn__flex:not(:first-child) {
+    border-top: 5px solid var(--b3-border-color);
+}
+
+
+/* 反链面板 */
+.backlinkList>ul>li.b3-list-item,
+.backlinkMList>ul>li.b3-list-item {
+    background: var(--b3-theme-surface);
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 2px;
+}
+
+
+.backlinkList>ul>li.b3-list-item:hover:not(.b3-list-item--focus),
+.backlinkMList>ul>li.b3-list-item:hover:not(.b3-list-item--focus) {
+    background: var(--b3-theme-primary-lightest-pro);
+}
+
+
+.backlinkList>ul>li.b3-list-item.b3-list-item--focus,
+.backlinkMList>ul>li.b3-list-item.b3-list-item--focus {
+    background: var(--b3-theme-primary-lightest);
+}
+
+.backlinkList>.b3-list>.protyle, .backlinkMList>.b3-list>.protyle {
+    margin: 0 5px 6px 5px;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 9px rgba(0,0,0,.05), 0 1.5px 2.8px rgba(0,0,0,.07), 0 0.3px 0.7px rgba(0,0,0,.12);
+}

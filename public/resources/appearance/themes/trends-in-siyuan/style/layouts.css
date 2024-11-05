@@ -1,0 +1,8 @@
+ul.layout-tab-bar.fn__flex li.item.item--pin {
+    background-color: rgb(250, 250, 250);
+}
+
+ul.layout-tab-bar.fn__flex li.item {
+    border-right: 1px solid var(--b3-border-color);
+}
+

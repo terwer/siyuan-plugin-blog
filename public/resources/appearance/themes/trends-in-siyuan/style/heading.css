@@ -1,0 +1,31 @@
+.b3-typography h2,
+.b3-typography h3,
+.b3-typography h4,
+.b3-typography h5,
+.b3-typography h6,
+.protyle-wysiwyg div[data-node-id][data-type="NodeHeading"] {
+    color: var(--b3-theme-secondary);
+}
+
+
+
+.b3-typography h1,
+.protyle-wysiwyg div[data-node-id][data-subtype="h1"] {
+    color: var(--b3-theme-on-background);
+    font-weight: 300;
+    font-size: 2.5em;
+}
+
+.b3-typography h3,
+.b3-typography h4,
+.protyle-wysiwyg [data-subtype="h3"],
+.protyle-wysiwyg [data-subtype="h4"] {
+    font-weight: 500;
+}
+
+.b3-typography h5,
+.b3-typography h6
+.protyle-wysiwyg [data-subtype="h5"],
+.protyle-wysiwyg [data-subtype="h6"] {
+    font-weight: 300;
+}
