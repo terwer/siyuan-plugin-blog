@@ -78,7 +78,7 @@ const formData = reactive({
   versionMap: {
     midlight: "3.1.10",
     daylight: "3.1.10",
-    Zhihu: "0.1.1",
+    Zhihu: "0.1.2",
     Savor: "4.2.3",
   } as any,
 })
