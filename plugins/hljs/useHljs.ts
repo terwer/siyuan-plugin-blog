@@ -38,8 +38,9 @@ import php from "highlight.js/lib/languages/php"
 import properties from "highlight.js/lib/languages/properties"
 import sql from "highlight.js/lib/languages/sql"
 import markdown from "highlight.js/lib/languages/markdown"
-import { CopyButtonPlugin } from "~/plugins/hljs/codecopy"
-import "./codecopy/codecopy.css"
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { addThirdLanguages } from "./lib/third-languages"
 
 export const useHljs = () => {
   // 按需加载语言，防止打包体积过大
@@ -65,13 +66,8 @@ export const useHljs = () => {
   hljs.registerLanguage("sql", sql)
   hljs.registerLanguage("markdown", markdown)
   hljs.registerLanguage("md", markdown)
-
-  // 代码复制
-  // hljs.addPlugin(
-  //   new CopyButtonPlugin({
-  //     callback: (text: string, el: HTMLElement) => console.log("Copied to clipboard", text),
-  //   })
-  // )
+  // 第三方语言支持
+  addThirdLanguages(hljs)
 
   return { hljs }
 }
