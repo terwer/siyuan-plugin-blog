@@ -57,6 +57,10 @@ const formData = reactive({
         value: "Savor",
         label: "写未",
       },
+      {
+        value: "Tsundoku",
+        label: "積読",
+      },
     ],
     dark: [
       {
@@ -71,6 +75,10 @@ const formData = reactive({
         value: "Savor",
         label: "写未",
       },
+      {
+        value: "Tsundoku",
+        label: "積読",
+      },
     ],
   },
   lightTheme: setting?.theme?.lightTheme ?? "Zhihu",
@@ -80,6 +88,7 @@ const formData = reactive({
     daylight: "3.1.10",
     Zhihu: "0.1.3",
     Savor: "4.2.3",
+    Tsundoku: "2.3.5",
   } as any,
 })
 
