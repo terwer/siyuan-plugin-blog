@@ -1,9 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.0...siyuan-blog-v2.2.1) (2024-11-05)
+### Bug Fixes
+* hljs new line not work ([343158d](https://github.com/terwer/siyuan-plugin-blog/commit/343158d15f4be76f723083874608f0d450b4c255))
+* text truncated due to excessive length ([e91836f](https://github.com/terwer/siyuan-plugin-blog/commit/e91836fb8a2fa27bdfbfdbc990f275824509ef2c))
 ## [2.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.1.0...siyuan-blog-v2.2.0) (2024-11-04)
 ### Features
 * support custom css ([6e68dd5](https://github.com/terwer/siyuan-plugin-blog/commit/6e68dd578fe0451fe9ab2512f4358eb75797c43e))
-### Bug Fixes
 * support some custom setting in provider mode ([0e350cc](https://github.com/terwer/siyuan-plugin-blog/commit/0e350cc4908b57d1e15401335aa7cea479b2848d))
 ### Miscellaneous
 * update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
