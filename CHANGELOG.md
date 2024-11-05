@@ -1,27 +1,18 @@
 # Changelog
 
 ## [2.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.1...siyuan-blog-v2.3.0) (2024-11-05)
-
-
 ### Features
-
 * support pink-room theme ([8bc3cc7](https://github.com/terwer/siyuan-plugin-blog/commit/8bc3cc70bfedfb66e7795b8d51c32b58cd78cc2c))
-* support Trends theme ([36c6749](https://github.com/terwer/siyuan-plugin-blog/commit/36c67496a0c8e61883c90fb1b5f5b5f56b56abed))
-* support Tsundoku theme ([2df8df8](https://github.com/terwer/siyuan-plugin-blog/commit/2df8df8420b65d69c11d37a8d3282e272c52a6c2))
-* update Savor to 4.2.3, siyuan to 3.1.10 ([453460f](https://github.com/terwer/siyuan-plugin-blog/commit/453460f7ace5fcd57fe0b14ce8cc0526cdc9c1a3))
-* update Zhihu to 0.1.2 ([7c9143c](https://github.com/terwer/siyuan-plugin-blog/commit/7c9143cf43c009120a2040ace563da0968a5b8f9))
-
-
+* support trends theme ([36c6749](https://github.com/terwer/siyuan-plugin-blog/commit/36c67496a0c8e61883c90fb1b5f5b5f56b56abed))
+* support tsundoku theme ([2df8df8](https://github.com/terwer/siyuan-plugin-blog/commit/2df8df8420b65d69c11d37a8d3282e272c52a6c2))
+* update savor to 4.2.3, siyuan to 3.1.10 ([453460f](https://github.com/terwer/siyuan-plugin-blog/commit/453460f7ace5fcd57fe0b14ce8cc0526cdc9c1a3))
+* update zhihu to 0.1.2 ([7c9143c](https://github.com/terwer/siyuan-plugin-blog/commit/7c9143cf43c009120a2040ace563da0968a5b8f9))
 ### Bug Fixes
-
-* Zhihu theme code block ([bda512f](https://github.com/terwer/siyuan-plugin-blog/commit/bda512ffa38ab901a9c595a0519c4fb113356cb7))
-
+* zhihu theme code block ([bda512f](https://github.com/terwer/siyuan-plugin-blog/commit/bda512ffa38ab901a9c595a0519c4fb113356cb7))
 ## [2.2.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.0...siyuan-blog-v2.2.1) (2024-11-05)
-### Bug Fixes
 * hljs new line not work ([343158d](https://github.com/terwer/siyuan-plugin-blog/commit/343158d15f4be76f723083874608f0d450b4c255))
 * text truncated due to excessive length ([e91836f](https://github.com/terwer/siyuan-plugin-blog/commit/e91836fb8a2fa27bdfbfdbc990f275824509ef2c))
 ## [2.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.1.0...siyuan-blog-v2.2.0) (2024-11-04)
-### Features
 * support custom css ([6e68dd5](https://github.com/terwer/siyuan-plugin-blog/commit/6e68dd578fe0451fe9ab2512f4358eb75797c43e))
 * support some custom setting in provider mode ([0e350cc](https://github.com/terwer/siyuan-plugin-blog/commit/0e350cc4908b57d1e15401335aa7cea479b2848d))
 ### Miscellaneous
