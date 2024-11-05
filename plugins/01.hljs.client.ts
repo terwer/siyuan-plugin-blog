@@ -45,16 +45,33 @@ export default defineNuxtPlugin(({ vueApp }) => {
     mounted(el, binding) {
       const w = Number(env.public.waitTime ?? "500")
       setTimeout(() => {
+        // 先转换成 pre code，再进行高亮
+        const divCodeBlocks = el.querySelectorAll("div[class='hljs']")
+        // 遍历每个 block
+        Array.prototype.forEach.call(divCodeBlocks, (block) => {
+          // 创建 <pre> 和 <code> 元素
+          const pre = document.createElement("pre")
+          const code = document.createElement("code")
+          // 将 block 的内容移动到 <code> 中
+          code.innerHTML = block.innerHTML
+          // 将 <code> 添加到 <pre> 中
+          pre.appendChild(code)
+          // 将 <pre> 插入到 block 的位置，并移除原始的 block
+          block.parentNode?.insertBefore(pre, block)
+          block.remove()
+        })
+
         const blocks = el.querySelectorAll("pre code")
         Array.prototype.forEach.call(blocks, hljs.highlightBlock)
         logger.info("hljs code highlighted")
       }, w)
 
-      setTimeout(() => {
-        const blocks = el.querySelectorAll("div[class='hljs']")
-        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
-        logger.info("hljs div highlighted")
-      }, w)
+      // setTimeout(() => {
+      //   const blocks = el.querySelectorAll("div[class='hljs']")
+      //   alert(blocks[0].innerHTML)
+      //   Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+      //   logger.info("hljs div highlighted")
+      // }, w)
     },
   })
 })

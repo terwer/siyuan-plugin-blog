@@ -168,7 +168,6 @@ export const useThemeMode = async () => {
     //     },
     //   ],
     const customCss = setting.customCss
-    debugger
     if (customCss) {
       for (const css of customCss) {
         const style = document.createElement("style")
