@@ -52,12 +52,15 @@ export default defineNuxtPlugin(({ vueApp }) => {
           // 创建 <pre> 和 <code> 元素
           const pre = document.createElement("pre")
           const code = document.createElement("code")
+          const div = document.createElement("div")
+          div.className = "hljs"
           // 将 block 的内容移动到 <code> 中
           code.innerHTML = block.innerHTML
           // 将 <code> 添加到 <pre> 中
           pre.appendChild(code)
+          div.appendChild(pre)
           // 将 <pre> 插入到 block 的位置，并移除原始的 block
-          block.parentNode?.insertBefore(pre, block)
+          block.parentNode?.insertBefore(div, block)
           block.remove()
         })
 
