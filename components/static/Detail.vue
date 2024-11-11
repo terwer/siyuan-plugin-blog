@@ -31,6 +31,7 @@ import { checkExpires, getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { useProviderMode } from "~/composables/useProviderMode"
+import Sidebar from "~/components/static/Sidebar.vue"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -58,7 +59,43 @@ const formData = reactive({
   post: {} as Post,
   shareEnabled: true,
   isExpires: false,
+
+  // 文档树
+  items: [
+    { id: "1", name: "首页", children: [] },
+    {
+      id: "2",
+      name: "产品",
+      children: [
+        { id: "3", name: "产品A", content: "这是产品A的内容" },
+        {
+          id: "4",
+          name: "产品B",
+          children: [
+            { id: "5", name: "产品B1", content: "这是产品B1的内容" },
+            { id: "6", name: "产品B2", content: "这是产品B2的内容" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "7",
+      name: "关于我们",
+      children: [
+        { id: "8", name: "公司简介", content: "这是公司的简介" },
+        { id: "9", name: "联系方式", content: "这是联系方式" },
+      ],
+    },
+  ],
+  defaultOpen: "8",
+  maxDepth: 3,
+  openItems: <string[]>[],
+  selectedItem: {},
 })
+
+const onItemSelected = (item: any) => {
+  formData.selectedItem = item
+}
 
 const getPostData = async () => {
   const resText = await fetchPostMeta(id, providerMode)
@@ -92,7 +129,9 @@ if (!props.overrideSeo) {
   useSeoMeta(seoMeta)
 }
 
-onMounted(async () => {})
+onMounted(async () => {
+  formData.openItems.push(formData.defaultOpen)
+})
 
 const VNode = () =>
   h("div", {
@@ -106,30 +145,41 @@ const VNode = () =>
     <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
     </el-empty>
   </div>
-  <div v-else class="fn__flex-1 protyle" data-loading="finished">
-    <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-      <div class="protyle-title protyle-wysiwyg--attr">
-        <div
-          contenteditable="false"
-          data-position="center"
-          spellcheck="false"
-          class="protyle-title__input"
-          data-render="true"
-        >
-          {{ formData.post.title }}
+  <div v-else>
+    <!-- 文档树 -->
+    <Sidebar
+      v-model="formData.openItems"
+      :items="formData.items"
+      :default-open="formData.defaultOpen"
+      :max-depth="formData.maxDepth"
+      @item-selected="onItemSelected"
+    />
+    <!-- 分享正文 -->
+    <div class="fn__flex-1 protyle" data-loading="finished">
+      <div class="protyle-content protyle-content--transition" data-fullwidth="true">
+        <div class="protyle-title protyle-wysiwyg--attr">
+          <div
+            contenteditable="false"
+            data-position="center"
+            spellcheck="false"
+            class="protyle-title__input"
+            data-render="true"
+          >
+            {{ formData.post.title }}
+          </div>
         </div>
-      </div>
-      <div
-        v-highlight
-        v-sbeauty
-        v-sdomparser
-        class="protyle-wysiwyg protyle-wysiwyg--attr"
-        spellcheck="false"
-        contenteditable="false"
-        data-doc-type="NodeDocument"
-        :data-page-id="id"
-      >
-        <VNode />
+        <div
+          v-highlight
+          v-sbeauty
+          v-sdomparser
+          class="protyle-wysiwyg protyle-wysiwyg--attr"
+          spellcheck="false"
+          contenteditable="false"
+          data-doc-type="NodeDocument"
+          :data-page-id="id"
+        >
+          <VNode />
+        </div>
       </div>
     </div>
   </div>

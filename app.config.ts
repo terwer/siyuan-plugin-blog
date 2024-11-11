@@ -70,4 +70,7 @@ export default defineAppConfig<AppConfig>({
       content: "body { background-color: #f5f5f5; }",
     },
   ],
+
+  outline: [],
+  docTree: [],
 })
