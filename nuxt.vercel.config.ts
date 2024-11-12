@@ -50,6 +50,14 @@ export default defineNuxtConfig({
       "process.env.SSR": `"true"`,
     },
     plugins: [],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern",
+          silenceDeprecations: ["mixed-decls", "color-functions", "global-builtin", "import", "new-global"],
+        },
+      },
+    },
   },
 
   elementPlus: {
