@@ -49,7 +49,7 @@
     "highlight.js": "11.7.0",
     "pinia": "^2.2.6",
     "zhi-device": "^2.11.0",
-    "zhi-siyuan-api": "^2.22.0"
+    "zhi-siyuan-api": "^2.23.0"
   },
   "packageManager": "pnpm@9.6.0"
 }
