@@ -6,10 +6,10 @@
   <div v-else class="app-container">
     <aside class="sidebar-container">
       <sidebar
-        :tree-data="treeData"
-        :max-depth="maxDepth"
-        :all-expanded="allExpanded"
-        :expanded-ids="expandedIds"
+        :tree-data="formData.treeData"
+        :max-depth="formData.maxDepth"
+        :all-expanded="formData.allExpanded"
+        :expanded-ids="formData.expandedIds"
         @update-expanded-ids="handleUpdateExpandedIds"
         @update-all-expanded="handleUpdateAllExpanded"
       />
@@ -45,7 +45,7 @@
       </div>
     </main>
     <aside class="floating-toc">
-      <Outline :items="outlineItems" />
+      <Outline :items="formData.toc" />
     </aside>
   </div>
 </template>
@@ -89,30 +89,13 @@ const formData = reactive({
   isExpires: false,
 
   // 文档树
-  items: <any>{
-    id: "root",
-    name: "文档树",
-    children: [
-      {
-        id: "1",
-        name: "文件夹1",
-        children: [
-          { id: "1-1", name: "文件1-1" },
-          { id: "1-2", name: "文件1-2" },
-        ],
-      },
-      { id: "2", name: "文件夹2", children: [{ id: "2-1", name: "文件2-1" }] },
-    ],
-  },
-  // maxDepth: 3,
-  openItems: <string[]>[],
-  selectedItem: {} as any,
+  treeData: <any[]>[],
+  maxDepth: 6,
+  allExpanded: false,
+  defaultExpandedIds: [id],
+  expandedIds: <any[]>[],
 
-  toc: <any[]>[
-    { id: "1-1", name: "文件1-1" },
-    { id: "1-2", name: "文件1-2" },
-    { id: "2-1", name: "文件2-1" },
-  ],
+  toc: <any[]>[],
 })
 
 const getPostData = async () => {
@@ -148,21 +131,14 @@ if (!props.overrideSeo) {
 }
 const editorDom = formData.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? ""
 
-const treeData = ref([])
-const maxDepth = ref(6)
-const allExpanded = ref(false)
-const defaultExpandedIds = ref(["3"])
-const expandedIds = ref([] as any)
-const outlineItems = ref()
-
 // 处理 expandedIds 的更新
 const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
-  expandedIds.value = newExpandedIds
+  formData.expandedIds = newExpandedIds
 }
 
 // 处理 allExpanded 的更新
 const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
-  allExpanded.value = newAllExpanded
+  formData.allExpanded = newAllExpanded
 }
 
 // 生成大纲
@@ -170,16 +146,8 @@ const generateOutline = (item: any) => {
   return item.children || []
 }
 
-treeData.value = TreeUtils.addParentIds([
-  { id: "1", parentId: null, name: "Section 1" },
-  { id: "2", parentId: "1", name: "Subsection 1.1" },
-  { id: "3", parentId: "1", name: "Subsection 1.2" },
-  { id: "4", parentId: null, name: "Section 2" },
-  { id: "5", parentId: "4", name: "Subsection 2.1" },
-  { id: "6", parentId: "3", name: "Subsection 1.2.1" },
-  { id: "7", parentId: "3", name: "Subsection 1.2.2" },
-])
-outlineItems.value = [
+formData.treeData = TreeUtils.addParentIds(formData.post.docTree)
+formData.toc = [
   { id: "section-1", title: "Introduction", level: 1 },
   {
     id: "section-1-1",
@@ -212,7 +180,7 @@ outlineItems.value = [
 ]
 
 // 初始化
-expandedIds.value = TreeUtils.chainExpandedIds(treeData.value, defaultExpandedIds.value)
+formData.expandedIds = TreeUtils.chainExpandedIds(formData.treeData, formData.defaultExpandedIds)
 
 const VNode = () =>
   h("div", {
@@ -221,7 +189,8 @@ const VNode = () =>
   })
 
 onMounted(() => {
-  console.log("outlineItems=>", outlineItems.value)
+  console.log("formData.treeData=>", formData.treeData)
+  console.log("formData.expandedIds=>", formData.expandedIds)
 })
 </script>
 
