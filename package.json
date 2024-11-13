@@ -46,7 +46,7 @@
     "cheerio": "1.0.0",
     "copy-to-clipboard": "^3.3.3",
     "element-plus": "^2.8.7",
-    "highlight.js": "11.7.0",
+    "highlight.js": "11.10.0",
     "pinia": "^2.2.6",
     "zhi-device": "^2.11.0",
     "zhi-siyuan-api": "^2.23.0"
