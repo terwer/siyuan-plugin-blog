@@ -1,6 +1,6 @@
 <!--suppress ALL -->
 <template>
-  <div class="sidebar-item" :style="{ paddingLeft: depth * 16 + 'px' }">
+  <div class="sidebar-item" :style="{ paddingLeft: depth * 2 + 'px' }">
     <div class="item-title" @click="toggle">
       <span v-if="item.children.length" class="toggle-icon">
         <el-icon>

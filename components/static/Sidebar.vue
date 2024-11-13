@@ -21,7 +21,7 @@ import SidebarItem from "~/components/static/SidebarItem.vue"
 
 const props = defineProps({
   treeData: {
-    type: Array,
+    type: Object,
     required: true,
   },
   maxDepth: {
@@ -42,7 +42,7 @@ const props = defineProps({
 const emit = defineEmits(["update-expanded-ids", "update-all-expanded"])
 
 // 构建树形数据
-const buildTree = (list: any[], parentId = null, depth = 1): any => {
+const buildTree = (list: any[], parentId = "", depth = 1): any => {
   if (!list || !Array.isArray(list)) return []
 
   return list
@@ -56,7 +56,8 @@ const buildTree = (list: any[], parentId = null, depth = 1): any => {
 
 // 计算属性 items，用于构建树形结构
 const items = computed(() => {
-  return props.treeData && props.treeData.length > 0 ? buildTree(props.treeData) : []
+  const itemData = props.treeData.items
+  return itemData && itemData.length > 0 ? buildTree(itemData) : []
 })
 
 // 监听 expandedIds 变化并向父组件 emit 更新
@@ -83,6 +84,10 @@ const toggleAll = () => {
   const newExpandedIds = newAllExpanded ? items.value.map((item: any) => item.id) : []
   emit("update-expanded-ids", newExpandedIds)
 }
+
+onMounted(() => {
+  console.log("props.treeData", toRaw(props.treeData.items))
+})
 </script>
 
 <style lang="stylus" scoped>

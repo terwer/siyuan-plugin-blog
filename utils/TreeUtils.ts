@@ -9,7 +9,9 @@ class TreeUtils {
    */
   public static addParentIds(data: any) {
     const map = new Map()
-
+    if (!data) {
+      return []
+    }
     data.forEach((item: any) => map.set(item.id, item))
 
     function getParentIds(item: any) {
