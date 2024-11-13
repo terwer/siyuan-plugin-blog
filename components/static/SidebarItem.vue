@@ -1,10 +1,21 @@
+<!--suppress ALL -->
 <template>
   <div class="sidebar-item" :style="{ paddingLeft: depth * 16 + 'px' }">
     <div class="item-title" @click="toggle">
       <span v-if="item.children.length" class="toggle-icon">
-        {{ isExpanded ? "▼" : "▶" }}
+        <el-icon>
+          <template v-if="isExpanded">
+            <ArrowDown />
+          </template>
+          <template v-else>
+            <ArrowUp />
+          </template>
+        </el-icon>
       </span>
-      <router-link :to="`/document/${item.id}`" class="item-link">
+      <span v-else class="toggle-icon">
+        <el-icon><Minus /></el-icon>
+      </span>
+      <router-link :to="`/x/${item.id}`" class="item-link">
         {{ item.name }}
       </router-link>
     </div>
@@ -24,15 +35,26 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ArrowDown, ArrowUp, Minus } from "@element-plus/icons-vue"
+
 const props = defineProps({
-  item: Object,
+  item: {
+    type: Object,
+    required: true,
+  },
   depth: {
     type: Number,
     default: 1,
   },
-  expandedIds: Array,
-  maxDepth: Number,
+  expandedIds: {
+    type: Array,
+    default: () => [],
+  },
+  maxDepth: {
+    type: Number,
+    default: -1,
+  },
   allExpanded: Boolean,
 })
 
@@ -110,7 +132,11 @@ const handleSelect = (item) => {
   align-items center
 
 .toggle-icon
-  margin-right 8px
+  margin-right 6px
+  margin-top 2px
+  ::v-deep(.el-icon)
+    width 0.62rem
+    height 0.62rem
 
 .item-link
   text-decoration none
