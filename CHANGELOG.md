@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.3.0...siyuan-blog-v2.4.0) (2024-11-13)
+
+
+### Features
+
+* support docTree ([129e1c8](https://github.com/terwer/siyuan-plugin-blog/commit/129e1c8825aa1482a45f9cb3316e431ed0f745da))
+* support docTree ([4767264](https://github.com/terwer/siyuan-plugin-blog/commit/476726492cee6e4b99c9a2b921167c8749e2b495))
+* support docTree and outline ([c480a65](https://github.com/terwer/siyuan-plugin-blog/commit/c480a659946a777200a926c21423fd0e2fa8439a))
+* support docTree and outline ([1c2657e](https://github.com/terwer/siyuan-plugin-blog/commit/1c2657eae968eaf74c44724e981dd4a7e9590a08))
+* support docTree and outline ([c9292a6](https://github.com/terwer/siyuan-plugin-blog/commit/c9292a63953269557193b70fcbb3dd2bcfc5b3f2))
+* support docTree and outline ([cd73fda](https://github.com/terwer/siyuan-plugin-blog/commit/cd73fdac6ec3474b0e78b018fa180cf0fa73b1d7))
+* support docTree and outline ([d1147c6](https://github.com/terwer/siyuan-plugin-blog/commit/d1147c6764fc3adf7c9935599d7457dd070d531a))
+* support docTree and outline ([03245bb](https://github.com/terwer/siyuan-plugin-blog/commit/03245bb0c10a81b9bc421cf1ba867d2d64a4ab47))
+* support docTree and outline ([611b036](https://github.com/terwer/siyuan-plugin-blog/commit/611b036dcfaa50176b8c0cf4417bd6052beb8aa0))
+* support docTree and outline ([3dcece8](https://github.com/terwer/siyuan-plugin-blog/commit/3dcece85bac5bd5a2c349f1baa56b7f92c9c6d7c))
+* support docTree and outline ([ad81189](https://github.com/terwer/siyuan-plugin-blog/commit/ad81189e904420010250e8e1a5d74bb3b82440ca))
+* support docTree and outline ([dc978b7](https://github.com/terwer/siyuan-plugin-blog/commit/dc978b75508d2776575d2b4c64077d1008b59d3b))
+* support docTree and outline ([20a1e17](https://github.com/terwer/siyuan-plugin-blog/commit/20a1e178932c2f9b752ddf02d73e5999220b9193))
+* support docTree and outline ([6ab7e37](https://github.com/terwer/siyuan-plugin-blog/commit/6ab7e3758214a3c765ff0679ab0dc8736da33309))
+* support docTree and outline ([d66a7af](https://github.com/terwer/siyuan-plugin-blog/commit/d66a7afc2ececa7524d4f56c33904c3901a01b9b))
+
+
+### Miscellaneous
+
+* suppress warning for sass ([8e41bec](https://github.com/terwer/siyuan-plugin-blog/commit/8e41bec94096635fd92042bac61d10c3a27a9be6))
+
 ## [2.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.1...siyuan-blog-v2.3.0) (2024-11-05)
 ### Features
 * support pink-room theme ([8bc3cc7](https://github.com/terwer/siyuan-plugin-blog/commit/8bc3cc70bfedfb66e7795b8d51c32b58cd78cc2c))
