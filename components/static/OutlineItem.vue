@@ -1,19 +1,47 @@
 <template>
-  <div :style="{ paddingLeft: (item.level - 1) * 16 + 'px' }" class="outline-item">
-    <a @click.prevent="scrollToSection(item.id)" class="item-link">
-      {{ item.title }}
-    </a>
-    <div v-if="item.children && item.level < maxDepth" class="nested-items">
-      <OutlineItem v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
+  <div :style="{ marginLeft: (getItemLevel(item) - 1) * 16 + 'px' }" class="outline-item">
+    <!-- 第一级 -->
+    <div v-if="getItemLevel(item) === 1" class="nested-items">
+      <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.name }} </a>
+      <div v-if="getItemLevel(item) < maxDepth">
+        <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" />
+      </div>
+    </div>
+
+    <!-- 其他级别且有子项 -->
+    <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
+      <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.content }} </a>
+      <div v-if="getItemLevel(item) < maxDepth">
+        <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
+      </div>
+    </div>
+
+    <!-- 无子项 -->
+    <div v-else>
+      <div v-if="getItemLevel(item) < maxDepth">
+        <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.content }} </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
-  item: Object,
-  maxDepth: Number,
+  item: {
+    type: Object,
+    required: true,
+  },
+  maxDepth: {
+    type: Number,
+    default: -1,
+  },
 })
+
+const getItemLevel = (item) => {
+  const level = parseInt(item.subType.replace("h", ""), 10)
+  console.log(`level:${level}=>`, item)
+  return isNaN(level) ? 1 : level // 默认级别为1
+}
 
 const scrollToSection = (id) => {
   const element = document.getElementById(id)
@@ -32,8 +60,8 @@ const scrollToSection = (id) => {
 .item-link
   color #333
   text-decoration none
-  cursor pointer // 改为 pointer
-  transition color 0.2s // 增加渐变效果
+  cursor pointer
+  transition color 0.2s
 
 .item-link:hover
   color #1890ff

@@ -44,8 +44,8 @@
         </div>
       </div>
     </main>
-    <aside class="floating-toc">
-      <Outline :items="outlineItems" />
+    <aside v-if="outlineData && outlineData.length > 0" class="floating-toc">
+      <outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
     </aside>
   </div>
 </template>
@@ -58,8 +58,8 @@ import { checkExpires, getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { useProviderMode } from "~/composables/useProviderMode"
-import Outline from "~/components/static/Outline.vue"
 import Sidebar from "~/components/static/Sidebar.vue"
+import Outline from "~/components/static/Outline.vue"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -122,12 +122,15 @@ if (!props.overrideSeo) {
 }
 const editorDom = formData.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? ""
 
+// docTree
 const treeData = ref([] as any)
 const maxDepth = ref(6)
 const allExpanded = ref(false)
 const defaultExpandedIds = ref([id])
 const expandedIds = ref([] as any)
-const outlineItems = ref()
+// outline
+const outlineData = ref([] as any)
+const outlineMaxDepth = ref(6)
 
 // 处理 expandedIds 的更新
 const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
@@ -139,48 +142,11 @@ const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
   allExpanded.value = newAllExpanded
 }
 
-// 生成大纲
-const generateOutline = (item: any) => {
-  return [
-    { id: "section-1", title: "Introduction", level: 1 },
-    {
-      id: "section-1-1",
-      title: "What is Vue",
-      level: 2,
-      children: [
-        { id: "section-1-1-1", title: "Vue Basics", level: 3 },
-        {
-          id: "section-1-1-2",
-          title: "Vue Lifecycle",
-          level: 3,
-          children: [{ id: "section-1-1-2-1", title: "Lifecycle Hooks", level: 4 }],
-        },
-      ],
-    },
-    {
-      id: "section-2",
-      title: "Advanced Topics",
-      level: 1,
-      children: [
-        { id: "section-2-1", title: "Reactivity", level: 2 },
-        {
-          id: "section-2-2",
-          title: "Composition API",
-          level: 2,
-          children: [{ id: "section-2-2-1", title: "Setup Function", level: 3 }],
-        },
-      ],
-    },
-  ]
-}
-
-treeData.value = {
-  items: TreeUtils.addParentIds(formData.post.docTree),
-}
-outlineItems.value = generateOutline(formData.post.outline)
-
-// 初始化
-expandedIds.value = TreeUtils.chainExpandedIds(treeData.value.items, defaultExpandedIds.value)
+// 初始化文档树
+treeData.value = TreeUtils.addParentIds(formData.post.docTree)
+expandedIds.value = TreeUtils.chainExpandedIds(treeData.value, defaultExpandedIds.value)
+// 初始化大纲
+outlineData.value = formData.post.outline ?? []
 
 const VNode = () =>
   h("div", {
@@ -188,9 +154,7 @@ const VNode = () =>
     innerHTML: editorDom,
   })
 
-onMounted(() => {
-  console.log("expandedIds.value=>", expandedIds.value)
-})
+onMounted(() => {})
 </script>
 
 <style lang="stylus" scoped>
@@ -207,10 +171,17 @@ onMounted(() => {
   box-shadow 4px 0 6px rgba(0, 0, 0, 0.1)
   padding 16px
 
-.main
-  flex 1
-  overflow-y auto
-  padding 16px
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 和 Edge */
+}
+
+.main::-webkit-scrollbar {
+  display: none; /* 隐藏滚动条（Chrome 和 Safari）*/
+}
 
 .floating-toc
   position fixed

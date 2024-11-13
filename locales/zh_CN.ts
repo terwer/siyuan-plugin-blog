@@ -103,4 +103,7 @@ export default {
   "share.template.footer.placeholder": "留空则不显示底部，支持 HTML。更新需重新分享",
   "share.template.link": "分享模板",
   "share.template.link.placeholder": "分享出去的提示信息模板，支持占位符 [title] [url] [expired]",
+
+  "page.sidebar.expand.all": "展开全部",
+  "page.sidebar.collapse.all": "折叠全部",
 }

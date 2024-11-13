@@ -107,4 +107,7 @@ export default {
   "share.template.link": "Template for Sharing",
   "share.template.link.placeholder":
     "Template for the shared prompt information, supports placeholders [title] [url] [expired]",
+
+  "page.sidebar.expand.all": "Expand all",
+  "page.sidebar.collapse.all": "Collapse all",
 }

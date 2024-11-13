@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <button class="expand-collapse-btn" @click="toggleAll">
-      {{ props.allExpanded ? "Collapse All" : "Expand All" }}
+      {{ props.allExpanded ? t("page.sidebar.expand.all") : t("page.sidebar.collapse.all") }}
     </button>
     <sidebar-item
       v-for="item in items"
@@ -19,9 +19,11 @@
 import { computed, defineEmits, defineProps, watch } from "vue"
 import SidebarItem from "~/components/static/SidebarItem.vue"
 
+const { t } = useI18n()
+
 const props = defineProps({
   treeData: {
-    type: Object,
+    type: Array,
     required: true,
   },
   maxDepth: {
@@ -56,7 +58,7 @@ const buildTree = (list: any[], parentId = "", depth = 1): any => {
 
 // 计算属性 items，用于构建树形结构
 const items = computed(() => {
-  const itemData = props.treeData.items
+  const itemData = props.treeData
   return itemData && itemData.length > 0 ? buildTree(itemData) : []
 })
 
@@ -85,9 +87,7 @@ const toggleAll = () => {
   emit("update-expanded-ids", newExpandedIds)
 }
 
-onMounted(() => {
-  console.log("props.treeData", toRaw(props.treeData.items))
-})
+onMounted(() => {})
 </script>
 
 <style lang="stylus" scoped>
