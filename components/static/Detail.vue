@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout">
-    <aside class="sidebar">
+    <aside class="sidebar-container">
       <sidebar
         :tree-data="treeData"
         :max-depth="maxDepth"
@@ -93,35 +93,27 @@ onMounted(() => {
 </script>
 
 <style lang="stylus" scoped>
-.app-layout {
-  display: flex;
-  height: 100vh;
-}
+.app-layout
+  display flex
+  height 100vh
 
-.sidebar {
-  width: 250px;
-  background-color: #fafafa;
-  border-right: 1px solid #f0f0f0;
-  overflow-y: auto;
-}
+.sidebar-container
+  min-width 180px
+  max-width 300px
+  background-color #fafafa
+  border-right 1px solid #f0f0f0
+  overflow-y auto
+  box-shadow 4px 0 6px rgba(0, 0, 0, 0.1)
+  padding 16px
 
-.expand-collapse-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #1890ff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-}
+.main
+  flex 1
+  overflow-y auto
+  padding 16px
 
-.main {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.outline {
-  width: 200px;
-  overflow-y: auto;
-}
+.outline
+  width 240px
+  overflow-y auto
+  padding 16px
+  border-left 1px solid #f0f0f0
 </style>

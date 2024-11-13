@@ -85,4 +85,44 @@ const toggleAll = () => {
   </div>
 </template>
 
-<style scoped lang="stylus"></style>
+<style lang="stylus" scoped>
+.sidebar-item
+  padding 10px
+  font-size 14px
+  color #333
+  cursor pointer
+  transition background-color 0.3s
+
+  &:hover
+    background-color #f0f0f0
+
+.item-title
+  display flex
+  align-items center
+
+.expand-collapse-btn
+  width 100%
+  padding 12px
+  margin-bottom 6px
+  background-color #1890ff
+  color white
+  border none
+  cursor pointer
+  text-align center
+  border-radius 4px
+  font-size 14px
+  transition background-color 0.3s
+
+  &:hover
+    background-color #40a9ff
+
+.toggle-icon
+  margin-right 8px
+
+.item-link
+  text-decoration none
+  color #1890ff
+
+.nested-items
+  padding-left 16px
+</style>

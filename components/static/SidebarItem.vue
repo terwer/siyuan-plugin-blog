@@ -95,31 +95,27 @@ const handleSelect = (item) => {
 </script>
 
 <style lang="stylus" scoped>
-.sidebar-item {
-  cursor: pointer;
-}
+.sidebar-item
+  padding 4px
+  font-size 14px
+  color #333
+  cursor pointer
+  transition background-color 0.3s
 
-.item-title {
-  display: flex;
-  align-items: center;
-}
+  &:hover
+    background-color #f0f0f0
 
-.toggle-icon {
-  font-weight: bold;
-  margin-right: 8px;
-}
+.item-title
+  display flex
+  align-items center
 
-.item-link {
-  color: #000;
-  text-decoration: none;
-}
+.toggle-icon
+  margin-right 8px
 
-.item-link:hover {
-  color: #1890ff;
-  text-decoration: underline;
-}
+.item-link
+  text-decoration none
+  color #1890ff
 
-.nested-items {
-  margin-left: 10px;
-}
+.nested-items
+  padding-left 16px
 </style>
