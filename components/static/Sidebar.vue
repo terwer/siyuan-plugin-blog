@@ -1,5 +1,22 @@
+<template>
+  <div class="sidebar">
+    <button class="expand-collapse-btn" @click="toggleAll">
+      {{ props.allExpanded ? "Collapse All" : "Expand All" }}
+    </button>
+    <sidebar-item
+      v-for="item in items"
+      :key="item.id"
+      :item="item"
+      :expanded-ids="props.expandedIds"
+      :max-depth="props.maxDepth"
+      :all-expanded="props.allExpanded"
+      @update-expanded-ids="(newExpandedIds) => emit('update-expanded-ids', newExpandedIds)"
+    />
+  </div>
+</template>
+
 <script setup lang="ts">
-import { defineProps, defineEmits, computed, watch } from "vue"
+import { computed, defineEmits, defineProps, watch } from "vue"
 import SidebarItem from "~/components/static/SidebarItem.vue"
 
 const props = defineProps({
@@ -68,37 +85,9 @@ const toggleAll = () => {
 }
 </script>
 
-<template>
-  <div class="sidebar">
-    <button class="expand-collapse-btn" @click="toggleAll">
-      {{ props.allExpanded ? "Collapse All" : "Expand All" }}
-    </button>
-    <sidebar-item
-      v-for="item in items"
-      :key="item.id"
-      :item="item"
-      :expanded-ids="props.expandedIds"
-      :max-depth="props.maxDepth"
-      :all-expanded="props.allExpanded"
-      @update-expanded-ids="(newExpandedIds) => emit('update-expanded-ids', newExpandedIds)"
-    />
-  </div>
-</template>
-
 <style lang="stylus" scoped>
-.sidebar-item
-  padding 10px
-  font-size 14px
-  color #333
-  cursor pointer
-  transition background-color 0.3s
-
-  &:hover
-    background-color #f0f0f0
-
-.item-title
-  display flex
-  align-items center
+//.sidebar
+//  background-color #f0f0f0
 
 .expand-collapse-btn
   width 100%
@@ -115,14 +104,4 @@ const toggleAll = () => {
 
   &:hover
     background-color #40a9ff
-
-.toggle-icon
-  margin-right 8px
-
-.item-link
-  text-decoration none
-  color #1890ff
-
-.nested-items
-  padding-left 16px
 </style>

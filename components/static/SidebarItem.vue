@@ -123,13 +123,19 @@ const handleSelect = (item) => {
   color #333
   cursor pointer
   transition background-color 0.3s
-
+  // 禁用父级元素的 hover 效果
+  //pointer-events none
   &:hover
     background-color #f0f0f0
 
 .item-title
   display flex
   align-items center
+  cursor pointer  // 使得标题部分本身可点击
+  //&:hover
+  //  background-color #f0f0f0
+  //// 启用标题的 hover 效果
+  //pointer-events auto
 
 .toggle-icon
   margin-right 6px
