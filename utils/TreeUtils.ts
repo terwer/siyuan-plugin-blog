@@ -1,36 +1,56 @@
-interface TreeNode {
-  id: string
-  name: string
-  parentId?: string
-  children?: TreeNode[]
-  content?: string
-}
-
+/**
+ * @description 树形工具类
+ */
 class TreeUtils {
-  public static buildTree(nodes: TreeNode[]): TreeNode[] {
-    const idMap = new Map<string, TreeNode>()
-    const rootNodes: TreeNode[] = []
+  /**
+   * 添加父级ID
+   *
+   * @param data
+   */
+  public static addParentIds(data: any) {
+    const map = new Map()
 
-    // 首先将所有节点放入一个 Map 中，以便快速查找
-    nodes.forEach((node) => {
-      idMap.set(node.id, { ...node, children: [] })
-    })
+    data.forEach((item: any) => map.set(item.id, item))
 
-    // 构建树结构
-    nodes.forEach((node) => {
-      if (node.parentId) {
-        const parent = idMap.get(node.parentId)
-        if (parent) {
-          parent.children = parent.children ?? []
-          parent.children.push(idMap.get(node.id)!)
-        }
-      } else {
-        rootNodes.push(idMap.get(node.id)!)
+    function getParentIds(item: any) {
+      const parentIds = []
+      let parent = map.get(item.parentId)
+      while (parent) {
+        parentIds.unshift(parent.id)
+        parent = map.get(parent.parentId)
       }
-    })
+      return parentIds
+    }
 
-    return rootNodes
+    data.forEach((item: any) => {
+      item.parentIds = getParentIds(item)
+    })
+    return data
+  }
+
+  /**
+   * 获取所有父级ID（包括自己）
+   *
+   * @param treeData
+   * @param expandedIds
+   */
+  public static chainExpandedIds(treeData: any[], expandedIds: string[]): string[] {
+    // 获取所有 parentIds，同时包括 expandedIds 中的 ID，并去重
+    const parentIds = [
+      ...new Set(
+        treeData
+          .filter((item: any) => expandedIds.includes(item.id))
+          .map((item: any) => item.parentIds)
+          // 扁平化 parentIds 数组
+          .flat()
+      ),
+      // 将 expandedIds 中的 ID 加入结果
+      ...expandedIds,
+    ]
+
+    // 去重并按升序排序
+    return [...new Set(parentIds)].sort()
   }
 }
 
-export { type TreeNode, TreeUtils }
+export { TreeUtils }

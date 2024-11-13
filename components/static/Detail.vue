@@ -1,18 +1,13 @@
 <template>
   <div class="app-layout">
     <aside class="sidebar">
-      <button class="expand-collapse-btn" @click="toggleAll">
-        {{ allExpanded ? "Collapse All" : "Expand All" }}
-      </button>
-      <SidebarItem
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
-        :expanded-ids="expandedIds"
-        :max-depth="3"
+      <sidebar
+        :tree-data="treeData"
+        :max-depth="maxDepth"
         :all-expanded="allExpanded"
-        @update-expanded-ids="updateExpandedIds"
-        @select="handleSelect"
+        :expanded-ids="expandedIds"
+        @update-expanded-ids="handleUpdateExpandedIds"
+        @update-all-expanded="handleUpdateAllExpanded"
       />
     </aside>
     <main class="main">main</main>
@@ -23,68 +18,24 @@
 </template>
 
 <script setup lang="ts">
-import SidebarItem from "~/components/static/SidebarItem.vue"
 import Outline from "~/components/static/Outline.vue"
+import Sidebar from "~/components/static/Sidebar.vue"
 
 const treeData = ref([])
-
-const defaultExpandedIds = ref(["5", "7"])
-const expandedIds = ref([] as any)
 const maxDepth = ref(6)
 const allExpanded = ref(false)
-const currentItem = ref(null)
-
+const defaultExpandedIds = ref(["5", "7"])
+const expandedIds = ref([] as any)
 const outlineItems = ref()
 
-// 构建树形数据
-const buildTree = (list: any[], parentId = null, depth = 1): any => {
-  if (!list || !Array.isArray(list)) return []
-
-  return list
-    .filter((item: any) => item.parentId === parentId)
-    .map((item: any) => {
-      return {
-        ...item,
-        depth,
-        children: depth < maxDepth.value ? buildTree(list, item.id, depth + 1) : [],
-      }
-    })
-}
-
-const items = computed(() => {
-  return Array.isArray(treeData.value) && treeData.value.length > 0 ? buildTree(treeData.value) : []
-})
-
-const addParentIds = (data: any) => {
-  const map = new Map()
-
-  data.forEach((item: any) => map.set(item.id, item))
-
-  function getParentIds(item: any) {
-    const parentIds = []
-    let parent = map.get(item.parentId)
-    while (parent) {
-      parentIds.unshift(parent.id)
-      parent = map.get(parent.parentId)
-    }
-    return parentIds
-  }
-
-  data.forEach((item: any) => {
-    item.parentIds = getParentIds(item)
-  })
-  return data
-}
-
-// 更新展开的项
-const updateExpandedIds = (newExpandedIds: any) => {
+// 处理 expandedIds 的更新
+const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
   expandedIds.value = newExpandedIds
 }
 
-// 处理项的选择
-const handleSelect = (item: any) => {
-  currentItem.value = item
-  outlineItems.value = generateOutline(item)
+// 处理 allExpanded 的更新
+const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
+  allExpanded.value = newAllExpanded
 }
 
 // 生成大纲
@@ -92,32 +43,7 @@ const generateOutline = (item: any) => {
   return item.children || []
 }
 
-// 切换所有项的展开/收起
-const toggleAll = () => {
-  allExpanded.value = !allExpanded.value
-  expandedIds.value = allExpanded.value ? treeData.value.map((item: any) => item.id) : []
-}
-
-const chainExpandedIds = (expandedIds: string[]): string[] => {
-  // 获取所有 parentIds，同时包括 expandedIds 中的 ID，并去重
-  const parentIds = [
-    ...new Set(
-      treeData.value
-        .filter((item: any) => expandedIds.includes(item.id))
-        .map((item: any) => item.parentIds)
-        // 扁平化 parentIds 数组
-        .flat()
-    ),
-    // 将 expandedIds 中的 ID 加入结果
-    ...expandedIds,
-  ]
-
-  // 去重并按升序排序
-  return [...new Set(parentIds)].sort()
-}
-
-// Initialize tree data
-treeData.value = addParentIds([
+treeData.value = TreeUtils.addParentIds([
   { id: "1", parentId: null, name: "Section 1" },
   { id: "2", parentId: "1", name: "Subsection 1.1" },
   { id: "3", parentId: "1", name: "Subsection 1.2" },
@@ -126,7 +52,6 @@ treeData.value = addParentIds([
   { id: "6", parentId: "3", name: "Subsection 1.2.1" },
   { id: "7", parentId: "3", name: "Subsection 1.2.2" },
 ])
-
 outlineItems.value = [
   { id: "section-1", title: "Introduction", level: 1 },
   {
@@ -159,10 +84,10 @@ outlineItems.value = [
   },
 ]
 
-onMounted(() => {
-  expandedIds.value = chainExpandedIds(defaultExpandedIds.value)
-  console.warn("expandedIds=>", expandedIds.value)
+// 初始化
+expandedIds.value = TreeUtils.chainExpandedIds(treeData.value, defaultExpandedIds.value)
 
+onMounted(() => {
   console.log("outlineItems=>", outlineItems.value)
 })
 </script>
