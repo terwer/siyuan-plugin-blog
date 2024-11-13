@@ -4,7 +4,7 @@
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <aside class="sidebar-container">
+    <aside v-if="treeData && treeData.length > 0" class="sidebar-container">
       <sidebar
         :tree-data="treeData"
         :max-depth="maxDepth"
@@ -124,13 +124,13 @@ const editorDom = formData.post.editorDom?.replaceAll('contenteditable="true"', 
 
 // docTree
 const treeData = ref([] as any)
-const maxDepth = ref(6)
+const maxDepth = ref(formData.post?.docTreeLevel ?? 3)
 const allExpanded = ref(false)
 const defaultExpandedIds = ref([id])
 const expandedIds = ref([] as any)
 // outline
 const outlineData = ref([] as any)
-const outlineMaxDepth = ref(6)
+const outlineMaxDepth = ref(formData.post?.outlineLevel ?? 6)
 
 // 处理 expandedIds 的更新
 const handleUpdateExpandedIds = (newExpandedIds: number[]) => {

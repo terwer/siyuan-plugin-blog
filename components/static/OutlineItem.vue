@@ -44,7 +44,8 @@ const getItemLevel = (item) => {
 }
 
 const scrollToSection = (id) => {
-  const element = document.getElementById(id)
+  // 使用 querySelector 根据 data-node-id 属性查找元素
+  const element = document.querySelector(`[data-node-id="${id}"]`)
   if (element) {
     element.scrollIntoView({ behavior: "smooth", block: "start" })
     // 使标题稍微高于屏幕中心
