@@ -1,7 +1,12 @@
 # Changelog
 
-## [2.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.1...siyuan-blog-v2.3.0) (2024-11-05)
+## [2.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.3.0...siyuan-blog-v2.4.0) (2024-11-13)
 ### Features
+* support doctree ([4767264](https://github.com/terwer/siyuan-plugin-blog/commit/476726492cee6e4b99c9a2b921167c8749e2b495))
+* support doctree and outline ([d66a7af](https://github.com/terwer/siyuan-plugin-blog/commit/d66a7afc2ececa7524d4f56c33904c3901a01b9b))
+### Miscellaneous
+* suppress warning for sass ([8e41bec](https://github.com/terwer/siyuan-plugin-blog/commit/8e41bec94096635fd92042bac61d10c3a27a9be6))
+## [2.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.1...siyuan-blog-v2.3.0) (2024-11-05)
 * support pink-room theme ([8bc3cc7](https://github.com/terwer/siyuan-plugin-blog/commit/8bc3cc70bfedfb66e7795b8d51c32b58cd78cc2c))
 * support trends theme ([36c6749](https://github.com/terwer/siyuan-plugin-blog/commit/36c67496a0c8e61883c90fb1b5f5b5f56b56abed))
 * support tsundoku theme ([2df8df8](https://github.com/terwer/siyuan-plugin-blog/commit/2df8df8420b65d69c11d37a8d3282e272c52a6c2))
@@ -15,7 +20,6 @@
 ## [2.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.1.0...siyuan-blog-v2.2.0) (2024-11-04)
 * support custom css ([6e68dd5](https://github.com/terwer/siyuan-plugin-blog/commit/6e68dd578fe0451fe9ab2512f4358eb75797c43e))
 * support some custom setting in provider mode ([0e350cc](https://github.com/terwer/siyuan-plugin-blog/commit/0e350cc4908b57d1e15401335aa7cea479b2848d))
-### Miscellaneous
 * update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 ## [2.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.0.1...siyuan-blog-v2.1.0) (2024-09-12)
 * adapt style ([86dcd91](https://github.com/terwer/siyuan-plugin-blog/commit/86dcd91dcceeea835d5d0d965ed11eb7bf2316b1))
