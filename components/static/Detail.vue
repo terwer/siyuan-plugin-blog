@@ -122,6 +122,7 @@ if (!props.overrideSeo) {
 }
 const editorDom = formData.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? ""
 
+const treeData = ref([] as any)
 const maxDepth = ref(6)
 const allExpanded = ref(false)
 const defaultExpandedIds = ref([id])
@@ -140,44 +141,43 @@ const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
 
 // 生成大纲
 const generateOutline = (item: any) => {
-  return item.children || []
+  return [
+    { id: "section-1", title: "Introduction", level: 1 },
+    {
+      id: "section-1-1",
+      title: "What is Vue",
+      level: 2,
+      children: [
+        { id: "section-1-1-1", title: "Vue Basics", level: 3 },
+        {
+          id: "section-1-1-2",
+          title: "Vue Lifecycle",
+          level: 3,
+          children: [{ id: "section-1-1-2-1", title: "Lifecycle Hooks", level: 4 }],
+        },
+      ],
+    },
+    {
+      id: "section-2",
+      title: "Advanced Topics",
+      level: 1,
+      children: [
+        { id: "section-2-1", title: "Reactivity", level: 2 },
+        {
+          id: "section-2-2",
+          title: "Composition API",
+          level: 2,
+          children: [{ id: "section-2-2-1", title: "Setup Function", level: 3 }],
+        },
+      ],
+    },
+  ]
 }
 
-const treeData = ref({
+treeData.value = {
   items: TreeUtils.addParentIds(formData.post.docTree),
-})
-logger.info("treeData.value=>", treeData.value)
-outlineItems.value = [
-  { id: "section-1", title: "Introduction", level: 1 },
-  {
-    id: "section-1-1",
-    title: "What is Vue",
-    level: 2,
-    children: [
-      { id: "section-1-1-1", title: "Vue Basics", level: 3 },
-      {
-        id: "section-1-1-2",
-        title: "Vue Lifecycle",
-        level: 3,
-        children: [{ id: "section-1-1-2-1", title: "Lifecycle Hooks", level: 4 }],
-      },
-    ],
-  },
-  {
-    id: "section-2",
-    title: "Advanced Topics",
-    level: 1,
-    children: [
-      { id: "section-2-1", title: "Reactivity", level: 2 },
-      {
-        id: "section-2-2",
-        title: "Composition API",
-        level: 2,
-        children: [{ id: "section-2-2-1", title: "Setup Function", level: 3 }],
-      },
-    ],
-  },
-]
+}
+outlineItems.value = generateOutline(formData.post.outline)
 
 // 初始化
 expandedIds.value = TreeUtils.chainExpandedIds(treeData.value.items, defaultExpandedIds.value)
