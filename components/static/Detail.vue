@@ -1,27 +1,54 @@
-<!--
-  - Copyright (c) 2023, Terwer . All rights reserved.
-  - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
-  -
-  - This code is free software; you can redistribute it and/or modify it
-  - under the terms of the GNU General Public License version 2 only, as
-  - published by the Free Software Foundation.  Terwer designates this
-  - particular file as subject to the "Classpath" exception as provided
-  - by Terwer in the LICENSE file that accompanied this code.
-  -
-  - This code is distributed in the hope that it will be useful, but WITHOUT
-  - ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  - FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-  - version 2 for more details (a copy is included in the LICENSE file that
-  - accompanied this code).
-  -
-  - You should have received a copy of the GNU General Public License version
-  - 2 along with this work; if not, write to the Free Software Foundation,
-  - Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-  -
-  - Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
-  - or visit www.terwer.space if you need additional information or have any
-  - questions.
-  -->
+<template>
+  <div v-if="!formData.shareEnabled || formData.isExpires">
+    <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
+    </el-empty>
+  </div>
+  <div v-else class="app-container">
+    <aside v-if="treeData && treeData.length > 0" class="sidebar-container">
+      <sidebar
+        :tree-data="treeData"
+        :max-depth="maxDepth"
+        :all-expanded="allExpanded"
+        :expanded-ids="expandedIds"
+        @update-expanded-ids="handleUpdateExpandedIds"
+        @update-all-expanded="handleUpdateAllExpanded"
+      />
+    </aside>
+    <main class="main">
+      <!-- 分享正文 -->
+      <div class="fn__flex-1 protyle" data-loading="finished">
+        <div class="protyle-content protyle-content--transition" data-fullwidth="true">
+          <div class="protyle-title protyle-wysiwyg--attr">
+            <div
+              contenteditable="false"
+              data-position="center"
+              spellcheck="false"
+              class="protyle-title__input"
+              data-render="true"
+            >
+              {{ formData.post.title }}
+            </div>
+          </div>
+          <div
+            v-highlight
+            v-sbeauty
+            v-sdomparser
+            class="protyle-wysiwyg protyle-wysiwyg--attr"
+            spellcheck="false"
+            contenteditable="false"
+            data-doc-type="NodeDocument"
+            :data-page-id="id"
+          >
+            <VNode />
+          </div>
+        </div>
+      </div>
+    </main>
+    <aside v-if="outlineData && outlineData.length > 0" class="floating-toc">
+      <outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
+    </aside>
+  </div>
+</template>
 
 <script setup lang="ts">
 import { JsonUtil, ObjectUtil } from "zhi-common"
@@ -31,6 +58,8 @@ import { checkExpires, getSummery } from "~/utils/utils"
 import { useServerAssets } from "~/plugins/renderer/useServerAssets"
 import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { useProviderMode } from "~/composables/useProviderMode"
+import Sidebar from "~/components/static/Sidebar.vue"
+import Outline from "~/components/static/Outline.vue"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -91,48 +120,94 @@ if (!props.overrideSeo) {
   }
   useSeoMeta(seoMeta)
 }
+const editorDom = formData.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? ""
 
-onMounted(async () => {})
+// docTree
+const treeData = ref([] as any)
+const maxDepth = ref(formData.post?.docTreeLevel ?? 3)
+const allExpanded = ref(false)
+const defaultExpandedIds = ref([id])
+const expandedIds = ref([] as any)
+// outline
+const outlineData = ref([] as any)
+const outlineMaxDepth = ref(formData.post?.outlineLevel ?? 6)
+
+// 处理 expandedIds 的更新
+const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
+  expandedIds.value = newExpandedIds
+}
+
+// 处理 allExpanded 的更新
+const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
+  allExpanded.value = newAllExpanded
+}
+
+// 初始化文档树
+treeData.value = TreeUtils.addParentIds(formData.post.docTree)
+expandedIds.value = TreeUtils.chainExpandedIds(treeData.value, defaultExpandedIds.value)
+// 初始化大纲
+outlineData.value = formData.post.outline ?? []
 
 const VNode = () =>
   h("div", {
     class: "",
-    innerHTML: formData.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? "",
+    innerHTML: editorDom,
   })
+
+onMounted(() => {})
 </script>
 
-<template>
-  <div v-if="!formData.shareEnabled || formData.isExpires">
-    <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
-    </el-empty>
-  </div>
-  <div v-else class="fn__flex-1 protyle" data-loading="finished">
-    <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-      <div class="protyle-title protyle-wysiwyg--attr">
-        <div
-          contenteditable="false"
-          data-position="center"
-          spellcheck="false"
-          class="protyle-title__input"
-          data-render="true"
-        >
-          {{ formData.post.title }}
-        </div>
-      </div>
-      <div
-        v-highlight
-        v-sbeauty
-        v-sdomparser
-        class="protyle-wysiwyg protyle-wysiwyg--attr"
-        spellcheck="false"
-        contenteditable="false"
-        data-doc-type="NodeDocument"
-        :data-page-id="id"
-      >
-        <VNode />
-      </div>
-    </div>
-  </div>
-</template>
+<style lang="stylus" scoped>
+.app-container
+  display flex
+  height 100vh
 
-<style scoped></style>
+.sidebar-container
+  min-width 180px
+  max-width 350px
+  background-color #fafafa
+  border-right 1px solid #f0f0f0
+  overflow-y auto
+  box-shadow 4px 0 6px rgba(0, 0, 0, 0.1)
+  padding 16px
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 和 Edge */
+}
+
+.main::-webkit-scrollbar {
+  display: none; /* 隐藏滚动条（Chrome 和 Safari）*/
+}
+
+.floating-toc
+  position fixed
+  top 20px
+  right 20px
+  width 200px
+  background-color #fff
+  border 1px solid #ddd
+  padding 10px
+  box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
+  z-index 1000
+
+  h3
+    margin-top 0
+    margin-bottom 10px
+
+  ul
+    list-style-type none
+    padding 0
+    margin 0
+
+  li
+    cursor pointer
+    padding 5px 0
+    transition background-color 0.3s
+
+    &:hover
+      background-color #f5f5f5
+</style>

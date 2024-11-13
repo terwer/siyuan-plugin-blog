@@ -28,7 +28,7 @@
 <template>
   <el-container>
     <static-header />
-    <el-main>
+    <el-main class="main-content">
       <slot />
     </el-main>
     <static-footer />

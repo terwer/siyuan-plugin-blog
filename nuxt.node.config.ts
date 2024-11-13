@@ -50,6 +50,14 @@ export default defineNuxtConfig({
       "process.env.SSR": `"true"`,
     },
     plugins: [],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern",
+          silenceDeprecations: ["mixed-decls", "color-functions", "global-builtin", "import", "new-global"],
+        },
+      },
+    },
   },
 
   elementPlus: {
@@ -86,12 +94,12 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
+            // {
+            //   src: appBase + "libs/eruda/eruda.js",
+            // },
+            // {
+            //   children: "eruda.init();console.log('eruda inited');",
+            // },
             {
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
