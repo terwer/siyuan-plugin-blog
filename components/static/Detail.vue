@@ -24,7 +24,7 @@ import Sidebar from "~/components/static/Sidebar.vue"
 const treeData = ref([])
 const maxDepth = ref(6)
 const allExpanded = ref(false)
-const defaultExpandedIds = ref(["5", "7"])
+const defaultExpandedIds = ref(["3"])
 const expandedIds = ref([] as any)
 const outlineItems = ref()
 
