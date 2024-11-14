@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "serve": "bash scripts/serve.sh",
+    "dockerServe": "bash scripts/docker.sh",
     "dev": "bash scripts/dev.sh",
     "makeLink": "python scripts/make_dev_link.py",
     "pluginDev": "zhi-build --watch",
@@ -12,7 +13,7 @@
     "nodeBuild": "bash scripts/node.sh",
     "vercelBuild": "bash scripts/vercel.sh",
     "pluginBuild": "zhi-build --production",
-    "dockerPackage": "bash scripts/docker.sh",
+    "dockerPackage": "bash scripts/push_docker_image.sh",
     "syncVersion": "python scripts/version.py",
     "parseChangelog": "python scripts/parse_changelog.py",
     "prepareRelease": "pnpm syncVersion && pnpm parseChangelog",
