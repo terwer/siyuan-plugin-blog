@@ -1,0 +1,1 @@
+nohup node .output/server/index.mjs > /dev/null 2>&1 &
