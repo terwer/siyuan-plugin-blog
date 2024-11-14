@@ -6,6 +6,16 @@
 pnpm install
 ```
 
+## Using aliyun private image repo
+
+```bash
+docker pull node:18-alpine
+docker images
+docker tag a1f1d32cdee7 registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
+docker login --username=terwer@aliyun.com registry.cn-shenzhen.aliyuncs.com
+docker push registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
+```
+
 ## Development
 
 serve
