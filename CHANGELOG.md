@@ -1,5 +1,9 @@
 # Changelog
 
+## [5.0.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.1...siyuan-blog-v5.0.2) (2024-11-15)
+### Bug Fixes
+* doctree not show in some case ([3902a87](https://github.com/terwer/siyuan-plugin-blog/commit/3902a8756f9bc99e25effb921581b834001dc66a))
+* outline not show normal ([7c35ded](https://github.com/terwer/siyuan-plugin-blog/commit/7c35ded8920f500cc0f1ca7c3306c1b54cdcfa52))
 ## [5.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.0...siyuan-blog-v5.0.1) (2024-11-15)
 ### Miscellaneous
 * update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
@@ -100,7 +104,6 @@
 * 集成 meilisearch ([59f6589](https://github.com/terwer/siyuan-plugin-blog/commit/59f6589a68167b172773cbc018d6abf96dbc1312))
 * 集成server api ([2f7a865](https://github.com/terwer/siyuan-plugin-blog/commit/2f7a865e8054deb71b0af4d6e09df6bcb7c765a4))
 * 集成图标模块 ([b814e0d](https://github.com/terwer/siyuan-plugin-blog/commit/b814e0d251378aa445e7c611881693428665c2d8))
-### Bug Fixes
 * auth error ([9fdfe20](https://github.com/terwer/siyuan-plugin-blog/commit/9fdfe20bc5823d1b8a6bfbf9389cffbdd0f85e34))
 * color mode not auto set ([5abe90e](https://github.com/terwer/siyuan-plugin-blog/commit/5abe90ebc16397024ca868e2c4f3373e79333046))
 * **deps:** bump @pinia/nuxt from 0.5.5 to 0.7.0 ([ac5c480](https://github.com/terwer/siyuan-plugin-local-blog/commit/ac5c4807252d164e3abb5c14ae997112e70258e0))
