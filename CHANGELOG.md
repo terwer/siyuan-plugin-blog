@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.6.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.5.0...siyuan-blog-v2.6.0) (2024-11-15)
+
+
+### Features
+
+* add vercel dev ([a71cf32](https://github.com/terwer/siyuan-plugin-blog/commit/a71cf32013acf5e4efb51349d96da9aade72e723))
+* add vercel dev ([88ac452](https://github.com/terwer/siyuan-plugin-blog/commit/88ac452e552309439374ee940d02c07cb73b3cc0))
+* add vercel dev ([a95bc3d](https://github.com/terwer/siyuan-plugin-blog/commit/a95bc3d0107a23f4d640e3098b261e019a3860b9))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump @nuxtjs/i18n from 8.5.6 to 9.0.0 ([0c1dc2c](https://github.com/terwer/siyuan-plugin-blog/commit/0c1dc2c83bef9b915d2347e59becca4903fa9128))
+* **deps-dev:** bump stylus from 0.63.0 to 0.64.0 ([b59a543](https://github.com/terwer/siyuan-plugin-blog/commit/b59a5436d6dfc240ba64ed054cc725bbcdcb6b00))
+* **main:** release siyuan-blog 3.0.0 ([e0b65ff](https://github.com/terwer/siyuan-plugin-blog/commit/e0b65ffea564c16b18b93d913ee50c8b04180663))
+* update docs ([44f91fe](https://github.com/terwer/siyuan-plugin-blog/commit/44f91fe225f86787d4e9c9c0a7bd0f87090566bf))
+* update docs ([8445394](https://github.com/terwer/siyuan-plugin-blog/commit/8445394c2165f036de92f5526268758d05de5a3b))
+
 ## [2.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.4.0...siyuan-blog-v2.5.0) (2024-11-14)
 ### Features
 * support provider mode as docker ([4735540](https://github.com/terwer/siyuan-plugin-blog/commit/4735540bb986c09564761409a9c51fe8a06f01fc))
