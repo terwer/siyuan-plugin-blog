@@ -56,30 +56,30 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 ## Features compare
 
-| Feature                                                                   | Free Version | Paid Version |
-|---------------------------------------------------------------------------|--------------|--------------|
-| Support for replacing image links                                         | ✔️           | ✔️           |
-| Integration with currently popular themes                                 | ✔️           | ✔️           |
-| Support for internal and external links                                   | ✔️           | ✔️           |
-| Support for task lists                                                    | ✔️           | ✔️           |
-| Support for sharing with authorization code                               | ✔️           | ✔️           |
-| Unordered list style adaptation                                           | ✔️           | ✔️           |
-| Latex formula rendering                                                   | ✔️           | ✔️           |
-| Support for SourceYuan's SVGs, e.g., `<use xlink:href="#iconMore"></use>` | ✔️           | ✔️           |
-| Support for image hosting                                                 | ❌            | ✔️           |
-| Support for custom domain                                                 | ❌            | ✔️           |
-| Batch management for shared pages                                         | ❌            | ✔️           |
-| Document tree                                                             | ❌            | ✔️           |
-| Page outline                                                              | ❌            | ✔️           |
-| Support for sharing password for single pages                             | ❌            | Planned      |
-| Support for document alias access                                         | ❌            | Planned      |
-| Support for displaying original MD content                                | ❌            | Planned      |
-| Support for displaying original KMD content                               | ❌            | Planned      |
-| Tags, summaries                                                           | ❌            | Planned      |
-| Custom properties                                                         | ❌            | Planned      |
-| Image zoom effect                                                         | ❌            | Planned      |
-| PlantUML diagram support                                                  | ❌            | Planned      |
-| ECharts diagram support                                                   | ❌            | Planned      |
+| Feature                                       | Free Version | Paid Version |
+|-----------------------------------------------|--------------|--------------|
+| Support for replacing image links             | ✔️           | ✔️           |
+| Integration with currently popular themes     | ✔️           | ✔️           |
+| Support for internal and external links       | ✔️           | ✔️           |
+| Support for task lists                        | ✔️           | ✔️           |
+| Support for sharing with authorization code   | ✔️           | ✔️           |
+| Unordered list style adaptation               | ✔️           | ✔️           |
+| Latex formula rendering                       | ✔️           | ✔️           |
+| Support for siyuan-note's SVGs                | ✔️           | ✔️           |
+| Support for image hosting                     | ❌            | ✔️           |
+| Support for custom domain                     | ❌            | ✔️           |
+| Batch management for shared pages             | ❌            | ✔️           |
+| Document tree                                 | ❌            | ✔️           |
+| Page outline                                  | ❌            | ✔️           |
+| Support for sharing password for single pages | ❌            | Planned      |
+| Support for document alias access             | ❌            | Planned      |
+| Support for displaying original MD content    | ❌            | Planned      |
+| Support for displaying original KMD content   | ❌            | Planned      |
+| Tags, summaries                               | ❌            | Planned      |
+| Custom properties                             | ❌            | Planned      |
+| Image zoom effect                             | ❌            | Planned      |
+| PlantUML diagram support                      | ❌            | Planned      |
+| ECharts diagram support                       | ❌            | Planned      |
 
 ## Changelog
 
