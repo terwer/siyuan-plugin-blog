@@ -1,12 +1,8 @@
 # Changelog
 
 ## [5.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.0...siyuan-blog-v5.0.1) (2024-11-15)
-
-
 ### Miscellaneous
-
-* update docs ([0ed1d44](https://github.com/terwer/siyuan-plugin-blog/commit/0ed1d447fdf82181c84a12db4bf240b81355acee))
-
+* update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 ## [5.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v4.0.0...siyuan-blog-v5.0.0) (2024-11-15)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
@@ -158,7 +154,6 @@
 * 适配 vercel - i18n ([773b052](https://github.com/terwer/siyuan-plugin-blog/commit/773b052e9efd68e4af66bf1e76de0dc440903319))
 * 适配 vercel - i18n and element-plus ([7ffb242](https://github.com/terwer/siyuan-plugin-blog/commit/7ffb242af3d47d6f92921a048b76227e888de7a9))
 * 适配 vercel - pina and api ([b8eacd5](https://github.com/terwer/siyuan-plugin-blog/commit/b8eacd5a90fb1f363a1ea12623da9042e55a1ef9))
-### Miscellaneous
 * adapt vercel build ([d82b50f](https://github.com/terwer/siyuan-plugin-blog/commit/d82b50fa99a5ec53557ad14d5da3902ef699d9e7))
 * add meilisearch_endpoint ([97398b5](https://github.com/terwer/siyuan-plugin-blog/commit/97398b56c48f9ad8ff72e816eb46a3e967d3ed8e))
 * add preset ([c3ee89b](https://github.com/terwer/siyuan-plugin-blog/commit/c3ee89b8fc750ec39ce0e35874a7c640c1b81aba))
@@ -215,7 +210,6 @@
 * set repo as a mirror ([609d383](https://github.com/terwer/siyuan-plugin-blog/commit/609d383e859861971188b200375d124e2fef698c))
 * suppress warning for sass ([8e41bec](https://github.com/terwer/siyuan-plugin-blog/commit/8e41bec94096635fd92042bac61d10c3a27a9be6))
 * update deps ([7e37065](https://github.com/terwer/siyuan-plugin-blog/commit/7e3706555817c2b3841992acdd5721f8419665db))
-* update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 * upgrade release please to 4 ([8c2b8f9](https://github.com/terwer/siyuan-plugin-blog/commit/8c2b8f991227ba11227b63fd05a822aadeb94eaf))
 * 优化 docker 打包脚本 ([b42f2f3](https://github.com/terwer/siyuan-plugin-blog/commit/b42f2f310ab84763a409e4b6c91f2225abf517cc))
 * 修改项目说明 ([c45182e](https://github.com/terwer/siyuan-plugin-blog/commit/c45182ed2303cbad4d8b1ce68932e13fc80ccf04))
