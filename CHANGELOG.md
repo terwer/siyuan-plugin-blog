@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.0...siyuan-blog-v5.0.1) (2024-11-15)
+
+
+### Miscellaneous
+
+* update docs ([0ed1d44](https://github.com/terwer/siyuan-plugin-blog/commit/0ed1d447fdf82181c84a12db4bf240b81355acee))
+
 ## [5.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v4.0.0...siyuan-blog-v5.0.0) (2024-11-15)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
