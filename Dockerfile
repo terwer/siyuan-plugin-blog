@@ -2,7 +2,8 @@
 # Tip: Modify "dockerBuild" options in project.json to change docker build args.
 #
 # Run the container with `docker run -p 3000:3000 -t vue3-ssr`.
-FROM node:18-alpine
+#FROM node:18-alpine
+FROM registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
 
 # default env
 ENV HOST=0.0.0.0
