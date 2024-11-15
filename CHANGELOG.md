@@ -1,15 +1,9 @@
 # Changelog
 
 ## [2.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.4.0...siyuan-blog-v2.5.0) (2024-11-14)
-
-
 ### Features
-
-* support provider mode as docker ([ee46a08](https://github.com/terwer/siyuan-plugin-blog/commit/ee46a08b44a33244a3054a8624f8d8d8de52644d))
 * support provider mode as docker ([4735540](https://github.com/terwer/siyuan-plugin-blog/commit/4735540bb986c09564761409a9c51fe8a06f01fc))
-
 ## [2.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.3.0...siyuan-blog-v2.4.0) (2024-11-13)
-### Features
 * support doctree ([4767264](https://github.com/terwer/siyuan-plugin-blog/commit/476726492cee6e4b99c9a2b921167c8749e2b495))
 * support doctree and outline ([d66a7af](https://github.com/terwer/siyuan-plugin-blog/commit/d66a7afc2ececa7524d4f56c33904c3901a01b9b))
 ### Miscellaneous
