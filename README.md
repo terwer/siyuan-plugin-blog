@@ -28,9 +28,9 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 [docs](https://siyuannote.site/x/20241115104036-8pprbgr)
 
-[Self-deployed Free Version Experience Address](https://freeshare.terwergreen.com)
+[Self-deployed free version experience address](https://freeshare.terwergreen.com)
 
-[Paid Version Experience Address](https:///siyuannote.site)
+[Paid version experience address](https:///siyuannote.site)
 
 ## Core Features
 
