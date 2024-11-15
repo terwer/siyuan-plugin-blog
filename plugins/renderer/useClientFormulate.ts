@@ -10,7 +10,7 @@ const useClientFormulate = () => {
   const renderFormulate = (el: HTMLElement) => {
     // 内联公式
     const inlineMathElements = document.querySelectorAll('span[data-type="inline-math"][data-subtype="math"]')
-    console.log(inlineMathElements)
+    // console.log(inlineMathElements)
     if (inlineMathElements) {
       inlineMathElements.forEach((inlineMathElement) => {
         const inlineContentValue = inlineMathElement.getAttribute("data-content")
