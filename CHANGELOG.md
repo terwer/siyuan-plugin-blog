@@ -1,11 +1,10 @@
 # Changelog
 
-## [4.0.0](https://github.com/terwer/siyuan-plugin-local-blog/compare/siyuan-blog-v3.0.0...siyuan-blog-v4.0.0) (2024-11-15)
+## [5.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v4.0.0...siyuan-blog-v5.0.0) (2024-11-15)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
 ### Features
 * [#12](https://github.com/terwer/siyuan-plugin-blog/issues/12) 表格及摘要样式 ([384c8e4](https://github.com/terwer/siyuan-plugin-blog/commit/384c8e4ca6e07bb60763cfb3dce63eab13cf58c1))
-* [#14](https://github.com/terwer/siyuan-plugin-blog/issues/14) 静态渲染，提升性能 ([a1f7ff7](https://github.com/terwer/siyuan-plugin-blog/commit/a1f7ff72bf3793894ce6067ef12830282748f7c9))
 * [#19](https://github.com/terwer/siyuan-plugin-blog/issues/19) 发布权限控制-UI微调 ([cf5cd8c](https://github.com/terwer/siyuan-plugin-blog/commit/cf5cd8cdf830717adf63cdb5e89a96bb948a7453))
 * [#26](https://github.com/terwer/siyuan-plugin-blog/issues/26) 整合sy-post-publisher ([f3d8c20](https://github.com/terwer/siyuan-plugin-blog/commit/f3d8c203ef080f8972be277cd945081bd694ad75))
 * [#27](https://github.com/terwer/siyuan-plugin-blog/issues/27) 适配jvue、cnblogs文章展示 ([4cfe257](https://github.com/terwer/siyuan-plugin-blog/commit/4cfe257dcf452b1b6e441f311acda213ded6a5b3))
@@ -200,6 +199,7 @@
 * **main:** release siyuan-blog 2.4.0 ([ad6b8fb](https://github.com/terwer/siyuan-plugin-local-blog/commit/ad6b8fbf1df4775576c8fec658c33700f9016f2c))
 * **main:** release siyuan-blog 2.5.0 ([307323c](https://github.com/terwer/siyuan-plugin-local-blog/commit/307323c33d4b34d7fb98a511db9691e84f239374))
 * **main:** release siyuan-blog 3.0.0 ([e0b65ff](https://github.com/terwer/siyuan-plugin-local-blog/commit/e0b65ffea564c16b18b93d913ee50c8b04180663))
+* **main:** release siyuan-blog 4.0.0 ([090ed0e](https://github.com/terwer/siyuan-plugin-blog/commit/090ed0e05f4af962ce7637a9d52bbe4307b962fe))
 * pretty error ([0bdae8f](https://github.com/terwer/siyuan-plugin-blog/commit/0bdae8fe9f5634ad75d6923b806d027302b06d8c))
 * release 1.3.0 ([9f2ed34](https://github.com/terwer/siyuan-plugin-blog/commit/9f2ed3450d8f9e2927feb1a6e17f85b700d26ab3))
 * release 1.7.0 ([64c4abf](https://github.com/terwer/siyuan-plugin-blog/commit/64c4abfdac5daa90ad7baddad0e1a1c61a3eda3f))
@@ -212,6 +212,8 @@
 * upgrade release please to 4 ([8c2b8f9](https://github.com/terwer/siyuan-plugin-blog/commit/8c2b8f991227ba11227b63fd05a822aadeb94eaf))
 * 优化 docker 打包脚本 ([b42f2f3](https://github.com/terwer/siyuan-plugin-blog/commit/b42f2f310ab84763a409e4b6c91f2225abf517cc))
 * 修改项目说明 ([c45182e](https://github.com/terwer/siyuan-plugin-blog/commit/c45182ed2303cbad4d8b1ce68932e13fc80ccf04))
+## [4.0.0](https://github.com/terwer/siyuan-plugin-local-blog/compare/siyuan-blog-v3.0.0...siyuan-blog-v4.0.0) (2024-11-15)
+* [#14](https://github.com/terwer/siyuan-plugin-blog/issues/14) 静态渲染，提升性能 ([a1f7ff7](https://github.com/terwer/siyuan-plugin-blog/commit/a1f7ff72bf3793894ce6067ef12830282748f7c9))
 ## [3.0.0](https://github.com/terwer/siyuan-plugin-local-blog/compare/siyuan-blog-v2.5.0...siyuan-blog-v3.0.0) (2024-11-15)
 ## [2.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.4.0...siyuan-blog-v2.5.0) (2024-11-14)
 ## [2.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.3.0...siyuan-blog-v2.4.0) (2024-11-13)
