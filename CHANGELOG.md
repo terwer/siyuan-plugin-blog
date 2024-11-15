@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.0.0](https://github.com/terwer/siyuan-plugin-local-blog/compare/siyuan-blog-v2.5.0...siyuan-blog-v3.0.0) (2024-11-15)
+## [4.0.0](https://github.com/terwer/siyuan-plugin-local-blog/compare/siyuan-blog-v3.0.0...siyuan-blog-v4.0.0) (2024-11-15)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
 ### Features
@@ -212,6 +212,7 @@
 * upgrade release please to 4 ([8c2b8f9](https://github.com/terwer/siyuan-plugin-blog/commit/8c2b8f991227ba11227b63fd05a822aadeb94eaf))
 * 优化 docker 打包脚本 ([b42f2f3](https://github.com/terwer/siyuan-plugin-blog/commit/b42f2f310ab84763a409e4b6c91f2225abf517cc))
 * 修改项目说明 ([c45182e](https://github.com/terwer/siyuan-plugin-blog/commit/c45182ed2303cbad4d8b1ce68932e13fc80ccf04))
+## [3.0.0](https://github.com/terwer/siyuan-plugin-local-blog/compare/siyuan-blog-v2.5.0...siyuan-blog-v3.0.0) (2024-11-15)
 ## [2.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.4.0...siyuan-blog-v2.5.0) (2024-11-14)
 ## [2.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.3.0...siyuan-blog-v2.4.0) (2024-11-13)
 ## [2.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v2.2.1...siyuan-blog-v2.3.0) (2024-11-05)
