@@ -54,7 +54,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 * **VIP Service Provider Mode**<sup>2.0.0+</sup>: Allows deploying this project as a VIP service provider, requiring
   backend sharing service(eg. https://github.com/terwerinc/siyuan-note-service) support.
 
-Here is the translated version of the table:
+## Features compare
 
 | Feature                                                                   | Free Version | Paid Version |
 |---------------------------------------------------------------------------|--------------|--------------|
