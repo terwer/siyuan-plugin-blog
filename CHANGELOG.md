@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.3...siyuan-blog-v5.0.4) (2024-11-15)
+
+
+### Bug Fixes
+
+* docTree not show in some case ([b08d5a7](https://github.com/terwer/siyuan-plugin-blog/commit/b08d5a7b2a035f326f888b33a135d3b3edd3cf90))
+
 ## [5.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.2...siyuan-blog-v5.0.3) (2024-11-15)
 ### Bug Fixes
 * outline not show normal in some case ([d6bdda9](https://github.com/terwer/siyuan-plugin-blog/commit/d6bdda907bd7f8ad8a6cd30786ad9559a9881846))
