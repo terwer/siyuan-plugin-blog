@@ -187,12 +187,16 @@ onMounted(() => {})
   position fixed
   top 20px
   right 20px
-  width 200px
+  min-idth 200px
+  max-width 350px
   background-color #fff
   border 1px solid #ddd
   padding 10px
   box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
   z-index 1000
+  overflow-y auto
+  /* 限制最大高度，防止内容超出屏幕 */
+  max-height 80vh
 
   h3
     margin-top 0
