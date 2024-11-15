@@ -18,7 +18,9 @@
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, watch } from "vue"
 import SidebarItem from "~/components/static/SidebarItem.vue"
+import { createAppLogger } from "~/common/appLogger"
 
+const logger = createAppLogger("static-sidebar")
 const { t } = useI18n()
 
 const props = defineProps({
@@ -44,7 +46,7 @@ const props = defineProps({
 const emit = defineEmits(["update-expanded-ids", "update-all-expanded"])
 
 // 构建树形数据
-const buildTree = (list: any[], parentId = "", depth = 1): any => {
+const buildTree = (list: any[], parentId: string, depth = 1): any => {
   if (!list || !Array.isArray(list)) return []
 
   return list
@@ -59,7 +61,20 @@ const buildTree = (list: any[], parentId = "", depth = 1): any => {
 // 计算属性 items，用于构建树形结构
 const items = computed(() => {
   const itemData = props.treeData
-  return itemData && itemData.length > 0 ? buildTree(itemData) : []
+  if (itemData && itemData.length > 0) {
+    let parentId = ""
+    // 没有父亲的当做父节点
+    itemData.forEach((item: any) => {
+      if (!itemData.find((x: any) => x.id === item.parentId)) {
+        parentId = item.parentId
+      }
+    })
+
+    logger.info("found parentId=>", parentId)
+    return buildTree(itemData, parentId)
+  } else {
+    return []
+  }
 })
 
 // 监听 expandedIds 变化并向父组件 emit 更新

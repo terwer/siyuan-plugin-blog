@@ -28,7 +28,7 @@
 
 [自部署免费版体验地址](https://freeshare.terwergreen.com)
 
-[收费版版体验地址](https://share.terwergreen.com)
+[收费版体验地址](https://share.terwergreen.com)
 
 ## 核心特色
 

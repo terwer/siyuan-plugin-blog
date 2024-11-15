@@ -1,6 +1,11 @@
 <template>
-  <div v-for="(item, index) in outlineData" :key="index">
-    <outline-item :item="item" :max-depth="maxDepth" />
+  <div>
+    <div class="outline-title">
+      <a class="outline-title-link"> {{ "文档大纲" }} </a>
+    </div>
+    <div v-for="(item, index) in outlineData" :key="index">
+      <outline-item :item="item" :max-depth="maxDepth" :is-root="true" />
+    </div>
   </div>
 </template>
 
@@ -21,4 +26,9 @@ const props = defineProps({
 onMounted(() => {})
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.outline-title
+  .outline-title-link
+    text-decoration none
+    color #333
+</style>

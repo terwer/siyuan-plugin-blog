@@ -1,8 +1,10 @@
 <template>
   <div :style="{ marginLeft: (getItemLevel(item) - 1) * 16 + 'px' }" class="outline-item">
     <!-- 第一级 -->
-    <div v-if="getItemLevel(item) === 1" class="nested-items">
-      <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.name }} </a>
+    <div v-if="getItemLevel(item) === 1 || isRoot" class="nested-items">
+      <a class="item-link" @click.prevent="scrollToSection(item.id)">
+        {{ adjustItemName(item.name) }}
+      </a>
       <div v-if="getItemLevel(item) < maxDepth">
         <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" />
       </div>
@@ -10,7 +12,9 @@
 
     <!-- 其他级别且有子项 -->
     <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
-      <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.content }} </a>
+      <a class="item-link" @click.prevent="scrollToSection(item.id)">
+        {{ adjustItemName(item.content) }}
+      </a>
       <div v-if="getItemLevel(item) < maxDepth">
         <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
       </div>
@@ -19,7 +23,9 @@
     <!-- 无子项 -->
     <div v-else>
       <div v-if="getItemLevel(item) < maxDepth">
-        <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.content }} </a>
+        <a class="item-link" @click.prevent="scrollToSection(item.id)">
+          {{ adjustItemName(item.content) }}
+        </a>
       </div>
     </div>
   </div>
@@ -35,7 +41,19 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
+  isRoot: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const adjustItemName = (name) => {
+  // &nbsp;处理、换行符处理、:：处理，处理
+  return name
+    .replace(/&nbsp;/g, " ")
+    .replace(/\n/g, " ")
+    .replace(/：/g, ":")
+}
 
 const getItemLevel = (item) => {
   const level = parseInt(item.subType.replace("h", ""), 10)
