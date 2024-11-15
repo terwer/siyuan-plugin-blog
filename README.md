@@ -28,6 +28,10 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 
 [docs](https://siyuannote.site/x/20241115104036-8pprbgr)
 
+[Self-deployed Free Version Experience Address](https://freeshare.terwergreen.com)
+
+[Paid Version Experience Address](https:///siyuannote.site)
+
 ## Core Features
 
 * **One-click sharing**: You can share your documents to the local area network with just one click. If you need to
