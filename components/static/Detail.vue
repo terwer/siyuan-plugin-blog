@@ -143,7 +143,7 @@ const maxDepth = ref(formData.post?.docTreeLevel ?? 3)
 const allExpanded = ref(false)
 const defaultExpandedIds = ref([id])
 const expandedIds = ref([] as any)
-const isSidebarVisible = ref(true)
+const isSidebarVisible = ref(false)
 // outline
 const outlineData = ref([] as any)
 const outlineMaxDepth = ref(formData.post?.outlineLevel ?? 6)
