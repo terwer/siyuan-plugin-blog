@@ -1,13 +1,12 @@
 # Changelog
 
+## [5.1.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.0...siyuan-blog-v5.1.1) (2024-11-16)
+### Miscellaneous
+* fix deploy error ([732b9fa](https://github.com/terwer/siyuan-plugin-blog/commit/732b9fad0a3fea8d889bfee146422ee838e1279a))
 ## [5.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.4...siyuan-blog-v5.1.0) (2024-11-16)
-
-
 ### Features
-
-* change docTree style ([cfa7513](https://github.com/terwer/siyuan-plugin-blog/commit/cfa751303912b425f025c2b299a4fb7ab193fc3c))
-* docTree default hidden ([de1972f](https://github.com/terwer/siyuan-plugin-blog/commit/de1972f00041fcc029e295ff64c7fd0ea8ec25d4))
-
+* change doctree style ([cfa7513](https://github.com/terwer/siyuan-plugin-blog/commit/cfa751303912b425f025c2b299a4fb7ab193fc3c))
+* doctree default hidden ([de1972f](https://github.com/terwer/siyuan-plugin-blog/commit/de1972f00041fcc029e295ff64c7fd0ea8ec25d4))
 ## [5.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.3...siyuan-blog-v5.0.4) (2024-11-15)
 ### Bug Fixes
 * doctree not show in some case ([3902a87](https://github.com/terwer/siyuan-plugin-blog/commit/3902a8756f9bc99e25effb921581b834001dc66a))
@@ -16,12 +15,10 @@
 ## [5.0.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.1...siyuan-blog-v5.0.2) (2024-11-15)
 * outline not show normal ([7c35ded](https://github.com/terwer/siyuan-plugin-blog/commit/7c35ded8920f500cc0f1ca7c3306c1b54cdcfa52))
 ## [5.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.0...siyuan-blog-v5.0.1) (2024-11-15)
-### Miscellaneous
 * update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 ## [5.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v4.0.0...siyuan-blog-v5.0.0) (2024-11-15)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
-### Features
 * [#12](https://github.com/terwer/siyuan-plugin-blog/issues/12) 表格及摘要样式 ([384c8e4](https://github.com/terwer/siyuan-plugin-blog/commit/384c8e4ca6e07bb60763cfb3dce63eab13cf58c1))
 * [#19](https://github.com/terwer/siyuan-plugin-blog/issues/19) 发布权限控制-UI微调 ([cf5cd8c](https://github.com/terwer/siyuan-plugin-blog/commit/cf5cd8cdf830717adf63cdb5e89a96bb948a7453))
 * [#26](https://github.com/terwer/siyuan-plugin-blog/issues/26) 整合sy-post-publisher ([f3d8c20](https://github.com/terwer/siyuan-plugin-blog/commit/f3d8c203ef080f8972be277cd945081bd694ad75))
