@@ -5,28 +5,26 @@
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <!-- 固定的图标 -->
-    <div class="sidebar-toggle" @click="toggleSidebar">
-      <el-icon v-if="isSidebarVisible">
-        <Expand />
-      </el-icon>
-      <el-icon v-else>
-        <Fold />
-      </el-icon>
-    </div>
-    <aside
-      v-if="isSidebarVisible && treeData && treeData.length > 0"
-      class="sidebar-container"
-      :class="{ 'sidebar-hidden': !isSidebarVisible }"
-    >
-      <sidebar
-        :tree-data="treeData"
-        :max-depth="maxDepth"
-        :all-expanded="allExpanded"
-        :expanded-ids="expandedIds"
-        @update-expanded-ids="handleUpdateExpandedIds"
-        @update-all-expanded="handleUpdateAllExpanded"
-      />
+    <aside v-if="treeData && treeData.length > 0">
+      <!-- 固定的图标 -->
+      <div class="sidebar-toggle" @click="toggleSidebar">
+        <el-icon v-if="isSidebarVisible">
+          <Expand />
+        </el-icon>
+        <el-icon v-else>
+          <Fold />
+        </el-icon>
+      </div>
+      <div v-if="isSidebarVisible" class="sidebar-container" :class="{ 'sidebar-hidden': !isSidebarVisible }">
+        <sidebar
+          :tree-data="treeData"
+          :max-depth="maxDepth"
+          :all-expanded="allExpanded"
+          :expanded-ids="expandedIds"
+          @update-expanded-ids="handleUpdateExpandedIds"
+          @update-all-expanded="handleUpdateAllExpanded"
+        />
+      </div>
     </aside>
     <main class="main">
       <!-- 分享正文 -->
