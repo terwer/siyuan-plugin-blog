@@ -1,11 +1,19 @@
 # Changelog
 
+## [5.1.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.0...siyuan-blog-v5.1.1) (2024-11-16)
+
+
+### Miscellaneous
+
+* fix deploy error ([732b9fa](https://github.com/terwer/siyuan-plugin-blog/commit/732b9fad0a3fea8d889bfee146422ee838e1279a))
+
 ## [5.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.4...siyuan-blog-v5.1.0) (2024-11-16)
 
 
 ### Features
 
 * change docTree style ([cfa7513](https://github.com/terwer/siyuan-plugin-blog/commit/cfa751303912b425f025c2b299a4fb7ab193fc3c))
+* docTree default hidden ([de1972f](https://github.com/terwer/siyuan-plugin-blog/commit/de1972f00041fcc029e295ff64c7fd0ea8ec25d4))
 
 ## [5.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.3...siyuan-blog-v5.0.4) (2024-11-15)
 ### Bug Fixes
