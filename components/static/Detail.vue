@@ -1,10 +1,24 @@
+<!--suppress ALL -->
 <template>
   <div v-if="!formData.shareEnabled || formData.isExpires">
     <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <aside v-if="treeData && treeData.length > 0" class="sidebar-container">
+    <!-- 固定的图标 -->
+    <div class="sidebar-toggle" @click="toggleSidebar">
+      <el-icon v-if="isSidebarVisible">
+        <Expand />
+      </el-icon>
+      <el-icon v-else>
+        <Fold />
+      </el-icon>
+    </div>
+    <aside
+      v-if="isSidebarVisible && treeData && treeData.length > 0"
+      class="sidebar-container"
+      :class="{ 'sidebar-hidden': !isSidebarVisible }"
+    >
       <sidebar
         :tree-data="treeData"
         :max-depth="maxDepth"
@@ -60,6 +74,7 @@ import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { useProviderMode } from "~/composables/useProviderMode"
 import Sidebar from "~/components/static/Sidebar.vue"
 import Outline from "~/components/static/Outline.vue"
+import { Fold, Expand } from "@element-plus/icons-vue"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -128,6 +143,7 @@ const maxDepth = ref(formData.post?.docTreeLevel ?? 3)
 const allExpanded = ref(false)
 const defaultExpandedIds = ref([id])
 const expandedIds = ref([] as any)
+const isSidebarVisible = ref(true)
 // outline
 const outlineData = ref([] as any)
 const outlineMaxDepth = ref(formData.post?.outlineLevel ?? 6)
@@ -140,6 +156,10 @@ const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
 // 处理 allExpanded 的更新
 const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
   allExpanded.value = newAllExpanded
+}
+
+const toggleSidebar = () => {
+  isSidebarVisible.value = !isSidebarVisible.value
 }
 
 // 初始化文档树
@@ -162,6 +182,21 @@ onMounted(() => {})
   display flex
   height 100vh
 
+.sidebar-toggle
+  position fixed
+  top 24px
+  left 14px
+  z-index 2000
+  //background-color #fff
+  //border 1px solid #ddd
+  //box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
+  padding 10px
+  cursor pointer
+  transition transform 0.3s ease-in-out
+
+  &:hover
+    transform scale(1.1)
+
 .sidebar-container
   min-width 180px
   max-width 350px
@@ -170,6 +205,11 @@ onMounted(() => {})
   overflow-y auto
   box-shadow 4px 0 6px rgba(0, 0, 0, 0.1)
   padding 16px
+  padding-left 24px
+  transition transform 0.3s ease-in-out
+
+.sidebar-hidden
+  transform translateX(-100%)
 
 .main {
   flex: 1;

@@ -1,8 +1,13 @@
 <template>
   <div class="sidebar">
-    <button class="expand-collapse-btn" @click="toggleAll">
-      {{ props.allExpanded ? t("page.sidebar.expand.all") : t("page.sidebar.collapse.all") }}
-    </button>
+    <div class="sidebar-expand-toggle" @click="toggleAll">
+      <el-icon v-if="props.allExpanded" :title="t('page.sidebar.collapse.all')">
+        <ZoomOut />
+      </el-icon>
+      <el-icon v-else :title="t('page.sidebar.expand.all')">
+        <ZoomIn />
+      </el-icon>
+    </div>
     <sidebar-item
       v-for="item in items"
       :key="item.id"
@@ -19,6 +24,7 @@
 import { computed, defineEmits, defineProps, watch } from "vue"
 import SidebarItem from "~/components/static/SidebarItem.vue"
 import { createAppLogger } from "~/common/appLogger"
+import { ZoomIn, ZoomOut } from "@element-plus/icons-vue"
 
 const logger = createAppLogger("static-sidebar")
 const { t } = useI18n()
@@ -106,22 +112,28 @@ onMounted(() => {})
 </script>
 
 <style lang="stylus" scoped>
-//.sidebar
-//  background-color #f0f0f0
+.sidebar
+  position relative
+  padding 6px
+  background-color #f0f0f0
 
-.expand-collapse-btn
-  width 100%
-  padding 12px
-  margin-bottom 6px
-  background-color #1890ff
-  color white
-  border none
+.sidebar-expand-toggle
+  position absolute
+  top 6px
+  right 6px
   cursor pointer
-  text-align center
-  border-radius 4px
-  font-size 14px
-  transition background-color 0.3s
+  display flex
+  align-items center
+  justify-content center
+  width 24px
+  height 24px
+  background-color #d9d9d9
+  color #606060
+  border-radius 50%
+  box-shadow 0 1px 4px rgba(0, 0, 0, 0.1)
+  transition all 0.3s
 
   &:hover
-    background-color #40a9ff
+    background-color #bfbfbf
+    color #404040
 </style>
