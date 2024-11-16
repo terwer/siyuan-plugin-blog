@@ -220,7 +220,8 @@ onMounted(() => {})
 }
 
 .main::-webkit-scrollbar {
-  display: none; /* 隐藏滚动条（Chrome 和 Safari）*/
+  /* 隐藏滚动条（Chrome 和 Safari）*/
+  display: none;
 }
 
 .floating-toc
