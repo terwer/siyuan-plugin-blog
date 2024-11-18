@@ -26,6 +26,7 @@
 import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
 import { JsonUtil } from "zhi-common"
+import { isDev } from "~/common/Constants"
 
 export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-auth-mode-fetch")
@@ -191,7 +192,8 @@ export const useAuthModeFetch = () => {
 
   const getAuthorByDomainWhiteList = async (): Promise<string> => {
     // 先查找 domain 白名单
-    const domainsText = await fetchProviderConfigByResource("domains.json")
+    const domainsFile = isDev ? "domains.local.json" : "domains.json"
+    const domainsText = await fetchProviderConfigByResource(domainsFile)
     const domainsJson = JsonUtil.safeParse<any>(domainsText, {})
     const domains = domainsJson.domains ?? []
     // 获取当前页面的 origin
