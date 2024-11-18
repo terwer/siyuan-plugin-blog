@@ -1,5 +1,20 @@
 # Changelog
 
+## [5.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.2...siyuan-blog-v5.2.0) (2024-11-18)
+
+
+### Features
+
+* support custom setting load by custom domain ([1e46763](https://github.com/terwer/siyuan-plugin-blog/commit/1e46763d4c96ae2895d04efa03408c931598b772))
+* support disable docTree and outline ([3924886](https://github.com/terwer/siyuan-plugin-blog/commit/392488629c1cc03b0db29f8870b237144b5d3b36))
+* support disable docTree and outline ([6381920](https://github.com/terwer/siyuan-plugin-blog/commit/638192011a58b8489c73597e75c40e067f85a5bf))
+* support disable docTree and outline ([51a3c9a](https://github.com/terwer/siyuan-plugin-blog/commit/51a3c9a2007e7233a418526794a7ba4f7b5c56d1))
+
+
+### Miscellaneous
+
+* no docTree hidden ([19a55ac](https://github.com/terwer/siyuan-plugin-blog/commit/19a55ac41600ada43ca850d1671ef76455151d0c))
+
 ## [5.1.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.1...siyuan-blog-v5.1.2) (2024-11-16)
 ### Miscellaneous
 * no doctree hidden ([1d6b05c](https://github.com/terwer/siyuan-plugin-blog/commit/1d6b05c706fb9c25df9ad1a5919cc98295a4a750))
