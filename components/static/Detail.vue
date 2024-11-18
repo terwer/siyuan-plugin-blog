@@ -74,6 +74,7 @@ import Sidebar from "~/components/static/Sidebar.vue"
 import Outline from "~/components/static/Outline.vue"
 import { Fold, Expand } from "@element-plus/icons-vue"
 import AppConfig from "~/app.config"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -95,7 +96,7 @@ const id = props.pageId ?? ((route.params.id ?? "") as string)
 const { getFirstImageSrc } = useServerAssets()
 const { fetchPostMeta } = useAuthModeFetch()
 const { providerMode } = useProviderMode()
-const { fetchConfig } = useAuthModeFetch()
+const { getStaticSetting } = useStaticSettingStore()
 
 // datas
 const formData = reactive({
@@ -118,8 +119,7 @@ const getPostData = async () => {
   formData.isExpires = checkExpires(attrs)
 }
 const getSetting = async () => {
-  const resText = await fetchConfig(`static.app.config.json`, providerMode)
-  const currentSetting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+  const currentSetting = await getStaticSetting()
   logger.info("currentSetting=>", currentSetting)
   formData.setting = currentSetting
 }
