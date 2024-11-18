@@ -25,7 +25,7 @@
 
 import { createAppLogger } from "~/common/appLogger"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
-import { JsonUtil } from "zhi-common"
+import { JsonUtil, StrUtil } from "zhi-common"
 import { isDev } from "~/common/Constants"
 
 export const useAuthModeFetch = () => {
@@ -197,7 +197,10 @@ export const useAuthModeFetch = () => {
     const domainsJson = JsonUtil.safeParse<any>(domainsText, {})
     const domains = domainsJson.domains ?? []
     // 获取当前页面的 origin
-    const currentOrigin = window.location.origin
+    // https://stackoverflow.com/a/77175631/4037224
+    const requestURL = useRequestURL()
+    const currentOrigin = StrUtil.isEmptyString(requestURL.origin) ? window.location.origin : requestURL.origin
+    logger.info("current origin=>", currentOrigin)
     // 查找匹配的 domain 并获取 author
     const matchedDomain = domains.find((domain: any) => domain.domain === currentOrigin)
     return matchedDomain ? matchedDomain.author : null
