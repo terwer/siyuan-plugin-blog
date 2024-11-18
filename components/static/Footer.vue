@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { JsonUtil } from "zhi-common"
-import AppConfig from "~/app.config"
-import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
-import { useProviderMode } from "~/composables/useProviderMode"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
-const { providerMode } = useProviderMode()
-const { fetchConfig } = useAuthModeFetch()
-const resText = await fetchConfig(`static.app.config.json`, providerMode)
-const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+const { getStaticSetting } = useStaticSettingStore()
+const setting = await getStaticSetting()
 await useStaticThemeMode()
 
 const VNode = () =>
