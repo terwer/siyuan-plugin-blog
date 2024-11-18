@@ -5,7 +5,7 @@
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <aside v-if="treeData && treeData.length > 0">
+    <aside v-if="formData.setting.docTreeEnabled && treeData && treeData.length > 0">
       <!-- 固定的图标 -->
       <div class="sidebar-toggle" @click="toggleSidebar">
         <el-icon v-if="isSidebarVisible">
@@ -56,7 +56,7 @@
         </div>
       </div>
     </main>
-    <aside v-if="outlineData && outlineData.length > 0" class="floating-toc">
+    <aside v-if="formData.setting.outlineEnabled && outlineData && outlineData.length > 0" class="floating-toc">
       <outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
     </aside>
   </div>
@@ -73,6 +73,7 @@ import { useProviderMode } from "~/composables/useProviderMode"
 import Sidebar from "~/components/static/Sidebar.vue"
 import Outline from "~/components/static/Outline.vue"
 import { Fold, Expand } from "@element-plus/icons-vue"
+import AppConfig from "~/app.config"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -94,10 +95,12 @@ const id = props.pageId ?? ((route.params.id ?? "") as string)
 const { getFirstImageSrc } = useServerAssets()
 const { fetchPostMeta } = useAuthModeFetch()
 const { providerMode } = useProviderMode()
+const { fetchConfig } = useAuthModeFetch()
 
 // datas
 const formData = reactive({
   post: {} as Post,
+  setting: {} as any,
   shareEnabled: true,
   isExpires: false,
 })
@@ -114,7 +117,14 @@ const getPostData = async () => {
   const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
   formData.isExpires = checkExpires(attrs)
 }
+const getSetting = async () => {
+  const resText = await fetchConfig(`static.app.config.json`, providerMode)
+  const currentSetting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+  logger.info("currentSetting=>", currentSetting)
+  formData.setting = currentSetting
+}
 await getPostData()
+await getSetting()
 
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
