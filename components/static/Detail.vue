@@ -72,8 +72,7 @@ import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { useProviderMode } from "~/composables/useProviderMode"
 import Sidebar from "~/components/static/Sidebar.vue"
 import Outline from "~/components/static/Outline.vue"
-import { Fold, Expand } from "@element-plus/icons-vue"
-import AppConfig from "~/app.config"
+import { Expand, Fold } from "@element-plus/icons-vue"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
 // https://github.com/nuxt/nuxt/issues/15346
@@ -121,7 +120,9 @@ const getPostData = async () => {
 const getSetting = async () => {
   const currentSetting = await getStaticSetting()
   logger.info("currentSetting=>", currentSetting)
-  formData.setting = currentSetting
+  // 默认没有设置的时候应该显示
+  formData.setting.docTreeEnabled = currentSetting?.docTreeEnabled ?? true
+  formData.setting.outlineEnabled = currentSetting?.outlineEnabled ?? true
 }
 await getPostData()
 await getSetting()
