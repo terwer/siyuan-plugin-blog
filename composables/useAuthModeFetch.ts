@@ -33,7 +33,7 @@ export const useAuthModeFetch = () => {
   const { kernelApi } = useSiyuanApi()
   const env = useRuntimeConfig()
   const route = useRoute()
-
+  const isSSR = process.server
   /**
    * 获取文本
    *
@@ -237,6 +237,10 @@ export const useAuthModeFetch = () => {
       resText = await fetchPublicText(filename)
     }
     logger.info("finally resText by fetchConfig=>", { resText: resText })
+    // 存一份到客户端使用
+    if (!isSSR) {
+      window.localStorage.setItem(filename, resText)
+    }
     return resText
   }
 
