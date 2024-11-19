@@ -237,7 +237,7 @@ onMounted(() => {})
   position fixed
   top 20px
   right 20px
-  min-idth 200px
+  min-width 200px
   max-width 350px
   background-color #fff
   border 1px solid #ddd
