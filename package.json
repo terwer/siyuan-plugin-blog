@@ -11,6 +11,7 @@
     "pluginDev": "zhi-build --watch",
     "build": "bash scripts/build.sh",
     "nodeBuild": "bash scripts/node.sh",
+    "cloudflareBuild": "bash scripts/cloudflare.sh",
     "vercelBuild": "bash scripts/vercel.sh",
     "pluginBuild": "zhi-build --production",
     "dockerPackage": "bash scripts/push_docker_image.sh",
