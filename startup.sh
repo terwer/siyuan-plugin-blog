@@ -1,20 +1,23 @@
 # nohup node .output/server/index.mjs > /dev/null 2>&1 &
 
-# 列出当前运行的应用
+# Define the application name
+APP_NAME="share-front"
+
+# List currently running applications
 pm2 list
 
-# 检查应用是否存在
-if pm2 describe "share-front" &> /dev/null; then
-  # 停止应用
-  pm2 stop "share-front"
+# Check if the application exists
+if pm2 describe "$APP_NAME" &> /dev/null; then
+  # Stop the application
+  pm2 stop "$APP_NAME"
 
-  # 删除应用
-  pm2 delete "share-front"
-  echo "应用 'share-front' 已停止并删除"
+  # Delete the application
+  pm2 delete "$APP_NAME"
+  echo "Application '$APP_NAME' has been stopped and deleted"
 else
-  echo "应用 'share-front' 不存在，跳过停止和删除步骤"
+  echo "Application '$APP_NAME' does not exist, skipping stop and delete steps"
 fi
 
-# 启动新应用
-pm2 start .output/server/index.mjs --name "share-front"
-echo "应用 'share-front' 已启动"
+# Start the new application
+pm2 start .output/server/index.mjs --name "$APP_NAME"
+echo "Application '$APP_NAME' has been started"
