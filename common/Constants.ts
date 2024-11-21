@@ -1,3 +1,5 @@
+// noinspection JSDeprecatedSymbols
+
 /*
  * Copyright (c) 2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23,4 +25,9 @@
  * questions.
  */
 
-export const isDev = typeof process === "undefined" ? false : process?.env?.DEV_MODE === "true"
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+export const isDev = process.dev
+// export const isDev = import.meta.dev
+// https://github.com/nuxt/nuxt/discussions/18779#discussioncomment-5082909
+// typeof process === "undefined" ? false : process?.env?.DEV_MODE === "true"

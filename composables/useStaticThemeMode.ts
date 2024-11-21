@@ -27,10 +27,8 @@ import { BrowserUtil } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { CONSTANTS } from "~/utils/constants"
 import { useRoute } from "vue-router"
-import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
-import { JsonUtil } from "zhi-common"
-import AppConfig from "~/app.config"
 import { useProviderMode } from "~/composables/useProviderMode"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -44,7 +42,7 @@ export const useStaticThemeMode = async () => {
   const { query } = useRoute()
   const { providerMode } = useProviderMode()
   const appBase = process.env.APP_BASE
-  const { fetchConfig } = useAuthModeFetch()
+  const { getStaticSetting } = useStaticSettingStore()
 
   // 在 mounted 生命周期中处理加载后逻辑
   onMounted(() => {})
@@ -67,8 +65,7 @@ export const useStaticThemeMode = async () => {
     switchMode()
   }
 
-  const resText = await fetchConfig(`static.app.config.json`, providerMode)
-  const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+  const setting = await getStaticSetting()
   const siyuanV = CONSTANTS.SIYUAN_VERSION
   const hljsV = CONSTANTS.HLJS_VERSION
   const siyuanLightTheme = (query.lightTheme ?? setting.theme?.lightTheme ?? "Zhihu") as string

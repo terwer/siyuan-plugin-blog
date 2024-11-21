@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { JsonUtil } from "zhi-common"
-import AppConfig from "~/app.config"
-import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
-import { useProviderMode } from "~/composables/useProviderMode"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
+import { useI18n } from "vue-i18n"
 
-const { providerMode } = useProviderMode()
-const { fetchConfig } = useAuthModeFetch()
-const resText = await fetchConfig(`static.app.config.json`, providerMode)
-const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
+const { locale } = useI18n()
+const { getStaticSetting } = useStaticSettingStore()
+const setting = await getStaticSetting()
 await useStaticThemeMode()
 
 const VNode = () =>
@@ -15,6 +12,14 @@ const VNode = () =>
     class: "",
     innerHTML: setting.footer ?? "",
   })
+
+// lifecycles
+onBeforeMount(() => {
+  // 设置默认语言
+  if (setting?.lang) {
+    locale.value = setting?.lang
+  }
+})
 </script>
 
 <template>

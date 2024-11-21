@@ -1,10 +1,15 @@
 # Changelog
 
-## [5.1.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.0...siyuan-blog-v5.1.1) (2024-11-16)
+## [5.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.2...siyuan-blog-v5.2.0) (2024-11-18)
+### Features
+* support custom setting load by custom domain ([1e46763](https://github.com/terwer/siyuan-plugin-blog/commit/1e46763d4c96ae2895d04efa03408c931598b772))
+* support disable doctree and outline ([51a3c9a](https://github.com/terwer/siyuan-plugin-blog/commit/51a3c9a2007e7233a418526794a7ba4f7b5c56d1))
 ### Miscellaneous
+* no doctree hidden ([1d6b05c](https://github.com/terwer/siyuan-plugin-blog/commit/1d6b05c706fb9c25df9ad1a5919cc98295a4a750))
+## [5.1.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.1...siyuan-blog-v5.1.2) (2024-11-16)
+## [5.1.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.0...siyuan-blog-v5.1.1) (2024-11-16)
 * fix deploy error ([732b9fa](https://github.com/terwer/siyuan-plugin-blog/commit/732b9fad0a3fea8d889bfee146422ee838e1279a))
 ## [5.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.4...siyuan-blog-v5.1.0) (2024-11-16)
-### Features
 * change doctree style ([cfa7513](https://github.com/terwer/siyuan-plugin-blog/commit/cfa751303912b425f025c2b299a4fb7ab193fc3c))
 * doctree default hidden ([de1972f](https://github.com/terwer/siyuan-plugin-blog/commit/de1972f00041fcc029e295ff64c7fd0ea8ec25d4))
 ## [5.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.3...siyuan-blog-v5.0.4) (2024-11-15)

@@ -110,4 +110,6 @@ export default {
 
   "page.sidebar.expand.all": "Expand all",
   "page.sidebar.collapse.all": "Collapse all",
+
+  "static.outline": "Document outline",
 }

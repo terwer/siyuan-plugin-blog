@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "share-front",
+      "script": ".output/server/index.mjs",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

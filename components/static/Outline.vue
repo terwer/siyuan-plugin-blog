@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="outline-title">
-      <a class="outline-title-link"> {{ "文档大纲" }} </a>
+      <a class="outline-title-link"> {{ t("static.outline") }} </a>
     </div>
     <div v-for="(item, index) in outlineData" :key="index">
       <outline-item :item="item" :max-depth="maxDepth" :root-level="getRootLevel(item)" :is-root="true" />
@@ -22,6 +22,8 @@ const props = defineProps({
     default: -1,
   },
 })
+
+const { t } = useI18n()
 
 const getRootLevel = () => {
   if (props.outlineData.length === 0) return 1 // 如果数据为空，返回默认级别 1
