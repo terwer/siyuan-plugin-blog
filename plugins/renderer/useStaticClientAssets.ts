@@ -27,6 +27,7 @@ import { createAppLogger } from "~/common/appLogger"
 import { useBaseUrl } from "~/plugins/renderer/useClientBaseUrl"
 import * as cheerio from "cheerio"
 import { useSiyuanApi } from "~/composables/api/useSiyuanApi"
+import { useProviderMode } from "~/composables/useProviderMode"
 
 /**
  * 处理客户端资源文件地址
@@ -38,17 +39,29 @@ export const useStaticClientAssets = () => {
 
   const addClientAssetsPrefix = (el: HTMLElement) => {
     const pageId = el.getAttribute("data-page-id") ?? ""
+    const { providerMode } = useProviderMode()
+    const env = useRuntimeConfig()
 
     const imgs = el.querySelectorAll("img")
     if (imgs && imgs.length > 0) {
       imgs.forEach((img) => {
+        // 异步加载图片
+        img.setAttribute("async", "true")
+        img.setAttribute("loading", "lazy")
+        // 路径处理
         const src = img.getAttribute("src") ?? ""
         if (src.indexOf("assets") > -1) {
-          const baseUrl = getClientBaseUrl()
-          const pubicAssetsFolder = `public/siyuan-blog/${pageId}`
-          const imgUrl = [baseUrl, pubicAssetsFolder, src].join("/")
+          if (providerMode) {
+            // const apiBase = env.public.providerUrl
+            // const imgUrl = [apiBase, "api/asset/", src].join("/")
+            logger.info("providerMode is not local, skip addClientAssetsPrefix, use api as alternative")
+          } else {
+            const baseUrl = getClientBaseUrl()
+            const pubicAssetsFolder = `public/siyuan-blog/${pageId}`
+            const imgUrl = [baseUrl, pubicAssetsFolder, src].join("/")
 
-          img.setAttribute("src", imgUrl)
+            img.setAttribute("src", imgUrl)
+          }
         }
       })
       logger.info("The local image has been processed and the picture display has been repaired.")
