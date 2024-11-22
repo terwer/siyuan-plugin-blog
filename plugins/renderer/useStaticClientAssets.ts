@@ -61,12 +61,14 @@ export const useStaticClientAssets = () => {
             const imgUrl = [baseUrl, pubicAssetsFolder, src].join("/")
 
             img.setAttribute("src", imgUrl)
+            img.setAttribute("data-src", imgUrl)
           }
         }
         // 兼容旧图片域名
         if (src.indexOf("https://api.siyuannote.site") > -1) {
           const imgUrl = src.replace("https://api.siyuannote.site", "https://img1.siyuan.wiki")
           img.setAttribute("src", imgUrl)
+          img.setAttribute("data-src", imgUrl)
         }
       })
       logger.info("The local image has been processed and the picture display has been repaired.")
