@@ -40,6 +40,7 @@ export const useStaticClientAssets = () => {
   const addClientAssetsPrefix = (el: HTMLElement) => {
     const pageId = el.getAttribute("data-page-id") ?? ""
     const { providerMode } = useProviderMode()
+    const env = useRuntimeConfig()
 
     const imgs = el.querySelectorAll("img")
     if (imgs && imgs.length > 0) {
@@ -51,6 +52,8 @@ export const useStaticClientAssets = () => {
         const src = img.getAttribute("src") ?? ""
         if (src.indexOf("assets") > -1) {
           if (providerMode) {
+            // const apiBase = env.public.providerUrl
+            // const imgUrl = [apiBase, "api/asset/", src].join("/")
             logger.info("providerMode is not local, skip addClientAssetsPrefix, use api as alternative")
           } else {
             const baseUrl = getClientBaseUrl()
