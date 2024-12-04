@@ -33,8 +33,8 @@ importers:
         specifier: ^2.11.0
         version: 2.11.0
       zhi-siyuan-api:
-        specifier: ^2.23.0
-        version: 2.23.0(typescript@5.6.3)
+        specifier: ^2.24.1
+        version: 2.24.1(typescript@5.6.3)
     devDependencies:
       '@element-plus/nuxt':
         specifier: ^1.1.0
@@ -2354,6 +2354,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -4768,8 +4769,8 @@ packages:
   zhead@2.2.4:
     resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
 
-  zhi-blog-api@1.67.0:
-    resolution: {integrity: sha512-AVytAFXe4bs/12Xnt0dbKvYMUMudt4JMYjaeI0RUtkKEEZRevO6BedrU9G5py2R0M9cRxBhO2TadlqIAV5qiUA==}
+  zhi-blog-api@1.67.1:
+    resolution: {integrity: sha512-r2i9JBYdIQSGp/X8HvZ2pEJZMJYQUfxu0TsoKk0boVMHCdSbYqgpYe2dyHA/96yBeN1nIQ5eir7d+GjBtK942A==}
 
   zhi-common@1.33.0:
     resolution: {integrity: sha512-ggHVmZ/zkVIOLfAWv4vqJBZY9BZnlnBUhlOmtYoVHV35UdxI5zcvvakBRgDZxjyknikHOLot7MtYfccCCOdyKw==}
@@ -4780,8 +4781,8 @@ packages:
   zhi-lib-base@0.8.0:
     resolution: {integrity: sha512-3Ky5p6KvLWpXy2tlb/JIfSEKLSe5w43PBLM6g+hNcWwpL9S62emgcpUAHzGWBbC0vlLBLungt2LOsmwAfhrZ0w==}
 
-  zhi-siyuan-api@2.23.0:
-    resolution: {integrity: sha512-T4DSd5wR3lsBCdCrKefuoleMfeOjF5yOJOXMCeXlw7EQduz4n4IkP8dHixP/GkSSQdEJHc1Ia0jbUlu9nQka1w==}
+  zhi-siyuan-api@2.24.1:
+    resolution: {integrity: sha512-QKudDHWz+xJgPJ3PQh+Y/LHJlwbxuUwHixgD7FqwnseJ7Z5sWx0Uph51NK7u2vUUBzIozPMW53OIqWL5uOjgyQ==}
 
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
@@ -10199,7 +10200,7 @@ snapshots:
 
   zhead@2.2.4: {}
 
-  zhi-blog-api@1.67.0(typescript@5.6.3):
+  zhi-blog-api@1.67.1(typescript@5.6.3):
     dependencies:
       zhi-common: 1.33.0(typescript@5.6.3)
       zhi-lib-base: 0.8.0
@@ -10220,9 +10221,9 @@ snapshots:
 
   zhi-lib-base@0.8.0: {}
 
-  zhi-siyuan-api@2.23.0(typescript@5.6.3):
+  zhi-siyuan-api@2.24.1(typescript@5.6.3):
     dependencies:
-      zhi-blog-api: 1.67.0(typescript@5.6.3)
+      zhi-blog-api: 1.67.1(typescript@5.6.3)
       zhi-common: 1.33.0(typescript@5.6.3)
       zhi-lib-base: 0.8.0
     transitivePeerDependencies:
