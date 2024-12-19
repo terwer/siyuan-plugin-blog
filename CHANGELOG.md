@@ -1,10 +1,26 @@
 # Changelog
 
-## [5.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.2...siyuan-blog-v5.2.0) (2024-11-18)
+## [5.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.2.0...siyuan-blog-v5.3.0) (2024-12-19)
 ### Features
+* support cloudflare deploy ([3a50d66](https://github.com/terwer/siyuan-plugin-blog/commit/3a50d66151ddb3dde39c5e688a57b066a108bbff))
+### Bug Fixes
+* [#385](https://github.com/terwer/siyuan-plugin-blog/issues/385) dark mode is back again ([0781d6f](https://github.com/terwer/siyuan-plugin-blog/commit/0781d6fa92a707370c3dc6bf735db999c69fa1c3))
+* [#550](https://github.com/terwer/siyuan-plugin-blog/issues/550) [#540](https://github.com/terwer/siyuan-plugin-blog/issues/540) docker version error ([3113892](https://github.com/terwer/siyuan-plugin-blog/commit/3113892ea23c1ee35fc07e19bd15da47b58ff346))
+* default setting not work ([79d0684](https://github.com/terwer/siyuan-plugin-blog/commit/79d06841f092024ba9211cfd01de71d7a994189c))
+* pm2 script ([ba733da](https://github.com/terwer/siyuan-plugin-blog/commit/ba733da49c835bff45068966c1d13d01a80de654))
+* pm2 startup error ([1c3e320](https://github.com/terwer/siyuan-plugin-blog/commit/1c3e32055a809cdbc941fe60989fa34bc793dcfd))
+* replace old img ([000cdd5](https://github.com/terwer/siyuan-plugin-blog/commit/000cdd532d9a0742a3bbb00b8b9f4d573b382f26))
+* set pm2 app name ([a077eb9](https://github.com/terwer/siyuan-plugin-blog/commit/a077eb959d21ebef58120b38a758c4fdd2de82fd))
+* speed img loading ([eb5e84c](https://github.com/terwer/siyuan-plugin-blog/commit/eb5e84c9dd557a5303d7ca0fc7a38946b798d0db))
+* support lang ([4607658](https://github.com/terwer/siyuan-plugin-blog/commit/4607658eb04fe7ef3052262aa3848e00e5f22f01))
+* use custom link from setting ([67df3eb](https://github.com/terwer/siyuan-plugin-blog/commit/67df3ebd66c9e7f33b4127dce4fbd592ddacb40d))
+### Miscellaneous
+* dns validate ([5e2a7c3](https://github.com/terwer/siyuan-plugin-blog/commit/5e2a7c3cfd3f19afe40cdc6b23b48dbb173d04b2))
+* new startup way ([3200960](https://github.com/terwer/siyuan-plugin-blog/commit/3200960d45ce6e053844546a19ed3684bd893a39))
+* remove dns file, use auto ([f4719d8](https://github.com/terwer/siyuan-plugin-blog/commit/f4719d80d2f9adaf5da2ca9e334f0017160bec95))
+## [5.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.2...siyuan-blog-v5.2.0) (2024-11-18)
 * support custom setting load by custom domain ([1e46763](https://github.com/terwer/siyuan-plugin-blog/commit/1e46763d4c96ae2895d04efa03408c931598b772))
 * support disable doctree and outline ([51a3c9a](https://github.com/terwer/siyuan-plugin-blog/commit/51a3c9a2007e7233a418526794a7ba4f7b5c56d1))
-### Miscellaneous
 * no doctree hidden ([1d6b05c](https://github.com/terwer/siyuan-plugin-blog/commit/1d6b05c706fb9c25df9ad1a5919cc98295a4a750))
 ## [5.1.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.1...siyuan-blog-v5.1.2) (2024-11-16)
 ## [5.1.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.0...siyuan-blog-v5.1.1) (2024-11-16)
@@ -13,7 +29,6 @@
 * change doctree style ([cfa7513](https://github.com/terwer/siyuan-plugin-blog/commit/cfa751303912b425f025c2b299a4fb7ab193fc3c))
 * doctree default hidden ([de1972f](https://github.com/terwer/siyuan-plugin-blog/commit/de1972f00041fcc029e295ff64c7fd0ea8ec25d4))
 ## [5.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.3...siyuan-blog-v5.0.4) (2024-11-15)
-### Bug Fixes
 * doctree not show in some case ([3902a87](https://github.com/terwer/siyuan-plugin-blog/commit/3902a8756f9bc99e25effb921581b834001dc66a))
 ## [5.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.0.2...siyuan-blog-v5.0.3) (2024-11-15)
 * outline not show normal in some case ([d6bdda9](https://github.com/terwer/siyuan-plugin-blog/commit/d6bdda907bd7f8ad8a6cd30786ad9559a9881846))
