@@ -23,11 +23,10 @@
  * questions.
  */
 
-import { BrowserUtil } from "zhi-device"
+import { BrowserUtil, SiyuanDevice } from "zhi-device"
 import { createAppLogger } from "~/common/appLogger"
 import { CONSTANTS } from "~/utils/constants"
 import { useRoute } from "vue-router"
-import { useProviderMode } from "~/composables/useProviderMode"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
 // 创建日志记录器
@@ -40,12 +39,18 @@ export const useStaticThemeMode = async () => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
   const { query } = useRoute()
-  const { providerMode } = useProviderMode()
   const appBase = process.env.APP_BASE
   const { getStaticSetting } = useStaticSettingStore()
 
   // 在 mounted 生命周期中处理加载后逻辑
-  onMounted(() => {})
+  onMounted(() => {
+    // 检测浏览器不是暗黑模式，根据媒介查询
+    const win = SiyuanDevice.siyuanWindow()
+    const isDarkMode = !BrowserUtil.hasNodeEnv() && win.matchMedia("(prefers-color-scheme: dark)").matches
+    if (isDarkMode) {
+      setThemeMode(true)
+    }
+  })
 
   // computes
   // 获取颜色模式并暴露 computed 属性
@@ -125,13 +130,17 @@ export const useStaticThemeMode = async () => {
 
   // 设置主题模式
   const setThemeMode = (isDarkMode: boolean) => {
+    if (isDarkMode) {
+      document.body.style.backgroundColor = "unset"
+    } else {
+      document.body.style.backgroundColor = "#f5f5f5"
+    }
     if (BrowserUtil.isInBrowser) {
       setCssAndThemeMode(isDarkMode)
       // 记录日志
       logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
       logger.info(`Auto set mode, isDark => ${isDarkMode}`)
     }
-
     color.preference = isDarkMode ? "dark" : "light"
   }
 
@@ -139,14 +148,17 @@ export const useStaticThemeMode = async () => {
   const setCssAndThemeMode = (isDarkMode: boolean) => {
     // 默认主题适配
     const themeDefaultStyle = document.querySelector("#themeDefaultStyle") as any
-    themeDefaultStyle.href =
-      appBase + `resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`
+    if (themeDefaultStyle) {
+      themeDefaultStyle.href =
+        appBase + `resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`
+    }
 
     // 代码块适配
     const protyleHljsStyle = document.querySelector("#protyleHljsStyle") as any
-    protyleHljsStyle.href =
-      appBase + `resources/stage/protyle/js/highlight.js/styles/vs${isDarkMode ? "2015" : ""}.min.css?v=${hljsV}`
-
+    if (protyleHljsStyle) {
+      protyleHljsStyle.href =
+        appBase + `resources/stage/protyle/js/highlight.js/styles/vs${isDarkMode ? "2015" : ""}.min.css?v=${hljsV}`
+    }
     // 颜色模式属性
     document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
 
