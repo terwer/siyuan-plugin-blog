@@ -1,5 +1,40 @@
 # Changelog
 
+## [5.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.2.0...siyuan-blog-v5.3.0) (2024-12-19)
+
+
+### Features
+
+* support cloudflare deploy ([3a50d66](https://github.com/terwer/siyuan-plugin-blog/commit/3a50d66151ddb3dde39c5e688a57b066a108bbff))
+
+
+### Bug Fixes
+
+* [#385](https://github.com/terwer/siyuan-plugin-blog/issues/385) dark mode is back again ([0781d6f](https://github.com/terwer/siyuan-plugin-blog/commit/0781d6fa92a707370c3dc6bf735db999c69fa1c3))
+* [#550](https://github.com/terwer/siyuan-plugin-blog/issues/550) [#540](https://github.com/terwer/siyuan-plugin-blog/issues/540) docker version error ([3113892](https://github.com/terwer/siyuan-plugin-blog/commit/3113892ea23c1ee35fc07e19bd15da47b58ff346))
+* default setting not work ([79d0684](https://github.com/terwer/siyuan-plugin-blog/commit/79d06841f092024ba9211cfd01de71d7a994189c))
+* pm2 script ([ba733da](https://github.com/terwer/siyuan-plugin-blog/commit/ba733da49c835bff45068966c1d13d01a80de654))
+* pm2 startup error ([406e338](https://github.com/terwer/siyuan-plugin-blog/commit/406e338e29d15094da86892abe21545bd4cb3777))
+* pm2 startup error ([1c3e320](https://github.com/terwer/siyuan-plugin-blog/commit/1c3e32055a809cdbc941fe60989fa34bc793dcfd))
+* replace old img ([ea43ff9](https://github.com/terwer/siyuan-plugin-blog/commit/ea43ff97080a0661eb14aac943722d08b3b3d048))
+* replace old img ([000cdd5](https://github.com/terwer/siyuan-plugin-blog/commit/000cdd532d9a0742a3bbb00b8b9f4d573b382f26))
+* set pm2 app name ([a077eb9](https://github.com/terwer/siyuan-plugin-blog/commit/a077eb959d21ebef58120b38a758c4fdd2de82fd))
+* speed img loading ([1fbe266](https://github.com/terwer/siyuan-plugin-blog/commit/1fbe266bb2e77dbfa71924e1077ec13c6871b073))
+* speed img loading ([eb5e84c](https://github.com/terwer/siyuan-plugin-blog/commit/eb5e84c9dd557a5303d7ca0fc7a38946b798d0db))
+* support lang ([4607658](https://github.com/terwer/siyuan-plugin-blog/commit/4607658eb04fe7ef3052262aa3848e00e5f22f01))
+* use custom link from setting ([67df3eb](https://github.com/terwer/siyuan-plugin-blog/commit/67df3ebd66c9e7f33b4127dce4fbd592ddacb40d))
+
+
+### Miscellaneous
+
+* dns validate ([5e2a7c3](https://github.com/terwer/siyuan-plugin-blog/commit/5e2a7c3cfd3f19afe40cdc6b23b48dbb173d04b2))
+* new startup way ([1e109db](https://github.com/terwer/siyuan-plugin-blog/commit/1e109dba50d16fb1e224d96ea64f18c171ead265))
+* new startup way ([42ab7f4](https://github.com/terwer/siyuan-plugin-blog/commit/42ab7f4704ee061ce52817b4ccbdc5aea93c3ac0))
+* new startup way ([421ba67](https://github.com/terwer/siyuan-plugin-blog/commit/421ba671bc0dae26524331805207995278a5a6b2))
+* new startup way ([b229c78](https://github.com/terwer/siyuan-plugin-blog/commit/b229c788b201568fcb99a20543b3a5f0330c0e67))
+* new startup way ([3200960](https://github.com/terwer/siyuan-plugin-blog/commit/3200960d45ce6e053844546a19ed3684bd893a39))
+* remove dns file, use auto ([f4719d8](https://github.com/terwer/siyuan-plugin-blog/commit/f4719d80d2f9adaf5da2ca9e334f0017160bec95))
+
 ## [5.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.1.2...siyuan-blog-v5.2.0) (2024-11-18)
 ### Features
 * support custom setting load by custom domain ([1e46763](https://github.com/terwer/siyuan-plugin-blog/commit/1e46763d4c96ae2895d04efa03408c931598b772))
