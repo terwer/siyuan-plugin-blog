@@ -1,18 +1,30 @@
+<!--suppress ALL -->
 <template>
   <div v-if="!formData.shareEnabled || formData.isExpires">
     <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <aside v-if="treeData && treeData.length > 0" class="sidebar-container">
-      <sidebar
-        :tree-data="treeData"
-        :max-depth="maxDepth"
-        :all-expanded="allExpanded"
-        :expanded-ids="expandedIds"
-        @update-expanded-ids="handleUpdateExpandedIds"
-        @update-all-expanded="handleUpdateAllExpanded"
-      />
+    <aside v-if="formData.setting.docTreeEnabled && treeData && treeData.length > 0">
+      <!-- 固定的图标 -->
+      <div class="sidebar-toggle" @click="toggleSidebar">
+        <el-icon v-if="isSidebarVisible">
+          <Expand />
+        </el-icon>
+        <el-icon v-else>
+          <Fold />
+        </el-icon>
+      </div>
+      <div v-if="isSidebarVisible" class="sidebar-container" :class="{ 'sidebar-hidden': !isSidebarVisible }">
+        <sidebar
+          :tree-data="treeData"
+          :max-depth="maxDepth"
+          :all-expanded="allExpanded"
+          :expanded-ids="expandedIds"
+          @update-expanded-ids="handleUpdateExpandedIds"
+          @update-all-expanded="handleUpdateAllExpanded"
+        />
+      </div>
     </aside>
     <main class="main">
       <!-- 分享正文 -->
@@ -44,7 +56,7 @@
         </div>
       </div>
     </main>
-    <aside v-if="outlineData && outlineData.length > 0" class="floating-toc">
+    <aside v-if="formData.setting.outlineEnabled && outlineData && outlineData.length > 0" class="floating-toc">
       <outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
     </aside>
   </div>
@@ -60,6 +72,8 @@ import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 import { useProviderMode } from "~/composables/useProviderMode"
 import Sidebar from "~/components/static/Sidebar.vue"
 import Outline from "~/components/static/Outline.vue"
+import { Expand, Fold } from "@element-plus/icons-vue"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，静态构建情况下，不能动态设置，只能在前面的页面写死
@@ -81,10 +95,12 @@ const id = props.pageId ?? ((route.params.id ?? "") as string)
 const { getFirstImageSrc } = useServerAssets()
 const { fetchPostMeta } = useAuthModeFetch()
 const { providerMode } = useProviderMode()
+const { getStaticSetting } = useStaticSettingStore()
 
 // datas
 const formData = reactive({
   post: {} as Post,
+  setting: {} as any,
   shareEnabled: true,
   isExpires: false,
 })
@@ -101,7 +117,15 @@ const getPostData = async () => {
   const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
   formData.isExpires = checkExpires(attrs)
 }
+const getSetting = async () => {
+  const currentSetting = await getStaticSetting()
+  logger.info("currentSetting=>", currentSetting)
+  // 默认没有设置的时候应该显示
+  formData.setting.docTreeEnabled = currentSetting?.docTreeEnabled ?? true
+  formData.setting.outlineEnabled = currentSetting?.outlineEnabled ?? true
+}
 await getPostData()
+await getSetting()
 
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
@@ -128,6 +152,7 @@ const maxDepth = ref(formData.post?.docTreeLevel ?? 3)
 const allExpanded = ref(false)
 const defaultExpandedIds = ref([id])
 const expandedIds = ref([] as any)
+const isSidebarVisible = ref(false)
 // outline
 const outlineData = ref([] as any)
 const outlineMaxDepth = ref(formData.post?.outlineLevel ?? 6)
@@ -140,6 +165,10 @@ const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
 // 处理 allExpanded 的更新
 const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
   allExpanded.value = newAllExpanded
+}
+
+const toggleSidebar = () => {
+  isSidebarVisible.value = !isSidebarVisible.value
 }
 
 // 初始化文档树
@@ -162,6 +191,21 @@ onMounted(() => {})
   display flex
   height 100vh
 
+.sidebar-toggle
+  position fixed
+  top 24px
+  left 14px
+  z-index 2000
+  //background-color #fff
+  //border 1px solid #ddd
+  //box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
+  padding 10px
+  cursor pointer
+  transition transform 0.3s ease-in-out
+
+  &:hover
+    transform scale(1.1)
+
 .sidebar-container
   min-width 180px
   max-width 350px
@@ -170,6 +214,11 @@ onMounted(() => {})
   overflow-y auto
   box-shadow 4px 0 6px rgba(0, 0, 0, 0.1)
   padding 16px
+  padding-left 24px
+  transition transform 0.3s ease-in-out
+
+.sidebar-hidden
+  transform translateX(-100%)
 
 .main {
   flex: 1;
@@ -180,19 +229,24 @@ onMounted(() => {})
 }
 
 .main::-webkit-scrollbar {
-  display: none; /* 隐藏滚动条（Chrome 和 Safari）*/
+  /* 隐藏滚动条（Chrome 和 Safari）*/
+  display: none;
 }
 
 .floating-toc
   position fixed
   top 20px
   right 20px
-  width 200px
+  min-width 200px
+  max-width 350px
   background-color #fff
   border 1px solid #ddd
   padding 10px
   box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
   z-index 1000
+  overflow-y auto
+  /* 限制最大高度，防止内容超出屏幕 */
+  max-height 80vh
 
   h3
     margin-top 0

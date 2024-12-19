@@ -92,7 +92,7 @@ watch(
   { immediate: true }
 )
 
-const emitUpdateExpandedIds = (newExpandedIds) => {
+const emitUpdateExpandedIds = (newExpandedIds: any[]) => {
   emit("update-expanded-ids", newExpandedIds)
 }
 
@@ -111,7 +111,7 @@ const toggle = () => {
   }
 }
 
-const handleSelect = (item) => {
+const handleSelect = (item: any) => {
   emit("select", item)
 }
 </script>

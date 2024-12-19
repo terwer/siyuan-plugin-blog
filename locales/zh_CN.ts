@@ -106,4 +106,6 @@ export default {
 
   "page.sidebar.expand.all": "展开全部",
   "page.sidebar.collapse.all": "折叠全部",
+
+  "static.outline": "文档大纲",
 }

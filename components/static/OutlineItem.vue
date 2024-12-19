@@ -1,8 +1,10 @@
 <template>
-  <div :style="{ marginLeft: (getItemLevel(item) - 1) * 16 + 'px' }" class="outline-item">
+  <div :style="{ marginLeft: getFirstMargin(item) + 'px' }" class="outline-item">
     <!-- 第一级 -->
-    <div v-if="getItemLevel(item) === 1" class="nested-items">
-      <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.name }} </a>
+    <div v-if="getItemLevel(item) === 1 || isRoot" class="nested-items">
+      <a class="item-link" @click.prevent="scrollToSection(item.id)">
+        {{ adjustItemName(item.name) }}
+      </a>
       <div v-if="getItemLevel(item) < maxDepth">
         <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" />
       </div>
@@ -10,7 +12,9 @@
 
     <!-- 其他级别且有子项 -->
     <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
-      <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.content }} </a>
+      <a class="item-link" @click.prevent="scrollToSection(item.id)">
+        {{ adjustItemName(item.content) }}
+      </a>
       <div v-if="getItemLevel(item) < maxDepth">
         <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
       </div>
@@ -19,7 +23,9 @@
     <!-- 无子项 -->
     <div v-else>
       <div v-if="getItemLevel(item) < maxDepth">
-        <a class="item-link" @click.prevent="scrollToSection(item.id)"> {{ item.content }} </a>
+        <a class="item-link" @click.prevent="scrollToSection(item.id)">
+          {{ adjustItemName(item.content) }}
+        </a>
       </div>
     </div>
   </div>
@@ -35,11 +41,49 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
+  isRoot: {
+    type: Boolean,
+    default: false,
+  },
+  rootLevel: {
+    type: Number,
+    default: 1,
+  },
 })
+
+const getFirstMargin = (item) => {
+  const level = getItemLevel(item)
+  if (props.rootLevel === 1) {
+    return (level - 1) * 16
+  } else {
+    return (level - props.rootLevel + 1) * 16
+  }
+}
+
+const adjustItemName = (name) => {
+  // &nbsp;处理、换行符处理、:：处理
+  let adjustedName = name
+    .replace(/&nbsp;/g, " ")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\n/g, " ")
+    .replace(/：/g, "")
+    .replace(/:/g, "")
+    .replace(/,/g, "")
+
+  // 处理 HTML 标签，保留标签内的文本
+  adjustedName = adjustedName.replace(/<[^>]+>/g, (match) => {
+    const textContent = match.match(/>([\s\S]*?)</)
+    return textContent ? textContent[1] : ""
+  })
+
+  return adjustedName
+}
 
 const getItemLevel = (item) => {
   const level = parseInt(item.subType.replace("h", ""), 10)
-  console.log(`level:${level}=>`, item)
   return isNaN(level) ? 1 : level // 默认级别为1
 }
 

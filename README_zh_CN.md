@@ -26,6 +26,10 @@
 
 [帮助文档](https://share.terwergreen.com/s/20230621001422-xsimx5v)
 
+[自部署免费版体验地址](https://freeshare.terwergreen.com)
+
+[收费版体验地址](https://share.terwergreen.com)
+
 ## 核心特色
 
 - **一键分享**：支持一键分享文档到局域网，如果需要远程分享，可使用 docker 部署在服务器，然后安装插件
