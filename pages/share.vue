@@ -38,6 +38,7 @@ import { sendMessageToParent } from "~/utils/innerIframeEvent"
 import { getAllIps } from "~/utils/urlUtil"
 import { useStaticShare } from "~/composables/useStaticShare"
 import { useShareType } from "~/composables/useShareType"
+import { useStaticThemeMode } from "~/composables/useStaticThemeMode"
 
 definePageMeta({
   layout: "default",
@@ -53,6 +54,7 @@ const { blogApi, kernelApi } = useSiyuanApi()
 const { getShareType, isPrivateShare } = useShareType()
 const { updateShareType } = useCommonShareType()
 const { openStaticShare, closeStaticShare, updateStaticShare } = useStaticShare()
+const { colorMode, toggleDark } = await useStaticThemeMode()
 
 const id = useRouteQuery("id", "")
 const origin = useRouteQuery("origin", "")
@@ -103,7 +105,7 @@ const formData = reactive({
 const { optionState, optionToggle } = useShareOptionToggle(formData.optionEnabled)
 
 const goHelp = async () => {
-  window.open("https://blog.terwer.space/s/20230621001422-xsimx5v")
+  window.open("https://siyuan.wiki/s/20230621001422-xsimx5v")
 }
 
 const copyWebLink = () => {
@@ -349,6 +351,13 @@ const goSetting = () => {
               <el-icon-setting />
             </el-icon>
             {{ t("share.setting") }}
+          </el-text>
+
+          <el-text @click="toggleDark">
+            <el-icon>
+              <el-icon-coffee />
+            </el-icon>
+            {{ colorMode ? t("theme.mode.light") : t("theme.mode.dark") }}
           </el-text>
         </el-space>
       </div>

@@ -67,7 +67,8 @@ export default defineAppConfig<AppConfig>({
   customCss: [
     {
       name: "custom.css",
-      content: "body { background-color: #f5f5f5; }",
+      // content: "body { background-color: #f5f5f5; }",
+      content: "",
     },
   ],
 
