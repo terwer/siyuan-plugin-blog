@@ -88,8 +88,8 @@ importers:
         specifier: ^1.80.6
         version: 1.80.6
       siyuan:
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.7
+        version: 1.0.7
       stylus:
         specifier: ^0.63.0
         version: 0.63.0
@@ -2354,6 +2354,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -4038,8 +4039,8 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
-  siyuan@1.0.5:
-    resolution: {integrity: sha512-cTE2WETYSehfm+FoXeAg7lGoGCPkMMCezwUloGS+P5nIEA/IGLUTJXyhML3yTkW92r7qV3oCsm0Ozr13UV94jQ==}
+  siyuan@1.0.7:
+    resolution: {integrity: sha512-DHJdf/y2Il6M1GrUMBq3tw6wv1MFvijwIX6ZnvQVLByI6l+SUXJau89kNnd2t0JIBawnX7ETMWnZIr09TUKiWg==}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -9457,7 +9458,7 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  siyuan@1.0.5: {}
+  siyuan@1.0.7: {}
 
   slash@3.0.0: {}
 
