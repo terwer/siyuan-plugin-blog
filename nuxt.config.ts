@@ -9,7 +9,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/plugins/siyuan-blog/"
+const appBase = "/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -24,14 +24,7 @@ export default defineNuxtConfig({
   },
 
   // build modules
-  modules: [
-    "@vueuse/nuxt",
-    "@nuxtjs/i18n-edge",
-    "@element-plus/nuxt",
-    "@nuxtjs/color-mode",
-    "@pinia/nuxt",
-    "@nuxt/image",
-  ],
+  modules: ["@vueuse/nuxt", "@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/color-mode", "@pinia/nuxt", "@nuxt/image"],
 
   // vueuse
   vueuse: {
@@ -54,7 +47,7 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
-      "process.env.SSR": `"false"`,
+      "process.env.SSR": `"true"`,
     },
     plugins: [],
     css: {
@@ -71,14 +64,6 @@ export default defineNuxtConfig({
     icon: "ElIcon",
     importStyle: "scss",
     themes: ["dark"],
-  },
-
-  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-  ssr: false,
-  router: {
-    options: {
-      hashMode: true,
-    },
   },
 
   css: ["~/assets/siyuan/style.styl", "~/assets/siyuan/index.styl"],
@@ -109,12 +94,12 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            },
+            // {
+            //   src: appBase + "libs/eruda/eruda.js",
+            // },
+            // {
+            //   children: "eruda.init();console.log('eruda inited');",
+            // },
             {
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
@@ -131,19 +116,14 @@ export default defineNuxtConfig({
 
   // 环境变量
   runtimeConfig: {
-    // siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
-    siyuanAuthToken: "",
-    // siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
-    siyuanCookie: "",
+    siyuanAuthToken: process.env.NUXT_SIYUAN_AUTH_TOKEN,
+    siyuanCookie: process.env.NUXT_SIYUAN_COOKIE,
     public: {
-      // defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE,
-      defaultType: "siyuan",
-      // siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL,
-      siyuanApiUrl: "",
-      // waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
-      waitTime: "0",
-      providerMode: "false",
-      providerUrl: "http://127.0.0.1:8000",
+      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "siyuan",
+      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
+      waitTime: process.env.NUXT_PUBLIC_WAIT_TIME,
+      providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
+      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8000",
     },
   },
 

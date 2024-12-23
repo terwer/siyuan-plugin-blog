@@ -20,6 +20,7 @@ export const useSettingStore = defineStore("setting", () => {
 
   const { isPrivateShare } = useCommonShareType()
   const { updateStaticSetting } = useStaticSettingStore()
+  const { providerMode } = useProviderMode()
 
   const getSettingRef = computed(async () => {
     const setting = await commonStore.get()
@@ -69,9 +70,11 @@ export const useSettingStore = defineStore("setting", () => {
    */
   const updateSetting = async (setting: Partial<typeof AppConfig>) => {
     logger.info("update setting=>", setting)
-    // 设置额外信息
-    setting = await setExtraSettingData(setting, setting)
-    settingRef.value = { ...settingRef.value, ...setting }
+    if (providerMode) {
+      // 设置额外信息
+      setting = await setExtraSettingData(setting, setting)
+      settingRef.value = { ...settingRef.value, ...setting }
+    }
 
     const isPrivate = await isPrivateShare()
     if (isPrivate) {
