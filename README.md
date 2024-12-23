@@ -45,7 +45,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 * **SEO optimization**: support automatically generating titles, summaries, and cover images for better SEO.
 * **Multiple Deployment Options**: Supports deployment as a plugin for siyuan-note, self-deployment using Docker, and
   hosting on Vercel to meet different needs. For more details, please see
-  the [docs](https://blog.terwer.space/s/20230621001422-xsimx5v) .
+  the [docs](https://siyuan.wiki/s/20230621001422-xsimx5v) .
     - [Beginner-Level] siyuan-note Plugin: Zero configuration, ready to use out of the box, runs as a local SPA
       application and accesses the Siyuan ontology directly, resulting in extremely fast speed but not very
       SEO-friendly.
