@@ -1,16 +1,11 @@
 # Changelog
 
 ## [5.3.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.3.0...siyuan-blog-v5.3.1) (2024-12-23)
-
-
 ### Bug Fixes
-
 * free share error ([f56214d](https://github.com/terwer/siyuan-plugin-blog/commit/f56214d4afe876fcf9ebbf8b8f1946c6b1614ba0))
-
 ## [5.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.2.0...siyuan-blog-v5.3.0) (2024-12-19)
 ### Features
 * support cloudflare deploy ([3a50d66](https://github.com/terwer/siyuan-plugin-blog/commit/3a50d66151ddb3dde39c5e688a57b066a108bbff))
-### Bug Fixes
 * [#385](https://github.com/terwer/siyuan-plugin-blog/issues/385) dark mode is back again ([0781d6f](https://github.com/terwer/siyuan-plugin-blog/commit/0781d6fa92a707370c3dc6bf735db999c69fa1c3))
 * [#550](https://github.com/terwer/siyuan-plugin-blog/issues/550) [#540](https://github.com/terwer/siyuan-plugin-blog/issues/540) docker version error ([3113892](https://github.com/terwer/siyuan-plugin-blog/commit/3113892ea23c1ee35fc07e19bd15da47b58ff346))
 * default setting not work ([79d0684](https://github.com/terwer/siyuan-plugin-blog/commit/79d06841f092024ba9211cfd01de71d7a994189c))
