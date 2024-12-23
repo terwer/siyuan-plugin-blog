@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.3.0...siyuan-blog-v5.3.1) (2024-12-23)
+
+
+### Bug Fixes
+
+* free share error ([f56214d](https://github.com/terwer/siyuan-plugin-blog/commit/f56214d4afe876fcf9ebbf8b8f1946c6b1614ba0))
+
 ## [5.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-blog-v5.2.0...siyuan-blog-v5.3.0) (2024-12-19)
 ### Features
 * support cloudflare deploy ([3a50d66](https://github.com/terwer/siyuan-plugin-blog/commit/3a50d66151ddb3dde39c5e688a57b066a108bbff))
