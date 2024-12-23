@@ -77,6 +77,24 @@
 | plantuml 图表支持                                      | ❌   | 规划中  |
 | echats 图表支持                                        | ❌   | 规划中️ |
 
+### 应用和包
+
+- `docs`: 一个 [Nuxt](https://nuxt.com/) 应用
+- `web`: 另一个 [Vue3](https://vuejs.org/) 应用
+- `ui`: 一个 Vue 组件库的占位符，被 `web` 和 `docs` 应用共享
+- `eslint-config-custom`: `eslint` 配置（包括 `@nuxtjs/eslint-config-typescript` 和 `@vue/eslint-config-typescript`）
+- `tsconfig`: 在整个 monorepo 中使用的 `tsconfig.json`
+
+每个包/应用都是 100% 使用 [TypeScript](https://www.typescriptlang.org) 编写的。
+
+### 工具
+
+这个 Turborepo 设置了一些额外的工具：
+
+- [TypeScript](https://www.typescriptlang.org/) 用于静态类型检查
+- [ESLint](https://eslint.org/) 用于代码检查
+- [Prettier](https://prettier.io) 用于代码格式化
+
 ## 更新历史
 
 请参考 [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)

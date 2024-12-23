@@ -85,6 +85,24 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 | PlantUML diagram support                      | ❌            | Planned      |
 | ECharts diagram support                       | ❌            | Planned      |
 
+### Apps and Packages
+
+- `docs`: a [Nuxt](https://nuxt.com/) app
+- `web`: another [Vue3](https://vuejs.org/) app
+- `ui`: a stub Vue component library shared by both `web` and `docs` applications
+- `eslint-config-custom`: `eslint` configurations (includes `@nuxtjs/eslint-config-typescript` and `@vue/eslint-config-typescript`)
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Utilities
+
+This Turborepo has some additional tools already setup for you:
+
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+
 ## Changelog
 
 Please refer to [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)

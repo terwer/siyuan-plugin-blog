@@ -28,3 +28,4 @@ token.txt
 .env.*
 !.env.example
 !.env.*.example
+.turbo

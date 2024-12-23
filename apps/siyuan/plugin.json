@@ -1,0 +1,38 @@
+{
+  "name": "publisher-pro",
+  "author": "terwer",
+  "url": "https://github.com/terwerinc/siyuan-plugin-publisher-pro",
+  "version": "1.18.3",
+  "minAppVersion": "2.9.0",
+  "backends": [
+    "windows",
+    "linux",
+    "darwin",
+    "docker"
+  ],
+  "frontends": [
+    "desktop",
+    "browser-desktop"
+  ],
+  "displayName": {
+    "default": "Publisher pro",
+    "zh_CN": "发布工具专业版"
+  },
+  "description": {
+    "default": "An user-centric, extensible, cross-platform publishing tool for publishing articles from siyuan-note to platforms like Yuque etc.",
+    "zh_CN": "用户体验优先、可扩展、多平台的思源笔记发布工具"
+  },
+  "readme": {
+    "default": "README.md",
+    "zh_CN": "README_zh_CN.md"
+  },
+  "i18n": [
+    "en_US",
+    "zh_CN"
+  ],
+  "funding": {
+    "custom": [
+      "https://afdian.com/a/terwer"
+    ]
+  }
+}
