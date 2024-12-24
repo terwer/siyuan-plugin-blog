@@ -1,89 +1,18 @@
-[中文](README_zh_CN.md)
+# Turborepo VueJS/NuxtJS starter
 
-# Share to web
+This is an official starter Turborepo.
 
-<img src="https://ghproxy.com/https://github.com/terwer/siyuan-plugin-blog/blob/main/icon.png" width="160" height="160" alt="icon">
+## Using this example
 
-The notion like sharing feature you've always dreamed of is here, too.
+Run the following command:
 
-Based on the localization concept of siyuan-note , this plugin is natively shared locally on a local area network and
-can be shared remotely through the docker plugin. No additional server-side support is required, just take siyuan-note.
+```sh
+npx create-turbo@latest -e with-vue-nuxt
+```
 
-The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
+## What's inside?
 
-> Important Notice:
-> 1. Version 2.0.0 introduces support for VIP versions, add mode link rules as follows:    
-     /s/[id]  
-     /static/[id]  
-     /p/[id]  
-     /post/[id]  
-     /link/[id]  
-     /doc/[id]  
-     /article/[id]  
-     /x/[id]  
-     /a/[id]  
-     /d/[id]
-> 2. Share pro is released on the VIP service, please visit：https://siyuan.wiki
-
-
-[docs](https://siyuan.wiki/x/20241115104036-8pprbgr)
-
-[Self-deployed free version experience address](https://freeshare.terwergreen.com)
-
-[Paid version experience address](https:///siyuan.wiki)
-
-## Core Features
-
-* **One-click sharing**: You can share your documents to the local area network with just one click. If you need to
-  share remotely, you can deploy it on a server using Docker and then install the plugin.
-* **Permission control**: Only shared pages can be viewed, and pages that have not been shared cannot be viewed without
-  permission.
-* **Expiration time**: Support setting expired time, after which you cannot view it
-* **Personal homepage**: You can set a shared page as your homepage, which can be used as a custom blog homepage.
-* **Theme integration**: The default theme is [Zhihu](https://github.com/terwer/siyuan-theme-zhihu), and other themes
-  will be supported in the future.
-* **SEO optimization**: support automatically generating titles, summaries, and cover images for better SEO.
-* **Multiple Deployment Options**: Supports deployment as a plugin for siyuan-note, self-deployment using Docker, and
-  hosting on Vercel to meet different needs. For more details, please see
-  the [docs](https://siyuan.wiki/s/20230621001422-xsimx5v) .
-    - [Beginner-Level] siyuan-note Plugin: Zero configuration, ready to use out of the box, runs as a local SPA
-      application and accesses the Siyuan ontology directly, resulting in extremely fast speed but not very
-      SEO-friendly.
-    - [Expert-Level] Self-Deployment using Docker: Requires purchasing a server, SSR server-side rendering,
-      SEO-friendly, high speed.
-    - [Cost-Free Option] Vercel Hosting: Requires purchasing a domain and may not be accessible in some countries, low
-      cost, moderate speed.
-* **Sharing mode (experimental)**: Public note sharing is supported by default, and limited sharing functions can be
-  supported after enabling the authorization code.
-* **VIP Service Provider Mode**<sup>2.0.0+</sup>: Allows deploying this project as a VIP service provider, requiring
-  backend sharing service(eg. https://github.com/terwerinc/siyuan-note-service) support.
-
-## Features compare
-
-| Feature                                       | Free Version | Paid Version |
-|-----------------------------------------------|--------------|--------------|
-| Support for replacing image links             | ✔️           | ✔️           |
-| Integration with currently popular themes     | ✔️           | ✔️           |
-| Support for internal and external links       | ✔️           | ✔️           |
-| Support for task lists                        | ✔️           | ✔️           |
-| Support for sharing with authorization code   | ✔️           | ✔️           |
-| Unordered list style adaptation               | ✔️           | ✔️           |
-| Latex formula rendering                       | ✔️           | ✔️           |
-| Support for siyuan-note's SVGs                | ✔️           | ✔️           |
-| Support for image hosting                     | ❌            | ✔️           |
-| Support for custom domain                     | ❌            | ✔️           |
-| Batch management for shared pages             | ❌            | ✔️           |
-| Document tree                                 | ❌            | ✔️           |
-| Page outline                                  | ❌            | ✔️           |
-| Support for sharing password for single pages | ❌            | Planned      |
-| Support for document alias access             | ❌            | Planned      |
-| Support for displaying original MD content    | ❌            | Planned      |
-| Support for displaying original KMD content   | ❌            | Planned      |
-| Tags, summaries                               | ❌            | Planned      |
-| Custom properties                             | ❌            | Planned      |
-| Image zoom effect                             | ❌            | Planned      |
-| PlantUML diagram support                      | ❌            | Planned      |
-| ECharts diagram support                       | ❌            | Planned      |
+This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
@@ -103,33 +32,53 @@ This Turborepo has some additional tools already setup for you:
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
 
-## Changelog
+### Build
 
-Please refer to [CHANGELOG](https://github.com/terwer/siyuan-plugin-blog/blob/main/CHANGELOG.md)
+To build all apps and packages, run the following command:
 
-## Development
+```
+cd my-turborepo
+pnpm build
+```
 
-Please refer to [DEVELOPMENT](./DEVELOPMENT.md)
+### Develop
 
-## Donate
+To develop all apps and packages, run the following command:
 
-If you approve of this project, invite me to have a cup of coffee, which will encourage me to keep updating and create
-more useful tools~
+```
+cd my-turborepo
+pnpm dev
+```
 
-### WeChat
+### Remote Caching
 
-<div>
-<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
-</div>
+> [!TIP]
+> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
 
-### Alipay
+Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-<div>
-<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
-</div>
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
 
-## Thanks
+```
+cd my-turborepo
+npx turbo login
+```
 
-Thanks to the solutions provided by the open source community, which simplifies a lot of work for this project!
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
 
-- [notion](https://notion.so)
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+
+```
+npx turbo link
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
+- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)

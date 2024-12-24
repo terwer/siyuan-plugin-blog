@@ -1,5 +1,5 @@
 {
-  "name": "@terwer/eslint-config",
+  "name": "eslint-config-custom",
   "license": "MIT",
   "version": "0.0.0",
   "private": true,

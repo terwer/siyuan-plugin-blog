@@ -6,7 +6,7 @@ const props = withDefaults(
     class?: string;
   }>(),
   {},
-);
+)
 </script>
 
 <template>

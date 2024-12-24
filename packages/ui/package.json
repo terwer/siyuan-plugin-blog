@@ -1,5 +1,5 @@
 {
-  "name": "@terwer/ui",
+  "name": "ui",
   "version": "0.0.0",
   "private": true,
   "main": "./index.ts",
@@ -8,8 +8,8 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@terwer/eslint-config": "workspace:*",
-    "@terwer/tsconfig": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
     "vue": "^3.4.21"
   }
 }

@@ -1,24 +1,25 @@
+// noinspection JSCheckFunctionSignatures
+
 const { resolve } = require("node:path");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
 /*
  * This is a custom ESLint configuration for use with
- * NuxtJs apps.
+ * internal that utilize VueJS.
  *
  * This config extends the Vercel Engineering Style Guide.
  * For more information, see https://github.com/vercel/style-guide
  *
  */
+
 module.exports = {
   extends: [
-    "@nuxtjs/eslint-config-typescript",
-    "@vercel/style-guide/eslint/node",
     "@vercel/style-guide/eslint/browser",
-    "turbo",
+    "@vue/eslint-config-typescript",
   ].map(require.resolve),
   parserOptions: {
-    sourceType: "module",
+    ecmaVersion: "latest",
   },
   settings: {
     "import/resolver": {
@@ -27,11 +28,14 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs", "nuxt.config.ts"],
+  // ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js"],
+  ignorePatterns: ["node_modules/", "dist/"],
+
   rules: {
-    "comma-dangle": "off",
-    semi: "off",
-    "no-undef": "off",
+    "import/no-default-export": "off",
+    "vue/multi-word-component-names": "off",
     // add specific rules configurations here
+    semi: ["error", "never"],
+    "eslint-comments/require-description": "off",
   },
 };

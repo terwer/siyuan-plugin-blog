@@ -2,7 +2,6 @@
   "name": "with-vue-nuxt",
   "private": true,
   "scripts": {
-    "makeLink": "node --no-warnings ./scripts/make_dev_link.js",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
@@ -12,5 +11,5 @@
     "prettier": "^3.2.5",
     "turbo": "^2.3.3"
   },
-  "packageManager": "pnpm@8.15.6"
+  "packageManager": "pnpm@9.15.1"
 }
