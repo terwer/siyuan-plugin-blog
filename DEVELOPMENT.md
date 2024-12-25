@@ -60,6 +60,7 @@ NUXT_APP_BASE_URL=blog node ./dist/node/server/index.mjs
 for vercel
 
 ```bash
+# npx vercel dev
 pnpm build -F @terwer/share-pro-app -- --from vercel
 ```
 
