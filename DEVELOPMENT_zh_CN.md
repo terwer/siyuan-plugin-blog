@@ -65,17 +65,18 @@ NUXT_APP_BASE_URL=blog node ./dist/node/server/index.mjs
 ### 为 Vercel 构建
 
 ```bash
-# npx vercel dev
-pnpm build -F @terwer/share-pro-app -- --from vercel
+# 根目录：apps/app
+# 构建命令
+pnpm vercelBuild
 ```
 
 
 ### 为 Cloudflare 构建
 
 ```bash
-pnpm build -F @terwer/share-pro-app -- --from cloudflare
-# 运行
-npx wrangler pages dev dist/cloudflare
+# 根目录：apps/app
+# 构建命令
+pnpm cloudflareBuild
 ```
 
 

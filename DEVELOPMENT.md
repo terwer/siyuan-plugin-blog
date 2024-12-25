@@ -60,16 +60,17 @@ NUXT_APP_BASE_URL=blog node ./dist/node/server/index.mjs
 for vercel
 
 ```bash
-# npx vercel dev
-pnpm build -F @terwer/share-pro-app -- --from vercel
+# root：apps/app
+# build command
+pnpm vercelBuild
 ```
 
 for cloudflare
 
 ```bash
-pnpm build -F @terwer/share-pro-app -- --from cloudflare
-# run
-npx wrangler pages dev dist/cloudflare
+# root：apps/app
+# build command
+pnpm cloudflareBuild
 ```
 
 ## Package
