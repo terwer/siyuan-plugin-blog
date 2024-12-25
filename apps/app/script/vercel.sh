@@ -9,12 +9,8 @@ echo "Nuxt build for vercel finished."
 # 拷贝资源
 # rsync -av --progress .output/public/ ./dist/
 mkdir -p ../../dist/vercel
-#rsync -av .output/ ../../dist/vercel
-#rsync -av dist/ ../../dist/vercel
-pwd
-ls
-cp -r .output/ ../../dist/vercel
-cp -r dist/ ../../dist/vercel
+#rsync -av .vercel/output/ ../../dist/vercel
+cp -r .vercel/output/ ../../dist/vercel
 echo "Resources are copied."
 
 echo "Vercel build finished."
