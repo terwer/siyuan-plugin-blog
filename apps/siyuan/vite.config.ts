@@ -1,16 +1,16 @@
-import { resolve } from "path";
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import minimist from "minimist";
-import { viteStaticCopy } from "vite-plugin-static-copy";
+import { resolve } from "node:path"
+import { defineConfig } from "vite"
+import vue from "@vitejs/plugin-vue"
+import minimist from "minimist"
+import { viteStaticCopy } from "vite-plugin-static-copy"
 // import externalize from "vite-plugin-externalize-dependencies";
-import livereload from "rollup-plugin-livereload";
-import fg from "fast-glob";
+import livereload from "rollup-plugin-livereload"
+import fg from "fast-glob"
 
-const args = minimist(process.argv.slice(2));
-const isWatch = args.watch || args.w || false;
+const args = minimist(process.argv.slice(2))
+const isWatch = args.watch || args.w || false
 // const distDir = "./dist";
-const distDir = "../../dist/siyuan";
+const distDir = "../../dist/siyuan"
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -63,6 +63,7 @@ export default defineConfig({
   // https://github.com/vitejs/vite/discussions/3058#discussioncomment-2115319
   // 在这里自定义变量
   define: {
+    "process.env.NODE_ENV": isWatch ? "\"development\"" : "\"production\"",
     "process.env.DEV_MODE": `"${isWatch}"`,
     "process.env.SH_BUILD_TIME": new Date().getTime().toString(),
   },
@@ -109,9 +110,9 @@ export default defineConfig({
                     "src/i18n/*.json",
                     "./README*.md",
                     "./plugin.json",
-                  ]);
+                  ])
                   for (const file of files) {
-                    this.addWatchFile(file);
+                    this.addWatchFile(file)
                   }
                 },
               },
@@ -121,16 +122,16 @@ export default defineConfig({
       output: {
         entryFileNames: "[name].js",
         assetFileNames: (assetInfo) => {
-          for (let name of assetInfo.names) {
+          for (const name of assetInfo.names) {
             if (name === "style.css") {
-              return "Home.styl";
+              return "Home.styl"
             }
           }
-          return "[name][extname]";
+          return "[name][extname]"
         },
-        banner: `/* Siyuan blog*/`,
+        banner: "/* Siyuan blog*/",
         footer: "/* Copyright Terwer Inc. */",
       },
     },
   },
-});
+})

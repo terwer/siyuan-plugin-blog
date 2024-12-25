@@ -32,6 +32,7 @@ module.exports = {
     // semi: "off",
     "no-undef": "off",
     "eslint-comments/require-description": "off",
+    "unicorn/filename-case": "off",
     // add specific rules configurations here
     semi: ["error", "never"],
     quotes: ["error", "double"],
