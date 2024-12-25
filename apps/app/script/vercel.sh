@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 使用 Vercel 构建配置
 echo "Using Vercel build config as SSR build."
@@ -7,6 +7,7 @@ echo "Nuxt build for vercel finished."
 
 # 拷贝资源
 # rsync -av --progress .output/public/ ./dist/
+apt -yq install rsync openssh-client
 mkdir -p ../../dist/vercel
 rsync -av .output/ ../../dist/vercel
 rsync -av dist/ ../../dist/vercel
