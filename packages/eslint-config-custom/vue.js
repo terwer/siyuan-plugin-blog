@@ -32,5 +32,6 @@ module.exports = {
     "import/no-default-export": "off",
     "vue/multi-word-component-names": "off",
     // add specific rules configurations here
+    semi: ["error", "never"]
   },
 };

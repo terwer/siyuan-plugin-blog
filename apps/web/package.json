@@ -17,7 +17,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node18": "^18.2.2",
-    "@types/node": "^20.11.24",
+    "@types/node": "^18.19.68",
     "@vitejs/plugin-vue": "^5.0.4",
     "eslint": "^8.57.0",
     "eslint-config-custom": "workspace:*",
@@ -25,7 +25,7 @@
     "npm-run-all2": "^6.1.2",
     "tsconfig": "workspace:*",
     "typescript": "5.5.4",
-    "vite": "^5.1.4",
+    "vite": "^5.4.6",
     "vue-tsc": "^2.0.4"
   }
 }

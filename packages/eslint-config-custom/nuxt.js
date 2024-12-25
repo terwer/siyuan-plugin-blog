@@ -15,7 +15,6 @@ module.exports = {
     "@nuxtjs/eslint-config-typescript",
     "@vercel/style-guide/eslint/node",
     "@vercel/style-guide/eslint/browser",
-    "turbo",
   ].map(require.resolve),
   parserOptions: {
     sourceType: "module",
@@ -30,8 +29,9 @@ module.exports = {
   ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs", "nuxt.config.ts"],
   rules: {
     "comma-dangle": "off",
-    semi: "off",
+    // semi: "off",
     "no-undef": "off",
     // add specific rules configurations here
+    semi: ["error", "never"]
   },
 };
