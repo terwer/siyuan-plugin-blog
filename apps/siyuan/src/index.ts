@@ -7,12 +7,9 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import { App, IObject, Plugin } from "siyuan";
-import { isDev } from "./Constants.ts";
-import { Topbar } from "./topbar.ts";
-import { ILogger, simpleLogger } from "zhi-lib-base";
-
-import "./global.css";
+import {App, IObject, Plugin} from "siyuan"
+import {Topbar} from "./topbar.ts"
+import {icons} from "./icons.ts"
 
 /**
  * SiyuanBlogPlugin 类是 siyuan-note 的插件入口
@@ -21,23 +18,23 @@ import "./global.css";
  * @since 5.4.0
  */
 export default class SiyuanBlogPlugin extends Plugin {
-  public logger: ILogger = simpleLogger("index", "siyuan-blog", isDev);
-  private topbar: Topbar = {} as Topbar;
+  // public logger: ILogger = simpleLogger("index", "siyuan-blog", isDev)
+  private topbar: Topbar = {} as Topbar
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
-    super(options);
+    super(options)
     // topbar
-    this.topbar = new Topbar(this);
+    this.topbar = new Topbar(this)
   }
 
   async onload() {
+    // 注册图标
+    this.addIcons(icons.iconShare)
     // 初始化工具栏
-    this.topbar.initTopbar();
-    this.logger.debug("SiyuanBlog loaded");
+    this.topbar.initTopbar()
   }
 
   onunload() {
-    this.logger.debug("SiyuanBlog unloaded");
   }
 
   // ==================

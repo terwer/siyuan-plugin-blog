@@ -1,4 +1,3 @@
-import {createApp} from "vue"
-import Share from "./share.vue"
+import {createBootStrap} from "./bootstrap.ts"
 
-createApp(Share).mount("#root")
+createBootStrap("#root")
