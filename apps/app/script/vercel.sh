@@ -10,6 +10,8 @@ echo "Nuxt build for vercel finished."
 mkdir -p ../../dist/vercel
 #rsync -av .output/ ../../dist/vercel
 #rsync -av dist/ ../../dist/vercel
+pwd
+ls
 cp -r .output/ ../../dist/vercel
 cp -r dist/ ../../dist/vercel
 echo "Resources are copied."
