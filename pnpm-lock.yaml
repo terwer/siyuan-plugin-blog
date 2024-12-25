@@ -103,9 +103,6 @@ importers:
       '@vue/eslint-config-typescript':
         specifier: ^12.0.0
         version: 12.0.0(eslint-plugin-vue@9.22.0)(eslint@8.57.0)(typescript@5.5.4)
-      eslint-config-turbo:
-        specifier: ^2.0.0
-        version: 2.0.3(eslint@8.57.0)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -4281,11 +4278,6 @@ packages:
       type-fest: 4.30.2
     dev: true
 
-  /dotenv@16.0.3:
-    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
-    engines: {node: '>=12'}
-    dev: true
-
   /dotenv@16.4.5:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
@@ -4615,15 +4607,6 @@ packages:
       eslint-plugin-promise: 6.1.1(eslint@8.57.0)
     dev: true
 
-  /eslint-config-turbo@2.0.3(eslint@8.57.0):
-    resolution: {integrity: sha512-D1+lNOpTFEuAgPWJfRHXHjzvAfO+0TVmORfftmYQNw+uk2UIBjhelhwERBceYFy2oFJnckHsqt69dp/zIM6/0g==}
-    peerDependencies:
-      eslint: '>6.6.0'
-    dependencies:
-      eslint: 8.57.0
-      eslint-plugin-turbo: 2.0.3(eslint@8.57.0)
-    dev: true
-
   /eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.28.1):
     resolution: {integrity: sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==}
     engines: {node: '>= 4'}
@@ -4916,15 +4899,6 @@ packages:
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-    dev: true
-
-  /eslint-plugin-turbo@2.0.3(eslint@8.57.0):
-    resolution: {integrity: sha512-mplP4nYaRvtTNuwF5QTLYKLu0/8LTRsHPgX4ARhaof+QZI2ttglONe1/iJpKB4pg0KqFp7WHziKoJL+s0+CJ1w==}
-    peerDependencies:
-      eslint: '>6.6.0'
-    dependencies:
-      dotenv: 16.0.3
-      eslint: 8.57.0
     dev: true
 
   /eslint-plugin-unicorn@44.0.2(eslint@8.57.0):

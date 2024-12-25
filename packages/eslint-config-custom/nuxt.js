@@ -12,9 +12,7 @@ const project = resolve(process.cwd(), "tsconfig.json");
  */
 module.exports = {
   extends: [
-    "@nuxtjs/eslint-config-typescript",
-    "@vercel/style-guide/eslint/node",
-    "@vercel/style-guide/eslint/browser",
+    "@nuxtjs/eslint-config-typescript"
   ].map(require.resolve),
   parserOptions: {
     sourceType: "module",
@@ -32,6 +30,7 @@ module.exports = {
     // semi: "off",
     "no-undef": "off",
     // add specific rules configurations here
-    semi: ["error", "never"]
+    semi: ["error", "never"],
+    quotes: ["error", "double"],
   },
 };
