@@ -5,5 +5,5 @@ echo "Starting with docker..."
 
 # 兼容 node 的构建
 cp .env.docker .env
-pnpm nodeBuild
+pnpm build --from node
 docker compose up -d --build
