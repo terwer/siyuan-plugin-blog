@@ -44,19 +44,31 @@ pnpm build -F siyuan-blog -- --watch
 ### for siyuan-note
 
 ```bash
-pnpm build
+pnpm build -F @terwer/share-pro-app -- --from siyuan
 ```
 
 ### for node
 
 ```bash
-cd apps/app
-pnpm nodeBuild
-cd ../../
+pnpm build -F @terwer/share-pro-app -- --from node
 # for /
 node ./dist/node/server/index.mjs
 # custom prefix, eg:/blog
 NUXT_APP_BASE_URL=blog node ./dist/node/server/index.mjs
+```
+
+for vercel
+
+```bash
+pnpm build -F @terwer/share-pro-app -- --from vercel
+```
+
+for cloudflare
+
+```bash
+pnpm build -F @terwer/share-pro-app -- --from cloudflare
+# run
+npx wrangler pages dev dist/cloudflare
 ```
 
 ## Package
