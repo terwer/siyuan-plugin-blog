@@ -6,6 +6,7 @@
     "dev": "nuxt dev",
     "build": "bash script/build.sh",
     "vercelBuild": "bash script/vercel.sh",
+    "cloudflareBuild": "bash script/cloudflare.sh",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
