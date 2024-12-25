@@ -3,7 +3,7 @@ const props = defineProps<{
   class?: string;
   title: string;
   href: string;
-}>()
+}>();
 </script>
 
 <template>

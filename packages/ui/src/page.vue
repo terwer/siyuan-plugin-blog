@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Card from "./card.vue"
-import Gradient from "./gradient.vue"
+import Card from "./card.vue";
+import Gradient from "./gradient.vue";
 
 const LINKS = [
   {
@@ -24,11 +24,11 @@ const LINKS = [
     description:
       "Instantly deploy your Turborepo to a shareable URL with Vercel.",
   },
-]
+];
 
 const props = defineProps<{
   appName: string;
-}>()
+}>();
 </script>
 
 <template>

@@ -1,5 +1,3 @@
-// noinspection JSCheckFunctionSignatures
-
 const { resolve } = require("node:path");
 
 const project = resolve(process.cwd(), "tsconfig.json");
@@ -28,14 +26,11 @@ module.exports = {
       },
     },
   },
-  // ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js"],
-  ignorePatterns: ["node_modules/", "dist/"],
+  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js"],
 
   rules: {
     "import/no-default-export": "off",
     "vue/multi-word-component-names": "off",
     // add specific rules configurations here
-    semi: ["error", "never"],
-    "eslint-comments/require-description": "off",
   },
 };
