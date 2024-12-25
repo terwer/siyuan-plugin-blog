@@ -6,6 +6,7 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".nuxt/**", ".output/**", "dist/**"]
     },
+    "clean": {},
     "lint": {},
     "dev": {
       "cache": false,

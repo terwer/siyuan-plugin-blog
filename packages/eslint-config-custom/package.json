@@ -3,6 +3,9 @@
   "license": "MIT",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "clean": "rimraf node_modules"
+  },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@vercel/style-guide": "^5.2.0",

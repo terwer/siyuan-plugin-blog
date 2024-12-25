@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "clean": "rimraf node_modules"
   },
   "devDependencies": {
     "@vue/tsconfig": "^0.5.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
