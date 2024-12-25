@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 使用 Node 构建配置
 echo "Using Node build config as SSR build."
@@ -8,7 +8,10 @@ echo "Nuxt build for node finished."
 # 拷贝资源
 # rsync -av --progress .output/public/ ./dist/
 mkdir -p ../../dist/node
-rsync -av .output/ ../../dist/node
+#rsync -av .output/ ../../dist/node
+#rsync -av dist/ ../../dist/node
+cp -r .output/ ../../dist/node
+cp -r dist/ ../../dist/node
 echo "Resources are copied."
 
 nuxt build

@@ -7,10 +7,11 @@ echo "Nuxt build for vercel finished."
 
 # 拷贝资源
 # rsync -av --progress .output/public/ ./dist/
-apt -yq install rsync openssh-client
 mkdir -p ../../dist/vercel
-rsync -av .output/ ../../dist/vercel
-rsync -av dist/ ../../dist/vercel
+#rsync -av .output/ ../../dist/vercel
+#rsync -av dist/ ../../dist/vercel
+cp -r .output/ ../../dist/vercel
+cp -r dist/ ../../dist/vercel
 echo "Resources are copied."
 
 nuxt build

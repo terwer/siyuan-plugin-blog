@@ -10,6 +10,7 @@ echo "Nuxt build for siyuan finished."
 # rsync -av --progress .output/public/ ./dist/
 mkdir -p ../../dist/siyuan/app
 rsync -av .output/public/ ../../dist/siyuan/app
+#cp -r .output/public/ ../../dist/siyuan/app
 echo "Resources are copied."
 
 # 使用 `sed` 命令替换内容
