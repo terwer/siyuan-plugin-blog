@@ -31,6 +31,7 @@ module.exports = {
     "comma-dangle": "off",
     // semi: "off",
     "no-undef": "off",
+    "eslint-comments/require-description": "off",
     // add specific rules configurations here
     semi: ["error", "never"],
     quotes: ["error", "double"],

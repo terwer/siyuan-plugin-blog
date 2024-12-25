@@ -13,6 +13,7 @@ coverage
 .output/
 out/
 build
+dist
 
 # misc
 .DS_Store
@@ -37,3 +38,5 @@ yarn-error.log*
 .vercel
 
 .idea
+.turbo
+__pycache__
