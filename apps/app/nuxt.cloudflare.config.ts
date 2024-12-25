@@ -7,5 +7,8 @@ export default defineNuxtConfig({
   app: {
     baseURL: appBase,
   },
+  nitro: {
+    preset: "cloudflare_pages",
+  },
   compatibilityDate: "2024-11-01",
 })

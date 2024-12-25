@@ -4,7 +4,7 @@
 echo "Using Siyuan build config as SSE and SPA build."
 cp nuxt.siyuan.config.ts nuxt.config.ts
 nuxt generate
-echo "Nuxt build for Siyuan finished."
+echo "Nuxt build for siyuan finished."
 
 # 拷贝资源
 # rsync -av --progress .output/public/ ./dist/

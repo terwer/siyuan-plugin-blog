@@ -3,10 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bash script/build.sh",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "build": "bash script/build.sh",
+    "nodeBuild": "bash script/node.sh",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {

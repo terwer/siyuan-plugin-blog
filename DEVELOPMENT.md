@@ -41,8 +41,22 @@ pnpm build -F siyuan-blog -- --watch
 
 ## Build
 
+### for siyuan-note
+
 ```bash
 pnpm build
+```
+
+### for node
+
+```bash
+cd apps/app
+pnpm nodeBuild
+cd ../../
+# for /
+node ./dist/node/server/index.mjs
+# custom prefix, eg:/blog
+NUXT_APP_BASE_URL=blog node ./dist/node/server/index.mjs
 ```
 
 ## Package

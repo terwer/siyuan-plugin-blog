@@ -7,5 +7,8 @@ export default defineNuxtConfig({
   app: {
     baseURL: appBase,
   },
+  nitro: {
+    preset: "vercel",
+  },
   compatibilityDate: "2024-11-01",
 })
