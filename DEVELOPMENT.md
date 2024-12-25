@@ -35,8 +35,8 @@ dev
 
 ```bash
 pnpm makeLink
+pnpm build -F @terwer/share-pro-app
 pnpm build -F siyuan-blog -- --watch
-pnpm dev -F @terwer/share-pro-app
 ```
 
 ## Build

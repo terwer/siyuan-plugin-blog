@@ -1,8 +1,8 @@
-import { resolve } from "node:path"
-import { defineConfig } from "vite"
+import {resolve} from "node:path"
+import {defineConfig} from "vite"
 import vue from "@vitejs/plugin-vue"
 import minimist from "minimist"
-import { viteStaticCopy } from "vite-plugin-static-copy"
+import {viteStaticCopy} from "vite-plugin-static-copy"
 // import externalize from "vite-plugin-externalize-dependencies";
 import livereload from "rollup-plugin-livereload"
 import fg from "fast-glob"
@@ -101,22 +101,22 @@ export default defineConfig({
       plugins: [
         ...(isWatch
           ? [
-              livereload(distDir),
-              {
-                //监听静态资源文件
-                name: "watch-external",
-                async buildStart() {
-                  const files = await fg([
-                    "src/i18n/*.json",
-                    "./README*.md",
-                    "./plugin.json",
-                  ])
-                  for (const file of files) {
-                    this.addWatchFile(file)
-                  }
-                },
+            livereload(distDir),
+            {
+              //监听静态资源文件
+              name: "watch-external",
+              async buildStart() {
+                const files = await fg([
+                  "src/i18n/*.json",
+                  "./README*.md",
+                  "./plugin.json",
+                ])
+                for (const file of files) {
+                  this.addWatchFile(file)
+                }
               },
-            ]
+            },
+          ]
           : []),
       ],
       output: {
@@ -134,4 +134,4 @@ export default defineConfig({
       },
     },
   },
-})
+} as any)
