@@ -23,19 +23,14 @@ docker push registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
 ### 启动开发服务器
 
 ```bash
-pnpm dev -F siyuan-blog
-# http://localhost:6808/plugins/siyuan-blog/app/#/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
+pnpm build -F @terwer/share-pro-app -- --from siyuan
+pnpm build -F siyuan-blog
+pnpm makeLink
+pnpm build -F siyuan-blog -- --watch
 
-pnpm dev -F @terwer/share-pro-app -- --host
-# http://localhost:3000
-# http://localhost:3000/s/20241217142133-o580ytq
+# http://localhost:6806/plugins/siyuan-blog/app/#/s/20241217142133-o580ytq
+# http://localhost:6806/plugins/siyuan-blog/app/#/s/20241217142133-o580ytq?lang=en_US
 ```
-
-#### 可用的测试链接
-
-- [http://localhost:4000/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false](http://localhost:4000/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false)
-- [http://localhost:4000](http://localhost:4000)
-- [http://localhost:4000/s/20240408194841-jmgbco2](http://localhost:4000/s/20240408194841-jmgbco2)
 
 ### 构建和链接
 

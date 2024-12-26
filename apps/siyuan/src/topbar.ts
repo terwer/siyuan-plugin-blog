@@ -23,9 +23,11 @@
  * questions.
  */
 
-import {Menu} from "siyuan"
+import {Menu, showMessage} from "siyuan"
 import {createBootStrap} from "./bootstrap.ts"
 import SiyuanBlogPlugin from "./index"
+import PageUtil from "./utils/pageUtil.ts";
+import {StrUtil} from "zhi-common";
 
 /**
  * 顶部按钮
@@ -41,7 +43,7 @@ export class Topbar {
     const topBarElement = this.pluginInstance.addTopBar({
       icon: "iconShare",
       title: this.pluginInstance.i18n.siyuanBlog,
-      position: "right",
+      position: "left",
       callback: () => {
       },
     })
@@ -52,7 +54,16 @@ export class Topbar {
         label: "",
       })
       // 挂载内容到菜单
-      createBootStrap(el)
+      const pageId = PageUtil.getPageId()
+      if (StrUtil.isEmptyString(pageId)) {
+        showMessage("必须先打开一篇文档才能分享")
+        return
+      }
+      createBootStrap(el, {
+        pluginInstance: this.pluginInstance,
+        id: pageId,
+        origin: window.location.origin,
+      })
       // 显示菜单
       const rect = topBarElement.getBoundingClientRect()
       menu.open({

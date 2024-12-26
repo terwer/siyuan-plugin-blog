@@ -121,11 +121,9 @@ export default defineConfig({
       ],
       output: {
         entryFileNames: "[name].js",
-        assetFileNames: (assetInfo) => {
-          for (const name of assetInfo.names) {
-            if (name === "style.css") {
-              return "Home.styl"
-            }
+        assetFileNames: (assetInfo: any) => {
+          if (assetInfo.name === "style.css") {
+            return "index.css"
           }
           return "[name][extname]"
         },
