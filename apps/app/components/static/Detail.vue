@@ -8,11 +8,31 @@
   -->
 
 <script lang="ts" setup>
+const logger = createAppLogger("static-share-page")
 const {docId} = useDocId()
+const {t} = useI18n()
+
+// datas
+const formData = reactive({
+  post: {} as any,
+  setting: {} as any,
+  shareEnabled: true,
+  isExpires: false,
+})
 </script>
 
 <template>
-  <div>static detail=>{{ docId }}</div>
+  <div v-if="!formData.shareEnabled || formData.isExpires">
+    <!--
+    <el-empty :description="formData.isExpires ? t('blog.index.no.expires') : t('blog.index.no.permission')">
+    </el-empty>
+    -->
+    {{ t('blog.index.no.expires') }}
+  </div>
+  <div v-else class="app-container">
+    {{ t('blog.index.no.permission') }}
+    {{docId}}
+  </div>
 </template>
 
 <style scoped>

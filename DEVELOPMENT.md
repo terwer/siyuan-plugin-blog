@@ -24,9 +24,10 @@ serve
 pnpm dev -F siyuan-blog
 # http://localhost:6808/plugins/siyuan-blog/app/#/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
 
-pnpm dev -F @terwer/share-pro-app
+pnpm dev -F @terwer/share-pro-app -- --host
 # http://localhost:3000
 # http://localhost:3000/s/20241217142133-o580ytq
+# http://10.10.34.38:3000/s/20241217142133-o580ytq.html?lang=en_US
 ```
 
 dev

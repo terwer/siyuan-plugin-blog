@@ -24,7 +24,11 @@ docker push registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
 
 ```bash
 pnpm dev -F siyuan-blog
-pnpm dev -F @terwer/share-pro-app
+# http://localhost:6808/plugins/siyuan-blog/app/#/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
+
+pnpm dev -F @terwer/share-pro-app -- --host
+# http://localhost:3000
+# http://localhost:3000/s/20241217142133-o580ytq
 ```
 
 #### 可用的测试链接
