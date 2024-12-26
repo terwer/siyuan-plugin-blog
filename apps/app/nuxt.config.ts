@@ -1,5 +1,5 @@
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+const appBase = "/plugins/siyuan-blog/app/"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -15,6 +15,14 @@ export default defineNuxtConfig({
     vueI18n: "./i18n.ts"
   },
 
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
+  ssr: false,
+  router: {
+    options: {
+      hashMode: true,
+    },
+  },
+
   app: {
     baseURL: appBase,
   },
@@ -22,10 +30,10 @@ export default defineNuxtConfig({
   // 环境变量
   runtimeConfig: {
     public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "node",
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
-      providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
-      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
+      defaultType: "siyuan",
+      siyuanApiUrl: "",
+      providerMode: "false",
+      providerUrl: "",
     },
   },
 
