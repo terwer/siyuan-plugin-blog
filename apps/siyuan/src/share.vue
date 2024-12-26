@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import {onBeforeMount, reactive} from "vue"
+import {onBeforeMount, reactive, toRaw} from "vue"
+import copy from "copy-to-clipboard"
 import {JsonUtil, StrUtil} from "zhi-common"
 import {showMessage} from "siyuan"
 import {createAppLogger} from "./utils/appLogger.ts"
@@ -17,7 +18,7 @@ const props = defineProps({
 })
 
 const logger = createAppLogger("share-page")
-const {getSetting} = useSettingStore()
+const {getSetting, updateSetting} = useSettingStore()
 const {blogApi, kernelApi} = useSiyuanApi()
 const {handleMethod} = useMethod(props.pluginInstance)
 const {handleMethodAsync} = useMethodAsync(props.pluginInstance)
@@ -30,7 +31,11 @@ const formData = reactive({
   post: {} as any,
 
   shared: false,
-  isHome: false
+  isHome: false,
+  expiredTime: "",
+  shareLink: "",
+  ip: "",
+  ipList: []
 })
 
 const getIps = () => {
@@ -42,7 +47,7 @@ const getIps = () => {
   if (!ips.includes(hostname)) {
     ips.push(hostname)
   }
-  return ips
+  return {hostname, ips}
 }
 
 const handleShare = () => {
@@ -100,6 +105,68 @@ const handleShare = () => {
   })
 }
 
+const copyWebLink = () => {
+  handleMethod(() => {
+    const shareTemplate =
+        (StrUtil.isEmptyString(formData.setting.shareTemplate) ? formData.shareLink : formData.setting.shareTemplate) ?? formData.shareLink
+    const copyText = shareTemplate
+        .replace(
+            /\[expired]/g,
+            StrUtil.isEmptyString(formData.expiredTime) || formData.expiredTime.toString().trim() === "0"
+                ? "永久"
+                : formData.expiredTime
+        )
+        .replace(/\[title]/g, formData.post.title)
+        .replace(/\[url]/g, formData.shareLink)
+
+    copy(copyText)
+  })
+}
+
+const handleIpChange = () => {
+  const url = new URL(formData.shareLink)
+  url.hostname = formData.ip
+  formData.shareLink = url.toString()
+}
+
+const handleSetHome = () => {
+  // eslint-disable-next-line no-new
+  new Promise<void>((resolve, reject) => {
+    handleMethodAsync(async () => {
+      if (formData.isHome) {
+        formData.setting.homePageId = props.id
+      } else {
+        formData.setting.homePageId = undefined
+      }
+      await updateSetting(toRaw(formData.setting))
+      resolve()
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+const handleExpiresTime = async () => {
+  const expiredTime = Number(toRaw(formData.expiredTime))
+  await handleMethodAsync(
+      async () => {
+        await kernelApi.setBlockAttrs(props.id, {
+          "custom-expires": expiredTime.toString(),
+        })
+
+        await updateStaticShare(props.id)
+        logger.info("updated static share in auth mode")
+      },
+      () => {
+        if (isNaN(expiredTime) || expiredTime < 0 || expiredTime > 7 * 24 * 60 * 60) {
+          showMessage("share.link.expires.error", 7000, "error")
+          return false
+        }
+        return true
+      }
+  )
+}
+
 onBeforeMount(async () => {
   formData.setting = await getSetting()
   formData.post = await blogApi.getPost(props.id, false, false)
@@ -108,6 +175,13 @@ onBeforeMount(async () => {
 
   formData.shared = attrs["custom-publish-status"] === "publish"
   formData.isHome = formData.setting.homePageId === props.id
+  formData.shareLink = `${shareOrigin}${basePath}/s/${props.id}`
+  formData.expiredTime = attrs["custom-expires"] ?? "0"
+  const {hostname, ips} = getIps()
+  formData.ip = hostname
+  formData.ipList = ips.map((ip: string) => {
+    return {value: ip, label: ip}
+  })
 })
 logger.debug("share inited", props)
 </script>
@@ -136,6 +210,63 @@ logger.debug("share inited", props)
         </div>
       </div>
       <div class="share-split"/>
+
+      <div v-if="formData.shared">
+        <div class="share-item">
+          <div class="item-left item-copy-link">
+            <input type="text" v-model="formData.shareLink"/>
+          </div>
+          <div class="item-right">
+            <button @click="copyWebLink">{{ "share.copy.web.link" }}</button>
+          </div>
+        </div>
+        <div class="share-item">
+          <div class="item-left">
+            <span class="change-ip-title">{{ "change.ip.title" }}</span>
+            <select
+                v-model="formData.ip"
+                class="m-2"
+                @change="handleIpChange"
+            >
+              <option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value"/>
+            </select>
+          </div>
+          <div class="change-ip-tip">
+            {{ "share.static.tip" }}
+          </div>
+        </div>
+        <div class="share-split"/>
+
+        <div class="share-item">
+          <div class="item-left item-copy-link">
+            {{ "share.show.link.option" }}
+          </div>
+          <div class="item-right"></div>
+        </div>
+
+        <div class="share-item expires-link-item">
+          <div class="expires-link expires-link-label">
+            {{ "share.other.option.link.expires" }}
+          </div>
+          <div class="expires-link expires-link-input">
+            <input type="text" v-model="formData.expiredTime" :placeholder="'share.link.expires.time.placeholder'"/>
+          </div>
+          <div class="item-right">
+            <button @click="handleExpiresTime">{{ "main.opt.save" }}</button>
+          </div>
+        </div>
+        <div class="share-split"/>
+
+        <div class="share-item">
+          <div class="item-left">
+            {{ "share.set.home" }}
+          </div>
+          <div class="item-right">
+            <input type="checkbox" v-model="formData.isHome" @change="handleSetHome"/>
+          </div>
+        </div>
+        <div class="share-split"/>
+      </div>
     </div>
   </Suspense>
 </template>
