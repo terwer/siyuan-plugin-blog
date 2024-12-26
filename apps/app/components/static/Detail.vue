@@ -8,10 +8,11 @@
   -->
 
 <script lang="ts" setup>
+const {docId} = useDocId()
 </script>
 
 <template>
-  <div>static detail</div>
+  <div>static detail=>{{ docId }}</div>
 </template>
 
 <style scoped>

@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <div>public detail</div>
+  <div>public share is deprecated since `v1.9.0`</div>
 </template>
 
 <style scoped>

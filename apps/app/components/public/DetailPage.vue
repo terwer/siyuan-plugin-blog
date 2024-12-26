@@ -8,10 +8,13 @@
   -->
 
 <script lang="ts" setup>
+import Detail from "~/components/static/Detail.vue"
 </script>
 
 <template>
-  <div>public detail page</div>
+  <div>
+    <detail/>
+  </div>
 </template>
 
 <style scoped>

@@ -15,8 +15,10 @@ export const useDocId = () => {
 
   const getDocId = () => {
     const id = (route.params.id ?? "") as string
-    if (id.includes(".html")) {
+    if (id.endsWith(".html")) {
       return id.replace(".html", "")
+    } else if (id.endsWith(".htm")) {
+      return id.replace(".htm", "")
     } else {
       return id
     }
