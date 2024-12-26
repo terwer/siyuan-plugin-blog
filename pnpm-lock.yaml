@@ -26,6 +26,12 @@ importers:
       vue-router:
         specifier: 4.5.0
         version: 4.5.0(vue@3.5.13(typescript@5.6.3))
+      zhi-common:
+        specifier: ^1.33.1
+        version: 1.33.1(typescript@5.6.3)
+      zhi-lib-base:
+        specifier: ^0.8.0
+        version: 0.8.0
     devDependencies:
       vite:
         specifier: ^5.4.11
@@ -39,6 +45,9 @@ importers:
       zhi-lib-base:
         specifier: ^0.8.0
         version: 0.8.0
+      zhi-siyuan-api:
+        specifier: ^2.25.0
+        version: 2.25.0(typescript@5.6.3)
     devDependencies:
       '@eslint/js':
         specifier: ^9.15.0
@@ -4322,6 +4331,9 @@ packages:
     resolution: {integrity: sha512-AzqKpGKjrj7EM6rKVQEPpB288oCfnrEIuyoT9cyF4nmGa7V8Zk6f7RRqYisX8X9m+Q7bd632aZW4ky7EhbQztA==}
     engines: {node: '>= 0.4'}
 
+  shorthash2@1.0.5:
+    resolution: {integrity: sha512-OgKQtF1rIj79taV/coJyp0E6zfo6MmGNAsIepwjoWV2IYlpvWzhU2kFe9o8wSzJRysEhvmLlDHVOXe8/pWqK1Q==}
+
   side-channel-list@1.0.0:
     resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
     engines: {node: '>= 0.4'}
@@ -4605,6 +4617,11 @@ packages:
 
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+
+  transliteration@2.3.5:
+    resolution: {integrity: sha512-HAGI4Lq4Q9dZ3Utu2phaWgtm3vB6PkLUFqWAScg/UW+1eZ/Tg6Exo4oC0/3VUol/w4BlefLhUUSVBr/9/ZGQOw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
 
   ts-api-utils@1.0.2:
     resolution: {integrity: sha512-Cbu4nIqnEdd+THNEsBdkolnOXhg0I8XteoHaEKgvsxpsbWda4IsUut2c187HxywQCvveojow0Dgw/amxtSKVkQ==}
@@ -5206,8 +5223,20 @@ packages:
   zhead@2.2.4:
     resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
 
+  zhi-blog-api@1.67.1:
+    resolution: {integrity: sha512-r2i9JBYdIQSGp/X8HvZ2pEJZMJYQUfxu0TsoKk0boVMHCdSbYqgpYe2dyHA/96yBeN1nIQ5eir7d+GjBtK942A==}
+
+  zhi-common@1.33.0:
+    resolution: {integrity: sha512-ggHVmZ/zkVIOLfAWv4vqJBZY9BZnlnBUhlOmtYoVHV35UdxI5zcvvakBRgDZxjyknikHOLot7MtYfccCCOdyKw==}
+
+  zhi-common@1.33.1:
+    resolution: {integrity: sha512-R+/9Ha2bF44I2a/vF9EDewvb4KK2AxnC03LOBXwCyAFQkge+EKvua5zYqeNMNMYn9aUBDJ6MEOyrd2CORe2QcA==}
+
   zhi-lib-base@0.8.0:
     resolution: {integrity: sha512-3Ky5p6KvLWpXy2tlb/JIfSEKLSe5w43PBLM6g+hNcWwpL9S62emgcpUAHzGWBbC0vlLBLungt2LOsmwAfhrZ0w==}
+
+  zhi-siyuan-api@2.25.0:
+    resolution: {integrity: sha512-GSzjp07YKcLZIkvfwrrjZ7AIXDvcz140JKn9ZyIYijbO7rSzCKEG2s3SlbX1zwOv7g1ZuTzbUBCLgyKQoHC/1A==}
 
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
@@ -10112,6 +10141,8 @@ snapshots:
 
   shell-quote@1.8.2: {}
 
+  shorthash2@1.0.5: {}
+
   side-channel-list@1.0.0:
     dependencies:
       es-errors: 1.3.0
@@ -10452,6 +10483,10 @@ snapshots:
   totalist@3.0.1: {}
 
   tr46@0.0.3: {}
+
+  transliteration@2.3.5:
+    dependencies:
+      yargs: 17.7.2
 
   ts-api-utils@1.0.2(typescript@5.5.4):
     dependencies:
@@ -11067,7 +11102,42 @@ snapshots:
 
   zhead@2.2.4: {}
 
+  zhi-blog-api@1.67.1(typescript@5.6.3):
+    dependencies:
+      zhi-common: 1.33.0(typescript@5.6.3)
+      zhi-lib-base: 0.8.0
+    transitivePeerDependencies:
+      - typescript
+
+  zhi-common@1.33.0(typescript@5.6.3):
+    dependencies:
+      js-yaml: 4.1.0
+      shorthash2: 1.0.5
+      transliteration: 2.3.5
+      vue: 3.5.13(typescript@5.6.3)
+      zhi-lib-base: 0.8.0
+    transitivePeerDependencies:
+      - typescript
+
+  zhi-common@1.33.1(typescript@5.6.3):
+    dependencies:
+      js-yaml: 4.1.0
+      shorthash2: 1.0.5
+      transliteration: 2.3.5
+      vue: 3.5.13(typescript@5.6.3)
+      zhi-lib-base: 0.8.0
+    transitivePeerDependencies:
+      - typescript
+
   zhi-lib-base@0.8.0: {}
+
+  zhi-siyuan-api@2.25.0(typescript@5.6.3):
+    dependencies:
+      zhi-blog-api: 1.67.1(typescript@5.6.3)
+      zhi-common: 1.33.0(typescript@5.6.3)
+      zhi-lib-base: 0.8.0
+    transitivePeerDependencies:
+      - typescript
 
   zip-stream@6.0.1:
     dependencies:

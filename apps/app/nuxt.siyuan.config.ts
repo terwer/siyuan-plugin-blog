@@ -14,5 +14,14 @@ export default defineNuxtConfig({
   app: {
     baseURL: appBase,
   },
+  // 环境变量
+  runtimeConfig: {
+    public: {
+      defaultType: "siyuan",
+      siyuanApiUrl: "",
+      providerMode: "false",
+      providerUrl: "",
+    },
+  },
   compatibilityDate: "2024-11-01",
 })

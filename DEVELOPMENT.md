@@ -22,20 +22,18 @@ serve
 
 ```bash
 pnpm dev -F siyuan-blog
-pnpm dev -F @terwer/share-pro-app
+# http://localhost:6808/plugins/siyuan-blog/app/#/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
 
-# available links for serve test
-# http://localhost:4000/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
-#
-# http://localhost:4000
-# http://localhost:4000/s/20240408194841-jmgbco2
+pnpm dev -F @terwer/share-pro-app
+# http://localhost:3000
+# http://localhost:3000/s/20241217142133-o580ytq
 ```
 
 dev
 
 ```bash
 pnpm makeLink
-pnpm build -F @terwer/share-pro-app
+pnpm build -F @terwer/share-pro-app -- --from siyuan
 pnpm build -F siyuan-blog -- --watch
 ```
 
@@ -45,6 +43,7 @@ pnpm build -F siyuan-blog -- --watch
 
 ```bash
 pnpm build -F @terwer/share-pro-app -- --from siyuan
+pnpm build -F siyuan-blog
 ```
 
 ### for node
