@@ -30,7 +30,7 @@ const formData = reactive({
     {{ t('blog.index.no.expires') }}
   </div>
   <div v-else class="app-container">
-    {{ t('blog.index.no.permission') }}:
+    <{{ t('blog.index.no.permission') }}>:
     {{docId}}
   </div>
 </template>
