@@ -1,0 +1,22 @@
+/* 配合思源默认的文件引用青色 */
+/* 主要是PDF文件引用 */
+.protyle-wysiwyg [data-node-id] span[data-type~=file-annotation-ref], .protyle-wysiwyg [data-node-id] span[data-type~=a][data-href*="assets/"]{
+    border-bottom: 1px solid #88bd9c;
+}
+.protyle-wysiwyg [data-node-id] span[data-type~=file-annotation-ref]:hover, .protyle-wysiwyg [data-node-id] span[data-type~=a][data-href*="assets/"]:hover{
+    border-bottom: 1px solid #0e864a;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type~=block-ref] {
+    margin: 0px 2px 0px;
+
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type~=block-ref]:hover {
+    border-bottom: 1px solid var(--b3-protyle-inline-blockref-color);
+}
+
+
+span[data-type~=block-ref]{
+    font-weight: 500
+}

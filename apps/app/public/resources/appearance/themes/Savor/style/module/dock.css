@@ -1,0 +1,107 @@
+/* ————————————————————dock栏———————————————————— */
+.dock{
+	background-color: var(--S-dock-background);
+	border: none!important;
+	&.dock--vertical{
+	width: var(--S-dock-item-width);
+	}
+	&#dockLeft{
+		.dock__item{
+			margin: 10px 3px 10px 7px;
+		}
+	}
+	&#dockRight{
+		padding-bottom:26px;
+		.dock__item{
+			margin: 7px 7px 7px 3px;
+		}
+	}
+	&#dockBottom{
+		height: unset;
+		background-color: var(--S-status-msg-background);
+		.dock__item{
+			margin: 3px 7px 3px 0;
+			padding: 3px;
+			height: 14px;
+		}
+	}
+	& .dock__item{
+		color: var(--S-dock-color);
+		background-color: var(--S-dock-background);
+		padding:5.5px ;
+		svg{
+			width: 11px;
+			height: 11px;
+		}
+		&:first-child{
+			margin-top: 8px!important;
+		}
+		&:last-child{
+			margin-bottom: 7px!important;
+		}
+		&:hover{
+			color: var(--b3-theme-on-background);
+			background-color: var(--S-dock-item-active-background-hover);
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+		}
+		&.dock__item--activefocus{
+			background-color: var(--S-list-background-activefocus)!important;
+			color:var(--S-dock--item--activefocus)!important;
+			box-shadow: 0 1px 3px var(--S-list-background-activefocus), 0px 0px 1px var(--S-list-background-activefocus);
+		}/*dock焦点状态*/
+	}
+	& .dock__item--active{
+		color: var(--b3-theme-on-background);
+		background-color: var(--S-dock-item-active-background-hover);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0px 0px 1px rgba(0, 0, 0, 0.2);
+	}
+	& .dock__item--active:hover{
+		color: var(--b3-theme-on-background);
+		background-color: var(--S-dock-item-active-background-hover);
+	}
+}
+
+.b3-list-item__toggle{
+	margin-left: -4px;
+}
+
+
+/* 底dock栏 */
+.layout__dockb.layout--float{
+	bottom:60px!important;
+	margin-left:32px;
+	margin-right:32px;
+	border-radius:6px;
+	overflow:hidden;
+	box-shadow: 0 4px 9px rgba(0,0,0,.05), 0 1.5px 2.8px rgba(0,0,0,.07), 0 0.3px 0.7px rgba(0,0,0,.12);
+}
+.layout__dockb.layout--float[style*="bottom: 26px"]{
+	bottom:8px!important;
+	margin-left:8px;
+	margin-right:8px;
+}
+.layout__dockb.layout--float[style*="bottom: 59px"]{
+	bottom:40px!important;
+}
+#dockLeft.fn__none + .layout .layout__dockb.layout--float[style*="bottom: 59px"]{
+	margin-left:8px;
+	margin-right:8px;
+}
+#dockBottom:has(.dock__item--active) .dock__item--pin[aria-label="钉住"],#dockBottom:has(.dock__item--active) .dock__item--pin[aria-label="Pin"]{
+	margin: 0 7px 40px 0;
+}
+#dockBottom.fn__none .dock__item--pin{
+	display: none;
+}
+#dockBottom:not(.fn__none):has(+.status.fn__none) [data-title]{
+	margin: 0 7px 7px 0;
+}
+#dockBottom.fn__none:has(+.status.fn__none) .dock__item--active{
+	display: none;
+}
+#dockBottom:not(.fn__none)+#status.fn__none #barDock{
+	bottom:-7px;
+}	
+#dockBottom .fn__flex-1{
+	flex: 0;
+}

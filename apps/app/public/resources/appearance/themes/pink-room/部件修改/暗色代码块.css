@@ -1,0 +1,81 @@
+
+/* ATOM 风格 */
+
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+}
+
+code.hljs {
+    padding: 3px 5px
+}
+
+.hljs {
+    color: #abb2bf !important;
+    background: #2b383e !important;
+}
+
+.hljs-comment,.hljs-quote {
+    color: #5c6370  !important;
+    font-style: italic
+}
+
+.hljs-doctag,.hljs-formula,.hljs-keyword {
+    color: #c678dd  !important;
+}
+
+.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst {
+    color: #e06c75  !important;
+}
+
+.hljs-literal {
+    color: #56b6c2  !important;
+}
+
+.hljs-addition,.hljs-attribute,.hljs-meta .hljs-string,.hljs-regexp,.hljs-string {
+    color: #98c379  !important;
+}
+
+.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable {
+    color: #d19a66  !important;
+}
+
+.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title {
+    color: #61aeee  !important;
+}
+
+.hljs-built_in,.hljs-class .hljs-title,.hljs-title.class_ {
+    color: #e6c07b  !important;
+}
+
+.hljs-emphasis {
+    font-style: italic
+}
+
+.hljs-strong {
+    font-weight: 700
+}
+
+.hljs-link {
+    text-decoration: underline
+}
+
+/* ATOM风格结束 */
+
+
+/* 指定其他区域代码块样式 */
+.protyle-linenumber__rows{
+    background-color: #11242c; 
+    border-right-color: transparent !important;
+    padding-right: 7px;
+}
+
+/* 增大代码的左边距以防止贴边缘贴得太近 */
+.b3-typography .hljs, .protyle-wysiwyg .hljs{
+    padding: 1.6em 10px;
+}
+
+.protyle-linenumber__rows>span::before{
+    color: #838383;
+}

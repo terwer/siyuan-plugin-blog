@@ -1,0 +1,61 @@
+/*页签栏 */
+.layout-tab-bar{
+    background-color: transparent;
+    border-bottom: none;
+}
+
+
+.layout-tab-bar .item__close{
+    padding: 5px 5px 5px 0;
+}
+
+.fn__flex.layout-tab-bar .item{
+    background-color: rgb(242 212 212);
+    border-radius: 4px;
+    margin-top: -2px;
+    margin-bottom: 4px;
+    margin-right: 6px;
+    min-height: 33px;
+    box-shadow: rgb(216 150 157 / 77%) 0px 0px 0px 1px inset;
+    transition: all 200ms ease-out 0s;
+}
+
+
+.fn__flex.layout-tab-bar .item.item--focus{
+    background-color: #fff4f4;
+    box-shadow: inset 0 0 0px 1px rgb(200 135 135);
+}
+.layout__wnd--active .fn__flex.layout-tab-bar .item.item--focus{
+    background-color: #cefbff;
+    box-shadow: inset 0 0 0px 1px rgb(147 178 195);
+}
+
+
+/* 手选当前编辑中页签字色 */
+.layout__wnd--active .layout-tab-bar .item--focus>.item__text{
+    color: #30609d;
+}
+
+
+body.body--blur .layout__wnd--active .layout-tab-bar .item--focus{
+    background-color: #fff9f9;
+    box-shadow: inset 0 0 0px 1px rgb(200 135 135);
+}
+
+.layout-tab-bar .item--focus:after{
+    display: none;
+}
+
+.layout-tab-bar .item__text{
+    color: #8b5959;
+    min-width: 33px;
+    text-align: left;
+    padding: 0px 26px 0px 13px;
+}
+.fn__flex-column.fn__flex.fn__flex-1 .fn__flex:has(.fn__flex.layout-tab-bar){
+    margin: 0px 5px 0px 0px;
+}
+
+.fn__flex.layout-tab-bar .item:hover{
+    background-color: #fdbfbf;
+}

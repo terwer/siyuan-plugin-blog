@@ -1,0 +1,95 @@
+/* ————搜索面板———— */
+
+.block__icons{
+    background-color: var(--room-surface-dimcolor);
+}
+
+/* 搜索结果和展示编辑器之间的分隔线，可以用来拖动调节两个区域的大小 */
+.search__drag:after{
+    background-color: #ceb7b7;
+}
+
+/* 选取范围同上，使鼠标放上去后线条变色，以提醒用户可以进行拖拽操作 */
+.search__drag:hover:after{
+    background-color:#b68d8d;
+}
+
+
+/* 给搜索面板中搜索到的项目设置边界线，以让用户更容易区分不同的项目 */
+/* 并取消思源默认的圆角，因为外部面板已经有圆角了，内部小项目就不用圆角了 */
+#searchList .b3-list-item {
+    border-bottom: 1px solid #dbcec5;
+    border-right: 1px solid #dbcec5;
+    border-radius: 0px;
+}
+
+/* 当使用左右布局的时候，取消左边的边框，一防止多1px的线条，使得被搜索到的项目的右部看起来黑一点 */
+.search__layout--row #searchList .b3-list-item{
+    border-right:none;
+}
+
+/* 第一个被搜索到的项目上面加条线 */
+#searchList .b3-list-item:first-child{
+    border-top: 1px solid #dbcec5;
+}
+
+/* 鼠标悬浮时除背景色变化外，在此处添加边框线颜色边深的变化，以让用户更容易定位到当前元素 */
+/* 此段代码在编辑器里报错，但在软件里生效，兼容性目前不明 */
+#searchList .b3-list-item:hover,#searchList .b3-list-item:has(+.b3-list-item:hover){
+    border-bottom: 1px solid #e6a87d;
+}
+
+/* 作用同上 */
+#searchList .b3-list-item:first-child:hover{
+    border-top: 1px solid #e6a87d;
+}
+
+/* 搜索面板中按键提示，直接改成半透明白色，省得为了多色界面还得重新声明 */
+.search__tip kbd{
+    background-color: #ffffffdb;
+}
+
+/* 为了让搜索面板中文字输入区域不过于紧贴边缘而加上外边距。过于贴合的话用户可能不好理解文字输入区域的层级或者空间从属关系 */
+/* 如果不设置这个底色的话，文字输入区域四角剩下影响视觉的颜色 */
+.search__header{
+    margin: 5px 2px 0px 4px;
+    background: var(--room-surface-dimcolor);
+}
+
+
+/* 在搜索页面中调整容器盒的底色为暗一点的粉色 */
+.layout-tab-container:has(.search__header), .b3-dialog__container:has(.search__header){
+    background-color:var(--room-surface-dimcolor) ;
+}
+
+/* 搜索列表区域背景色，使用通用的米色 */
+#searchList.fn__flex-1.search__list.b3-list.b3-list--background{
+    background-color: var(--b3-theme-surface);
+}
+
+/* 加入内阴影以帮助找到文本输入区域 */
+#searchInput.b3-text-field.b3-text-field--text{
+    background-color: white;
+    border-radius: 0.3rem;
+    box-shadow: inset 0 0 2px 1px #b06d6db5;
+}
+
+/* 防止和上面的内阴影重复，出现很黑的边缘 */
+.search__header{
+    border-bottom: none;
+}
+
+
+
+
+#criteria.fn__flex{
+    min-height: 30px !important;
+    background-color: transparent !important;
+}
+
+
+.search__header .block__icon {
+    opacity: 1;
+    background-color: #ffecec;
+    border-radius: 0.3em;
+}

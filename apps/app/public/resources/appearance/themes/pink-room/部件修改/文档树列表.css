@@ -1,0 +1,201 @@
+/* 文档树引用数字的颜色,修改为淡色，避免过于显眼导致注意力容易从笔记本标题文字上分散到此*/
+.counter {
+    color: #55555a5d;
+}
+
+
+/* 无子文档的文档前面添加圆点符号 */
+.b3-list-item.b3-list-item--hide-action .b3-list-item__toggle.fn__hidden::before {
+    content: "◦";
+    font-size: 2em;
+    position: absolute;
+    visibility: visible;
+    margin-bottom: 2px;
+    color: #8080804d;
+}
+
+/* 设置文档树前面的＞符号颜色为灰色以不抢夺笔记本标题文字的视觉吸引力 */
+/* .fn__flex-1.fn__flex-column.file-tree .b3-list-item__arrow {
+    color: #8080804d;
+} */
+
+/* 点击文档树emoji不弹出修改窗口（防止误触） */
+/* 有人需要此功能，加回来 */
+/* span.b3-list-item__icon.b3-tooltips.b3-tooltips__n {
+    pointer-events: none;
+} */
+
+/* 笔记本之间的间隔 */
+.sy__file ul.b3-list.b3-list--background {
+    border-radius: 0.3em;
+    margin: 6px 10px 6px 12px;
+    outline: 1px solid rgba(178, 100, 100, 0.812);
+    background-color: white;
+    overflow: hidden;
+}
+
+[data-type="navigation-root"] {
+    height: 32px;
+}
+
+
+/* 设置反链面板图标位置（不设置对不齐） */
+.backlinkList.fn__flex-1 .b3-list-item .popover__block {
+    margin-left: 4px;
+}
+
+
+
+/* ------------------------------------文档树文字设置为灰色------------------------------- */
+.b3-list-item__text {
+    color: var(--b3-theme-on-surface);
+}
+
+/* -----------------------------文档树focus------------------------------- */
+
+/* 颜色 */
+.b3-list--background .b3-list-item--focus .b3-list-item__text,
+.b3-list--background .b3-list-item--focus .b3-list-item__graphic,
+.b3-list--background .b3-list-item--focus .b3-list-item__icon svg {
+    /* color: var(--b3-theme-on-background); */
+    color: #287b00;
+}
+
+
+/* 页签切换面板中不用绿色，绿色太亮了 */
+.switch-doc .b3-list-item.b3-list-item--focus{
+   background-color: #beeb8a !important;
+}
+
+/* 缩小页签列表中的间距 */
+.switch-doc .b3-list:last-child .b3-list-item{
+    border-radius:0;
+    margin-bottom:0 !important;  
+    padding: 0.1em 0 0.1em 0;   
+    box-shadow: inset 0 -1px 0 #d2bdbd;
+}
+
+
+
+
+
+
+
+
+/* 背景色 */
+.b3-list--background .b3-list-item--focus {
+    background-color: #e9ffbd  !important;
+}
+.sy__backlink .b3-list--background .b3-list-item--focus {
+    background-color: #ffbdb4b0 !important;
+}
+
+
+
+
+/* -----------------------------文档树hover-------------------------------- */
+
+/* 颜色 */
+.b3-list--background .b3-list-item:hover .b3-list-item__text,
+.b3-list--background .b3-list-item:hover .b3-list-item__graphic,
+.b3-list--background .b3-list-item:hover .b3-list-item__icon svg {
+    color: var(--b3-theme-error);
+}
+
+/* 背景 */
+
+
+/* 将鼠标放置在文档树中笔记本右侧的引用数字上能打开一个窗口，下方代码将其中的元素正常放置而不是居中放置 */
+.block__edit.fn__flex-1.protyle{
+    align-items: normal;
+}
+
+/* 将鼠标放置在文档树中笔记本右侧的引用数字上能打开一个窗口，为这个区域中的内容块设置小点的内边距以防止出现多个滚动条 */
+.block__popover.block__popover--move.block__popover--open .block__edit>.protyle-content{
+    padding: 0px 20px 0px 20px !important;
+    /* overflow-y: hidden; */
+    /* min-height: 30px; */
+    /* margin: 10px; */
+}
+
+/* 将鼠标放置在文档树中笔记本右侧的引用数字上能打开一个窗口，为这个区域设置边框 */
+.block__popover.block__popover--move.block__popover--open{
+    border: 5px solid var(--b3-pinkroom-border);
+}
+
+/* 将鼠标放置在文档树中笔记本右侧的引用数字上能打开一个窗口，为这个区域取消内阴影*/
+.block__edit.fn__flex-1.protyle{
+    box-shadow: none;
+}
+
+/* 将鼠标放置在文档树中笔记本右侧的引用数字上能打开一个窗口，为这个区域取消内阴影*/
+.block__edit>.protyle-breadcrumb{
+    background-color: #fbeeee;
+}
+
+
+/* 将鼠标放置在文档树中笔记本右侧的引用数字上能打开一个窗口，为这个区域中的内容区域设置最底层的底色 */
+.block__popover.block__popover--move.block__popover--open .block__content{
+    background-color: #dfd1cdb5;
+}
+
+
+/* 防止鼠标划过列表项时，底色左右两边还留有空隙 */
+.b3-list-item{
+    margin: 0px !important;
+}
+
+/* 鼠标划过列表项时的底色 */
+.b3-list--background .b3-list-item:hover:not(.b3-list-item--focus){
+    background-color: #94f7ed;
+}
+
+
+/* list-item设置底色时和外边框的圆角不融合 */
+.b3-list--background .b3-list-item{
+    border-radius: 2px;
+}
+
+/* 给大纲中项目添加边线 */
+.sy__outline .b3-list--background .b3-list-item{
+    border-radius: 0px;
+    box-shadow: inset -1px -1px 0px 0px #9f9f9f4b;
+}
+
+
+
+/* 颜色用蓝的*/
+.b3-list--background .b3-list-item:hover .b3-list-item__text, .b3-list--background .b3-list-item:hover .b3-list-item__graphic, .b3-list--background .b3-list-item:hover .b3-list-item__icon svg{
+    color: inherit;
+}
+
+
+
+
+
+/* .fn__hidden{
+    visibility: visible;
+}
+
+
+.fn__hidden>svg.b3-list-item__arrow{
+    visibility: hidden;
+}
+
+.b3-list-item__toggle {
+    position: relative;
+}
+
+.b3-list-item__toggle.b3-list-item__toggle--hl::after{
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: -1.6em;
+    background-color: #83aaac99;
+    top: 0;
+}
+
+.b3-list-item__text {
+    box-shadow: 0 1px 0 0  rgb(73 126 128 / 40%);
+} */

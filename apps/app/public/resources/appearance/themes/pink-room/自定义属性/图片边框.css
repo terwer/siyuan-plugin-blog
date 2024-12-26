@@ -1,0 +1,10 @@
+/* 给图片设置边框 */
+[custom-tpbk] img{
+    /* border-color: #852a4b; */
+    /* border-width: 1px; */
+    /* border-style: solid; */
+    outline-color: #852a4bcb;
+    outline-style: solid;
+    outline-width: 1px;
+}
+

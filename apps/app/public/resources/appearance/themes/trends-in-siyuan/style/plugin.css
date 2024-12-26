@@ -1,0 +1,15 @@
+/* 适配各种 Plugin */
+
+/* 侧边栏插件 */
+.sy__siyuan-plugin-dockydocky .docky-panel {
+    background-color: var(--b3-theme-surface);
+    padding: 8px 0px;
+}
+
+.sy__siyuan-plugin-dockydocky .docky-panel:first-child {
+    padding-top: 0px;
+}
+
+.sy__siyuan-plugin-dockydocky .docky-panel:last-child {
+    padding-bottom: 0px;
+}

@@ -1,0 +1,15 @@
+.block__popover.block__popover--move.block__popover--open {
+    border: 5px solid var(--room-border-color);
+}
+
+.protyle-hint, .b3-menu {
+    border: var(--room-pink-menu-border);
+}
+
+.protyle-toolbar {
+    border: solid 3px var( --room-border-color);
+}
+
+.protyle-util {
+    border: var(--room-pink-menu-border);
+}

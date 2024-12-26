@@ -1,0 +1,5 @@
+.protyle-wysiwyg [data-node-id] span[data-type=virtual-block-ref]{
+    background-color: #5ecece1f;
+    border-bottom: 2px #7feeffb0;
+    border-bottom-style: dashed;
+}

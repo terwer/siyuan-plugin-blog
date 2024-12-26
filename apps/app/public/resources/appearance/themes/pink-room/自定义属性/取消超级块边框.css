@@ -1,0 +1,21 @@
+[custom-wbk="1"].sb:not(.sb:has(.sb)){
+    outline: none;
+    background-color: transparent ;
+    border: none ;
+    margin: 0px !important;
+    padding: 0px;
+}
+
+.protyle-wysiwyg [custom-wbk="1"][data-node-id].sb{
+    outline: none;
+    background-color: transparent;
+    border: none ;
+    margin: 0px !important;
+    padding: 0px;
+    box-shadow: none;
+}
+
+
+.fn__flex-1.protyle.protyle-content{
+box-shadow: inset 5px 0px 5px 0px #d3c8c3;
+}

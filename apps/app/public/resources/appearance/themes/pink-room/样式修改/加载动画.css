@@ -1,0 +1,62 @@
+img[src="/stage/loading-pure.svg"] {
+    visibility: hidden;
+}
+
+
+
+*:has(>*:has(>img[src="/stage/loading-pure.svg"])){
+  position: relative;
+}
+
+
+*:has(>img[src="/stage/loading-pure.svg"])::after {
+    content: "loading";
+    font-weight: bold;
+    text-align: center;
+    color: #ff5380;
+    font-size: 1.4em;
+    height: 10rem;
+    width: 10rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-size: 10rem;
+    background-image: url("../icon/loading.png");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    transform-origin: center center;
+    border-radius: 50%;
+    /* background-color: #ffd4e8; */
+    /* border: 0.1em solid #d28ba7; */
+}
+
+@keyframes rotate_1 {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes rotate_2 {
+    0% {
+      transform: translate(0%, 0%) rotate(0deg);
+    }
+    100% {
+      transform: translate(0%, 0%) rotate(360deg);
+    }
+  }
+
+*:has(>img[src="/stage/loading-pure.svg"])::after {
+    animation: rotate_1 2s linear infinite; /* 使用 rotate 动画，无限循环 */
+  }
+
+
+[data-name="bazaar"] *:has(>img[src="/stage/loading-pure.svg"])::after {
+    animation: rotate_2 2s linear infinite; /* 使用 rotate 动画，无限循环 */
+  }
+
+
+

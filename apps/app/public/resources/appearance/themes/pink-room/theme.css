@@ -1,0 +1,99 @@
+/* ——本主题为白天主题—— */
+/* This theme is for daytime */
+@import url("root/修改root.css中变量.css");
+@import url("root/新增主题自用变量.css");
+
+
+/* ——————部件修改 针对特定位置的面板进行修改—————— */
+@import url("部件修改/页签栏.css");
+@import url("部件修改/设置面板.css");
+/*@import url("部件修改/块滚动条.css");*/
+@import url("部件修改/面包屑.css");
+
+/* 这段代码问题很多，未来需要重构 */
+@import url("部件修改/文档树列表.css");
+
+/* 未来需要给大纲中的项添加底边线 */
+/*@import url("部件修改/文档大纲.css");*/
+
+/* 未来需要给大纲中的项添加底边线 */
+/*@import url("部件修改/标签列表.css");*/
+
+/* 未来需要给书签中的项添加底边线 */
+/*@import url("部件修改/书签.css");*/
+
+@import url("部件修改/弹出框.css");
+/*@import url("部件修改/悬浮窗.css");*/
+/*@import url("部件修改/块引用搜索.css");*/
+@import url("部件修改/文档编辑区.css");
+@import url("部件修改/反链面板.css");
+@import url("部件修改/侧边栏.css");
+@import url("部件修改/搜索面板.css");
+@import url("部件修改/PDF阅读界面.css");
+@import url("部件修改/整体界面圆润一体化.css");
+@import url("部件修改/工作空间设置按钮.css");
+@import url("部件修改/滚动条.css");
+@import url("部件修改/尺寸调节滑杠.css");
+@import url("部件修改/数据历史面板.css");
+@import url("部件修改/右上角信息气泡.css");
+@import url("部件修改/闪卡界面.css");
+@import url("部件修改/面板边框.css");
+@import url("部件修改/面板外阴影.css");
+@import url("部件修改/工具条.css");
+@import url("部件修改/斜杠唤出菜单.css");
+@import url("部件修改/行内样式选择面板.css");
+@import url("部件修改/钉住的页签.css");
+@import url("部件修改/分离窗口.css");
+@import url("部件修改/加载界面.css");
+
+
+/* ——————样式修改 针对编辑器内文档内元素进行修改—————— */
+@import url("样式修改/多级标题.css");
+@import url("样式修改/文档标题.css");
+@import url("样式修改/行内代码.css");
+@import url("样式修改/按键kbd.css");
+@import url("样式修改/超链接.css");
+@import url("样式修改/块引用.css");
+@import url("样式修改/标签.css");
+@import url("样式修改/嵌入块.css");
+@import url("样式修改/斜体、镂空和投影.css");
+@import url("样式修改/虚拟引用.css");
+@import url("样式修改/引述块.css");
+@import url("样式修改/代码块.css");
+@import url("样式修改/块图标.css");
+@import url("样式修改/列表块.css");
+@import url("样式修改/加载动画.css");
+@import url("样式修改/滑块.css");
+@import url("样式修改/闪卡.css");
+
+
+
+/* ——————作者自用功能 没事别开—————————— */
+/* 如果想要开启功能的话，就去除那行代码两边的符号并保存，这会取消这行代码的注释状态并使其生效 */
+/* @import url("样式修改/行内样式/12种背景色.css"); */
+/* @import url("样式修改/行内样式/12种字色.css"); */
+/* @import url("部件修改/卷轴页面.css");     */
+/* @import url("部件修改/文档网格背景.css"); */
+/* @import url("部件修改/渐隐背景图.css"); */
+/* @import url("部件修改/暗色代码块.css"); */
+
+/* 默认开启的超级块边框，如不喜欢请将其注释掉 */
+@import url("样式修改/超级块边框.css");
+
+/* 如果你想要实现工工整整的卡片布局，可以试试这个 */
+/* @import url("样式修改/底层超级块边框.css"); */
+
+
+@import url("自定义属性/图片边框.css");
+@import url("自定义属性/取消超级块边框.css");
+@import url("自定义属性/仿维基百科简介+信息卡.css");
+
+@import url("移动端优化.css");
+
+@import url("插件兼容.css");
+@import url("杂乱的修改.css");
+
+
+/* ---多种色系配色界面暂时性解决方案，可开关切换--- */
+/* @import url("config/蓝色系界面.css"); */
+/* @import url("config/绿色系界面.css"); */

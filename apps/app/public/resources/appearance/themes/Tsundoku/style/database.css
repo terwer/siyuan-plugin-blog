@@ -1,0 +1,104 @@
+/* 资源列链接悬浮样式 */
+.av__celltext--url:hover {
+    color: var(--b3-protyle-inline-link-hover-color);
+    border-bottom: 1px solid var(--b3-protyle-inline-link-hover-color) !important;
+}
+
+span[data-type='av-add-more'] {
+    background-color: #58b3f0;
+    color: #fff;
+}
+span[data-type='av-add-more']:hover {
+    background-color: #3498db !important;
+    color: #fff !important;
+}
+
+/* 数据库默认不隐藏按钮 */
+/* .av .av__views .block__icon {
+    opacity: 1;
+} */
+
+/* 数据库单元格选中背景色 */
+.av__cell--active {
+    background-color: var(--b3-theme-primary-lightest);
+}
+
+/* 数据库勾选框 */
+.av__cell.av__cell-check svg {
+    color: #289aa2;
+}
+
+/* 块属性面板的数据库hover时添加背景色 */
+.custom-attr__avvalue:hover,
+.custom-attr .b3-text-field--text:hover {
+    background-color: var(--b3-list-hover);
+}
+
+/* 优化块右上角所属数据库的样式 */
+.protyle-attr--av svg {
+    /* 去除数据库svg */
+    display: none;
+}
+.protyle-attr--av > span {
+    /* 添加圆角 */
+    padding: 0 0.5em;
+    border-radius: 0.5em;
+}
+.protyle-attr--av > span:nth-child(4n + 1) {
+    /* 每组的第1个 */
+    color: var(--b3-card-success-color);
+    background-color: var(--b3-card-success-background);
+}
+
+.protyle-attr--av > span:nth-child(4n + 2) {
+    /* 每组的第2个 */
+    color: var(--b3-card-info-color);
+    background-color: var(--b3-card-info-background);
+}
+
+.protyle-attr--av > span:nth-child(4n + 3) {
+    /* 每组的第3个 */
+    color: var(--b3-card-warning-color);
+    background-color: var(--b3-card-warning-background);
+}
+
+.protyle-attr--av > span:nth-child(4n) {
+    /* 每组的第4个 */
+    color: var(--b3-card-error-color);
+    background-color: var(--b3-card-error-background);
+}
+
+
+/* 数据库表头添加border */
+.av__cell--header {
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    overflow: inherit;
+    border-right-color: var(--b3-theme-surface-lighter);
+}
+
+/*  数据库新增列按钮背景色设置为透明 */
+.protyle-wysiwyg [data-type='NodeAttributeView'] .block__icons {
+    background-color: transparent !important;
+}
+
+/* 数据库页签 */
+.av__header .layout-tab-bar .item {
+    padding-right: 10px;
+}
+
+/* 数据库图片全宽展示 */
+img.av__cellassetimg {
+    max-height: inherit;
+    border-radius: var(--b3-border-radius);
+    margin: 1px 2px;
+    max-width: none;
+    vertical-align: top;
+    font-size: inherit;
+    width: 100%;
+}
+
+.custom-attr .av__cellassetimg {
+    max-height: none;
+}

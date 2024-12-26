@@ -1,0 +1,7 @@
+
+/* 加深面包屑底部边线颜色 */
+/* 使用border来实现的话，容易有y轴上内容溢出的导致出现无效滚动条 */
+.protyle-breadcrumb{
+    box-shadow: inset 0px -1px 0px #be8585;
+}
+

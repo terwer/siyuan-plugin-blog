@@ -1,0 +1,27 @@
+
+/* 修改顶部页签间距以使其舒适 */
+.fn__flex-column:has(#historyContainer) .fn__flex.layout-tab-bar .item{
+    margin-top: 2px;
+}
+
+
+/* 修改顶部背景间距，并设置背景为暗粉色 */
+.fn__flex-column:has(#historyContainer) .layout-tab-bar.fn__flex{
+    padding:  2px 0px 0px 6px;
+    background-color: #f8dbdb;
+}
+
+
+/* 展示列表使用米色背景 */
+.history__panel>.b3-list, .history__panel>.history__diff{
+    background-color: #fffcf8;
+}
+
+/* 取消框架中粉色背景 */
+.fn__flex.fn__flex-1.history__panel,.fn__flex-1.fn__flex#historyContainer{
+    background-color: transparent;
+}
+/* 防止切出思源后背景变色 */
+body.body--blur .fn__flex-1.fn__flex.history__panel,body.body--blur .fn__flex-1.fn__flex#historyContainer{
+    background-color: transparent;
+}

@@ -1,0 +1,21 @@
+:root{
+    --room-surface-lightcolor:#ffe0e0;
+    --room-surface-lightcolor-blur:#f7d9d9;
+    --room-grid-background: #f4eded;
+    --room-high-saturated-color:#e06289;
+    --room-surface-dimcolor:#f8dbdb;
+    --room-border-color: #f9c1c5;
+    
+
+    --room-pink-menu-border: 4px solid var(--room-border-color);
+    --room-blue-menu-border: 4px solid #74cbdf;
+    --room-green-menu-border: 4px solid #b3d788;
+
+    --room-background-grid:linear-gradient(var(--room-grid-background) 1px, transparent 0),
+    linear-gradient(90deg, var(--room-grid-background) 1px, transparent 0),
+    linear-gradient(white 1px, transparent 0),
+    linear-gradient(90deg, white 1px, transparent 0);
+
+    --room-falshcard-mark-color: #59cac5;
+    
+}

@@ -1,0 +1,6 @@
+/* 侧栏上功能图标 */
+.dock__item {
+    padding: 8px;
+    border-radius: 5px;
+    margin: 4px 3px 4px 3px;
+}
