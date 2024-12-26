@@ -24,10 +24,64 @@
  */
 
 import {Menu, showMessage} from "siyuan"
+import {StrUtil} from "zhi-common"
+import PageUtil from "./utils/pageUtil.ts"
 import {createBootStrap} from "./bootstrap.ts"
+import {icons} from "./icons.ts"
+import {getAvailableOrigin} from "./utils/urlUtil.ts"
 import SiyuanBlogPlugin from "./index"
-import PageUtil from "./utils/pageUtil.ts";
-import {StrUtil} from "zhi-common";
+
+const initContextMenu = async (pluginInstance: SiyuanBlogPlugin, rect: DOMRect) => {
+  const menu = new Menu("blogContextMenu")
+
+  // menu.addItem({
+  //   iconHTML: `<span class="font-awesome-icon">${icons.iconSetting}</span>`,
+  //   label: pluginInstance.i18n.setting,
+  //   click: () => {
+  //     showSettingPage(pluginInstance)
+  //   },
+  // })
+  //
+  // menu.addSeparator()
+  // menu.addItem({
+  //   iconHTML: `<span class="iconfont-icon">${icons.iconHome}</span>`,
+  //   label: pluginInstance.i18n.showHome,
+  //   click: () => {
+  //     const blogIndex = "/plugins/siyuan-blog/#/"
+  //     const origin = getAvailableOrigin()
+  //     // showPage(pluginInstance, blogIndex, pluginInstance.i18n.home)
+  //     window.open(`${origin}${blogIndex}`)
+  //   },
+  // })
+  //
+  // menu.addSeparator()
+  // menu.addItem({
+  //   iconHTML: `<span class="font-awesome-icon">${icons.iconBrowser}</span>`,
+  //   label: pluginInstance.i18n.browserOpen,
+  //   click: () => {
+  //     const pageId = PageUtil.getPageId()
+  //     const blogIndex = `/plugins/siyuan-blog/#/s/${pageId}`
+  //     const origin = getAvailableOrigin()
+  //     window.open(`${origin}${blogIndex}`)
+  //   },
+  // })
+
+  if (pluginInstance.isMobile) {
+    menu.fullscreen()
+  } else {
+    menu.open({
+      x: rect.left,
+      y: rect.top,
+      w: rect.width,
+      h: rect.height,
+      isLeft: false,
+    })
+  }
+}
+
+const showSettingPage = (pluginInstance: SiyuanBlogPlugin) => {
+  showMessage("setting page")
+}
 
 /**
  * 顶部按钮
@@ -43,10 +97,11 @@ export class Topbar {
     const topBarElement = this.pluginInstance.addTopBar({
       icon: "iconShare",
       title: this.pluginInstance.i18n.siyuanBlog,
-      position: "left",
+      position: "right",
       callback: () => {
       },
     })
+
     topBarElement.addEventListener("click", async () => {
       const menu = new Menu("shareProMenu")
       const el = menu.addItem({
@@ -71,6 +126,16 @@ export class Topbar {
         y: rect.bottom,
         isLeft: true,
       })
+    })
+
+    // 添加右键菜单
+    topBarElement.addEventListener("contextmenu", async () => {
+      let rect = topBarElement.getBoundingClientRect()
+      // 如果获取不到宽度，则使用更多按钮的宽度
+      if (rect.width === 0) {
+        rect = document?.querySelector("#barMore")?.getBoundingClientRect() as any
+      }
+      await initContextMenu(this.pluginInstance, rect)
     })
   }
 }
