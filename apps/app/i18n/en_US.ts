@@ -24,6 +24,7 @@
  */
 
 export default {
+  "name": "Share to web",
   "lang.choose": "Choose lang",
   "lang.choose.placeholder": "Please select language",
   "syp.about": "About me",

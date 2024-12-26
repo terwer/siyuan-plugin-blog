@@ -7,7 +7,6 @@
   -  of this license document, but changing it is not allowed.
   -->
 
-<!--suppress ALL, VueUnrecognizedDirective -->
 <script lang="ts" setup>
 import {JsonUtil, ObjectUtil} from "zhi-common"
 import {checkExpires, getSummery} from "~/utils/utils"
@@ -108,38 +107,36 @@ const VNode = () =>
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <static-header/>
-    <main class="main">
-      <!-- 分享正文 -->
-      <div class="fn__flex-1 protyle" data-loading="finished">
-        <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-          <div class="protyle-title protyle-wysiwyg--attr">
-            <div
-                contenteditable="false"
-                data-position="center"
-                spellcheck="false"
-                class="protyle-title__input"
-                data-render="true"
-            >
-              {{ formData.post.title }}
-            </div>
-          </div>
+    <!-- 分享正文 -->
+    <div class="fn__flex-1 protyle" data-loading="finished">
+      <static-header/>
+      <div class="protyle-content protyle-content--transition" data-fullwidth="true">
+        <div class="protyle-title protyle-wysiwyg--attr">
           <div
-              v-highlight
-              v-sbeauty
-              v-sdomparser
-              class="protyle-wysiwyg protyle-wysiwyg--attr"
-              spellcheck="false"
               contenteditable="false"
-              data-doc-type="NodeDocument"
-              :data-page-id="id"
+              data-position="center"
+              spellcheck="false"
+              class="protyle-title__input"
+              data-render="true"
           >
-            <VNode/>
+            {{ formData.post.title }}
           </div>
         </div>
+        <div
+            v-highlight
+            v-sbeauty
+            v-sdomparser
+            class="protyle-wysiwyg protyle-wysiwyg--attr"
+            spellcheck="false"
+            contenteditable="false"
+            data-doc-type="NodeDocument"
+            :data-page-id="id"
+        >
+          <VNode/>
+        </div>
       </div>
-    </main>
-    <static-footer/>
+      <static-footer/>
+    </div>
   </div>
 </template>
 

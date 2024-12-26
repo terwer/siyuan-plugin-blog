@@ -10,16 +10,43 @@
 <script setup lang="ts">
 import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
 import {useI18n} from "vue-i18n"
+import {useProviderMode} from "~/composables/useProviderMode"
+import {DateUtil, StrUtil} from "zhi-common"
+import * as pkg from "~/package.json"
+import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
 
 const {locale, t} = useI18n()
 const {getStaticSetting} = useStaticSettingStore()
 const setting = await getStaticSetting()
 const {colorMode, toggleDark} = await useStaticThemeMode()
+const {providerMode} = useProviderMode()
+const footer = setting?.footer ?? ""
+const {getHome} = useBaseUrl()
+
+// datas
+const v = ref(pkg.version)
+const nowYear = DateUtil.nowYear()
+
+// methods
+const goGithub = () => {
+  window.open("https://github.com/terwer/siyuan-plugin-blog")
+}
+
+const goAbout = () => {
+  window.open("https://siyuan.wiki/s/20241226200349-4v6e21m")
+}
+
+// methods
+const goHome = async () => {
+  const home = getHome()
+  window.open(home)
+}
+
 
 const VNode = () =>
     h("div", {
       class: "",
-      innerHTML: setting.footer ?? "",
+      innerHTML: footer,
     })
 
 // lifecycles
@@ -32,38 +59,31 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="footer">
-    <VNode/>
-    <div class="theme-toggle" @click="toggleDark()">
-      <div class="theme-option" :class="{ active: !colorMode }">
-        {{ t("theme.mode.light") }}
-      </div>
-      <div class="theme-option" :class="{ active: colorMode }">
-        {{ t("theme.mode.dark") }}
-      </div>
+  <el-footer>
+    <div class="footer" v-if="!providerMode && StrUtil.isEmptyString(footer)">
+      <span class="text"> &copy;2011-{{ nowYear }} </span>
+      <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
+
+      <span class="text">v{{ v }}&nbsp;</span>
+
+      <span class="text s-dark" @click="goHome()">{{ t("go.home") }}</span>
+
+      <span class="text dot">.</span>
+      <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
+
+      <span class="text dot">.</span>
+      <span class="text s-dark" @click="toggleDark()">
+        {{
+          colorMode ? t("theme.mode.light") : t("theme.mode.dark")
+        }}
+      </span>
     </div>
-  </div>
+    <div class="footer" v-else>
+      <VNode/>
+    </div>
+  </el-footer>
 </template>
 
-<style>
-:root {
-  --footer-only-background-color: #ffffff;
-  --footer-only-hover-background-color: #f0f0f0;
-  --footer-only-active-background-color: #007bff;
-  --footer-only-border-color: #ccc;
-  --footer-only-text-color: #333;
-  --footer-only-active-text-color: #ffffff;
-}
-
-html[data-theme-mode="dark"] {
-  --footer-only-background-color: #444444; /* 深色背景 */
-  --footer-only-hover-background-color: #555555; /* 悬浮背景 */
-  --footer-only-active-background-color: #ffa500; /* 激活项背景 */
-  --footer-only-border-color: #666666; /* 边框深色 */
-  --footer-only-text-color: #f0f0f0; /* 默认文字浅色 */
-  --footer-only-active-text-color: #333333; /* 激活项文字深色 */
-}
-</style>
 <style scoped>
 .footer {
   font-size: 12px;
@@ -72,35 +92,18 @@ html[data-theme-mode="dark"] {
   padding-bottom: 8px;
 }
 
-.theme-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--footer-only-background-color, #ffffff);
-  border: 1px solid var(--footer-only-border-color, #ccc);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+.footer .text {
+  vertical-align: middle;
 }
 
-.theme-option {
-  padding: 10px 20px;
-  text-align: center;
+.s-dark {
+  color: var(--el-color-primary);
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--footer-only-text-color, #333);
 }
 
-.theme-option:hover {
-  background-color: var(--footer-only-hover-background-color, #f0f0f0);
+.dot{
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
-.theme-option.active {
-  background-color: var(--footer-only-active-background-color, #007bff);
-  color: var(--footer-only-active-text-color, #ffffff);
-}
 </style>

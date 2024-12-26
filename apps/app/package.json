@@ -1,7 +1,7 @@
 {
   "name": "@terwer/share-pro-app",
-  "private": true,
   "type": "module",
+  "version": "5.4.0",
   "scripts": {
     "dev": "nuxt dev",
     "build": "bash script/build.sh",
