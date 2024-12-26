@@ -13,7 +13,7 @@ import Detail from "~/components/static/Detail.vue"
 
 <template>
   <div>
-    <detail/>
+    <detail :show-title-sign="false"/>
   </div>
 </template>
 

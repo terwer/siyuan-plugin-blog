@@ -30,11 +30,15 @@ export const useStaticThemeMode = async () => {
   // 在 mounted 生命周期中处理加载后逻辑
   onMounted(() => {
     // 检测浏览器不是暗黑模式，根据媒介查询
-    const win = SiyuanDevice.siyuanWindow()
-    const isDarkMode = !BrowserUtil.hasNodeEnv() && win.matchMedia("(prefers-color-scheme: dark)").matches
-    if (isDarkMode) {
-      setThemeMode(true)
-    }
+    // const win = SiyuanDevice.siyuanWindow()
+    // const isDarkMode = !BrowserUtil.hasNodeEnv() && win.matchMedia("(prefers-color-scheme: dark)").matches
+    // if (isDarkMode) {
+    //   setThemeMode(true)
+    //   colorMode.value = true
+    // }
+    // 默认展示浅色模式，用户自己切换
+    setThemeMode(isDarkMode)
+    colorMode.value = isDarkMode
   })
 
   // computes
@@ -115,18 +119,19 @@ export const useStaticThemeMode = async () => {
 
   // 设置主题模式
   const setThemeMode = (isDarkMode: boolean) => {
-    if (isDarkMode) {
-      document.body.style.backgroundColor = "unset"
-    } else {
-      document.body.style.backgroundColor = "#f5f5f5"
-    }
+    // if (isDarkMode) {
+    //   document.body.style.backgroundColor = "unset"
+    // } else {
+    //   document.body.style.backgroundColor = "#f5f5f5"
+    // }
     if (BrowserUtil.isInBrowser) {
       setCssAndThemeMode(isDarkMode)
       // 记录日志
       logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
       logger.info(`Auto set mode, isDark => ${isDarkMode}`)
     }
-    (color as any).preference = isDarkMode ? "dark" : "light"
+    // @ts-ignore
+    color.preference = isDarkMode ? "dark" : "light"
   }
 
   // 根据浏览器模式设置 CSS 和主题模式

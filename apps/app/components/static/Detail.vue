@@ -107,36 +107,38 @@ const VNode = () =>
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <!-- 分享正文 -->
-    <div class="fn__flex-1 protyle" data-loading="finished">
-      <static-header/>
-      <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-        <div class="protyle-title protyle-wysiwyg--attr">
+    <main class="main">
+      <!-- 分享正文 -->
+      <div class="fn__flex-1 protyle" data-loading="finished">
+        <static-header/>
+        <div class="protyle-content protyle-content--transition" data-fullwidth="true">
+          <div class="protyle-title protyle-wysiwyg--attr">
+            <div
+                contenteditable="false"
+                data-position="center"
+                spellcheck="false"
+                class="protyle-title__input"
+                data-render="true"
+            >
+              {{ formData.post.title }}
+            </div>
+          </div>
           <div
-              contenteditable="false"
-              data-position="center"
+              v-highlight
+              v-sbeauty
+              v-sdomparser
+              class="protyle-wysiwyg protyle-wysiwyg--attr"
               spellcheck="false"
-              class="protyle-title__input"
-              data-render="true"
+              contenteditable="false"
+              data-doc-type="NodeDocument"
+              :data-page-id="id"
           >
-            {{ formData.post.title }}
+            <VNode/>
           </div>
         </div>
-        <div
-            v-highlight
-            v-sbeauty
-            v-sdomparser
-            class="protyle-wysiwyg protyle-wysiwyg--attr"
-            spellcheck="false"
-            contenteditable="false"
-            data-doc-type="NodeDocument"
-            :data-page-id="id"
-        >
-          <VNode/>
-        </div>
+        <static-footer/>
       </div>
-      <static-footer/>
-    </div>
+    </main>
   </div>
 </template>
 
