@@ -23,6 +23,7 @@ export const useCommonShareType = () => {
    */
   const getShareType = async () => {
     if (providerMode) {
+      logger.info("providerMode is true, use static shareType")
       return ShareTypeEnum.ShareType_Static
     }
 
