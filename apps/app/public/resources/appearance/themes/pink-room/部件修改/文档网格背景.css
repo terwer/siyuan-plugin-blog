@@ -1,0 +1,76 @@
+
+/* ——————此网格背景暂时无法方便地调节间距—————— */
+
+/* 首先给所见即所得文档区域加上一层网格背景，使用纯色变量作为颜色值 */
+/* 重要，此处排除了反链面板中的网格背景，因为在反链面板中添加网格后我无论如何都不能防止面包屑区域背景不出现网格 */
+:not(.sy__backlink) .protyle-wysiwyg.protyle-wysiwyg--attr:not(.sy__backlink .protyle-wysiwyg.protyle-wysiwyg--attr){
+    background-image: var(--room-background-grid);
+    background-size: 15px 15px, 15px 15px, 75px 75px, 75px 75px;
+    
+}
+
+/* 让其定位为相对，好让伪元素能绝对定位 */
+.protyle-wysiwyg.protyle-wysiwyg--attr{
+    position: relative;
+}
+
+/* 为文档区域加个伪元素，将其挪到上方，并使得网格能对齐 */
+/* 直接把网格背景加到.protyle-content上不会跟随页面内容滚动 */
+/* 而不使用这种伪类方法来添加背景，文档标题文字区域无法加上网格背景 */
+/* 原因是文档标题文字区域.protyle-title的外边距是动态计算的，而background属性无法影响外边距区域 */
+/* 重要，此处排除了反链面板中的网格背景，因为在反链面板中添加网格后我无论如何都不能防止面包屑区域背景不出现网格 */
+.protyle-wysiwyg.protyle-wysiwyg--attr:not(.sy__backlink .protyle-wysiwyg.protyle-wysiwyg--attr)::before {
+    content: "";
+    height: 300px;
+    width: 100%;
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    background-image: var(--room-background-grid);
+    background-size: 15px 15px, 15px 15px, 75px 75px, 75px 75px;
+    pointer-events: none;
+}
+
+/* 文章底部空白也加上网格 */
+/* .protyle-wysiwyg.protyle-wysiwyg--attr:not(.sy__backlink .protyle-wysiwyg.protyle-wysiwyg--attr)::after {
+    content: "";
+    height: 400px;
+    width: 100%;
+    position: absolute;
+    top: 98.5%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-image: var(--room-background-grid);
+    background-size: 15px 15px, 15px 15px, 75px 75px, 75px 75px;
+    pointer-events: none;
+} */
+
+/* .protyle-content *:not(.protyle-wysiwyg.protyle-wysiwyg--attr:not(.sy__backlink .protyle-wysiwyg.protyle-wysiwyg--attr)::after){
+z-index: 1;
+} */
+
+
+/* 将文档标题区域默认的背景色改成透明，以显露出下面的伪元素中的网格背景 */
+.protyle-title__input{
+    background: transparent;
+}
+
+
+/* 伪元素的网格背景会遮挡住一部分元素，比如标题、题头图区域、图标,将它们的z-index提高到高于伪元素以防止遮挡 */
+.protyle-content--transition .protyle-title{
+    z-index: 2;
+}
+.protyle-background__iconw{
+    z-index: 2;
+}
+.protyle-background{
+    z-index: 2;
+}
+.protyle-breadcrumb__bar{
+    z-index: 2;
+}
+.protyle-breadcrumb__item{
+    z-index: 2;
+}

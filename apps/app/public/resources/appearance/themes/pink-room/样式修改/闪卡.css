@@ -1,0 +1,15 @@
+/* 改变默认的闪卡标记颜色（默认是和“标注”的颜色一样的橙色 */
+.protyle-wysiwyg [data-node-id][custom-riff-decks]{
+    box-shadow: 3px 0px 0px -1px var(--room-falshcard-mark-color) inset;
+}
+
+/* 闪卡动画 */
+@keyframes addCard {
+    0% {
+        box-shadow: 100vw 0px 0px -1px var(--room-falshcard-mark-color) inset
+    }
+
+    100% {
+        box-shadow: 3px 0px 0px -1px var(--room-falshcard-mark-color) inset
+    }
+}

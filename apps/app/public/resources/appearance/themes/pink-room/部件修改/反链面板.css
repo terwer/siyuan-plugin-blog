@@ -1,0 +1,127 @@
+/* 使反链面板中第一个项目和顶部有一定间隔，和左右间隔统一 */
+.sy__backlink .b3-list.b3-list--background{
+    margin-top: 7px;
+}
+
+
+/* 为反链面板中反链区域添加内部阴影，以增加层次感，方便用户目光聚焦于该区域 */
+/* 算了，没啥用 */
+.sy__backlink .backlinkList.fn__flex-1{
+    /* box-shadow: 0px 0px 9px -1px inset #e2d5d5, inset 3px 0px 2px -1px #e2d5d5, inset -3px 0px 2px -1px #e2d5d5; */
+}
+
+
+
+/* 反链列表项底色*/
+.sy__backlink  .b3-list-item:not(.hint--menu .b3-list-item){
+    background-color: #fff5f5;
+}
+
+
+/* 为反链列表中的内容区域添加底部阴影 */
+.sy__backlink .protyle{
+    background-color: white;
+    min-height: auto;
+    margin-bottom: 15px;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin: 0px 10px 10px 18px;
+    outline: 1px solid #c5a2a2;
+    box-shadow: 0px 3px 3px -2px #c3b4b4;
+}
+
+/* 反链列表项 */
+.sy__backlink .b3-list-item:not(.protyle-hint .b3-list-item):not(.hint--menu .b3-list-item){
+    padding-left: 17px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin: 0px 10px 0px 18px !important;
+    outline: 1px solid #c5a2a2;
+}
+
+
+
+.sy__backlink .b3-list-item:nth-last-child(1):not(.protyle-hint .b3-list-item){
+    border-bottom-left-radius: 1px!important;
+    border-bottom-right-radius: 1px!important;
+}
+
+.sy__backlink .protyle+.b3-list-item:not(.protyle-hint .b3-list-item){
+    border-top-left-radius: 1px !important;
+    border-top-right-radius: 1px !important;
+}
+
+
+
+
+
+/* 修改反链面板中每个文档标题栏左边箭头图标的颜色，使其更显眼 */
+.sy__backlink .b3-list-item__arrow{
+    color: #310000bf !important;
+}
+
+/* 修改反链面板所见即所得区域左右内边距，减少空间浪费 */
+.sy__backlink .protyle-wysiwyg{
+    padding:0px 30px  2px 30px!important;
+}
+
+
+/* 反链面板，真反链和提及的顶部栏 */
+.sy__backlink .block__icons--active,.sy__backlink .block__icons{
+    /* background-color: #ffcdd0; */
+    border-top: 1px solid var(--b3-border-color);
+    box-shadow: inset 0px -0.5px 0px 0px var(--b3-border-color);
+    z-index: 2;
+}
+
+
+
+
+
+/* 给反链面板中的面包屑和正文间添加横线以作分割 */
+.sy__backlink .protyle::before {
+    content: "";
+    height: 0.05em;
+    width: 100%;
+    background-color: #986e6e80;
+    position: absolute;
+    top: 29px;
+}
+
+
+/* 修改反链面板中面包屑文字大小，原因，该区域文字太大的话会抢走底下正文的注意力 */
+.sy__backlink .protyle-breadcrumb__bar{
+    font-size: 12px;
+}
+
+.sy__backlink .protyle-breadcrumb__item{
+    height: 14px;
+}
+
+
+.backlinkMList.fn__flex-1 ::-webkit-scrollbar-thumb{
+    overflow-y: overlay;
+}
+
+
+/* ——反链面板中的提示栏的样式—— */
+.sy__backlink .protyle-hint.b3-list.b3-list--background{
+    border: var( --pinkroom-pink-menu-border);
+    border-radius: 2px;
+}
+
+
+
+
+/* 反链面板中按[[唤出的hint菜单的项目，底色设置为白色方便看字 */
+.backlinkList .protyle-hint.b3-list.b3-list--background:not(.hint--menu) .b3-list-item{
+    width: 100% !important;
+    border: 1px solid rgba(130, 23, 23, 0.556);
+    border-left: none;
+    border-radius: 0px !important;
+    background-color: #ffffff;
+    border-top: none;
+}
+

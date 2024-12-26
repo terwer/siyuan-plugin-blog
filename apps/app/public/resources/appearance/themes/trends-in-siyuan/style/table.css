@@ -1,0 +1,32 @@
+.protyle-wysiwyg [data-node-id].table {
+    text-align: center;
+}
+
+
+.b3-typography table td,
+.b3-typography table th,
+.protyle-wysiwyg table td,
+.protyle-wysiwyg table th {
+    background-color: #A5A5A5;
+    color: #fff;
+}
+
+
+.b3-typography table tr:nth-child(2n) td,
+.protyle-wysiwyg table tr:nth-child(2n) td {
+    background-color: #F0F0F0;
+    color: var(--b3-theme-on-background);
+}
+
+.b3-typography table tr:nth-child(2n+1) td,
+.protyle-wysiwyg table tr:nth-child(2n+1) td {
+    background-color: #E1E1E1;
+    color: var(--b3-theme-on-background);
+}
+
+.b3-typography table td,
+.b3-typography table th,
+.protyle-wysiwyg table td,
+.protyle-wysiwyg table th {
+    border: 3px solid var(--b3-theme-background);
+}

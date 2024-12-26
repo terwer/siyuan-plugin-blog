@@ -1,0 +1,119 @@
+/* ————此处修改斜杠唤出菜单和[[唤出的块引搜索面板———— */
+
+
+/* 修改提示菜单样式 */
+.hint--menu>div:not(.hint--menu>div:has(.emojis)){
+    column-count: 4;
+    column-width: 30px !important;
+    column-gap: 15px;
+    min-width: 41em !important;
+    max-height: 600px !important;
+    padding: 6px;
+    background-color: #fffcfb;
+    border-radius: 4px;
+}
+
+
+
+/* 表情面板适配 */
+.hint--menu:has(.emojis){
+    padding:0px;
+}
+.protyle-hint.b3-list.b3-list--background.hint--menu{
+    border:var(--room-pink-menu-border);
+}
+
+
+/* 表情面板的按钮 */
+.emojis__type{
+    background-color: var(--room-surface-dimcolor);
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.emojis__type:hover{
+    background-color: var(--b3-border-color) !important;
+}
+[data-type="0"].emojis__type{
+    margin-left: 2px;
+}
+
+
+
+/* 为按/唤出的提示菜单整体设置一个比较舒适的圆角 */
+.protyle-hint.b3-list.b3-list--background.hint--menu .b3-list-item{
+    border-radius: 3px !important;
+}
+
+
+/* 修改提示菜单中选项样式 */
+.protyle-hint.b3-list.b3-list--background.hint--menu .b3-list-item {
+    font-size: 90%;
+    border-width: 1px;
+    border-style: solid; 
+    border-color: transparent;
+    box-sizing: border-box;
+    vertical-align: middle;
+    padding: 2px 8px !important;
+    margin-bottom: 5px !important;
+    border-radius: 0px;
+    width: 100% !important;
+}
+
+
+/* 按[[唤出的hint菜单中的项目 */
+.protyle-hint.b3-list.b3-list--background .b3-list-item{
+    width: 100% !important;
+    outline: 1px solid var(--b3-theme-surface-lighter);
+    border-left: none;
+    border-radius: 0px !important;
+    background-color: #ffffff;
+    border-top: none;
+}
+
+
+
+
+.protyle-hint.b3-list.b3-list--background .b3-list-item:hover{
+    background-color:#e6f9f4;
+    color: #4374a9;
+}
+
+.protyle-hint{
+    border-radius: 0.5em;
+    padding: 0px 0;
+}
+
+.protyle-hint.b3-list.b3-list--background .b3-list-item{
+    padding: 0.4em 0.3em 0.4em 0.3em;
+}
+
+.protyle-hint.b3-list.b3-list--background .b3-list-item__text{
+    color: #450101;
+}
+
+.b3-list-item--two .b3-list-item__meta {
+    margin-left: 5px;
+    color: #3f7c95;
+}
+
+
+.protyle-hint.b3-list.b3-list--background .b3-list-item.b3-list-item--focus .b3-list-item__hinticon{
+    color: #3f7c95;
+}
+
+.protyle-hint.b3-list.b3-list--background .b3-list-item.b3-list-item--focus .b3-list-item__text{
+    color: #35a100;
+}
+
+
+.protyle-hint.b3-list.b3-list--background  mark {
+    background-color: rgb(206 239 255);
+    color: #00394b;
+}
+
+
+.b3-list--background.hint--menu.protyle-hint{
+    max-height: 720px;
+    min-width: 770px;
+}

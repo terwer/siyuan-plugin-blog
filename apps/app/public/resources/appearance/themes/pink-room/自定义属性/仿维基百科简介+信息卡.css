@@ -1,0 +1,20 @@
+.protyle-wysiwyg  [custom-wikicard="1"][data-node-id].sb{
+    /* outline: none; */
+    border-radius: 0%;
+    background-color: transparent;
+    border: none ;
+    margin: 0px !important;
+    padding: 0px;
+}
+
+.sb[custom-wikicard="1"]>:nth-child(1) {
+    width: 85%;
+    margin-bottom: 0px !important;
+}
+
+.sb[custom-wikicard="1"]>:nth-child(2) {
+    font-size: 85%;
+    background-color: #f8f9fa !important;
+    margin: 0.4em 0.4em 0.4em 0 !important;
+    border: 1px solid #a2a9b1 !important;
+}

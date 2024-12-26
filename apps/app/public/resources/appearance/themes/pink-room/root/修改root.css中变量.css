@@ -1,0 +1,79 @@
+/* 对思源默认主题中root中定义的自定义属性进行修改 */
+:root{
+    
+    --b3-theme-background: #fefdfd;
+    --b3-tooltips-color:#ffffff;
+    --b3-tooltips-background:#834e68;
+    --b3-border-color: #9d2e2e55;
+
+
+    --b3-menu-background: #ffffff;
+    --b3-graph-ref-line: #b14d44;
+
+
+    --b3-theme-surface: #fffcf8;
+    --b3-theme-on-surface: #8b606d;
+
+    /* 在思源软件里操作时toolbar颜色 */
+    --b3-toolbar-background:#f8c5c4;
+    /* 切离思源软件时toolbar颜色会淡一点 */
+    --b3-toolbar-blur-background:hwb(7deg 77% 7%);
+    --b3-toolbar-color: var(--b3-theme-on-surface);
+    --b3-toolbar-hover: var(--b3-theme-background-light);
+
+    --b3-theme-on-surface-light: rgb(174 101 133 / 87%);
+
+    --b3-theme-on-background: #61414b;
+    --b3-theme-primary: #2a89d4;
+
+    --b3-theme-surface-lighter:rgb(122 71 71 / 40%);
+
+    /* 主要是为了修改面包屑颜色 */
+    --b3-list-hover: #e8d6db78;
+
+
+    --b3-theme-background-light: #efa5c0;
+
+    /* 使加粗文字不直接变黑 */
+    --b3-protyle-inline-strong-color: inherit;
+    --b3-protyle-inline-link-color:rgba(67, 135, 244, 1);
+
+
+    /* 修改关系图中节点的颜色 */
+    --b3-graph-doc-point: #07b5c8;
+
+    /* 修改文件引用所用颜色 */
+    --b3-protyle-inline-fileref-color: #21866b;
+
+    /* 加深块引所用颜色以方便辩识 */
+    --b3-protyle-inline-blockref-color: #7440d5;
+
+    /* 修改原版那个不怎么好看的阴影 */
+    --b3-dialog-shadow: rgb(152 94 124 / 28%) 0px 1px 5px, rgb(127 84 113 / 42%) 0px 2px 4px, rgb(157 139 143 / 50%) 0px 4px 8px 1px, rgb(168 153 158 / 51%) 0px 8px 16px, rgb(139 131 134 / 9%) 0px 16px 32px;
+
+    --b3-point-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+    --b3-card-error-color: hsl(4deg 87% 34%);
+    --b3-card-error-background: rgb(253 236 234 / 80%);
+    --b3-card-warning-color: rgb(160, 93, 0 );
+    --b3-card-warning-background: rgb(255 235 209 / 80%);
+    --b3-card-info-color: rgb(10, 103, 175);
+    --b3-card-info-background: rgb(232 244 253 / 80%);
+    --b3-card-success-color: rgb(23, 120, 28);
+    --b3-card-success-background: rgb(237 247 237 / 80%);
+
+
+
+    /* 修改pdf标记颜色 */
+    --b3-pdf-background1: hsl(4deg 72% 86%);
+    --b3-pdf-background2: hsl(26deg 72% 83%);
+    --b3-pdf-background3: hsl(46deg 68% 83%);
+    --b3-pdf-background4: hsl(107deg 51% 83%);
+    --b3-pdf-background5: hsl(167deg 46% 83%);
+    --b3-pdf-background6: hsl(207deg 64% 83%);
+    --b3-pdf-background7: hsl(249deg 71% 88%);
+    
+
+    /* 使用相对单位的半径以适应多种缩放的界面 */
+    --b3-border-radius: 0.38em;
+}

@@ -1,0 +1,79 @@
+/* 选择下拉框 */
+.b3-select:hover{
+    background-color: #fff4e1;
+}
+
+
+/* 求求了给关闭按钮做明显点吧，点都点不到 */
+.b3-dialog__close{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 3px;
+    margin-top: 2px;
+}
+
+
+/* 修改引用统计的位置，防止在卷轴页面情况下被遮挡 */
+.protyle-attr--refcount{
+    right: -16px;
+    outline: 1px solid var(--b3-theme-on-surface);
+}
+
+/* 修改聚焦状态下退出按钮的显眼度 */
+.block__icon.block__icon--show.ft__smaller.fn__flex-center{
+    font-size: 100%;
+    background-color: #8cdfff;
+    color: #535d6a;
+}
+
+/* 解决"悬浮窗内编辑器有了边框后上方留有间隙"的问题 */
+.block__popover--move>.block__icons{
+    border-radius: 0;
+}
+
+/* 块引用、文件链接不使用特殊动画 */
+.protyle-wysiwyg [data-node-id] span[data-type~=block-ref], .protyle-wysiwyg [data-node-id] span[data-type~=file-annotation-ref]{
+    transition: auto;
+}
+
+
+/* 修改分隔线的颜色 */
+/* 2.8.5前的 */
+/* .protyle-wysiwyg [data-node-id].hr>div{
+    border-bottom: 1px solid var(--b3-theme-on-surface-light);
+} */
+/* 2.8.5后的 */
+.protyle-wysiwyg [data-node-id].hr>div:after {
+    background-color: var(--b3-theme-on-surface-light);
+}
+
+
+
+
+
+/* 次级菜单的圆角过大不太好看，用小号的 */
+.b3-menu__submenu{
+    border-radius: var(--b3-border-radius);
+}
+
+
+
+/* 属性面板中的item项目与外部容器的间距太过紧密，故手动调节 */
+.b3-dialog__body .layout-tab-bar.fn__flex {
+    padding-top: 8px;
+    padding-left: 9px;
+    padding-right: 2px;
+}
+
+
+
+/* 使代码块、行内代码等显示代码的地方，中英文使用不同的字体 */
+@font-face {
+    font-family: "HEI";
+    src: local("微软雅黑"), local('PingFang SC'), local('Heiti SC'), local('Droidsansfallback');
+    unicode-range: u+4e00-9f5a, u+30;
+  }
+  
+  .fn__code, .b3-typography code:not(.hljs), .b3-typography span[data-type~=code], .protyle-wysiwyg code:not(.hljs), .protyle-wysiwyg span[data-type~=code], .b3-typography .hljs, .protyle-wysiwyg .hljs{
+      font-family: "HEI", var(--b3-font-family-code) ;
+  }

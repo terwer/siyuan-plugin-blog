@@ -1,0 +1,176 @@
+/* --------------------让页面编辑区域变成固定宽度且固定在页面中部，以呈现一种竖卷轴式的编辑区  特色性功能-------------------- */
+.protyle-content{
+    width: 100%;
+}
+.protyle:not(#searchPreview.fn__flex-1.protyle,.block__popover,.block__edit.fn__flex-1.protyle,.backlinkList .protyle,.backlinkMList .protyle, #cardPreview.protyle){
+    background-color:#eee5e6;
+}
+
+/* ----------此处为初版样式，由于即使是浅粉色，也依旧对不同颜色的文字阅读造成了不好的影响，故换成纯白底色---------- */
+/* .protyle-content:not(#searchPreview.fn__flex-1.protyle>.protyle-content,.block__popover,.block__edit.fn__flex-1.protyle>.protyle-content){
+    width: 297mm !important;
+    background-color: #faf5f5;
+    box-shadow: #5007134a 0px 0px 0.7em 0.3em, #b43e672b 0px 0px 3em 1em, #f5e4e7a3 0px 0px 2.5em;
+    border: 10px solid #f4c4d0;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    margin: 0 0 0 0;
+    padding: 0 0 30rem 0;
+    min-height: 10rem;
+} */
+
+/* ----------此为当前正在使用的卷轴页面样式，去除了边框以防止其干扰对文字内容的阅读，底色相比之前更接近白色了，能更好地让多种字色的文字比较容易阅读---------- */
+.fn__flex-1.protyle .protyle-content:not(#searchPreview.fn__flex-1.protyle>.protyle-content,.block__popover,.block__edit.fn__flex-1.protyle>.protyle-content,.backlinkList .protyle-content,.backlinkMList .protyle-content, #cardPreview>.protyle-content, .b3-dialog__container .protyle-content){
+    width: 297mm !important;
+    background-color: hsl(0, 33%, 99%);
+    box-shadow: #33101624 0px 0px 0.7em 0.3em, #da5b872b 0px 0px 3em 1em, #f5e4e7a3 0px 0px 2.5em;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    margin: 0 0 0 0;
+    padding: 0 0 30rem 0;
+    min-height: 10rem;
+    border-left: 8px solid #f4c4d0;
+    border-right: 8px solid #f4c4d0;
+}
+
+
+
+/*  ----暂时失败的尝试，虽然使用这段代码能让卷轴布局根据父元素的宽度动态地出现，但会影响块图标的显示位置 */
+/* .fn__flex-1.protyle{
+    container-type: inline-size;
+    container-name: father;
+}
+
+@container father (width > 297mm) {
+    .protyle-content:not(#searchPreview.fn__flex-1.protyle>.protyle-content,.block__popover,.block__edit.fn__flex-1.protyle>.protyle-content,.backlinkList .protyle-content,.backlinkMList .protyle-content, #cardPreview>.protyle-content) {
+        width: 297mm !important;
+        background-color: hsl(0, 33%, 99%);
+        box-shadow: #33101624 0px 0px 0.7em 0.3em, #da5b872b 0px 0px 3em 1em, #f5e4e7a3 0px 0px 2.5em;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        margin: 0 0 0 0;
+        padding: 0 0 30rem 0;
+        min-height: 10rem;
+        border-left: 10px solid #f4c4d0;
+        border-right: 10px solid #f4c4d0;
+    }
+} 
+
+ @container father (width > 297mm){
+    .backlinkList.protyle-content,.backlinkMList .protyle-content{
+        background-color: hsl(0, 33%, 99%);
+        box-shadow: 0px 0px 5px pink;
+
+    }
+} */
+
+/* 中央卷轴之外的区域，视觉上看起来就像是卷轴底下的平面。设为灰粉色以和中央文字区域区分，目的是让使用者更容易把注意力集中在中央的文字区域 */
+/* @container father (width > 297mm){
+    .protyle{
+        background-color: #fdfcfc;
+    }
+}
+.protyle-content{
+    background-color: hsl(0, 33%, 99%);
+} */
+
+
+
+/* 为文档文字编辑区域设置较窄的内边距 */
+.protyle-wysiwyg,.protyle-wysiwyg--attr{
+    padding: 34px 16px 16px 24px !important;
+}
+
+/* 修改题头图标的位置   此代码可能是为了适应主题的内容区域宽度固定而做的针对性修改 */
+.protyle-background__iconw{
+    left: 16px !important;
+}
+
+
+/* 为始质…或者说编辑区域，添加背景图片 */
+
+/* .protyle::before{
+    content: "";
+    display: block;
+    position:fixed;
+    pointer-events: none;
+    height: 100%;
+    width: 100%;
+    background-image:url("../pic/background.png") ;   
+    background-position:center center;
+	background-size:cover;
+    background-repeat: no-repeat;
+} */
+
+
+/* 此选择器元素内包括protyle-content protyle-breadcrumb等元素  此处主要功能是将这些元素居中放置 */
+.fn__flex-1.protyle{
+    align-items: center;
+}
+
+
+/* 使得protyle-content的box-shadow不遮挡面包屑 */
+.protyle-breadcrumb{
+    z-index: 1;
+}   
+
+/* 使得面包屑的宽度为父元素的100% */
+.protyle-breadcrumb{
+    width: 100%;
+}
+
+
+.protyle-background{
+    min-height: 20rem !important;
+    padding-bottom: 0px;
+}
+
+.protyle-background__img img{
+    height: 20rem !important;
+}
+
+
+/* 修改标题的位置   此代码可能是为了适应主题的内容区域宽度固定而做的针对性修改 */
+.protyle-title{
+    margin: 34px 16px 0 24px !important;
+    padding: 6px !important;
+}
+
+/* 改变文档属性图标的位置 */
+.protyle-title__icon{
+    left: -16px;
+}
+
+/* 文档编辑框内部阴影 */
+.fn__flex-1.protyle {
+    box-shadow: inset 0 0 10px 1px #b6a09cc4;
+}
+
+/* 闪卡界面编辑框内部阴影，和上面的略有区别 */
+#cardPreview.fn__flex-1.protyle, #searchPreview.fn__flex-1.protyle{
+    box-shadow: none;
+}
+#cardPreview .protyle-content, #searchPreview .protyle-content{
+    box-shadow: inset 0 0 10px 1px #b6a09cc4;
+}
+
+
+/* 修改引用统计的位置，防止在卷轴页面情况下被遮挡 */
+.protyle-attr--refcount{
+    right: -16px;
+}
+
+/* 鼠标放在块引上能打开悬浮窗，而鼠标在其中操作的时候可能有多余的滚动条，使用下面代码使其不显示 */
+.block__content{
+    overflow:hidden;
+}
+
+/* 闪卡管理界面可能会出现多余的滚动条，将overflow隐藏以防止其出现 */
+#cardPreview.fn__flex-1.protyle{
+    overflow: hidden;
+}
+
+
+
+
+

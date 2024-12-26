@@ -1,0 +1,17 @@
+/* 闪卡界面后面的背景颜色 */
+/* 这里不得不用!important */
+.b3-dialog:has(.card__main) .b3-dialog__scrim{
+    background-color: grey !important;
+}
+
+
+.card__main{
+    overflow: hidden;
+    border: var(--room-pink-menu-border);
+}
+
+
+.b3-dialog__container:has(.card__main){
+    background-color: transparent;
+    border-radius: 0.8em;
+}

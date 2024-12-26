@@ -1,0 +1,15 @@
+.protyle-wysiwyg [data-node-id].li>.list{
+    margin-left: 0.8em !important;
+    padding-left: 0.7em;
+}
+
+
+
+.protyle-wysiwyg [data-node-id].li:before{
+
+    border-left-color: #ebd1d1c9;
+}
+
+.protyle-wysiwyg [data-node-id].li:hover:before{
+    border-left-color: #d5acacb0;
+}

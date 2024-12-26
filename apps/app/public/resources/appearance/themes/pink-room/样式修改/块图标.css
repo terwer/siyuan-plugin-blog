@@ -1,0 +1,7 @@
+.protyle-gutters {
+    transition: all 200ms ease-out;
+    background-color: var(--b3-theme-surface);
+    z-index: 4;
+    box-shadow: 0 0  1px 1px var(--b3-theme-surface-lighter);
+    border-radius: 0.3em;
+}

@@ -1,0 +1,30 @@
+.protyle-content.protyle-content--transition:not(.block__popover .protyle-content.protyle-content--transition)::before{
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-image: url("../pic/background.png");
+    -webkit-mask: linear-gradient(90deg, #000000bf 0%, #0000008a 22%, transparent 25%, transparent 74%, #ffffff8a 78%,#000000bf 100%);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    display: block;
+    z-index: 0;
+    position: absolute;
+}
+
+.protyle-content.protyle-content--transition::-webkit-scrollbar{
+    z-index: 2;
+}
+
+.protyle—content{
+    z-index: 1;
+    position: relative;
+}
+
+.protyle-background__img img{
+    -webkit-mask: linear-gradient(to bottom, #fff 60%, transparent 96%);    
+}
+.protyle{
+    overflow-y: hidden;
+}

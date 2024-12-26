@@ -1,0 +1,326 @@
+:root {
+    --b3-theme-background: hsl(120, 20%, 99%);
+    
+    --b3-tooltips-color:white;
+    --b3-tooltips-background: hsl(97, 31%, 37%);
+
+    --b3-border-color: hsla(117, 55%, 40%, 0.333);
+
+
+    --b3-theme-surface: hsl(69deg 51% 95%);
+    --b3-list-hover: hsl(74deg 28% 87% / 47%);
+    --b3-theme-on-surface: hsl(74deg 23% 41%);
+    --b3-border-color: hsl(194deg 55% 40% / 33%);
+    --b3-theme-background-light: hsl(84deg 69% 75%);
+    --b3-theme-on-surface-light: hsl(84deg 31% 54% / 87%);
+    --b3-theme-on-background: hsl(84 20% 23%);
+    --b3-theme-surface-lighter: hsl(84deg 26% 38% / 40%);
+
+    --b3-dialog-shadow: rgb(111 152 94 / 28%) 0px 1px 5px, rgb(101 127 84 / 42%) 0px 2px 4px, rgb(141 157 139 / 50%) 0px 4px 8px 1px, rgb(160 168 153 / 51%) 0px 8px 16px, rgb(137 139 131 / 9%) 0px 16px 32px;
+
+    --room-surface-lightcolor: hsl(74deg 94% 93%);
+    --room-surface-lightcolor-blur: hsl(74, 65%, 91%);
+    --room-grid-background: hsl(74, 0%, 95%);
+    --room-high-saturated-color: hsl(74deg 67% 63%);
+    --room-surface-dimcolor: hsl(79deg 43% 86%);
+    --room-grid-background: hsl(72deg 20% 93%);
+    --room-border-color: #c7df90;
+
+    /* 闪卡标记颜色 */
+    --room-falshcard-mark-color: #e099bc;
+}
+
+/* 顶栏 */
+.toolbar {
+    background-color: hsl(78deg 55% 72%);
+}
+
+/* 工作空间设置按钮 */
+#barWorkspace {
+    background-color: hsl(97deg 49% 61%);
+}
+#barWorkspace:hover {
+    background-color: hsl(89deg 48% 50%);
+}
+
+
+
+/* ——页签栏—— */
+.fn__flex.layout-tab-bar .item {
+    background-color: hsl(74deg 54% 89%);
+    box-shadow: hsl(102deg 33% 61% / 77%) 0px 0px 0px 1px inset;
+}
+.layout-tab-bar .item__text {
+    color: hsl(194deg 22% 45%);
+}
+.layout__wnd--active .layout-tab-bar .item--focus>.item__text {
+    color: #2f8c95;
+}
+.layout__wnd--active .fn__flex.layout-tab-bar .item.item--focus {
+    background-color: #fdfff6;
+    box-shadow: rgb(102 167 128) 0px 0px 0px 1px inset;
+}
+.fn__flex-column.fn__flex.fn__flex-1 .fn__flex-1.layout-tab-container::after {
+    box-shadow: inset 0 0 3px hsl(194deg 30% 40%);
+}
+.fn__flex.layout-tab-bar .item.item--focus {
+    background-color: hsl(65deg 25% 93%);
+    box-shadow: inset 0 0 0px 1px hsl(194deg 37% 66%);
+}
+.fn__flex.layout-tab-bar .item:hover {
+    background-color: hsl(79deg 85% 77% / 91%);
+}
+
+
+/* 文档标题 */
+.protyle-title__input {
+    color: rgb(77 166 0);
+    border-bottom: 2px solid rgb(202 227 187);
+}
+
+
+/* 多级标题 */
+.b3-typography .h1, .b3-typography h1, .b3-typography .h2, .b3-typography h2, .b3-typography .h3, .b3-typography h3, .b3-typography .h4, .b3-typography h4, .b3-typography .h5, .b3-typography h5, .b3-typography .h6, .b3-typography h6, .protyle-wysiwyg .h1, .protyle-wysiwyg h1, .protyle-wysiwyg .h2, .protyle-wysiwyg h2, .protyle-wysiwyg .h3, .protyle-wysiwyg h3, .protyle-wysiwyg .h4, .protyle-wysiwyg h4, .protyle-wysiwyg .h5, .protyle-wysiwyg h5, .protyle-wysiwyg .h6, .protyle-wysiwyg h6 {
+    color: rgb(88 124 56) !important;
+}
+
+
+/* 文档树 */
+.sy__file ul.b3-list.b3-list--background {
+    outline: 1px solid hsl(194deg 34% 55% / 81%);
+    background-color: white;
+}
+
+.b3-list--background .b3-list-item--focus {
+    background-color: hsl(186deg 100% 92% / 69%) !important;
+}
+.b3-list--background .b3-list-item:hover:not(.b3-list-item--focus) {
+    background-color: hsl(83deg 100% 83%);
+}
+
+/* 编辑区背景色 */
+.protyle-content {
+    background-color: hsl(83deg 100% 99%);
+}
+
+/* 集市卡片 */
+.b3-card:hover {
+    background-color: hsl(76deg 82% 72% / 40%);
+}
+
+/* 标签 */
+.protyle-wysiwyg [data-node-id] span[data-type~=tag] {
+    color: hsl(156deg 25% 43%) !important;
+    box-shadow: hsl(180deg 30% 56%) 3.6em 0px 0px -2.2em inset, 0px 0px 0px 1px inset #9cc1b8;
+}
+
+/* 行内代码 */
+.fn__code, .b3-typography code:not(.hljs), .b3-typography span[data-type~=code], .protyle-wysiwyg code:not(.hljs), .protyle-wysiwyg span[data-type~=code] {
+    color: rgb(75 44 1 / 85%);
+    background-color: #fef7e9;
+    border-color: rgb(163 151 121 / 85%);
+}
+
+/* 阴影字 */
+[style*="text-shadow"] {
+    color: #4e8358 !important;
+    text-shadow: 0px 1px 0px rgb(197 213 197 / 76%), 0px 2px rgb(186 210 194 / 60%), 0px 3px 5px #b0c7bc, 0px 4px 5px #daeed0b3 !important;
+}
+
+
+
+/* 代码块 */
+.b3-typography .code-block, .protyle-wysiwyg .code-block {
+    box-shadow: 0px 0px 6px 1px #95a47c72;
+}
+.protyle-linenumber__rows {
+    border-right: 1px solid rgb(194 216 227);
+}
+
+
+/* 数据历史面板 */
+.fn__flex-column:has(#historyContainer) .layout-tab-bar.fn__flex {
+    background-color: #ddedf8;
+}
+.history__panel>.b3-list, .history__panel>.history__diff {
+    background-color: #f8fffd;
+}
+
+/* 面包屑 */
+.protyle-breadcrumb {
+    box-shadow: inset 0px -1px 0px hsl(194deg 30% 63%);
+}
+
+/* 选择下拉框 */
+.b3-select:hover {
+    background-color: #e1f4ff;
+}
+
+
+/* 标题前图标 */
+.h1 > :first-child::before, .h2 > :first-child::before, .h3 > :first-child::before, .h4 > :first-child::before, .h5 > :first-child::before, .h6 > :first-child::before {
+    filter: brightness(81%) sepia(88%) hue-rotate(160deg) saturate(209%);
+}
+
+
+
+/* ————卷轴页面相关———— */
+
+/* 中央卷轴之外的区域，视觉上看起来就像是卷轴底下的平面。设为灰粉色以和中央文字区域区分，目的是让使用者更容易把注意力集中在中央的文字区域 */
+.protyle:not(#searchPreview.fn__flex-1.protyle,.block__popover,.block__edit.fn__flex-1.protyle,.backlinkList .protyle,.backlinkMList .protyle, #cardPreview.protyle){
+    background-color: hsl(97deg 34% 91% / 90%);
+}
+/* 卷轴页面底色 */
+.fn__flex-1.protyle .protyle-content:not(#searchPreview.fn__flex-1.protyle>.protyle-content,.block__popover,.block__edit.fn__flex-1.protyle>.protyle-content,.backlinkList .protyle-content,.backlinkMList .protyle-content, #cardPreview>.protyle-content){
+    background-color: #fcfffa;
+    box-shadow: #10331524 0px 0px 0.7em 0.3em, #8cda5b2b 0px 0px 3em 1em, #ebf5e4a3 0px 0px 2.5em;
+}
+/* 开启卷轴页面时需要的边框 */
+.fn__flex-1.protyle .protyle-content:not(#searchPreview.fn__flex-1.protyle>.protyle-content,.block__popover,.block__edit.fn__flex-1.protyle>.protyle-content,.backlinkList .protyle-content,.backlinkMList .protyle-content, #cardPreview>.protyle-content){
+    border-left-color: #aed48c;
+    border-right-color: #aed48c;
+}
+.fn__flex-1.protyle {
+    box-shadow: inset 0 0 10px 1px #a9b69c59;
+}
+
+
+/* 悬浮窗中面包屑 */
+.block__edit>.protyle-breadcrumb{
+    background-color: rgb(244 251 238);
+}
+
+
+/* ——————反链面板————*/
+.sy__backlink  .b3-list-item:not(.hint--menu .b3-list-item) {
+    background-color: #edfae1;
+}
+.sy__backlink .b3-list-item:not(.protyle-hint .b3-list-item):not(.hint--menu .b3-list-item){
+    outline: 1px solid #aac5a2;
+}
+.sy__backlink .protyle{
+    outline: 1px solid #a2c5a6;
+    box-shadow: 0px 3px 3px -2px #c3bbb4;
+}
+.sy__backlink .protyle::before {
+    background-color: #6e989480;
+}
+
+
+/* ————文档树列表————— */
+.sy__backlink .b3-list--background .b3-list-item--focus {
+    background-color: #dfffb4b0 !important;
+}
+
+
+/* 嵌入块 */
+.protyle-wysiwyg [data-node-id].render-node[data-type=NodeBlockQueryEmbed] {
+    background-color: #e2ebd763;
+    box-shadow: 0px 0px 3px 2px inset #c5d2c6;
+}
+
+
+/* ————搜索面板———— */
+#searchInput.b3-text-field.b3-text-field--text {
+    background-color: white;
+    border-radius: 0.3rem;
+    box-shadow: inset 0 0 2px 1px #84b389b5;
+}
+#searchList .b3-list-item {
+    border-bottom: 1px solid #c5dbd6;
+    border-right: 1px solid #c5dbd6;
+}
+#searchList .b3-list-item:hover, #searchList .b3-list-item:has(+.b3-list-item:hover) {
+    border-bottom: 1px solid #679841;
+}
+
+#searchList .b3-list-item:first-child {
+    border-top: 1px solid rgb(197 209 219);
+}
+#searchList .b3-list-item:first-child:hover{
+    border-top: 1px solid #679841;
+}
+
+
+
+/* ————面板边框———— */
+.protyle-hint, .b3-menu {
+    border: var(--room-green-menu-border);
+}
+
+.protyle-util {
+    border: var(--room-green-menu-border);
+}
+
+/* ————设置面板———— */
+.b3-card--current {
+    background-color: hsl(100deg 44% 90%);
+    border: 1px solid hsl(100deg 29% 80%);
+}
+
+
+
+.protyle-wysiwyg [data-node-id].li:before{
+    border-left-color: hsl(148.5deg 16.67% 52.94% / 76.86%);
+}
+
+.protyle-wysiwyg [data-node-id].li:hover:before{
+    border-left-color: hsla(148, 25%, 43%, 0.84);
+}
+
+
+.search__drag:after {
+    background-color: #6d9e6b;
+}
+.search__drag:hover:after {
+    background-color: #367034;
+}
+
+.b3-list--mobile ul.b3-list.b3-list--background{
+    outline: 0.2em solid rgb(105 141 89 / 63%);
+}
+
+
+.b3-text-field, .pcr-app .pcr-interaction .pcr-result{
+    background-color: #f8e4d654;
+}
+.b3-text-field, .pcr-app .pcr-interaction .pcr-result {
+    box-shadow: inset 0 0 0 0.6px #858264c2;
+}
+
+.b3-select{
+    background-color: #f8e4d654;
+}
+
+.protyle-hint.b3-list.b3-list--background .b3-list-item__text {
+    color: #1b4501;
+}
+
+.switch-doc .b3-list:last-child .b3-list-item{
+    box-shadow: inset 0 -1px 0 #bdcdd2;
+}
+
+.layout-tab-container:has(.search__header), .b3-dialog__container:has(.search__header) {
+    background-color: var(--room-surface-dimcolor);
+}
+.b3-dialog__container:has(.search__header) {
+    box-shadow: 0 0 0 0.22em #d9e9d2,0 0 0 0.28em #83ad79,var(--b3-dialog-shadow);
+}
+.b3-dialog__container:not(:has(.card__main)) {
+    border: 1px solid #c0d1c2;
+}
+
+.search__header .block__icon {
+    background-color: #f4ffec;
+}
+
+/* 给图片设置边框 */
+[custom-tpbk] img{
+    outline-color: #55852acb;
+}
+
+
+/* 闪卡边框使用对应的颜色 */
+.card__main{
+    border: var(--room-green-menu-border);
+}

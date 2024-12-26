@@ -1,0 +1,13 @@
+
+/* 修改默认的投影样式 */
+[style*="text-shadow"]{
+    color:#834e68 !important;
+    text-shadow: 0px 1px 0px #d3b9b9c2, 0px 2px #d3b2b299, 0px 3px 5px #c7b0b0, 0px 4px 5px #eed3d0cc !important;
+
+}
+
+/* 修改默认的镂空样式 */
+[style*="-webkit-text-stroke"]{
+    font-weight: 900 !important;
+    -webkit-text-stroke: 0.8px var(--b3-theme-on-background) !important;
+}

@@ -1,0 +1,12 @@
+.config-bazaar__readme>.item__side {
+    & button[data-type="install"] {
+        font-weight: bold;
+    }
+
+    & a[data-type="feedback"] {
+        font-weight: bold;
+        border: 2px solid var(--b3-theme-secondary);
+        background-color: var(--b3-theme-background);
+        color: var(--b3-theme-secondary);
+    }
+}
