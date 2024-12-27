@@ -12,6 +12,7 @@ import {JsonUtil, ObjectUtil} from "zhi-common"
 import {checkExpires, getSummery} from "~/utils/utils"
 import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
 import {useServerAssets} from "~/plugins/libs/renderer/useServerAssets"
+import AppConfig from "~/app.config"
 
 const logger = createAppLogger("static-share-page")
 const {docId} = useDocId()
@@ -28,7 +29,7 @@ const props = defineProps({
   pageId: {
     type: String,
     default: undefined,
-  },
+  }, setting: typeof AppConfig
 })
 
 // datas
@@ -57,7 +58,11 @@ const getPostData = async () => {
   }
 }
 const getSetting = async () => {
-  const currentSetting = await getStaticSetting()
+  let currentSetting = props.setting
+  // 防止重复请求
+  if (!props.setting) {
+    currentSetting = await getStaticSetting()
+  }
   logger.info("currentSetting=>", currentSetting)
   // 默认没有设置的时候应该显示
   formData.setting.docTreeEnabled = currentSetting?.docTreeEnabled ?? true

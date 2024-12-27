@@ -32,15 +32,15 @@ const homePageId = setting?.homePageId ?? undefined
 
 <template>
   <el-container v-if="StrUtil.isEmptyString(homePageId)">
-    <static-header/>
+    <static-header :setting="setting"/>
     <el-main>
       <el-empty :description="t('blog.index.no.home')">
         <el-alert type="warning" :description="t('blog.index.goto.set.home.static')" :closable="false"></el-alert>
       </el-empty>
     </el-main>
-    <static-footer/>
+    <static-footer :setting="setting"/>
   </el-container>
-  <static-home v-else :page-id="homePageId"/>
+  <static-home v-else :page-id="homePageId" :setting="setting"/>
 </template>
 
 <style lang="stylus">
