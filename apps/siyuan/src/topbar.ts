@@ -27,115 +27,73 @@ import {Menu, showMessage} from "siyuan"
 import {StrUtil} from "zhi-common"
 import PageUtil from "./utils/pageUtil.ts"
 import {createBootStrap} from "./bootstrap.ts"
-import {icons} from "./icons.ts"
-import {getAvailableOrigin} from "./utils/urlUtil.ts"
+import Share from "./share.vue"
+import Setting from "./setting.vue"
 import SiyuanBlogPlugin from "./index"
-
-const initContextMenu = async (pluginInstance: SiyuanBlogPlugin, rect: DOMRect) => {
-  const menu = new Menu("blogContextMenu")
-
-  // menu.addItem({
-  //   iconHTML: `<span class="font-awesome-icon">${icons.iconSetting}</span>`,
-  //   label: pluginInstance.i18n.setting,
-  //   click: () => {
-  //     showSettingPage(pluginInstance)
-  //   },
-  // })
-  //
-  // menu.addSeparator()
-  // menu.addItem({
-  //   iconHTML: `<span class="iconfont-icon">${icons.iconHome}</span>`,
-  //   label: pluginInstance.i18n.showHome,
-  //   click: () => {
-  //     const blogIndex = "/plugins/siyuan-blog/#/"
-  //     const origin = getAvailableOrigin()
-  //     // showPage(pluginInstance, blogIndex, pluginInstance.i18n.home)
-  //     window.open(`${origin}${blogIndex}`)
-  //   },
-  // })
-  //
-  // menu.addSeparator()
-  // menu.addItem({
-  //   iconHTML: `<span class="font-awesome-icon">${icons.iconBrowser}</span>`,
-  //   label: pluginInstance.i18n.browserOpen,
-  //   click: () => {
-  //     const pageId = PageUtil.getPageId()
-  //     const blogIndex = `/plugins/siyuan-blog/#/s/${pageId}`
-  //     const origin = getAvailableOrigin()
-  //     window.open(`${origin}${blogIndex}`)
-  //   },
-  // })
-
-  if (pluginInstance.isMobile) {
-    menu.fullscreen()
-  } else {
-    menu.open({
-      x: rect.left,
-      y: rect.top,
-      w: rect.width,
-      h: rect.height,
-      isLeft: false,
-    })
-  }
-}
-
-const showSettingPage = (pluginInstance: SiyuanBlogPlugin) => {
-  showMessage("setting page")
-}
 
 /**
  * 顶部按钮
  */
 export class Topbar {
   private readonly pluginInstance: SiyuanBlogPlugin
+  private readonly topBarElement: HTMLElement
+  private initRect: DOMRect
+  private contentMenu: Menu
+  private contextMenu: Menu
 
   constructor(pluginInstance: SiyuanBlogPlugin) {
     this.pluginInstance = pluginInstance
-  }
-
-  public initTopbar() {
-    const topBarElement = this.pluginInstance.addTopBar({
+    this.topBarElement = this.pluginInstance.addTopBar({
       icon: "iconShare",
       title: this.pluginInstance.i18n.siyuanBlog,
       position: "right",
       callback: () => {
       },
     })
+  }
 
-    topBarElement.addEventListener("click", async () => {
-      const menu = new Menu("shareProMenu")
-      const el = menu.addItem({
-        iconHTML: "",
-        label: "",
-      })
-      // 挂载内容到菜单
-      const pageId = PageUtil.getPageId()
-      if (StrUtil.isEmptyString(pageId)) {
-        showMessage("必须先打开一篇文档才能分享")
-        return
+  public initTopbar() {
+    this.topBarElement.addEventListener("click", async () => {
+      if (!this.contentMenu) {
+        this.contentMenu = new Menu("shareProContentMenu")
       }
-      createBootStrap(el, {
-        pluginInstance: this.pluginInstance,
-        id: pageId,
-        origin: window.location.origin,
-      })
-      // 显示菜单
-      const rect = topBarElement.getBoundingClientRect()
-      menu.open({
-        x: rect.right,
-        y: rect.bottom,
-        isLeft: true,
-      })
+      if (!this.initRect) {
+        this.initRect = this.topBarElement.getBoundingClientRect()
+      }
+      this.addMenu(Share, this.contentMenu.element, this.contentMenu)
     })
 
     // 添加右键菜单
-    topBarElement.addEventListener("contextmenu", async () => {
-      let rect = topBarElement.getBoundingClientRect()
-      // 如果获取不到宽度，则使用更多按钮的宽度
-      if (rect.width === 0) {
-        rect = document?.querySelector("#barMore")?.getBoundingClientRect() as any
+    this.topBarElement.addEventListener("contextmenu", async () => {
+      if (!this.contextMenu) {
+        this.contextMenu = new Menu("shareProContentMenu")
       }
-      await initContextMenu(this.pluginInstance, rect)
+      if (!this.initRect) {
+        this.initRect = this.topBarElement.getBoundingClientRect()
+      }
+      this.addMenu(Setting, this.contextMenu.element, this.contextMenu)
+    })
+  }
+
+  private addMenu(content: any, contentElement: any, menu: Menu) {
+    // 挂载内容到菜单
+    const pageId = PageUtil.getPageId()
+    if (StrUtil.isEmptyString(pageId)) {
+      showMessage("必须先打开一篇文档才能分享")
+      return
+    }
+    createBootStrap(content, {
+      pluginInstance: this.pluginInstance,
+      id: pageId,
+      origin: window.location.origin,
+    }, contentElement)
+    // 显示菜单
+    // const rect = this.topBarElement.getBoundingClientRect()
+    const rect = this.initRect
+    menu.open({
+      x: rect.left,
+      y: rect.bottom,
+      isLeft: true,
     })
   }
 }

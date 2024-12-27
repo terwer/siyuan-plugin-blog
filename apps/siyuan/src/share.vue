@@ -279,6 +279,7 @@ logger.debug("share inited", props)
   margin 2px 0
 
 #share
+  min-width 425px
   .share-item
     padding 6px 10px
 
