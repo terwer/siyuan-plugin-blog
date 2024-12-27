@@ -27,25 +27,32 @@ export const useAuthModeFetch = () => {
   const fetchPublicText = async (filename: string): Promise<string> => {
     const fetchFileUrl = `/public/siyuan-blog/${filename}`
     logger.info("getPublicFile in auth mode", fetchFileUrl)
-    if (isSiyuanSPA) {
-      const origin = window.location.origin
-      logger.info("fetchPublicText via siyuan spa, origin=>", origin)
-      const apiUrl = buildUrl(origin, fetchFileUrl)
-      const res = (
-        await $fetch(apiUrl)
-      ) as any
-      return JSON.stringify(res)
-    } else {
-      logger.info("fetchPublicText via endpoint")
-      const res = (
-        await $fetch("/api/endpoint", {
-          method: "POST",
-          body: JSON.stringify({
-            url: fetchFileUrl
+    try {
+
+
+      if (isSiyuanSPA) {
+        const origin = window.location.origin
+        logger.info("fetchPublicText via siyuan spa, origin=>", origin)
+        const apiUrl = buildUrl(origin, fetchFileUrl)
+        const res = (
+          await $fetch(apiUrl)
+        ) as any
+        return JSON.stringify(res)
+      } else {
+        logger.info("fetchPublicText via endpoint")
+        const res = (
+          await $fetch("/api/endpoint", {
+            method: "POST",
+            body: JSON.stringify({
+              url: fetchFileUrl
+            })
           })
-        })
-      ) as any
-      return JSON.stringify(res)
+        ) as any
+        return JSON.stringify(res)
+      }
+    } catch (e) {
+      logger.error("fetchPublicText via endpoint", e)
+      return ""
     }
   }
 

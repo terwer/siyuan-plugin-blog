@@ -7,7 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {App, IObject, Plugin} from "siyuan"
+import {App, getFrontend, IObject, Plugin} from "siyuan"
 import {Topbar} from "./topbar.ts"
 import {icons} from "./icons.ts"
 
@@ -20,11 +20,14 @@ import {icons} from "./icons.ts"
 export default class SiyuanBlogPlugin extends Plugin {
   // public logger: ILogger = simpleLogger("index", "siyuan-blog", isDev)
   private topbar: Topbar = {} as Topbar
+  public isMobile: boolean
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
     // topbar
     this.topbar = new Topbar(this)
+    const frontEnd = getFrontend()
+    this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile"
   }
 
   async onload() {

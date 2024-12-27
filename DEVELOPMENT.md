@@ -33,8 +33,9 @@ pnpm dev -F @terwer/share-pro-app -- --host
 dev
 
 ```bash
-pnpm makeLink
 pnpm build -F @terwer/share-pro-app -- --from siyuan
+pnpm build -F siyuan-blog
+pnpm makeLink
 pnpm build -F siyuan-blog -- --watch
 
 # http://localhost:6806/plugins/siyuan-blog/app/#/s/20241217142133-o580ytq
