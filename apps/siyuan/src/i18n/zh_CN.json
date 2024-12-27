@@ -26,5 +26,6 @@
   "温馨提示：如果无法访问可通过切换IP（PC）、或者「右键->设置->自定义域名」（PC、Docker）解决，外网访问需在「设置->关于->网络伺服」打开伺服",
   "share.other.option.link.expires": "链接过期时间",
   "share.link.expires.time.placeholder": "单位/秒，最多支持7天。0表示永久生效",
-  "share.set.home": "设为主页"
+  "share.set.home": "设为主页",
+  "share.click.view": "点击查看"
 }

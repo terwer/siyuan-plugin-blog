@@ -7,10 +7,17 @@
   -  of this license document, but changing it is not allowed.
   -->
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  showHeader: Boolean,
+})
+</script>
 
 <template>
-  <header></header>
+  <header v-if="showHeader">header</header>
 </template>
 
-<style scoped></style>
+<style lang="stylus" scoped>
+header
+  height 44px
+</style>

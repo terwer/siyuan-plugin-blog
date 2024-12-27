@@ -110,7 +110,7 @@ const VNode = () =>
     <main class="main">
       <!-- 分享正文 -->
       <div class="fn__flex-1 protyle" data-loading="finished">
-        <static-header/>
+        <static-header :show-header="true"/>
         <div class="protyle-content protyle-content--transition" data-fullwidth="true">
           <div class="protyle-title protyle-wysiwyg--attr">
             <div
@@ -145,7 +145,22 @@ const VNode = () =>
 <style lang="stylus" scoped>
 .app-container
   display flex
+  flex-direction column
   height 100vh
+
+.main
+  flex 1
+  overflow-y auto
+  padding 0
+  box-sizing border-box
+  scrollbar-width none  /* Firefox */
+  -ms-overflow-style none  /* IE 和 Edge */
+  background-clip padding-box  /* 确保背景只在内容区域 */
+  /* 隐藏滚动条的同时保留滚动功能 */
+  ::-webkit-scrollbar
+    display none  /* Chrome 和 Safari */
+  .protyle-content
+    margin-top 44px
 
 .sidebar-toggle
   position fixed
@@ -175,19 +190,6 @@ const VNode = () =>
 
 .sidebar-hidden
   transform translateX(-100%)
-
-.main {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 和 Edge */
-}
-
-.main::-webkit-scrollbar {
-  /* 隐藏滚动条（Chrome 和 Safari）*/
-  display: none;
-}
 
 .floating-toc
   position fixed

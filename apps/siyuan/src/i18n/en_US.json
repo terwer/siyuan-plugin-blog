@@ -26,5 +26,6 @@
   "Gentle reminder: Should access prove elusive, consider IP switching. In environments beyond 127.0.0.1, kindly navigate to Settings->About->Network Servers to initiate server activation.",
   "share.other.option.link.expires": "Allow link expires",
   "share.link.expires.time.placeholder": "Units/sec, up to 7 days. 0 means permanent",
-  "share.set.home": "Set home"
+  "share.set.home": "Set home",
+  "share.click.view": "Click to view"
 }

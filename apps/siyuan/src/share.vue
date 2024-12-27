@@ -41,7 +41,7 @@ const formData = reactive({
 
   shared: false,
   isHome: false,
-  expiredTime: "",
+  expiredTime: 0,
   shareLink: "",
   ip: "",
   ipList: []
@@ -57,6 +57,10 @@ const getIps = () => {
     ips.push(hostname)
   }
   return {hostname, ips}
+}
+
+const viewDoc = () => {
+  window.open(formData.shareLink)
 }
 
 const handleShare = () => {
@@ -103,7 +107,7 @@ const handleShare = () => {
         () => {
           if (formData.isHome) {
             formData.shared = true
-            showMessage("blog.index.home.exists", 7000, "error")
+            showMessage(props.pluginInstance.i18n["blog.index.home.exists"], 7000, "error")
             return false
           }
           return true
@@ -168,7 +172,7 @@ const handleExpiresTime = async () => {
       },
       () => {
         if (isNaN(expiredTime) || expiredTime < 0 || expiredTime > 7 * 24 * 60 * 60) {
-          showMessage("share.link.expires.error", 7000, "error")
+          showMessage(props.pluginInstance.i18n["share.link.expires.error"], 7000, "error")
           return false
         }
         return true
@@ -185,7 +189,7 @@ onBeforeMount(async () => {
   formData.shared = attrs["custom-publish-status"] === "publish"
   formData.isHome = formData.setting.homePageId === props.id
   formData.shareLink = `${shareOrigin}${basePath}/s/${props.id}`
-  formData.expiredTime = attrs["custom-expires"] ?? "0"
+  formData.expiredTime = attrs["custom-expires"] ?? 0
   const {hostname, ips} = getIps()
   formData.ip = hostname
   formData.ipList = ips.map((ip: string) => {
@@ -206,9 +210,9 @@ logger.debug("share inited", props)
 
     <div class="share-settings">
       <div class="setting-row">
-        <span class="setting-label">{{
-            pluginInstance.i18n["share.to.web"]
-          }} - {{ pluginInstance.i18n["share.to.web.before.tip"] }}</span>
+        <span class="setting-label">
+          {{ pluginInstance.i18n["share.to.web"] }} - {{ pluginInstance.i18n["share.to.web.before.tip"] }}
+        </span>
         <input class="b3-switch fn__flex-center" type="checkbox" v-model="formData.shared" @change="handleShare">
       </div>
     </div>
@@ -217,7 +221,8 @@ logger.debug("share inited", props)
       <div class="setting-row">
         <span class="setting-label">{{ pluginInstance.i18n["share.copy.title"] }}</span>
         <div class="input-group">
-          <input type="text" v-model="formData.shareLink" readonly class="share-link-input" disabled/>
+          <input type="text" v-model="formData.shareLink" readonly class="share-link-input" @click="viewDoc"
+                 :title="pluginInstance.i18n['share.click.view']"/>
           <button @click="copyWebLink">{{ pluginInstance.i18n["share.copy.web.link"] }}</button>
         </div>
       </div>
@@ -238,7 +243,7 @@ logger.debug("share inited", props)
       <div class="setting-row">
         <span class="setting-label">{{ pluginInstance.i18n["share.other.option.link.expires"] }}</span>
         <div class="input-group">
-          <input type="text" v-model="formData.expiredTime" class="share-expired-input"
+          <input v-model="formData.expiredTime" class="share-expired-input" type="number" min="0" step="1"
                  :placeholder='pluginInstance.i18n["share.link.expires.time.placeholder"]'/>
           <button @click="handleExpiresTime">{{ pluginInstance.i18n["main.opt.save"] }}</button>
         </div>
@@ -387,6 +392,16 @@ html[data-theme-mode="dark"]
     border-color #444444
     background-color #2c2c2c
 
+  .input-group input:not([readonly])
+    color var(--b3-theme-on-background)
+    background-color #2c2c2c
+    border-color #444444
+
+  .input-group input:not([readonly]):focus
+    border-color #0073e6
+    background-color #3a3a3a
+    box-shadow 0 0 4px rgba(0, 115, 230, 0.5)
+
   .input-group select
     border-color #444444
     color var(--b3-theme-on-background)
@@ -395,6 +410,7 @@ html[data-theme-mode="dark"]
   .input-group select option
     color var(--b3-theme-on-background)
     background-color #444444
+
     &:hover, &:focus
       background-color #555555
       color #ffffff
