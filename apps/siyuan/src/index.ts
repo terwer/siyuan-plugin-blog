@@ -11,6 +11,8 @@ import {App, getFrontend, IObject, Plugin} from "siyuan"
 import {Topbar} from "./topbar.ts"
 import {icons} from "./icons.ts"
 
+import "./index.styl"
+
 /**
  * SiyuanBlogPlugin 类是 siyuan-note 的插件入口
  *

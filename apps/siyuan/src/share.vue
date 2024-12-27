@@ -196,180 +196,183 @@ logger.debug("share inited", props)
 </script>
 
 <template>
-  <Suspense>
-    <div id="share">
-      <div class="share-item share-subject">
-        <div class="item-left">
-          {{ pluginInstance.i18n.siyuanBlog }} -
-          {{ formData.post.title }}
-        </div>
-        <div class="item-right"></div>
-      </div>
-      <div class="share-split"/>
-
-      <div class="el-page-header__content share-item">
-        <div class="flex items-center">
-          <span class="text-large font-600 mr-3 share-title"> "share.to.web" </span>
-          <span class="text-sm mr-2 share-description">
-          "share.to.web.before.tip"
-        </span>
-          <span class="item-right">
-          <input type="checkbox" v-model="formData.shared" @change="handleShare"/>
-        </span>
-        </div>
-      </div>
-      <div class="share-split"/>
-
-      <div v-if="formData.shared">
-        <div class="share-item">
-          <div class="item-left item-copy-link">
-            <input type="text" v-model="formData.shareLink"/>
-          </div>
-          <div class="item-right">
-            <button @click="copyWebLink">{{ "share.copy.web.link" }}</button>
-          </div>
-        </div>
-        <div class="share-item">
-          <div class="item-left">
-            <span class="change-ip-title">{{ "change.ip.title" }}</span>
-            <select
-                v-model="formData.ip"
-                class="m-2"
-                @change="handleIpChange"
-            >
-              <option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value"/>
-            </select>
-          </div>
-          <div class="change-ip-tip">
-            {{ "share.static.tip" }}
-          </div>
-        </div>
-        <div class="share-split"/>
-
-        <div class="share-item">
-          <div class="item-left item-copy-link">
-            {{ "share.show.link.option" }}
-          </div>
-          <div class="item-right"></div>
-        </div>
-
-        <div class="share-item expires-link-item">
-          <div class="expires-link expires-link-label">
-            {{ "share.other.option.link.expires" }}
-          </div>
-          <div class="expires-link expires-link-input">
-            <input type="text" v-model="formData.expiredTime" :placeholder="'share.link.expires.time.placeholder'"/>
-          </div>
-          <div class="item-right">
-            <button @click="handleExpiresTime">{{ "main.opt.save" }}</button>
-          </div>
-        </div>
-        <div class="share-split"/>
-
-        <div class="share-item">
-          <div class="item-left">
-            {{ "share.set.home" }}
-          </div>
-          <div class="item-right">
-            <input type="checkbox" v-model="formData.isHome" @change="handleSetHome"/>
-          </div>
-        </div>
-        <div class="share-split"/>
+  <div id="share">
+    <div class="share-header">
+      <div class="share-title">
+        {{ formData.post.title }}
       </div>
     </div>
-  </Suspense>
+    <div class="divider"/>
+
+    <div class="share-settings">
+      <div class="setting-row">
+        <span class="setting-label">{{
+            pluginInstance.i18n["share.to.web"]
+          }} - {{ pluginInstance.i18n["share.to.web.before.tip"] }}</span>
+        <input class="b3-switch fn__flex-center" type="checkbox" v-model="formData.shared" @change="handleShare">
+      </div>
+    </div>
+
+    <div v-if="formData.shared" class="share-content">
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["share.copy.web.link"] }}</span>
+        <div class="input-group">
+          <input type="text" v-model="formData.shareLink" readonly class="share-link-input" disabled/>
+          <button @click="copyWebLink">{{ pluginInstance.i18n["share.copy.web.link"] }}</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["change.ip.title"] }}</span>
+        <div class="input-group">
+          <select v-model="formData.ip" @change="handleIpChange">
+            <option v-for="item in formData.ipList" :key="item.value" :value="item.value">
+              {{ item.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="info-text">{{ pluginInstance.i18n["share.static.tip"] }}</div>
+
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["share.other.option.link.expires"] }}</span>
+        <div class="input-group">
+          <input type="text" v-model="formData.expiredTime" class="share-expired-input"
+                 :placeholder='pluginInstance.i18n["share.link.expires.time.placeholder"]'/>
+          <button @click="handleExpiresTime">{{ pluginInstance.i18n["main.opt.save"] }}</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["share.set.home"] }}</span>
+        <input class="b3-switch fn__flex-center" type="checkbox" v-model="formData.isHome" @change="handleSetHome">
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="stylus" scoped>
-.text-center
-  text-align center
-
-.share-split
-  margin 2px 0
-
 #share
-  min-width 425px
-  .share-item
-    padding 6px 10px
-
-    &:hover, &:focus
-      cursor pointer
-
-    //border-radius 5px
-    //border-color var(--el-border-color)
-    //background-color var(--b3-list-hover)
-
-    .share-icon
-      vertical-align middle
-      font-size 26px
-      fill rgba(55, 53, 47, 0.35)
-
-    .share-title
-      font-size 16px
-
-    .share-description
-      font-size 12px
-
-    .item-left
-      display inline-block
-
-    .item-copy-link
-      width 75%
-
-      ::v-deep(.el-space__item)
-        padding 0 !important
-
-    .item-right
-      display inline-block
-      float right
-
-    .item-middle
-      display inline-block
-      background-color transparent
-
-    .expires-link
-      display inline-block
-
-    .expires-link-label
-      margin-right 10px
-
-    .expires-link-input
-      width 60%
-
-  .other-setting
-    border-radius 4px
-    background-color var(--b3-list-hover)
-
-  .share-subject
-    font-size 14px
-    font-weight 600
-
-  ::v-deep(.el-switch)
-    display inline-block
-
-  .expires-link-item
-    ::v-deep(.el-switch)
-      display inline-flex
-
-  .el-page-header__content
-    ::v-deep(.el-switch)
-      display inline-flex
-
-.change-ip-title
-  margin-right 10px
-
-.warn-text
-  color #ea4aaa
-
-.share-warn-tip
-  padding-left 6px
-
-.change-ip-tip
-  color red
-  font-size 13px
+  font-family "Open Sans", "LXGW WenKai", "JetBrains Mono", "-apple-system", "Microsoft YaHei", "Times New Roman",
+  "方正北魏楷书_GBK", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
+  "Droid Sans", "Helvetica Neue", sans-serif
+  max-width 600px
+  min-width 475px
+  margin auto
+  padding 8px
   padding-top 10px
+  padding-bottom 0
+  padding-left 16px
+  padding-right 16px
 
-.setting-btn
-  padding-left 10px
-  font-size 13px
+.share-header
+  font-size 16px
+  font-weight 600
+
+.divider
+  height 1px
+  margin 8px 0
+
+.share-content
+  margin-top 16px
+
+.setting-row
+  display flex
+  align-items center
+  margin-bottom 12px
+
+.setting-label
+  font-size 16px
+  flex-shrink 0
+  margin-right 8px
+  max-width 60% /* 限制最大宽度，防止布局溢出 */
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
+
+.input-group
+  display flex
+  align-items center
+  justify-content space-between
+  width 100%
+  gap 8px
+
+.input-group input,
+.input-group select
+  flex-grow 1
+  padding 8px
+  border 1px solid
+  border-radius 4px
+  font-size 14px
+  background-color inherit
+  color inherit
+  box-sizing border-box
+
+.input-group input:focus
+  outline none
+  border-color #0073e6
+  box-shadow 0 0 4px rgba(0, 115, 230, 0.5)
+
+.share-link-input
+  max-width 300px
+
+.share-expired-input
+  max-width 250px
+
+button
+  padding 4px 16px
+  font-size 14px
+  color #ffffff
+  border none
+  border-radius 4px
+  cursor pointer
+  background-color #0073e6
+  transition all 0.2s ease
+
+button:hover
+  background-color #005bb5
+  transform scale(1.05)
+
+.b3-switch
+  margin-left auto
+
+.info-text
+  font-size 12px
+  margin-top 8px
+  color #ff4d4f
+
+html[data-theme-mode="light"]
+  .divider
+    background-color #e3e3e3
+
+  .share-link-input
+    border-color #cccccc
+    background-color #f9f9f9
+
+  button
+    background-color #0073e6
+
+  button:hover
+    background-color #005bb5
+
+  .info-text
+    color #ff4d4f
+
+html[data-theme-mode="dark"]
+  .divider
+    background-color #333333
+
+  .share-link-input
+    border-color #444444
+    background-color #2c2c2c
+
+  button
+    background-color #0073e6
+
+  button:hover
+    background-color #005bb5
+
+  .info-text
+    color #ff7875
 </style>
