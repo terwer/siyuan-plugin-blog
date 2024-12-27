@@ -215,7 +215,7 @@ logger.debug("share inited", props)
 
     <div v-if="formData.shared" class="share-content">
       <div class="setting-row">
-        <span class="setting-label">{{ pluginInstance.i18n["share.copy.web.link"] }}</span>
+        <span class="setting-label">{{ pluginInstance.i18n["share.copy.title"] }}</span>
         <div class="input-group">
           <input type="text" v-model="formData.shareLink" readonly class="share-link-input" disabled/>
           <button @click="copyWebLink">{{ pluginInstance.i18n["share.copy.web.link"] }}</button>
@@ -280,48 +280,60 @@ logger.debug("share inited", props)
 .setting-row
   display flex
   align-items center
-  margin-bottom 12px
+  justify-content space-between
+  margin-bottom 10px
+  gap 8px
 
 .setting-label
   font-size 16px
-  flex-shrink 0
+  white-space nowrap /* 防止换行，字段宽度自适应 */
   margin-right 8px
-  max-width 60% /* 限制最大宽度，防止布局溢出 */
-  white-space nowrap
-  overflow hidden
-  text-overflow ellipsis
+
+/* 与输入框保持适当间距 */
 
 .input-group
   display flex
   align-items center
-  justify-content space-between
-  width 100%
   gap 8px
+  flex-grow 1 /* 输入框占据剩余空间 */
+  width 100%
 
 .input-group input,
 .input-group select
   flex-grow 1
-  padding 8px
-  border 1px solid
+  height 28px
+  padding 4px 8px
+  border 1px solid #cccccc
   border-radius 4px
   font-size 14px
-  background-color inherit
-  color inherit
+  background-color #f9f9f9
+  color #333333
   box-sizing border-box
+  min-width 0
 
-.input-group input:focus
+/* 防止 flex 布局导致超出容器 */
+
+.input-group input:focus,
+.input-group select:focus
   outline none
   border-color #0073e6
   box-shadow 0 0 4px rgba(0, 115, 230, 0.5)
 
 .share-link-input
-  max-width 300px
+  height 28px
+  padding 4px 8px
+  border 1px solid #cccccc
+  border-radius 4px
+  font-size 14px
+  background-color #f0f0f0 /* 禁用时的背景色 */
+  color #aaaaaa /* 禁用时的文字颜色 */
+  box-sizing border-box
+  cursor not-allowed
 
-.share-expired-input
-  max-width 250px
+/* 表明是不可交互的 */
 
 button
-  padding 4px 16px
+  padding 4px 12px
   font-size 14px
   color #ffffff
   border none
@@ -329,26 +341,34 @@ button
   cursor pointer
   background-color #0073e6
   transition all 0.2s ease
+  white-space nowrap /* 防止按钮内容换行 */
+  flex-shrink 0
+
+/* 按钮保持固定大小 */
 
 button:hover
   background-color #005bb5
   transform scale(1.05)
 
-.b3-switch
-  margin-left auto
-
 .info-text
   font-size 12px
   margin-top 8px
+  margin-bottom 8px
   color #ff4d4f
 
 html[data-theme-mode="light"]
   .divider
     background-color #e3e3e3
 
-  .share-link-input
+  .input-group input,
+  .input-group select
     border-color #cccccc
     background-color #f9f9f9
+
+  .share-link-input
+    border-color #cccccc
+    background-color #f0f0f0
+    color #aaaaaa
 
   button
     background-color #0073e6
@@ -363,9 +383,26 @@ html[data-theme-mode="dark"]
   .divider
     background-color #333333
 
-  .share-link-input
+  .input-group input
     border-color #444444
     background-color #2c2c2c
+
+  .input-group select
+    border-color #444444
+    color var(--b3-theme-on-background)
+    background-color #2c2c2c
+
+  .input-group select option
+    color var(--b3-theme-on-background)
+    background-color #444444
+    &:hover, &:focus
+      background-color #555555
+      color #ffffff
+
+  .share-link-input
+    border-color #444444
+    background-color #3a3a3a
+    color #666666
 
   button
     background-color #0073e6

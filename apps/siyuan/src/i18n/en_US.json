@@ -6,6 +6,7 @@
   "shareOptions": "Share options",
   "browserOpen": "Open current page",
   "share.to.web": "Share to web",
+  "share.copy.title": "Copy link",
   "share.copy.web.link": "Copy",
   "share.to.web.before.tip": "Publish and share link to everyone",
   "share.to.web.after.tip": "Anyone with the link can view",
