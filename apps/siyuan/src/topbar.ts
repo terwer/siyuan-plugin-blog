@@ -36,13 +36,16 @@ import SiyuanBlogPlugin from "./index"
  */
 export class Topbar {
   private readonly pluginInstance: SiyuanBlogPlugin
-  private readonly topBarElement: HTMLElement
-  private initRect: DOMRect
+  private rect: DOMRect
+  private topBarElement: HTMLElement
   private contentMenu: Menu
-  private contextMenu: Menu
+  private contentMenuElement: HTMLElement
 
   constructor(pluginInstance: SiyuanBlogPlugin) {
     this.pluginInstance = pluginInstance
+  }
+
+  public initTopbar() {
     this.topBarElement = this.pluginInstance.addTopBar({
       icon: "iconShare",
       title: this.pluginInstance.i18n.siyuanBlog,
@@ -50,47 +53,45 @@ export class Topbar {
       callback: () => {
       },
     })
-  }
 
-  public initTopbar() {
     this.topBarElement.addEventListener("click", async () => {
-      if (!this.contentMenu) {
-        this.contentMenu = new Menu("shareProContentMenu")
+      // 挂载内容到菜单
+      const pageId = PageUtil.getPageId()
+      if (StrUtil.isEmptyString(pageId)) {
+        showMessage("必须先打开一篇文档才能分享")
+        return
       }
-      if (!this.initRect) {
-        this.initRect = this.topBarElement.getBoundingClientRect()
-      }
-      this.addMenu(Share, this.contentMenu.element, this.contentMenu)
+      this.addMenu(Share, {
+        pluginInstance: this.pluginInstance,
+        id: pageId,
+        origin: window.location.origin,
+      }, "share-free-edition-content-menu")
     })
 
     // 添加右键菜单
     this.topBarElement.addEventListener("contextmenu", async () => {
-      if (!this.contextMenu) {
-        this.contextMenu = new Menu("shareProContentMenu")
-      }
-      if (!this.initRect) {
-        this.initRect = this.topBarElement.getBoundingClientRect()
-      }
-      this.addMenu(Setting, this.contextMenu.element, this.contextMenu)
+      // 挂载内容到菜单
+      this.addMenu(Setting, {}, "share-free-edition-context-menu")
     })
   }
 
-  private addMenu(content: any, contentElement: any, menu: Menu) {
-    // 挂载内容到菜单
-    const pageId = PageUtil.getPageId()
-    if (StrUtil.isEmptyString(pageId)) {
-      showMessage("必须先打开一篇文档才能分享")
-      return
+  private addMenu(content: any, props: any, menuID: string) {
+    if (!this.contentMenu) {
+      this.contentMenu = new Menu(menuID)
     }
-    createBootStrap(content, {
-      pluginInstance: this.pluginInstance,
-      id: pageId,
-      origin: window.location.origin,
-    }, contentElement)
+    this.contentMenuElement?.remove()
+    const contentWrapper = Object.assign(document.createElement("div"), {
+      id: `${menuID}-wrapper`,
+      className: "share-free-edition-menu-content"
+    })
+    this.contentMenuElement = this.contentMenu.element.appendChild(contentWrapper)
+    if (!this.rect) {
+      this.rect = this.topBarElement.getBoundingClientRect()
+    }
+    createBootStrap(content, props, this.contentMenuElement)
     // 显示菜单
-    // const rect = this.topBarElement.getBoundingClientRect()
-    const rect = this.initRect
-    menu.open({
+    const rect = this.rect
+    this.contentMenu.open({
       x: rect.left,
       y: rect.bottom,
       isLeft: true,
