@@ -9,10 +9,10 @@
 
 import {BrowserUtil} from "zhi-device"
 import {useRoute} from "vue-router"
-import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
 import {useColorMode} from "@vueuse/core"
 import {HLJS_VERSION, SIYUAN_VERSION} from "~/utils/Constants"
 import {useAppBase} from "~/composables/useAppBase"
+import type AppConfig from "~/app.config"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -20,12 +20,11 @@ const logger = createAppLogger("use-theme-mode")
 /**
  * 注意：静态模式不能查询，只能通过参数传递进来
  */
-export const useStaticThemeMode = async () => {
+export const useStaticThemeMode = async (setting: typeof AppConfig) => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
   const {query} = useRoute()
   const {appBase} = useAppBase()
-  const {getStaticSetting} = useStaticSettingStore()
 
   // 在 mounted 生命周期中处理加载后逻辑
   onMounted(() => {
@@ -59,7 +58,6 @@ export const useStaticThemeMode = async () => {
     switchMode()
   }
 
-  const setting = await getStaticSetting()
   const siyuanV = SIYUAN_VERSION
   const hljsV = HLJS_VERSION
   const siyuanLightTheme = (query.lightTheme ?? setting.theme?.lightTheme ?? "Zhihu") as string

@@ -17,7 +17,7 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
 const {t} = useI18n()
-const {colorMode, toggleDark} = await useStaticThemeMode()
+const {colorMode, toggleDark} = await useStaticThemeMode(props.setting)
 
 // datas
 const header = props.setting?.header ?? ""

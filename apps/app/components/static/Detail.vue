@@ -110,7 +110,7 @@ const VNode = () =>
     <main class="main">
       <!-- 分享正文 -->
       <div class="fn__flex-1 protyle" data-loading="finished">
-        <static-header :show-header="formData.setting"/>
+        <static-header :setting="formData.setting"/>
         <div class="protyle-content protyle-content--transition" data-fullwidth="true">
           <div class="protyle-title protyle-wysiwyg--attr">
             <div
@@ -136,7 +136,7 @@ const VNode = () =>
             <VNode/>
           </div>
         </div>
-        <static-footer/>
+        <static-footer :setting="formData.setting"/>
       </div>
     </main>
   </div>
