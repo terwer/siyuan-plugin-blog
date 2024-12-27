@@ -8,24 +8,25 @@
   -->
 
 <script setup lang="ts">
-import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
 import {useI18n} from "vue-i18n"
 import {useProviderMode} from "~/composables/useProviderMode"
 import {DateUtil, StrUtil} from "zhi-common"
 import * as pkg from "~/package.json"
 import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import AppConfig from "~/app.config"
 
+// props
+const props = defineProps<{ setting: typeof AppConfig }>()
+
+// uses
 const {locale, t} = useI18n()
-const {getStaticSetting} = useStaticSettingStore()
-const setting = await getStaticSetting()
-const {colorMode, toggleDark} = await useStaticThemeMode()
 const {providerMode} = useProviderMode()
-const footer = setting?.footer ?? ""
 const {getHome} = useBaseUrl()
 
 // datas
-const v = ref(pkg.version)
+const v = ref((pkg as any).version)
 const nowYear = DateUtil.nowYear()
+const footer = props.setting?.footer ?? ""
 
 // methods
 const goGithub = () => {
@@ -52,8 +53,8 @@ const VNode = () =>
 // lifecycles
 onBeforeMount(() => {
   // 设置默认语言
-  if (setting?.lang) {
-    locale.value = setting?.lang as any
+  if (props.setting?.lang) {
+    locale.value = props.setting?.lang as any
   }
 })
 </script>
@@ -70,13 +71,6 @@ onBeforeMount(() => {
 
       <span class="text dot">.</span>
       <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
-
-      <span class="text dot">.</span>
-      <span class="text s-dark" @click="toggleDark()">
-        {{
-          colorMode ? t("theme.mode.light") : t("theme.mode.dark")
-        }}
-      </span>
     </div>
     <div class="footer" v-else>
       <VNode/>
@@ -101,7 +95,7 @@ onBeforeMount(() => {
   cursor: pointer;
 }
 
-.dot{
+.dot {
   padding-left: 2px;
   padding-right: 2px;
 }

@@ -8,13 +8,39 @@
   -->
 
 <script setup lang="ts">
-defineProps({
-  showHeader: Boolean,
-})
+import AppConfig from "~/app.config"
+import {StrUtil} from "zhi-common"
+import {useI18n} from "vue-i18n"
+
+// props
+const props = defineProps<{ setting: typeof AppConfig }>()
+
+// uses
+const {t} = useI18n()
+const {colorMode, toggleDark} = await useStaticThemeMode()
+
+// datas
+const header = props.setting?.header ?? ""
+
+const VNode = () =>
+    h("div", {
+      class: "",
+      innerHTML: header,
+    })
 </script>
 
 <template>
-  <header v-if="showHeader">header</header>
+  <div class="header" v-if="StrUtil.isEmptyString(header)">
+    <span class="text dot">.</span>
+    <span class="text s-dark" @click="toggleDark()">
+        {{
+        colorMode ? t("theme.mode.light") : t("theme.mode.dark")
+      }}
+      </span>
+  </div>
+  <div class="header" v-else>
+    <VNode/>
+  </div>
 </template>
 
 <style lang="stylus" scoped>

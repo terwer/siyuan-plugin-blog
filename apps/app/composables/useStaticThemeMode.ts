@@ -7,7 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {BrowserUtil, SiyuanDevice} from "zhi-device"
+import {BrowserUtil} from "zhi-device"
 import {useRoute} from "vue-router"
 import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
 import {useColorMode} from "@vueuse/core"

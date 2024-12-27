@@ -60,6 +60,7 @@ export default defineAppConfig<AppConfig>({
     themeVersion: "0.1.1",
   },
 
+  header: "",
   footer: "",
   shareTemplate: "[url]",
   homePageId: "",
