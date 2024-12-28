@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ["~/assets/index.styl"],
+  css: ["~/assets/css/index.styl"],
 
   app: {
     baseURL: appBase,

@@ -80,7 +80,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ["~/assets/index.styl"],
+  css: ["~/assets/css/index.styl"],
 
   // 环境变量
   runtimeConfig: {

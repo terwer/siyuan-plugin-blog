@@ -57,7 +57,7 @@ export default defineAppConfig<AppConfig>({
     mode: "light",
     lightTheme: "Zhihu",
     darkTheme: "Zhihu",
-    themeVersion: "0.1.1",
+    themeVersion: "0.1.5",
   },
 
   header: "",

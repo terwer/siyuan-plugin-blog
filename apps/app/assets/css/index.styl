@@ -8,14 +8,6 @@ html, body
   margin 0
   padding 0
 
-pre {
-  margin: 0;
-}
-
-pre code.hljs {
-  padding: 0;
-}
-
 // 字体
 body
   font-family "Open Sans", "LXGW WenKai", "JetBrains Mono", "-apple-system", "Microsoft YaHei", "Times New Roman",
@@ -26,6 +18,14 @@ body
 @import "./siyuan.styl"
 
 // 其他修复样式
+
+/* added by 2.3.0 */
+// overide hljs style
+pre
+  margin 0 !important
+pre code.hljs
+  padding 0 !important
+
 /* added by 5.4.0 */
 .protyle-action .b3-tooltips::before,.protyle-action .b3-tooltips::after
   display none

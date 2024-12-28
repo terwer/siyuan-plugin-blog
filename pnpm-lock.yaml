@@ -63,6 +63,9 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
     devDependencies:
+      stylus:
+        specifier: ^0.64.0
+        version: 0.64.0
       vite:
         specifier: ^5.4.11
         version: 5.4.11(@types/node@18.19.68)(stylus@0.64.0)(terser@5.26.0)

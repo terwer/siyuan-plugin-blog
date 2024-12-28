@@ -27,6 +27,7 @@
     "zhi-lib-base": "^0.8.0"
   },
   "devDependencies": {
+    "stylus": "^0.64.0",
     "vite": "^5.4.11"
   }
 }
