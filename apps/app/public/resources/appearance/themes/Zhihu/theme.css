@@ -22,7 +22,7 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-@import '/appearance/themes/Zhihu/style/common/fonts/webfont/webfont.css';
+@import './style/common/fonts/webfont/webfont.css';
 :root {
   --b3-font-family: "Open Sans", "LXGW WenKai", "-apple-system", "Microsoft YaHei", "Times New Roman", "方正北魏楷书_GBK";
   --b3-font-family-code: "Open Sans", "LXGW WenKai", "-apple-system", "Microsoft YaHei", "Times New Roman", "方正北魏楷书_GBK";
