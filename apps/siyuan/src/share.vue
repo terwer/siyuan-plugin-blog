@@ -268,11 +268,11 @@ logger.debug("share inited", props)
   padding 8px
   padding-top 10px
   padding-bottom 0
-  padding-left 16px
-  padding-right 16px
+  padding-left 14px
+  padding-right 14px
 
 .share-header
-  font-size 16px
+  font-size 14px
   font-weight 600
 
 .divider
@@ -280,7 +280,7 @@ logger.debug("share inited", props)
   margin 8px 0
 
 .share-content
-  margin-top 16px
+  margin-top 14px
 
 .setting-row
   display flex
@@ -290,7 +290,7 @@ logger.debug("share inited", props)
   gap 8px
 
 .setting-label
-  font-size 16px
+  font-size 14px
   white-space nowrap /* 防止换行，字段宽度自适应 */
   margin-right 8px
 

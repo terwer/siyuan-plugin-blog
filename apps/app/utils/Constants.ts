@@ -13,5 +13,5 @@ export const isDev = typeof process === "undefined" ? false : process?.dev
 // export const isDev = import.meta.dev
 // https://github.com/nuxt/nuxt/discussions/18779#discussioncomment-5082909
 // typeof process === "undefined" ? false : process?.env?.DEV_MODE === "true"
-export const SIYUAN_VERSION = "3.0.10"
+export const SIYUAN_VERSION = "3.1.17"
 export const HLJS_VERSION = "11.5.0"
