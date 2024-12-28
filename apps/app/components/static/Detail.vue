@@ -13,6 +13,9 @@ import {checkExpires, getSummery} from "~/utils/utils"
 import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
 import {useServerAssets} from "~/plugins/libs/renderer/useServerAssets"
 import AppConfig from "~/app.config"
+import Sidebar from "~/components/static/Sidebar.vue";
+import Outline from "~/components/static/Outline.vue";
+import {Expand, Fold} from "@element-plus/icons-vue"
 
 const logger = createAppLogger("static-share-page")
 const {docId} = useDocId()
@@ -24,13 +27,22 @@ const {getFirstImageSrc} = useServerAssets()
 
 // props
 const props = defineProps({
-  showTitleSign: Boolean,
-  overrideSeo: Boolean,
+  showTitleSign: {
+    type: Boolean,
+    default: false
+  },
+  overrideSeo: {
+    type: Boolean,
+    default: false
+  },
   pageId: {
     type: String,
     default: undefined,
-  }, setting: typeof AppConfig
-})
+  }, setting: {
+    type: typeof AppConfig,
+    default: undefined
+  }
+} as any)
 
 // datas
 const id = props.pageId ?? docId
@@ -65,8 +77,14 @@ const getSetting = async () => {
   }
   logger.info("currentSetting=>", currentSetting)
   // 默认没有设置的时候应该显示
-  formData.setting.docTreeEnabled = currentSetting?.docTreeEnabled ?? true
-  formData.setting.outlineEnabled = currentSetting?.outlineEnabled ?? true
+  if (isDev) {
+    // 开发阶段开启所有模式
+    formData.setting.docTreeEnabled = true
+    formData.setting.outlineEnabled = true
+  } else {
+    formData.setting.docTreeEnabled = currentSetting?.docTreeEnabled ?? true
+    formData.setting.outlineEnabled = currentSetting?.outlineEnabled ?? true
+  }
 }
 await getPostData()
 await getSetting()
@@ -96,6 +114,37 @@ const VNode = () =>
       class: "",
       innerHTML: editorDom,
     })
+
+// docTree
+const treeData = ref([] as any)
+const maxDepth = ref(formData.post?.docTreeLevel ?? 3)
+const allExpanded = ref(false)
+const defaultExpandedIds = ref([id])
+const expandedIds = ref([] as any)
+const isSidebarVisible = ref(false)
+// outline
+const outlineData = ref([] as any)
+const outlineMaxDepth = ref(formData.post?.outlineLevel ?? 6)
+
+// 处理 expandedIds 的更新
+const handleUpdateExpandedIds = (newExpandedIds: number[]) => {
+  expandedIds.value = newExpandedIds
+}
+
+// 处理 allExpanded 的更新
+const handleUpdateAllExpanded = (newAllExpanded: boolean) => {
+  allExpanded.value = newAllExpanded
+}
+
+const toggleSidebar = () => {
+  isSidebarVisible.value = !isSidebarVisible.value
+}
+
+// 初始化文档树
+treeData.value = TreeUtils.addParentIds(formData.post.docTree)
+expandedIds.value = TreeUtils.chainExpandedIds(treeData.value, defaultExpandedIds.value)
+// 初始化大纲
+outlineData.value = formData.post.outline ?? []
 </script>
 
 <template>
@@ -112,7 +161,28 @@ const VNode = () =>
     </el-empty>
   </div>
   <div v-else class="app-container">
-    <main class="main">
+    <el-aside v-if="formData.setting.docTreeEnabled && treeData && treeData.length > 0">
+      <!-- 固定的图标 -->
+      <div class="sidebar-toggle" @click="toggleSidebar">
+        <el-icon v-if="isSidebarVisible">
+          <Expand/>
+        </el-icon>
+        <el-icon v-else>
+          <Fold/>
+        </el-icon>
+      </div>
+      <div v-if="isSidebarVisible" class="sidebar-container" :class="{ 'sidebar-hidden': !isSidebarVisible }">
+        <sidebar
+            :tree-data="treeData"
+            :max-depth="maxDepth"
+            :all-expanded="allExpanded"
+            :expanded-ids="expandedIds"
+            @update-expanded-ids="handleUpdateExpandedIds"
+            @update-all-expanded="handleUpdateAllExpanded"
+        />
+      </div>
+    </el-aside>
+    <el-main class="main">
       <!-- 分享正文 -->
       <div class="fn__flex-1 protyle" data-loading="finished">
         <static-header :setting="formData.setting"/>
@@ -143,7 +213,10 @@ const VNode = () =>
         </div>
         <static-footer :setting="formData.setting"/>
       </div>
-    </main>
+    </el-main>
+    <el-aside v-if="formData.setting.outlineEnabled && outlineData && outlineData.length > 0" class="floating-toc">
+      <outline :outline-data="outlineData" :max-depth="outlineMaxDepth"/>
+    </el-aside>
   </div>
 </template>
 
@@ -170,6 +243,7 @@ const VNode = () =>
 //.protyle-content
 //  margin-top 44px
 
+// sidebar
 .sidebar-toggle
   position fixed
   top 24px
@@ -199,6 +273,7 @@ const VNode = () =>
 .sidebar-hidden
   transform translateX(-100%)
 
+// outline
 .floating-toc
   position fixed
   top 20px

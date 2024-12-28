@@ -32,7 +32,6 @@
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, watch } from "vue"
 import SidebarItem from "~/components/static/SidebarItem.vue"
-import { createAppLogger } from "~/common/appLogger"
 import { ZoomIn, ZoomOut } from "@element-plus/icons-vue"
 
 const logger = createAppLogger("static-sidebar")

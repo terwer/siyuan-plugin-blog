@@ -36,6 +36,10 @@ export const AppConfig = {
   siteTitle: "浅海拾贝",
   siteSlogan: "寻找未知的技术拼图",
   siteDescription: "专注于Java后端开发及服务端、软件架构、微服务、自然语言处理等领域的技术分享。",
+  header: "",
+  footer: "",
+  shareTemplate: "[url]",
+  homePageId: "",
 
   theme: {
     mode: "light",
@@ -44,11 +48,6 @@ export const AppConfig = {
     themeVersion: "0.1.5",
   },
 
-  header: "",
-  footer: "",
-  shareTemplate: "[url]",
-  homePageId: "",
-
   customCss: [
     {
       name: "custom.css",
@@ -56,7 +55,4 @@ export const AppConfig = {
       content: "",
     },
   ],
-
-  outline: [],
-  docTree: [],
 }
