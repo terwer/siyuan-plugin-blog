@@ -26,6 +26,8 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 <style scoped lang="stylus">
 @import "../../../assets/css/theme/index.styl"
 
+.main-container
+  margin 20px 0
 .headed-container
   top $navbarHeight
 .main
