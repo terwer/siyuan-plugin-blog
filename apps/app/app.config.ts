@@ -32,6 +32,7 @@ interface AppConfig {
   siteSlogan?: string
   siteDescription?: string
   homePageId?: string
+  showHeader?:boolean
   header?: string,
   footer?: string
   shareTemplate?: string

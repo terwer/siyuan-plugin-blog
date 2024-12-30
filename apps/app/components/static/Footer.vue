@@ -70,24 +70,23 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <el-footer>
+  <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
     <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
 
-    <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
-      <span class="text"> &copy;2011-{{ nowYear }} </span>
-      <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
+    <span class="text"> &copy;2011-{{ nowYear }} </span>
+    <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
 
-      <span class="text">v{{ v }}&nbsp;</span>
+    <span class="text">v{{ v }}&nbsp;</span>
 
-      <span class="text s-dark" @click="goHome()">{{ t("go.home") }}</span>
+    <span class="text s-dark" @click="goHome()">{{ t("go.home") }}</span>
 
-      <span class="text dot">.</span>
-      <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
-    </div>
-    <div v-else class="footer">
-      <VNode />
-    </div>
-  </el-footer>
+    <span class="text dot">.</span>
+    <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
+  </div>
+  <div v-else class="footer">
+    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+    <VNode />
+  </div>
 </template>
 
 <style scoped>

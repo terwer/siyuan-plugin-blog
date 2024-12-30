@@ -52,4 +52,10 @@ const VNode = () =>
 </template>
 
 <style lang="stylus" scoped>
+.protyle-title
+  padding 0 !important
+  margin 0 !important
+.protyle-wysiwyg
+  padding 0 !important
+  margin 0 !important
 </style>

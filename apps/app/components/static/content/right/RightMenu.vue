@@ -8,15 +8,11 @@
   -->
 
 <script setup lang="ts">
-import type AppConfig from "~/app.config"
 
-const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
-  <el-aside width="200px">
-    <div>right index</div>
-  </el-aside>
+  <div>Right menu</div>
 </template>
 
 <style scoped lang="stylus">

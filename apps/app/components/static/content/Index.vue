@@ -14,19 +14,21 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
-  <el-container>
-    <el-aside width="200px">
-      Aside
-    </el-aside>
-    <el-main>
+  <el-container :class="{ 'main-container': true, 'headed-container': props.setting?.showHeader }">
+    <static-content-left :post="props.post" :setting="props.setting" />
+    <el-main class="main">
       <static-content-main :post="props.post" :setting="props.setting" />
     </el-main>
-    <el-aside width="200px">
-      Aside
-    </el-aside>
+    <static-content-right :post="props.post" :setting="props.setting" />
   </el-container>
 </template>
 
 <style scoped lang="stylus">
+@import "../../../assets/css/theme/index.styl"
 
+.headed-container
+  top $navbarHeight
+.main
+  padding 0
+  margin 0
 </style>

@@ -53,10 +53,22 @@ const VNode = () =>
 </template>
 
 <style lang="stylus" scoped>
-$navbarHeight = 3.6rem
+@import "../../assets/css/theme/index.styl"
+
 $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
+
 .navbar
+  position fixed
+  z-index 20
+  top 0
+  left 0
+  right 0
+  height $navbarHeight
+  background-color var(--blurBg)
+  box-sizing border-box
+  box-shadow 0 2px 5px rgba(0,0,0,.06)
+
   padding $navbar-vertical-padding $navbar-horizontal-padding
   line-height $navbarHeight - 1.4rem
   transition transform 0.3s

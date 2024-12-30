@@ -95,10 +95,10 @@ if (!props.overrideSeo) {
   </div>
   <div v-else>
     <el-container>
-      <el-header>
+      <el-header :class="{'headed':formData.setting?.showHeader, 'plain':!formData.setting?.showHeader}">
         <lazy-static-header :setting="formData.setting" />
       </el-header>
-      <el-main>
+      <el-main class="main">
         <lazy-static-content :post="formData.post" :setting="formData.setting" />
       </el-main>
       <el-footer>
@@ -109,4 +109,11 @@ if (!props.overrideSeo) {
 </template>
 
 <style lang="stylus" scoped>
+.plain
+  height 0
+  display none
+
+.main
+  padding 0
+  margin 0
 </style>
