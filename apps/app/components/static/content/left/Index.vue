@@ -31,14 +31,18 @@ const emitToggleSidebar = (state: boolean) => {
 <style scoped lang="stylus">
 .aside-left
   transition: width 0.3s ease
-  height: 100vh
   .aside-sidebar
-    width: 100%
-    height: 100%
+    position: fixed
+    top: 0
+    left: 0
+    height: 100vh
     overflow-y: auto
     transition: opacity 0.3s ease
     opacity: 1
     pointer-events: auto
+    :deep(.el-menu)
+      height 100vh
+      width 250px
 
 .sidebarOpen
   width: 280px
