@@ -17,5 +17,5 @@ export const useAppBase = () => {
   const logger = createAppLogger("use-app-base")
   const appBase = process.env.APP_BASE
   logger.info(`get app base => ${appBase}`)
-  return {appBase}
+  return { appBase }
 }

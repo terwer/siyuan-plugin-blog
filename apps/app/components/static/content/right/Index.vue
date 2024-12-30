@@ -14,7 +14,7 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
-<div>right index</div>
+  <div>right index</div>
 </template>
 
 <style scoped lang="stylus">

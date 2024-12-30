@@ -8,19 +8,19 @@
   -->
 
 <script lang="ts" setup>
-import {JsonUtil, ObjectUtil} from "zhi-common"
-import {checkExpires} from "~/utils/utils"
-import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
+import { JsonUtil, ObjectUtil } from "zhi-common"
+import { checkExpires } from "~/utils/utils"
+import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 import AppConfig from "~/app.config"
-import {useServerAssets} from "~/plugins/libs/renderer/useServerAssets"
+import { useServerAssets } from "~/plugins/libs/renderer/useServerAssets"
 
 const logger = createAppLogger("static-share-page")
-const {docId} = useDocId()
-const {t} = useI18n()
-const {providerMode} = useProviderMode()
-const {fetchPostMeta} = useAuthModeFetch()
-const {getStaticSetting} = useStaticSettingStore()
-const {getFirstImageSrc} = useServerAssets()
+const { docId } = useDocId()
+const { t } = useI18n()
+const { providerMode } = useProviderMode()
+const { fetchPostMeta } = useAuthModeFetch()
+const { getStaticSetting } = useStaticSettingStore()
+const { getFirstImageSrc } = useServerAssets()
 
 // props
 const props = defineProps<{
@@ -60,6 +60,7 @@ const getSetting = async () => {
   if (!props.setting) {
     currentSetting = await getStaticSetting()
   }
+  formData.setting = currentSetting
   logger.debug("currentSetting=>", currentSetting)
 }
 await getPostData()
@@ -72,7 +73,7 @@ if (!props.overrideSeo) {
   const desc = getSummery(formData?.post?.description ?? "")
   const headImage = getFirstImageSrc(formData?.post?.description ?? "")
   const seoMeta = {
-    title: title,
+    title,
     ogTitle: title,
     description: desc,
     ogDescription: desc,
@@ -87,23 +88,21 @@ if (!props.overrideSeo) {
 
 <template>
   <div v-if="!formData.isShared">
-    <el-empty :description=" t('blog.index.no.shared') ">
-    </el-empty>
+    <el-empty :description=" t('blog.index.no.shared') " />
   </div>
   <div v-else-if="formData.isExpires">
-    <el-empty :description=" t('blog.index.no.expires') ">
-    </el-empty>
+    <el-empty :description=" t('blog.index.no.expires') " />
   </div>
   <div v-else>
     <el-container>
       <el-header>
-        <lazy-static-header :setting="formData.setting"/>
+        <lazy-static-header :setting="formData.setting" />
       </el-header>
       <el-main>
-        <lazy-static-content :post="formData.post" :setting="formData.setting"/>
+        <lazy-static-content :post="formData.post" :setting="formData.setting" />
       </el-main>
       <el-footer>
-        <lazy-static-footer :setting="formData.setting"/>
+        <lazy-static-footer :setting="formData.setting" />
       </el-footer>
     </el-container>
   </div>

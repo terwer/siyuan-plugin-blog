@@ -7,14 +7,14 @@ class TreeUtils {
    *
    * @param data
    */
-  public static addParentIds(data: any) {
+  public static addParentIds (data: any) {
     const map = new Map()
     if (!data) {
       return []
     }
     data.forEach((item: any) => map.set(item.id, item))
 
-    function getParentIds(item: any) {
+    function getParentIds (item: any) {
       const parentIds = []
       let parent = map.get(item.parentId)
       while (parent) {
@@ -36,7 +36,7 @@ class TreeUtils {
    * @param treeData
    * @param expandedIds
    */
-  public static chainExpandedIds(treeData: any[], expandedIds: string[]): string[] {
+  public static chainExpandedIds (treeData: any[], expandedIds: string[]): string[] {
     // 获取所有 parentIds，同时包括 expandedIds 中的 ID，并去重
     const parentIds = [
       ...new Set(

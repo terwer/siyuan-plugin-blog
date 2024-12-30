@@ -31,8 +31,8 @@
 
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, watch } from "vue"
-import SidebarItem from "~/components/static/SidebarItem.vue"
 import { ZoomIn, ZoomOut } from "@element-plus/icons-vue"
+import SidebarItem from "~/components/static/SidebarItem.vue"
 
 const logger = createAppLogger("static-sidebar")
 const { t } = useI18n()
@@ -61,7 +61,7 @@ const emit = defineEmits(["update-expanded-ids", "update-all-expanded"])
 
 // 构建树形数据
 const buildTree = (list: any[], parentId: string, depth = 1): any => {
-  if (!list || !Array.isArray(list)) return []
+  if (!list || !Array.isArray(list)) { return [] }
 
   return list
     .filter((item: any) => item.parentId === parentId)

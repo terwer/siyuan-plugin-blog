@@ -14,9 +14,9 @@
  * @since 5.0.0
  */
 export const useProviderMode = () => {
-    const logger = createAppLogger("use-auth-mode-fetch")
-    const env = useRuntimeConfig()
-    const providerMode = env.public.providerMode.toString() === "true"
-    logger.info(`check in providerMode => ${providerMode}`)
-    return {providerMode}
+  const logger = createAppLogger("use-auth-mode-fetch")
+  const env = useRuntimeConfig()
+  const providerMode = env.public.providerMode.toString() === "true"
+  logger.info(`check in providerMode => ${providerMode}`)
+  return { providerMode }
 }

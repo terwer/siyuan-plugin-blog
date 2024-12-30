@@ -73,7 +73,7 @@ const adjustItemName = (name) => {
   // &nbsp;处理、换行符处理、:：处理
   let adjustedName = name
     .replace(/&nbsp;/g, " ")
-    .replace(/&quot;/g, '"')
+    .replace(/&quot;/g, "\"")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")

@@ -7,15 +7,15 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {ShareTypeEnum} from "~/enums/ShareTypeEnum"
-import {useProviderMode} from "~/composables/useProviderMode"
-import {JsonUtil, ObjectUtil} from "zhi-common"
-import {useAuthModeFetch} from "~/composables/useAuthModeFetch"
+import { JsonUtil, ObjectUtil } from "zhi-common"
+import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
+import { useProviderMode } from "~/composables/useProviderMode"
+import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 
 export const useCommonShareType = () => {
   const logger = createAppLogger("use-common-share-type")
-  const {providerMode} = useProviderMode()
-  const {fetchConfig} = useAuthModeFetch()
+  const { providerMode } = useProviderMode()
+  const { fetchConfig } = useAuthModeFetch()
   const shareTypeJsonFile = "share-type.json"
 
   /**
@@ -43,5 +43,5 @@ export const useCommonShareType = () => {
     return shareType === ShareTypeEnum.ShareType_Static
   }
 
-  return {isPrivateShare}
+  return { isPrivateShare }
 }

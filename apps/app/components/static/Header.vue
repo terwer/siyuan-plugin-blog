@@ -8,42 +8,117 @@
   -->
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n"
+import { StrUtil } from "zhi-common"
 import AppConfig from "~/app.config"
-import {StrUtil} from "zhi-common"
-import {useI18n} from "vue-i18n"
 
 // props
 const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
-const {t} = useI18n()
-const {colorMode, toggleDark} = await useClientThemeMode(props.setting)
+const { t } = useI18n()
+const { colorMode, toggleDark } = await useClientThemeMode(props.setting)
 
 // datas
 const header = props.setting?.header ?? ""
 
 const VNode = () =>
-    h("div", {
-      class: "",
-      innerHTML: header,
-    })
+  h("div", {
+    class: "",
+    innerHTML: header,
+  })
 </script>
 
 <template>
-  <div class="header" v-if="StrUtil.isEmptyString(header)">
-    <client-only>
-      <span class="text dot">.</span>
-      <span class="text s-dark" @click="toggleDark()">
-        {{ colorMode ? t("theme.mode.light") : t("theme.mode.dark") }}
-      </span>
-    </client-only>
-  </div>
-  <div class="header" v-else>
-    <VNode/>
+  <div class="header navbar blur">
+    <nuxt-link to="/" class="home-link">
+      <img
+        v-if="!StrUtil.isEmptyString(props.setting?.themeConfig?.logo)"
+        class="logo"
+        :src="ThemeUtils.withBase(props.setting?.themeConfig?.logo, props.setting)"
+        :alt="props.setting.siteTitle"
+      >
+      <span
+        v-if="props.setting.siteTitle"
+        ref="siteName"
+        class="site-name"
+        :class="{ 'can-hide': props.setting?.themeConfig?.logo }"
+      >{{ props.setting.siteTitle }}</span>
+    </nuxt-link>
+
+    <div class="links">
+      <!--      <NavLinks class="can-hide"/>-->
+    </div>
+
+    <span class="text dot">.</span>
+    <span class="text s-dark" @click="toggleDark()">
+      {{ colorMode ? t("theme.mode.light") : t("theme.mode.dark") }}
+    </span>
+    <VNode />
   </div>
 </template>
 
 <style lang="stylus" scoped>
-header
-  height 44px
+$navbarHeight = 3.6rem
+$navbar-vertical-padding = 0.7rem
+$navbar-horizontal-padding = 1.5rem
+.navbar
+  padding $navbar-vertical-padding $navbar-horizontal-padding
+  line-height $navbarHeight - 1.4rem
+  transition transform 0.3s
+
+  a, span, img
+    display inline-block
+
+  .logo
+    height $navbarHeight - 1.4rem
+    min-width $navbarHeight - 1.4rem
+    margin-right 0.8rem
+    vertical-align top
+
+  .site-name
+    font-size 1.3rem
+    font-weight 600
+    color var(--textColor)
+    position relative
+
+  .links
+    padding-left 1.5rem
+    box-sizing border-box
+    white-space nowrap
+    font-size 0.9rem
+    position absolute
+    right $navbar-horizontal-padding
+    top $navbar-vertical-padding
+    display flex
+
+    .search-box
+      flex 0 0 auto
+      vertical-align top
+
+.hide-navbar
+  .navbar
+    transform translateY(-100%)
+
+// 959
+@media (max-width $MQNarrow)
+  .navbar
+    .site-name
+      display none
+
+@media (max-width $MQMobile)
+  .navbar
+    padding-left 4rem
+
+    .can-hide
+      display none
+
+    .links
+      padding-left 1.5rem
+
+    .site-name
+      width calc(100vw - 9.4rem)
+      overflow hidden
+      white-space nowrap
+      text-overflow ellipsis
 </style>

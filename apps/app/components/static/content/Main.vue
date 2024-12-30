@@ -13,12 +13,12 @@ import type AppConfig from "~/app.config"
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
 // 正文
-const editorDom = props.post.editorDom?.replaceAll('contenteditable="true"', 'contenteditable="false"') ?? ""
+const editorDom = props.post.editorDom?.replaceAll("contenteditable=\"true\"", "contenteditable=\"false\"") ?? ""
 const VNode = () =>
-    h("div", {
-      class: "",
-      innerHTML: editorDom,
-    })
+  h("div", {
+    class: "",
+    innerHTML: editorDom,
+  })
 </script>
 
 <template>
@@ -26,26 +26,26 @@ const VNode = () =>
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
       <div class="protyle-title protyle-wysiwyg--attr">
         <div
-            contenteditable="false"
-            data-position="center"
-            spellcheck="false"
-            class="protyle-title__input"
-            data-render="true"
+          contenteditable="false"
+          data-position="center"
+          spellcheck="false"
+          class="protyle-title__input"
+          data-render="true"
         >
           {{ props.post.title }}
         </div>
       </div>
       <div
-          v-highlight
-          v-sbeauty
-          v-sdomparser
-          class="protyle-wysiwyg protyle-wysiwyg--attr"
-          spellcheck="false"
-          contenteditable="false"
-          data-doc-type="NodeDocument"
-          :data-page-id="props.post.postid"
+        v-highlight
+        v-sbeauty
+        v-sdomparser
+        class="protyle-wysiwyg protyle-wysiwyg--attr"
+        spellcheck="false"
+        contenteditable="false"
+        data-doc-type="NodeDocument"
+        :data-page-id="props.post.postid"
       >
-        <VNode/>
+        <VNode />
       </div>
     </div>
   </div>

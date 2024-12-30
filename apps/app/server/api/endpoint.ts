@@ -7,7 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {buildUrl} from "~/server/utils/urlUtils"
+import { buildUrl } from "~/server/utils/urlUtils"
 
 export default defineEventHandler(async (event) => {
   switch (event.method) {

@@ -13,5 +13,5 @@ const props = defineProps<{ pageId?: string }>()
 </script>
 
 <template>
-  <static-detail :page-id="props.pageId" :override-seo="true" :show-title-sign="false"/>
+  <static-detail :page-id="props.pageId" :override-seo="true" :show-title-sign="false" />
 </template>

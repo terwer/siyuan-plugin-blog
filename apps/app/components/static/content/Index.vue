@@ -15,9 +15,15 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
 <template>
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
-    <el-main>Main</el-main>
-    <el-aside width="200px">Aside</el-aside>
+    <el-aside width="200px">
+      Aside
+    </el-aside>
+    <el-main>
+      <static-content-main :post="props.post" :setting="props.setting" />
+    </el-main>
+    <el-aside width="200px">
+      Aside
+    </el-aside>
   </el-container>
 </template>
 

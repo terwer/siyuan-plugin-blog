@@ -13,7 +13,7 @@
       <a class="outline-title-link"> {{ t("static.outline") }} </a>
     </div>
     <div v-for="(item, index) in outlineData" :key="index">
-      <outline-item :item="item" :max-depth="maxDepth" :root-level="getRootLevel(item)" :is-root="true"/>
+      <outline-item :item="item" :max-depth="maxDepth" :root-level="getRootLevel(item)" :is-root="true" />
     </div>
   </div>
 </template>
@@ -32,12 +32,12 @@ const props = defineProps({
   },
 })
 
-const {t} = useI18n()
+const { t } = useI18n()
 
 const getRootLevel = () => {
-  if (props.outlineData.length === 0) return 1 // 如果数据为空，返回默认级别 1
+  if (props.outlineData.length === 0) { return 1 } // 如果数据为空，返回默认级别 1
 
-  const levels = props.outlineData.map((item) => getItemLevel(item))
+  const levels = props.outlineData.map(item => getItemLevel(item))
   const uniqueLevels = new Set(levels)
 
   if (uniqueLevels.size === 1) {

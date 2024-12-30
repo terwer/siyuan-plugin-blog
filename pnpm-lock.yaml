@@ -69,6 +69,9 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
     devDependencies:
+      '@rushstack/eslint-patch':
+        specifier: ^1.10.4
+        version: 1.10.4
       stylus:
         specifier: ^0.64.0
         version: 0.64.0
@@ -1394,9 +1397,6 @@ packages:
 
   '@rushstack/eslint-patch@1.10.4':
     resolution: {integrity: sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==}
-
-  '@rushstack/eslint-patch@1.7.2':
-    resolution: {integrity: sha512-RbhOOTCNoCrbfkRyoXODZp75MlpiHMgbE5MEBZAnnnLyQNgrigEj4p0lzsMDyc1zVsJDLrivB58tgg3emX0eEA==}
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -6858,8 +6858,6 @@ snapshots:
 
   '@rushstack/eslint-patch@1.10.4': {}
 
-  '@rushstack/eslint-patch@1.7.2': {}
-
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@sxzz/popperjs-es@2.11.7': {}
@@ -7156,7 +7154,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.26.0
       '@babel/eslint-parser': 7.25.9(@babel/core@7.26.0)(eslint@8.57.1)
-      '@rushstack/eslint-patch': 1.7.2
+      '@rushstack/eslint-patch': 1.10.4
       '@typescript-eslint/eslint-plugin': 6.10.0(@typescript-eslint/parser@6.10.0(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)(typescript@5.5.4)
       '@typescript-eslint/parser': 6.10.0(eslint@8.57.1)(typescript@5.5.4)
       eslint-config-prettier: 9.1.0(eslint@8.57.1)

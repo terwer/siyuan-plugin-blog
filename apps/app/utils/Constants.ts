@@ -7,7 +7,6 @@
  *  of this license document, but changing it is not allowed.
  */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const isDev = typeof process === "undefined" ? false : process?.dev
 // export const isDev = import.meta.dev

@@ -24,5 +24,5 @@ export const useDocId = () => {
     }
   }
 
-  return {docId: getDocId()}
+  return { docId: getDocId() }
 }

@@ -12,7 +12,7 @@
 
 <template>
   <div>
-    <static-detail :show-title-sign="false"/>
+    <static-detail :show-title-sign="false" />
   </div>
 </template>
 

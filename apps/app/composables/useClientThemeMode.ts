@@ -7,11 +7,11 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {BrowserUtil} from "zhi-device"
-import {useRoute} from "vue-router"
-import {useColorMode} from "@vueuse/core"
-import {HLJS_VERSION, SIYUAN_VERSION} from "~/utils/Constants"
-import {useAppBase} from "~/composables/useAppBase"
+import { BrowserUtil } from "zhi-device"
+import { useRoute } from "vue-router"
+import { useColorMode } from "@vueuse/core"
+import { HLJS_VERSION, SIYUAN_VERSION } from "~/utils/Constants"
+import { useAppBase } from "~/composables/useAppBase"
 import type AppConfig from "~/app.config"
 
 // 创建日志记录器
@@ -23,8 +23,8 @@ const logger = createAppLogger("use-theme-mode")
 export const useClientThemeMode = async (setting: typeof AppConfig) => {
   // 获取颜色模式和运行时配置
   const color = useColorMode()
-  const {query} = useRoute()
-  const {appBase} = useAppBase()
+  const { query } = useRoute()
+  const { appBase } = useAppBase()
 
   // 在 mounted 生命周期中处理加载后逻辑
   onBeforeMount(() => {
@@ -147,5 +147,5 @@ export const useClientThemeMode = async (setting: typeof AppConfig) => {
     }
   }
 
-  return {colorMode, toggleDark}
+  return { colorMode, toggleDark }
 }

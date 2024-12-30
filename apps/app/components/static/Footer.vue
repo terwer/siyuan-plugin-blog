@@ -8,20 +8,20 @@
   -->
 
 <script setup lang="ts">
-import {useI18n} from "vue-i18n"
-import {useProviderMode} from "~/composables/useProviderMode"
-import {DateUtil, StrUtil} from "zhi-common"
+import { useI18n } from "vue-i18n"
+import { DateUtil, StrUtil } from "zhi-common"
+import { useProviderMode } from "~/composables/useProviderMode"
 import * as pkg from "~/package.json"
-import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 import AppConfig from "~/app.config"
 
 // props
 const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
-const {locale, t} = useI18n()
-const {providerMode} = useProviderMode()
-const {getHome} = useBaseUrl()
+const { locale, t } = useI18n()
+const { providerMode } = useProviderMode()
+const { getHome } = useBaseUrl()
 
 // datas
 const v = ref((pkg as any).version)
@@ -44,10 +44,10 @@ const goHome = async () => {
 }
 
 const VNode = () =>
-    h("div", {
-      class: "",
-      innerHTML: footer,
-    })
+  h("div", {
+    class: "",
+    innerHTML: footer,
+  })
 
 // lifecycles
 onBeforeMount(() => {
@@ -60,7 +60,8 @@ onBeforeMount(() => {
 
 <template>
   <el-footer>
-    <div class="footer" v-if="!providerMode && StrUtil.isEmptyString(footer)">
+    <static-buttons />
+    <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
       <span class="text"> &copy;2011-{{ nowYear }} </span>
       <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
 
@@ -71,8 +72,8 @@ onBeforeMount(() => {
       <span class="text dot">.</span>
       <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
     </div>
-    <div class="footer" v-else>
-      <VNode/>
+    <div v-else class="footer">
+      <VNode />
     </div>
   </el-footer>
 </template>

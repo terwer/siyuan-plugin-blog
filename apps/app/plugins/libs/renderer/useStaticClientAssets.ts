@@ -7,19 +7,19 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {useProviderMode} from "~/composables/useProviderMode"
-import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useProviderMode } from "~/composables/useProviderMode"
+import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
 /**
  * 处理客户端资源文件地址
  */
 export const useStaticClientAssets = () => {
   const logger = createAppLogger("use-static-client-assets")
-  const {getClientBaseUrl} = useBaseUrl()
+  const { getClientBaseUrl } = useBaseUrl()
 
   const addClientAssetsPrefix = (el: HTMLElement) => {
     const pageId = el.getAttribute("data-page-id") ?? ""
-    const {providerMode} = useProviderMode()
+    const { providerMode } = useProviderMode()
     const env = useRuntimeConfig()
 
     const imgs = el.querySelectorAll("img")
@@ -30,7 +30,7 @@ export const useStaticClientAssets = () => {
         img.setAttribute("loading", "lazy")
         // 路径处理
         const src = img.getAttribute("src") ?? ""
-        if (src.indexOf("assets") > -1) {
+        if (src.includes("assets")) {
           if (providerMode) {
             // const apiBase = env.public.providerUrl
             // const imgUrl = [apiBase, "api/asset/", src].join("/")
@@ -45,7 +45,7 @@ export const useStaticClientAssets = () => {
           }
         }
         // 兼容旧图片域名
-        if (src.indexOf("https://api.siyuannote.site") > -1) {
+        if (src.includes("https://api.siyuannote.site")) {
           const imgUrl = src.replace("https://api.siyuannote.site", "https://img1.siyuan.wiki")
           img.setAttribute("src", imgUrl)
           img.setAttribute("data-src", imgUrl)
@@ -86,5 +86,5 @@ export const useStaticClientAssets = () => {
   //   })
   // }
 
-  return {addClientAssetsPrefix}
+  return { addClientAssetsPrefix }
 }

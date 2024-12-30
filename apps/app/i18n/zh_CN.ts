@@ -24,7 +24,7 @@
  */
 
 export default {
-  "name": "在线分享",
+  name: "在线分享",
   "lang.choose": "语言选择",
   "lang.choose.placeholder": "请选择语言",
   "syp.about": "关于作者",

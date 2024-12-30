@@ -16,7 +16,7 @@ const useClientFormulate = () => {
 
   const renderFormulate = (el: HTMLElement) => {
     // 内联公式
-    const inlineMathElements = document.querySelectorAll('span[data-type="inline-math"][data-subtype="math"]')
+    const inlineMathElements = document.querySelectorAll("span[data-type=\"inline-math\"][data-subtype=\"math\"]")
     // console.log(inlineMathElements)
     if (inlineMathElements) {
       inlineMathElements.forEach((inlineMathElement) => {
@@ -30,7 +30,7 @@ const useClientFormulate = () => {
     // 替换成 $inlineContentValue$
 
     // 多行公式
-    const mathBlockElements = document.querySelectorAll('div[data-type="NodeMathBlock"]')
+    const mathBlockElements = document.querySelectorAll("div[data-type=\"NodeMathBlock\"]")
     mathBlockElements.forEach((mathBlockElement) => {
       const blockContentValue = mathBlockElement.getAttribute("data-content")
       // mathBlockElement.innerHTML = `$$${blockContentValue}$$`
@@ -41,7 +41,7 @@ const useClientFormulate = () => {
     })
   }
 
-  return {renderFormulate}
+  return { renderFormulate }
 }
 
-export {useClientFormulate}
+export { useClientFormulate }

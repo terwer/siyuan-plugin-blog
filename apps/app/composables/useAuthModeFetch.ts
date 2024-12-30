@@ -7,16 +7,16 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {buildUrl} from "~/server/utils/urlUtils"
-import {useSiyuanSPA} from "~/composables/useSiyuanSPA"
-import {JsonUtil, StrUtil} from "zhi-common"
+import { JsonUtil, StrUtil } from "zhi-common"
+import { buildUrl } from "~/server/utils/urlUtils"
+import { useSiyuanSPA } from "~/composables/useSiyuanSPA"
 
 export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-config-fetch")
-  const {docId} = useDocId()
+  const { docId } = useDocId()
   // noinspection JSDeprecatedSymbols
   const isSSR = process.server
-  const {isSiyuanSPA} = useSiyuanSPA()
+  const { isSiyuanSPA } = useSiyuanSPA()
   const env = useRuntimeConfig()
 
   /**
@@ -28,8 +28,6 @@ export const useAuthModeFetch = () => {
     const fetchFileUrl = `/public/siyuan-blog/${filename}`
     logger.info("getPublicFile in auth mode", fetchFileUrl)
     try {
-
-
       if (isSiyuanSPA) {
         const origin = window.location.origin
         logger.info("fetchPublicText via siyuan spa, origin=>", origin)
@@ -58,7 +56,7 @@ export const useAuthModeFetch = () => {
 
   const fetchProviderConfigByResource = async (filename: string): Promise<string> => {
     const apiBase = env.public.providerUrl
-    const url = `/api/settings/byResource`
+    const url = "/api/settings/byResource"
     const reqUrl = `${apiBase}${url}`
     let resText = ""
     logger.info(`fetch resource ${filename} in provider mode, reqUrl=>${reqUrl}`)
@@ -72,7 +70,7 @@ export const useAuthModeFetch = () => {
       }),
     })
     resText = await res.text()
-    logger.info("fetch resource in provider mode finish=>", {resText: resText})
+    logger.info("fetch resource in provider mode finish=>", { resText })
     if (!res.ok) {
       throw new Error("fetch resource error")
     }
@@ -97,7 +95,7 @@ export const useAuthModeFetch = () => {
 
   const fetchProviderConfigByAuthorForCurrentUser = async (author: string, filename: string): Promise<string> => {
     const apiBase = env.public.providerUrl
-    const url = `/api/settings/byAuthor`
+    const url = "/api/settings/byAuthor"
     const reqUrl = `${apiBase}${url}`
     let resText = ""
     logger.info(`fetch config text ${filename} in provider mode, reqUrl=>${reqUrl}`)
@@ -108,12 +106,12 @@ export const useAuthModeFetch = () => {
       },
       body: JSON.stringify({
         group: "GENERAL",
-        author: author,
+        author,
         key: filename,
       }),
     })
     resText = await res.text()
-    logger.info("fetch config text in provider mode finish=>", {resText: resText})
+    logger.info("fetch config text in provider mode finish=>", { resText })
     if (!res.ok) {
       throw new Error("fetch provider config error")
     }
@@ -128,7 +126,7 @@ export const useAuthModeFetch = () => {
    */
   const fetchProviderConfigForCurrentUser = async (docId: string, filename: string): Promise<string> => {
     const apiBase = env.public.providerUrl
-    const url = `/api/settings/share`
+    const url = "/api/settings/share"
     const reqUrl = `${apiBase}${url}`
     let resText = ""
     logger.info(`fetch config text ${filename} in provider mode, reqUrl=>${reqUrl}`)
@@ -139,18 +137,17 @@ export const useAuthModeFetch = () => {
       },
       body: JSON.stringify({
         group: "GENERAL",
-        docId: docId,
+        docId,
         key: filename,
       }),
     })
     resText = await res.text()
-    logger.info("fetch config text in provider mode finish=>", {resText: resText})
+    logger.info("fetch config text in provider mode finish=>", { resText })
     if (!res.ok) {
       throw new Error("fetch provider config error")
     }
     return resText
   }
-
 
   /**
    * 远程获取配置文本
@@ -202,7 +199,7 @@ export const useAuthModeFetch = () => {
       logger.info(`fetch config text ${filename} in normal mode`)
       resText = await fetchPublicText(filename)
     }
-    logger.info("finally resText by fetchConfig=>", {resText: resText})
+    logger.info("finally resText by fetchConfig=>", { resText })
     // 存一份到客户端使用
     if (!isSSR) {
       window.localStorage.setItem(filename, resText)
