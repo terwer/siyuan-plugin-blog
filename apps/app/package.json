@@ -3,7 +3,7 @@
   "type": "module",
   "version": "5.4.0",
   "scripts": {
-    "dev": "nuxt dev",
+    "dev": "bash script/dev.sh",
     "build": "bash script/build.sh",
     "vercelBuild": "bash script/vercel.sh",
     "cloudflareBuild": "bash script/cloudflare.sh",
