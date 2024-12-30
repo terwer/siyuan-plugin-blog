@@ -2,7 +2,7 @@
   -            GNU GENERAL PUBLIC LICENSE
   -               Version 3, 29 June 2007
   -
-  -  Copyright (C) 2024 Terwer, Inc. <https://terwer.space/>
+  -  Copyright (C) 2023-2024 Terwer, Inc. <https://terwer.space/>
   -  Everyone is permitted to copy and distribute verbatim copies
   -  of this license document, but changing it is not allowed.
   -->
@@ -32,18 +32,20 @@ const homePageId = setting?.homePageId ?? undefined
 
 <template>
   <el-container v-if="StrUtil.isEmptyString(homePageId)">
-    <static-header :setting="setting"/>
+    <el-header>
+      <static-header :setting="setting"/>
+    </el-header>
     <el-main>
       <el-empty :description="t('blog.index.no.home')">
         <el-alert type="warning" :description="t('blog.index.goto.set.home.static')" :closable="false"></el-alert>
       </el-empty>
     </el-main>
-    <static-footer :setting="setting"/>
+    <el-footer>
+      <static-footer :setting="setting"/>
+    </el-footer>
   </el-container>
   <static-home v-else :page-id="homePageId" :setting="setting"/>
 </template>
 
-<style lang="stylus">
-.el-container
-  display block !important
+<style lang="stylus" scoped>
 </style>

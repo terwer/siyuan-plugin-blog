@@ -1,3 +1,7 @@
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import {ElementPlusResolver} from "unplugin-vue-components/resolvers"
+
 const generateDynamicV = () => {
   const now = new Date()
   const year = now.getFullYear().toString()
@@ -16,7 +20,7 @@ const staticV = generateDynamicV()
 export default defineNuxtConfig({
   devtools: {enabled: isDev},
 
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
     locales: ["en_US", "zh_CN"],
@@ -78,9 +82,22 @@ export default defineNuxtConfig({
       "process.env.APP_BASE": `"${appBase}"`,
       "process.env.SSR": `"true"`,
     },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
+    ]
   },
 
   css: ["~/assets/css/index.styl"],
+
+  elementPlus: {
+    /** Options */
+    themes: ["dark"],
+  },
 
   nitro: {
     preset: "cloudflare_pages",

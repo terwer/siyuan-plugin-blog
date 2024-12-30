@@ -7,13 +7,11 @@
   -  of this license document, but changing it is not allowed.
   -->
 
-<script lang="ts" setup>
-import Detail from "~/components/static/Detail.vue"
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div>
-    <detail/>
+    <public-detail/>
   </div>
 </template>
 

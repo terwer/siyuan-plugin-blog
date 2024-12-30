@@ -7,12 +7,20 @@
   -  of this license document, but changing it is not allowed.
   -->
 
-<script lang="ts" setup>
+<script setup lang="ts">
+import type AppConfig from "~/app.config"
+
+const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
-  <div>public share is deprecated since `v1.9.0`</div>
+  <el-container>
+    <el-aside width="200px">Aside</el-aside>
+    <el-main>Main</el-main>
+    <el-aside width="200px">Aside</el-aside>
+  </el-container>
 </template>
 
-<style scoped>
+<style scoped lang="stylus">
+
 </style>

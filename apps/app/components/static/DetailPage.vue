@@ -8,15 +8,13 @@
   -->
 
 <script lang="ts" setup>
-import Detail from "~/components/static/Detail.vue"
 </script>
 
 <template>
   <div>
-    <detail :show-title-sign="false"/>
+    <static-detail :show-title-sign="false"/>
   </div>
 </template>
 
 <style scoped>
-
 </style>

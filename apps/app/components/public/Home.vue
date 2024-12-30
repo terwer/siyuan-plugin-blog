@@ -9,16 +9,11 @@
 
 <script setup lang="ts">
 // props
-const props = defineProps({
-  pageId: {
-    type: String,
-    default: undefined,
-  },
-})
+const props = defineProps<{ pageId: string }>()
 </script>
 
 <template>
-  <public-detail :page-id="props.pageId" :override-seo="true" />
+  <public-detail :page-id="props.pageId" :override-seo="true"/>
 </template>
 
 <style scoped></style>
