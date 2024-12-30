@@ -17,7 +17,7 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
 const {t} = useI18n()
-const {colorMode, toggleDark} = await useStaticThemeMode(props.setting)
+const {colorMode, toggleDark} = await useClientThemeMode(props.setting)
 
 // datas
 const header = props.setting?.header ?? ""
@@ -31,10 +31,12 @@ const VNode = () =>
 
 <template>
   <div class="header" v-if="StrUtil.isEmptyString(header)">
-    <span class="text dot">.</span>
-    <span class="text s-dark" @click="toggleDark()">
+    <client-only>
+      <span class="text dot">.</span>
+      <span class="text s-dark" @click="toggleDark()">
         {{ colorMode ? t("theme.mode.light") : t("theme.mode.dark") }}
       </span>
+    </client-only>
   </div>
   <div class="header" v-else>
     <VNode/>

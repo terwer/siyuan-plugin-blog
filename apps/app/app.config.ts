@@ -32,6 +32,7 @@ interface AppConfig {
   siteSlogan?: string
   siteDescription?: string
   homePageId?: string
+  header?: string,
   footer?: string
   shareTemplate?: string
 
@@ -41,6 +42,11 @@ interface AppConfig {
     darkTheme?: string
     themeVersion?: string
   }
+
+  customCss: Array<{
+    name: string
+    content: string
+  }>
 
   // 加上字符串索引签名，兼容 AppConfigInput 约束
   [key: string]: any
@@ -52,6 +58,10 @@ export default defineAppConfig<AppConfig>({
   siteTitle: "浅海拾贝",
   siteSlogan: "寻找未知的技术拼图",
   siteDescription: "专注于Java后端开发及服务端、软件架构、微服务、自然语言处理等领域的技术分享。",
+  homePageId: "",
+  header: "",
+  footer: "",
+  shareTemplate: "[url]",
 
   theme: {
     mode: "light",
@@ -60,11 +70,6 @@ export default defineAppConfig<AppConfig>({
     themeVersion: "0.1.5",
   },
 
-  header: "",
-  footer: "",
-  shareTemplate: "[url]",
-  homePageId: "",
-
   customCss: [
     {
       name: "custom.css",
@@ -72,7 +77,4 @@ export default defineAppConfig<AppConfig>({
       content: "",
     },
   ],
-
-  outline: [],
-  docTree: [],
 })
