@@ -22,6 +22,7 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 const { locale, t } = useI18n()
 const { providerMode } = useProviderMode()
 const { getHome } = useBaseUrl()
+const { colorMode, toggleDark } = await useClientThemeMode(props.setting)
 
 // datas
 const v = ref((pkg as any).version)
@@ -38,9 +39,19 @@ const goAbout = () => {
 }
 
 // methods
-const goHome = async () => {
+const goHome = () => {
   const home = getHome()
   window.open(home)
+}
+
+const emitToggleThemeMode = (key: "auto"|"light"|"dark") => {
+  if (key === "dark" && colorMode.value) {
+    return
+  }
+  if (key === "light" && !colorMode.value) {
+    return
+  }
+  toggleDark()
 }
 
 const VNode = () =>
@@ -60,7 +71,8 @@ onBeforeMount(() => {
 
 <template>
   <el-footer>
-    <static-buttons />
+    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+
     <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
       <span class="text"> &copy;2011-{{ nowYear }} </span>
       <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>

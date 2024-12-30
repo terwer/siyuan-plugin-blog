@@ -17,7 +17,6 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
 const { t } = useI18n()
-const { colorMode, toggleDark } = await useClientThemeMode(props.setting)
 
 // datas
 const header = props.setting?.header ?? ""
@@ -49,11 +48,6 @@ const VNode = () =>
     <div class="links">
       <!--      <NavLinks class="can-hide"/>-->
     </div>
-
-    <span class="text dot">.</span>
-    <span class="text s-dark" @click="toggleDark()">
-      {{ colorMode ? t("theme.mode.light") : t("theme.mode.dark") }}
-    </span>
     <VNode />
   </div>
 </template>
