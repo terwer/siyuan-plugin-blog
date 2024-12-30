@@ -20,32 +20,30 @@ const logger = createAppLogger("use-theme-mode")
 /**
  * 注意：静态模式不能查询，只能通过参数传递进来
  */
-export const useClientThemeMode = async (setting: typeof AppConfig) => {
+export const useClientThemeMode = (setting: typeof AppConfig) => {
   // 获取颜色模式和运行时配置
-  const color = useColorMode()
+  const { store } = useColorMode()
   const { query } = useRoute()
   const { appBase } = useAppBase()
 
   // 在 mounted 生命周期中处理加载后逻辑
   onBeforeMount(() => {
-    const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-    color.value = isDarkMode ? "dark" : "light"
   })
 
   // computes
   // 获取颜色模式并暴露 computed 属性
   const colorMode = computed({
     get: () => {
-      return color.value === "dark"
+      return store.value === "dark"
     },
     set: (value) => {
-      color.value = value ? "dark" : "light"
+      store.value = value ? "dark" : "light"
     },
   })
 
   // methods
   // 切换暗黑模式
-  const toggleDark = async () => {
+  const toggleDark = () => {
     colorMode.value = !colorMode.value
     setThemeMode()
   }
@@ -55,29 +53,37 @@ export const useClientThemeMode = async (setting: typeof AppConfig) => {
   const siyuanLightTheme = (query.lightTheme ?? setting.theme?.lightTheme ?? "Zhihu") as string
   const siyuanDarkTheme = (query.darkTheme ?? setting.theme?.darkTheme ?? "Zhihu") as string
   const siyuanThemeV = (query.themeVersion ?? setting.theme?.themeVersion ?? "0.1.2") as string
+  const isDarkMode = colorMode.value
   useHead({
     htmlAttrs: {
       lang: "zh_CN",
-      "data-theme-mode": "light",
+      "data-theme-mode": isDarkMode ? "dark" : "light",
       "data-light-theme": siyuanLightTheme,
       "data-dark-theme": siyuanDarkTheme,
     },
     link: [
-      // 默认展示浅色主题
       {
         rel: "stylesheet",
         id: "themeDefaultStyle",
-        href: `${appBase}resources/appearance/themes/daylight/theme.css?v=${siyuanV}`,
+        href: `${appBase}resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
       },
-      {
-        rel: "stylesheet",
-        id: "themeStyle",
-        href: `${appBase}resources/appearance/themes/${siyuanLightTheme}/theme.css?v=${siyuanThemeV}`,
-      },
+      ...(siyuanLightTheme !== "daylight" && siyuanDarkTheme !== "midlight"
+        ? [
+            {
+              rel: "stylesheet",
+              id: "themeStyle",
+              href: `${appBase}resources/appearance/themes/${
+              isDarkMode ? siyuanDarkTheme : siyuanLightTheme
+            }/theme.css?v=${siyuanThemeV}`,
+            },
+          ]
+        : []),
       {
         rel: "stylesheet",
         id: "protyleHljsStyle",
-        href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs.min.css?v=${hljsV}`,
+        href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs${
+          isDarkMode ? "2015" : ""
+        }.min.css?v=${hljsV}`,
       },
     ],
     style: [
@@ -97,7 +103,7 @@ export const useClientThemeMode = async (setting: typeof AppConfig) => {
   const setThemeMode = () => {
     // 服务端不渲染
     if (BrowserUtil.isInBrowser) {
-      const isDarkMode = color.value === "dark"
+      const isDarkMode = store.value === "dark"
       setCssAndThemeMode(isDarkMode)
       // 记录日志
       logger.info(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")

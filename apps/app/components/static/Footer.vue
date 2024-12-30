@@ -22,7 +22,7 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 const { locale, t } = useI18n()
 const { providerMode } = useProviderMode()
 const { getHome } = useBaseUrl()
-const { colorMode, toggleDark } = await useClientThemeMode(props.setting)
+const { colorMode, toggleDark } = useClientThemeMode(props.setting)
 
 // datas
 const v = ref((pkg as any).version)

@@ -93,6 +93,6 @@ const toggleSidebar = () => {
   left 15.6rem
   z-index 99
   background: var(--b3-protyle-inline-link-color);
-  color var(--el-menu-text-color)
+  color #dcdcdc
   box-shadow: 0 0 6px var(--b3-protyle-inline-link-color);
 </style>
