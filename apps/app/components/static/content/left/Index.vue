@@ -50,9 +50,9 @@ const emitToggleSidebar = (state: boolean) => {
     transition: opacity 0.3s ease
     opacity: 1
     pointer-events: auto
-    :deep(.el-menu)
-      height 100vh
-      width 250px
+    :deep(.el-sub-menu__title)
+      //height 100vh
+      max-width 250px
 
 .sidebarOpen
   width: 280px

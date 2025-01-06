@@ -109,5 +109,6 @@ export default {
   "page.sidebar.expand.all": "展开全部",
   "page.sidebar.collapse.all": "折叠全部",
 
+  "static.docTree": "文档树",
   "static.outline": "文档大纲",
 }

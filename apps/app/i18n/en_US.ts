@@ -114,5 +114,6 @@ export default {
   "page.sidebar.expand.all": "Expand all",
   "page.sidebar.collapse.all": "Collapse all",
 
+  "static.docTree": "Document menu",
   "static.outline": "Document outline",
 }
