@@ -18,7 +18,7 @@
 import { computed } from "vue"
 
 interface Props {
-  id: string;
+  link: string;
   text: string;
 }
 
@@ -49,8 +49,7 @@ const truncatedText = computed(() => {
 })
 
 const handleItemClick = async () => {
-  const to = `/x/${props.id}`
-  await navigateTo(to)
+  await navigateTo(props.link)
 }
 </script>
 

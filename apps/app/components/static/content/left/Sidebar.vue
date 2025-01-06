@@ -23,6 +23,7 @@ const activeIndex = props.post.postid
 // 默认展开的节点
 const expandedIds = TreeUtils.chainExpandedIds(treeData, [props.post.postid])
 const maxDepth = 3
+const defaultDocPath = "x"
 // 构建树形数据
 const buildTree = (list: any[], parentId: string, depth = 1): any => {
   if (!list || !Array.isArray(list)) {
@@ -34,6 +35,7 @@ const buildTree = (list: any[], parentId: string, depth = 1): any => {
     .map((item: any) => ({
       ...item,
       depth,
+      link: `/${props.setting.docPath ?? defaultDocPath}/${item.id}`,
       children: depth < maxDepth ? buildTree(list, item.id, depth + 1) : [],
     }))
 }

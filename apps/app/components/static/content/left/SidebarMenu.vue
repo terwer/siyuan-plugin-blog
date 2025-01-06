@@ -14,6 +14,7 @@ import MenuItem from "./MenuItem.vue"
 interface MenuData {
   id: string;
   name: string;
+  link: string;
   depth: number;
   children?: MenuData[]; // 子菜单可选
 }
@@ -27,7 +28,7 @@ const props = defineProps<{ menu: MenuData, maxDepth: number }>()
     :index="props.menu.id"
   >
     <template #title>
-      <MenuItem :id="props.menu.id" :text="props.menu.name" />
+      <MenuItem :link="props.menu.link" :text="props.menu.name" />
     </template>
     <SidebarMenu
       v-for="child in props.menu.children || []"
@@ -37,6 +38,6 @@ const props = defineProps<{ menu: MenuData, maxDepth: number }>()
     />
   </el-sub-menu>
   <el-menu-item v-else :index="props.menu.id">
-    <MenuItem :id="props.menu.id" :text="props.menu.name" />
+    <MenuItem :link="props.menu.link" :text="props.menu.name" />
   </el-menu-item>
 </template>
