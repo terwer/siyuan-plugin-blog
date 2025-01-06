@@ -1,3 +1,7 @@
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+
 const generateDynamicV = () => {
   const now = new Date()
   const year = now.getFullYear().toString()
@@ -14,9 +18,9 @@ const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: {enabled: isDev},
+  devtools: { enabled: isDev },
 
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
     locales: ["en_US", "zh_CN"],
@@ -38,7 +42,8 @@ export default defineNuxtConfig({
         "data-dark-theme": "Zhihu",
       },
       link: [
-        {rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV},
+        { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        { rel: "stylesheet", href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV },
         {
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
@@ -52,23 +57,23 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
-          {
-            src: appBase + "libs/eruda/eruda.js",
-          },
-          {
-            children: "eruda.init();console.log('eruda inited');",
-          },
-          {
-            defer: true,
-            src: appBase + "libs/katex/0.16.10/katex.min.js",
-          },
-        ]
+            {
+              src: appBase + "libs/eruda/eruda.js",
+            },
+            {
+              children: "eruda.init();console.log('eruda inited');",
+            },
+            {
+              defer: true,
+              src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
+          ]
         : [
-          {
-            defer: true,
-            src: appBase + "libs/katex/0.16.10/katex.min.js",
-          },
-        ],
+            {
+              defer: true,
+              src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
+          ],
     },
   },
 
@@ -80,11 +85,24 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
-      "process.env.SSR": `"true"`,
+      "process.env.SSR": "\"true\"",
     },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
+    ]
   },
 
-  css: ["~/assets/index.styl"],
+  css: ["~/assets/css/index.styl"],
+
+  elementPlus: {
+    /** Options */
+    themes: ["dark"],
+  },
 
   // 环境变量
   runtimeConfig: {

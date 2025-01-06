@@ -115,7 +115,7 @@ const toggle = () => {
   } else {
     emit(
       "update-expanded-ids",
-      props.expandedIds.filter((itemId) => itemId !== id)
+      props.expandedIds.filter(itemId => itemId !== id)
     )
   }
 }

@@ -70,6 +70,7 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
 | Unordered list style adaptation               | ✔️           | ✔️           |
 | Latex formula rendering                       | ✔️           | ✔️           |
 | Support for siyuan-note's SVGs                | ✔️           | ✔️           |
+| Remove bottom copyright                       | ❌            | ✔️           |
 | Support for image hosting                     | ❌            | ✔️           |
 | Support for custom domain                     | ❌            | ✔️           |
 | Batch management for shared pages             | ❌            | ✔️           |

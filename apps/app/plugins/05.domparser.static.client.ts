@@ -23,8 +23,8 @@
  * questions.
  */
 
-import {useSvg} from "~/plugins/libs/domparser/useSvg"
-import {useStaticBlockRef} from "~/plugins/libs/domparser/useStaticBlockRef"
+import { useSvg } from "~/plugins/libs/domparser/useSvg"
+import { useStaticBlockRef } from "~/plugins/libs/domparser/useStaticBlockRef"
 
 /**
  * 页面渲染插件(图标等) - 客户端

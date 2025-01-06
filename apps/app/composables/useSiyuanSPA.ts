@@ -11,5 +11,5 @@ export const useSiyuanSPA = () => {
   const env = useRuntimeConfig()
   const isSiyuanSPA = env.public.defaultType === "siyuan"
 
-  return {isSiyuanSPA}
+  return { isSiyuanSPA }
 }

@@ -24,7 +24,7 @@
  */
 
 export default {
-  "name": "Share to web",
+  name: "Share to web",
   "lang.choose": "Choose lang",
   "lang.choose.placeholder": "Please select language",
   "syp.about": "About me",
@@ -114,5 +114,6 @@ export default {
   "page.sidebar.expand.all": "Expand all",
   "page.sidebar.collapse.all": "Collapse all",
 
+  "static.docTree": "Document menu",
   "static.outline": "Document outline",
 }

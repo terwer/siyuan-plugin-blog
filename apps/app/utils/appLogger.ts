@@ -7,8 +7,8 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {type ILogger, simpleLogger} from "zhi-lib-base"
-import {isDev} from "~/utils/Constants"
+import { type ILogger, simpleLogger } from "zhi-lib-base"
+import { isDev } from "~/utils/Constants"
 
 /**
  * 一个简单轻量级的日志记录器

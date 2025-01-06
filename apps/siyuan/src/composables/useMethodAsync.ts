@@ -25,10 +25,10 @@ export const useMethodAsync = (pluginInstance: any) => {
 
     try {
       await methodCall()
-      showMessage("main.opt.success", 3000, "info")
+      showMessage(pluginInstance.i18n["main.opt.success"], 3000, "info")
     } catch (e) {
-      logger.error("main.opt.failure", e)
-      showMessage(`main.opt.failure${e}`, 7000, "error")
+      logger.error(pluginInstance.i18n["main.opt.failure"], e)
+      showMessage(`${pluginInstance.i18n["main.opt.failure"]}${e}`, 7000, "error")
       throw e
     }
   }

@@ -7,7 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {HtmlUtil} from "zhi-common"
+import { HtmlUtil } from "zhi-common"
 
 export const getSummery = (html: string) => {
   const text = HtmlUtil.removeMdWidgetTag(html)

@@ -7,15 +7,15 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {StrUtil} from "zhi-common"
-import {useAppBase} from "~/composables/useAppBase"
+import { StrUtil } from "zhi-common"
+import { useAppBase } from "~/composables/useAppBase"
 
 /**
  * 获取基本地址的通用方法
  */
 export const useBaseUrl = () => {
   const env = useRuntimeConfig()
-  const {appBase} = useAppBase()
+  const { appBase } = useAppBase()
 
   const getHome = () => {
     const ssrHome = `${origin}`
@@ -37,5 +37,5 @@ export const useBaseUrl = () => {
     return env.public.siyuanApiUrl
   }
 
-  return {getHome, getOrigin, getClientBaseUrl, getServerBaseUrl}
+  return { getHome, getOrigin, getClientBaseUrl, getServerBaseUrl }
 }

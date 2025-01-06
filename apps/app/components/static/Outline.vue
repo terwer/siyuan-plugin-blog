@@ -8,7 +8,7 @@
   -->
 
 <template>
-  <div>
+  <div class="outline">
     <div class="outline-title">
       <a class="outline-title-link"> {{ t("static.outline") }} </a>
     </div>
@@ -35,9 +35,9 @@ const props = defineProps({
 const { t } = useI18n()
 
 const getRootLevel = () => {
-  if (props.outlineData.length === 0) return 1 // 如果数据为空，返回默认级别 1
+  if (props.outlineData.length === 0) { return 1 } // 如果数据为空，返回默认级别 1
 
-  const levels = props.outlineData.map((item) => getItemLevel(item))
+  const levels = props.outlineData.map(item => getItemLevel(item))
   const uniqueLevels = new Set(levels)
 
   if (uniqueLevels.size === 1) {
@@ -53,12 +53,46 @@ const getItemLevel = (item) => {
   return isNaN(level) ? 1 : level // 默认级别为1
 }
 
-onMounted(() => {})
+onMounted(() => {
+})
 </script>
 
 <style lang="stylus" scoped>
+.outline
+  position fixed
+  top 20px
+  right 20px
+  min-width 200px
+  max-width 350px
+  background-color #fff
+  border 1px solid #ddd
+  padding 10px
+  box-shadow 0 2px 4px rgba(0, 0, 0, 0.1)
+  z-index 1000
+  overflow-y auto
+  /* 限制最大高度，防止内容超出屏幕 */
+  max-height 80vh
+
+  h3
+    margin-top 0
+    margin-bottom 10px
+
+  ul
+    list-style-type none
+    padding 0
+    margin 0
+
+  li
+    cursor pointer
+    padding 5px 0
+    transition background-color 0.3s
+
+    &:hover
+      background-color #f5f5f5
+
 .outline-title
   margin-bottom 0.5rem
+
   .outline-title-link
     text-decoration none
     color #333

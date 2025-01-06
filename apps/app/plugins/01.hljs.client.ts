@@ -23,7 +23,7 @@
  * questions.
  */
 
-import {useHljs} from "~/plugins/libs/hljs/useHljs"
+import { useHljs } from "~/plugins/libs/hljs/useHljs"
 
 /**
  * 代码高亮插件
@@ -34,14 +34,14 @@ import {useHljs} from "~/plugins/libs/hljs/useHljs"
  * @version 1.0.0
  * @since 0.0.1
  */
-export default defineNuxtPlugin(({vueApp}) => {
+export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("hljs-client-plugin")
-  const {hljs} = useHljs()
+  const { hljs } = useHljs()
   const env = useRuntimeConfig()
   logger.info("hljs plugin load")
 
   vueApp.directive("highlight", {
-    mounted(el, binding) {
+    mounted (el, binding) {
       const w = Number(env.public.waitTime ?? "500")
       setTimeout(() => {
         // 先转换成 pre code，再进行高亮

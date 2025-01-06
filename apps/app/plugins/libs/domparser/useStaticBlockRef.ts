@@ -7,14 +7,14 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
 /**
  * 处理块链接
  */
 export const useStaticBlockRef = () => {
   const logger = createAppLogger("use-block-ref")
-  const {getHome} = useBaseUrl()
+  const { getHome } = useBaseUrl()
 
   // 尝试获取配置
   const getCfg = () => {
@@ -33,7 +33,7 @@ export const useStaticBlockRef = () => {
   const convertBlockRefLinks = (rootElement: any) => {
     const home = getHome()
 
-    rootElement.querySelectorAll('span[data-type="block-ref"]').forEach((el: HTMLElement) => {
+    rootElement.querySelectorAll("span[data-type=\"block-ref\"]").forEach((el: HTMLElement) => {
       const id = el.getAttribute("data-id")
       const cfg = getCfg()
       let urlPath = "s"
@@ -56,7 +56,7 @@ export const useStaticBlockRef = () => {
 
   // 将所有类型为 "a" 的 span 元素转化成 a 元素
   const convertALinks = (rootElement: any) => {
-    rootElement.querySelectorAll('span[data-type="a"]').forEach((el: HTMLElement) => {
+    rootElement.querySelectorAll("span[data-type=\"a\"]").forEach((el: HTMLElement) => {
       const href = el.getAttribute("data-href") ?? "#"
 
       // 创建一个新的 a 元素
@@ -77,5 +77,5 @@ export const useStaticBlockRef = () => {
     convertALinks(rootElement)
   }
 
-  return {convertAllLinks}
+  return { convertAllLinks }
 }

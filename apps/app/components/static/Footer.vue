@@ -2,30 +2,32 @@
   -            GNU GENERAL PUBLIC LICENSE
   -               Version 3, 29 June 2007
   -
-  -  Copyright (C) 2024 Terwer, Inc. <https://terwer.space/>
+  -  Copyright (C) 2023-2024 Terwer, Inc. <https://terwer.space/>
   -  Everyone is permitted to copy and distribute verbatim copies
   -  of this license document, but changing it is not allowed.
   -->
 
 <script setup lang="ts">
-import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
-import {useI18n} from "vue-i18n"
-import {useProviderMode} from "~/composables/useProviderMode"
-import {DateUtil, StrUtil} from "zhi-common"
+import { useI18n } from "vue-i18n"
+import { DateUtil, StrUtil } from "zhi-common"
+import { useProviderMode } from "~/composables/useProviderMode"
 import * as pkg from "~/package.json"
-import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
+import AppConfig from "~/app.config"
 
-const {locale, t} = useI18n()
-const {getStaticSetting} = useStaticSettingStore()
-const setting = await getStaticSetting()
-const {colorMode, toggleDark} = await useStaticThemeMode()
-const {providerMode} = useProviderMode()
-const footer = setting?.footer ?? ""
-const {getHome} = useBaseUrl()
+// props
+const props = defineProps<{ setting: typeof AppConfig }>()
+
+// uses
+const { locale, t } = useI18n()
+const { providerMode } = useProviderMode()
+const { getHome } = useBaseUrl()
+const { colorMode, toggleDark } = useClientThemeMode(props.setting)
 
 // datas
-const v = ref(pkg.version)
+const v = ref((pkg as any).version)
 const nowYear = DateUtil.nowYear()
+const footer = props.setting?.footer ?? ""
 
 // methods
 const goGithub = () => {
@@ -37,51 +39,54 @@ const goAbout = () => {
 }
 
 // methods
-const goHome = async () => {
+const goHome = () => {
   const home = getHome()
   window.open(home)
 }
 
+const emitToggleThemeMode = (key: "auto"|"light"|"dark") => {
+  if (key === "dark" && colorMode.value) {
+    return
+  }
+  if (key === "light" && !colorMode.value) {
+    return
+  }
+  toggleDark()
+}
 
 const VNode = () =>
-    h("div", {
-      class: "",
-      innerHTML: footer,
-    })
+  h("div", {
+    class: "",
+    innerHTML: footer,
+  })
 
 // lifecycles
 onBeforeMount(() => {
   // 设置默认语言
-  if (setting?.lang) {
-    locale.value = setting?.lang as any
+  if (props.setting?.lang) {
+    locale.value = props.setting?.lang as any
   }
 })
 </script>
 
 <template>
-  <el-footer>
-    <div class="footer" v-if="!providerMode && StrUtil.isEmptyString(footer)">
-      <span class="text"> &copy;2011-{{ nowYear }} </span>
-      <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
+  <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
+    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
 
-      <span class="text">v{{ v }}&nbsp;</span>
+    <span class="text"> &copy;2011-{{ nowYear }} </span>
+    <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
 
-      <span class="text s-dark" @click="goHome()">{{ t("go.home") }}</span>
+    <span class="text">v{{ v }}&nbsp;</span>
 
-      <span class="text dot">.</span>
-      <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
+    <span class="text s-dark" @click="goHome()">{{ t("go.home") }}</span>
 
-      <span class="text dot">.</span>
-      <span class="text s-dark" @click="toggleDark()">
-        {{
-          colorMode ? t("theme.mode.light") : t("theme.mode.dark")
-        }}
-      </span>
-    </div>
-    <div class="footer" v-else>
-      <VNode/>
-    </div>
-  </el-footer>
+    <span class="text dot">.</span>
+    <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
+  </div>
+  <div v-else class="footer">
+    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+    <VNode />
+  </div>
 </template>
 
 <style scoped>
@@ -101,7 +106,7 @@ onBeforeMount(() => {
   cursor: pointer;
 }
 
-.dot{
+.dot {
   padding-left: 2px;
   padding-right: 2px;
 }

@@ -7,12 +7,12 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {BrowserUtil, SiyuanDevice} from "zhi-device"
-import {useRoute} from "vue-router"
-import {useStaticSettingStore} from "~/stores/useStaticSettingStore"
-import {useColorMode} from "@vueuse/core"
-import {HLJS_VERSION, SIYUAN_VERSION} from "~/utils/Constants"
-import {useAppBase} from "~/composables/useAppBase"
+import { BrowserUtil } from "zhi-device"
+import { useRoute } from "vue-router"
+import { useColorMode } from "@vueuse/core"
+import { HLJS_VERSION, SIYUAN_VERSION } from "~/utils/Constants"
+import { useAppBase } from "~/composables/useAppBase"
+import type AppConfig from "~/app.config"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -20,57 +20,44 @@ const logger = createAppLogger("use-theme-mode")
 /**
  * 注意：静态模式不能查询，只能通过参数传递进来
  */
-export const useStaticThemeMode = async () => {
+export const useClientThemeMode = (setting: typeof AppConfig) => {
   // 获取颜色模式和运行时配置
-  const color = useColorMode()
-  const {query} = useRoute()
-  const {appBase} = useAppBase()
-  const {getStaticSetting} = useStaticSettingStore()
+  const { store } = useColorMode()
+  const { query } = useRoute()
+  const { appBase } = useAppBase()
 
   // 在 mounted 生命周期中处理加载后逻辑
-  onMounted(() => {
-    // 检测浏览器不是暗黑模式，根据媒介查询
-    // const win = SiyuanDevice.siyuanWindow()
-    // const isDarkMode = !BrowserUtil.hasNodeEnv() && win.matchMedia("(prefers-color-scheme: dark)").matches
-    // if (isDarkMode) {
-    //   setThemeMode(true)
-    //   colorMode.value = true
-    // }
-    // 默认展示浅色模式，用户自己切换
-    setThemeMode(isDarkMode)
-    colorMode.value = isDarkMode
+  onBeforeMount(() => {
   })
 
   // computes
   // 获取颜色模式并暴露 computed 属性
   const colorMode = computed({
     get: () => {
-      return color.value === "dark"
+      return store.value === "dark"
     },
     set: (value) => {
-      color.value = value ? "dark" : "light"
+      store.value = value ? "dark" : "light"
     },
   })
 
   // methods
   // 切换暗黑模式
-  const toggleDark = async () => {
+  const toggleDark = () => {
     colorMode.value = !colorMode.value
-    switchMode()
+    setThemeMode()
   }
 
-  const setting = await getStaticSetting()
   const siyuanV = SIYUAN_VERSION
   const hljsV = HLJS_VERSION
   const siyuanLightTheme = (query.lightTheme ?? setting.theme?.lightTheme ?? "Zhihu") as string
   const siyuanDarkTheme = (query.darkTheme ?? setting.theme?.darkTheme ?? "Zhihu") as string
   const siyuanThemeV = (query.themeVersion ?? setting.theme?.themeVersion ?? "0.1.2") as string
-  const detectedMode = (color as any).preference == "system" ? "light" : (color as any).preference
-  const isDarkMode = detectedMode === "dark"
+  const isDarkMode = colorMode.value
   useHead({
     htmlAttrs: {
       lang: "zh_CN",
-      "data-theme-mode": detectedMode,
+      "data-theme-mode": isDarkMode ? "dark" : "light",
       "data-light-theme": siyuanLightTheme,
       "data-dark-theme": siyuanDarkTheme,
     },
@@ -82,14 +69,14 @@ export const useStaticThemeMode = async () => {
       },
       ...(siyuanLightTheme !== "daylight" && siyuanDarkTheme !== "midlight"
         ? [
-          {
-            rel: "stylesheet",
-            id: "themeStyle",
-            href: `${appBase}resources/appearance/themes/${
+            {
+              rel: "stylesheet",
+              id: "themeStyle",
+              href: `${appBase}resources/appearance/themes/${
               isDarkMode ? siyuanDarkTheme : siyuanLightTheme
             }/theme.css?v=${siyuanThemeV}`,
-          },
-        ]
+            },
+          ]
         : []),
       {
         rel: "stylesheet",
@@ -112,26 +99,15 @@ export const useStaticThemeMode = async () => {
   // ==================================================
   // private methods
   // ==================================================
-  const switchMode = () => {
-    const isDarkMode = color.value === "dark"
-    setThemeMode(isDarkMode)
-  }
-
   // 设置主题模式
-  const setThemeMode = (isDarkMode: boolean) => {
-    // if (isDarkMode) {
-    //   document.body.style.backgroundColor = "unset"
-    // } else {
-    //   document.body.style.backgroundColor = "#f5f5f5"
-    // }
+  const setThemeMode = () => {
+    // 服务端不渲染
     if (BrowserUtil.isInBrowser) {
+      const isDarkMode = store.value === "dark"
       setCssAndThemeMode(isDarkMode)
       // 记录日志
-      logger.debug(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
-      logger.info(`Auto set mode, isDark => ${isDarkMode}`)
+      logger.info(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
     }
-    // @ts-ignore
-    color.preference = isDarkMode ? "dark" : "light"
   }
 
   // 根据浏览器模式设置 CSS 和主题模式
@@ -141,6 +117,14 @@ export const useStaticThemeMode = async () => {
     if (themeDefaultStyle) {
       themeDefaultStyle.href =
         appBase + `resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`
+    }
+
+    // 当前主题适配
+    const themeStyle = document.querySelector("#themeStyle") as any
+    if (themeStyle) {
+      themeStyle.href = `${appBase}resources/appearance/themes/${
+        isDarkMode ? siyuanDarkTheme : siyuanLightTheme
+      }/theme.css?v=${siyuanThemeV}`
     }
 
     // 代码块适配
@@ -158,12 +142,6 @@ export const useStaticThemeMode = async () => {
 
   const setCustomCss = () => {
     // 自定义样式适配
-    // customCss: [
-    //     {
-    //       name: "custom.css",
-    //       content: "body { background-color: #f5f5f5; }",
-    //     },
-    //   ],
     const customCss = setting.customCss
     if (customCss) {
       for (const css of customCss) {
@@ -175,5 +153,5 @@ export const useStaticThemeMode = async () => {
     }
   }
 
-  return {colorMode, toggleDark}
+  return { colorMode, toggleDark }
 }

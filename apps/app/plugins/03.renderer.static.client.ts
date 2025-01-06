@@ -23,8 +23,8 @@
  * questions.
  */
 
-import {useStaticClientAssets} from "~/plugins/libs/renderer/useStaticClientAssets"
-import {useClientFormulate} from "~/plugins/libs/renderer/useClientFormulate"
+import { useStaticClientAssets } from "~/plugins/libs/renderer/useStaticClientAssets"
+import { useClientFormulate } from "~/plugins/libs/renderer/useClientFormulate"
 
 /**
  * 页面渲染插件(图片、链接、公式等) - 客户端
@@ -35,10 +35,10 @@ import {useClientFormulate} from "~/plugins/libs/renderer/useClientFormulate"
  * @version 1.0.0
  * @since 0.0.1
  */
-export default defineNuxtPlugin(({vueApp}) => {
+export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("renderer-static-client-plugin")
-  const {addClientAssetsPrefix} = useStaticClientAssets()
-  const {renderFormulate} = useClientFormulate()
+  const { addClientAssetsPrefix } = useStaticClientAssets()
+  const { renderFormulate } = useClientFormulate()
 
   vueApp.directive("sbeauty", (el: HTMLElement) => {
     // if (process.env.SSR === "true") {

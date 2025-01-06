@@ -24,7 +24,7 @@
  */
 
 export default {
-  "name": "在线分享",
+  name: "在线分享",
   "lang.choose": "语言选择",
   "lang.choose.placeholder": "请选择语言",
   "syp.about": "关于作者",
@@ -58,7 +58,7 @@ export default {
   "switch.unactive.text": "正常模式",
   "blog.index.no.home": "啊哦，您还没设置自己的主页哟！",
   "blog.index.goto.set.home": "马上去设置我的主页",
-  "blog.index.goto.set.home.static": "授权码已开启，暂无权限修改，请在分享界面设置主页",
+  "blog.index.goto.set.home.static": "暂无权限修改，请在分享配置设置主页",
   "blog.share": "在线分享",
   "blog.share.options": "分享选项",
   "blog.share.setting": "分享设置",
@@ -109,5 +109,6 @@ export default {
   "page.sidebar.expand.all": "展开全部",
   "page.sidebar.collapse.all": "折叠全部",
 
+  "static.docTree": "文档树",
   "static.outline": "文档大纲",
 }

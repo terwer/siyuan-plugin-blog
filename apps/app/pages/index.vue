@@ -8,14 +8,14 @@
   -->
 
 <script setup lang="ts">
-import {useCommonShareType} from "~/composables/useCommonShareType"
+import { useCommonShareType } from "~/composables/useCommonShareType"
 
 definePageMeta({
   layout: false,
 })
 
 const logger = createAppLogger("s-page")
-const {isPrivateShare} = useCommonShareType()
+const { isPrivateShare } = useCommonShareType()
 
 // datas
 const isPrivate = await isPrivateShare()
@@ -23,6 +23,6 @@ logger.info(`isPrivate=>${isPrivate}`)
 </script>
 
 <template>
-  <static-home-page v-if="isPrivate"/>
-  <public-home-page v-else/>
+  <static-home-page v-if="isPrivate" />
+  <public-home-page v-else />
 </template>

@@ -7,21 +7,21 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
 /**
  * 处理客户端资源文件地址
  */
 export const useClientAssets = () => {
   const logger = createAppLogger("use-client-assets")
-  const {getClientBaseUrl} = useBaseUrl()
+  const { getClientBaseUrl } = useBaseUrl()
 
   const addClientAssetsPrefix = (el: HTMLElement) => {
     const imgs = el.querySelectorAll("img")
     if (imgs && imgs.length > 0) {
       imgs.forEach((img) => {
         const src = img.getAttribute("src") ?? ""
-        if (src.indexOf("assets") > -1) {
+        if (src.includes("assets")) {
           const baseUrl = getClientBaseUrl()
           const imgUrl = [baseUrl, src].join("/")
 
@@ -32,5 +32,5 @@ export const useClientAssets = () => {
     }
   }
 
-  return {addClientAssetsPrefix}
+  return { addClientAssetsPrefix }
 }

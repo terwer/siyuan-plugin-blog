@@ -22,7 +22,7 @@ import php from "highlight.js/lib/languages/php"
 import properties from "highlight.js/lib/languages/properties"
 import sql from "highlight.js/lib/languages/sql"
 import markdown from "highlight.js/lib/languages/markdown"
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 // @ts-ignore
 import { addThirdLanguages } from "./lib/third-languages"
 

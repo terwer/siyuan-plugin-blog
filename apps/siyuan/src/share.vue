@@ -41,7 +41,7 @@ const formData = reactive({
 
   shared: false,
   isHome: false,
-  expiredTime: "",
+  expiredTime: 0,
   shareLink: "",
   ip: "",
   ipList: []
@@ -57,6 +57,10 @@ const getIps = () => {
     ips.push(hostname)
   }
   return {hostname, ips}
+}
+
+const viewDoc = () => {
+  window.open(formData.shareLink)
 }
 
 const handleShare = () => {
@@ -103,7 +107,7 @@ const handleShare = () => {
         () => {
           if (formData.isHome) {
             formData.shared = true
-            showMessage("blog.index.home.exists", 7000, "error")
+            showMessage(props.pluginInstance.i18n["blog.index.home.exists"], 7000, "error")
             return false
           }
           return true
@@ -168,7 +172,7 @@ const handleExpiresTime = async () => {
       },
       () => {
         if (isNaN(expiredTime) || expiredTime < 0 || expiredTime > 7 * 24 * 60 * 60) {
-          showMessage("share.link.expires.error", 7000, "error")
+          showMessage(props.pluginInstance.i18n["share.link.expires.error"], 7000, "error")
           return false
         }
         return true
@@ -185,7 +189,7 @@ onBeforeMount(async () => {
   formData.shared = attrs["custom-publish-status"] === "publish"
   formData.isHome = formData.setting.homePageId === props.id
   formData.shareLink = `${shareOrigin}${basePath}/s/${props.id}`
-  formData.expiredTime = attrs["custom-expires"] ?? "0"
+  formData.expiredTime = attrs["custom-expires"] ?? 0
   const {hostname, ips} = getIps()
   formData.ip = hostname
   formData.ipList = ips.map((ip: string) => {
@@ -196,180 +200,232 @@ logger.debug("share inited", props)
 </script>
 
 <template>
-  <Suspense>
-    <div id="share">
-      <div class="share-item share-subject">
-        <div class="item-left">
-          {{ pluginInstance.i18n.siyuanBlog }} -
-          {{ formData.post.title }}
-        </div>
-        <div class="item-right"></div>
-      </div>
-      <div class="share-split"/>
-
-      <div class="el-page-header__content share-item">
-        <div class="flex items-center">
-          <span class="text-large font-600 mr-3 share-title"> "share.to.web" </span>
-          <span class="text-sm mr-2 share-description">
-          "share.to.web.before.tip"
-        </span>
-          <span class="item-right">
-          <input type="checkbox" v-model="formData.shared" @change="handleShare"/>
-        </span>
-        </div>
-      </div>
-      <div class="share-split"/>
-
-      <div v-if="formData.shared">
-        <div class="share-item">
-          <div class="item-left item-copy-link">
-            <input type="text" v-model="formData.shareLink"/>
-          </div>
-          <div class="item-right">
-            <button @click="copyWebLink">{{ "share.copy.web.link" }}</button>
-          </div>
-        </div>
-        <div class="share-item">
-          <div class="item-left">
-            <span class="change-ip-title">{{ "change.ip.title" }}</span>
-            <select
-                v-model="formData.ip"
-                class="m-2"
-                @change="handleIpChange"
-            >
-              <option v-for="item in formData.ipList" :key="item.value" :label="item.label" :value="item.value"/>
-            </select>
-          </div>
-          <div class="change-ip-tip">
-            {{ "share.static.tip" }}
-          </div>
-        </div>
-        <div class="share-split"/>
-
-        <div class="share-item">
-          <div class="item-left item-copy-link">
-            {{ "share.show.link.option" }}
-          </div>
-          <div class="item-right"></div>
-        </div>
-
-        <div class="share-item expires-link-item">
-          <div class="expires-link expires-link-label">
-            {{ "share.other.option.link.expires" }}
-          </div>
-          <div class="expires-link expires-link-input">
-            <input type="text" v-model="formData.expiredTime" :placeholder="'share.link.expires.time.placeholder'"/>
-          </div>
-          <div class="item-right">
-            <button @click="handleExpiresTime">{{ "main.opt.save" }}</button>
-          </div>
-        </div>
-        <div class="share-split"/>
-
-        <div class="share-item">
-          <div class="item-left">
-            {{ "share.set.home" }}
-          </div>
-          <div class="item-right">
-            <input type="checkbox" v-model="formData.isHome" @change="handleSetHome"/>
-          </div>
-        </div>
-        <div class="share-split"/>
+  <div id="share">
+    <div class="share-header">
+      <div class="share-title">
+        {{ formData.post.title }}
       </div>
     </div>
-  </Suspense>
+    <div class="divider"/>
+
+    <div class="share-settings">
+      <div class="setting-row">
+        <span class="setting-label">
+          {{ pluginInstance.i18n["share.to.web"] }} - {{ pluginInstance.i18n["share.to.web.before.tip"] }}
+        </span>
+        <input class="b3-switch fn__flex-center" type="checkbox" v-model="formData.shared" @change="handleShare">
+      </div>
+    </div>
+
+    <div v-if="formData.shared" class="share-content">
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["share.copy.title"] }}</span>
+        <div class="input-group">
+          <input type="text" v-model="formData.shareLink" readonly class="share-link-input" @click="viewDoc"
+                 :title="pluginInstance.i18n['share.click.view']"/>
+          <button @click="copyWebLink">{{ pluginInstance.i18n["share.copy.web.link"] }}</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["change.ip.title"] }}</span>
+        <div class="input-group">
+          <select v-model="formData.ip" @change="handleIpChange">
+            <option v-for="item in formData.ipList" :key="item.value" :value="item.value">
+              {{ item.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="info-text">{{ pluginInstance.i18n["share.static.tip"] }}</div>
+
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["share.other.option.link.expires"] }}</span>
+        <div class="input-group">
+          <input v-model="formData.expiredTime" class="share-expired-input" type="number" min="0" step="1"
+                 :placeholder='pluginInstance.i18n["share.link.expires.time.placeholder"]'/>
+          <button @click="handleExpiresTime">{{ pluginInstance.i18n["main.opt.save"] }}</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">{{ pluginInstance.i18n["share.set.home"] }}</span>
+        <input class="b3-switch fn__flex-center" type="checkbox" v-model="formData.isHome" @change="handleSetHome">
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="stylus" scoped>
-.text-center
-  text-align center
-
-.share-split
-  margin 2px 0
-
 #share
-  min-width 425px
-  .share-item
-    padding 6px 10px
+  font-family "Open Sans", "LXGW WenKai", "JetBrains Mono", "-apple-system", "Microsoft YaHei", "Times New Roman",
+  "方正北魏楷书_GBK", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
+  "Droid Sans", "Helvetica Neue", sans-serif
+  max-width 600px
+  min-width 475px
+  margin auto
+  padding 8px
+  padding-top 10px
+  padding-bottom 0
+  padding-left 14px
+  padding-right 14px
+
+.share-header
+  font-size 14px
+  font-weight 600
+
+.divider
+  height 1px
+  margin 8px 0
+
+.share-content
+  margin-top 14px
+
+.setting-row
+  display flex
+  align-items center
+  justify-content space-between
+  margin-bottom 10px
+  gap 8px
+
+.setting-label
+  font-size 14px
+  white-space nowrap /* 防止换行，字段宽度自适应 */
+  margin-right 8px
+
+/* 与输入框保持适当间距 */
+
+.input-group
+  display flex
+  align-items center
+  gap 8px
+  flex-grow 1 /* 输入框占据剩余空间 */
+  width 100%
+
+.input-group input,
+.input-group select
+  flex-grow 1
+  height 28px
+  padding 4px 8px
+  border 1px solid #cccccc
+  border-radius 4px
+  font-size 14px
+  background-color #f9f9f9
+  color #333333
+  box-sizing border-box
+  min-width 0
+
+/* 防止 flex 布局导致超出容器 */
+
+.input-group input:focus,
+.input-group select:focus
+  outline none
+  border-color #0073e6
+  box-shadow 0 0 4px rgba(0, 115, 230, 0.5)
+
+.share-link-input
+  height 28px
+  padding 4px 8px
+  border 1px solid #cccccc
+  border-radius 4px
+  font-size 14px
+  background-color #f0f0f0 /* 禁用时的背景色 */
+  color #aaaaaa /* 禁用时的文字颜色 */
+  box-sizing border-box
+  cursor not-allowed
+
+/* 表明是不可交互的 */
+
+button
+  padding 4px 12px
+  font-size 14px
+  color #ffffff
+  border none
+  border-radius 4px
+  cursor pointer
+  background-color #0073e6
+  transition all 0.2s ease
+  white-space nowrap /* 防止按钮内容换行 */
+  flex-shrink 0
+
+/* 按钮保持固定大小 */
+
+button:hover
+  background-color #005bb5
+  transform scale(1.05)
+
+.info-text
+  font-size 12px
+  margin-top 8px
+  margin-bottom 8px
+  color #ff4d4f
+
+html[data-theme-mode="light"]
+  .divider
+    background-color #e3e3e3
+
+  .input-group input,
+  .input-group select
+    border-color #cccccc
+    background-color #f9f9f9
+
+  .share-link-input
+    border-color #cccccc
+    background-color #f0f0f0
+    color #aaaaaa
+
+  button
+    background-color #0073e6
+
+  button:hover
+    background-color #005bb5
+
+  .info-text
+    color #ff4d4f
+
+html[data-theme-mode="dark"]
+  .divider
+    background-color #333333
+
+  .input-group input
+    border-color #444444
+    background-color #2c2c2c
+
+  .input-group input:not([readonly])
+    color var(--b3-theme-on-background)
+    background-color #2c2c2c
+    border-color #444444
+
+  .input-group input:not([readonly]):focus
+    border-color #0073e6
+    background-color #3a3a3a
+    box-shadow 0 0 4px rgba(0, 115, 230, 0.5)
+
+  .input-group select
+    border-color #444444
+    color var(--b3-theme-on-background)
+    background-color #2c2c2c
+
+  .input-group select option
+    color var(--b3-theme-on-background)
+    background-color #444444
 
     &:hover, &:focus
-      cursor pointer
+      background-color #555555
+      color #ffffff
 
-    //border-radius 5px
-    //border-color var(--el-border-color)
-    //background-color var(--b3-list-hover)
+  .share-link-input
+    border-color #444444
+    background-color #3a3a3a
+    color #666666
 
-    .share-icon
-      vertical-align middle
-      font-size 26px
-      fill rgba(55, 53, 47, 0.35)
+  button
+    background-color #0073e6
 
-    .share-title
-      font-size 16px
+  button:hover
+    background-color #005bb5
 
-    .share-description
-      font-size 12px
-
-    .item-left
-      display inline-block
-
-    .item-copy-link
-      width 75%
-
-      ::v-deep(.el-space__item)
-        padding 0 !important
-
-    .item-right
-      display inline-block
-      float right
-
-    .item-middle
-      display inline-block
-      background-color transparent
-
-    .expires-link
-      display inline-block
-
-    .expires-link-label
-      margin-right 10px
-
-    .expires-link-input
-      width 60%
-
-  .other-setting
-    border-radius 4px
-    background-color var(--b3-list-hover)
-
-  .share-subject
-    font-size 14px
-    font-weight 600
-
-  ::v-deep(.el-switch)
-    display inline-block
-
-  .expires-link-item
-    ::v-deep(.el-switch)
-      display inline-flex
-
-  .el-page-header__content
-    ::v-deep(.el-switch)
-      display inline-flex
-
-.change-ip-title
-  margin-right 10px
-
-.warn-text
-  color #ea4aaa
-
-.share-warn-tip
-  padding-left 6px
-
-.change-ip-tip
-  color red
-  font-size 13px
-  padding-top 10px
-
-.setting-btn
-  padding-left 10px
-  font-size 13px
+  .info-text
+    color #ff7875
 </style>

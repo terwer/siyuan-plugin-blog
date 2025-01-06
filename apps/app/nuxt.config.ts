@@ -1,3 +1,7 @@
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+
 const generateDynamicV = () => {
   const now = new Date()
   const year = now.getFullYear().toString()
@@ -9,14 +13,14 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/plugins/siyuan-blog/app/"
+const appBase = "/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: {enabled: isDev},
+  devtools: { enabled: isDev },
 
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
     locales: ["en_US", "zh_CN"],
@@ -25,24 +29,6 @@ export default defineNuxtConfig({
     detectBrowserLanguage: false,
     vueI18n: "./i18n.ts"
   },
-
-  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-  ssr: false,
-  router: {
-    options: {
-      hashMode: true,
-    },
-  },
-
-  vite: {
-    define: {
-      "process.env.DEV_MODE": `"${isDev}"`,
-      "process.env.APP_BASE": `"${appBase}"`,
-      "process.env.SSR": `"false"`,
-    },
-  },
-
-  css: ["~/assets/index.styl"],
 
   app: {
     baseURL: appBase,
@@ -56,7 +42,8 @@ export default defineNuxtConfig({
         "data-dark-theme": "Zhihu",
       },
       link: [
-        {rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV},
+        { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        { rel: "stylesheet", href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV },
         {
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
@@ -70,33 +57,56 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
-          {
-            src: appBase + "libs/eruda/eruda.js",
-          },
-          {
-            children: "eruda.init();console.log('eruda inited');",
-          },
-          {
-            defer: true,
-            src: appBase + "libs/katex/0.16.10/katex.min.js",
-          },
-        ]
+            {
+              src: appBase + "libs/eruda/eruda.js",
+            },
+            {
+              children: "eruda.init();console.log('eruda inited');",
+            },
+            {
+              defer: true,
+              src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
+          ]
         : [
-          {
-            defer: true,
-            src: appBase + "libs/katex/0.16.10/katex.min.js",
-          },
-        ],
+            {
+              defer: true,
+              src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
+          ],
     },
+  },
+
+  vite: {
+    define: {
+      "process.env.DEV_MODE": `"${isDev}"`,
+      "process.env.APP_BASE": `"${appBase}"`,
+      "process.env.SSR": "\"true\"",
+    },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
+    ]
+  },
+
+  css: ["~/assets/css/index.styl"],
+
+  elementPlus: {
+    /** Options */
+    themes: ["dark"],
   },
 
   // 环境变量
   runtimeConfig: {
     public: {
-      defaultType: "siyuan",
-      siyuanApiUrl: "",
-      providerMode: "false",
-      providerUrl: "",
+      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "node",
+      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
+      providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
+      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
     },
   },
 

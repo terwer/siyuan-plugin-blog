@@ -16,7 +16,7 @@ export const useSvg = () => {
     const wrapper = `
     <svg data-name="siyuan-blog" style="position: absolute; width: 0; height: 0; overflow: hidden;">
       <defs>
-        ${svgDataArray.map((svgData) => `<symbol>${svgData}</symbol>`).join("")}
+        ${svgDataArray.map(svgData => `<symbol>${svgData}</symbol>`).join("")}
       </defs>
     </svg>
   `
@@ -24,5 +24,5 @@ export const useSvg = () => {
     document.body.insertAdjacentHTML("afterbegin", wrapper)
   }
 
-  return {addSvgToPage}
+  return { addSvgToPage }
 }

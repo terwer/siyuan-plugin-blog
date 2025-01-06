@@ -1,7 +1,7 @@
+import { JsonUtil } from "zhi-common"
 import AppConfig from "~/app.config"
-import {JsonUtil} from "zhi-common"
-import {useAuthModeFetch} from "~/composables/useAuthModeFetch"
-import {useProviderMode} from "~/composables/useProviderMode"
+import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
+import { useProviderMode } from "~/composables/useProviderMode"
 
 /**
  * 设置配置存储
@@ -10,8 +10,8 @@ import {useProviderMode} from "~/composables/useProviderMode"
 export const useStaticSettingStore = () => {
   const logger = createAppLogger("use-static-setting-store")
   const staticSettingFile = "static.app.config.json"
-  const {fetchConfig} = useAuthModeFetch()
-  const {providerMode} = useProviderMode()
+  const { fetchConfig } = useAuthModeFetch()
+  const { providerMode } = useProviderMode()
   /**
    * 获取配置
    */
@@ -23,5 +23,5 @@ export const useStaticSettingStore = () => {
     return setting
   }
 
-  return {getStaticSetting}
+  return { getStaticSetting }
 }

@@ -7,7 +7,6 @@
  *  of this license document, but changing it is not allowed.
  */
 
-
 /**
  * Nuxt 插件，根据 `lang` 查询参数设置语言环境
  *

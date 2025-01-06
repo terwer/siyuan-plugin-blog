@@ -8,14 +8,14 @@
  */
 
 import * as cheerio from "cheerio"
-import {useBaseUrl} from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
 /**
  * DOM 相关操作钩子
  */
 export const useServerAssets = () => {
   const logger = createAppLogger("use-server-assets")
-  const {getServerBaseUrl} = useBaseUrl()
+  const { getServerBaseUrl } = useBaseUrl()
 
   /**
    * 获取HTML代码中第一个<img>元素的src属性值
@@ -54,17 +54,17 @@ export const useServerAssets = () => {
     const $ = cheerio.load(html)
     const images = $("img")
     for (const image of images) {
-      const src = image.attribs["src"]
+      const src = image.attribs.src
       const newImageUrl = [baseUrl, src].join("/")
       logger.debug("image src=>", src)
       logger.debug("newImageUrl=>", newImageUrl)
 
-      image.attribs["src"] = newImageUrl
+      image.attribs.src = newImageUrl
     }
 
     // 将修改后的 DOM 结构重新序列化成字符串并返回
     return $.html()
   }
 
-  return {getFirstImageSrc, addServerAssetsPrefix}
+  return { getFirstImageSrc, addServerAssetsPrefix }
 }
