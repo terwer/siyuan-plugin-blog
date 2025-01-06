@@ -73,6 +73,10 @@ const items = computed(() => {
   </el-scrollbar>
 </template>
 
+<style lang="stylus">
+:root
+  --el-menu-item-height 40px
+</style>
 <style scoped lang="stylus">
 .sidebar-container
   min-width 220px
@@ -88,13 +92,9 @@ const items = computed(() => {
 
 .sidebar-menu
   border none
-</style>
-
-<style scoped lang="stylus">
-.sidebar-container
-  max-width 250px
-  border-right 1px solid var(--el-menu-border-color)
-
-.sidebar-menu
-  border none
+:deep(ul[role="menu"])
+  li.is-active:not(.is-opened)
+    background-color var(--el-menu-hover-bg-color)
+    //&:hover
+    //  background-color unset
 </style>
