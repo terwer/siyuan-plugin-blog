@@ -33,7 +33,7 @@ const props = defineProps<{ menu: MenuData, maxDepth: number }>()
     <SidebarMenu
       v-for="child in props.menu.children || []"
       :key="child.id"
-      :menu="{ ...child, depth: child.depth + 1 }"
+      :menu="child"
       :max-depth="props.maxDepth"
     />
   </el-sub-menu>
