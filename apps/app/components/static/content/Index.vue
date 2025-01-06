@@ -14,9 +14,15 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
- 111 {{JSON.stringify(props.post.docTree)}}222
-  <el-container :class="{ 'main-container': true, 'headed-container': props.setting?.showHeader }">
-    <static-content-left :post="props.post" :setting="props.setting" />
+  <el-container
+    :class="{ 'main-container': true, 'headed-container': props.setting?.showHeader }"
+  >
+    <static-content-left
+      v-if="props.setting.docTreeEnabled && props.post.treeData && props.post.treeData.length > 0"
+      :post="props.post"
+      :setting="props.setting"
+    />
+    <el-aside v-else width="40px" />
     <el-main class="main">
       <static-content-main :post="props.post" :setting="props.setting" />
     </el-main>

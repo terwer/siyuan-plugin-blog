@@ -9,15 +9,16 @@
 
 <template>
   <el-tooltip v-if="shouldShowTooltip" :content="text" effect="dark" trigger="hover" placement="right">
-    <span class="menu-title">{{ truncatedText }}</span>
+    <span class="menu-title" @click="handleItemClick">{{ truncatedText }}</span>
   </el-tooltip>
-  <span v-else class="menu-title">{{ text }}</span>
+  <span v-else class="menu-title" @click="handleItemClick">{{ text }}</span>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue"
 
 interface Props {
+  id: string;
   text: string;
 }
 
@@ -46,6 +47,11 @@ const truncatedText = computed(() => {
   }
   return result + "..."
 })
+
+const handleItemClick = async () => {
+  const to = `/x/${props.id}`
+  await navigateTo(to)
+}
 </script>
 
 <style scoped lang="stylus">

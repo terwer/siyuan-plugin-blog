@@ -4,7 +4,8 @@
   "type": "module",
   "homepage": "https://github.com/terwer/siyuan-plugin-blog",
   "scripts": {
-    "dev": "vite",
+    "serve": "vite",
+    "dev": "tsc -b && vite build --watch",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
