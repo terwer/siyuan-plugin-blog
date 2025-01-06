@@ -49,6 +49,10 @@ const formData = reactive({
     },
   ],
 })
+
+// 初始化文档树
+const treeData = TreeUtils.addParentIds(props.post.docTree)
+// const expandedIds = TreeUtils.chainExpandedIds(treeData, defaultExpandedIds.value)
 </script>
 
 <template>
@@ -57,6 +61,7 @@ const formData = reactive({
     <div class="sidebar-header">
       {{ t("static.outline") }}
     </div>
+    {{JSON.stringify(treeData)}}
     <!-- 菜单部分 -->
     <el-menu class="sidebar-menu" :default-openeds="formData.openedIds" :default-active="formData.activeIndex">
       <SidebarMenu v-for="menu in formData.menuData" :key="menu.index" :menu="menu" />

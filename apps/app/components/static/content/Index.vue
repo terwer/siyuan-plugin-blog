@@ -14,6 +14,7 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
+ 111 {{JSON.stringify(props.post.docTree)}}222
   <el-container :class="{ 'main-container': true, 'headed-container': props.setting?.showHeader }">
     <static-content-left :post="props.post" :setting="props.setting" />
     <el-main class="main">
