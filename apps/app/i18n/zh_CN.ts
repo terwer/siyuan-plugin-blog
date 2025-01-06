@@ -58,7 +58,7 @@ export default {
   "switch.unactive.text": "正常模式",
   "blog.index.no.home": "啊哦，您还没设置自己的主页哟！",
   "blog.index.goto.set.home": "马上去设置我的主页",
-  "blog.index.goto.set.home.static": "授权码已开启，暂无权限修改，请在分享界面设置主页",
+  "blog.index.goto.set.home.static": "暂无权限修改，请在分享配置设置主页",
   "blog.share": "在线分享",
   "blog.share.options": "分享选项",
   "blog.share.setting": "分享设置",

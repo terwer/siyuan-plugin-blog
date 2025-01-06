@@ -52,5 +52,7 @@ export const AppConfig = {
     lightTheme: "Zhihu",
     darkTheme: "Zhihu",
     themeVersion: "0.1.5",
-  }
+  },
+
+  customCss: []
 }

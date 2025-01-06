@@ -8,6 +8,7 @@
   -->
 
 <script setup lang="ts">
+import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
 
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
@@ -18,6 +19,15 @@ const formData = reactive({
 
 const emitToggleSidebar = (state: boolean) => {
   formData.sidebarVisible = state
+
+  // 防止标题栏被侧边按钮遮挡
+  if (BrowserUtil.isInBrowser) {
+    const element = document.querySelector(".protyle-title__input") as HTMLElement | null
+    if (!element) {
+      return
+    }
+    element.style.marginLeft = formData.sidebarVisible ? "25px" : "0"
+  }
 }
 </script>
 
