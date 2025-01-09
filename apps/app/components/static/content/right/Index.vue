@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="outline-container">
+  <div v-if="outlineData &&outlineData.length>0" class="outline-container">
     <div class="outline-content" :class="{ 'outline-expanded': showOutline }">
       <static-content-right-outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
     </div>
