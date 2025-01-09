@@ -42,3 +42,4 @@ yarn-error.log*
 __pycache__
 .wrangler
 startup.sh
+package.zip
