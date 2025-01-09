@@ -7,117 +7,71 @@
   -  of this license document, but changing it is not allowed.
   -->
 
-<script setup lang="ts">
-import { ref, onMounted, watch } from "vue"
-
-const isHovered = ref(false)
-const headings = ref<any[]>([])
-const currentHeading = ref<string | null>(null)
-
-const handleMouseEnter = () => {
-  isHovered.value = true
-}
-
-const handleMouseLeave = () => {
-  isHovered.value = false
-}
-
-const scrollToHeading = () => {
-  // Selecting headings directly from the main content (body or global element)
-  const headingsElements = document.querySelectorAll("h2, h3, h4")
-  headingsElements.forEach((heading) => {
-    const id = heading.id
-    if (id) {
-      headings.value.push({ id, text: heading.innerText })
-    }
-  })
-}
-
-onMounted(() => {
-  scrollToHeading()
-  window.addEventListener("scroll", updateCurrentHeading)
+<script setup>
+const props = defineProps({
+  outlineData: {
+    type: Array,
+    required: true,
+  },
+  maxDepth: {
+    type: Number,
+    default: -1,
+  },
 })
 
-watch(headings, () => {
-  updateCurrentHeading()
-})
+const { t } = useI18n()
 
-const updateCurrentHeading = () => {
-  const headingsElement = document.querySelectorAll("h2, h3, h4")
-  headingsElement.forEach((heading) => {
-    const rect = heading.getBoundingClientRect()
-    if (rect.top <= 0 && rect.bottom >= 0) {
-      currentHeading.value = heading.id
-    }
-  })
+const getRootLevel = () => {
+  if (props.outlineData.length === 0) {
+    return 1
+  }
+
+  const levels = props.outlineData.map(item => getItemLevel(item))
+  const uniqueLevels = new Set(levels)
+
+  if (uniqueLevels.size === 1) {
+    return levels[0]
+  } else {
+    return Math.min(...levels)
+  }
+}
+
+const getItemLevel = (item) => {
+  const level = parseInt(item.subType.replace("h", ""), 10)
+  return isNaN(level) ? 1 : level
 }
 </script>
 
 <template>
-  <div class="outline" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <div class="outline-bar" :class="{ 'outline-bar-expanded': isHovered }" />
-    <div v-if="isHovered" class="outline-content">
-      <ul>
-        <li v-for="(heading, index) in headings" :key="index">
-          <a :href="'#' + heading.id" :class="{ active: currentHeading === heading.id }">{{ heading.text }}</a>
-        </li>
-      </ul>
+  <div class="outline">
+    <div class="outline-title">
+      <a class="outline-title-link"> {{ t("static.outline") }} </a>
+    </div>
+    <div v-for="(item, index) in outlineData" :key="index">
+      <static-content-right-outline-item :item="item" :max-depth="maxDepth" :root-level="getRootLevel()" :is-root="true" />
     </div>
   </div>
 </template>
 
-<style scoped lang="stylus">
+<style lang="stylus" scoped>
 .outline
-  position: fixed
-  right: 0
-  top: 0
-  height: 100%
-  width: 260px
-  background-color: #f5f5f5
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1)
-  overflow-y: auto
-  z-index: 1
-  transition: transform 0.3s ease
+  width: 240px
+  background-color: #fff
+  padding: 10px
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1)
+  z-index: 9
+  overflow-y auto
+  height: 100vh
+  position: relative
 
-.outline-bar
-  position: absolute
-  top: 50%
-  right: 0
-  width: 5px
-  background-color: green
-  transform: translateY(-50%)
-  height: 50px
-  cursor: pointer
-  transition: width 0.3s ease
-
-.outline-bar-expanded
-  width: 260px
-
-.outline-content
-  padding-top: 60px
-  padding-right: 20px
-  max-height: 90vh
-  overflow-y: auto
-
-.outline-content ul
-  list-style: none
-  padding: 0
-  margin: 0
-
-.outline-content li
-  margin-bottom: 10px
-
-.outline-content a
-  text-decoration: none
-  color: #333
-  font-size: 16px
-  display: block
-  transition: color 0.3s
-
-.outline-content a:hover
-  color: #007bff
-
-.outline-content a.active
-  font-weight: bold
-  color: #007bff
+.outline-title
+  margin-bottom: 1rem
+  .outline-title-link
+    color: #333
+    font-weight: 600
+    text-decoration: none
+    cursor: pointer
+    transition: color 0.3s ease
+    &:hover
+      color: #007bff
 </style>

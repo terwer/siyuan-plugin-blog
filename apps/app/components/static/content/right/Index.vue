@@ -8,51 +8,75 @@
   -->
 
 <script setup lang="ts">
+import { More } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
 
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
-const showOutline = ref(true)
+const outlineData = ref(props.post.outline ?? [] as any)
+const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
 
+// 控制大纲是否显示
+const showOutline = ref(false)
 const toggleOutline = () => {
   showOutline.value = !showOutline.value
 }
+
+onMounted(() => {
+  const isMobile = window.innerWidth <= 768
+  if (!isMobile) {
+    showOutline.value = true
+  }
+})
 </script>
 
 <template>
-  <el-aside class="aside-right" :class="{ 'aside-right-expanded': showOutline }">
-    <static-content-right-outline v-if="showOutline" />
-    <div class="toggle-btn" @click="toggleOutline">
-      Toggle Outline
+  <div class="outline-container">
+    <div class="outline-content" :class="{ 'outline-expanded': showOutline }">
+      <static-content-right-outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
     </div>
-  </el-aside>
+    <div class="toggle-btn" @click="toggleOutline">
+      <el-icon><More /></el-icon>
+    </div>
+  </div>
 </template>
 
-<style scoped lang="stylus">
-.aside-right
-  position: fixed /* Fixed when collapsed */
+<style lang="stylus" scoped>
+.outline-container
+  position: relative
+  height: 100vh
+  display: flex
+  flex-direction: column
+
+.outline-content
+  position: fixed
   top: 0
   right: 0
-  height: 100%
-  width: 0 /* Initially collapsed */
-  background-color: #f5f5f5
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1)
-  overflow-y: auto
-  z-index: 1
-  transition: width 0.3s ease /* Animate width transition */
+  transform: translateX(100%)
+  transition: transform 0.3s ease
 
-.aside-right-expanded
-  position: relative /* Change to relative when expanded */
-  width: 260px /* Expanded width */
+.outline-expanded
+  position relative
+  transform: translateX(0)
 
 .toggle-btn
   position: fixed
-  top: 20px
+  color var(--dim)
+  top: 32px
   right: 20px
-  background-color: #007bff
-  color: white
-  padding: 8px 16px
-  border-radius: 5px
   cursor: pointer
   z-index: 10
+  transition: right 0.3s ease
+  //&:hover
+  //  color: #0056b3
+
+.outline:not(.outline-expanded) .toggle-btn
+  right: -40px
+
+/* 移动端适配，默认收起大纲 */
+@media (max-width: 768px)
+  .outline-container
+    z-index 99
+  .outline-content
+    position fixed
 </style>
