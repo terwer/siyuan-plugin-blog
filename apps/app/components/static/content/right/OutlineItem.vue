@@ -62,15 +62,10 @@ const props = defineProps({
 
 const getFirstMargin = (item) => {
   const level = getItemLevel(item)
-  if (props.rootLevel === 1) {
-    return (level - 1) * 16
-  } else {
-    return (level - props.rootLevel + 1) * 16
-  }
+  return (level - 1) * 16
 }
 
 const adjustItemName = (name) => {
-  // &nbsp;处理、换行符处理、:：处理
   let adjustedName = name
     .replace(/&nbsp;/g, " ")
     .replace(/&quot;/g, "\"")
@@ -81,46 +76,42 @@ const adjustItemName = (name) => {
     .replace(/：/g, "")
     .replace(/:/g, "")
     .replace(/,/g, "")
-
-  // 处理 HTML 标签，保留标签内的文本
   adjustedName = adjustedName.replace(/<[^>]+>/g, (match) => {
     const textContent = match.match(/>([\s\S]*?)</)
     return textContent ? textContent[1] : ""
   })
-
   return adjustedName
 }
 
 const getItemLevel = (item) => {
   const level = parseInt(item.subType.replace("h", ""), 10)
-  return isNaN(level) ? 1 : level // 默认级别为1
+  return isNaN(level) ? 1 : level
 }
 
 const scrollToSection = (id) => {
-  // 使用 querySelector 根据 data-node-id 属性查找元素
   const element = document.querySelector(`[data-node-id="${id}"]`)
   if (element) {
     element.scrollIntoView({ behavior: "smooth", block: "start" })
-    // 使标题稍微高于屏幕中心
-    window.scrollBy(0, -20) // 调整这个偏移量以适应具体需求
+    window.scrollBy(0, -20)
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .outline-item
-  margin-bottom 8px
+  margin-bottom: 8px
+  padding-left: 5px
 
 .item-link
-  color #333
-  text-decoration none
-  cursor pointer
-  transition color 0.2s
+  color: #333
+  text-decoration: none
+  cursor: pointer
+  transition: color 0.2s ease
 
 .item-link:hover
-  color #1890ff
-  font-weight bold
+  color: #1890ff
+  font-weight: bold
 
 .nested-items
-  margin-left 10px
+  margin-left: 20px
 </style>

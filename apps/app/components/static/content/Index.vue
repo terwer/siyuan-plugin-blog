@@ -18,11 +18,9 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
     :class="{ 'main-container': true, 'headed-container': props.setting?.showHeader }"
   >
     <static-content-left
-      v-if="props.setting.docTreeEnabled && props.post.docTree && props.post.docTree.length > 0"
       :post="props.post"
       :setting="props.setting"
     />
-    <el-aside v-else width="40px" />
     <el-main class="main">
       <static-content-main :post="props.post" :setting="props.setting" />
     </el-main>
