@@ -41,3 +41,4 @@ yarn-error.log*
 .turbo
 __pycache__
 .wrangler
+startup.sh
