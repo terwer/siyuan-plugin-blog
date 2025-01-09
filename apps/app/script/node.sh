@@ -12,7 +12,7 @@
 # 使用 Node 构建配置
 echo "Using Node build config as SSR build."
 cp nuxt.node.config.ts nuxt.config.ts
-nuxt build
+NODE_OPTIONS=--max_old_space_size=8192 nuxt build
 echo "Nuxt build for node finished."
 
 # 拷贝资源
