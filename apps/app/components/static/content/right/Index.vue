@@ -39,9 +39,12 @@ onMounted(() => {
       <el-icon><More /></el-icon>
     </div>
   </div>
+  <el-aside v-else class="aside-right-empty" />
 </template>
 
 <style lang="stylus" scoped>
+.aside-right-empty
+  width 20px
 .outline-container
   position: relative
   height: 100vh

@@ -32,15 +32,19 @@ const emitToggleSidebar = (state: boolean) => {
 </script>
 
 <template>
-  <div v-if="props.post.docTree&&props.post.docTree.length>0">
-    <el-aside :class="{'aside-left': true, sidebarOpen: formData.sidebarVisible, sidebarClosed: !formData.sidebarVisible}">
-      <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
-      <static-content-left-sidebar-button @toggle-sidebar="emitToggleSidebar" />
-    </el-aside>
-  </div>
+  <el-aside
+    v-if="props.post.docTree && props.post.docTree.length>0"
+    :class="{'aside-left': true, sidebarOpen: formData.sidebarVisible, sidebarClosed: !formData.sidebarVisible}"
+  >
+    <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
+    <static-content-left-sidebar-button @toggle-sidebar="emitToggleSidebar" />
+  </el-aside>
+  <el-aside v-else class="aside-left-empty" />
 </template>
 
 <style scoped lang="stylus">
+.aside-left-empty
+  width 40px
 .aside-left
   transition: width 0.3s ease
   .aside-sidebar
