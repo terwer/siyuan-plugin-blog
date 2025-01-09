@@ -6,6 +6,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "clean": "./scripts/clean.sh",
+    "start": "./startup.sh",
     "makeLink": "node ./scripts/make_dev_link.mjs"
   },
   "devDependencies": {
