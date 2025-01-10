@@ -16,28 +16,50 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 const outlineData = ref(props.post.outline ?? [] as any)
 const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
 
-// 控制大纲是否显示
+// 控制大纲状态，true 为展开，false 为收起
 const showOutline = ref(false)
+// 控制 hover 状态，true 为 hover 展开，false 为 hover 收起
+const isHovered = ref(false)
+
+// 切换大纲显示/隐藏
 const toggleOutline = () => {
   showOutline.value = !showOutline.value
 }
 
-onMounted(() => {
-  const isMobile = window.innerWidth <= 768
-  if (!isMobile) {
-    showOutline.value = true
+// hover 状态控制
+const onHover = (state:boolean) => {
+  if (!showOutline.value) {
+    isHovered.value = state
+    toggleOutline()
   }
-})
+}
+
+// 默认收起大纲
+// onMounted(() => {
+//   const isMobile = window.innerWidth <= 768
+//   if (!isMobile) {
+//     showOutline.value = true
+//   }
+// })
 </script>
 
 <template>
-  <div class="outline-wrapper">
-    <div v-if="outlineData && outlineData.length > 0" class="outline-container" :class="{ 'outline-expanded': showOutline }">
+  <div class="outline-wrapper" :class="{ 'outline-wrapper-expanded': showOutline }">
+    <div
+      v-if="outlineData && outlineData.length > 0"
+      class="outline-container"
+      :class="{ 'outline-expanded': showOutline }"
+    >
       <div class="outline-content">
         <static-content-right-outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
       </div>
     </div>
-    <div class="toggle-btn" @click="toggleOutline">
+    <div
+      class="toggle-btn"
+      @click="toggleOutline"
+      @mouseenter="onHover(true)"
+      @mouseleave="onHover(false)"
+    >
       <el-icon><More /></el-icon>
     </div>
   </div>
@@ -47,6 +69,10 @@ onMounted(() => {
 /* 包裹容器 */
 .outline-wrapper
   position relative
+  width unset
+
+.outline-wrapper-expanded
+  width 240px
 
 /* 大纲整体容器 */
 .outline-container
