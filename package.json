@@ -1,12 +1,20 @@
 {
   "name": "with-vue-nuxt",
-  "private": true,
+  "version": "5.3.1",
   "scripts": {
+    "devApp": "ppnpm dev -F @terwer/share-pro-app -- --host",
+    "devSiyuan": "pnpm build -F siyuan-blog -- --watch",
+    "buildArtifacts": "pnpm build -F @terwer/share-pro-app -- --from node && pnpm build -F siyuan-blog",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "clean": "./scripts/clean.sh",
     "start": "./startup.sh",
+    "packageNodeProvider": "./package-node-provider.sh",
+    "package": "python scripts/package.py",
+    "syncVersion": "python scripts/version.py",
+    "parseChangelog": "python scripts/parse_changelog.py",
+    "prepareRelease": "pnpm syncVersion && pnpm parseChangelog",
     "makeLink": "node ./scripts/make_dev_link.mjs"
   },
   "devDependencies": {
