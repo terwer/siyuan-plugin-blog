@@ -1,5 +1,8 @@
 # Changelog
 
+## [6.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.0...siyuan-plugin-blog-v6.0.1) (2025-01-10)
+### Bug Fixes
+* ci ([7024dd3](https://github.com/terwer/siyuan-plugin-blog/commit/7024dd31972c039100d01f6718d3d7e13d09338f))
 ## [6.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v5.3.1...siyuan-plugin-blog-v6.0.0) (2025-01-10)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
@@ -79,7 +82,6 @@
 * 支持配置 siyuan-api 请求 cookie [实验性] ([487fbf5](https://github.com/terwer/siyuan-plugin-blog/commit/487fbf5bece5d8bab94f5e90c28d4170a59589c5))
 * 解决链接展示不明显问题 ([0f1d622](https://github.com/terwer/siyuan-plugin-blog/commit/0f1d6227f1d8c376075ee14d041e92ddaf243bd1))
 * 重构项目，统一处理公开分享与授权码模式下的分享逻辑 ([6c0c651](https://github.com/terwer/siyuan-plugin-blog/commit/6c0c651bb87fda6f451fd19bc776ccb322f3e922))
-### Bug Fixes
 * [#385](https://github.com/terwer/siyuan-plugin-blog/issues/385) dark mode is back again ([0781d6f](https://github.com/terwer/siyuan-plugin-blog/commit/0781d6fa92a707370c3dc6bf735db999c69fa1c3))
 * [#550](https://github.com/terwer/siyuan-plugin-blog/issues/550) [#540](https://github.com/terwer/siyuan-plugin-blog/issues/540) docker version error ([3113892](https://github.com/terwer/siyuan-plugin-blog/commit/3113892ea23c1ee35fc07e19bd15da47b58ff346))
 * auth error ([9fdfe20](https://github.com/terwer/siyuan-plugin-blog/commit/9fdfe20bc5823d1b8a6bfbf9389cffbdd0f85e34))
