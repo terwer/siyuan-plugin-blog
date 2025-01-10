@@ -27,5 +27,7 @@
   "share.other.option.link.expires": "Allow link expires",
   "share.link.expires.time.placeholder": "Units/sec, up to 7 days. 0 means permanent",
   "share.set.home": "Set home",
-  "share.click.view": "Click to view"
+  "share.click.view": "Click to view",
+  "share.setting.basic": "Basic setting",
+  "share.setting.advanced": "Preference setting"
 }

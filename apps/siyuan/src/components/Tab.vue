@@ -55,7 +55,7 @@ function handleTabClick(index: number) {
     <div class="tab-content">
       <template v-if=" tabs[activeIndex]">
         <component
-            v-if="typeof tabs[activeIndex].content === 'function'"
+            v-if="typeof tabs[activeIndex].content === 'function' || typeof tabs[activeIndex].content === 'object'"
             :is="tabs[activeIndex].content"
             v-bind="tabs[activeIndex].props"
         />

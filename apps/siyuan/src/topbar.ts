@@ -55,7 +55,9 @@ export class Topbar {
     // 添加右键菜单
     this.topBarElement.addEventListener("contextmenu", async () => {
       // 挂载内容到菜单
-      this.addMenu(Setting, {}, "share-free-edition-context-menu")
+      this.addMenu(Setting, {
+        pluginInstance: this.pluginInstance
+      }, "share-free-edition-context-menu")
     })
   }
 
