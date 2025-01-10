@@ -11,8 +11,8 @@ import {Menu, showMessage} from "siyuan"
 import {StrUtil} from "zhi-common"
 import PageUtil from "./utils/pageUtil.ts"
 import {createBootStrap} from "./bootstrap.ts"
-import Share from "./share.vue"
-import Setting from "./setting.vue"
+import Share from "./pages/Share.vue"
+import Setting from "./pages/Setting/Index.vue"
 import SiyuanBlogPlugin from "./index"
 
 /**

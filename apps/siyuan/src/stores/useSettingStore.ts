@@ -10,8 +10,8 @@
 import {computed, ref} from "vue"
 import {useSiyuanApi} from "../composables/useSiyuanApi.ts"
 import {createAppLogger} from "../utils/appLogger.ts"
+import {AppConfig} from "../app.config.ts"
 import {useCommonStorageAsync} from "./common/useCommonStorageAsync.ts"
-import {AppConfig} from "../app.config.ts";
 
 /**
  * 设置配置存储
