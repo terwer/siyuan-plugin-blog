@@ -58,7 +58,6 @@ const onHover = (state:boolean) => {
       class="toggle-btn"
       @click="toggleOutline"
       @mouseenter="onHover(true)"
-      @mouseleave="onHover(false)"
     >
       <el-icon><More /></el-icon>
     </div>
