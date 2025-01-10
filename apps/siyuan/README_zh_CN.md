@@ -22,13 +22,13 @@
      /x/[id]  
      /a/[id]  
      /d/[id]
-> 2. 在线分享专业版已上线🎉，欢迎试用，访问地址：https://siyuannote.site
+> 2. 在线分享专业版已上线🎉，欢迎试用，访问地址：https://siyuan.wiki
 
-[帮助文档](https://share.terwergreen.com/s/20230621001422-xsimx5v)
+[帮助文档](https://siyuan.wiki/s/20230621001422-xsimx5v)
 
-[自部署免费版体验地址](https://freeshare.terwergreen.com)
+[自部署免费版体验地址](https://free.siyuan.wiki)
 
-[收费版体验地址](https://share.terwergreen.com)
+[收费版体验地址](https://siyuan.wiki)
 
 ## 核心特色
 

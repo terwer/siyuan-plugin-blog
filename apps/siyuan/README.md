@@ -23,14 +23,14 @@ The core idea of this plugin is: `Everything is a Page` . You can set a page to 
      /x/[id]  
      /a/[id]  
      /d/[id]
-> 2. Share pro is released on the VIP service, please visit：https://siyuannote.site
+> 2. Share pro is released on the VIP service, please visit：https://siyuan.wiki
 
 
 [docs](https://siyuannote.site/x/20241115104036-8pprbgr)
 
-[Self-deployed free version experience address](https://freeshare.terwergreen.com)
+[Self-deployed free version experience address](https://free.siyuan.wiki/)
 
-[Paid version experience address](https:///siyuannote.site)
+[Paid version experience address](https:///siyuan.wiki)
 
 ## Core Features
 
