@@ -12,6 +12,7 @@
   "dependencies": {
     "@element-plus/icons-vue": ">=0.2.6",
     "@element-plus/nuxt": "1.1.1",
+    "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.7",
     "@nuxtjs/i18n": "9.1.1",
     "@pinia/nuxt": "^0.9.0",
     "@vueuse/core": "^12.2.0",
