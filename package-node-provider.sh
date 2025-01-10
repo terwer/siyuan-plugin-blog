@@ -5,4 +5,4 @@ if [ ! -d "dist/node" ]; then
   echo "dist/node directory does not exist"
   exit 1
 fi
-zip -r package.zip dist/node
+zip -r build/node-provider.zip dist/node
