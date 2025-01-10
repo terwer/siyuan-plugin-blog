@@ -44,9 +44,8 @@ const onHover = (state:boolean) => {
 </script>
 
 <template>
-  <div class="outline-wrapper" :class="{ 'outline-wrapper-expanded': showOutline }">
+  <div v-if="outlineData && outlineData.length > 0" class="outline-wrapper" :class="{ 'outline-wrapper-expanded': showOutline }">
     <div
-      v-if="outlineData && outlineData.length > 0"
       class="outline-container"
       :class="{ 'outline-expanded': showOutline }"
     >
@@ -65,13 +64,15 @@ const onHover = (state:boolean) => {
 </template>
 
 <style lang="stylus" scoped>
+$OUTLINE_WIDTH=220px
+
 /* 包裹容器 */
 .outline-wrapper
   position relative
   width unset
 
 .outline-wrapper-expanded
-  width 240px
+  width $OUTLINE_WIDTH
 
 /* 大纲整体容器 */
 .outline-container
@@ -79,7 +80,7 @@ const onHover = (state:boolean) => {
   top 0
   right 0
   height 100vh /* 占满视窗高度 */
-  width 240px /* 固定宽度，仅在展开时可见 */
+  width $OUTLINE_WIDTH /* 固定宽度，仅在展开时可见 */
   background var(--background)
   border-left 1px solid var(--border-color)
   display flex
