@@ -121,7 +121,7 @@ const onSubmit = async () => {
       </div>
 
       <div class="form-item">
-        <button type="submit" class="form-button">{{ props.pluginInstance.i18n["main.button.save"] }}</button>
+        <button type="submit" class="form-button">{{ props.pluginInstance.i18n["main.opt.save"] }}</button>
       </div>
     </form>
   </div>

@@ -29,5 +29,11 @@
   "share.set.home": "Set home",
   "share.click.view": "Click to view",
   "share.setting.basic": "Basic setting",
-  "share.setting.advanced": "Preference setting"
+  "share.setting.advanced": "Preference setting",
+  "main.label.siteUrl": "Custom Domain",
+  "main.label.siteUrl.placeholder": "Please enter the full URL (including port if applicable). Ensure the domain is properly resolved, e.g., http://siyuan.terwergreen.com:6808",
+  "main.label.homePageId": "Home Page ID",
+  "main.label.homePageId.placeholder": "ID of the home page document. Note: It must be a shared document",
+  "main.label.lightTheme": "Light Theme",
+  "main.label.darkTheme": "Dark Theme"
 }

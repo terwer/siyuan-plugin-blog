@@ -128,7 +128,7 @@ const onSubmit = async () => {
             id="siteUrl"
             v-model="formData.siteUrl"
             class="form-input"
-            placeholder="Enter site URL"
+            :placeholder="props.pluginInstance.i18n['main.label.siteUrl.placeholder']"
         />
       </div>
 
@@ -139,7 +139,7 @@ const onSubmit = async () => {
             id="homePageId"
             v-model="formData.homePageId"
             class="form-input"
-            placeholder="Enter home page ID"
+            :placeholder="props.pluginInstance.i18n['main.label.homePageId.placeholder']"
         />
       </div>
 
@@ -162,7 +162,7 @@ const onSubmit = async () => {
       </div>
 
       <div class="form-item">
-        <button type="submit" class="form-button">{{ props.pluginInstance.i18n["main.button.save"] }}</button>
+        <button type="submit" class="form-button">{{ props.pluginInstance.i18n["main.opt.save"] }}</button>
       </div>
     </form>
   </div>
