@@ -12,4 +12,4 @@
 echo "Using Node build config as SSR serve."
 cp nuxt.node.config.ts nuxt.config.ts
 pnpm postinstall
-nuxt dev
+nuxt dev --host
