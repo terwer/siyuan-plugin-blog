@@ -46,7 +46,7 @@ const onHover = (state:boolean) => {
 // 当前激活的节点 ID
 const activeNodeText = ref("")
 const onScroll = () => {
-  logger.info("start scroll...")
+  // logger.info("start scroll...")
   // 获取页面中所有符合条件的节点
   const nodes = document.querySelectorAll("[data-subtype^=\"h\"]")
   if (!nodes.length) {
@@ -158,8 +158,8 @@ onUnmounted(() => {
   cursor pointer
   transition right 0.3s ease
 
-/* 小屏适配：隐藏大纲 */
+/* 小屏适配：不占用宽度 */
 @media (max-width: 768px)
-  .outline-container
-    display none
+  .outline-wrapper
+    position fixed
 </style>
