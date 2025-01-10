@@ -11,8 +11,8 @@ import {Menu, showMessage} from "siyuan"
 import {StrUtil} from "zhi-common"
 import PageUtil from "./utils/pageUtil.ts"
 import {createBootStrap} from "./bootstrap.ts"
-import Share from "./share.vue"
-import Setting from "./setting.vue"
+import Share from "./pages/Share.vue"
+import Setting from "./pages/Setting/Index.vue"
 import SiyuanBlogPlugin from "./index"
 
 /**
@@ -55,7 +55,9 @@ export class Topbar {
     // 添加右键菜单
     this.topBarElement.addEventListener("contextmenu", async () => {
       // 挂载内容到菜单
-      this.addMenu(Setting, {}, "share-free-edition-context-menu")
+      this.addMenu(Setting, {
+        pluginInstance: this.pluginInstance
+      }, "share-free-edition-context-menu")
     })
   }
 

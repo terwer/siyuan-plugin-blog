@@ -10,8 +10,8 @@
 import {computed, ref} from "vue"
 import {useSiyuanApi} from "../composables/useSiyuanApi.ts"
 import {createAppLogger} from "../utils/appLogger.ts"
+import {AppConfig} from "../app.config.ts"
 import {useCommonStorageAsync} from "./common/useCommonStorageAsync.ts"
-import {AppConfig} from "../app.config.ts";
 
 /**
  * 设置配置存储
@@ -49,10 +49,16 @@ export const useSettingStore = () => {
 
   const updateSetting = async (setting: Partial<typeof AppConfig>) => {
     logger.info("update public setting=>", setting)
-    // 设置额外信息
-    const newSetting = (await setExtraSettingData(setting, setting)) as typeof AppConfig
-    settingRef.value = {...settingRef.value, ...newSetting}
-    await commonStore.set(newSetting)
+    const customCssEnabled = true
+    if(customCssEnabled){
+      // 设置额外信息
+      const newSetting = (await setExtraSettingData(setting, setting)) as typeof AppConfig
+      settingRef.value = {...settingRef.value, ...newSetting}
+      await commonStore.set(newSetting)
+    }else{
+      settingRef.value = { ...settingRef.value, ...setting }
+      await commonStore.set(settingRef.value)
+    }
   }
 
   const setExtraSettingData = async (setting: Partial<typeof AppConfig>, data: Record<string, unknown>) => {
