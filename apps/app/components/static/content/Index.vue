@@ -38,4 +38,5 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 .main
   padding 0
   margin 0
+  flex-basis min-content
 </style>

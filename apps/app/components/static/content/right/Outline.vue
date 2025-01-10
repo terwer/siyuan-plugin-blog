@@ -17,6 +17,10 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
+  activeText: {
+    type: String,
+    default: "",
+  }
 })
 
 const { t } = useI18n()
@@ -48,7 +52,13 @@ const getItemLevel = (item) => {
       <a class="outline-title-link"> {{ t("static.outline") }} </a>
     </div>
     <div v-for="(item, index) in outlineData" :key="index">
-      <static-content-right-outline-item :item="item" :max-depth="maxDepth" :root-level="getRootLevel()" :is-root="true" />
+      <static-content-right-outline-item
+        :item="item"
+        :max-depth="maxDepth"
+        :root-level="getRootLevel()"
+        :is-root="true"
+        :active-text="activeText"
+      />
     </div>
   </div>
 </template>
