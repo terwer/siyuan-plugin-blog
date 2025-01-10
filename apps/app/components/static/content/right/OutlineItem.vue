@@ -7,39 +7,6 @@
   -  of this license document, but changing it is not allowed.
   -->
 
-<template>
-  <div :style="{ marginLeft: getFirstMargin(item) + 'px' }" class="outline-item">
-    <!-- 第一级 -->
-    <div v-if="getItemLevel(item) === 1 || isRoot" class="nested-items">
-      <a class="item-link" @click.prevent="scrollToSection(item.id)">
-        {{ adjustItemName(item.name) }}
-      </a>
-      <div v-if="getItemLevel(item) < maxDepth">
-        <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" />
-      </div>
-    </div>
-
-    <!-- 其他级别且有子项 -->
-    <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
-      <a class="item-link" @click.prevent="scrollToSection(item.id)">
-        {{ adjustItemName(item.content) }}
-      </a>
-      <div v-if="getItemLevel(item) < maxDepth">
-        <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
-      </div>
-    </div>
-
-    <!-- 无子项 -->
-    <div v-else>
-      <div v-if="getItemLevel(item) < maxDepth">
-        <a class="item-link" @click.prevent="scrollToSection(item.id)">
-          {{ adjustItemName(item.content) }}
-        </a>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 const props = defineProps({
   item: {
@@ -58,6 +25,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  activeText: {
+    type: String,
+    default: "",
+  }
 })
 
 const getFirstMargin = (item) => {
@@ -97,6 +68,39 @@ const scrollToSection = (id) => {
 }
 </script>
 
+<template>
+  <div :style="{ marginLeft: getFirstMargin(item) + 'px' }" class="outline-item">
+    <!-- 第一级 -->
+    <div v-if="getItemLevel(item) === 1 || isRoot" class="nested-items">
+      <a class="item-link" :class="{ active: item.name === activeText }" @click.prevent="scrollToSection(item.id)">
+        {{ adjustItemName(item.name) }}
+      </a>
+      <div v-if="getItemLevel(item) < maxDepth">
+        <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" />
+      </div>
+    </div>
+
+    <!-- 其他级别且有子项 -->
+    <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
+      <a class="item-link" :class="{ active: item.name === activeText }" @click.prevent="scrollToSection(item.id)">
+        {{ adjustItemName(item.content) }}
+      </a>
+      <div v-if="getItemLevel(item) < maxDepth">
+        <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
+      </div>
+    </div>
+
+    <!-- 无子项 -->
+    <div v-else>
+      <div v-if="getItemLevel(item) < maxDepth">
+        <a class="item-link" @click.prevent="scrollToSection(item.id)">
+          {{ adjustItemName(item.content) }}
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style lang="stylus" scoped>
 .outline-item
   margin-bottom: 8px
@@ -114,4 +118,7 @@ const scrollToSection = (id) => {
 
 .nested-items
   margin-left: 20px
+
+.active
+  color: #1890ff
 </style>

@@ -11,6 +11,7 @@
 import { More } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
 
+const logger = createAppLogger("right-index")
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
 const outlineData = ref(props.post.outline ?? [] as any)
@@ -41,6 +42,53 @@ const onHover = (state:boolean) => {
 //     showOutline.value = true
 //   }
 // })
+
+// 当前激活的节点 ID
+const activeNodeText = ref("")
+const onScroll = () => {
+  logger.info("start scroll...")
+  // 获取页面中所有符合条件的节点
+  const nodes = document.querySelectorAll("[data-subtype^=\"h\"]")
+  if (!nodes.length) {
+    logger.warn("No nodes with data-subtype found")
+    return
+  }
+
+  // 找到距离视口顶部最近的节点
+  let closestNode:any = null
+  let minDistance = Number.MAX_VALUE
+
+  nodes.forEach((node) => {
+    const rect = node.getBoundingClientRect()
+    const distance = Math.abs(rect.top - 20) // 偏移调整
+    if (distance < minDistance) {
+      minDistance = distance
+      closestNode = node
+    }
+  })
+
+  // 如果找到最近节点，更新其内部文本
+  if (closestNode) {
+    const nodeText = closestNode.querySelector("div")?.textContent?.trim()
+    if (nodeText && nodeText !== activeNodeText.value) {
+      activeNodeText.value = nodeText
+      // logger.info("Active Node Text:", nodeText)
+    }
+  }
+}
+
+onMounted(() => {
+  // 有文档大纲才绑定滚动
+  if (outlineData.value && outlineData.value.length > 0) {
+    logger.info("Mounted: Adding scroll listener")
+    window.addEventListener("scroll", onScroll, true)
+  }
+})
+
+onUnmounted(() => {
+  logger.info("Unmounted: Removing scroll listener")
+  window.removeEventListener("scroll", onScroll)
+})
 </script>
 
 <template>
@@ -50,7 +98,11 @@ const onHover = (state:boolean) => {
       :class="{ 'outline-expanded': showOutline }"
     >
       <div class="outline-content">
-        <static-content-right-outline :outline-data="outlineData" :max-depth="outlineMaxDepth" />
+        <static-content-right-outline
+          :outline-data="outlineData"
+          :max-depth="outlineMaxDepth"
+          :active-text="activeNodeText"
+        />
       </div>
     </div>
     <div
@@ -64,15 +116,14 @@ const onHover = (state:boolean) => {
 </template>
 
 <style lang="stylus" scoped>
-$OUTLINE_WIDTH=220px
-
 /* 包裹容器 */
 .outline-wrapper
   position relative
   width unset
+  margin-left 20px
 
 .outline-wrapper-expanded
-  width $OUTLINE_WIDTH
+  width 200px
 
 /* 大纲整体容器 */
 .outline-container
@@ -80,7 +131,7 @@ $OUTLINE_WIDTH=220px
   top 0
   right 0
   height 100vh /* 占满视窗高度 */
-  width $OUTLINE_WIDTH /* 固定宽度，仅在展开时可见 */
+  width 240px /* 固定宽度，仅在展开时可见 */
   background var(--background)
   border-left 1px solid var(--border-color)
   display flex
