@@ -13,7 +13,7 @@ import {showMessage} from "siyuan"
 import {useSettingStore} from "../../stores/useSettingStore.ts"
 import {createAppLogger} from "../../utils/appLogger.ts"
 
-const props=defineProps<{
+const props = defineProps<{
   pluginInstance: any,
 }>()
 
@@ -79,8 +79,8 @@ const formData = reactive({
       },
     ],
   },
-  lightTheme:  "Zhihu",
-  darkTheme:  "Zhihu",
+  lightTheme: "Zhihu",
+  darkTheme: "Zhihu",
   versionMap: {
     midlight: "3.1.10",
     daylight: "3.1.10",
@@ -92,7 +92,7 @@ const formData = reactive({
   } as any,
 })
 
-onBeforeMount(async ()=>{
+onBeforeMount(async () => {
   setting.value = await getSetting()
   formData.siteUrl = setting.value?.siteUrl
   formData.homePageId = setting.value?.homePageId
@@ -110,10 +110,10 @@ const onSubmit = async () => {
     setting.value.theme.darkTheme = formData.darkTheme
     setting.value.theme.themeVersion = formData.versionMap[setting.value.theme.lightTheme] ?? "0.1.1"
     await updateSetting(setting.value)
-    showMessage(props.pluginInstance.i18n["main.opt.success"], 3000,"info" )
+    showMessage(props.pluginInstance.i18n["main.opt.success"], 3000, "info")
   } catch (e) {
     logger.error(props.pluginInstance.i18n["main.opt.failure"], e)
-    showMessage(props.pluginInstance.i18n["main.opt.failure"] + e, 7000,"error")
+    showMessage(props.pluginInstance.i18n["main.opt.failure"] + e, 7000, "error")
   }
 }
 </script>
@@ -162,7 +162,8 @@ const onSubmit = async () => {
       </div>
 
       <div class="form-item">
-        <button type="submit" class="form-button">{{ props.pluginInstance.i18n["main.opt.save"] }}</button>
+        <label for="submit" class="form-label"></label>
+        <button id="submit" type="submit" class="form-button">{{ props.pluginInstance.i18n["main.opt.save"] }}</button>
       </div>
     </form>
   </div>
@@ -173,24 +174,32 @@ const onSubmit = async () => {
   display flex
   flex-direction column
   gap 16px
+  align-items center
+  padding 0 16px
+  width 100%
+  padding-left 0
+  margin-left -28px
 
 .form-item
   display flex
   align-items center
+  gap 8px
+  width 100%
 
 .form-label
-  width 150px
+  width 120px // 减少文字宽度，减少左侧空白
   text-align right
-  margin-right 16px
   font-size 14px
-  color #333
+  color #666
 
 .form-input, .form-select
   flex 1
-  padding 8px
+  height 36px
+  padding 6px 8px
   font-size 14px
   border 1px solid #ccc
   border-radius 4px
+  box-sizing border-box
 
 .form-input:focus, .form-select:focus
   border-color #409eff
@@ -204,7 +213,7 @@ const onSubmit = async () => {
   border none
   border-radius 4px
   cursor pointer
-  align-self flex-start
+  margin-top 16px
 
 .form-button:hover
   background-color #66b1ff

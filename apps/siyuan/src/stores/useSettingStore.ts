@@ -49,25 +49,27 @@ export const useSettingStore = () => {
 
   const updateSetting = async (setting: Partial<typeof AppConfig>) => {
     logger.info("update public setting=>", setting)
-    // 设置额外信息
-    const newSetting = (await setExtraSettingData(setting, setting)) as typeof AppConfig
-    settingRef.value = {...settingRef.value, ...newSetting}
-    await commonStore.set(newSetting)
+    // // 设置额外信息
+    // const newSetting = (await setExtraSettingData(setting, setting)) as typeof AppConfig
+    // settingRef.value = {...settingRef.value, ...newSetting}
+    // await commonStore.set(newSetting)
+    settingRef.value = { ...settingRef.value, ...setting }
+    await commonStore.set(settingRef.value)
   }
 
-  const setExtraSettingData = async (setting: Partial<typeof AppConfig>, data: Record<string, unknown>) => {
-    logger.info("update extra setting data=>", data)
-    try {
-      const customCss = await kernelApi.siyuanRequest("/api/snippet/getSnippet", {type: "css", enabled: 2})
-      logger.info("get custom css", customCss)
-      if (customCss.snippets) {
-        setting.customCss = customCss.snippets
-      }
-    } catch (e) {
-      logger.error("get custom css error", e)
-    }
-    return setting
-  }
+  // const setExtraSettingData = async (setting: Partial<typeof AppConfig>, data: Record<string, unknown>) => {
+  //   logger.info("update extra setting data=>", data)
+  //   try {
+  //     const customCss = await kernelApi.siyuanRequest("/api/snippet/getSnippet", {type: "css", enabled: 2})
+  //     logger.info("get custom css", customCss)
+  //     if (customCss.snippets) {
+  //       setting.customCss = customCss.snippets
+  //     }
+  //   } catch (e) {
+  //     logger.error("get custom css error", e)
+  //   }
+  //   return setting
+  // }
 
   return {getSetting, updateSetting}
 }

@@ -75,7 +75,7 @@ const onSubmit = async () => {
             id="siteTitle"
             v-model="formData.siteTitle"
             class="form-input"
-            placeholder="Enter site title"
+            :placeholder="props.pluginInstance.i18n['blog.site.title.placeholder']"
         />
       </div>
 
@@ -86,7 +86,7 @@ const onSubmit = async () => {
             id="siteSlogan"
             v-model="formData.siteSlogan"
             class="form-input"
-            placeholder="Enter site slogan"
+            :placeholder="props.pluginInstance.i18n['blog.site.slogan.placeholder']"
         />
       </div>
 
@@ -96,7 +96,7 @@ const onSubmit = async () => {
             id="siteDescription"
             v-model="formData.siteDescription"
             class="form-input"
-            placeholder="Enter site description"
+            :placeholder="props.pluginInstance.i18n['blog.site.description.placeholder']"
         />
       </div>
 
@@ -106,7 +106,7 @@ const onSubmit = async () => {
             id="footer"
             v-model="formData.footer"
             class="form-input"
-            placeholder="Enter footer content"
+            :placeholder="props.pluginInstance.i18n['blog.footer.placeholder']"
         />
       </div>
 
@@ -116,12 +116,13 @@ const onSubmit = async () => {
             id="shareTemplate"
             v-model="formData.shareTemplate"
             class="form-input"
-            placeholder="Enter share template"
+            :placeholder="props.pluginInstance.i18n['blog.share.template.placeholder']"
         />
       </div>
 
       <div class="form-item">
-        <button type="submit" class="form-button">{{ props.pluginInstance.i18n["main.opt.save"] }}</button>
+        <label for="submit" class="form-label"></label>
+        <button id="submit" type="submit" class="form-button">{{ props.pluginInstance.i18n["main.opt.save"] }}</button>
       </div>
     </form>
   </div>
@@ -132,30 +133,38 @@ const onSubmit = async () => {
   display flex
   flex-direction column
   gap 16px
+  align-items center
+  padding 0 16px
+  width 100%
+  padding-left 0
+  margin-left -28px
 
 .form-item
   display flex
-  align-items flex-start
+  align-items center
+  gap 8px
+  width 100%
 
 .form-label
-  width 150px
+  width 120px // 减少文字宽度，减少左侧空白
   text-align right
-  margin-right 16px
   font-size 14px
-  color #333
+  color #666
 
-.form-input
+.form-input, .form-select
   flex 1
-  padding 8px
+  height 36px
+  padding 6px 8px
   font-size 14px
   border 1px solid #ccc
   border-radius 4px
+  box-sizing border-box
 
 textarea.form-input
   resize vertical
   height 80px
 
-.form-input:focus
+.form-input:focus, .form-select:focus
   border-color #409eff
   outline none
 
