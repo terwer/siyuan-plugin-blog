@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.0...siyuan-plugin-blog-v6.0.1) (2025-01-10)
+
+
+### Bug Fixes
+
+* ci ([7024dd3](https://github.com/terwer/siyuan-plugin-blog/commit/7024dd31972c039100d01f6718d3d7e13d09338f))
+
 ## [6.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v5.3.1...siyuan-plugin-blog-v6.0.0) (2025-01-10)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
