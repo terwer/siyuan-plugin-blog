@@ -8,7 +8,7 @@ def package_siyuan(cwd):
     v = data["version"]
 
     src_folder = dist_folder
-    tmp_folder_name = "./siyuan-plugin-blog"
+    tmp_folder_name = "./siyuan-blog"
     build_zip_path = "./build"
     build_zip_name = "siyuan-plugin-blog-" + v + ".zip"
 
