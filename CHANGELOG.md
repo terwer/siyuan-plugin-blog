@@ -1,16 +1,11 @@
 # Changelog
 
 ## [6.0.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.1...siyuan-plugin-blog-v6.0.2) (2025-01-10)
-
-
 ### Bug Fixes
-
 * install script ([586501e](https://github.com/terwer/siyuan-plugin-blog/commit/586501e0f443d5b5560d3636cf2a1d33798464b8))
 * install scripts ([3b238c7](https://github.com/terwer/siyuan-plugin-blog/commit/3b238c733c42ef6abec32eeaa713d9f5df9b2f67))
 * siyuan build ([89b5770](https://github.com/terwer/siyuan-plugin-blog/commit/89b57709cf92b54f96614c0bf6792bc889f27d71))
-
 ## [6.0.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.0...siyuan-plugin-blog-v6.0.1) (2025-01-10)
-### Bug Fixes
 * ci ([7024dd3](https://github.com/terwer/siyuan-plugin-blog/commit/7024dd31972c039100d01f6718d3d7e13d09338f))
 ## [6.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v5.3.1...siyuan-plugin-blog-v6.0.0) (2025-01-10)
 ### ⚠ BREAKING CHANGES
