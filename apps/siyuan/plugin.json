@@ -8,11 +8,16 @@
     "windows",
     "linux",
     "darwin",
-    "docker"
+    "docker",
+    "android",
+    "ios"
   ],
   "frontends": [
     "desktop",
-    "browser-desktop"
+    "desktop-window",
+    "mobile",
+    "browser-desktop",
+    "browser-mobile"
   ],
   "displayName": {
     "default": "Share to web",
