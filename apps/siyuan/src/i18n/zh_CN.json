@@ -45,5 +45,5 @@
   "blog.footer": "底部信息",
   "blog.footer.placeholder": "留空则不显示底部，支持 HTML。更新需重新分享",
   "blog.share.template": "分享模板",
-  "blog.share.template.placeholder": "分享出去的提示信息模板，支持占位符 [title] [url] [expired]"
-}
+  "blog.share.template.placeholder": "分享出去的提示信息模板，支持占位符 [title] [url] [expired]",
+  "blog.index.home.exists": "对不起，该页面已设置为主页，请先移除主页再取消分享"}

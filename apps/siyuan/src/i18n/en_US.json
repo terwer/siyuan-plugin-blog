@@ -45,5 +45,6 @@
   "blog.footer": "Footer Information",
   "blog.footer.placeholder": "Leave blank to hide the footer. HTML is supported. Update requires re-sharing",
   "blog.share.template": "Share Template",
-  "blog.share.template.placeholder": "Template for the shared message, supports placeholders [title] [url] [expired]"
+  "blog.share.template.placeholder": "Template for the shared message, supports placeholders [title] [url] [expired]",
+  "blog.index.home.exists": "Sorry, the page is already set as the Page, please remove the Page before unsharing"
 }
