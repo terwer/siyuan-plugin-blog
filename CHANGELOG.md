@@ -1,7 +1,10 @@
 # Changelog
 
-## [6.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.2...siyuan-plugin-blog-v6.0.3) (2025-01-10)
+## [6.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.3...siyuan-plugin-blog-v6.0.4) (2025-01-11)
 ### Bug Fixes
+* bazaar index ([e6a729c](https://github.com/terwer/siyuan-plugin-blog/commit/e6a729c30e2cfa9c1c95bb13f5040eaf848269da))
+* element-plus ssr error for vercel https://github.com/nitrojs/nitro/issues/1573 ([f515f5d](https://github.com/terwer/siyuan-plugin-blog/commit/f515f5d90e5469cf7f370b00e67d0f82f67ad3eb))
+## [6.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.2...siyuan-plugin-blog-v6.0.3) (2025-01-10)
 * dev script ([9974eca](https://github.com/terwer/siyuan-plugin-blog/commit/9974eca22845d8c06b7170430de9f1fd587ab27b))
 * element-plus ssr error https://github.com/element-plus/element-plus/issues/10979 ([4ca8d04](https://github.com/terwer/siyuan-plugin-blog/commit/4ca8d04639a125922de1c57088d6898c3c04744b))
 * plugin folder ([db1015b](https://github.com/terwer/siyuan-plugin-blog/commit/db1015bd3071757f3a67577f0a18bf721fb367c0))
