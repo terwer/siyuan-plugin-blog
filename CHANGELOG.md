@@ -1,18 +1,11 @@
 # Changelog
 
 ## [6.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.2...siyuan-plugin-blog-v6.0.3) (2025-01-10)
-
-
 ### Bug Fixes
-
 * dev script ([9974eca](https://github.com/terwer/siyuan-plugin-blog/commit/9974eca22845d8c06b7170430de9f1fd587ab27b))
-* element-plus ssr error https://github.com/element-plus/element-plus/issues/10979 ([31a706b](https://github.com/terwer/siyuan-plugin-blog/commit/31a706bbf0b978c0cb2fb0491fd853b02a23ed04))
 * element-plus ssr error https://github.com/element-plus/element-plus/issues/10979 ([4ca8d04](https://github.com/terwer/siyuan-plugin-blog/commit/4ca8d04639a125922de1c57088d6898c3c04744b))
-* plugin folder ([8fb42f2](https://github.com/terwer/siyuan-plugin-blog/commit/8fb42f24965a51e17ee3f95b6df32e9fc5d36a29))
 * plugin folder ([db1015b](https://github.com/terwer/siyuan-plugin-blog/commit/db1015bd3071757f3a67577f0a18bf721fb367c0))
-
 ## [6.0.2](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.1...siyuan-plugin-blog-v6.0.2) (2025-01-10)
-### Bug Fixes
 * install script ([586501e](https://github.com/terwer/siyuan-plugin-blog/commit/586501e0f443d5b5560d3636cf2a1d33798464b8))
 * install scripts ([3b238c7](https://github.com/terwer/siyuan-plugin-blog/commit/3b238c733c42ef6abec32eeaa713d9f5df9b2f67))
 * siyuan build ([89b5770](https://github.com/terwer/siyuan-plugin-blog/commit/89b57709cf92b54f96614c0bf6792bc889f27d71))
