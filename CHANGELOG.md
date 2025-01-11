@@ -5,6 +5,7 @@
 
 ### Bug Fixes
 
+* bazaar index ([e6a729c](https://github.com/terwer/siyuan-plugin-blog/commit/e6a729c30e2cfa9c1c95bb13f5040eaf848269da))
 * element-plus ssr error for vercel https://github.com/nitrojs/nitro/issues/1573 ([f515f5d](https://github.com/terwer/siyuan-plugin-blog/commit/f515f5d90e5469cf7f370b00e67d0f82f67ad3eb))
 
 ## [6.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.2...siyuan-plugin-blog-v6.0.3) (2025-01-10)

@@ -68,6 +68,7 @@ if __name__ == "__main__":
         print("Verbose mode enabled")
 
     # plugin.json
+    parse_json(cwd + "plugin.json", "version", args.version)
     parse_json(cwd + "apps/siyuan/plugin.json", "version", args.version)
     parse_json(cwd + "apps/siyuan/package.json", "version", args.version)
     parse_json(cwd + "apps/app/package.json", "version", args.version)
