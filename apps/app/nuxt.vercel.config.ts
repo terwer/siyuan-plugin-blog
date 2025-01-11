@@ -79,6 +79,11 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "vercel",
+    externals: {
+      traceAlias: {
+        "@sxzz/popperjs-es": "@popperjs/core",
+      },
+    },
   },
 
   vite: {
