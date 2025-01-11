@@ -90,7 +90,6 @@ export default {
   "blog.index.no.permission": "对不起，您暂时无权限查看此页面，请联系作者重新开放分享！",
   "blog.index.no.expires": "对不起，该文档已过有效期，请联系作者重新开放分享！",
   "blog.index.no.shared": "对不起，该文档尚未分享，请联系作者开放分享！",
-  "blog.index.home.exists": "对不起，该页面已设置为主页，请先移除主页再取消分享",
   "share.link.expires.error": "请输入必须为一个合法且不大于 7 天的数字！如需永久生效，请输入0",
   "go.home": "打开主页",
   "form.select": "请选择",
