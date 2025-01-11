@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.4...siyuan-plugin-blog-v6.1.0) (2025-01-11)
+
+
+### Features
+
+* add docker support ([c6c2447](https://github.com/terwer/siyuan-plugin-blog/commit/c6c2447ce6415b39cf402890e1a574fa5c6f9929))
+
+
+### Bug Fixes
+
+* add docs ([a40fe1d](https://github.com/terwer/siyuan-plugin-blog/commit/a40fe1db725f29a5313933f1dae6cdda71bd1f11))
+* cancel share message error when doc is set home ([6b52735](https://github.com/terwer/siyuan-plugin-blog/commit/6b5273586166034947dd51dc5086420fefef9801))
+
 ## [6.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.3...siyuan-plugin-blog-v6.0.4) (2025-01-11)
 ### Bug Fixes
 * bazaar index ([e6a729c](https://github.com/terwer/siyuan-plugin-blog/commit/e6a729c30e2cfa9c1c95bb13f5040eaf848269da))
