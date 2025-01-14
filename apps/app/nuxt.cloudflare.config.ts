@@ -102,6 +102,11 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "cloudflare_pages",
+    externals: {
+      traceAlias: {
+        "@sxzz/popperjs-es": "@popperjs/core",
+      },
+    },
   },
 
   // 环境变量

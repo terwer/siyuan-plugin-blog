@@ -92,7 +92,6 @@ export default {
   "blog.index.no.expires": "Sorry, the page has expired, please contact the author to reopen sharing!",
   "blog.index.no.shared":
     "Sorry, this document has not been shared yet. Please contact the author to re-enable sharing!",
-  "blog.index.home.exists": "Sorry, the page is already set as the Page, please remove the Page before unsharing",
   "share.link.expires.error":
     "Please enter a number that must be legal and no older than 7 days! For perpetual effect, enter 0",
   "go.home": "Go home",

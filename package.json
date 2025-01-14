@@ -1,12 +1,20 @@
 {
-  "name": "with-vue-nuxt",
-  "private": true,
+  "name": "siyuan-plugin-blog",
+  "version": "6.0.4",
   "scripts": {
+    "devApp": "ppnpm dev -F @terwer/share-pro-app -- --host",
+    "devSiyuan": "pnpm build -F siyuan-blog -- --watch",
+    "buildArtifacts": "./build-artifacts.sh",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "clean": "./scripts/clean.sh",
     "start": "./startup.sh",
+    "packageNodeProvider": "./package-node-provider.sh",
+    "package": "python scripts/package.py",
+    "syncVersion": "python scripts/version.py",
+    "parseChangelog": "python scripts/parse_changelog.py",
+    "prepareRelease": "pnpm syncVersion && pnpm parseChangelog",
     "makeLink": "node ./scripts/make_dev_link.mjs"
   },
   "devDependencies": {
