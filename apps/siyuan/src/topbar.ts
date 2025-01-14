@@ -62,6 +62,12 @@ export class Topbar {
   }
 
   private addMenu(content: any, props: any, menuID: string) {
+    // 移除旧菜单
+    const elements = document.querySelectorAll(".share-pro-menu-content")
+    elements.forEach(element => {
+      element.remove()
+    })
+    
     if (!this.contentMenu) {
       this.contentMenu = new Menu(menuID)
     }
