@@ -1,7 +1,12 @@
 # Changelog
 
-## [6.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.3...siyuan-plugin-blog-v6.0.4) (2025-01-11)
+## [6.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.4...siyuan-plugin-blog-v6.1.0) (2025-01-11)
+### Features
+* add docker support ([181c98f](https://github.com/terwer/siyuan-plugin-blog/commit/181c98f86725c60cf177532f57528c7c66052a71))
 ### Bug Fixes
+* add docs ([a40fe1d](https://github.com/terwer/siyuan-plugin-blog/commit/a40fe1db725f29a5313933f1dae6cdda71bd1f11))
+* cancel share message error when doc is set home ([6b52735](https://github.com/terwer/siyuan-plugin-blog/commit/6b5273586166034947dd51dc5086420fefef9801))
+## [6.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.3...siyuan-plugin-blog-v6.0.4) (2025-01-11)
 * bazaar index ([e6a729c](https://github.com/terwer/siyuan-plugin-blog/commit/e6a729c30e2cfa9c1c95bb13f5040eaf848269da))
 * element-plus ssr error for vercel https://github.com/nitrojs/nitro/issues/1573 ([f515f5d](https://github.com/terwer/siyuan-plugin-blog/commit/f515f5d90e5469cf7f370b00e67d0f82f67ad3eb))
 ## [6.0.3](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.2...siyuan-plugin-blog-v6.0.3) (2025-01-10)
@@ -17,12 +22,10 @@
 ## [6.0.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v5.3.1...siyuan-plugin-blog-v6.0.0) (2025-01-10)
 ### ⚠ BREAKING CHANGES
 * add vip provider mode
-### Features
 * adapt new theme ([858c08c](https://github.com/terwer/siyuan-plugin-blog/commit/858c08c5a2f493a57246f53f1e4e29e9906bfa46))
 * adapt savor theme ([417659c](https://github.com/terwer/siyuan-plugin-blog/commit/417659c2c0ab1d2ac9196f246c5a7d5e7b732cd5))
 * adapt style ([86dcd91](https://github.com/terwer/siyuan-plugin-blog/commit/86dcd91dcceeea835d5d0d965ed11eb7bf2316b1))
 * add development guide ([0c82999](https://github.com/terwer/siyuan-plugin-blog/commit/0c829999dcf35bdce78901ad14f9defd6273c0a7))
-* add docker support ([181c98f](https://github.com/terwer/siyuan-plugin-blog/commit/181c98f86725c60cf177532f57528c7c66052a71))
 * add i18n support ([6e7bacc](https://github.com/terwer/siyuan-plugin-blog/commit/6e7bacc662b765fc6e187da36fc99592bd7ff870))
 * add install scripts ([e9c5c77](https://github.com/terwer/siyuan-plugin-blog/commit/e9c5c77b60a939421cb348714f37c321247534ab))
 * add missing style ([4094a4f](https://github.com/terwer/siyuan-plugin-blog/commit/4094a4fbdfb452609bade0b3902833c71347de4f))
