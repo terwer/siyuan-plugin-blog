@@ -21,23 +21,23 @@ import { JsonUtil, StrUtil } from "zhi-common"
 export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("datatable-client-plugin")
 
-  const createTable = (dataTableEl: HTMLElement, currentDataTable: any) => {
+  const createTable = (dataTableEl: HTMLElement, currentDataTable:any) => {
     const dataTableId = dataTableEl.getAttribute("data-av-id")
     logger.debug("start createTable for=>", dataTableId)
 
     // 创建 Tabs 容器和内容容器
     const tabsContainer = document.createElement("div")
-    tabsContainer.id = `tabs-${dataTableId}`
-    tabsContainer.className = "tabs"
+    tabsContainer.id = `db-tabs-${dataTableId}`
+    tabsContainer.className = "db-tabs"
 
     const tabContentsContainer = document.createElement("div")
-    tabContentsContainer.id = `tab-contents-${dataTableId}`
-    tabContentsContainer.className = "tab-contents"
+    tabContentsContainer.id = `db-tab-contents-${dataTableId}`
+    tabContentsContainer.className = "db-tab-contents"
 
     // 创建表格标题
     const tableTitle = document.createElement("div")
-    tableTitle.id = `title-${dataTableId}`
-    tableTitle.className = "tabs-title"
+    tableTitle.id = `db-title-${dataTableId}`
+    tableTitle.className = "db-tabs-title"
     tableTitle.innerText = "Table Title"
     dataTableEl.appendChild(tableTitle)
 
@@ -48,42 +48,41 @@ export default defineNuxtPlugin(({ vueApp }) => {
     // 动态生成 Tabs 和表格内容
     for (const key in currentDataTable) {
       const item = currentDataTable[key]
-      // item.name需要设置到tableTitle
       tableTitle.innerText = item.name
 
       // 创建 Tab 按钮
       const tabButton = document.createElement("button")
-      tabButton.className = "tab-button"
-      tabButton.innerText = item.view.name || item.name // 默认使用 item.view.name，如果为空则使用 item.name
+      tabButton.className = "db-tab-button"
+      tabButton.innerText = item.view.name || item.name
       tabButton.dataset.tabId = key
       tabButton.onclick = () => {
         // 仅在当前 dataTableEl 内查找
-        const allTabs = tabsContainer.querySelectorAll(".tab-button")
-        const allTabContents = tabContentsContainer.querySelectorAll(".tab-content")
+        const allTabs = tabsContainer.querySelectorAll(".db-tab-button")
+        const allTabContents = tabContentsContainer.querySelectorAll(".db-tab-content")
 
         allTabs.forEach(btn => btn.classList.remove("active"))
         allTabContents.forEach(content => content.classList.remove("active"))
 
         tabButton.classList.add("active")
-        document.getElementById(`content-${key}`)?.classList.add("active")
+        document.getElementById(`db-content-${key}`)?.classList.add("active")
       }
       tabsContainer.appendChild(tabButton)
 
       // 创建表格内容
       const tabContent = document.createElement("div")
-      tabContent.className = "tab-content"
-      tabContent.id = `content-${key}`
+      tabContent.className = "db-tab-content"
+      tabContent.id = `db-content-${key}`
       tabContent.style.display = "none"
 
       const table = document.createElement("table")
-      table.className = "data-table"
+      table.className = "db-data-table"
 
       // 创建表头
       const thead = document.createElement("thead")
       const headerRow = document.createElement("tr")
-      item.view.columns.forEach((col: any) => {
+      item.view.columns.forEach((col:any) => {
         const th = document.createElement("th")
-        th.innerText = col.name || "" // 使用 columns 中的 name 作为表头
+        th.innerText = col.name || ""
         headerRow.appendChild(th)
       })
       thead.appendChild(headerRow)
@@ -91,20 +90,13 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
       // 创建表格主体
       const tbody = document.createElement("tbody")
-      item.view.rows.forEach((row: any) => {
+      item.view.rows.forEach((row:any) => {
         const tr = document.createElement("tr")
-        item.view.columns.forEach((col: any, colIndex: number) => {
+        item.view.columns.forEach((col:any, colIndex:number) => {
           const td = document.createElement("td")
-
-          // 使用 colIndex 来从 row.cells 中获取对应的 cell
           const cell = row.cells[colIndex]
 
-          if (cell && cell.value && cell.value.block) {
-            td.innerText = cell.value.block.content || "" // 获取 block.content 作为单元格内容
-          } else {
-            td.innerText = "" // 如果没有有效值，显示空字符串
-          }
-
+          td.innerText = cell?.value?.block?.content || ""
           tr.appendChild(td)
         })
         tbody.appendChild(tr)
@@ -116,8 +108,8 @@ export default defineNuxtPlugin(({ vueApp }) => {
     }
 
     // 默认激活第一个 Tab 和内容
-    const firstTab = tabsContainer.querySelector(".tab-button")
-    const firstContent = tabContentsContainer.querySelector(".tab-content")
+    const firstTab = tabsContainer.querySelector(".db-tab-button")
+    const firstContent = tabContentsContainer.querySelector(".db-tab-content")
     if (firstTab && firstContent) {
       firstTab.classList.add("active")
       firstContent.classList.add("active")
