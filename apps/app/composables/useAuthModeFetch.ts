@@ -49,8 +49,8 @@ export const useAuthModeFetch = () => {
         return JSON.stringify(res)
       }
     } catch (e) {
-      logger.error("fetchPublicText via endpoint", e)
-      return ""
+      logger.error("fetchPublicText via endpoint error", e)
+      throw e
     }
   }
 

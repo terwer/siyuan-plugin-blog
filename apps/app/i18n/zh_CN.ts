@@ -87,6 +87,7 @@ export default {
   "share.copy.link": "复制链接",
   "share.set.home": "设为主页",
   "share.share": "分享",
+  "blog.index.no.title": "文档尚未分享",
   "blog.index.no.permission": "对不起，您暂时无权限查看此页面，请联系作者重新开放分享！",
   "blog.index.no.expires": "对不起，该文档已过有效期，请联系作者重新开放分享！",
   "blog.index.no.shared": "对不起，该文档尚未分享，请联系作者开放分享！",
