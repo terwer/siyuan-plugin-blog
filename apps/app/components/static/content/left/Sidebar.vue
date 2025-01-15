@@ -64,7 +64,7 @@ const items = computed(() => {
   <el-scrollbar class="sidebar-container">
     <!-- 顶部标题 -->
     <div class="sidebar-header">
-      {{ t("static.outline") }}
+      {{ t("static.docTree") }}
     </div>
     <!-- 菜单部分 -->
     <el-menu class="sidebar-menu" :default-openeds="expandedIds" :default-active="activeIndex">
@@ -84,11 +84,13 @@ const items = computed(() => {
   border-right 1px solid var(--el-menu-border-color)
 
 .sidebar-header
+  margin-top: 20px
   font-size 16px
   font-weight bold
-  text-align center
+  //text-align center
+  margin-left 20px
   padding 10px 0
-  border-bottom 1px solid var(--el-menu-border-color)
+  //border-bottom 1px solid var(--el-menu-border-color)
 
 .sidebar-menu
   border none
