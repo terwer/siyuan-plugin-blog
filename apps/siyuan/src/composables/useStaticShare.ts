@@ -8,7 +8,6 @@
  */
 
 import {createAppLogger} from "../utils/appLogger.ts"
-import {isDev} from "../Constants.ts"
 import {useSiyuanApi} from "./useSiyuanApi.ts"
 import {useStaticAssets} from "./useStaticAssets.ts"
 
@@ -33,14 +32,6 @@ export const useStaticShare = () => {
     sPost.attrs = post.attrs
     sPost.title = post.title
     sPost.editorDom = post.editorDom
-    if(isDev){
-      // 文档树
-      sPost.docTree = post.docTree
-      sPost.docTreeLevel = post.docTreeLevel
-      // 目录大纲
-      sPost.outline = post.outline
-      sPost.outlineLevel = post.outlineLevel
-    }
     const sJson = JSON.stringify(sPost) ?? "{}"
     await kernelApi.saveTextData(shareJsonFile, sJson)
     logger.info("static share success")

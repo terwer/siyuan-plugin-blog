@@ -18,10 +18,6 @@ export const useSiyuanApi = () => {
   const logger = createAppLogger("use-siyuan-api")
 
   const siyuanConfig = new SiyuanConfig(window.location.origin, "")
-  if (isDev) {
-    siyuanConfig.preferenceConfig.docTreeEnable = true
-    siyuanConfig.preferenceConfig.outlineEnable = true
-  }
   const blogApi = new SiYuanApiAdaptor(siyuanConfig)
   const kernelApi = new SiyuanKernelApi(siyuanConfig)
   logger.debug("useSiyuanApi inited")
