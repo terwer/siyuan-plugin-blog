@@ -9,6 +9,7 @@
 
 import {SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi} from "zhi-siyuan-api"
 import {createAppLogger} from "../utils/appLogger.ts"
+import {isDev} from "../Constants.ts"
 
 /**
  * 通用 Siyuan API 封装
@@ -17,6 +18,10 @@ export const useSiyuanApi = () => {
   const logger = createAppLogger("use-siyuan-api")
 
   const siyuanConfig = new SiyuanConfig(window.location.origin, "")
+  if (isDev) {
+    siyuanConfig.preferenceConfig.docTreeEnable = true
+    siyuanConfig.preferenceConfig.outlineEnable = true
+  }
   const blogApi = new SiYuanApiAdaptor(siyuanConfig)
   const kernelApi = new SiyuanKernelApi(siyuanConfig)
   logger.debug("useSiyuanApi inited")
