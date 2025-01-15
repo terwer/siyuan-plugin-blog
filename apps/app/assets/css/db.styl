@@ -1,0 +1,137 @@
+div[data-av-type="table"]
+  display flex
+  flex-direction column
+
+/* 整体 Tabs 样式 */
+.tabs
+  display flex
+  flex-direction row
+  border-bottom 2px solid #007bff // 改为蓝色
+  margin-bottom 8px // 减少间距
+  padding-bottom 4px // 减少 padding
+  flex-wrap wrap
+
+/* Tab 标题样式 */
+.tabs-title
+  font-size 18px
+  font-weight bold
+  margin-bottom 8px
+  color #333
+
+/* 每个 Tab 按钮样式 */
+.tab-button
+  padding 6px 12px // 调整间距
+  cursor pointer
+  background-color transparent
+  border none
+  border-radius 4px
+  margin-right 4px // 增加按钮间距，避免 hover 重叠
+  font-size 14px
+  color #333
+  transition background-color 0.2s ease, color 0.2s ease
+  outline none
+
+  &.active
+    background-color #f0f8ff // 更贴近蓝色风格
+    color #007bff
+
+  &:hover
+    background-color #eef6ff // 增加 hover 背景颜色
+
+/* Tab 内容容器样式 */
+.tab-contents
+  display flex
+  flex-direction column
+  width 100%
+  padding 0 12px
+  overflow-y auto
+  overflow-x hidden
+
+/* 每个 Tab 内容 */
+.tab-content
+  display none
+  flex 1 0 auto
+  opacity 0
+  transition opacity 0.3s ease
+
+  &.active
+    display block !important
+    opacity 1
+
+/* 表格样式 */
+.data-table
+  width 100%
+  border-collapse collapse
+  margin-top 12px // 减少表格与 Tabs 的间距
+  font-size 14px
+  border-radius 8px
+  overflow hidden
+  box-shadow 0 2px 6px rgba(0, 0, 0, 0.1)
+
+  th, td
+    padding 10px 12px
+    text-align left
+    border-bottom 1px solid #f0f0f0
+    transition background-color 0.2s ease
+
+  th
+    background-color #f9f9f9
+    color #666
+
+  td
+    background-color #fff
+    color #333
+
+  tr:hover
+    background-color #f9f9f9
+
+/* 激活 Tab 按钮样式 */
+.tab-button.active
+  background-color #f0f8ff
+  border-radius 4px
+
+/* 暗黑模式 */
+html[data-theme-mode="dark"]
+  div[data-av-type="table"]
+    display flex
+    flex-direction column
+
+  .tabs
+    border-bottom 2px solid #4aaef8 // 暗色蓝色
+    margin-bottom 8px
+    padding-bottom 4px
+
+  .tabs-title
+    color #ddd
+
+  .tab-button
+    color #ddd
+    margin-right 4px
+
+    &.active
+      background-color #2a3b4d
+      color #4aaef8
+
+    &:hover
+      background-color #33475b
+
+  .tab-contents
+    overflow-y auto
+    overflow-x hidden
+
+  .data-table
+    box-shadow 0 2px 6px rgba(255, 255, 255, 0.1)
+
+    th, td
+      border-bottom 1px solid #444
+
+    th
+      background-color #2c3e50
+      color #bbb
+
+    td
+      background-color #1e2d3a
+      color #ddd
+
+    tr:hover
+      background-color #2c3e50

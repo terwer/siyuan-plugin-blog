@@ -46,15 +46,18 @@ const useDataTable = () => {
     // 并发请求所有视图渲染并收集结果
     const results = await Promise.all(
       dataTableIds.map(async (item) => {
-        const resultMap: Record<string, any> = {}
+        const resultMap: Record<string, any> = {
+          [item.dataTableId]: {},
+        }
+        // 请求默认视图
         const initialRes = await kernelApi.siyuanRequest("/api/av/renderAttributeView", {
           id: item.dataTableId,
           viewID: item.defaultViewId,
           query: "",
         })
         logger.debug(`renderAttributeView res for ${item.dataTableId}:`, initialRes)
-        // 记录默认视图结果
-        resultMap[JSON.stringify({id: item.dataTableId, viewID: item.defaultViewId})] = initialRes
+        // 保存默认视图结果
+        resultMap[item.dataTableId][item.defaultViewId] = initialRes
         // 并发请求其他视图
         if (initialRes.views) {
           const otherViewPromises = initialRes.views
@@ -66,7 +69,7 @@ const useDataTable = () => {
                 query: "",
               }).then((res) => {
                 logger.debug(`renderAttributeView res for view ${view.id}:`, res)
-                resultMap[JSON.stringify({id: item.dataTableId, viewID: view.id})] = res
+                resultMap[item.dataTableId][view.id] = res
               })
             )
           // 等待其他视图请求完成
@@ -75,9 +78,10 @@ const useDataTable = () => {
         return resultMap
       })
     )
-    // 直接合并结果
-    const mergedResults = Object.assign({}, ...results)
-    logger.debug("All merged results:", mergedResults)
+
+    // 将所有结果合并为单一对象
+    const mergedResults = results.reduce((acc, cur) => ({ ...acc, ...cur }), {})
+    logger.debug("Merged results:", mergedResults)
     return mergedResults
   }
   return {getDataViews}
