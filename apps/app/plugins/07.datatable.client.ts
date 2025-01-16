@@ -7,7 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import { JsonUtil, StrUtil } from "zhi-common"
+import {JsonUtil, StrUtil} from "zhi-common"
 
 /**
  * 数据库插件
@@ -20,6 +20,57 @@ import { JsonUtil, StrUtil } from "zhi-common"
  */
 export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("datatable-client-plugin")
+
+  const getCellContent = (cell:any) => {
+    logger.debug("start render cell block=>", cell)
+    if (!cell || !cell?.value) {
+      return ""
+    }
+
+    // block
+    try {
+      switch (cell?.valueType) {
+        case "block":
+          return cell?.value?.block?.content || ""
+        case "select":
+          const mSelect = cell?.value?.mSelect
+          // item.color是一个数字代表颜色
+          const bgColors = ["#FFD700", "#ADD8E6", "#90EE90", "#FFFFE0", "#D3D3D3", "#FFB6C1"] // 更浅的背景颜色
+          const colors = ["#8B4513", "#00008B", "#228B22", "#808000", "#A9A9A9", "#8B0000"] // 对应的字体颜色
+          return mSelect
+            .map((item: any) => {
+              const bgColor = bgColors[item.color % bgColors.length] || "#FFFFFF" // 使用模运算确保颜色索引在范围内
+              const color = colors[item.color % colors.length] || "#000000" // 使用模运算确保颜色索引在范围内
+              return `<span style="background-color: ${bgColor}; color: ${color};" class="db-select-item">${item.content}</span>`
+            })
+            .join(",")
+        case "number":
+          return cell?.value?.number?.content || "0"
+        case "date":
+          return cell?.value?.date?.content || ""
+      }
+
+      // if (cell?.value?.block) {
+      //   return cell?.value?.block?.content || ""
+      // } else if (cell?.value?.date) {
+      //   const date = cell?.value?.date?.content
+      //   if (!date) {
+      //     return ""
+      //   }
+      //   if (cell?.valueType === "date") {
+      //     return DateUtil.formatTimestampToZhDate(date, false)
+      //   }
+      //   return DateUtil.formatTimestampToZh(date, true)
+      // } else if (cell?.value?.number) {
+      //   return cell?.value?.number?.content || "0"
+      // } else {
+      //   return ""
+      // }
+    } catch (e) {
+      logger.error("getCellContent error", e)
+      return ""
+    }
+  }
 
   const createTable = (dataTableEl: HTMLElement, currentDataTable:any) => {
     const dataTableId = dataTableEl.getAttribute("data-av-id")
@@ -101,7 +152,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
           const td = document.createElement("td")
           const cell = row.cells[colIndex]
 
-          td.innerText = cell?.value?.block?.content || ""
+          td.innerHTML = getCellContent(cell) || ""
           tr.appendChild(td)
         })
         tbody.appendChild(tr)
