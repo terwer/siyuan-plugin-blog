@@ -23,11 +23,11 @@ export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("datatable-client-plugin")
   const { addClientAssetsPrefix } = useStaticClientAssets()
 
-  const getDate = (cell: any, dt: any) => {
+  const getDate = (cell: any, dt: any, isNotTime:boolean) => {
     if (!dt) {
       return ""
     }
-    if (cell?.value?.date?.isNotTime) {
+    if (isNotTime) {
       return DateUtil.formatTimestampToZhDate(dt, false)
     } else {
       return DateUtil.formatTimestampToZh(dt, true)
@@ -64,15 +64,16 @@ export default defineNuxtPlugin(({ vueApp }) => {
             })
             .join(", ")
         case "date":
+          const isNotTime = cell?.value?.date?.isNotTime ?? false
           if (cell?.value?.date?.hasEndDate) {
             const dt1 = cell?.value?.date?.content
             const dt2 = cell?.value?.date?.content2
-            const content = getDate(cell, dt1)
-            const content2 = getDate(cell, dt2)
+            const content = getDate(cell, dt1, isNotTime)
+            const content2 = getDate(cell, dt2, isNotTime)
             return `${content} ~ ${content2}`
           } else {
             const dt = cell?.value?.date?.content
-            return getDate(cell, dt)
+            return getDate(cell, dt, isNotTime)
           }
         case "text":
           return cell?.value?.text?.content || ""
@@ -99,6 +100,62 @@ export default defineNuxtPlugin(({ vueApp }) => {
             }
           })
           return assetHtml
+        case "checkbox":
+          const checked = cell?.value?.checkbox.checked
+          // 生成 checkbox
+          return `<input type="checkbox" ${checked ? "checked" : ""} disabled>`
+        case "url":
+          if (StrUtil.isEmptyString(cell?.value?.url?.content)) {
+            return ""
+          }
+          return `<a href="${cell?.value?.url?.content}" target="_blank">${cell?.value?.url?.content}</a>`
+        case "email":
+          if (StrUtil.isEmptyString(cell?.value?.email?.content)) {
+            return ""
+          }
+          return `<a href="mailto:${cell?.value?.email?.content}">${cell?.value?.email?.content}</a>`
+        case "phone":
+          if (StrUtil.isEmptyString(cell?.value?.phone?.content)) {
+            return ""
+          }
+          const phoneContent = cell?.value?.phone?.content
+          return `
+            <div class="db-phone-button-group">
+              <span class="db-phone-icon">📞</span>
+              <span class="db-phone-label">Phone:</span>
+              <span class="db-phone-value">${phoneContent}</span>
+            </div>
+          `
+        case "template":
+          return cell?.value?.template?.content || ""
+        case "relation":
+          return ""
+        case "rollup":
+          return cell?.value?.rollup?.content || ""
+        case "created":
+          const isNotTimeForCreated = cell?.value?.created?.isNotTime ?? false
+          if (cell?.value?.created?.hasEndDate) {
+            const dt1 = cell?.value?.created?.content
+            const dt2 = cell?.value?.created?.content2
+            const content = getDate(cell, dt1, isNotTimeForCreated)
+            const content2 = getDate(cell, dt2, isNotTimeForCreated)
+            return `${content} ~ ${content2}`
+          } else {
+            const dt = cell?.value?.created?.content
+            return getDate(cell, dt, isNotTimeForCreated)
+          }
+        case "updated":
+          const isNotTimeForUpdated = cell?.value?.updated?.isNotTime ?? false
+          if (cell?.value?.updated?.hasEndDate) {
+            const dt1 = cell?.value?.updated?.content
+            const dt2 = cell?.value?.updated?.content2
+            const content = getDate(cell, dt1, isNotTimeForUpdated)
+            const content2 = getDate(cell, dt2, isNotTimeForUpdated)
+            return `${content} ~ ${content2}`
+          } else {
+            const dt = cell?.value?.updated?.content
+            return getDate(cell, dt, isNotTimeForUpdated)
+          }
       }
     } catch (e) {
       logger.error("getCellContent error", e)
