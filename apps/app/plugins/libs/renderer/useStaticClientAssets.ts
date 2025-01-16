@@ -7,6 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
+import { StrUtil } from "zhi-common"
 import { useProviderMode } from "~/composables/useProviderMode"
 import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
@@ -38,8 +39,7 @@ export const useStaticClientAssets = () => {
           } else {
             const baseUrl = getClientBaseUrl()
             const pubicAssetsFolder = `public/siyuan-blog/${pageId}`
-            const imgUrl = [baseUrl, pubicAssetsFolder, src].join("/")
-
+            const imgUrl = StrUtil.pathJoin(StrUtil.pathJoin(baseUrl, pubicAssetsFolder), src)
             img.setAttribute("src", imgUrl)
             img.setAttribute("data-src", imgUrl)
           }
