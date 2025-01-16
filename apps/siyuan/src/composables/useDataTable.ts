@@ -23,45 +23,50 @@ const useDataTable = () => {
 
   const getDataViews = async (editorDom: string) => {
     const $ = cheerio.load(editorDom)
-    //<div contenteditable="false" data-av-id="20250115212822-7vcugma" data-av-type="table"
-    // data-node-id="20250115212815-grwybvd" data-node-index="2" data-type="NodeAttributeView" class="av"
-    // updated="20250115214917" custom-sy-av-view="20250115212823-reg0iqj">
-    // <div spellcheck="false"></div>
-    //   <div class="protyle-attr" contenteditable="false"></div>
-    //</div>
-    //  1、找到 data-av-type="table" 的元素，就是DataTable节点。然后找到  data-av-id
-    //  2、同时找到第一个默认的 view，就是 custom-sy-av-view
     const dataTables = $("div[data-av-type='table']")
-    const dataTableIds: { dataTableId: string; defaultViewId: string }[] = []
+    const dataTableIds: { dataTableId: string; defaultViewId?: string }[] = []
+
     dataTables.each((index, element) => {
       const dataTableId = $(element).attr("data-av-id")
       const defaultViewId = $(element).attr("custom-sy-av-view")
-      logger.debug(`Found dataTable: ${dataTableId}`)
-      logger.debug(`Found defaultView: ${defaultViewId}`)
-      if (!dataTableId || !defaultViewId) {
+      if (!dataTableId) {
         return
       }
-      dataTableIds.push({dataTableId, defaultViewId})
+      dataTableIds.push({ dataTableId, defaultViewId })
     })
-    // 并发请求所有视图渲染并收集结果
+
     const results = await Promise.all(
       dataTableIds.map(async (item) => {
         const resultMap: Record<string, any> = {
-          [item.dataTableId]: {},
+          [item.dataTableId]: { order: [] }, // 初始化 order 数组
         }
+
         // 请求默认视图
         const initialRes = await kernelApi.siyuanRequest("/api/av/renderAttributeView", {
           id: item.dataTableId,
-          viewID: item.defaultViewId,
+          viewID: item.defaultViewId || "", // 初始可能为空
           query: "",
         })
         logger.debug(`renderAttributeView res for ${item.dataTableId}:`, initialRes)
-        // 保存默认视图结果
-        resultMap[item.dataTableId][item.defaultViewId] = initialRes
+
+        let fallbackViewId = item.defaultViewId
+
+        // 如果 defaultViewId 未定义，从结果中选取 `initialRes.view.id` 作为默认视图
+        if (!item.defaultViewId && initialRes.view?.id) {
+          fallbackViewId = initialRes.view.id
+          logger.debug(`Fallback defaultViewId for ${item.dataTableId}: ${fallbackViewId}`)
+        }
+
+        if (fallbackViewId) {
+          // 保存默认视图结果
+          resultMap[item.dataTableId][fallbackViewId] = initialRes
+          resultMap[item.dataTableId].order.push(fallbackViewId) // 记录顺序
+        }
+
         // 并发请求其他视图
         if (initialRes.views) {
           const otherViewPromises = initialRes.views
-            .filter((view: any) => view.id !== item.defaultViewId) // 排除默认视图
+            .filter((view: any) => view.id !== fallbackViewId) // 排除默认视图
             .map((view: any) =>
               kernelApi.siyuanRequest("/api/av/renderAttributeView", {
                 id: item.dataTableId,
@@ -70,9 +75,9 @@ const useDataTable = () => {
               }).then((res) => {
                 logger.debug(`renderAttributeView res for view ${view.id}:`, res)
                 resultMap[item.dataTableId][view.id] = res
+                resultMap[item.dataTableId].order.push(view.id) // 按顺序记录视图 ID
               })
             )
-          // 等待其他视图请求完成
           await Promise.all(otherViewPromises)
         }
         return resultMap
@@ -84,7 +89,8 @@ const useDataTable = () => {
     logger.debug("Merged results:", mergedResults)
     return mergedResults
   }
-  return {getDataViews}
+
+  return { getDataViews }
 }
 
 export {useDataTable}

@@ -23,7 +23,9 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
   const createTable = (dataTableEl: HTMLElement, currentDataTable:any) => {
     const dataTableId = dataTableEl.getAttribute("data-av-id")
-    logger.debug("start createTable for=>", dataTableId)
+    // const defaultViewId = dataTableEl.getAttribute("custom-sy-av-view")
+    // logger.debug(`start createTable for ${dataTableId} =>view:${dataTableId}`)
+    logger.debug(`start createTable for ${dataTableId}`)
 
     // 创建 Tabs 容器和内容容器
     const tabsContainer = document.createElement("div")
@@ -46,15 +48,18 @@ export default defineNuxtPlugin(({ vueApp }) => {
     dataTableEl.appendChild(tabContentsContainer)
 
     // 动态生成 Tabs 和表格内容
-    for (const key in currentDataTable) {
-      const item = currentDataTable[key]
+    const views = currentDataTable.order
+    logger.debug(`Found views: ${views} for datatable=>${dataTableId}`)
+    views.forEach((viewId:any) => {
+      logger.debug(`start create view: ${viewId} for datatable=>${dataTableId}`)
+      const item = currentDataTable[viewId]
       tableTitle.innerText = item.name
 
       // 创建 Tab 按钮
       const tabButton = document.createElement("button")
       tabButton.className = "db-tab-button"
       tabButton.innerText = item.view.name || item.name
-      tabButton.dataset.tabId = key
+      tabButton.dataset.tabId = viewId
       tabButton.onclick = () => {
         // 仅在当前 dataTableEl 内查找
         const allTabs = tabsContainer.querySelectorAll(".db-tab-button")
@@ -64,14 +69,14 @@ export default defineNuxtPlugin(({ vueApp }) => {
         allTabContents.forEach(content => content.classList.remove("active"))
 
         tabButton.classList.add("active")
-        document.getElementById(`db-content-${key}`)?.classList.add("active")
+        document.getElementById(`db-content-${viewId}`)?.classList.add("active")
       }
       tabsContainer.appendChild(tabButton)
 
       // 创建表格内容
       const tabContent = document.createElement("div")
       tabContent.className = "db-tab-content"
-      tabContent.id = `db-content-${key}`
+      tabContent.id = `db-content-${viewId}`
       tabContent.style.display = "none"
 
       const table = document.createElement("table")
@@ -105,7 +110,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
       tabContent.appendChild(table)
       tabContentsContainer.appendChild(tabContent)
-    }
+    })
 
     // 默认激活第一个 Tab 和内容
     const firstTab = tabsContainer.querySelector(".db-tab-button")
@@ -130,17 +135,15 @@ export default defineNuxtPlugin(({ vueApp }) => {
       // logger.debug("find dataTables:", dataTables)
       dataTables.forEach((dataTableEl: any) => {
         const dataTableId = dataTableEl.getAttribute("data-av-id")
-        const defaultViewId = dataTableEl.getAttribute("custom-sy-av-view")
-        // logger.debug(`Found dataTable: ${dataTableId}`)
-        // logger.debug(`Found defaultView: ${defaultViewId}`)
-        if (!dataTableId || !defaultViewId) {
+        logger.debug(`Found dataTable: ${dataTableId}`)
+        if (!dataTableId) {
           return
         }
         const currentDataTable = dataTableDatas[dataTableId]
         if (!currentDataTable) {
           return
         }
-        logger.debug(`Found currentDataTable: ${currentDataTable}`)
+        logger.debug("Found currentDataTable =>", currentDataTable)
         createTable(dataTableEl, currentDataTable)
       })
     },
