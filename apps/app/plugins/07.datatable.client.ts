@@ -122,7 +122,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
           return `
             <div class="db-phone-button-group">
               <span class="db-phone-icon">📞</span>
-              <span class="db-phone-label">Phone:</span>
+              <span class="db-phone-label"> </span>
               <span class="db-phone-value">${phoneContent}</span>
             </div>
           `
