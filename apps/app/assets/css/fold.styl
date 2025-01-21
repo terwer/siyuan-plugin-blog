@@ -1,3 +1,12 @@
+.fold-block-wrapper
+  display: flex
+  align-items baseline
+.fold-inner
+  flex-basis: 100%  // 强制折叠内容占满一行
+  flex-shrink: 0    // 防止被压缩
+  margin-top: 10px  // 可选，增加上方间距
+  display: block    // 确保折叠内容作为块级元素显示
+
 /* 按钮样式 */
 .fold-block-toggle-button
   display inline-block
@@ -15,3 +24,6 @@
     color #666               /* 悬停时文字颜色变深 */
   &:active
     color #444               /* 点击时文字颜色进一步变深 */
+
+.protyle-wysiwyg div[fold="1"][data-type=NodeHeading]::before
+  display none

@@ -49,6 +49,7 @@ const VNode = () =>
         :data-page-id="props.post.postid"
         :data-dataviews="JSON.stringify(props.post.dataViews)"
         :data-embedblocks="JSON.stringify(props.post.embedBlocks)"
+        :data-foldblocks="JSON.stringify(props.post.foldBlocks)"
       >
         <VNode />
       </div>
