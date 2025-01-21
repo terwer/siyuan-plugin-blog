@@ -25,6 +25,7 @@ const useEmbedBlock = () => {
 
   /**
    * 获取嵌入块的内容并返回结果对象
+   *
    * @param editorDom 编辑器的 DOM 字符串
    * @param parentDocId 父文档 ID
    * @returns 包含嵌入块数据的结果对象
