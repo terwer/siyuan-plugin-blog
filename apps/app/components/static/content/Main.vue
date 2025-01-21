@@ -39,11 +39,16 @@ const VNode = () =>
         v-highlight
         v-sbeauty
         v-sdomparser
+        v-db
+        v-embedblock
+        v-fold
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
         data-doc-type="NodeDocument"
         :data-page-id="props.post.postid"
+        :data-dataviews="JSON.stringify(props.post.dataViews)"
+        :data-embedblocks="JSON.stringify(props.post.embedBlocks)"
       >
         <VNode />
       </div>

@@ -16,7 +16,20 @@ export default defineEventHandler(async (event) => {
       const env = useRuntimeConfig()
       const url = body.url
       const apiUrl = buildUrl(env.public.siyuanApiUrl, url)
-      return await $fetch(apiUrl)
+      try {
+        return await $fetch(apiUrl)
+      } catch (e:any) {
+        if (e.response?.status === 404) {
+          throw createError({
+            message: "Resource not found",
+            statusCode: 404,
+          })
+        }
+        throw createError({
+          message: e.message || "An unexpected error occurred",
+          statusCode: e.response?.status || 500,
+        })
+      }
     default:
       throw createError({
         message: "Method not allowed",

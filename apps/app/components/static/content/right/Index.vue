@@ -152,7 +152,7 @@ onUnmounted(() => {
 /* 切换按钮 */
 .toggle-btn
   position fixed /* 按钮始终固定 */
-  top 16px
+  top 28px
   right 20px
   z-index 100
   cursor pointer

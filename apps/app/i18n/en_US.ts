@@ -87,6 +87,7 @@ export default {
   "share.copy.link": "Copy link",
   "share.set.home": "Set home",
   "share.share": "Share",
+  "blog.index.no.title": "Doc is not shared",
   "blog.index.no.permission":
     "Sorry, you don't have permission to view this page or the page has expired, please contact the author to reopen sharing!",
   "blog.index.no.expires": "Sorry, the page has expired, please contact the author to reopen sharing!",

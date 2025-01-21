@@ -106,19 +106,36 @@ const scrollToSection = (id) => {
   margin-bottom: 8px
   padding-left: 5px
 
+  // Dark mode styles
+  html[data-theme-mode="dark"] &
+    color: #ccc
+
 .item-link
   color: #333
   text-decoration: none
   cursor: pointer
   transition: color 0.2s ease
 
-.item-link:hover
-  color: #1890ff
-  font-weight: bold
+  &:hover
+    color: #1890ff
+    font-weight: bold
+
+  // Dark mode styles
+  html[data-theme-mode="dark"] &
+    color: #bbb
+    &:hover
+      color: #40a9ff
 
 .nested-items
-  margin-left: 20px
+  &:first-child
+    margin-left 0
+  &:not(:first-child)
+    margin-left 20px
 
 .active
   color: #1890ff
+
+  // Dark mode styles
+  html[data-theme-mode="dark"] &
+    color: #40a9ff
 </style>

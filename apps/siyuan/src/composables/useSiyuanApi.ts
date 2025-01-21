@@ -9,6 +9,7 @@
 
 import {SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi} from "zhi-siyuan-api"
 import {createAppLogger} from "../utils/appLogger.ts"
+import {isDev} from "../Constants.ts"
 
 /**
  * 通用 Siyuan API 封装

@@ -69,7 +69,7 @@ await getSetting()
 // SEO
 if (!props.overrideSeo) {
   const titleSign = " - " + t("blog.share")
-  const title = `${formData.post?.title ?? "404 Not Found"}${props.showTitleSign ? titleSign : ""}`
+  const title = `${formData.post?.title ?? t("blog.index.no.title") + " - " + docId}${props.showTitleSign ? titleSign : ""}`
   const desc = getSummery(formData?.post?.description ?? "")
   const headImage = getFirstImageSrc(formData?.post?.description ?? "")
   const seoMeta = {

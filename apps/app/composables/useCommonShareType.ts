@@ -7,35 +7,41 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import { JsonUtil, ObjectUtil } from "zhi-common"
 import { ShareTypeEnum } from "~/enums/ShareTypeEnum"
-import { useProviderMode } from "~/composables/useProviderMode"
-import { useAuthModeFetch } from "~/composables/useAuthModeFetch"
 
 export const useCommonShareType = () => {
-  const logger = createAppLogger("use-common-share-type")
-  const { providerMode } = useProviderMode()
-  const { fetchConfig } = useAuthModeFetch()
-  const shareTypeJsonFile = "share-type.json"
+  // const logger = createAppLogger("use-common-share-type")
+  // const { providerMode } = useProviderMode()
+  // const { fetchConfig } = useAuthModeFetch()
+  // const shareTypeJsonFile = "share-type.json"
 
   /**
    * 获取分享类型
    */
+  // eslint-disable-next-line require-await
   const getShareType = async () => {
-    if (providerMode) {
-      logger.info("providerMode is true, use static shareType")
-      return ShareTypeEnum.ShareType_Static
-    }
-
-    const resText = await fetchConfig(shareTypeJsonFile, providerMode)
-    const shareType = JsonUtil.safeParse(resText, {} as any)
-    logger.info("get shareType from store", shareType)
-
-    if (ObjectUtil.isEmptyObject(shareType)) {
-      return ShareTypeEnum.ShareType_Static
-    }
-
-    return shareType.shareType
+    // 6.1.0+ 之后不支持公共分享，只有静态分享类型
+    return ShareTypeEnum.ShareType_Static
+    // if (providerMode) {
+    //   logger.info("providerMode is true, use static shareType")
+    //   return ShareTypeEnum.ShareType_Static
+    // }
+    //
+    // let resText = "{}"
+    // try {
+    //   resText = await fetchConfig(shareTypeJsonFile, providerMode)
+    // } catch (e) {
+    //   logger.error(`could not fetch share type from ${shareTypeJsonFile}`, e)
+    // }
+    //
+    // const shareType = JsonUtil.safeParse(resText, {} as any)
+    // logger.info("get shareType from store", shareType)
+    //
+    // if (ObjectUtil.isEmptyObject(shareType)) {
+    //   return ShareTypeEnum.ShareType_Static
+    // }
+    //
+    // return shareType.shareType
   }
 
   const isPrivateShare = async () => {
