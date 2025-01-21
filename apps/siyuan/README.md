@@ -2,9 +2,8 @@
 
 # Share to web
 
-The notion like sharing feature you've always dreamed of is here, too.
+Your self-hosted notion alternative
 
-Based on the localization concept of siyuan-note , this plugin is natively shared locally on a local area network and
-can be shared remotely through the docker plugin. No additional server-side support is required, just take siyuan-note.
+## Read more
 
-The core idea of this plugin is: `Everything is a Page` . You can set a page to be the home page.
+[Documentation](https://siyuan.wiki/s/20250111132959-xvao9ll)
