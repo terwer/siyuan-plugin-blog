@@ -1,9 +1,21 @@
 # Changelog
 
-## [6.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.4...siyuan-plugin-blog-v6.1.0) (2025-01-11)
+## [6.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.1.0...siyuan-plugin-blog-v6.2.0) (2025-01-21)
 ### Features
-* add docker support ([181c98f](https://github.com/terwer/siyuan-plugin-blog/commit/181c98f86725c60cf177532f57528c7c66052a71))
+* improve no share page ([6ef3ee8](https://github.com/terwer/siyuan-plugin-blog/commit/6ef3ee8992ca24174b65c667870fb1b99c3b255d))
+* new ui ([02e4f2b](https://github.com/terwer/siyuan-plugin-blog/commit/02e4f2bafe4e45e2a0f89efca6ba86cae20f5de3))
+* support data table ([5534334](https://github.com/terwer/siyuan-plugin-blog/commit/55343346144bd87ea04264202becf457fa88b2de))
+* support data table assets ([0754647](https://github.com/terwer/siyuan-plugin-blog/commit/0754647d3228e1c151c6170c8e154e65ed17cdac))
+* support embed blocks ([92eee86](https://github.com/terwer/siyuan-plugin-blog/commit/92eee8617c09ad185a9e9c1c72cdf5ca636d95f6))
+* support fold blocks ([d5b2187](https://github.com/terwer/siyuan-plugin-blog/commit/d5b2187b1ddc1f276fe6a8f270889f6938da1fbb))
+* support fold blocks - heading ([81bf687](https://github.com/terwer/siyuan-plugin-blog/commit/81bf6875b44aafe537f9900ceca002d282077ca8))
 ### Bug Fixes
+* doctree style ([5b6c0f3](https://github.com/terwer/siyuan-plugin-blog/commit/5b6c0f3b4ecae3d0649dd5644b32a06f7f390127))
+* outline style ([9f3cfaa](https://github.com/terwer/siyuan-plugin-blog/commit/9f3cfaa7908a633a1789d6a9fead8d268072951b))
+### Miscellaneous
+* update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
+## [6.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.4...siyuan-plugin-blog-v6.1.0) (2025-01-11)
+* add docker support ([181c98f](https://github.com/terwer/siyuan-plugin-blog/commit/181c98f86725c60cf177532f57528c7c66052a71))
 * add docs ([a40fe1d](https://github.com/terwer/siyuan-plugin-blog/commit/a40fe1db725f29a5313933f1dae6cdda71bd1f11))
 * cancel share message error when doc is set home ([6b52735](https://github.com/terwer/siyuan-plugin-blog/commit/6b5273586166034947dd51dc5086420fefef9801))
 ## [6.0.4](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.3...siyuan-plugin-blog-v6.0.4) (2025-01-11)
@@ -161,7 +173,6 @@
 * 适配 vercel - i18n ([773b052](https://github.com/terwer/siyuan-plugin-blog/commit/773b052e9efd68e4af66bf1e76de0dc440903319))
 * 适配 vercel - i18n and element-plus ([7ffb242](https://github.com/terwer/siyuan-plugin-blog/commit/7ffb242af3d47d6f92921a048b76227e888de7a9))
 * 适配 vercel - pina and api ([b8eacd5](https://github.com/terwer/siyuan-plugin-blog/commit/b8eacd5a90fb1f363a1ea12623da9042e55a1ef9))
-### Miscellaneous
 * **deps-dev:** bump @nuxt/devtools from 0.6.1 to 0.6.2 ([017ecc2](https://github.com/terwer/siyuan-plugin-blog/commit/017ecc2a3953d76757ac9868781aa1917055a241))
 * **deps-dev:** bump @nuxt/devtools from 0.6.2 to 0.6.4 ([1eda6a9](https://github.com/terwer/siyuan-plugin-blog/commit/1eda6a907487fc24c78346521169905bb914833f))
 * **deps-dev:** bump @nuxt/devtools from 0.6.7 to 0.7.6 ([6c7c117](https://github.com/terwer/siyuan-plugin-blog/commit/6c7c1171381a958e528f5ffcfc5dd63cf71f7d80))
@@ -217,7 +228,6 @@
 * remove dns file, use auto ([f4719d8](https://github.com/terwer/siyuan-plugin-blog/commit/f4719d80d2f9adaf5da2ca9e334f0017160bec95))
 * suppress warning for sass ([8e41bec](https://github.com/terwer/siyuan-plugin-blog/commit/8e41bec94096635fd92042bac61d10c3a27a9be6))
 * update deps ([7e37065](https://github.com/terwer/siyuan-plugin-blog/commit/7e3706555817c2b3841992acdd5721f8419665db))
-* update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 * upgrade release please to 4 ([8c2b8f9](https://github.com/terwer/siyuan-plugin-blog/commit/8c2b8f991227ba11227b63fd05a822aadeb94eaf))
 ### Performance Improvements
 * remove unnecessary requests ([0c2d2ee](https://github.com/terwer/siyuan-plugin-blog/commit/0c2d2eeed569941e04ee838744621e0069d3a315))
