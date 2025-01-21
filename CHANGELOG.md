@@ -1,5 +1,39 @@
 # Changelog
 
+## [6.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.1.0...siyuan-plugin-blog-v6.2.0) (2025-01-21)
+
+
+### Features
+
+* improve no share page ([6ef3ee8](https://github.com/terwer/siyuan-plugin-blog/commit/6ef3ee8992ca24174b65c667870fb1b99c3b255d))
+* new UI ([02e4f2b](https://github.com/terwer/siyuan-plugin-blog/commit/02e4f2bafe4e45e2a0f89efca6ba86cae20f5de3))
+* support data table ([de656f3](https://github.com/terwer/siyuan-plugin-blog/commit/de656f314d404696a89b81c6b079a3e1a28a14fa))
+* support data table ([9df48d5](https://github.com/terwer/siyuan-plugin-blog/commit/9df48d543d70a8e58fde806dd5a3cb8d43f1bbf6))
+* support data table ([0cca14b](https://github.com/terwer/siyuan-plugin-blog/commit/0cca14bbec48ae9a969b201c1de931124f9f278e))
+* support data table ([ea62ceb](https://github.com/terwer/siyuan-plugin-blog/commit/ea62ceb97560a0e9303f9be980a86e7b56adfd83))
+* support data table ([9197ec5](https://github.com/terwer/siyuan-plugin-blog/commit/9197ec5ce6a4853e88e4ca2827c0691a8974fef5))
+* support data table ([1f05848](https://github.com/terwer/siyuan-plugin-blog/commit/1f05848e1d503397fb0b2943a3fc2d96a7809799))
+* support data table ([5534334](https://github.com/terwer/siyuan-plugin-blog/commit/55343346144bd87ea04264202becf457fa88b2de))
+* support data table assets ([0754647](https://github.com/terwer/siyuan-plugin-blog/commit/0754647d3228e1c151c6170c8e154e65ed17cdac))
+* support embed blocks ([2379ece](https://github.com/terwer/siyuan-plugin-blog/commit/2379ece14f6fd334e03eb1c49f439a72267e636c))
+* support embed blocks ([92eee86](https://github.com/terwer/siyuan-plugin-blog/commit/92eee8617c09ad185a9e9c1c72cdf5ca636d95f6))
+* support fold blocks ([d5b2187](https://github.com/terwer/siyuan-plugin-blog/commit/d5b2187b1ddc1f276fe6a8f270889f6938da1fbb))
+* support fold blocks - heading ([81bf687](https://github.com/terwer/siyuan-plugin-blog/commit/81bf6875b44aafe537f9900ceca002d282077ca8))
+
+
+### Bug Fixes
+
+* docTree style ([cee5d07](https://github.com/terwer/siyuan-plugin-blog/commit/cee5d07cee7403f123b444ef90ebca64c5af26bf))
+* docTree style ([5b6c0f3](https://github.com/terwer/siyuan-plugin-blog/commit/5b6c0f3b4ecae3d0649dd5644b32a06f7f390127))
+* outline style ([9f3cfaa](https://github.com/terwer/siyuan-plugin-blog/commit/9f3cfaa7908a633a1789d6a9fead8d268072951b))
+
+
+### Miscellaneous
+
+* update docs ([5c79b73](https://github.com/terwer/siyuan-plugin-blog/commit/5c79b7344699a8a237fbcccb29365893dfc1bb01))
+* update docs ([752dbfa](https://github.com/terwer/siyuan-plugin-blog/commit/752dbfa0a7582f15c789c06a05aa45ab5df01d99))
+* update docs ([0c86ab4](https://github.com/terwer/siyuan-plugin-blog/commit/0c86ab4693b509c454d96379c14014436d6c7fb4))
+
 ## [6.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.4...siyuan-plugin-blog-v6.1.0) (2025-01-11)
 ### Features
 * add docker support ([181c98f](https://github.com/terwer/siyuan-plugin-blog/commit/181c98f86725c60cf177532f57528c7c66052a71))
