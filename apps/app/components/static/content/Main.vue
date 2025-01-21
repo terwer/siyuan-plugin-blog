@@ -41,6 +41,7 @@ const VNode = () =>
         v-sdomparser
         v-db
         v-embedblock
+        v-fold
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
