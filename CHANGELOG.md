@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.3.0...siyuan-plugin-blog-v6.4.0) (2025-01-22)
+
+
+### Features
+
+* change ip ([1ef7fa3](https://github.com/terwer/siyuan-plugin-blog/commit/1ef7fa3f930ded4adb69d1aa4f25514bd5ca4a25))
+
+
+### Miscellaneous
+
+* add provider startup script ([02b592f](https://github.com/terwer/siyuan-plugin-blog/commit/02b592f013a0b5a68dbee2b33f4ffbf366ceba0a))
+
 ## [6.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.2.0...siyuan-plugin-blog-v6.3.0) (2025-01-22)
 ### Features
 * add memo support ([6a8c5da](https://github.com/terwer/siyuan-plugin-blog/commit/6a8c5da3d66580e101c8b228d6fc8f5fd5f5761d))
