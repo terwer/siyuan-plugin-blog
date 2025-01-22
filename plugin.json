@@ -2,7 +2,7 @@
   "name": "siyuan-blog",
   "author": "terwer",
   "url": "https://github.com/terwer/siyuan-plugin-blog",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "minAppVersion": "2.9.0",
   "backends": [
     "windows",
