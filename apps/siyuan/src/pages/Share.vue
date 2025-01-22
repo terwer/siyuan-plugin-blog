@@ -136,10 +136,31 @@ const copyWebLink = () => {
   })
 }
 
+const getSiteIp = (): string => {
+  let siteIp: string = ""
+  try {
+    siteIp = new URL(formData.setting.siteUrl).hostname
+  } catch (e) {
+    logger.warn("getSiteURL error", e)
+  }
+  return siteIp
+}
+
 const handleIpChange = () => {
-  const url = new URL(formData.shareLink)
-  url.hostname = formData.ip
-  formData.shareLink = url.toString()
+  const siteIp = getSiteIp()
+  if (!StrUtil.isEmptyString(siteIp) && siteIp === formData.ip) {
+    const url = new URL(formData.shareLink)
+    const siteUrl = new URL(formData.setting.siteUrl)
+    url.hostname = siteUrl.hostname
+    url.port = siteUrl.port
+    formData.shareLink = url.toString()
+  } else {
+    const url = new URL(formData.shareLink)
+    const originUrl = new URL(window.location.origin)
+    url.hostname = formData.ip
+    url.port = originUrl.port
+    formData.shareLink = url.toString()
+  }
 }
 
 const handleSetHome = () => {
@@ -195,6 +216,15 @@ onBeforeMount(async () => {
   formData.ipList = ips.map((ip: string) => {
     return {value: ip, label: ip}
   })
+  // 自定义的也加进去
+  const siteIp = getSiteIp()
+  if (!StrUtil.isEmptyString(siteIp) && !ips.includes(siteIp)) {
+    formData.ip = siteIp
+    formData.ipList.push({
+      value: siteIp,
+      label: siteIp,
+    })
+  }
 })
 logger.debug("share inited", props)
 </script>
