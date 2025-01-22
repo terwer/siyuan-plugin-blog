@@ -38,10 +38,10 @@ interface AppConfig {
 
 export const AppConfig = {
   lang: "zh_CN",
-  siteUrl: "https://siyuan.wiki",
+  siteUrl: "",
   siteTitle: "在线分享",
-  siteSlogan: "随时随便分享您的思源笔记",
-  siteDescription: "致力于做 obsidian.publish 国内替代品，notion 发布国内替代品",
+  siteSlogan: "您的自部署 notion 替代品",
+  siteDescription: "您的自部署 notion 替代品",
   homePageId: "",
   header: "",
   footer: "",
