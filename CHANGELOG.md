@@ -1,7 +1,12 @@
 # Changelog
 
-## [6.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.1.0...siyuan-plugin-blog-v6.2.0) (2025-01-21)
+## [6.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.2.0...siyuan-plugin-blog-v6.3.0) (2025-01-22)
 ### Features
+* add memo support ([6a8c5da](https://github.com/terwer/siyuan-plugin-blog/commit/6a8c5da3d66580e101c8b228d6fc8f5fd5f5761d))
+### Bug Fixes
+* content overflow ([6335c1c](https://github.com/terwer/siyuan-plugin-blog/commit/6335c1c4eb6301ae31ff7f1ac391eb37df8b417c))
+* provider mode 404 page ([80f0c58](https://github.com/terwer/siyuan-plugin-blog/commit/80f0c58d3cbffd4315f91f3d9e043203e5280bad))
+## [6.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.1.0...siyuan-plugin-blog-v6.2.0) (2025-01-21)
 * improve no share page ([6ef3ee8](https://github.com/terwer/siyuan-plugin-blog/commit/6ef3ee8992ca24174b65c667870fb1b99c3b255d))
 * new ui ([02e4f2b](https://github.com/terwer/siyuan-plugin-blog/commit/02e4f2bafe4e45e2a0f89efca6ba86cae20f5de3))
 * support data table ([5534334](https://github.com/terwer/siyuan-plugin-blog/commit/55343346144bd87ea04264202becf457fa88b2de))
@@ -9,7 +14,6 @@
 * support embed blocks ([92eee86](https://github.com/terwer/siyuan-plugin-blog/commit/92eee8617c09ad185a9e9c1c72cdf5ca636d95f6))
 * support fold blocks ([d5b2187](https://github.com/terwer/siyuan-plugin-blog/commit/d5b2187b1ddc1f276fe6a8f270889f6938da1fbb))
 * support fold blocks - heading ([81bf687](https://github.com/terwer/siyuan-plugin-blog/commit/81bf6875b44aafe537f9900ceca002d282077ca8))
-### Bug Fixes
 * doctree style ([5b6c0f3](https://github.com/terwer/siyuan-plugin-blog/commit/5b6c0f3b4ecae3d0649dd5644b32a06f7f390127))
 * outline style ([9f3cfaa](https://github.com/terwer/siyuan-plugin-blog/commit/9f3cfaa7908a633a1789d6a9fead8d268072951b))
 ### Miscellaneous

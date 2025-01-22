@@ -1,7 +1,7 @@
 {
   "name": "@terwer/share-pro-app",
   "type": "module",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "scripts": {
     "dev": "bash script/dev.sh",
     "build": "bash script/build.sh",
