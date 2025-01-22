@@ -1,7 +1,11 @@
 # Changelog
 
-## [6.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.2.0...siyuan-plugin-blog-v6.3.0) (2025-01-22)
+## [6.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.3.0...siyuan-plugin-blog-v6.4.0) (2025-01-22)
 ### Features
+* change ip ([1ef7fa3](https://github.com/terwer/siyuan-plugin-blog/commit/1ef7fa3f930ded4adb69d1aa4f25514bd5ca4a25))
+### Miscellaneous
+* add provider startup script ([02b592f](https://github.com/terwer/siyuan-plugin-blog/commit/02b592f013a0b5a68dbee2b33f4ffbf366ceba0a))
+## [6.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.2.0...siyuan-plugin-blog-v6.3.0) (2025-01-22)
 * add memo support ([6a8c5da](https://github.com/terwer/siyuan-plugin-blog/commit/6a8c5da3d66580e101c8b228d6fc8f5fd5f5761d))
 ### Bug Fixes
 * content overflow ([6335c1c](https://github.com/terwer/siyuan-plugin-blog/commit/6335c1c4eb6301ae31ff7f1ac391eb37df8b417c))
@@ -16,7 +20,6 @@
 * support fold blocks - heading ([81bf687](https://github.com/terwer/siyuan-plugin-blog/commit/81bf6875b44aafe537f9900ceca002d282077ca8))
 * doctree style ([5b6c0f3](https://github.com/terwer/siyuan-plugin-blog/commit/5b6c0f3b4ecae3d0649dd5644b32a06f7f390127))
 * outline style ([9f3cfaa](https://github.com/terwer/siyuan-plugin-blog/commit/9f3cfaa7908a633a1789d6a9fead8d268072951b))
-### Miscellaneous
 * update docs ([d9b612c](https://github.com/terwer/siyuan-plugin-blog/commit/d9b612cc1c1bf66ed2f1a2cd0586327778d9de3a))
 ## [6.1.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.0.4...siyuan-plugin-blog-v6.1.0) (2025-01-11)
 * add docker support ([181c98f](https://github.com/terwer/siyuan-plugin-blog/commit/181c98f86725c60cf177532f57528c7c66052a71))
