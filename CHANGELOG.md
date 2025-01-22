@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.3.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.2.0...siyuan-plugin-blog-v6.3.0) (2025-01-22)
+
+
+### Features
+
+* add memo support ([6a8c5da](https://github.com/terwer/siyuan-plugin-blog/commit/6a8c5da3d66580e101c8b228d6fc8f5fd5f5761d))
+
+
+### Bug Fixes
+
+* content overflow ([6335c1c](https://github.com/terwer/siyuan-plugin-blog/commit/6335c1c4eb6301ae31ff7f1ac391eb37df8b417c))
+* provider mode 404 page ([80f0c58](https://github.com/terwer/siyuan-plugin-blog/commit/80f0c58d3cbffd4315f91f3d9e043203e5280bad))
+
 ## [6.2.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.1.0...siyuan-plugin-blog-v6.2.0) (2025-01-21)
 ### Features
 * improve no share page ([6ef3ee8](https://github.com/terwer/siyuan-plugin-blog/commit/6ef3ee8992ca24174b65c667870fb1b99c3b255d))
