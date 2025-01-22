@@ -236,9 +236,11 @@ export const useAuthModeFetch = () => {
         resText = JSON.stringify(dataJson.post)
       } else {
         logger.error("doc fetch error=>" + resJson.msg)
+        throw new Error("doc fetch error=>" + resJson.msg)
       }
     } catch (e) {
       logger.error(`fetch provider config ${reqUrl}`, e)
+      throw e
     }
     return resText
   }

@@ -19,6 +19,8 @@ echo "Nuxt build for node finished."
 
 # 拷贝资源
 # rsync -av --progress .output/public/ ./dist/
+mkdir -p .output/server/node_modules/@popperjs
+mv .output/server/node_modules/@sxzz/popperjs-es .output/server/node_modules/@popperjs/core
 mkdir -p ../../dist/node
 #rsync -av .output/ ../../dist/node
 #rsync -av dist/ ../../dist/node
