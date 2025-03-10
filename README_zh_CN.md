@@ -20,6 +20,13 @@ pnpm devApp
 ./startup.sh
 ```
 
+## 服务商生产模式打包
+
+```bash
+pnpm buildNodeProvider
+pnpm packageNodeProvider
+```
+
 ## 详细了解
 
 [功能介绍](https://siyuan.wiki/s/20250111132959-fv1bjrw)
