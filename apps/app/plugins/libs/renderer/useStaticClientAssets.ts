@@ -8,6 +8,7 @@
  */
 
 import { StrUtil } from "zhi-common"
+import { Base64 } from "js-base64"
 import { useProviderMode } from "~/composables/useProviderMode"
 import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
@@ -33,9 +34,13 @@ export const useStaticClientAssets = () => {
         const src = img.getAttribute("src") ?? ""
         if (src.includes("assets")) {
           if (providerMode) {
-            // const apiBase = env.public.providerUrl
-            // const imgUrl = [apiBase, "api/asset/", src].join("/")
-            logger.info("providerMode is not local, skip addClientAssetsPrefix, use api as alternative")
+            const apiBase = env.public.providerUrl
+            // src base64加密
+            const base64Url = Base64.encodeURI(src)
+            const imgUrl = StrUtil.pathJoin(StrUtil.pathJoin(apiBase, "/api/asset/origin/base64/"), base64Url)
+            img.setAttribute("src", imgUrl)
+            img.setAttribute("data-src", imgUrl)
+            logger.info("providerMode is not local, skip addClientAssetsPrefix, use api as alternative", imgUrl)
           } else {
             const baseUrl = getClientBaseUrl()
             const pubicAssetsFolder = `public/siyuan-blog/${pageId}`
