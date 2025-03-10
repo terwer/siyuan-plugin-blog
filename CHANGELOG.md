@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.4.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.4.0...siyuan-plugin-blog-v6.4.1) (2025-03-10)
+
+
+### Bug Fixes
+
+* image not show in some cases ([f637dad](https://github.com/terwer/siyuan-plugin-blog/commit/f637dad51ae6f0a852719c782017c087ff9af442))
+
 ## [6.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.3.0...siyuan-plugin-blog-v6.4.0) (2025-01-22)
 ### Features
 * change ip ([1ef7fa3](https://github.com/terwer/siyuan-plugin-blog/commit/1ef7fa3f930ded4adb69d1aa4f25514bd5ca4a25))
