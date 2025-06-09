@@ -43,6 +43,7 @@ const VNode = () =>
         v-embedblock
         v-fold
         v-desc
+        v-htmlblock
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
