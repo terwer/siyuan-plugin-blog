@@ -11,6 +11,7 @@ import { StrUtil } from "zhi-common"
 import { Base64 } from "js-base64"
 import { useProviderMode } from "~/composables/useProviderMode"
 import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
+import { useImagePreview } from "~/composables/useImagePreview"
 
 /**
  * 处理客户端资源文件地址
@@ -18,6 +19,7 @@ import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 export const useStaticClientAssets = () => {
   const logger = createAppLogger("use-static-client-assets")
   const { getClientBaseUrl } = useBaseUrl()
+  const { initImagePreview } = useImagePreview()
 
   const addClientAssetsPrefix = (el: HTMLElement) => {
     const pageId = el.getAttribute("data-page-id") ?? ""
@@ -58,38 +60,10 @@ export const useStaticClientAssets = () => {
       })
       logger.info("The local image has been processed and the picture display has been repaired.")
     }
+
+    // 初始化图片预览
+    initImagePreview(el)
   }
-
-  // =========================================================================
-  // const getImageBlob = async (url: string) => {
-  //   try {
-  //     const response = await fetch(url)
-  //     return await response.blob()
-  //   } catch (e: any) {
-  //     logger.error("image read error", e)
-  //     return ""
-  //   }
-  // }
-
-  // const getImageAsBase64 = async (url) => {
-  //   try {
-  //     const response = await fetch(url)
-  //     const blob = await response.blob()
-  //     return await convertBlobToBase64(blob)
-  //   } catch (error) {
-  //     logger.error("image read error", e)
-  //     return ""
-  //   }
-  // }
-
-  // const convertBlobToBase64 = (blob) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader()
-  //     reader.onloadend = () => resolve(reader.result)
-  //     reader.onerror = reject
-  //     reader.readAsDataURL(blob)
-  //   })
-  // }
 
   return { addClientAssetsPrefix }
 }

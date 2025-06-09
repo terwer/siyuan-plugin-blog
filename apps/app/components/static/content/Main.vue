@@ -8,9 +8,15 @@
   -->
 
 <script setup lang="ts">
-import type AppConfig from "~/app.config"
+import { useImagePreview } from "~/composables/useImagePreview"
+import ImagePreview from "~/components/common/ImagePreview.vue"
 
-const props = defineProps<{ post: any, setting: typeof AppConfig }>()
+const props = defineProps<{
+  post: any
+  setting?: any
+}>()
+
+const { images, previewRef } = useImagePreview()
 
 // 正文
 const editorDom = props.post.editorDom?.replaceAll("contenteditable=\"true\"", "contenteditable=\"false\"") ?? ""
@@ -56,6 +62,9 @@ const VNode = () =>
         <VNode />
       </div>
     </div>
+    <client-only>
+      <ImagePreview ref="previewRef" :images="images as any" />
+    </client-only>
   </div>
 </template>
 
