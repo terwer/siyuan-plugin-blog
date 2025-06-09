@@ -50,6 +50,7 @@ const VNode = () =>
         v-fold
         v-desc
         v-htmlblock
+        v-echarts
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
