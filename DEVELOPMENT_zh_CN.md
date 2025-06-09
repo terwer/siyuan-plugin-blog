@@ -93,3 +93,25 @@ pnpm package
   ├── package.zip
   ├── siyuan-plugin-blog-5.4.0.zip
 ```
+
+## 服务商模式维护
+
+1. 打包
+
+```
+pnpm buildNodeProvider
+pnpm packageNodeProvider
+```
+
+2. 然后 ftp 上传 `build/node-provider.zip` 并替换，接着解压安装
+
+```
+mv dist dist_bak
+./install.sh
+```
+
+3. 启动命令
+
+```
+pnpm start
+```

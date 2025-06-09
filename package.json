@@ -10,7 +10,7 @@
     "lint": "turbo run lint",
     "clean": "./scripts/clean.sh",
     "start": "./startup.sh",
-    "buildNodeProbuildNodeProvidervider": "./build-node-provider.sh",
+    "buildNodeProvider": "./build-node-provider.sh",
     "packageNodeProvider": "./package-node-provider.sh",
     "package": "python scripts/package.py",
     "syncVersion": "python scripts/version.py",

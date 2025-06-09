@@ -90,3 +90,25 @@ artifacts structure
   ├── package.zip
   ├── siyuan-plugin-blog-5.4.0.zip
 ```
+
+## Node Provider Mode Maintenance
+
+1. Build
+
+```bash
+pnpm buildNodeProvider
+pnpm packageNodeProvider
+```
+
+2. FTP upload `build/node-provider.zip` and replace, then extract and install
+
+```bash
+mv dist dist_bak
+./install.sh
+```
+
+3. Start command
+
+```bash
+pnpm start
+```
