@@ -26,6 +26,18 @@ export const useStaticAssets = () => {
         const src = image.attribs["src"]
         const imageUrl = [baseUrl, src].join("/")
         const toFilepath = [saveFolder, src].join("/")
+        
+        // 验证文件名
+        if (!isValidWindowsFilename(src)) {
+          logger.warn(`Invalid filename detected: ${src}, skipping...`)
+          continue
+        }
+        
+        // 跳过网络图片
+        if (src.startsWith("http")) {
+          continue
+        }
+        
         logger.info(`download image ${imageUrl} to ${toFilepath}`)
 
         // eslint-disable-next-line no-await-in-loop
@@ -36,6 +48,38 @@ export const useStaticAssets = () => {
     } catch (e) {
       logger.error("download assets to public error, image will not show properly", e)
     }
+  }
+
+  // 验证 Windows 文件名是否合法
+  const isValidWindowsFilename = (filename: string): boolean => {
+    // 检查长度
+    if (filename.length > 255) {
+      return false
+    }
+
+    // 检查非法字符
+    const invalidChars = /[:*?"<>|]/
+    if (invalidChars.test(filename)) {
+      return false
+    }
+
+    // 检查是否以点号结尾
+    if (filename.endsWith(".")) {
+      return false
+    }
+
+    // 检查保留的设备名称
+    const reservedNames = [
+      "CON", "PRN", "AUX", "NUL",
+      "COM1", "COM2", "COM3", "COM4",
+      "LPT1", "LPT2", "LPT3", "LPT4"
+    ]
+    const nameWithoutExt = filename.split(".")[0].toUpperCase()
+    if (reservedNames.includes(nameWithoutExt)) {
+      return false
+    }
+
+    return true
   }
 
   // =========================================================================
