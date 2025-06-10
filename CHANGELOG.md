@@ -1,10 +1,16 @@
 # Changelog
 
-## [6.4.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.4.0...siyuan-plugin-blog-v6.4.1) (2025-03-10)
+## [6.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.4.1...siyuan-plugin-blog-v6.5.0) (2025-06-10)
+### Features
+* **app:** add echarts rendering support ([a5a33d4](https://github.com/terwer/siyuan-plugin-blog/commit/a5a33d41b3ab74f4edf3ea3d7cd5dfea179dafc5))
+* **app:** add html block rendering support ([4dbc299](https://github.com/terwer/siyuan-plugin-blog/commit/4dbc29904aca43eccbddfc0fb778d6d29ab144dd))
+* **app:** add image preview functionality- add imagepreview component for zooming in on images ([12160b0](https://github.com/terwer/siyuan-plugin-blog/commit/12160b08a9e890139dfa0c2b29e3cbe5404ac283))
+* **siyuan:** add clear all shares functionality ([dac8102](https://github.com/terwer/siyuan-plugin-blog/commit/dac810289f00c19da572ed9c9c1555f91c5b1b18))
 ### Bug Fixes
+* provider build script ([e669cd1](https://github.com/terwer/siyuan-plugin-blog/commit/e669cd1b2ad27aeb363f4a51ad23bbe0206e2028))
+## [6.4.1](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.4.0...siyuan-plugin-blog-v6.4.1) (2025-03-10)
 * image not show in some cases ([f637dad](https://github.com/terwer/siyuan-plugin-blog/commit/f637dad51ae6f0a852719c782017c087ff9af442))
 ## [6.4.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.3.0...siyuan-plugin-blog-v6.4.0) (2025-01-22)
-### Features
 * change ip ([1ef7fa3](https://github.com/terwer/siyuan-plugin-blog/commit/1ef7fa3f930ded4adb69d1aa4f25514bd5ca4a25))
 ### Miscellaneous
 * add provider startup script ([02b592f](https://github.com/terwer/siyuan-plugin-blog/commit/02b592f013a0b5a68dbee2b33f4ffbf366ceba0a))
