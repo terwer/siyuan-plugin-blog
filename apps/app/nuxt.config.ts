@@ -13,7 +13,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/plugins/siyuan-blog/app/"
+const appBase = "/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -23,42 +23,13 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
-    locales: ["en_US", "zh_CN"],
     defaultLocale: "zh_CN",
+    locales: [
+      { code: "en_US", name: "English", file: "en_US.json" },
+      { code: "zh_CN", name: "Chinese", file: "zh_CN.json" }
+    ],
     strategy: "no_prefix",
     detectBrowserLanguage: false,
-    vueI18n: "./i18n.ts"
-  },
-
-  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
-  ssr: false,
-  router: {
-    options: {
-      hashMode: true,
-    },
-  },
-
-  vite: {
-    define: {
-      "process.env.DEV_MODE": `"${isDev}"`,
-      "process.env.APP_BASE": `"${appBase}"`,
-      "process.env.SSR": "\"false\"",
-    },
-    plugins: [
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-    ]
-  },
-
-  css: ["~/assets/css/index.styl"],
-
-  elementPlus: {
-    /** Options */
-    themes: ["dark"],
   },
 
   app: {
@@ -116,13 +87,36 @@ export default defineNuxtConfig({
     },
   },
 
+  vite: {
+    define: {
+      "process.env.DEV_MODE": `"${isDev}"`,
+      "process.env.APP_BASE": `"${appBase}"`,
+      "process.env.SSR": "\"true\"",
+    },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
+    ]
+  },
+
+  css: ["~/assets/css/index.styl"],
+
+  elementPlus: {
+    /** Options */
+    themes: ["dark"],
+  },
+
   // 环境变量
   runtimeConfig: {
     public: {
-      defaultType: "siyuan",
-      siyuanApiUrl: "",
-      providerMode: "false",
-      providerUrl: "",
+      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "node",
+      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
+      providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
+      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
     },
   },
 

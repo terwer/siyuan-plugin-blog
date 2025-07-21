@@ -1,8 +1,8 @@
 {
   "name": "siyuan-plugin-blog",
-  "version": "6.5.0",
+  "version": "6.4.0",
   "scripts": {
-    "devApp": "pnpm dev -F @terwer/share-pro-app -- --host",
+    "devApp": "NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=https://api.terwergreen.com pnpm dev -F @terwer/share-pro-app -- --host",
     "devSiyuan": "pnpm build -F siyuan-blog -- --watch",
     "buildArtifacts": "./build-artifacts.sh",
     "build": "turbo run build",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "rimraf": "^6.0.1",
-    "turbo": "^2.5.4"
+    "turbo": "^2.5.5"
   },
   "packageManager": "pnpm@10.12.1"
 }
