@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.6.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.5.0...siyuan-plugin-blog-v6.6.0) (2025-07-21)
+
+
+### Features
+
+* **app:** add js-base64 and vue-easy-lightbox dependencies ([ef9b3f9](https://github.com/terwer/siyuan-plugin-blog/commit/ef9b3f9ca6bfb2046026b318760e2ff08f4cdbdd))
+
+
+### Code Refactoring
+
+* **i18n:** migrate i18n to json format and update configurations ([2529ca0](https://github.com/terwer/siyuan-plugin-blog/commit/2529ca0d2d1bde2e78c5203cf11d852842e1ebb8))
+* **i18n:** migrate i18n to json format and update configurations ([48b5164](https://github.com/terwer/siyuan-plugin-blog/commit/48b516485a0e9b0e7700d841ce69beeccf1ab77c))
+
 ## [6.5.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.4.1...siyuan-plugin-blog-v6.5.0) (2025-06-10)
 ### Features
 * **app:** add echarts rendering support ([a5a33d4](https://github.com/terwer/siyuan-plugin-blog/commit/a5a33d41b3ab74f4edf3ea3d7cd5dfea179dafc5))
