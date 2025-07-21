@@ -15,6 +15,7 @@ import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 // 由于布局是个宏，不能动态设置了，因此只能写死
 
 const { t } = useI18n()
+
 const { getStaticSetting } = useStaticSettingStore()
 
 const setting = await getStaticSetting()

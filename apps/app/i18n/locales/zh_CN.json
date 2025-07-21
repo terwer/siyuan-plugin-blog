@@ -1,35 +1,9 @@
-/*
- * Copyright (c) 2023, Terwer . All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Terwer designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Terwer in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
- * or visit www.terwer.space if you need additional information or have any
- * questions.
- */
-
-export default {
-  name: "在线分享",
+{
+  "name": "在线分享",
   "lang.choose": "语言选择",
   "lang.choose.placeholder": "请选择语言",
   "syp.about": "关于作者",
-  "syp.about.desc":
-    "你们好，我叫 terwer，已在后端行业多年，主要专注于后端技术栈的探索。希望能认识更多朋友。欢迎大家留言交流。",
+  "syp.about.desc": "你们好，我叫 terwer，已在后端行业多年，主要专注于后端技术栈的探索。希望能认识更多朋友。欢迎大家留言交流。",
   "theme.mode.choose": "切换模式",
   "theme.mode.dark": "暗黑模式",
   "theme.mode.light": "浅色模式",
@@ -64,8 +38,7 @@ export default {
   "blog.share.setting": "分享设置",
   "blog.site.url.label": "自定义域名",
   "blog.site.url": "自定义域名",
-  "blog.site.url.placeholder":
-    "请填写完整地址(如有端口，需要包括端口)，需确保域名已经解析，例如：http://siyuan.terwergreen.com:6808",
+  "blog.site.url.placeholder": "请填写完整地址(如有端口，需要包括端口)，需确保域名已经解析，例如：http://siyuan.terwergreen.com:6808",
   "blog.site.title.label": "主页标题",
   "blog.site.title": "浅海拾贝",
   "blog.site.slogan.label": "主页副标题",
@@ -98,17 +71,14 @@ export default {
   "change.ip.title": "切换IP",
   "share.accessCodeEnabled.tip": "特别提示：为安全起见，1.9.0+ 将使用静态分享，若文档有更新，需重新分享，请知悉。",
   "share.public.tip": "当前处于公共分享模式",
-  "share.static.tip":
-    "温馨提示：如果无法访问可通过切换IP（PC）、或者在下方「偏好设置->设置自定义域名」（PC、Docker）解决，外网访问需在「设置->关于->网络伺服」打开伺服",
+  "share.static.tip": "温馨提示：如果无法访问可通过切换IP（PC）、或者在下方「偏好设置->设置自定义域名」（PC、Docker）解决，外网访问需在「设置->关于->网络伺服」打开伺服",
   "share.setting": "偏好设置",
   "share.template.footer": "底部信息",
   "share.template.footer.placeholder": "留空则不显示底部，支持 HTML。更新需重新分享",
   "share.template.link": "分享模板",
   "share.template.link.placeholder": "分享出去的提示信息模板，支持占位符 [title] [url] [expired]",
-
   "page.sidebar.expand.all": "展开全部",
   "page.sidebar.collapse.all": "折叠全部",
-
   "static.docTree": "文档树",
-  "static.outline": "文档大纲",
+  "static.outline": "文档大纲"
 }

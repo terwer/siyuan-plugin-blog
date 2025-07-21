@@ -23,11 +23,13 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
-    locales: ["en_US", "zh_CN"],
     defaultLocale: "zh_CN",
+    locales: [
+      { code: "en_US", name: "English", file: "en_US.json" },
+      { code: "zh_CN", name: "Chinese", file: "zh_CN.json" }
+    ],
     strategy: "no_prefix",
     detectBrowserLanguage: false,
-    vueI18n: "./i18n.ts"
   },
 
   // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
@@ -93,7 +95,7 @@ export default defineNuxtConfig({
             },
             {
               children: "eruda.init();console.log('eruda inited');",
-            },
+            } as any,
             {
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
