@@ -82,5 +82,15 @@ export const useStaticShare = () => {
     await removeSharePage(pageId)
   }
 
-  return {openStaticShare, closeStaticShare, updateStaticShare}
+  /**
+   * 清除所有静态分享页面
+   * 用于修复和清理所有分享数据
+   */
+  const clearSharePages = async () => {
+    const publicBlogFolder = "/data/public/siyuan-blog"
+    await kernelApi.removeFile(publicBlogFolder)
+    logger.info("all static share data cleared success")
+  }
+
+  return {openStaticShare, closeStaticShare, updateStaticShare, clearSharePages}
 }

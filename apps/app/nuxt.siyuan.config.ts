@@ -100,11 +100,19 @@ export default defineNuxtConfig({
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
             },
+            {
+              defer: true,
+              src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
+            },
           ]
         : [
             {
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
+            },
+            {
+              defer: true,
+              src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
             },
           ],
     },

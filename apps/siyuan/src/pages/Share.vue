@@ -11,7 +11,7 @@
 import {onBeforeMount, reactive, toRaw} from "vue"
 import copy from "copy-to-clipboard"
 import {JsonUtil, StrUtil} from "zhi-common"
-import {showMessage} from "siyuan"
+import {showMessage,confirm} from "siyuan"
 import {createAppLogger} from "../utils/appLogger.ts"
 import {useSiyuanApi} from "../composables/useSiyuanApi.ts"
 import {getAllIps} from "../utils/urlUtil.ts"
@@ -31,7 +31,7 @@ const {getSetting, updateSetting} = useSettingStore()
 const {blogApi, kernelApi} = useSiyuanApi()
 const {handleMethod} = useMethod(props.pluginInstance)
 const {handleMethodAsync} = useMethodAsync(props.pluginInstance)
-const {openStaticShare, closeStaticShare, updateStaticShare} = useStaticShare()
+const {openStaticShare, closeStaticShare, updateStaticShare, clearSharePages} = useStaticShare()
 
 const basePath = "/plugins/siyuan-blog/app/#"
 // datas
@@ -201,6 +201,21 @@ const handleExpiresTime = async () => {
   )
 }
 
+const handleClearAllShares = async (event: Event) => {
+  // 阻止事件冒泡
+  event.stopPropagation()
+  // 清除所有分享
+  await clearSharePages()
+  // 更新当前页面的分享状态
+  formData.shared = false
+  await kernelApi.setBlockAttrs(props.id, {
+    "custom-publish-status": "draft",
+    "custom-publish-time": "",
+  })
+  // 操作完成后再显示成功提示
+  showMessage(props.pluginInstance.i18n["share.clear.all.success"])
+}
+
 onBeforeMount(async () => {
   formData.setting = await getSetting()
   formData.post = await blogApi.getPost(props.id, false, false)
@@ -282,6 +297,18 @@ logger.debug("share inited", props)
       <div class="setting-row">
         <span class="setting-label">{{ pluginInstance.i18n["share.set.home"] }}</span>
         <input class="b3-switch fn__flex-center" type="checkbox" v-model="formData.isHome" @change="handleSetHome">
+      </div>
+    </div>
+
+    <div class="divider"/>
+
+    <div class="setting-row">
+      <span class="setting-label">
+        {{ pluginInstance.i18n["share.clear.all"] }}
+      </span>
+      <div class="input-group">
+        <div class="danger-text">{{ pluginInstance.i18n["share.clear.all.tip"] }}</div>
+        <button class="danger-button" @click="handleClearAllShares">{{ pluginInstance.i18n["share.clear.all"] }}</button>
       </div>
     </div>
   </div>
@@ -458,4 +485,14 @@ html[data-theme-mode="dark"]
 
   .info-text
     color #ff7875
+
+.danger-button
+  background-color #ff4d4f
+  &:hover
+    background-color #ff7875
+
+.danger-text
+  color #ff4d4f
+  font-size 12px
+  margin-right 8px
 </style>

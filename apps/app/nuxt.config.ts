@@ -13,7 +13,7 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = "/"
+const appBase = "/plugins/siyuan-blog/app/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -30,6 +30,37 @@ export default defineNuxtConfig({
     ],
     strategy: "no_prefix",
     detectBrowserLanguage: false,
+  },
+
+  // https://nuxt.com/docs/guide/going-further/custom-routing#hash-mode-spa
+  ssr: false,
+  router: {
+    options: {
+      hashMode: true,
+    },
+  },
+
+  vite: {
+    define: {
+      "process.env.DEV_MODE": `"${isDev}"`,
+      "process.env.APP_BASE": `"${appBase}"`,
+      "process.env.SSR": "\"false\"",
+    },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
+    ]
+  },
+
+  css: ["~/assets/css/index.styl"],
+
+  elementPlus: {
+    /** Options */
+    themes: ["dark"],
   },
 
   app: {
@@ -69,46 +100,31 @@ export default defineNuxtConfig({
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
             },
+            {
+              defer: true,
+              src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
+            },
           ]
         : [
             {
               defer: true,
               src: appBase + "libs/katex/0.16.10/katex.min.js",
             },
+            {
+              defer: true,
+              src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
+            },
           ],
     },
-  },
-
-  vite: {
-    define: {
-      "process.env.DEV_MODE": `"${isDev}"`,
-      "process.env.APP_BASE": `"${appBase}"`,
-      "process.env.SSR": "\"true\"",
-    },
-    plugins: [
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-    ]
-  },
-
-  css: ["~/assets/css/index.styl"],
-
-  elementPlus: {
-    /** Options */
-    themes: ["dark"],
   },
 
   // 环境变量
   runtimeConfig: {
     public: {
-      defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "node",
-      siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
-      providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
-      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
+      defaultType: "siyuan",
+      siyuanApiUrl: "",
+      providerMode: "false",
+      providerUrl: "",
     },
   },
 

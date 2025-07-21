@@ -20,6 +20,13 @@ pnpm devApp
 ./startup.sh
 ```
 
+## Build Via Node provider
+
+```bash
+pnpm buildNodeProvider
+pnpm packageNodeProvider
+```
+
 ## More
 
 [Click here](https://siyuan.wiki/s/20250111132959-xvao9ll)
