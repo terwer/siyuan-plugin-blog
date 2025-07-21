@@ -1,6 +1,6 @@
 {
   "name": "siyuan-blog",
-  "version": "6.5.0",
+  "version": "6.6.0",
   "type": "module",
   "homepage": "https://github.com/terwer/siyuan-plugin-blog",
   "scripts": {
