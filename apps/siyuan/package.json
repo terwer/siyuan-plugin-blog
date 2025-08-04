@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "clean": "ramrif node_modules"
+    "clean": "rm -rf node_modules"
   },
   "dependencies": {
     "@vueuse/core": "^12.2.0",

@@ -1,8 +1,8 @@
 #!/bin/sh
 
 set -e
-rimraf ./dist
-rimraf ./build
+rm -rf ./dist
+rm -rf ./build
 turbo run clean
 rm -rf node_modules
 find . -name ".turbo" -type d -exec rm -rf {} +
