@@ -30,8 +30,9 @@
             size="large"
             :loading="isLoading"
             class="submit-btn"
+            :disabled="form.lock"
         >
-          {{ submitText }}
+          {{ form.lock ? t("share.password.confirm.password.loading") : submitText }}
         </el-button>
       </el-form>
 
@@ -71,7 +72,8 @@ const emit = defineEmits<{
 }>()
 
 const form = reactive({
-  password: props.initialValue
+  password: props.initialValue,
+  lock:true
 })
 
 const rules: FormRules = {
@@ -107,6 +109,12 @@ defineExpose({
   setValue: (value: string) => {
     form.password = value
   }
+})
+
+onMounted(()=>{
+  setTimeout(()=>{
+    form.lock = false
+  }, 50)
 })
 </script>
 

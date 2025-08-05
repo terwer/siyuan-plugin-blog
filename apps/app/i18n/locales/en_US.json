@@ -94,5 +94,6 @@
   "share.password.confirm.password.rule.pwd.notEmpty": "Password cannot be empty",
   "share.password.confirm.password.rule.pwd.4less": "Password must be at least 4 characters",
   "share.password.confirm.password.rule.form.error": "Form validation failed",
-  "share.password.confirm.password.rule.not.match": "Incorrect password, please contact the document owner"
+  "share.password.confirm.password.rule.not.match": "Incorrect password, please contact the document owner",
+  "share.password.confirm.password.loading": "Loading..."
 }

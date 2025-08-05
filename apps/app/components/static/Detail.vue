@@ -110,12 +110,15 @@ const handlePasswordSubmit = async (password:string) => {
   logger.debug("db password:",  formData.shareOptions.password)
   // 调用API验证密码
   const valid = await validatePassword(formData.post.postid, password, formData.shareOptions.password)
-  if (valid.flag) {
+  // if (valid.flag) {
     // 当前 url 参数还是 ?key
-    BrowserUtil.setUrlParameter(window.location.href,"key", valid.data)
-  } else {
-    ElMessage.error(t('share.password.confirm.password.rule.not.match'))
-  }
+    const url = new URL(window.location.href);
+    url.searchParams.set("key", valid.data);
+    window.location.href = url.toString();
+
+  // } else {
+  //   ElMessage.error(t('share.password.confirm.password.rule.not.match'))
+  // }
 }
 </script>
 

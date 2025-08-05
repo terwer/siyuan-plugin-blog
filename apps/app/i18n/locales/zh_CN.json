@@ -94,5 +94,6 @@
   "share.password.confirm.password.rule.pwd.notEmpty": "密码不能为空",
   "share.password.confirm.password.rule.pwd.4less": "密码长度至少4位",
   "share.password.confirm.password.rule.form.error": "表单验证失败",
-  "share.password.confirm.password.rule.not.match": "密码错误，请联系文档作者"
+  "share.password.confirm.password.rule.not.match": "密码错误，请联系文档作者",
+  "share.password.confirm.password.loading": "页面加载中，请稍后..."
 }
