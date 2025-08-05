@@ -5,6 +5,7 @@
     "devApp": "NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=https://api.terwergreen.com pnpm dev -F @terwer/share-pro-app -- --host",
     "devSiyuan": "pnpm build -F siyuan-blog -- --watch",
     "buildArtifacts": "./build-artifacts.sh",
+    "buildSiyuanArtifacts": "./build-siyuan-artifacts.sh",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
