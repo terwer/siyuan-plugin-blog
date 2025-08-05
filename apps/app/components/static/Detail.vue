@@ -13,12 +13,13 @@ import { checkExpires } from "~/utils/utils"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 import AppConfig from "~/app.config"
 import { useServerAssets } from "~/plugins/libs/renderer/useServerAssets"
+import {BrowserUtil} from "zhi-device";
 
 const logger = createAppLogger("static-share-page")
 const { docId } = useDocId()
 const { t } = useI18n()
 const { providerMode } = useProviderMode()
-const { fetchPostMeta } = useAuthModeFetch()
+const { fetchPostMeta, validatePassword } = useAuthModeFetch()
 const { getStaticSetting } = useStaticSettingStore()
 const { getFirstImageSrc } = useServerAssets()
 
@@ -38,14 +39,32 @@ const formData = reactive({
 
   isShared: true,
   isExpires: false,
+
+  // 密码授权
+  shareOptions: {
+    passwordEnabled: false,
+    password: "",
+  }
 })
 const getPostData = async () => {
   try {
     const resText = await fetchPostMeta(id, providerMode)
-    const currentPost = JsonUtil.safeParse<any>(resText, {} as any)
-    currentPost.postid = id
-    formData.post = currentPost
-    logger.debug("currentPost=>", currentPost)
+    if(providerMode){
+      const dataJson = JsonUtil.safeParse<any>(resText, {} as any)
+      logger.debug("dataJson in providerMode=>", dataJson)
+      const currentPost = JsonUtil.safeParse<any>(dataJson.post, {} as any)
+      currentPost.postid = id
+      formData.post = currentPost
+      logger.debug("currentPost in providerMode=>", currentPost)
+      // 分享信息
+      formData.shareOptions.passwordEnabled = dataJson.passwordEnabled ?? false
+      formData.shareOptions.password = dataJson.password ?? ""
+    }else{
+      const currentPost = JsonUtil.safeParse<any>(resText, {} as any)
+      currentPost.postid = id
+      formData.post = currentPost
+      logger.debug("currentPost=>", currentPost)
+    }
 
     formData.isShared = !ObjectUtil.isEmptyObject(formData.post)
     const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
@@ -84,6 +103,20 @@ if (!props.overrideSeo) {
   }
   useSeoMeta(seoMeta)
 }
+
+// functions
+const handlePasswordSubmit = async (password:string) => {
+  logger.debug("get password:", password)
+  logger.debug("db password:",  formData.shareOptions.password)
+  // 调用API验证密码
+  const valid = await validatePassword(formData.post.postid, password, formData.shareOptions.password)
+  if (valid.flag) {
+    // 当前 url 参数还是 ?key
+    BrowserUtil.setUrlParameter(window.location.href,"key", valid.data)
+  } else {
+    ElMessage.error(t('share.password.confirm.password.rule.not.match'))
+  }
+}
 </script>
 
 <template>
@@ -91,7 +124,17 @@ if (!props.overrideSeo) {
     <el-empty :description=" t('blog.index.no.shared') " />
   </div>
   <div v-else-if="formData.isExpires">
-    <el-empty :description=" t('blog.index.no.expires') " />
+    <el-empty :description="t('blog.index.no.expires') " />
+  </div>
+  <div v-else-if="formData.shareOptions.passwordEnabled">
+    <common-confirm-password
+        :title="t('share.password.confirm.password.title')"
+        :description="t('share.password.confirm.password.description')"
+        :placeholder="t('share.password.confirm.password.placeholder')"
+        :submitText="t('share.password.confirm.password.submitText')"
+        :hint="t('share.password.confirm.password.hint')"
+        @submit="handlePasswordSubmit"
+    />
   </div>
   <div v-else>
     <el-container>

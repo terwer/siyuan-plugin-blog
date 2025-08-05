@@ -232,8 +232,9 @@ export const useAuthModeFetch = () => {
       })
       const resJson = await res.json()
       if (resJson.code === 0) {
-        const dataJson = JSON.parse(resJson.data)
-        resText = JSON.stringify(dataJson.post)
+        // const dataJson = JSON.parse(resJson.data)
+        // resText = JSON.stringify(dataJson.post)
+        resText = resJson.data
       } else {
         logger.error("doc fetch error=>" + resJson.msg)
         throw new Error("doc fetch error=>" + resJson.msg)
@@ -243,6 +244,46 @@ export const useAuthModeFetch = () => {
       throw e
     }
     return resText
+  }
+
+  const validatePassword = async (id: string, password: string, encryptPassword: string): Promise<{
+      flag: boolean,
+      msg: string,
+      data:string
+  }> => {
+      const apiBase = env.public.providerUrl
+      const url = "/api/share/validatePassword"
+      const reqUrl = `${apiBase}${url}`
+      const params = {
+          docId: id,
+          password,
+          encryptPassword
+      }
+      let resJson = {
+          flag: false,
+          msg: "password not valid",
+          data: ""
+      }
+      try {
+          const res = await fetch(reqUrl, {
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify(params),
+          })
+          const valiJson = await res.json()
+          if (valiJson.code === 0) {
+              resJson.flag = true
+              resJson.data = valiJson.data
+          } else {
+              logger.error("password validate error=>" + resJson.msg)
+              throw new Error("password validate error=>" + resJson.msg)
+          }
+      }catch (e) {
+          logger.error("password validate failed", e)
+      }
+      return resJson
   }
 
   const fetchPostMeta = async (id: string, providerMode: boolean): Promise<string> => {
@@ -260,6 +301,7 @@ export const useAuthModeFetch = () => {
 
   return {
     fetchConfig,
-    fetchPostMeta
+    fetchPostMeta,
+    validatePassword
   }
 }

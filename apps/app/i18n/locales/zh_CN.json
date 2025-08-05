@@ -80,5 +80,19 @@
   "page.sidebar.expand.all": "展开全部",
   "page.sidebar.collapse.all": "折叠全部",
   "static.docTree": "文档树",
-  "static.outline": "文档大纲"
+  "static.outline": "文档大纲",
+  "share.password.confirm.password.title": "私有内容访问",
+  "share.password.confirm.password.title.default": "访问受保护内容",
+  "share.password.confirm.password.description": "此内容需要密码验证",
+  "share.password.confirm.password.description.default": "请输入访问密码继续",
+  "share.password.confirm.password.placeholder": "输入分享密码",
+  "share.password.confirm.password.placeholder.default": "输入分享密码",
+  "share.password.confirm.password.submitText": "验证",
+  "share.password.confirm.password.submitText.default": "确认",
+  "share.password.confirm.password.hint": "密码由内容创建者设置",
+  "share.password.confirm.password.hint.default": "",
+  "share.password.confirm.password.rule.pwd.notEmpty": "密码不能为空",
+  "share.password.confirm.password.rule.pwd.4less": "密码长度至少4位",
+  "share.password.confirm.password.rule.form.error": "表单验证失败",
+  "share.password.confirm.password.rule.not.match": "密码错误，请联系文档作者"
 }
