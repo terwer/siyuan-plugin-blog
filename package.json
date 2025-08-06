@@ -1,6 +1,6 @@
 {
   "name": "siyuan-plugin-blog",
-  "version": "6.6.0",
+  "version": "6.7.0",
   "scripts": {
     "devApp": "NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=https://api.terwergreen.com pnpm dev -F @terwer/share-pro-app -- --host",
     "devSiyuan": "pnpm build -F siyuan-blog -- --watch",
