@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
       turbo:
         specifier: ^2.5.5
         version: 2.5.5
@@ -118,8 +115,8 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
       zhi-siyuan-api:
-        specifier: ^2.26.0
-        version: 2.26.0(typescript@5.6.3)
+        specifier: ^2.29.0
+        version: 2.29.0(typescript@5.6.3)
     devDependencies:
       '@eslint/js':
         specifier: ^9.15.0
@@ -3616,11 +3613,6 @@ packages:
     resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==}
     hasBin: true
 
-  glob@11.0.1:
-    resolution: {integrity: sha512-zrQDm8XPnYEKawJScsnM0QzobJxlT/kHOOlRTio8IH/GrmxRE5fjllkzdaHclIuNjUQTJYH2xHNIGfdpJkDJUw==}
-    engines: {node: 20 || >=22}
-    hasBin: true
-
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
@@ -4020,10 +4012,6 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
-  jackspeak@4.0.2:
-    resolution: {integrity: sha512-bZsjR/iRjl1Nk1UkjGpAzLNfQtzuijhn2g+pbZb98HQ1Gk8vM9hfbxeMBP+M2/UUdwj0RqGG3mlvk2MsAqwvEw==}
-    engines: {node: 20 || >=22}
-
   jiti@2.4.2:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
@@ -4222,10 +4210,6 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lru-cache@11.0.2:
-    resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
-    engines: {node: 20 || >=22}
-
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -4307,10 +4291,6 @@ packages:
   min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
-
-  minimatch@10.0.1:
-    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
-    engines: {node: 20 || >=22}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -4732,10 +4712,6 @@ packages:
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
-
-  path-scurry@2.0.0:
-    resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
-    engines: {node: 20 || >=22}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -5179,11 +5155,6 @@ packages:
 
   rimraf@5.0.10:
     resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
-    hasBin: true
-
-  rimraf@6.0.1:
-    resolution: {integrity: sha512-9dkvaxAsk/xNXSJzMgFqqMCuFgt2+KsOFek3TMLfo8NCPfWpBmqwyNn5Y+NX56QUYfCtsyhF3ayiboEoUmJk/A==}
-    engines: {node: 20 || >=22}
     hasBin: true
 
   rollup-plugin-livereload@2.0.5:
@@ -6365,8 +6336,8 @@ packages:
     resolution: {integrity: sha512-rY2A2lSF7zC+l7HH9Mq+83D1dLlsPnEvy8jTouzaptDZM6geqZ3aJe/b7ULCwRURPtWV3vbDjA2DDMdoBol0HQ==}
     engines: {node: '>=18'}
 
-  zhi-blog-api@1.67.2:
-    resolution: {integrity: sha512-ieke5izvzeMXvB1LCu9Fhaf3M5uSSrYATcLXbbiEBqBPBPH9PCmnfvC5TTRJadLEAaimlP/UFE+lL9X4muXyNg==}
+  zhi-blog-api@1.73.1:
+    resolution: {integrity: sha512-VXKQIew7mV/QuiWO+3pBxdjYZl1oSejJEibiNaW5NIjERWefH0Svq3rjBJ0Hdc3rVCqa8O3faoYf6HdD3dnRnQ==}
 
   zhi-common@1.33.1:
     resolution: {integrity: sha512-R+/9Ha2bF44I2a/vF9EDewvb4KK2AxnC03LOBXwCyAFQkge+EKvua5zYqeNMNMYn9aUBDJ6MEOyrd2CORe2QcA==}
@@ -6383,8 +6354,8 @@ packages:
   zhi-lib-base@0.8.0:
     resolution: {integrity: sha512-3Ky5p6KvLWpXy2tlb/JIfSEKLSe5w43PBLM6g+hNcWwpL9S62emgcpUAHzGWBbC0vlLBLungt2LOsmwAfhrZ0w==}
 
-  zhi-siyuan-api@2.26.0:
-    resolution: {integrity: sha512-NhANgwBgP//RRjdwqcxWDmXH7wxtaikkbk+ijt4XRGg9D9lePI47vFZdU/YLCOJ8Nz8mgBT5O1+jF3yHXwMIqQ==}
+  zhi-siyuan-api@2.29.0:
+    resolution: {integrity: sha512-DkBlnNfcCT16xBg+99muhjSsL4zsgnM5/SM2Gkb57U+5xCrLB2i2v01/hUiNOQVzatxotTD+BZ54qtfZ982SyQ==}
 
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
@@ -10378,15 +10349,6 @@ snapshots:
       package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
 
-  glob@11.0.1:
-    dependencies:
-      foreground-child: 3.3.0
-      jackspeak: 4.0.2
-      minimatch: 10.0.1
-      minipass: 7.1.2
-      package-json-from-dist: 1.0.1
-      path-scurry: 2.0.0
-
   glob@7.2.3:
     dependencies:
       fs.realpath: 1.0.0
@@ -10795,10 +10757,6 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
-  jackspeak@4.0.2:
-    dependencies:
-      '@isaacs/cliui': 8.0.2
-
   jiti@2.4.2: {}
 
   jju@1.4.0: {}
@@ -10994,8 +10952,6 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lru-cache@11.0.2: {}
-
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -11060,10 +11016,6 @@ snapshots:
   mimic-fn@4.0.0: {}
 
   min-indent@1.0.1: {}
-
-  minimatch@10.0.1:
-    dependencies:
-      brace-expansion: 2.0.1
 
   minimatch@3.1.2:
     dependencies:
@@ -11706,11 +11658,6 @@ snapshots:
       lru-cache: 10.4.3
       minipass: 7.1.2
 
-  path-scurry@2.0.0:
-    dependencies:
-      lru-cache: 11.0.2
-      minipass: 7.1.2
-
   path-type@4.0.0: {}
 
   path-type@5.0.0: {}
@@ -12156,11 +12103,6 @@ snapshots:
   rimraf@5.0.10:
     dependencies:
       glob: 10.4.5
-
-  rimraf@6.0.1:
-    dependencies:
-      glob: 11.0.1
-      package-json-from-dist: 1.0.1
 
   rollup-plugin-livereload@2.0.5:
     dependencies:
@@ -13460,9 +13402,9 @@ snapshots:
       cookie: 1.0.2
       youch-core: 0.3.3
 
-  zhi-blog-api@1.67.2(typescript@5.6.3):
+  zhi-blog-api@1.73.1(typescript@5.6.3):
     dependencies:
-      zhi-common: 1.33.1(typescript@5.6.3)
+      zhi-common: 1.34.1(typescript@5.6.3)
       zhi-lib-base: 0.8.0
     transitivePeerDependencies:
       - typescript
@@ -13473,6 +13415,16 @@ snapshots:
       shorthash2: 1.0.5
       transliteration: 2.3.5
       vue: 3.5.13(typescript@5.6.3)
+      zhi-lib-base: 0.8.0
+    transitivePeerDependencies:
+      - typescript
+
+  zhi-common@1.34.1(typescript@5.6.3):
+    dependencies:
+      js-yaml: 4.1.0
+      shorthash2: 1.0.5
+      transliteration: 2.3.5
+      vue: 3.5.17(typescript@5.6.3)
       zhi-lib-base: 0.8.0
     transitivePeerDependencies:
       - typescript
@@ -13493,10 +13445,10 @@ snapshots:
 
   zhi-lib-base@0.8.0: {}
 
-  zhi-siyuan-api@2.26.0(typescript@5.6.3):
+  zhi-siyuan-api@2.29.0(typescript@5.6.3):
     dependencies:
-      zhi-blog-api: 1.67.2(typescript@5.6.3)
-      zhi-common: 1.33.1(typescript@5.6.3)
+      zhi-blog-api: 1.73.1(typescript@5.6.3)
+      zhi-common: 1.34.1(typescript@5.6.3)
       zhi-lib-base: 0.8.0
     transitivePeerDependencies:
       - typescript

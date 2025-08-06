@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "clean": "ramrif node_modules"
+    "clean": "rm -rf node_modules"
   },
   "dependencies": {
     "@vueuse/core": "^12.2.0",
@@ -19,7 +19,7 @@
     "zhi-common": "^1.33.1",
     "zhi-device": "^2.11.0",
     "zhi-lib-base": "^0.8.0",
-    "zhi-siyuan-api": "^2.26.0"
+    "zhi-siyuan-api": "^2.29.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
