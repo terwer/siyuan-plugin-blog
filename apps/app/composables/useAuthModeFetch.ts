@@ -7,9 +7,10 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import { JsonUtil, StrUtil } from "zhi-common"
-import { buildUrl } from "~/server/utils/urlUtils"
-import { useSiyuanSPA } from "~/composables/useSiyuanSPA"
+import {JsonUtil, StrUtil} from "zhi-common"
+import {buildUrl} from "~/server/utils/urlUtils"
+import {useSiyuanSPA} from "~/composables/useSiyuanSPA"
+import {useRoute} from "#vue-router";
 
 export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-config-fetch")
@@ -218,8 +219,12 @@ export const useAuthModeFetch = () => {
     const apiBase = env.public.providerUrl
     const url = "/api/share/getDoc"
     const reqUrl = `${apiBase}${url}`
-    const params = {
-      fdId: id,
+    const { query } = useRoute()
+    const params: any = {
+      fdId: id
+    }
+    if(query.key){
+        params.fdKey = query.key
     }
     let resText = "{}"
     try {

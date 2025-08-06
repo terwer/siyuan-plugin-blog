@@ -49,28 +49,36 @@ const formData = reactive({
 const getPostData = async () => {
   try {
     const resText = await fetchPostMeta(id, providerMode)
+    const dataJson = JsonUtil.safeParse<any>(resText, {} as any)
+    logger.debug("dataJson in providerMode=>", dataJson)
     if(providerMode){
-      const dataJson = JsonUtil.safeParse<any>(resText, {} as any)
-      logger.debug("dataJson in providerMode=>", dataJson)
-      const currentPost = JsonUtil.safeParse<any>(dataJson.post, {} as any)
-      currentPost.postid = id
-      formData.post = currentPost
-      logger.debug("currentPost in providerMode=>", currentPost)
       // 分享信息
       formData.shareOptions.passwordEnabled = dataJson.passwordEnabled ?? false
       formData.shareOptions.password = dataJson.password ?? ""
+      formData.isShared = dataJson.isShared === true
+      // 文档信息
+      if(dataJson.post){
+        const currentPost = JsonUtil.safeParse<any>(dataJson.post, {} as any)
+        currentPost.postid = id
+        formData.post = currentPost
+        logger.debug("currentPost in providerMode=>", currentPost)
+        const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
+        formData.isExpires = checkExpires(attrs)
+      }
     }else{
+      // 文档信息
       const currentPost = JsonUtil.safeParse<any>(resText, {} as any)
       currentPost.postid = id
       formData.post = currentPost
       logger.debug("currentPost=>", currentPost)
+      // 分享信息
+      formData.isShared = !ObjectUtil.isEmptyObject(formData.post)
+      const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
+      formData.isExpires = checkExpires(attrs)
     }
-
-    formData.isShared = !ObjectUtil.isEmptyObject(formData.post)
-    const attrs = JsonUtil.safeParse<any>(formData.post?.attrs ?? "{}", {})
-    formData.isExpires = checkExpires(attrs)
   } catch (e) {
     formData.isShared = false
+    logger.error("getPostData error=>", e)
   }
 }
 const getSetting = async () => {
@@ -109,16 +117,15 @@ const handlePasswordSubmit = async (password:string) => {
   logger.debug("get password:", password)
   logger.debug("db password:",  formData.shareOptions.password)
   // 调用API验证密码
-  const valid = await validatePassword(formData.post.postid, password, formData.shareOptions.password)
-  // if (valid.flag) {
+  const valid = await validatePassword(id, password, formData.shareOptions.password)
+  if (valid.flag) {
     // 当前 url 参数还是 ?key
     const url = new URL(window.location.href);
     url.searchParams.set("key", valid.data);
     window.location.href = url.toString();
-
-  // } else {
-  //   ElMessage.error(t('share.password.confirm.password.rule.not.match'))
-  // }
+  } else {
+    ElMessage.error(t('share.password.confirm.password.rule.not.match'))
+  }
 }
 </script>
 
