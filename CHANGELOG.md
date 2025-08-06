@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.6.0...siyuan-plugin-blog-v6.7.0) (2025-08-06)
+
+
+### Features
+
+* add password feature 🍰 ([7e19064](https://github.com/terwer/siyuan-plugin-blog/commit/7e19064b34e1275282b8fcf1ba50b7769fe88844))
+* add password feature ok 🍰 ([3604fa9](https://github.com/terwer/siyuan-plugin-blog/commit/3604fa9e37aad8a7d911652c91a0536c0a604141))
+* add password feature release 🍰 ([7a95844](https://github.com/terwer/siyuan-plugin-blog/commit/7a9584432c8b05d2e642e6ed65ab49887fdddd8f))
+* add stable Suspense feature 🌹 ([c150aac](https://github.com/terwer/siyuan-plugin-blog/commit/c150aaca76619f82d0c3d2751afb0f91d0cccf99))
+* **app:** add siyuan artifacts build ([0782a6a](https://github.com/terwer/siyuan-plugin-blog/commit/0782a6a101632adeebe596d84d78518ba1817111))
+* **app:** add siyuan artifacts build ([13f16df](https://github.com/terwer/siyuan-plugin-blog/commit/13f16dfbbbb1fe7c628693a0e3b9bed8f5e72183))
+
 ## [6.6.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.5.0...siyuan-plugin-blog-v6.6.0) (2025-07-21)
 ### Features
 * **app:** add js-base64 and vue-easy-lightbox dependencies ([ef9b3f9](https://github.com/terwer/siyuan-plugin-blog/commit/ef9b3f9ca6bfb2046026b318760e2ff08f4cdbdd))
