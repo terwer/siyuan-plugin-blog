@@ -78,21 +78,27 @@ export const useAuthModeFetch = () => {
     return resText
   }
 
-  const getAuthorByDomainWhiteList = async (): Promise<string> => {
-    // 先查找 domain 白名单
-    const domainsFile = isDev ? "domains.local.json" : "domains.json"
-    const domainsText = await fetchProviderConfigByResource(domainsFile)
-    const domainsJson = JsonUtil.safeParse<any>(domainsText, {})
-    const domains = domainsJson.domains ?? []
-    // 获取当前页面的 origin
-    // https://stackoverflow.com/a/77175631/4037224
-    const requestURL = useRequestURL()
-    const currentOrigin = StrUtil.isEmptyString(requestURL.origin) ? window.location.origin : requestURL.origin
-    logger.info("current origin=>", currentOrigin)
-    // 查找匹配的 domain 并获取 author
-    const matchedDomain = domains.find((domain: any) => domain.domain === currentOrigin)
-    return matchedDomain ? matchedDomain.author : null
-  }
+    const getAuthorByDomainWhiteList = async (requestURL: URL): Promise<string> => {
+        // 先查找 domain 白名单
+        const domainsFile = isDev ? "domains.local.json" : "domains.json"
+        const domainsText = await fetchProviderConfigByResource(domainsFile)
+        const domainsJson = JsonUtil.safeParse<any>(domainsText, {})
+        const domains = domainsJson.domains ?? []
+        // logger.info("domains=>", domains)
+        try {
+            // 获取当前页面的 origin
+            // https://stackoverflow.com/a/77175631/4037224
+            const currentOrigin = StrUtil.isEmptyString(requestURL.origin) ? window.location.origin : requestURL.origin
+            logger.info("current origin=>", currentOrigin)
+            // 查找匹配的 domain 并获取 author
+            const matchedDomain = domains.find((domain: any) => domain.domain === currentOrigin)
+            logger.info(`matched domain=>${matchedDomain}`)
+            return matchedDomain ? matchedDomain.author : null
+        } catch (e) {
+            logger.error("get current origin error =>", e)
+            return ""
+        }
+    }
 
   const fetchProviderConfigByAuthorForCurrentUser = async (author: string, filename: string): Promise<string> => {
     const apiBase = env.public.providerUrl
@@ -172,14 +178,14 @@ export const useAuthModeFetch = () => {
   /**
    * 获取配置信息
    */
-  const fetchConfig = async (filename: string, providerMode: boolean): Promise<string> => {
+  const fetchConfig = async (filename: string, providerMode: boolean, requestURL: URL): Promise<string> => {
     let resText: string = ""
     if (providerMode) {
       logger.info(`fetch config text ${filename} in provider mode`)
       try {
         if (docId == "") {
           // 首页
-          const whiteListAuthor = await getAuthorByDomainWhiteList()
+          const whiteListAuthor = await getAuthorByDomainWhiteList(requestURL)
           if (whiteListAuthor) {
             logger.info("use author from domain white list for home page")
             resText = await fetchProviderConfigByAuthorForCurrentUser(whiteListAuthor, filename)

@@ -15,8 +15,8 @@ import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 // 由于布局是个宏，不能动态设置了，因此只能写死
 
 const { t } = useI18n()
-
-const { getStaticSetting } = useStaticSettingStore()
+const requestURL = useRequestURL()
+const { getStaticSetting } = useStaticSettingStore(requestURL)
 
 const setting = await getStaticSetting()
 const title = `${setting?.siteTitle ?? t("blog.site.title")} - ${setting?.siteSlogan ?? t("blog.site.slogan")}`

@@ -13,14 +13,14 @@ import { checkExpires } from "~/utils/utils"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 import AppConfig from "~/app.config"
 import { useServerAssets } from "~/plugins/libs/renderer/useServerAssets"
-import {BrowserUtil} from "zhi-device";
 
 const logger = createAppLogger("static-share-page")
+const requestURL = useRequestURL()
 const { docId } = useDocId()
 const { t } = useI18n()
 const { providerMode } = useProviderMode()
 const { fetchPostMeta, validatePassword } = useAuthModeFetch()
-const { getStaticSetting } = useStaticSettingStore()
+const { getStaticSetting } = useStaticSettingStore(requestURL)
 const { getFirstImageSrc } = useServerAssets()
 
 // props
