@@ -69,7 +69,7 @@ const items = computed(() => {
     </div>
     <!-- 菜单部分 -->
     <el-menu class="sidebar-menu" :default-openeds="expandedIds" :default-active="activeIndex">
-      <SidebarMenu v-for="menu in items" :key="menu.id" :menu="menu" :max-depth="maxDepth" />
+      <SidebarMenu v-for="menu in items" :key="menu.id" :menu="menu" :active-index="activeIndex" />
     </el-menu>
   </el-scrollbar>
 </template>
