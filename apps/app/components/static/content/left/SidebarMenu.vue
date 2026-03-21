@@ -24,7 +24,7 @@ const props = defineProps<{ menu: MenuData, maxDepth: number }>()
 
 <template>
   <el-sub-menu
-    v-if="props.menu.children?.length && props.menu.depth < props.maxDepth"
+    v-if="props.menu.children?.length"
     :index="props.menu.id"
   >
     <template #title>

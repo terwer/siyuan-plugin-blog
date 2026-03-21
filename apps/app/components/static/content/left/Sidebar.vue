@@ -24,8 +24,9 @@ const activeIndex = props.post.postid
 const expandedIds = TreeUtils.chainExpandedIds(treeData, [props.post.postid])
 const maxDepth = props.post?.docTreeLevel ?? 3
 const defaultDocPath = props.setting.docPath ?? "x"
-// 构建树形数据
-const buildTree = (list: any[], parentId: string, depth = 1): any => {
+
+// 构建树形数据（仅用于渲染，不应用深度限制，因为后端已处理）
+const buildTreeForRendering = (list: any[], parentId: string): any[] => {
   if (!list || !Array.isArray(list)) {
     return []
   }
@@ -34,11 +35,11 @@ const buildTree = (list: any[], parentId: string, depth = 1): any => {
     .filter((item: any) => item.parentId === parentId)
     .map((item: any) => ({
       ...item,
-      depth,
       link: `/${defaultDocPath}/${item.id}`,
-      children: depth < maxDepth ? buildTree(list, item.id, depth + 1) : [],
+      children: buildTreeForRendering(list, item.id),
     }))
 }
+
 // 计算属性 items，用于构建树形结构
 const items = computed(() => {
   const itemData = treeData
@@ -52,7 +53,7 @@ const items = computed(() => {
     })
 
     logger.info("found parentId=>", parentId)
-    return buildTree(itemData, parentId)
+    return buildTreeForRendering(itemData, parentId)
   } else {
     return []
   }
