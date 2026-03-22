@@ -8,6 +8,7 @@
   -->
 
 <script setup lang="ts">
+import { nextTick, onMounted, ref } from "vue"
 import type AppConfig from "~/app.config"
 import SidebarMenu from "~/components/static/content/left/SidebarMenu.vue"
 
@@ -16,6 +17,101 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 const route = useRoute()
 const logger = createAppLogger("left-sidebar")
 const { t } = useI18n()
+
+// 引用 el-scrollbar 组件
+const scrollbarRef = ref<any>(null)
+
+// 滚动到当前激活的菜单项
+const scrollToActiveItem = (attempt = 0) => {
+  const maxAttempts = 10
+  
+  nextTick(() => {
+    setTimeout(() => {
+      const scrollbar = scrollbarRef.value
+      if (!scrollbar) {
+        logger.warn("scrollbar not found")
+        return
+      }
+      
+      const wrap = scrollbar.wrapRef
+      if (!wrap) {
+        logger.warn("scrollbar wrap not found")
+        return
+      }
+      
+      // 查找激活的菜单项 - 优先查找 el-menu-item.is-active
+      // 因为子菜单展开后，el-sub-menu 也可能有 is-active 类
+      let activeElement = document.querySelector('.sidebar-menu .el-menu-item.is-active') as HTMLElement
+      
+      // 如果没找到，再查找任何 is-active 元素
+      if (!activeElement) {
+        activeElement = document.querySelector('.sidebar-menu .is-active') as HTMLElement
+      }
+      
+      if (!activeElement) {
+        logger.warn("active element not found, attempt:", attempt)
+        if (attempt < maxAttempts) {
+          // 重试，等待菜单展开
+          scrollToActiveItem(attempt + 1)
+        }
+        return
+      }
+      
+      // 获取元素相对于 wrap 的位置
+      const elementRect = activeElement.getBoundingClientRect()
+      const wrapRect = wrap.getBoundingClientRect()
+      
+      // 计算元素当前相对于 wrap 顶部的偏移
+      const elementRelativeTop = elementRect.top - wrapRect.top
+      const elementHeight = activeElement.offsetHeight
+      const wrapHeight = wrap.clientHeight
+      
+      // 如果元素已经在可视区域内且接近中央，不需要滚动
+      const isInViewport = elementRelativeTop >= 0 && elementRelativeTop + elementHeight <= wrapHeight
+      const viewportCenter = wrapHeight / 2
+      const elementCenter = elementRelativeTop + elementHeight / 2
+      const isNearCenter = Math.abs(elementCenter - viewportCenter) < elementHeight
+      
+      if (isInViewport && isNearCenter && attempt > 0) {
+        logger.info("element already in viewport center, skip scrolling")
+        return
+      }
+      
+      // 计算需要滚动的距离：使元素居中
+      const scrollOffset = elementRelativeTop - (wrapHeight / 2) + (elementHeight / 2)
+      const targetScrollTop = wrap.scrollTop + scrollOffset
+      
+      // 边界检查
+      const maxScrollTop = wrap.scrollHeight - wrapHeight
+      const finalScrollTop = Math.max(0, Math.min(targetScrollTop, maxScrollTop))
+      
+      logger.info("scrolling to:", finalScrollTop, "element top:", elementRelativeTop, "wrap height:", wrapHeight, "attempt:", attempt)
+      
+      // 使用 Element Plus 的 scrollTo 方法
+      scrollbar.scrollTo({
+        top: finalScrollTop,
+        behavior: 'smooth'
+      })
+      
+      // 再次验证滚动是否成功
+      setTimeout(() => {
+        const newRect = activeElement!.getBoundingClientRect()
+        const newRelativeTop = newRect.top - wrapRect.top
+        const isNowVisible = newRelativeTop >= 0 && newRelativeTop + elementHeight <= wrapHeight
+        
+        if (!isNowVisible && attempt < maxAttempts) {
+          logger.info("element not visible after scroll, retrying...")
+          scrollToActiveItem(attempt + 1)
+        }
+      }, 500)
+    }, 300 + attempt * 100) // 递增延迟
+  })
+}
+
+// 组件挂载后执行滚动
+onMounted(() => {
+  scrollToActiveItem()
+})
 
 // 初始化文档树
 const treeData = TreeUtils.addParentIds(props.post.docTree)
@@ -112,7 +208,7 @@ const items = computed(() => {
 </script>
 
 <template>
-  <el-scrollbar class="sidebar-container">
+  <el-scrollbar ref="scrollbarRef" class="sidebar-container">
     <!-- 顶部标题 -->
     <div class="sidebar-header">
       {{ t("static.docTree") }}
