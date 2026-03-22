@@ -92,9 +92,6 @@ watch(() => props.activeText, () => {
 
 <template>
   <div class="outline" :style="{ width: width + 'px' }">
-    <div class="outline-title">
-      <a class="outline-title-link">{{ t("static.outline") }}</a>
-    </div>
     <div ref="outlineContentRef" class="outline-content">
       <div
         v-for="(item, index) in outlineData"
@@ -116,63 +113,16 @@ watch(() => props.activeText, () => {
 
 <style lang="stylus" scoped>
 .outline
-  width: 280px /* 默认宽度，会被内联样式覆盖 */
-  max-height: calc(100vh - 80px) /* 限制最大高度，留出顶部空间 */
-  background-color: #fff
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1)
-  border: 1px solid #eaeaea
-  border-radius: 8px /* 圆角设计 */
+  width: 100% /* 填满父容器 */
+  height: 100% /* 填满父容器 */
   display: flex
   flex-direction: column
-  position: fixed
-  top: 60px /* 距离顶部一定距离 */
   overflow: hidden /* 防止内容溢出 */
-
-  // Dark mode styles
-  html[data-theme-mode="dark"] &
-    background-color: #1e1e1e
-    border-color: #3a3a3a
-
-.outline-title
-  flex-shrink: 0
-  padding: 12px 16px
-  background-color: inherit
-  border-bottom: 1px solid #f0f0f0
-  font-size: 14px
-  font-weight: 500
-
-  // Dark mode styles
-  html[data-theme-mode="dark"] &
-    border-bottom-color: #333
-
-  .outline-title-link
-    color: #666
-    text-decoration: none
-    cursor: pointer
-    transition: color 0.2s ease
-    display: flex
-    align-items: center
-    gap: 8px
-    
-    &::before
-      content: "☰"
-      font-size: 12px
-      opacity: 0.7
-    
-    &:hover
-      color: #1890ff
-
-    // Dark mode styles
-    html[data-theme-mode="dark"] &
-      color: #aaa
-      &:hover
-        color: #40a9ff
 
 .outline-content
   flex-grow: 1
   overflow-y: auto
   overflow-x: hidden
-  background-color: inherit
   padding: 8px 0
   scroll-behavior: smooth /* 平滑滚动 */
   

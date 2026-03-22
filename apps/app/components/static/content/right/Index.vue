@@ -226,6 +226,33 @@ onUnmounted(() => {
         :class="{ 'outline-expanded': showOutline, 'is-resizing': isResizing }"
         :style="{ width: showOutline ? outlineWidth + 'px' : '0px' }"
     >
+      <!-- 大纲标题栏（包含按钮组） -->
+      <div class="outline-header">
+        <div class="outline-title">
+          <span class="outline-title-icon">☰</span>
+          <span>{{ $t("static.outline") }}</span>
+        </div>
+        <div class="outline-header-actions">
+          <!-- 图钉按钮 -->
+          <div
+              class="header-btn pin-btn"
+              :class="{ 'pin-btn-active': isPinned }"
+              @click="togglePin"
+              title="固定显示大纲"
+          >
+            <el-icon :size="14"><Paperclip /></el-icon>
+          </div>
+          <!-- 关闭按钮 -->
+          <div
+              class="header-btn close-btn"
+              @click="toggleOutline"
+              title="关闭大纲"
+          >
+            <el-icon :size="14"><More /></el-icon>
+          </div>
+        </div>
+      </div>
+      
       <div class="outline-content">
         <static-content-right-outline
             :outline-data="outlineData"
@@ -234,6 +261,7 @@ onUnmounted(() => {
             :width="outlineWidth"
         />
       </div>
+      
       <!-- 拖拽调整宽度的手柄 -->
       <div
           v-if="showOutline"
@@ -242,7 +270,6 @@ onUnmounted(() => {
           @mousedown="startResize"
           title="拖拽调整宽度"
       >
-        <!-- 拖拽指示器图标 -->
         <div class="resize-indicator">
           <div class="resize-dots">
             <span class="dot"></span>
@@ -252,37 +279,14 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    <!-- 大纲控制按钮组 -->
+    
+    <!-- 收起状态下的展开按钮 -->
     <div
-        v-if="showOutline"
-        class="outline-controls"
-        :style="{ right: outlineWidth + 16 + 'px' }"
-    >
-      <!-- 图钉按钮 -->
-      <div
-          class="control-btn pin-btn"
-          :class="{ 'pin-btn-active': isPinned }"
-          @click="togglePin"
-          title="固定显示大纲"
-      >
-        <el-icon :size="14"><Paperclip /></el-icon>
-      </div>
-      <!-- 更多按钮 -->
-      <div
-          class="control-btn toggle-btn"
-          @click="toggleOutline"
-          @mouseenter="onHover(true)"
-          title="切换大纲显示"
-      >
-        <el-icon :size="14"><More /></el-icon>
-      </div>
-    </div>
-    <!-- 收起状态下的更多按钮 -->
-    <div
-        v-else
+        v-if="!showOutline"
         class="toggle-btn-collapsed"
         @click="toggleOutline"
         @mouseenter="onHover(true)"
+        title="展开大纲"
     >
       <el-icon :size="14"><More /></el-icon>
     </div>
@@ -312,6 +316,7 @@ onUnmounted(() => {
   flex-direction column
   transform translateX(100%) /* 默认隐藏大纲 */
   transition transform 0.3s ease
+  box-shadow -2px 0 8px rgba(0, 0, 0, 0.08) /* 添加阴影增强层次感 */
 
 /* 展开状态 */
 .outline-container.outline-expanded
@@ -320,6 +325,58 @@ onUnmounted(() => {
 /* 拖拽时禁用过渡，使调整更流畅 */
 .outline-container.is-resizing
   transition none
+
+/* 大纲标题栏 */
+.outline-header
+  flex-shrink 0
+  display flex
+  align-items center
+  justify-content space-between
+  padding 12px 16px
+  border-bottom 1px solid var(--border-color)
+  background var(--background)
+
+.outline-title
+  display flex
+  align-items center
+  gap 8px
+  font-size 14px
+  font-weight 500
+  color var(--text-color-primary)
+
+.outline-title-icon
+  font-size 12px
+  opacity 0.7
+
+/* 标题栏按钮组 */
+.outline-header-actions
+  display flex
+  align-items center
+  gap 4px
+
+.header-btn
+  width 28px
+  height 28px
+  display flex
+  align-items center
+  justify-content center
+  border-radius 6px
+  cursor pointer
+  transition all 0.2s ease
+  color var(--text-color-secondary)
+
+.header-btn:hover
+  background var(--el-fill-color-light)
+  color var(--text-color-primary)
+
+/* 图钉按钮 */
+.pin-btn-active
+  background var(--el-color-primary-light-9)
+  color var(--el-color-primary)
+
+.pin-btn-active:hover
+  background var(--el-color-primary)
+  color white
 
 /* 大纲内容 */
 .outline-content
@@ -391,54 +448,7 @@ onUnmounted(() => {
 .resize-handle.is-resizing .resize-dots .dot
   background var(--el-color-primary)
 
-/* 大纲控制按钮组 */
-.outline-controls
-  position fixed
-  top 20px
-  z-index 100
-  display flex
-  align-items center
-  gap 8px
-  padding 6px
-  background var(--background)
-  border 1px solid var(--border-color)
-  border-radius 8px
-  box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
-  transition all 0.3s ease
-
-/* 控制按钮通用样式 */
-.control-btn
-  width 28px
-  height 28px
-  display flex
-  align-items center
-  justify-content center
-  border-radius 6px
-  cursor pointer
-  transition all 0.2s ease
-  color var(--text-color-secondary)
-
-.control-btn:hover
-  background var(--el-fill-color-light)
-  color var(--text-color-primary)
-
-/* 图钉按钮 */
-.pin-btn
-  color var(--text-color-secondary)
-
-.pin-btn-active
-  background var(--el-color-primary-light-9)
-  color var(--el-color-primary)
-
-.pin-btn-active:hover
-  background var(--el-color-primary)
-  color white
-
-/* 切换按钮 */
-.toggle-btn
-  color var(--text-color-secondary)
-
-/* 收起状态下的切换按钮 */
+/* 收起状态下的展开按钮 */
 .toggle-btn-collapsed
   position fixed
   top 20px
