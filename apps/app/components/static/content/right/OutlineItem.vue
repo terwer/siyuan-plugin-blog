@@ -28,12 +28,21 @@ const props = defineProps({
   activeText: {
     type: String,
     default: "",
+  },
+  containerWidth: {
+    type: Number,
+    default: 280,
   }
 })
 
+// 优化的缩进计算：递减缩进策略
 const getFirstMargin = (item) => {
   const level = getItemLevel(item)
-  return (level - 1) * 16
+  // 递减缩进：H1=0, H2=12, H3=20, H4=28, H5+=8...
+  if (level === 1) return 0
+  if (level === 2) return 12
+  if (level === 3) return 20
+  return 28 + (level - 4) * 8
 }
 
 const adjustItemName = (name) => {
@@ -72,28 +81,28 @@ const scrollToSection = (id) => {
   <div :style="{ marginLeft: getFirstMargin(item) + 'px' }" class="outline-item">
     <!-- 第一级 -->
     <div v-if="getItemLevel(item) === 1 || isRoot" class="nested-items">
-      <a class="item-link" :class="{ active: item.name === activeText }" @click.prevent="scrollToSection(item.id)">
+      <a class="item-link" :class="{ active: item.name === activeText }" @click.prevent="scrollToSection(item.id)" :title="adjustItemName(item.name)">
         {{ adjustItemName(item.name) }}
       </a>
       <div v-if="getItemLevel(item) < maxDepth">
-        <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" />
+        <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" :container-width="containerWidth" />
       </div>
     </div>
 
     <!-- 其他级别且有子项 -->
     <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
-      <a class="item-link" :class="{ active: item.name === activeText }" @click.prevent="scrollToSection(item.id)">
+      <a class="item-link" :class="{ active: item.name === activeText }" @click.prevent="scrollToSection(item.id)" :title="adjustItemName(item.content)">
         {{ adjustItemName(item.content) }}
       </a>
       <div v-if="getItemLevel(item) < maxDepth">
-        <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" />
+        <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" :container-width="containerWidth" />
       </div>
     </div>
 
     <!-- 无子项 -->
     <div v-else>
       <div v-if="getItemLevel(item) < maxDepth">
-        <a class="item-link" @click.prevent="scrollToSection(item.id)">
+        <a class="item-link" @click.prevent="scrollToSection(item.id)" :title="adjustItemName(item.content)">
           {{ adjustItemName(item.content) }}
         </a>
       </div>
@@ -115,6 +124,12 @@ const scrollToSection = (id) => {
   text-decoration: none
   cursor: pointer
   transition: color 0.2s ease
+  display: block
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  max-width: 100%
+  line-height: 1.5
 
   &:hover
     color: #1890ff

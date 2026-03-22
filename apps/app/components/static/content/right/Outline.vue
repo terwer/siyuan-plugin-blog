@@ -20,6 +20,10 @@ const props = defineProps({
   activeText: {
     type: String,
     default: "",
+  },
+  width: {
+    type: Number,
+    default: 280,
   }
 })
 
@@ -47,7 +51,7 @@ const getItemLevel = (item) => {
 </script>
 
 <template>
-  <div class="outline">
+  <div class="outline" :style="{ width: width + 'px' }">
     <div class="outline-title">
       <a class="outline-title-link">{{ t("static.outline") }}</a>
     </div>
@@ -63,6 +67,7 @@ const getItemLevel = (item) => {
           :root-level="getRootLevel()"
           :is-root="true"
           :active-text="activeText"
+          :container-width="width"
         />
       </div>
     </div>
@@ -71,7 +76,7 @@ const getItemLevel = (item) => {
 
 <style lang="stylus" scoped>
 .outline
-  width: 240px
+  width: 280px /* 默认宽度，会被内联样式覆盖 */
   height: 100vh
   background-color: #fff
   box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1)

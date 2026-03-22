@@ -22,6 +22,67 @@ const showOutline = ref(false)
 // 控制 hover 状态，true 为 hover 展开，false 为 hover 收起
 const isHovered = ref(false)
 
+// ==================== 大纲宽度调整功能 ====================
+const OUTLINE_WIDTH_KEY = 'siyuan-blog-outline-width'
+const DEFAULT_WIDTH = 280
+const MIN_WIDTH = 200
+const MAX_WIDTH = 500
+
+// 大纲宽度状态
+const outlineWidth = ref(DEFAULT_WIDTH)
+const isResizing = ref(false)
+
+// 从 localStorage 读取保存的宽度
+const loadSavedWidth = () => {
+  if (process.client) {
+    const savedWidth = localStorage.getItem(OUTLINE_WIDTH_KEY)
+    if (savedWidth) {
+      const width = parseInt(savedWidth, 10)
+      if (width >= MIN_WIDTH && width <= MAX_WIDTH) {
+        outlineWidth.value = width
+      }
+    }
+  }
+}
+
+// 保存宽度到 localStorage
+const saveWidth = (width: number) => {
+  if (process.client) {
+    localStorage.setItem(OUTLINE_WIDTH_KEY, width.toString())
+  }
+}
+
+// 开始拖拽调整宽度
+const startResize = (e: MouseEvent) => {
+  e.preventDefault()
+  isResizing.value = true
+  
+  const startX = e.clientX
+  const startWidth = outlineWidth.value
+  
+  const handleMouseMove = (moveEvent: MouseEvent) => {
+    if (!isResizing.value) return
+    
+    const deltaX = startX - moveEvent.clientX
+    const newWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + deltaX))
+    outlineWidth.value = newWidth
+  }
+  
+  const handleMouseUp = () => {
+    isResizing.value = false
+    saveWidth(outlineWidth.value)
+    document.removeEventListener('mousemove', handleMouseMove)
+    document.removeEventListener('mouseup', handleMouseUp)
+    document.body.style.userSelect = ''
+    document.body.style.cursor = ''
+  }
+  
+  document.addEventListener('mousemove', handleMouseMove)
+  document.addEventListener('mouseup', handleMouseUp)
+  document.body.style.userSelect = 'none'
+  document.body.style.cursor = 'col-resize'
+}
+
 // 切换大纲显示/隐藏
 const toggleOutline = () => {
   showOutline.value = !showOutline.value
@@ -78,9 +139,12 @@ const onScroll = () => {
 }
 
 onMounted(() => {
+  // 从 localStorage 加载保存的宽度（确保在客户端执行）
+  loadSavedWidth()
+  
   // 有文档大纲才绑定滚动
   if (outlineData.value && outlineData.value.length > 0) {
-    logger.info("Mounted: Adding scroll listener")
+    logger.info("Mounted: Adding scroll listener, outline width:", outlineWidth.value)
     window.addEventListener("scroll", onScroll, true)
   }
 })
@@ -95,18 +159,39 @@ onUnmounted(() => {
   <div v-if="outlineData && outlineData.length > 0" class="outline-wrapper" :class="{ 'outline-wrapper-expanded': showOutline }">
     <div
         class="outline-container"
-        :class="{ 'outline-expanded': showOutline }"
+        :class="{ 'outline-expanded': showOutline, 'is-resizing': isResizing }"
+        :style="{ width: showOutline ? outlineWidth + 'px' : '0px' }"
     >
       <div class="outline-content">
         <static-content-right-outline
             :outline-data="outlineData"
             :max-depth="outlineMaxDepth"
             :active-text="activeNodeText"
+            :width="outlineWidth"
         />
+      </div>
+      <!-- 拖拽调整宽度的手柄 -->
+      <div
+          v-if="showOutline"
+          class="resize-handle"
+          :class="{ 'is-resizing': isResizing }"
+          @mousedown="startResize"
+          title="拖拽调整宽度"
+      >
+        <!-- 拖拽指示器图标 -->
+        <div class="resize-indicator">
+          <div class="resize-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
       </div>
     </div>
     <div
         class="toggle-btn"
+        :class="{ 'toggle-btn-moved': showOutline }"
+        :style="showOutline ? { right: outlineWidth + 10 + 'px' } : {}"
         @click="toggleOutline"
         @mouseenter="onHover(true)"
     >
@@ -131,7 +216,7 @@ onUnmounted(() => {
   top 0
   right 0
   height 100vh /* 占满视窗高度 */
-  width 240px /* 固定宽度，仅在展开时可见 */
+  width 0 /* 默认宽度为0，通过style动态设置 */
   background var(--background)
   border-left 1px solid var(--border-color)
   display flex
@@ -143,11 +228,79 @@ onUnmounted(() => {
 .outline-container.outline-expanded
   transform translateX(0)
 
+/* 拖拽时禁用过渡，使调整更流畅 */
+.outline-container.is-resizing
+  transition none
+
 /* 大纲内容 */
 .outline-content
   flex 1
   overflow-y auto /* 独立滚动 */
   padding 16px
+  min-width 0 /* 防止flex子项溢出 */
+
+/* 拖拽调整宽度的手柄 */
+.resize-handle
+  position absolute
+  left 0
+  top 0
+  bottom 0
+  width 12px /* 增加宽度以便更容易命中 */
+  cursor col-resize
+  background transparent
+  transition all 0.2s ease
+  z-index 10
+  display flex
+  align-items center
+  justify-content center
+
+/* 拖拽指示器容器 */
+.resize-indicator
+  width 4px
+  height 40px
+  background rgba(128, 128, 128, 0.2)
+  border-radius 2px
+  display flex
+  align-items center
+  justify-content center
+  transition all 0.2s ease
+  opacity 0.5
+
+/* 拖拽点样式 */
+.resize-dots
+  display flex
+  flex-direction column
+  gap 3px
+  align-items center
+
+.resize-dots .dot
+  width 3px
+  height 3px
+  background rgba(128, 128, 128, 0.6)
+  border-radius 50%
+  transition all 0.2s ease
+
+/* 悬停状态 */
+.resize-handle:hover
+  background rgba(64, 158, 255, 0.1) /* 主题色淡背景 */
+
+.resize-handle:hover .resize-indicator
+  background rgba(64, 158, 255, 0.3)
+  opacity 1
+
+.resize-handle:hover .resize-dots .dot
+  background rgba(64, 158, 255, 0.8)
+
+/* 拖拽中状态 */
+.resize-handle.is-resizing
+  background rgba(64, 158, 255, 0.15)
+
+.resize-handle.is-resizing .resize-indicator
+  background rgba(64, 158, 255, 0.5)
+  opacity 1
+
+.resize-handle.is-resizing .resize-dots .dot
+  background var(--el-color-primary)
 
 /* 切换按钮 */
 .toggle-btn
@@ -158,8 +311,15 @@ onUnmounted(() => {
   cursor pointer
   transition right 0.3s ease
 
+/* 按钮跟随大纲移动 */
+.toggle-btn-moved
+  transition right 0.1s ease
+
 /* 小屏适配：不占用宽度 */
 @media (max-width: 768px)
   .outline-wrapper
     position fixed
+  
+  .resize-handle
+    display none /* 小屏隐藏拖拽手柄 */
 </style>
