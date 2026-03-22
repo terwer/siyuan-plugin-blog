@@ -5,6 +5,8 @@
 - [apps/app/components/static/content/right/Index.vue](file://apps/app/components/static/content/right/Index.vue)
 - [apps/app/components/static/content/right/Outline.vue](file://apps/app/components/static/content/right/Outline.vue)
 - [apps/app/components/static/content/right/OutlineItem.vue](file://apps/app/components/static/content/right/OutlineItem.vue)
+- [apps/app/components/static/content/Index.vue](file://apps/app/components/static/content/Index.vue)
+- [apps/app/components/static/content/Main.vue](file://apps/app/components/static/content/Main.vue)
 - [apps/app/components/static/DetailPage.vue](file://apps/app/components/static/DetailPage.vue)
 - [apps/app/pages/static/[id].vue](file://apps/app/pages/static/[id].vue)
 - [apps/app/composables/useDocId.ts](file://apps/app/composables/useDocId.ts)
@@ -13,20 +15,33 @@
 - [apps/app/package.json](file://apps/app/package.json)
 </cite>
 
+## 更新摘要
+**变更内容**
+- 更新右侧大纲容器(Index.vue)为完整的 flex 布局系统
+- 新增占位元素确保正文被正确挤压
+- 引入 viewport 相对定位而非内容流
+- 优化宽度过渡动画和阴影效果
+- 增强滚动行为和自定义滚动条
+- 添加固定显示功能和拖拽调整宽度
+
 ## 目录
 1. [简介](#简介)
 2. [项目结构](#项目结构)
 3. [核心组件](#核心组件)
 4. [架构概览](#架构概览)
 5. [详细组件分析](#详细组件分析)
-6. [依赖关系分析](#依赖关系分析)
-7. [性能考虑](#性能考虑)
-8. [故障排除指南](#故障排除指南)
-9. [结论](#结论)
+6. [布局系统优化](#布局系统优化)
+7. [滚动行为增强](#滚动行为增强)
+8. [依赖关系分析](#依赖关系分析)
+9. [性能考虑](#性能考虑)
+10. [故障排除指南](#故障排除指南)
+11. [结论](#结论)
 
 ## 简介
 
 大纲系统是 Siyuan 笔记博客插件中的核心功能模块，负责为静态文章页面提供交互式的大纲导航。该系统能够自动生成文档的层次结构，提供智能的滚动同步、可定制的显示范围和灵活的用户交互体验。
+
+**更新** 系统已升级为基于 flex 布局的完整解决方案，采用 viewport 相对定位，提供更流畅的用户体验和更好的性能表现。
 
 系统主要特点包括：
 - 自动生成文档大纲结构
@@ -34,10 +49,13 @@
 - 可调整的大纲宽度和固定显示功能
 - 支持多级标题的层级展示
 - 响应式设计和主题适配
+- **新增**：flex 布局系统和 viewport 定位
+- **新增**：占位元素确保正文挤压
+- **新增**：优化的滚动行为和自定义滚动条
 
 ## 项目结构
 
-大纲系统位于应用的静态内容组件目录中，采用分层架构设计：
+大纲系统位于应用的静态内容组件目录中，采用分层架构设计，现已升级为完整的 flex 布局系统：
 
 ```mermaid
 graph TB
@@ -45,60 +63,73 @@ subgraph "大纲系统架构"
 A[static/content/right/] --> B[Index.vue - 主容器]
 A --> C[Outline.vue - 大纲容器]
 A --> D[OutlineItem.vue - 大纲项组件]
-B --> E[滚动监听器]
-B --> F[激活状态管理]
-B --> G[宽度调整器]
-C --> H[大纲数据渲染]
-C --> I[自动滚动定位]
-D --> J[层级计算]
-D --> K[激活状态检测]
-D --> L[点击跳转]
+B --> E[flex 布局系统]
+B --> F[viewport 定位]
+B --> G[占位元素]
+B --> H[固定显示功能]
+C --> I[独立滚动容器]
+C --> J[自动滚动定位]
+D --> K[层级计算]
+D --> L[激活状态检测]
+D --> M[点击跳转]
+N[content/Index.vue] --> O[flex 主布局]
+O --> P[左侧内容]
+O --> Q[正文区域]
+O --> R[右侧大纲]
 end
 ```
 
 **图表来源**
-- [apps/app/components/static/content/right/Index.vue:1-491](file://apps/app/components/static/content/right/Index.vue#L1-L491)
-- [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
+- [apps/app/components/static/content/right/Index.vue:1-530](file://apps/app/components/static/content/right/Index.vue#L1-L530)
+- [apps/app/components/static/content/right/Outline.vue:1-156](file://apps/app/components/static/content/right/Outline.vue#L1-L156)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
+- [apps/app/components/static/content/Index.vue:1-51](file://apps/app/components/static/content/Index.vue#L1-L51)
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:1-491](file://apps/app/components/static/content/right/Index.vue#L1-L491)
-- [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
+- [apps/app/components/static/content/right/Index.vue:1-530](file://apps/app/components/static/content/right/Index.vue#L1-L530)
+- [apps/app/components/static/content/right/Outline.vue:1-156](file://apps/app/components/static/content/right/Outline.vue#L1-L156)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
+- [apps/app/components/static/content/Index.vue:1-51](file://apps/app/components/static/content/Index.vue#L1-L51)
 
 ## 核心组件
 
-大纲系统由三个核心组件协同工作：
+大纲系统由四个核心组件协同工作，其中右侧大纲容器已升级为完整的 flex 布局系统：
 
-### 1. 大纲主容器 (Index.vue)
-负责整个大纲系统的协调和状态管理，包括滚动监听、激活状态跟踪和用户交互控制。
+### 1. 大纲主容器 (Index.vue) - **已升级**
+负责整个大纲系统的协调和状态管理，现采用 flex 布局和 viewport 定位，包括滚动监听、激活状态跟踪和用户交互控制。
 
 ### 2. 大纲容器 (Outline.vue)
-提供大纲的整体布局和样式，包含滚动区域和自动滚动功能。
+提供大纲的整体布局和样式，包含独立滚动区域和自动滚动功能。
 
 ### 3. 大纲项组件 (OutlineItem.vue)
 处理单个大纲项的渲染、层级计算和交互逻辑。
 
+### 4. 主布局容器 (content/Index.vue) - **新增**
+提供 flex 布局的基础结构，确保大纲、正文和侧边栏的正确排列。
+
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:1-491](file://apps/app/components/static/content/right/Index.vue#L1-L491)
-- [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
+- [apps/app/components/static/content/right/Index.vue:1-530](file://apps/app/components/static/content/right/Index.vue#L1-L530)
+- [apps/app/components/static/content/right/Outline.vue:1-156](file://apps/app/components/static/content/right/Outline.vue#L1-L156)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
+- [apps/app/components/static/content/Index.vue:1-51](file://apps/app/components/static/content/Index.vue#L1-L51)
 
 ## 架构概览
 
-大纲系统采用组件化的架构设计，实现了清晰的职责分离和良好的扩展性：
+大纲系统采用组件化的架构设计，现已升级为基于 flex 布局的完整解决方案：
 
 ```mermaid
 sequenceDiagram
 participant User as 用户
+participant FlexLayout as flex 布局系统
 participant Container as 大纲容器
 participant Item as 大纲项
 participant Scroll as 滚动监听器
 participant DOM as DOM元素
-User->>Container : 点击大纲项
-Container->>Item : 触发点击事件
-Item->>DOM : 查找对应节点
-DOM->>DOM : 滚动到目标位置
+User->>FlexLayout : 点击大纲项
+FlexLayout->>Container : 触发点击事件
+Container->>Item : 查找对应节点
+Item->>DOM : 滚动到目标位置
+DOM->>DOM : 平滑滚动到目标位置
 DOM-->>User : 显示目标内容
 Scroll->>Container : 监听滚动事件
 Container->>Container : 计算激活项
@@ -111,17 +142,17 @@ Item->>Item : 应用样式变化
 - [apps/app/components/static/content/right/OutlineItem.vue:155-161](file://apps/app/components/static/content/right/OutlineItem.vue#L155-L161)
 
 系统的核心流程包括：
-1. **初始化阶段**：加载大纲数据和配置
-2. **渲染阶段**：构建大纲树形结构
+1. **初始化阶段**：加载大纲数据和配置，建立 flex 布局
+2. **渲染阶段**：构建大纲树形结构，应用 viewport 定位
 3. **交互阶段**：处理用户操作和状态更新
 4. **同步阶段**：维护滚动位置和激活状态
 
 ## 详细组件分析
 
-### 大纲主容器 (Index.vue)
+### 大纲主容器 (Index.vue) - **已全面升级**
 
-#### 状态管理
-组件使用 Vue 3 的响应式系统管理多个状态：
+#### flex 布局系统
+组件现在采用完整的 flex 布局系统，提供更高效的布局和更好的性能：
 
 ```mermaid
 classDiagram
@@ -134,6 +165,8 @@ class OutlineContainer {
 +Boolean isResizing
 +Boolean isPinned
 +String activeNodeText
++Object outlinePlaceholder
++Object outlineContainer
 +loadSavedWidth()
 +saveWidth(width)
 +loadPinnedState()
@@ -143,45 +176,42 @@ class OutlineContainer {
 +toggleOutline()
 +onHover(state)
 +onScroll()
++createPlaceholder()
++setupViewportPositioning()
 }
 ```
 
 **图表来源**
 - [apps/app/components/static/content/right/Index.vue:10-220](file://apps/app/components/static/content/right/Index.vue#L10-L220)
 
-#### 滚动同步机制
-系统实现了智能的滚动同步功能：
+#### 占位元素机制
+新增的占位元素确保正文被正确挤压，提供更稳定的布局：
 
-```mermaid
-flowchart TD
-Start([滚动事件触发]) --> GetNodes["获取所有标题节点"]
-GetNodes --> CheckNodes{"找到节点？"}
-CheckNodes --> |否| Warn["记录警告日志"]
-CheckNodes --> |是| CalcDistance["计算到视口的距离"]
-CalcDistance --> FindClosest["找到最近节点"]
-FindClosest --> CleanText["清理节点文本"]
-CleanText --> UpdateState["更新激活状态"]
-UpdateState --> LogInfo["记录调试信息"]
-LogInfo --> End([完成])
-Warn --> End
-```
+- **占位元素**：`.outline-placeholder` - 在 flex 布局中预留空间
+- **动态宽度控制**：根据大纲展开/收起状态动态调整宽度
+- **无 CSS 过渡**：宽度变化由 JavaScript 控制，避免不必要的动画
 
-**图表来源**
-- [apps/app/components/static/content/right/Index.vue:172-202](file://apps/app/components/static/content/right/Index.vue#L172-L202)
+#### viewport 相对定位
+系统采用 viewport 相对定位而非内容流定位：
 
-#### 用户交互功能
-- **宽度调整**：支持鼠标拖拽调整大纲宽度（200-500px范围）
+- **固定定位**：`.outline-container` 使用 `position: fixed` 确保不随正文滚动
+- **视窗高度**：`height: 100vh` 占满整个视窗高度
+- **独立滚动**：大纲容器内部独立滚动，不影响正文
+
+#### 用户交互功能增强
+- **拖拽调整宽度**：支持鼠标拖拽调整大纲宽度（200-500px范围）
 - **固定显示**：支持固定显示大纲，避免频繁展开/收起
 - **悬停展开**：鼠标悬停时自动展开大纲
 - **本地存储**：持久化用户的偏好设置
+- **拖拽时禁用过渡**：拖拽过程中禁用 CSS 过渡动画
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:1-491](file://apps/app/components/static/content/right/Index.vue#L1-L491)
+- [apps/app/components/static/content/right/Index.vue:1-530](file://apps/app/components/static/content/right/Index.vue#L1-L530)
 
 ### 大纲容器 (Outline.vue)
 
-#### 根层级计算
-组件能够智能识别大纲的根层级：
+#### 独立滚动容器
+容器现在提供完全独立的滚动环境：
 
 ```mermaid
 flowchart TD
@@ -200,15 +230,16 @@ GetMin --> End
 **图表来源**
 - [apps/app/components/static/content/right/Outline.vue:35-48](file://apps/app/components/static/content/right/Outline.vue#L35-L48)
 
-#### 自动滚动功能
+#### 自动滚动功能优化
 实现了智能的滚动定位功能：
 
 - **激活项定位**：自动滚动到当前激活的大纲项
 - **居中显示**：确保激活项在视窗中央位置
 - **平滑滚动**：提供流畅的滚动体验
+- **防滚动传播**：使用 `overscroll-behavior: contain` 防止滚动传播到父元素
 
 **章节来源**
-- [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
+- [apps/app/components/static/content/right/Outline.vue:1-156](file://apps/app/components/static/content/right/Outline.vue#L1-L156)
 
 ### 大纲项组件 (OutlineItem.vue)
 
@@ -253,13 +284,40 @@ ParentActive --> Inactive : 子项全部取消
 #### 文本处理机制
 提供了完整的文本清理和格式化功能：
 
-- **HTML实体解码**：处理 `&nbsp;`, `&amp;`, `&lt;` 等实体
+- **HTML 实体解码**：处理 `&nbsp;`, `&amp;`, `&lt;` 等实体
 - **特殊字符过滤**：移除冒号、逗号等标点符号
-- **HTML标签剥离**：提取纯文本内容
+- **HTML 标签剥离**：提取纯文本内容
 - **空白字符标准化**：统一处理换行和空格
 
 **章节来源**
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
+
+### 主布局容器 (content/Index.vue) - **新增**
+
+#### flex 布局系统
+提供基础的 flex 布局结构，确保各组件正确排列：
+
+```mermaid
+flowchart TD
+FlexLayout["flex 布局容器"] --> LeftSidebar["左侧内容"]
+FlexLayout --> MainContent["正文区域"]
+FlexLayout --> RightOutline["右侧大纲"]
+LeftSidebar --> FlexGrow["flex: 0 0 auto"]
+MainContent --> FlexGrow["flex: 1 1 0"]
+RightOutline --> FlexShrink["flex-shrink: 0"]
+```
+
+**图表来源**
+- [apps/app/components/static/content/Index.vue:16-28](file://apps/app/components/static/content/Index.vue#L16-L28)
+
+#### 布局特性
+- **flex-direction: row**：水平布局
+- **align-items: flex-start**：顶部对齐
+- **min-height: calc(100vh - 40px)**：占满视窗高度
+- **flex 1**：正文区域占据剩余空间
+
+**章节来源**
+- [apps/app/components/static/content/Index.vue:1-51](file://apps/app/components/static/content/Index.vue#L1-L51)
 
 ### 页面集成
 
@@ -290,6 +348,105 @@ Render --> End([完成])
 **章节来源**
 - [apps/app/pages/static/[id].vue](file://apps/app/pages/static/[id].vue#L1-L27)
 - [apps/app/composables/useDocId.ts:1-29](file://apps/app/composables/useDocId.ts#L1-L29)
+
+## 布局系统优化
+
+### flex 布局架构
+
+**更新** 大纲系统已完全迁移到基于 flex 的布局架构：
+
+#### 占位元素机制
+- **outline-placeholder**：在 flex 布局中预留空间
+- **动态宽度控制**：根据大纲展开/收起状态实时调整
+- **无 CSS 过渡**：避免不必要的动画，提升性能
+
+#### viewport 相对定位
+- **outline-container**：使用 `position: fixed` 确保不随正文滚动
+- **100vh 高度**：占满整个视窗高度
+- **独立 z-index**：确保大纲始终在最前面显示
+
+#### 固定显示功能
+- **isPinned 状态**：支持固定显示大纲
+- **自动展开**：固定时自动展开大纲避免闪烁
+- **本地存储**：持久化固定状态
+
+**章节来源**
+- [apps/app/components/static/content/right/Index.vue:230-317](file://apps/app/components/static/content/right/Index.vue#L230-L317)
+- [apps/app/components/static/content/right/Index.vue:320-530](file://apps/app/components/static/content/right/Index.vue#L320-L530)
+
+### 宽度调整优化
+
+#### 拖拽调整系统
+- **startResize**：开始拖拽调整宽度
+- **范围限制**：200-500px 的有效范围
+- **实时预览**：拖拽时实时显示新宽度
+- **自动保存**：松开鼠标时自动保存设置
+
+#### 过渡动画优化
+- **拖拽时禁用过渡**：避免拖拽过程中的动画干扰
+- **平滑切换**：展开/收起时使用平滑过渡
+- **阴影效果软化**：使用更柔和的阴影值 (0.04)
+
+**章节来源**
+- [apps/app/components/static/content/right/Index.vue:94-123](file://apps/app/components/static/content/right/Index.vue#L94-L123)
+- [apps/app/components/static/content/right/Index.vue:355-358](file://apps/app/components/static/content/right/Index.vue#L355-L358)
+
+## 滚动行为增强
+
+### 独立滚动容器
+
+**更新** 大纲容器现在提供完全独立的滚动环境：
+
+#### 滚动优化特性
+- **独立滚动**：大纲容器内部独立滚动
+- **防滚动传播**：使用 `overscroll-behavior: contain`
+- **iOS 优化**：启用 `-webkit-overflow-scrolling: touch`
+- **平滑滚动**：全局启用 `scroll-behavior: smooth`
+
+#### 自动滚动定位
+- **激活项居中**：自动滚动到激活项并居中显示
+- **视口偏移**：考虑大纲位置的 80px 偏移量
+- **距离计算**：基于到视口顶部的距离找到最近节点
+
+#### 滚动条自定义
+- **细滚动条**：宽度仅为 3px
+- **透明轨道**：滚动条轨道透明
+- **淡色主题**：滚动条颜色根据主题调整
+- **悬停效果**：悬停时增加透明度
+
+**章节来源**
+- [apps/app/components/static/content/right/Outline.vue:55-90](file://apps/app/components/static/content/right/Outline.vue#L55-L90)
+- [apps/app/components/static/content/right/Outline.vue:122-152](file://apps/app/components/static/content/right/Outline.vue#L122-L152)
+- [apps/app/components/static/content/right/Index.vue:172-202](file://apps/app/components/static/content/right/Index.vue#L172-L202)
+
+### 激活状态管理
+
+#### 滚动同步机制
+```mermaid
+flowchart TD
+Start([滚动事件触发]) --> GetNodes["获取所有标题节点"]
+GetNodes --> CheckNodes{"找到节点？"}
+CheckNodes --> |否| Warn["记录警告日志"]
+CheckNodes --> |是| CalcDistance["计算到视口的距离"]
+CalcDistance --> FindClosest["找到最近节点"]
+FindClosest --> CleanText["清理节点文本"]
+CleanText --> UpdateState["更新激活状态"]
+UpdateState --> LogInfo["记录调试信息"]
+LogInfo --> End([完成])
+Warn --> End
+```
+
+**图表来源**
+- [apps/app/components/static/content/right/Index.vue:172-202](file://apps/app/components/static/content/right/Index.vue#L172-L202)
+
+#### 文本清理一致性
+- **cleanNodeText**：与 OutlineItem.vue 的 adjustItemName 保持一致
+- **HTML 实体处理**：统一处理各种 HTML 实体
+- **特殊字符过滤**：移除标点符号和特殊字符
+- **正则表达式清理**：使用正则表达式确保一致性
+
+**章节来源**
+- [apps/app/components/static/content/right/Index.vue:152-170](file://apps/app/components/static/content/right/Index.vue#L152-L170)
 
 ## 依赖关系分析
 
@@ -337,16 +494,31 @@ Components --> Utils
 
 ### 优化策略
 
-1. **懒加载机制**：大纲组件仅在需要时加载和渲染
-2. **虚拟滚动**：对于大型文档，考虑实现虚拟滚动以提升性能
-3. **防抖处理**：滚动事件使用防抖技术减少重绘频率
-4. **内存管理**：及时清理事件监听器和定时器
+**更新** 新的布局系统带来了多项性能优化：
+
+1. **flex 布局优化**：使用 CSS flex 替代 JavaScript 布局计算
+2. **viewport 定位**：固定定位避免布局重排
+3. **占位元素机制**：确保正文被正确挤压，避免布局抖动
+4. **拖拽时禁用过渡**：避免拖拽过程中的动画开销
+5. **独立滚动容器**：减少滚动事件对整个页面的影响
+6. **自定义滚动条**：使用 CSS 滚动条替代复杂组件
 
 ### 内存优化
 
 - **组件卸载**：在组件销毁时清理所有事件监听器
 - **状态清理**：避免在组件生命周期外保留状态引用
 - **资源释放**：及时释放 DOM 引用和定时器
+- **本地存储优化**：只在必要时访问 localStorage
+
+### 布局性能
+
+- **flex 布局**：现代浏览器优化的布局算法
+- **fixed 定位**：避免文档流中的重排
+- **占位元素**：静态宽度控制，减少计算开销
+- **CSS 过渡**：硬件加速的 CSS 动画
+
+**章节来源**
+- [apps/app/components/static/content/right/Index.vue:207-227](file://apps/app/components/static/content/right/Index.vue#L207-L227)
 
 ## 故障排除指南
 
@@ -356,16 +528,25 @@ Components --> Utils
 1. **检查数据源**：确认 `outlineData` 是否正确传入
 2. **验证配置**：检查 `outlineLevel` 设置是否合理
 3. **查看控制台**：检查是否有 JavaScript 错误
+4. **flex 布局检查**：确认父容器具有正确的 flex 属性
 
 #### 滚动不同步
 1. **检查选择器**：确认 `[data-subtype^="h"]` 选择器是否正确
 2. **验证元素**：确保文档中存在有效的标题元素
 3. **调试日志**：查看滚动监听器的日志输出
+4. **viewport 定位**：确认大纲容器使用正确的定位方式
 
 #### 激活状态异常
 1. **文本清理**：确认 `cleanNodeText` 和 `adjustItemName` 方法的一致性
 2. **编码问题**：检查特殊字符的处理是否正确
 3. **边界情况**：验证空文本和特殊格式的处理
+4. **占位元素**：确认占位元素正确影响正文布局
+
+#### 布局问题
+1. **flex 布局**：检查父容器的 flex 属性设置
+2. **占位元素**：确认占位元素的宽度控制逻辑
+3. **viewport 定位**：验证固定定位的正确性
+4. **滚动条问题**：检查自定义滚动条的样式应用
 
 **章节来源**
 - [apps/app/components/static/content/right/Index.vue:172-219](file://apps/app/components/static/content/right/Index.vue#L172-L219)
@@ -373,20 +554,32 @@ Components --> Utils
 
 ## 结论
 
-大纲系统作为 Siyuan 笔记博客插件的核心功能，展现了优秀的架构设计和用户体验。系统通过组件化的开发方式，实现了高度的模块化和可维护性。
+大纲系统作为 Siyuan 笔记博客插件的核心功能，经过重大升级后展现了更加优秀的架构设计和用户体验。系统通过采用 flex 布局和 viewport 定位，实现了高度的模块化、可维护性和性能优化。
 
 ### 主要优势
 
-1. **架构清晰**：三层组件设计实现了良好的职责分离
-2. **用户体验优秀**：提供流畅的滚动同步和交互体验
-3. **扩展性强**：支持自定义配置和主题适配
-4. **性能优化**：采用多种优化策略确保系统性能
+1. **架构升级**：从简单容器升级为完整的 flex 布局系统
+2. **布局优化**：采用 viewport 相对定位，提供更好的性能表现
+3. **用户体验**：占位元素确保正文被正确挤压，避免布局抖动
+4. **交互增强**：拖拽调整宽度和固定显示功能
+5. **滚动优化**：独立滚动容器和自定义滚动条
+6. **性能提升**：减少布局重排和重绘，提升响应速度
 
 ### 技术亮点
 
-- 智能的层级计算和激活状态管理
-- 响应式的用户交互设计
-- 完善的状态持久化机制
-- 良好的错误处理和调试支持
+- **flex 布局系统**：现代化的布局解决方案
+- **viewport 定位**：固定定位确保稳定显示
+- **占位元素机制**：智能的正文挤压控制
+- **独立滚动容器**：避免滚动事件传播
+- **自定义滚动条**：精致的视觉体验
+- **拖拽调整系统**：直观的用户交互
 
-该系统为用户提供了专业级的文档导航体验，是 Siyuan 笔记本生态系统的重要组成部分。
+### 未来展望
+
+系统将继续演进，计划包括：
+- 虚拟滚动支持大型文档
+- 更多主题适配选项
+- 移动端优化改进
+- 性能监控和分析
+
+该系统为用户提供了专业级的文档导航体验，是 Siyuan 笔记本生态系统的重要组成部分，代表了现代前端开发的最佳实践。

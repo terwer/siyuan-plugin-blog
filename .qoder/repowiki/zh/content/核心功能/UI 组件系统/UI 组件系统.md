@@ -32,13 +32,18 @@
 - [apps/app/assets/css/index.styl](file://apps/app/assets/css/index.styl)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/salt.css](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/salt.css)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/sugar.css](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/sugar.css)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/savor-dark.css](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/savor-dark.css)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/vinegar.css](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/vinegar.css)
+- [apps/app/public/resources/appearance/themes/Savor/theme.css](file://apps/app/public/resources/appearance/themes/Savor/theme.css)
 </cite>
 
 ## 更新摘要
 **所做更改**
-- 新增大纲标题栏系统章节，详细介绍新增的标题栏按钮组、固定显示和收起展开功能
-- 更新大纲系统架构，反映新增的状态管理一致性改进和自动滚动功能增强
-- 新增状态管理存储系统章节，介绍通用存储实现和状态持久化机制
+- 更新侧边栏和菜单系统样式优化，包括更淡的rgba边框、菜单项高度调整、字体大小优化、内边距调整和自定义滚动条样式
+- 新增菜单系统样式优化章节，详细介绍侧边栏边框、菜单项尺寸、字体规格和悬停效果的改进
 - 更新智能滚动功能，增强大纲激活状态检测和滚动到章节功能
 - 新增大纲面板性能优化和用户体验改进说明
 - 新增大纲宽度调整和固定状态的本地存储机制
@@ -49,7 +54,7 @@
 3. [核心组件](#核心组件)
 4. [架构总览](#架构总览)
 5. [组件详解](#组件详解)
-6. [菜单系统重构](#菜单系统重构)
+6. [菜单系统样式优化](#菜单系统样式优化)
 7. [智能自动滚动功能](#智能自动滚动功能)
 8. [大纲标题栏系统](#大纲标题栏系统)
 9. [状态管理存储系统](#状态管理存储系统)
@@ -62,7 +67,7 @@
 ## 简介
 本文件面向 UI 组件系统，系统化梳理 Vue 组件架构与使用方法，覆盖通用组件、静态组件、公共组件的设计模式与最佳实践；重点解读 Tab 组件、Header、Footer、Detail 等核心组件的功能特性、API 接口与配置项；阐述响应式设计、主题适配与国际化支持；并提供使用示例与集成指南，帮助开发者快速理解与扩展。
 
-**更新** 本次更新重点关注大纲标题栏系统的新增、状态管理一致性改进和自动滚动功能增强，显著提升了用户体验和界面灵活性。
+**更新** 本次更新重点关注侧边栏和菜单系统的重大样式优化，包括更淡的rgba边框、菜单项高度从40px减少到36px、字体大小从16px减少到12.5px、内边距从20px调整到16px、引入自定义滚动条样式、优化激活状态背景透明度和改进悬停效果。
 
 ## 项目结构
 UI 组件主要分布在以下目录：
@@ -80,6 +85,7 @@ UI 组件主要分布在以下目录：
 - apps/app/assets/css：核心样式文件（theme、fold、index）
 - apps/app/public/resources/appearance/themes：主题样式文件
 - apps/app/public/resources/appearance/themes/pink-room/部件修改：尺寸调节滑杠样式
+- apps/app/public/resources/appearance/themes/pink-room/部件修改：滚动条样式
 
 ```mermaid
 graph TB
@@ -119,6 +125,14 @@ FOLD["fold.styl"]
 INDEX["index.styl"]
 MCSS["menu.css"]
 SLIDER["尺寸调节滑杠.css"]
+SCROLL["滚动条.css"]
+end
+subgraph "主题系统"
+SALT["salt.css"]
+SUGAR["sugar.css"]
+SAVOR_DARK["savor-dark.css"]
+VINEGAR["vinegar.css"]
+THEME["theme.css"]
 end
 subgraph "国际化"
 ZH["zh_CN.json"]
@@ -148,14 +162,19 @@ AF --> AC
 AB --> AC
 BSR --> AC
 UCS --> CS
+SALT --> THEME
+SUGAR --> THEME
+SAVOR_DARK --> THEME
+VINEGAR --> THEME
+SCROLL --> S
 ```
 
 **图表来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
+- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
+- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
@@ -180,13 +199,19 @@ UCS --> CS
 - [apps/app/assets/css/index.styl:1-39](file://apps/app/assets/css/index.styl#L1-L39)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/salt.css:1-46](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/salt.css#L1-L46)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/sugar.css:1-44](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/sugar.css#L1-L44)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/savor-dark.css:1-45](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/savor-dark.css#L1-L45)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/vinegar.css:1-46](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/vinegar.css#L1-L46)
+- [apps/app/public/resources/appearance/themes/Savor/theme.css:110-151](file://apps/app/public/resources/appearance/themes/Savor/theme.css#L110-L151)
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
+- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
+- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
@@ -211,6 +236,12 @@ UCS --> CS
 - [apps/app/assets/css/index.styl:1-39](file://apps/app/assets/css/index.styl#L1-L39)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/salt.css:1-46](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/salt.css#L1-L46)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/sugar.css:1-44](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/sugar.css#L1-L44)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/savor-dark.css:1-45](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/savor-dark.css#L1-L45)
+- [apps/app/public/resources/appearance/themes/Savor/style/topbar/vinegar.css:1-46](file://apps/app/public/resources/appearance/themes/Savor/style/topbar/vinegar.css#L1-L46)
+- [apps/app/public/resources/appearance/themes/Savor/theme.css:110-151](file://apps/app/public/resources/appearance/themes/Savor/theme.css#L110-L151)
 
 ## 核心组件
 - Header：站点导航与品牌展示，支持 Logo、站点名称与自定义头部 HTML 片段
@@ -233,8 +264,8 @@ UCS --> CS
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
+- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
+- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
@@ -296,6 +327,7 @@ EN --> O
 EN --> CP
 MCSS["menu.css<br/>菜单样式"] --> S
 SLIDER["尺寸调节滑杠.css<br/>面板大小调节"] --> I
+SCROLL["滚动条.css<br/>自定义滚动条"] --> S
 SM["SidebarMenu<br/>菜单容器"] --> S
 MI["MenuItem<br/>菜单项"] --> SM
 OI["OutlineItem<br/>大纲项"] --> O
@@ -316,6 +348,7 @@ OI["OutlineItem<br/>大纲项"] --> O
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
 
 ## 组件详解
 
@@ -442,7 +475,7 @@ I --> J["日志记录与调试"]
 - [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
 
 **章节来源**
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
+- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
 
 ### Index 组件（新增大纲容器）
 - 功能要点
@@ -619,84 +652,79 @@ T->>T : 渲染对应 content组件/文本
 **章节来源**
 - [apps/app/components/common/ImagePreview.vue:1-64](file://apps/app/components/common/ImagePreview.vue#L1-L64)
 
-## 菜单系统重构
+## 菜单系统样式优化
 
-### 菜单系统架构
-菜单系统经过重构，采用分层组件设计，提升用户体验和可访问性：
+### 侧边栏样式优化
+侧边栏经过重大样式优化，采用更淡的rgba边框替代实线边框，提升视觉层次感：
 
-- **Sidebar**：主容器，负责菜单的整体布局和状态管理，新增智能自动滚动功能
-- **SidebarMenu**：菜单容器组件，处理菜单项的渲染和交互
-- **MenuItem**：基础菜单项组件，提供点击区域优化和文本处理
-
-```mermaid
-graph TB
-S["Sidebar.vue<br/>主容器<br/>智能滚动"] --> SM["SidebarMenu.vue<br/>菜单容器"]
-SM --> MI["MenuItem.vue<br/>菜单项"]
-SM --> SM2["SidebarMenu.vue<br/>子菜单容器"]
-SM2 --> MI2["MenuItem.vue<br/>子菜单项"]
-S --> SM3["SidebarMenu.vue<br/>其他菜单项"]
-```
-
-**图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
-
-### MenuItem 组件改进
-MenuItem 组件进行了重要优化：
-
-- **点击区域优化**：通过 CSS 扩展点击区域到左侧，覆盖 Element Plus 的 padding 区域
-- **文本处理**：智能计算中英文字符长度，支持文本截断和工具提示
-- **事件管理**：提供统一的点击处理方法，支持从文档树来源的链接处理
+- **边框优化**：使用 `rgba(0, 0, 0, 0.06)` 替代传统实线边框，提供更柔和的视觉效果
+- **滚动条定制**：引入更精致的滚动条样式，宽度从默认的6px调整为3px，拇指高度2px，提供更好的滚动体验
+- **激活状态优化**：激活菜单项背景使用 `rgba(24, 144, 255, 0.06)` 的更淡透明度，提升视觉层次
+- **悬停效果改进**：悬停时使用 `rgba(24, 144, 255, 0.04)` 的浅色背景，提供更细腻的交互反馈
 
 ```mermaid
 flowchart TD
-A["MenuItem.vue"] --> B["点击处理"]
-B --> C{"是否从文档树来源?"}
-C --> |是| D["添加查询参数 from=docTree"]
-C --> |否| E["直接跳转"]
-D --> F["navigateTo()"]
-E --> F
-F --> G["触发父组件事件"]
+A["Sidebar.vue<br/>侧边栏容器"] --> B["边框样式<br/>rgba(0, 0, 0, 0.06)"]
+B --> C["滚动条定制<br/>宽度3px, 拇指2px"]
+C --> D["激活状态<br/>透明度0.06"]
+D --> E["悬停效果<br/>透明度0.04"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/MenuItem.vue:55-66](file://apps/app/components/static/content/left/MenuItem.vue#L55-L66)
+- [apps/app/components/static/content/left/Sidebar.vue:223-291](file://apps/app/components/static/content/left/Sidebar.vue#L223-L291)
 
-### SidebarMenu 组件改进
-SidebarMenu 组件增强了交互体验：
+### 菜单项尺寸优化
+菜单项经过精心的尺寸调整，提升整体视觉效果和用户体验：
 
-- **嵌套菜单支持**：递归渲染子菜单，支持多级嵌套
-- **激活状态管理**：基于 activeIndex 管理当前激活菜单项
-- **事件委派**：通过 ref 调用子组件的方法，实现事件委派
+- **高度调整**：菜单项高度从40px减少到36px，提供更紧凑的视觉效果
+- **字体优化**：字体大小从16px减少到12.5px，提升信息密度
+- **内边距调整**：内边距从20px调整到16px，优化视觉平衡
+- **最小高度优化**：菜单项最小高度设置为36px，确保点击区域充足
+- **行高匹配**：行高与高度保持一致，确保文本垂直居中
 
 ```mermaid
-sequenceDiagram
-participant U as "用户"
-participant SM as "SidebarMenu"
-participant MI as "MenuItem"
-U->>SM : 点击菜单项
-SM->>MI : 调用 handleItemClick()
-MI->>MI : 处理点击逻辑
-MI-->>SM : 返回处理结果
-SM-->>U : 触发导航
+flowchart TD
+A["MenuItem.vue<br/>菜单项组件"] --> B["高度优化<br/>40px → 36px"]
+B --> C["字体优化<br/>16px → 12.5px"]
+C --> D["内边距优化<br/>20px → 16px"]
+D --> E["最小高度<br/>36px"]
+E --> F["行高匹配<br/>36px"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/SidebarMenu.vue:32-36](file://apps/app/components/static/content/left/SidebarMenu.vue#L32-L36)
+- [apps/app/components/static/content/left/MenuItem.vue:74-96](file://apps/app/components/static/content/left/MenuItem.vue#L74-L96)
 
-### 菜单系统交互流程
-重构后的菜单系统提供了更好的用户体验：
+### 悬停效果改进
+菜单系统的悬停效果经过优化，提供更细腻的交互体验：
 
-1. **点击区域优化**：菜单项的点击区域扩展到整个行高，提升可访问性
-2. **文本截断处理**：长文本自动截断并显示工具提示
-3. **事件委派机制**：通过 ref 实现父子组件间的事件传递
-4. **激活状态高亮**：当前激活菜单项具有明显的视觉反馈
+- **激活状态**：使用 `rgba(24, 144, 255, 0.06)` 的背景色，提供微妙的高亮效果
+- **悬停状态**：使用 `rgba(24, 144, 255, 0.04)` 的浅色背景，确保视觉层次清晰
+- **文本颜色**：悬停时文本颜色变为 `#1890ff`，提供明确的视觉引导
+- **子菜单优化**：子菜单标题的悬停效果与主菜单保持一致的透明度级别
+
+```mermaid
+flowchart TD
+A["悬停效果<br/>激活状态"] --> B["背景色<br/>rgba(24, 144, 255, 0.06)"]
+A --> C["悬停状态<br/>rgba(24, 144, 255, 0.04)"]
+B --> D["文本颜色<br/>#1890ff"]
+C --> E["子菜单<br/>一致的透明度"]
+```
+
+**图表来源**
+- [apps/app/components/static/content/left/Sidebar.vue:271-284](file://apps/app/components/static/content/left/Sidebar.vue#L271-L284)
+
+### 标题栏样式优化
+侧边栏标题栏经过优化，提升整体视觉效果：
+
+- **字体调整**：标题字体大小从16px调整为13px，提供更紧凑的视觉效果
+- **字重优化**：标题字重设置为600，确保视觉层次清晰
+- **间距优化**：顶部间距从20px调整为16px，提供更紧凑的布局
+- **内边距调整**：内边距从12px调整为8px，优化视觉平衡
+- **字间距优化**：字间距设置为-0.01em，提升文本可读性
 
 **章节来源**
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
+- [apps/app/components/static/content/left/Sidebar.vue:245-252](file://apps/app/components/static/content/left/Sidebar.vue#L245-L252)
+- [apps/app/components/static/content/left/MenuItem.vue:93-95](file://apps/app/components/static/content/left/MenuItem.vue#L93-L95)
 
 ## 智能自动滚动功能
 
@@ -949,6 +977,10 @@ I --> J["初始值设置<br/>setItem()"]
   - **useCommonStorageAsync 依赖 commonStorage 实现存储功能**
   - **commonStorage 依赖 Siyuan Kernel API 进行数据存储**
   - **Index 组件使用 useState 确保状态一致性**
+- 样式依赖
+  - **Sidebar 组件依赖自定义滚动条样式**
+  - **菜单系统依赖主题变量和CSS变量**
+  - **OutlineItem 组件依赖暗色模式样式**
 
 ```mermaid
 graph LR
@@ -988,6 +1020,7 @@ UCS --> O
 CS["commonStorage"] --> UCS
 MCSS["menu.css"] --> S
 SLIDER["尺寸调节滑杠.css"] --> I
+SCROLL["滚动条.css"] --> S
 ES["Element Plus<br/>el-scrollbar"] --> S
 ```
 
@@ -1005,6 +1038,7 @@ ES["Element Plus<br/>el-scrollbar"] --> S
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
 
 **章节来源**
 - [apps/app/app.config.ts:1-92](file://apps/app/app.config.ts#L1-L92)
@@ -1032,6 +1066,8 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **Index 组件使用 useState 确保状态一致性，避免闪烁**
   - **大纲滚动监听使用防抖处理，减少频繁计算**
   - **localStorage 操作异步化，避免阻塞主线程**
+  - **自定义滚动条样式使用 CSS 变量，提升渲染性能**
+  - **菜单项尺寸优化减少不必要的重绘**
 - 可维护性
   - 组件职责单一，事件与属性清晰
   - 配置集中于 AppConfig，便于统一管理
@@ -1041,6 +1077,7 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **日志记录系统便于问题排查和性能监控**
   - **状态管理存储系统提供统一的状态持久化解决方案**
   - **异步存储机制确保数据一致性和可靠性**
+  - **样式优化采用CSS变量，便于主题定制**
 - 用户体验
   - **智能滚动确保激活菜单项始终可见且居中**
   - **平滑滚动动画提升视觉体验**
@@ -1050,8 +1087,11 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **固定显示功能提升常用场景的便利性**
   - **标题栏按钮提供直观的操作反馈**
   - **状态持久化确保用户偏好的持续性**
+  - **更淡的边框提供更柔和的视觉效果**
+  - **紧凑的菜单项尺寸提升信息密度**
+  - **优化的悬停效果提供更细腻的交互体验**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统和智能滚动功能的性能优化说明。
+**更新** 新增大纲标题栏系统、状态管理存储系统和智能滚动功能的性能优化说明，以及菜单系统样式优化带来的性能提升。
 
 ## 故障排查指南
 - 主题未生效
@@ -1091,8 +1131,13 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **确认 CSS 变量 `--room-surface-lightcolor` 是否定义**
   - **验证 Outline 组件的 width 属性是否正确传递**
   - **检查固定定位是否被其他样式覆盖**
+- **菜单系统样式异常**
+  - **检查自定义滚动条样式是否正确加载**
+  - **确认 CSS 变量是否正确设置**
+  - **验证菜单项的尺寸和字体设置**
+  - **检查激活状态和悬停效果的样式覆盖**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统和智能滚动功能相关的故障排查指导。
+**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能和菜单系统样式优化相关的故障排查指导。
 
 **章节来源**
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
@@ -1108,11 +1153,12 @@ ES["Element Plus<br/>el-scrollbar"] --> S
 - [apps/siyuan/src/stores/common/useCommonStorageAsync.ts:1-91](file://apps/siyuan/src/stores/common/useCommonStorageAsync.ts#L1-L91)
 - [apps/siyuan/src/stores/common/commonStorage.ts:1-88](file://apps/siyuan/src/stores/common/commonStorage.ts#L1-L88)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
 
 ## 结论
 该 UI 组件系统以配置驱动为核心，结合组合式逻辑、国际化、主题工具和状态管理存储，形成清晰的静态布局与通用组件体系。各组件职责明确、接口简洁，具备良好的扩展性与可维护性。通过统一的主题注入与资源路径工具，实现了跨环境的一致体验。
 
-**更新** 大纲标题栏系统的新增、状态管理存储系统的完善和智能滚动功能的增强进一步提升了用户体验和界面灵活性，通过优化点击区域、增强事件管理、改进文本处理、实现面板大小调节和状态持久化，为用户提供了更加流畅、直观和灵活的导航体验。智能滚动功能的引入显著改善了用户在大型文档树中的导航体验，确保激活菜单项始终处于最佳可视位置；可调整大小的大纲面板则提供了更灵活的界面布局能力；状态管理存储系统的引入确保了用户偏好的持续性和可靠性。
+**更新** 菜单系统样式优化显著提升了视觉层次感和用户体验，包括更淡的rgba边框、紧凑的菜单项尺寸、优化的字体规格和改进的悬停效果；大纲标题栏系统的新增进一步增强了界面灵活性；状态管理存储系统的完善确保了用户偏好的持续性和可靠性；智能滚动功能的增强改善了用户在大型文档树中的导航体验。这些优化共同构成了更加现代化、高效和用户友好的UI组件系统。
 
 ## 附录
 
@@ -1163,15 +1209,15 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - 事件：hide
   - 行为：图片预览弹层，暴露 show(index)
 
-**更新** 新增大纲标题栏系统和状态管理存储系统的 API 说明。
+**更新** 新增大纲标题栏系统和状态管理存储系统的 API 说明，以及菜单系统样式优化相关的API说明。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
+- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
+- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
@@ -1187,6 +1233,7 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **智能滚动功能在不同屏幕尺寸下自动适应**
   - **大纲面板支持固定定位，在滚动时保持可见**
   - **Index 组件使用粘性定位，提供更好的响应式支持**
+  - **菜单项尺寸优化提升移动端显示效果**
 - 主题适配
   - useClientThemeMode 注入默认与当前主题样式，设置 data-theme-mode 属性
   - 暗色模式下 Outline 等组件自动切换背景与边框
@@ -1194,8 +1241,10 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **智能滚动功能与主题样式完全兼容**
   - **尺寸调节滑杠样式通过 CSS 变量适配主题颜色**
   - **大纲标题栏支持主题颜色适配**
+  - **自定义滚动条样式支持主题变量**
+  - **菜单系统样式优化支持主题适配**
 
-**更新** 新增大纲标题栏系统和状态管理存储系统的主题适配说明。
+**更新** 新增大纲标题栏系统、状态管理存储系统和菜单系统样式优化的主题适配说明。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
@@ -1206,6 +1255,8 @@ ES["Element Plus<br/>el-scrollbar"] --> S
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
+- [apps/app/public/resources/appearance/themes/Savor/theme.css:110-151](file://apps/app/public/resources/appearance/themes/Savor/theme.css#L110-L151)
 
 ### 国际化支持
 - 词条来源：zh_CN.json 与 en_US.json
@@ -1214,8 +1265,9 @@ ES["Element Plus<br/>el-scrollbar"] --> S
 - **智能滚动功能：日志记录使用英文描述，便于国际用户理解**
 - **大纲面板：标题使用国际化词条，支持多语言显示**
 - **大纲标题栏：按钮提示使用国际化词条**
+- **菜单系统：支持多语言菜单项显示**
 
-**更新** 大纲标题栏系统支持国际化，智能滚动功能的日志使用英文描述。
+**更新** 大纲标题栏系统支持国际化，智能滚动功能的日志使用英文描述，菜单系统支持多语言显示。
 
 **章节来源**
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
@@ -1240,6 +1292,7 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - 在入口处初始化 useClientThemeMode
   - 确保 i18n 语言与词条可用
   - 配置 menu.css 和尺寸调节滑杠样式文件
+  - **配置自定义滚动条样式文件**
 - **智能滚动功能集成**
   - **无需额外配置，Sidebar 组件自动启用智能滚动功能**
   - **确保 Element Plus 的 el-scrollbar 组件正确安装和配置**
@@ -1254,19 +1307,25 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **commonStorage 通过 Kernel API 实现数据持久化**
   - **在思源笔记环境中自动适配存储方式**
   - **提供异步存储操作，确保数据一致性**
+- **菜单系统样式集成**
+  - **Sidebar 组件自动应用样式优化**
+  - **确保 CSS 变量正确设置**
+  - **自定义滚动条样式自动加载**
+  - **菜单项尺寸和字体自动适配**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统的集成指南。
+**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能和菜单系统样式优化的集成指南。
 
 **章节来源**
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
-- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
+- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
+- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
 - [apps/siyuan/src/stores/common/useCommonStorageAsync.ts:1-91](file://apps/siyuan/src/stores/common/useCommonStorageAsync.ts#L1-L91)
 - [apps/siyuan/src/stores/common/commonStorage.ts:1-88](file://apps/siyuan/src/stores/common/commonStorage.ts#L1-L88)
 - [apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css:1-27](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/尺寸调节滑杠.css#L1-L27)
+- [apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css:1-15](file://apps/app/public/resources/appearance/themes/pink-room/部件修改/滚动条.css#L1-L15)
