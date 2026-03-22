@@ -8,10 +8,12 @@
   -->
 
 <template>
-  <el-tooltip v-if="shouldShowTooltip" :content="text" effect="dark" trigger="hover" placement="right">
-    <span class="menu-title" @click="handleItemClick">{{ truncatedText }}</span>
-  </el-tooltip>
-  <span v-else class="menu-title" @click="handleItemClick">{{ text }}</span>
+  <div class="menu-item-content" @click.stop="handleItemClick">
+    <el-tooltip v-if="shouldShowTooltip" :content="text" effect="dark" trigger="hover" placement="right">
+      <span class="menu-title">{{ truncatedText }}</span>
+    </el-tooltip>
+    <span v-else class="menu-title">{{ text }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -49,6 +51,7 @@ const truncatedText = computed(() => {
   return result + "..."
 })
 
+// 暴露给父组件调用
 const handleItemClick = async () => {
   let finalLink = props.link
 
@@ -61,9 +64,22 @@ const handleItemClick = async () => {
 
   await navigateTo(finalLink)
 }
+
+// 暴露方法给父组件
+defineExpose({
+  handleItemClick
+})
 </script>
 
 <style scoped lang="stylus">
+.menu-item-content
+  display flex
+  align-items center
+  width 100%
+  height 100%
+  min-height 40px
+  cursor pointer
+
 .menu-title
   display inline-block
   overflow hidden
