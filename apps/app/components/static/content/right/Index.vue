@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { More } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
-import MintlifyOutline from "~/components/static/content/right/MintlifyOutline.vue"
 
 const logger = createAppLogger("right-index")
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
@@ -95,21 +94,21 @@ onUnmounted(() => {
 <template>
   <div v-if="outlineData && outlineData.length > 0" class="outline-wrapper" :class="{ 'outline-wrapper-expanded': showOutline }">
     <div
-      class="outline-container"
-      :class="{ 'outline-expanded': showOutline }"
+        class="outline-container"
+        :class="{ 'outline-expanded': showOutline }"
     >
       <div class="outline-content">
-        <mintlify-outline
-          :outline-data="outlineData"
-          :max-depth="outlineMaxDepth"
-          :active-text="activeNodeText"
+        <static-content-right-outline
+            :outline-data="outlineData"
+            :max-depth="outlineMaxDepth"
+            :active-text="activeNodeText"
         />
       </div>
     </div>
     <div
-      class="toggle-btn"
-      @click="toggleOutline"
-      @mouseenter="onHover(true)"
+        class="toggle-btn"
+        @click="toggleOutline"
+        @mouseenter="onHover(true)"
     >
       <el-icon><More /></el-icon>
     </div>
