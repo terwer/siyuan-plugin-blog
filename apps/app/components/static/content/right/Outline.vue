@@ -8,7 +8,7 @@
   -->
 
 <script setup>
-import { nextTick, watch, ref } from "vue"
+import { nextTick, ref, watch } from "vue"
 
 const props = defineProps({
   outlineData: {

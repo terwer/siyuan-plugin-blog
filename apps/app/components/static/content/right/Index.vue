@@ -141,8 +141,28 @@ const onHover = (state:boolean) => {
 
 // 当前激活的节点 ID
 const activeNodeText = ref("")
+
+// 清理节点文本（与 OutlineItem.vue 的 adjustItemName 保持一致）
+const cleanNodeText = (text) => {
+  if (!text) return ""
+  return text
+    .replace(/&nbsp;/g, " ")
+    .replace(/&quot;/g, "\"")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\n/g, " ")
+    .replace(/：/g, "")
+    .replace(/:/g, "")
+    .replace(/,/g, "")
+    .replace(/<[^>]+>/g, (match) => {
+      const textContent = match.match(/>([\s\S]*?)</)
+      return textContent ? textContent[1] : ""
+    })
+    .trim()
+}
+
 const onScroll = () => {
-  // logger.info("start scroll...")
   // 获取页面中所有符合条件的节点
   const nodes = document.querySelectorAll("[data-subtype^=\"h\"]")
   if (!nodes.length) {
@@ -156,7 +176,7 @@ const onScroll = () => {
 
   nodes.forEach((node) => {
     const rect = node.getBoundingClientRect()
-    const distance = Math.abs(rect.top - 20) // 偏移调整
+    const distance = Math.abs(rect.top - 80) // 增加偏移量，考虑大纲位置
     if (distance < minDistance) {
       minDistance = distance
       closestNode = node
@@ -165,10 +185,11 @@ const onScroll = () => {
 
   // 如果找到最近节点，更新其内部文本
   if (closestNode) {
-    const nodeText = closestNode.querySelector("div")?.textContent?.trim()
+    const rawText = closestNode.querySelector("div")?.textContent?.trim()
+    const nodeText = cleanNodeText(rawText)
     if (nodeText && nodeText !== activeNodeText.value) {
       activeNodeText.value = nodeText
-      // logger.info("Active Node Text:", nodeText)
+      logger.info("Active Node Text:", nodeText, "subtype:", closestNode.getAttribute("data-subtype"))
     }
   }
 }

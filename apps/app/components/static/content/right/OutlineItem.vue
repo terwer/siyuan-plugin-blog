@@ -70,9 +70,32 @@ const getItemLevel = (item) => {
   return isNaN(level) ? 1 : level
 }
 
-// 获取当前项的文本内容
+// 统一获取子项数组（支持 blocks 和 children 两种结构）
+const getChildren = (item) => {
+  return item.blocks || item.children || []
+}
+
+// 获取项的显示文本（用于模板渲染）
+const getItemDisplayText = (item) => {
+  // 根级别使用 name
+  if (props.isRoot) {
+    return item.name || ''
+  }
+  // 非根级别使用 content
+  return item.content || item.name || ''
+}
+
+// 获取当前项的文本内容（用于激活状态判断）
 const getItemText = (item) => {
-  if (props.isRoot || getItemLevel(item) === 1) {
+  // 根级别或第一级使用 name，其他级别使用 content
+  // 注意：对于从 h3/h4 等非 h1 开始的文档，根项也是用 name
+  if (props.isRoot) {
+    return item.name
+  }
+  
+  const level = getItemLevel(item)
+  // 第一级使用 name，其他级别使用 content
+  if (level === 1) {
     return item.name
   }
   return item.content
@@ -98,23 +121,15 @@ const isActive = computed(() => {
 const hasActiveChild = computed(() => {
   if (!props.activeText) return false
   
-  // 获取子项数组（支持 blocks 和 children 两种结构）
-  const children = props.item.blocks || props.item.children || []
+  // 获取子项数组
+  const children = getChildren(props.item)
   if (!children.length) return false
   
   // 递归检查子项中是否有激活的
   const checkChildren = (items) => {
     for (const child of items) {
-      // 获取子项的文本内容（考虑不同层级结构）
-      let childText = ''
-      const childLevel = parseInt(child.subType?.replace("h", "") || "1", 10)
-      
-      // 第一级使用 name，其他使用 content
-      if (childLevel === 1 || child.name) {
-        childText = child.name || ''
-      } else {
-        childText = child.content || ''
-      }
+      // 获取子项的文本内容（非根级别使用 content）
+      let childText = child.content || child.name || ''
       
       // 清理文本（与 adjustItemName 保持一致）
       childText = childText
@@ -128,7 +143,7 @@ const hasActiveChild = computed(() => {
       if (childText === props.activeText) return true
       
       // 递归检查孙级
-      const grandChildren = child.blocks || child.children || []
+      const grandChildren = getChildren(child)
       if (grandChildren.length && checkChildren(grandChildren)) return true
     }
     return false
@@ -148,29 +163,16 @@ const scrollToSection = (id) => {
 
 <template>
   <div :style="{ marginLeft: getFirstMargin(item) + 'px' }" class="outline-item">
-    <!-- 第一级 -->
-    <div v-if="getItemLevel(item) === 1 || isRoot" class="nested-items">
+    <!-- 获取子项数组（统一处理 blocks 和 children） -->
+    <div v-if="getChildren(item).length > 0" class="nested-items">
       <a class="item-link" 
          :class="{ active: isActive, 'parent-active': hasActiveChild }" 
          @click.prevent="scrollToSection(item.id)" 
-         :title="adjustItemName(item.name)">
-        {{ adjustItemName(item.name) }}
+         :title="adjustItemName(getItemDisplayText(item))">
+        {{ adjustItemName(getItemDisplayText(item)) }}
       </a>
       <div v-if="getItemLevel(item) < maxDepth">
-        <outline-item v-for="(child, index) in item.blocks" :key="index" :item="child" :max-depth="maxDepth" :container-width="containerWidth" :active-text="activeText" />
-      </div>
-    </div>
-
-    <!-- 其他级别且有子项 -->
-    <div v-else-if="Array.isArray(item.children) && item.children.length > 0" class="nested-items">
-      <a class="item-link" 
-         :class="{ active: isActive, 'parent-active': hasActiveChild }" 
-         @click.prevent="scrollToSection(item.id)" 
-         :title="adjustItemName(item.content)">
-        {{ adjustItemName(item.content) }}
-      </a>
-      <div v-if="getItemLevel(item) < maxDepth">
-        <outline-item v-for="(child, index) in item.children" :key="index" :item="child" :max-depth="maxDepth" :container-width="containerWidth" :active-text="activeText" />
+        <outline-item v-for="(child, index) in getChildren(item)" :key="index" :item="child" :max-depth="maxDepth" :container-width="containerWidth" :active-text="activeText" />
       </div>
     </div>
 
@@ -180,8 +182,8 @@ const scrollToSection = (id) => {
         <a class="item-link" 
            :class="{ active: isActive }" 
            @click.prevent="scrollToSection(item.id)" 
-           :title="adjustItemName(item.content)">
-          {{ adjustItemName(item.content) }}
+           :title="adjustItemName(getItemDisplayText(item))">
+          {{ adjustItemName(getItemDisplayText(item)) }}
         </a>
       </div>
     </div>
