@@ -89,7 +89,7 @@ const toggleSidebar = () => {
       height 1rem
 
 .sidebar-button-active
-  left 15.7rem
+  left 14.5rem
   z-index 99
   background: var(--b3-protyle-inline-link-color);
   color #dcdcdc

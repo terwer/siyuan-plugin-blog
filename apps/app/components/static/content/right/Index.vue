@@ -201,6 +201,9 @@ const onScroll = () => {
   }
 }
 
+// 标记是否已完成初始加载
+const isInitialized = ref(false)
+
 onMounted(() => {
   // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
   loadSavedWidth()
@@ -211,6 +214,11 @@ onMounted(() => {
     logger.info("Mounted: Adding scroll listener, outline width:", outlineWidth.value, "pinned:", isPinned.value)
     window.addEventListener("scroll", onScroll, true)
   }
+  
+  // 延迟标记初始化完成，避免初始过渡动画
+  setTimeout(() => {
+    isInitialized.value = true
+  }, 100)
 })
 
 onUnmounted(() => {
@@ -220,18 +228,26 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="outlineData && outlineData.length > 0" class="outline-aside" :class="{ 'outline-collapsed': !showOutline }">
+  <div v-if="outlineData && outlineData.length > 0" class="outline-aside" :class="{ 'outline-collapsed': !showOutline, 'outline-initialized': isInitialized }">
     <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
     <div 
         class="outline-placeholder" 
-        :style="{ width: showOutline ? outlineWidth + 'px' : '0px', transition: isResizing ? 'none' : 'width 0.3s ease' }"
+        :style="{ 
+          width: showOutline ? outlineWidth + 'px' : '0px',
+          minWidth: showOutline ? outlineWidth + 'px' : '0px',
+          maxWidth: showOutline ? outlineWidth + 'px' : '0px'
+        }"
     ></div>
     
-    <!-- 大纲容器 - 使用 sticky 定位，内部独立滚动 -->
+    <!-- 大纲容器 - 使用 fixed 定位，内部独立滚动 -->
     <div
         class="outline-container"
         :class="{ 'is-resizing': isResizing }"
-        :style="{ width: showOutline ? outlineWidth + 'px' : '0px' }"
+        :style="{ 
+          width: showOutline ? outlineWidth + 'px' : '0px',
+          minWidth: showOutline ? outlineWidth + 'px' : '0px',
+          maxWidth: showOutline ? outlineWidth + 'px' : '0px'
+        }"
     >
       <!-- 大纲标题栏（包含按钮组） -->
       <div class="outline-header">
@@ -314,30 +330,32 @@ onUnmounted(() => {
 /* 占位元素 - 确保正文被正确挤压 */
 .outline-placeholder
   flex-shrink 0
-  height 100vh
-  transition width 0.3s ease
+  height calc(100vh - 120px)
+  margin-top 60px
+  /* 宽度由 JS 控制，不使用 CSS 过渡 */
 
 /* 收起状态下的占位 */
 .outline-collapsed
-  width 0
+  width 0 !important
 
 /* 大纲整体容器 - 使用 fixed 定位，完全独立于正文滚动 */
 .outline-container
   position fixed /* 固定在视窗，不随正文滚动 */
-  top 0
+  top 60px /* 顶部留出导航空间 */
   right 0
-  height 100vh /* 占满视窗高度 */
-  width 0 /* 默认宽度为0，通过style动态设置 */
+  height calc(100vh - 120px) /* 底部留出按钮空间 */
   background var(--background)
   border-left 1px solid rgba(0, 0, 0, 0.06) /* 更细的边框 */
+  border-top-left-radius 8px /* 顶部圆角 */
+  border-bottom-left-radius 8px /* 底部圆角 */
   display flex
   flex-direction column
   overflow hidden /* 隐藏溢出，内部滚动 */
-  transition width 0.25s cubic-bezier(0.4, 0, 0.2, 1) /* 更流畅的缓动 */
-  box-shadow -1px 0 3px rgba(0, 0, 0, 0.04) /* 更柔和的阴影 */
-  z-index 100
+  /* 宽度由 JS 控制，不使用 CSS 过渡 */
+  box-shadow -2px 2px 8px rgba(0, 0, 0, 0.06) /* 更柔和的阴影 */
+  z-index 10 /* 降低 z-index，避免覆盖右下角按钮 */
 
-/* 拖拽时禁用过渡，使调整更流畅 */
+/* 拖拽时禁用过渡 */
 .outline-container.is-resizing
   transition none
 
@@ -485,9 +503,9 @@ onUnmounted(() => {
 /* 收起状态下的展开按钮 - 使用 fixed 定位 */
 .toggle-btn-collapsed
   position fixed
-  top 20px
+  top 80px /* 调整位置，与大纲顶部对齐 */
   right 20px
-  z-index 101
+  z-index 11 /* 与 Buttons.vue 保持一致 */
   width 32px
   height 32px
   display flex
