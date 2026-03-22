@@ -20,15 +20,16 @@
 - [apps/app/i18n/locales/zh_CN.json](file://apps/app/i18n/locales/zh_CN.json)
 - [apps/app/assets/css/theme/palette.styl](file://apps/app/assets/css/theme/palette.styl)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css)
+- [apps/app/utils/appLogger.ts](file://apps/app/utils/appLogger.ts)
 </cite>
 
 ## 更新摘要
 **所做更改**
-- 新增菜单系统重构章节，详细介绍 MenuItem.vue 和 SidebarMenu.vue 的改进
-- 更新 Sidebar 组件架构，反映新的菜单系统结构
-- 新增菜单点击区域优化和事件管理改进说明
-- 更新菜单系统交互流程图和架构图
-- 新增菜单系统可访问性改进说明
+- 新增 Sidebar 组件智能自动滚动功能章节，详细介绍滚动到激活菜单项机制、重试机制、边界检查和平滑滚动等高级功能
+- 更新 Sidebar 组件架构，反映新增的智能滚动功能
+- 新增滚动日志记录和调试功能说明
+- 更新菜单系统交互流程图，包含智能滚动逻辑
+- 新增滚动性能优化和用户体验改进说明
 
 ## 目录
 1. [简介](#简介)
@@ -37,16 +38,17 @@
 4. [架构总览](#架构总览)
 5. [组件详解](#组件详解)
 6. [菜单系统重构](#菜单系统重构)
-7. [依赖关系分析](#依赖关系分析)
-8. [性能与可维护性](#性能与可维护性)
-9. [故障排查指南](#故障排查指南)
-10. [结论](#结论)
-11. [附录](#附录)
+7. [智能自动滚动功能](#智能自动滚动功能)
+8. [依赖关系分析](#依赖关系分析)
+9. [性能与可维护性](#性能与可维护性)
+10. [故障排查指南](#故障排查指南)
+11. [结论](#结论)
+12. [附录](#附录)
 
 ## 简介
 本文件面向 UI 组件系统，系统化梳理 Vue 组件架构与使用方法，覆盖通用组件、静态组件、公共组件的设计模式与最佳实践；重点解读 Tab 组件、Header、Footer、Detail 等核心组件的功能特性、API 接口与配置项；阐述响应式设计、主题适配与国际化支持；并提供使用示例与集成指南，帮助开发者快速理解与扩展。
 
-**更新** 本次更新重点关注菜单系统的重构改进，包括 MenuItem.vue 和 SidebarMenu.vue 的点击区域优化和事件管理增强。
+**更新** 本次更新重点关注 Sidebar 组件新增的智能自动滚动功能，显著提升了用户体验和导航便利性。
 
 ## 项目结构
 UI 组件主要分布在以下目录：
@@ -56,7 +58,7 @@ UI 组件主要分布在以下目录：
 - apps/app/components/public：公开分享相关组件（Detail 等）
 - apps/siyuan/src/components：SiYuan 环境下的通用组件（Tab）
 - apps/app/composables：组合式逻辑（主题模式、路由、鉴权等）
-- apps/app/utils：工具类（TreeUtils、ThemeUtils）
+- apps/app/utils：工具类（TreeUtils、ThemeUtils、appLogger）
 - apps/app/app.config.ts：全局配置类型与默认值
 - apps/app/i18n/locales：国际化词条（中英文）
 - apps/app/public/resources/appearance/themes：主题样式文件
@@ -86,6 +88,7 @@ TU["ThemeUtils.ts"]
 TR["TreeUtils.ts"]
 PAL["palette.styl"]
 MCSS["menu.css"]
+AL["appLogger.ts"]
 end
 subgraph "国际化"
 ZH["zh_CN.json"]
@@ -106,13 +109,14 @@ TM --> PAL
 TU --> AC
 TR --> S
 MCSS --> SM
+AL --> S
 ```
 
 **图表来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/right/Outline.vue:1-130](file://apps/app/components/static/content/right/Outline.vue#L1-L130)
@@ -127,12 +131,13 @@ MCSS --> SM
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 - [apps/app/assets/css/theme/palette.styl:1-52](file://apps/app/assets/css/theme/palette.styl#L1-L52)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/right/Outline.vue:1-130](file://apps/app/components/static/content/right/Outline.vue#L1-L130)
@@ -147,12 +152,13 @@ MCSS --> SM
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 - [apps/app/assets/css/theme/palette.styl:1-52](file://apps/app/assets/css/theme/palette.styl#L1-L52)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 
 ## 核心组件
 - Header：站点导航与品牌展示，支持 Logo、站点名称与自定义头部 HTML 片段
 - Footer：版权信息、版本号、跳转入口与主题模式切换
 - Buttons：返回顶部、主题模式弹窗选择等交互按钮集合
-- Sidebar：基于文档树的左侧导航菜单，支持展开、高亮与层级控制
+- Sidebar：基于文档树的左侧导航菜单，支持展开、高亮、层级控制和智能自动滚动
 - MenuItem：菜单项组件，支持文本截断、工具提示和点击区域优化
 - SidebarMenu：菜单容器组件，支持嵌套菜单和激活状态管理
 - Outline：右侧文档大纲，支持层级与激活文本高亮
@@ -160,13 +166,13 @@ MCSS --> SM
 - ConfirmPassword：密码确认表单，内置校验与加载态
 - ImagePreview：图片预览弹层，基于第三方库封装
 
-**更新** 新增 MenuItem 和 SidebarMenu 组件，作为菜单系统的核心组成部分。
+**更新** 新增 Sidebar 组件的智能自动滚动功能，显著提升了用户体验。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/right/Outline.vue:1-130](file://apps/app/components/static/content/right/Outline.vue#L1-L130)
@@ -179,8 +185,8 @@ MCSS --> SM
 - 配置驱动：通过 app.config.ts 的 AppConfig 类型统一管理站点、主题、导航等配置
 - 主题适配：useClientThemeMode.ts 动态注入主题样式与代码高亮样式，支持明/暗模式切换
 - 国际化：i18n 词条按模块组织，组件通过 useI18n 获取文案
-- 工具支撑：ThemeUtils 提供资源路径拼接，TreeUtils 处理树形数据结构
-- 菜单系统：Sidebar 作为主容器，SidebarMenu 和 MenuItem 提供细粒度的菜单功能
+- 工具支撑：ThemeUtils 提供资源路径拼接，TreeUtils 处理树形数据结构，appLogger 提供日志记录
+- 菜单系统：Sidebar 作为主容器，SidebarMenu 和 MenuItem 提供细粒度的菜单功能，支持智能自动滚动
 
 ```mermaid
 graph TB
@@ -197,6 +203,7 @@ TM --> B
 TU["ThemeUtils<br/>withBase 资源路径"] --> H
 TU --> F
 TR["TreeUtils<br/>树形数据处理"] --> S
+AL["appLogger<br/>日志记录"] --> S
 ZH["zh_CN.json"] --> H
 ZH --> F
 ZH --> S
@@ -217,6 +224,7 @@ MI["MenuItem<br/>菜单项"] --> SM
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/utils/ThemeUtils.ts:1-38](file://apps/app/utils/ThemeUtils.ts#L1-L38)
 - [apps/app/utils/TreeUtils.ts:1-59](file://apps/app/utils/TreeUtils.ts#L1-L59)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
@@ -313,7 +321,7 @@ F-->>U : UI 更新
   - 基于 docTree 构建树形菜单
   - 默认展开至当前文档父链
   - 支持从文档树来源的高亮与展开
-  - 自动滚动到激活菜单项
+  - **智能自动滚动**：自动滚动到激活菜单项，支持重试机制、边界检查和平滑滚动
 - 关键属性
   - post: 包含 docTree、postid、docTreeLevel 等
   - setting: AppConfig（docPath）
@@ -323,6 +331,9 @@ F-->>U : UI 更新
 - 交互优化
   - 滚动到激活菜单项，确保可见性
   - 支持从文档树来源的特殊处理
+  - **智能滚动算法**：包含重试机制、边界检查、平滑滚动和日志记录
+
+**更新** 新增智能自动滚动功能，显著提升了用户体验。
 
 ```mermaid
 flowchart TD
@@ -333,15 +344,17 @@ C --> |否| E["取首个节点作为根"]
 D --> F["递归构建树 buildTreeForRendering"]
 E --> F
 F --> G["渲染 el-menu 与子项"]
-G --> H["滚动到激活菜单项"]
+G --> H["智能滚动到激活菜单项"]
 H --> I["设置展开状态"]
+I --> J["日志记录与调试"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:112-114](file://apps/app/components/static/content/left/Sidebar.vue#L112-L114)
+- [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
 
 **章节来源**
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 
 ### Outline 组件
 - 功能要点
@@ -418,13 +431,13 @@ T->>T : 渲染对应 content组件/文本
 ### 菜单系统架构
 菜单系统经过重构，采用分层组件设计，提升用户体验和可访问性：
 
-- **Sidebar**：主容器，负责菜单的整体布局和状态管理
+- **Sidebar**：主容器，负责菜单的整体布局和状态管理，新增智能自动滚动功能
 - **SidebarMenu**：菜单容器组件，处理菜单项的渲染和交互
 - **MenuItem**：基础菜单项组件，提供点击区域优化和文本处理
 
 ```mermaid
 graph TB
-S["Sidebar.vue<br/>主容器"] --> SM["SidebarMenu.vue<br/>菜单容器"]
+S["Sidebar.vue<br/>主容器<br/>智能滚动"] --> SM["SidebarMenu.vue<br/>菜单容器"]
 SM --> MI["MenuItem.vue<br/>菜单项"]
 SM --> SM2["SidebarMenu.vue<br/>子菜单容器"]
 SM2 --> MI2["MenuItem.vue<br/>子菜单项"]
@@ -432,7 +445,7 @@ S --> SM3["SidebarMenu.vue<br/>其他菜单项"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
 
@@ -490,7 +503,87 @@ SM-->>U : 触发导航
 **章节来源**
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
+
+## 智能自动滚动功能
+
+### 滚动算法概述
+Sidebar 组件新增了智能自动滚动功能，通过复杂的算法确保激活菜单项始终处于可视区域的中心位置。该功能包含重试机制、边界检查和平滑滚动等高级特性。
+
+### 核心算法实现
+智能滚动功能的核心实现包含以下关键步骤：
+
+1. **元素定位**：优先查找 `.el-menu-item.is-active`，如果不存在则回退到任意 `.is-active` 元素
+2. **位置计算**：获取元素相对于滚动容器的位置信息
+3. **可视区域判断**：检查元素是否已在可视区域内且接近中心
+4. **目标滚动计算**：计算使元素居中的目标滚动位置
+5. **边界检查**：确保滚动位置在有效范围内
+6. **平滑滚动**：使用 Element Plus 的 `scrollTo` 方法进行平滑滚动
+7. **重试机制**：验证滚动结果，必要时进行重试
+
+```mermaid
+flowchart TD
+A["scrollToActiveItem()"] --> B["nextTick + setTimeout"]
+B --> C["查找滚动容器 scrollbarRef"]
+C --> D{"找到容器?"}
+D --> |否| E["记录警告并返回"]
+D --> |是| F["获取 wrap 容器"]
+F --> G{"找到 wrap?"}
+G --> |否| H["记录警告并返回"]
+G --> |是| I["查找激活元素"]
+I --> J{"找到激活元素?"}
+J --> |否| K{"尝试次数 < 10?"}
+K --> |是| L["递增延迟后重试"]
+K --> |否| M["记录警告并返回"]
+J --> |是| N["计算元素位置信息"]
+N --> O["检查是否已在可视区域且接近中心"]
+O --> |是| P["跳过滚动"]
+O --> |否| Q["计算目标滚动位置"]
+Q --> R["边界检查"]
+R --> S["平滑滚动到目标位置"]
+S --> T["500ms 后验证滚动结果"]
+T --> U{"元素仍不可见?"}
+U --> |是| K
+U --> |否| V["滚动完成"]
+```
+
+**图表来源**
+- [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
+
+### 重试机制设计
+智能滚动功能包含完善的重试机制：
+
+- **最大尝试次数**：最多尝试 10 次
+- **递增延迟**：每次重试增加 100ms 延迟，最长 1000ms
+- **条件检查**：只有在元素未找到或滚动后仍不可见时才重试
+- **日志记录**：详细记录每次尝试的结果和原因
+
+### 边界检查机制
+为了确保滚动行为的稳定性，系统实现了严格的边界检查：
+
+- **最小值检查**：确保滚动位置不小于 0
+- **最大值检查**：确保滚动位置不超过最大滚动高度
+- **容器尺寸验证**：检查容器的高度和滚动高度有效性
+- **元素尺寸验证**：验证元素的高度和相对位置
+
+### 平滑滚动实现
+使用 Element Plus 的原生滚动方法实现平滑滚动：
+
+- **behavior: 'smooth'**：启用平滑滚动动画
+- **精确控制**：通过 `scrollTo` 方法精确控制滚动位置
+- **性能优化**：避免使用 jQuery 或第三方库，直接调用原生 API
+
+### 日志记录与调试
+智能滚动功能集成了完整的日志记录系统：
+
+- **开发模式**：在开发环境下输出详细的调试信息
+- **生产模式**：在生产环境下保持静默
+- **关键信息**：记录滚动目标、元素位置、容器尺寸等关键信息
+- **错误追踪**：记录警告和错误信息，便于问题排查
+
+**章节来源**
+- [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 
 ## 依赖关系分析
 - 配置依赖
@@ -502,10 +595,12 @@ SM-->>U : 触发导航
 - 工具依赖
   - ThemeUtils.withBase 用于拼接带 base 的资源路径
   - TreeUtils.addParentIds 用于处理树形数据结构
+  - **appLogger.createAppLogger 用于智能滚动功能的日志记录**
 - 组件间耦合
   - Footer 与 Buttons 解耦，Footer 仅负责展示与事件转发
   - Tab 与业务内容解耦，通过 content/props 动态渲染
   - 菜单系统通过 ref 实现组件间通信
+  - **Sidebar 与 Element Plus 的 el-scrollbar 组件紧密集成**
 
 ```mermaid
 graph LR
@@ -530,9 +625,11 @@ EN --> CP
 TU["ThemeUtils"] --> H
 TU --> F
 TR["TreeUtils"] --> S
+AL["appLogger"] --> S
 MCSS["menu.css"] --> S
 SM["SidebarMenu"] --> S
 MI["MenuItem"] --> SM
+ES["Element Plus<br/>el-scrollbar"] --> S
 ```
 
 **图表来源**
@@ -540,6 +637,7 @@ MI["MenuItem"] --> SM
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/utils/ThemeUtils.ts:1-38](file://apps/app/utils/ThemeUtils.ts#L1-L38)
 - [apps/app/utils/TreeUtils.ts:1-59](file://apps/app/utils/TreeUtils.ts#L1-L59)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 - [apps/app/public/resources/appearance/themes/Savor/style/module/menu.css:1-514](file://apps/app/public/resources/appearance/themes/Savor/style/module/menu.css#L1-L514)
@@ -549,6 +647,7 @@ MI["MenuItem"] --> SM
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/utils/ThemeUtils.ts:1-38](file://apps/app/utils/ThemeUtils.ts#L1-L38)
 - [apps/app/utils/TreeUtils.ts:1-59](file://apps/app/utils/TreeUtils.ts#L1-L59)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
 
@@ -558,13 +657,21 @@ MI["MenuItem"] --> SM
   - Sidebar 构建树时使用 Map 与递归，避免重复遍历
   - Outline 使用固定宽度与滚动容器，减少重排
   - 菜单系统通过 ref 优化组件间通信，减少事件冒泡
+  - **智能滚动功能使用 nextTick 和 setTimeout 优化 DOM 查询时机**
+  - **重试机制采用递增延迟，避免频繁重试影响性能**
 - 可维护性
   - 组件职责单一，事件与属性清晰
   - 配置集中于 AppConfig，便于统一管理
   - 主题注入集中在 useClientThemeMode，便于扩展新主题
   - 菜单系统采用分层设计，便于功能扩展和维护
+  - **日志记录系统便于问题排查和性能监控**
+- 用户体验
+  - **智能滚动确保激活菜单项始终可见且居中**
+  - **平滑滚动动画提升视觉体验**
+  - **重试机制保证在复杂页面结构下的可靠性**
+  - **边界检查防止滚动异常**
 
-**更新** 菜单系统重构提升了性能和可维护性，通过优化点击区域和事件管理减少了不必要的 DOM 操作。
+**更新** 新增智能自动滚动功能的性能优化和用户体验改进说明。
 
 ## 故障排查指南
 - 主题未生效
@@ -582,8 +689,14 @@ MI["MenuItem"] --> SM
   - 检查 MenuItem 的点击处理逻辑，确认事件委派是否正常
   - 验证 SidebarMenu 的 ref 调用是否成功
   - 确认菜单项的链接格式是否正确
+- **智能滚动功能异常**
+  - **检查浏览器控制台是否有日志输出，确认 appLogger 是否正常工作**
+  - **验证 Element Plus 的 el-scrollbar 组件是否正确渲染**
+  - **确认激活元素的选择器是否匹配实际的 DOM 结构**
+  - **检查重试机制是否被正确触发，尝试次数是否达到最大值**
+  - **验证边界检查逻辑，确认滚动位置是否在有效范围内**
 
-**更新** 新增菜单系统相关故障排查指导。
+**更新** 新增智能自动滚动功能相关的故障排查指导。
 
 **章节来源**
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
@@ -594,11 +707,12 @@ MI["MenuItem"] --> SM
 - [apps/app/components/common/ImagePreview.vue:1-64](file://apps/app/components/common/ImagePreview.vue#L1-L64)
 - [apps/app/components/static/content/left/MenuItem.vue:55-66](file://apps/app/components/static/content/left/MenuItem.vue#L55-L66)
 - [apps/app/components/static/content/left/SidebarMenu.vue:32-36](file://apps/app/components/static/content/left/SidebarMenu.vue#L32-L36)
+- [apps/app/utils/appLogger.ts:1-23](file://apps/app/utils/appLogger.ts#L1-L23)
 
 ## 结论
 该 UI 组件系统以配置驱动为核心，结合组合式逻辑与国际化、主题工具，形成清晰的静态布局与通用组件体系。各组件职责明确、接口简洁，具备良好的扩展性与可维护性。通过统一的主题注入与资源路径工具，实现了跨环境的一致体验。
 
-**更新** 菜单系统的重构进一步提升了用户体验和可访问性，通过优化点击区域、增强事件管理和改进文本处理，为用户提供了更加流畅和直观的导航体验。
+**更新** 菜单系统的重构和智能自动滚动功能的新增进一步提升了用户体验和可访问性，通过优化点击区域、增强事件管理和改进文本处理，为用户提供了更加流畅和直观的导航体验。智能滚动功能的引入显著改善了用户在大型文档树中的导航体验，确保激活菜单项始终处于最佳可视位置。
 
 ## 附录
 
@@ -616,7 +730,7 @@ MI["MenuItem"] --> SM
   - 行为：返回顶部/主题模式弹窗
 - Sidebar
   - 属性：post(AppConfig), setting(AppConfig)
-  - 行为：根据 docTree 渲染菜单，自动展开当前文档父链，滚动到激活菜单项
+  - 行为：根据 docTree 渲染菜单，自动展开当前文档父链，**智能滚动到激活菜单项**
 - SidebarMenu
   - 属性：menu(MenuData), activeIndex(string)
   - 行为：渲染菜单容器，支持嵌套菜单和激活状态管理
@@ -640,13 +754,13 @@ MI["MenuItem"] --> SM
   - 事件：hide
   - 行为：图片预览弹层，暴露 show(index)
 
-**更新** 新增 SidebarMenu 和 MenuItem 组件的 API 说明。
+**更新** 新增 Sidebar 组件的智能滚动功能 API 说明。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)
 - [apps/app/components/static/content/right/Outline.vue:1-130](file://apps/app/components/static/content/right/Outline.vue#L1-L130)
@@ -658,12 +772,14 @@ MI["MenuItem"] --> SM
 - 响应式
   - Header/Footer/Buttons 在窄屏与移动端调整布局与可见元素
   - 菜单系统支持响应式布局，在窄屏下优化显示效果
+  - **智能滚动功能在不同屏幕尺寸下自动适应**
 - 主题适配
   - useClientThemeMode 注入默认与当前主题样式，设置 data-theme-mode 属性
   - 暗色模式下 Outline 等组件自动切换背景与边框
   - 菜单系统样式通过 menu.css 进行主题适配
+  - **智能滚动功能与主题样式完全兼容**
 
-**更新** 新增菜单系统主题适配说明。
+**更新** 新增智能滚动功能的主题适配说明。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
@@ -677,8 +793,9 @@ MI["MenuItem"] --> SM
 - 词条来源：zh_CN.json 与 en_US.json
 - 组件使用：通过 useI18n 获取文案，如静态菜单标题、按钮文案等
 - 菜单系统：支持多语言菜单项显示
+- **智能滚动功能：日志记录使用英文描述，便于国际用户理解**
 
-**更新** 菜单系统支持国际化菜单项。
+**更新** 菜单系统支持国际化菜单项，智能滚动功能的日志使用英文描述。
 
 **章节来源**
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
@@ -691,20 +808,24 @@ MI["MenuItem"] --> SM
   - ConfirmPassword：传入初始值与回调
   - ImagePreview：传入图片数组，调用暴露的 show(index)
 - 菜单系统集成
-  - Sidebar：传入 post 和 setting，自动渲染菜单树
+  - Sidebar：传入 post 和 setting，自动渲染菜单树，**智能滚动功能自动启用**
   - SidebarMenu：传入 menu 和 activeIndex，支持嵌套菜单
   - MenuItem：传入 link、text 和 fromDocTree 属性
 - 主题与国际化
   - 在入口处初始化 useClientThemeMode
   - 确保 i18n 语言与词条可用
   - 配置 menu.css 样式文件
+- **智能滚动功能集成**
+  - **无需额外配置，Sidebar 组件自动启用智能滚动功能**
+  - **确保 Element Plus 的 el-scrollbar 组件正确安装和配置**
+  - **在开发环境中可查看详细的滚动日志信息**
 
-**更新** 新增菜单系统集成指南。
+**更新** 新增智能自动滚动功能的集成指南。
 
 **章节来源**
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
-- [apps/app/components/static/content/left/Sidebar.vue:1-193](file://apps/app/components/static/content/left/Sidebar.vue#L1-L193)
+- [apps/app/components/static/content/left/Sidebar.vue:1-250](file://apps/app/components/static/content/left/Sidebar.vue#L1-L250)
 - [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
 - [apps/app/components/static/content/left/MenuItem.vue:1-94](file://apps/app/components/static/content/left/MenuItem.vue#L1-L94)

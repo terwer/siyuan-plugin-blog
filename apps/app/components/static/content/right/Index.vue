@@ -8,7 +8,7 @@
   -->
 
 <script setup lang="ts">
-import { More } from "@element-plus/icons-vue"
+import { More, Paperclip } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
 
 const logger = createAppLogger("right-index")
@@ -24,6 +24,7 @@ const isHovered = ref(false)
 
 // ==================== 大纲宽度调整功能 ====================
 const OUTLINE_WIDTH_KEY = 'siyuan-blog-outline-width'
+const OUTLINE_PINNED_KEY = 'siyuan-blog-outline-pinned'
 const DEFAULT_WIDTH = 280
 const MIN_WIDTH = 200
 const MAX_WIDTH = 500
@@ -31,6 +32,9 @@ const MAX_WIDTH = 500
 // 大纲宽度状态
 const outlineWidth = ref(DEFAULT_WIDTH)
 const isResizing = ref(false)
+
+// 大纲固定显示状态
+const isPinned = ref(false)
 
 // 从 localStorage 读取保存的宽度
 const loadSavedWidth = () => {
@@ -50,6 +54,34 @@ const saveWidth = (width: number) => {
   if (process.client) {
     localStorage.setItem(OUTLINE_WIDTH_KEY, width.toString())
   }
+}
+
+// 从 localStorage 读取固定状态
+const loadPinnedState = () => {
+  if (process.client) {
+    const savedPinned = localStorage.getItem(OUTLINE_PINNED_KEY)
+    if (savedPinned) {
+      isPinned.value = savedPinned === 'true'
+    }
+  }
+}
+
+// 保存固定状态到 localStorage
+const savePinnedState = (pinned: boolean) => {
+  if (process.client) {
+    localStorage.setItem(OUTLINE_PINNED_KEY, pinned.toString())
+  }
+}
+
+// 切换固定显示状态
+const togglePin = () => {
+  isPinned.value = !isPinned.value
+  savePinnedState(isPinned.value)
+  // 固定时自动展开大纲
+  if (isPinned.value) {
+    showOutline.value = true
+  }
+  logger.info("Outline pinned state:", isPinned.value)
 }
 
 // 开始拖拽调整宽度
@@ -90,6 +122,9 @@ const toggleOutline = () => {
 
 // hover 状态控制
 const onHover = (state:boolean) => {
+  // 固定模式下不响应 hover
+  if (isPinned.value) return
+  
   if (!showOutline.value) {
     isHovered.value = state
     toggleOutline()
@@ -139,12 +174,18 @@ const onScroll = () => {
 }
 
 onMounted(() => {
-  // 从 localStorage 加载保存的宽度（确保在客户端执行）
+  // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
   loadSavedWidth()
+  loadPinnedState()
+  
+  // 如果处于固定状态，自动展开大纲
+  if (isPinned.value) {
+    showOutline.value = true
+  }
   
   // 有文档大纲才绑定滚动
   if (outlineData.value && outlineData.value.length > 0) {
-    logger.info("Mounted: Adding scroll listener, outline width:", outlineWidth.value)
+    logger.info("Mounted: Adding scroll listener, outline width:", outlineWidth.value, "pinned:", isPinned.value)
     window.addEventListener("scroll", onScroll, true)
   }
 })
@@ -188,14 +229,39 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+    <!-- 大纲控制按钮组 -->
     <div
-        class="toggle-btn"
-        :class="{ 'toggle-btn-moved': showOutline }"
-        :style="showOutline ? { right: outlineWidth + 10 + 'px' } : {}"
+        v-if="showOutline"
+        class="outline-controls"
+        :style="{ right: outlineWidth + 16 + 'px' }"
+    >
+      <!-- 图钉按钮 -->
+      <div
+          class="control-btn pin-btn"
+          :class="{ 'pin-btn-active': isPinned }"
+          @click="togglePin"
+          title="固定显示大纲"
+      >
+        <el-icon :size="14"><Paperclip /></el-icon>
+      </div>
+      <!-- 更多按钮 -->
+      <div
+          class="control-btn toggle-btn"
+          @click="toggleOutline"
+          @mouseenter="onHover(true)"
+          title="切换大纲显示"
+      >
+        <el-icon :size="14"><More /></el-icon>
+      </div>
+    </div>
+    <!-- 收起状态下的更多按钮 -->
+    <div
+        v-else
+        class="toggle-btn-collapsed"
         @click="toggleOutline"
         @mouseenter="onHover(true)"
     >
-      <el-icon><More /></el-icon>
+      <el-icon :size="14"><More /></el-icon>
     </div>
   </div>
 </template>
@@ -302,18 +368,75 @@ onUnmounted(() => {
 .resize-handle.is-resizing .resize-dots .dot
   background var(--el-color-primary)
 
+/* 大纲控制按钮组 */
+.outline-controls
+  position fixed
+  top 20px
+  z-index 100
+  display flex
+  align-items center
+  gap 8px
+  padding 6px
+  background var(--background)
+  border 1px solid var(--border-color)
+  border-radius 8px
+  box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
+  transition all 0.3s ease
+
+/* 控制按钮通用样式 */
+.control-btn
+  width 28px
+  height 28px
+  display flex
+  align-items center
+  justify-content center
+  border-radius 6px
+  cursor pointer
+  transition all 0.2s ease
+  color var(--text-color-secondary)
+
+.control-btn:hover
+  background var(--el-fill-color-light)
+  color var(--text-color-primary)
+
+/* 图钉按钮 */
+.pin-btn
+  color var(--text-color-secondary)
+
+.pin-btn-active
+  background var(--el-color-primary-light-9)
+  color var(--el-color-primary)
+
+.pin-btn-active:hover
+  background var(--el-color-primary)
+  color white
+
 /* 切换按钮 */
 .toggle-btn
-  position fixed /* 按钮始终固定 */
-  top 28px
+  color var(--text-color-secondary)
+
+/* 收起状态下的切换按钮 */
+.toggle-btn-collapsed
+  position fixed
+  top 20px
   right 20px
   z-index 100
+  width 32px
+  height 32px
+  display flex
+  align-items center
+  justify-content center
+  border-radius 8px
+  background var(--background)
+  border 1px solid var(--border-color)
+  box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
   cursor pointer
-  transition right 0.3s ease
+  transition all 0.3s ease
+  color var(--text-color-secondary)
 
-/* 按钮跟随大纲移动 */
-.toggle-btn-moved
-  transition right 0.1s ease
+.toggle-btn-collapsed:hover
+  background var(--el-fill-color-light)
+  color var(--text-color-primary)
 
 /* 小屏适配：不占用宽度 */
 @media (max-width: 768px)
