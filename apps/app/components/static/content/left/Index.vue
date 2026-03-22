@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
+import { onMounted } from 'vue'
 
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
@@ -27,13 +28,19 @@ const shouldShowSidebar = computed(() => {
   return props.post.docTree && props.post.docTree.length > 0
 })
 
+// 在 mounted 时设置初始状态
+onMounted(() => {
+  // 如果从文档树过来，默认展开
+  if (isFromDocTree.value) {
+    formData.sidebarVisible = true
+  }
+})
+
 const sidebarClass = computed(() => {
-  // 如果从文档树过来，默认展开；否则使用用户的手动控制状态
-  const isVisible = isFromDocTree.value ? true : formData.sidebarVisible
   return {
     'aside-left': true,
-    'sidebarOpen': isVisible,
-    'sidebarClosed': !isVisible
+    'sidebarOpen': formData.sidebarVisible,
+    'sidebarClosed': !formData.sidebarVisible
   }
 })
 
