@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
-import { useRoute } from '#imports'
 
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
