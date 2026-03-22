@@ -7,12 +7,12 @@
  *  of this license document, but changing it is not allowed.
  */
 
-import { BrowserUtil } from "zhi-device"
-import { useRoute } from "vue-router"
 import { useColorMode } from "@vueuse/core"
-import { HLJS_VERSION, SIYUAN_VERSION } from "~/utils/Constants"
-import { useAppBase } from "~/composables/useAppBase"
+import { useRoute } from "vue-router"
+import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
+import { useAppBase } from "~/composables/useAppBase"
+import { HLJS_VERSION, SIYUAN_VERSION } from "~/utils/Constants"
 
 // 创建日志记录器
 const logger = createAppLogger("use-theme-mode")
@@ -28,6 +28,21 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
 
   // 在 mounted 生命周期中处理加载后逻辑
   onBeforeMount(() => {
+    // 处理 auto 模式：检测系统主题并设置实际值
+    if (store.value === "auto") {
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      const actualMode = systemPrefersDark ? "dark" : "light"
+      // 将 auto 转换为实际的 light/dark
+      store.value = actualMode
+      logger.info("Auto mode detected, setting to:", actualMode)
+      // 刷新页面以应用新主题
+      window.location.reload()
+      return
+    }
+    // 初始化主题模式
+    setThemeMode()
+    // 监听系统主题变化（仅在需要时重新检测）
+    watchSystemThemeChange()
   })
 
   // computes
@@ -99,14 +114,37 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
   // ==================================================
   // private methods
   // ==================================================
+  // 获取实际的主题模式（处理 auto 情况）
+  const getActualThemeMode = (): boolean => {
+    if (store.value === "auto") {
+      // 根据系统偏好返回实际模式
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+    }
+    return store.value === "dark"
+  }
+
   // 设置主题模式
   const setThemeMode = () => {
     // 服务端不渲染
     if (BrowserUtil.isInBrowser) {
-      const isDarkMode = store.value === "dark"
+      const isDarkMode = getActualThemeMode()
       setCssAndThemeMode(isDarkMode)
       // 记录日志
-      logger.info(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode")
+      logger.info(isDarkMode ? "Browser Dark Mode" : "Browser Light Mode", "store:", store.value)
+    }
+  }
+
+  // 监听系统主题变化
+  const watchSystemThemeChange = () => {
+    if (BrowserUtil.isInBrowser) {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      mediaQuery.addEventListener("change", (e) => {
+        // 自动同步系统主题变化
+        const newMode = e.matches ? "dark" : "light"
+        store.value = newMode
+        setCssAndThemeMode(e.matches)
+        logger.info("System theme changed, switching to:", newMode)
+      })
     }
   }
 
@@ -133,8 +171,18 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
       protyleHljsStyle.href =
         appBase + `resources/stage/protyle/js/highlight.js/styles/vs${isDarkMode ? "2015" : ""}.min.css?v=${hljsV}`
     }
-    // 颜色模式属性
-    document.documentElement.dataset.themeMode = isDarkMode ? "dark" : "light"
+    // 颜色模式属性 - 关键：确保 Element Plus 能正确响应
+    const actualMode = isDarkMode ? "dark" : "light"
+    document.documentElement.dataset.themeMode = actualMode
+    
+    // 同步设置 html class，确保 Element Plus 暗色模式正确应用
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark")
+      document.documentElement.classList.remove("light")
+    } else {
+      document.documentElement.classList.add("light")
+      document.documentElement.classList.remove("dark")
+    }
 
     // 自定义样式适配
     setCustomCss()

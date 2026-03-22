@@ -8,6 +8,7 @@
   -->
 
 <script setup lang="ts">
+import { useColorMode } from "@vueuse/core"
 import { debounce } from "lodash-unified"
 
 const emit = defineEmits<{
@@ -29,11 +30,11 @@ const formData = reactive({
   showModeBox: false,
   currentMode: "",
   modeList: [
-    // {
-    //   name: "跟随系统",
-    //   icon: "icon-zidong",
-    //   KEY: "auto"
-    // },
+    {
+      name: "跟随系统",
+      icon: "icon-zidong",
+      KEY: "auto"
+    },
     {
       name: "浅色模式",
       icon: "icon-rijianmoshi",
@@ -44,11 +45,6 @@ const formData = reactive({
       icon: "icon-yejianmoshi",
       KEY: "dark"
     },
-    // {
-    //   name: "阅读模式",
-    //   icon: "icon-yuedu",
-    //   KEY: "read"
-    // }
   ],
 })
 
@@ -88,9 +84,32 @@ const getCommentTop = () => {
   // }, 500)
 }
 
-const toggleMode = (key:string) => {
+// 获取实际的主题模式（将 auto 转换为 light/dark）
+const getActualMode = (mode: string): "light" | "dark" => {
+  if (mode === "auto") {
+    // 检测系统主题偏好
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  }
+  return mode as "light" | "dark"
+}
+
+// 使用 vueuse 的 color mode store
+const { store: colorModeStore } = useColorMode()
+
+const toggleMode = (key: string) => {
   formData.currentMode = key
-  emit("toggleThemeMode", key)
+  if (key === "auto") {
+    // auto 模式：检测系统主题并设置实际值
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    const actualMode = systemPrefersDark ? "dark" : "light"
+    colorModeStore.value = actualMode
+    // 刷新页面以应用新主题
+    window.location.reload()
+  } else {
+    // light/dark 模式：直接设置
+    colorModeStore.value = key
+    emit("toggleThemeMode", key)
+  }
 }
 
 onMounted(() => {
@@ -99,11 +118,28 @@ onMounted(() => {
     formData.scrollTop = getScrollTop()
   }, 100), true)
 
-  // window.addEventListener("load", () => {
-  //   getCommentTop()
-  // })
-
-  formData.currentMode = props.defaultMode ?? "auto"
+  // 设置初始模式
+  const initialMode = props.defaultMode ?? "auto"
+  formData.currentMode = initialMode
+  
+  // 如果初始是 auto，检测系统主题并刷新
+  if (initialMode === "auto") {
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    const actualMode = systemPrefersDark ? "dark" : "light"
+    colorModeStore.value = actualMode
+    // 刷新页面以应用新主题
+    window.location.reload()
+    return
+  }
+  
+  // 监听系统主题变化
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+  mediaQuery.addEventListener("change", (e) => {
+    // 自动同步系统主题变化
+    const newMode = e.matches ? "dark" : "light"
+    colorModeStore.value = newMode
+    emit("toggleThemeMode", newMode)
+  })
 })
 </script>
 
