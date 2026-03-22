@@ -8,6 +8,8 @@
   -->
 
 <script setup>
+import { nextTick, watch, ref } from "vue"
+
 const props = defineProps({
   outlineData: {
     type: Array,
@@ -28,6 +30,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+const outlineContentRef = ref(null)
 
 const getRootLevel = () => {
   if (props.outlineData.length === 0) {
@@ -48,6 +51,43 @@ const getItemLevel = (item) => {
   const level = parseInt(item.subType.replace("h", ""), 10)
   return isNaN(level) ? 1 : level
 }
+
+// 滚动到激活的目录项
+const scrollToActiveItem = () => {
+  nextTick(() => {
+    if (!outlineContentRef.value || !props.activeText) return
+    
+    const activeElement = outlineContentRef.value.querySelector('.item-link.active')
+    if (!activeElement) return
+    
+    const container = outlineContentRef.value
+    const elementRect = activeElement.getBoundingClientRect()
+    const containerRect = container.getBoundingClientRect()
+    
+    // 计算元素相对于容器的位置
+    const elementTop = elementRect.top - containerRect.top + container.scrollTop
+    const elementHeight = activeElement.offsetHeight
+    const containerHeight = container.clientHeight
+    
+    // 检查元素是否在可视区域内
+    const isInViewport = elementTop >= container.scrollTop && 
+                         elementTop + elementHeight <= container.scrollTop + containerHeight
+    
+    if (!isInViewport) {
+      // 滚动到元素居中显示
+      const targetScrollTop = elementTop - (containerHeight / 2) + (elementHeight / 2)
+      container.scrollTo({
+        top: Math.max(0, targetScrollTop),
+        behavior: 'smooth'
+      })
+    }
+  })
+}
+
+// 监听激活文本变化，自动滚动
+watch(() => props.activeText, () => {
+  scrollToActiveItem()
+}, { flush: 'post' })
 </script>
 
 <template>
@@ -55,7 +95,7 @@ const getItemLevel = (item) => {
     <div class="outline-title">
       <a class="outline-title-link">{{ t("static.outline") }}</a>
     </div>
-    <div class="outline-content">
+    <div ref="outlineContentRef" class="outline-content">
       <div
         v-for="(item, index) in outlineData"
         :key="index"
@@ -77,13 +117,16 @@ const getItemLevel = (item) => {
 <style lang="stylus" scoped>
 .outline
   width: 280px /* 默认宽度，会被内联样式覆盖 */
-  height: 100vh
+  max-height: calc(100vh - 80px) /* 限制最大高度，留出顶部空间 */
   background-color: #fff
   box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1)
   border: 1px solid #eaeaea
+  border-radius: 8px /* 圆角设计 */
   display: flex
   flex-direction: column
-  position fixed
+  position: fixed
+  top: 60px /* 距离顶部一定距离 */
+  overflow: hidden /* 防止内容溢出 */
 
   // Dark mode styles
   html[data-theme-mode="dark"] &
@@ -92,43 +135,69 @@ const getItemLevel = (item) => {
 
 .outline-title
   flex-shrink: 0
-  padding: 10px 20px
+  padding: 12px 16px
   background-color: inherit
-  position: sticky
-  top: 0
-  z-index: 10
-  //border-bottom: 1px solid #eaeaea
+  border-bottom: 1px solid #f0f0f0
+  font-size: 14px
+  font-weight: 500
 
   // Dark mode styles
   html[data-theme-mode="dark"] &
-    border-bottom-color: #3a3a3a
+    border-bottom-color: #333
 
   .outline-title-link
-    color: #333
-    font-weight: 600
+    color: #666
     text-decoration: none
     cursor: pointer
-    transition: color 0.3s ease
+    transition: color 0.2s ease
+    display: flex
+    align-items: center
+    gap: 8px
+    
+    &::before
+      content: "☰"
+      font-size: 12px
+      opacity: 0.7
+    
     &:hover
-      color: #007bff
+      color: #1890ff
 
     // Dark mode styles
     html[data-theme-mode="dark"] &
-      color: #ddd
+      color: #aaa
       &:hover
-        color: #3399ff
+        color: #40a9ff
 
 .outline-content
   flex-grow: 1
   overflow-y: auto
+  overflow-x: hidden
   background-color: inherit
-  padding: 10px
-
-  // Dark mode styles
+  padding: 8px 0
+  scroll-behavior: smooth /* 平滑滚动 */
+  
+  /* 自定义滚动条 */
+  &::-webkit-scrollbar
+    width: 4px
+  
+  &::-webkit-scrollbar-track
+    background: transparent
+  
+  &::-webkit-scrollbar-thumb
+    background: rgba(0, 0, 0, 0.15)
+    border-radius: 2px
+  
+  &::-webkit-scrollbar-thumb:hover
+    background: rgba(0, 0, 0, 0.25)
+  
+  // Dark mode scrollbar
   html[data-theme-mode="dark"] &
-    background-color: #1e1e1e
+    &::-webkit-scrollbar-thumb
+      background: rgba(255, 255, 255, 0.15)
+    
+    &::-webkit-scrollbar-thumb:hover
+      background: rgba(255, 255, 255, 0.25)
 
 .outline-item
-  margin-bottom: 8px
-  padding-left: 5px
+  margin-bottom: 2px /* 减小间距 */
 </style>
