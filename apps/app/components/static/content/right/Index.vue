@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { More } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
+import MintlifyOutline from "~/components/static/content/right/MintlifyOutline.vue"
 
 const logger = createAppLogger("right-index")
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
@@ -98,7 +99,7 @@ onUnmounted(() => {
       :class="{ 'outline-expanded': showOutline }"
     >
       <div class="outline-content">
-        <static-content-right-outline
+        <mintlify-outline
           :outline-data="outlineData"
           :max-depth="outlineMaxDepth"
           :active-text="activeNodeText"
