@@ -79,6 +79,9 @@ defineExpose({
   height 100%
   min-height 40px
   cursor pointer
+  // 扩展点击区域到左侧，覆盖 el-menu-item 的 padding 区域
+  margin-left -20px
+  padding-left 20px
 
 .menu-title
   display inline-block

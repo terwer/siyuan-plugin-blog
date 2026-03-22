@@ -8,7 +8,7 @@
   -->
 
 <script setup lang="ts">
-import { defineProps, computed, ref } from "vue"
+import { computed, defineProps, ref } from "vue"
 import MenuItem from "./MenuItem.vue"
 
 interface MenuData {
@@ -31,6 +31,7 @@ const menuItemRef = ref<InstanceType<typeof MenuItem> | null>(null)
 // 处理菜单项点击，触发子组件的跳转逻辑
 const handleMenuClick = () => {
   // 调用 MenuItem 的跳转方法
+  // 注意：不在这里阻止事件冒泡，由 MenuItem 组件内部处理
   menuItemRef.value?.handleItemClick()
 }
 </script>
@@ -42,7 +43,7 @@ const handleMenuClick = () => {
     :class="{ 'is-active': isActive }"
   >
     <template #title>
-      <div class="menu-item-wrapper" @click.stop="handleMenuClick">
+      <div class="menu-item-wrapper" @click="handleMenuClick">
         <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
       </div>
     </template>
@@ -57,7 +58,7 @@ const handleMenuClick = () => {
     v-else
     :index="props.menu.id"
     :class="{ 'is-active': isActive, 'menu-item-fullwidth': true }"
-    @click.stop="handleMenuClick"
+    @click="handleMenuClick"
   >
     <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
   </el-menu-item>
@@ -73,18 +74,8 @@ const handleMenuClick = () => {
 
 // 让 el-menu-item 的内容占满整个区域，同时保留左侧缩进
 :deep(.menu-item-fullwidth)
-  position relative
   // 保留 Element Plus 默认的 padding 用于左侧缩进
-  // 但让内部内容通过负 margin 覆盖整个点击区域
-  > div
-    position absolute
-    top 0
-    left 0
-    right 0
-    bottom 0
-    display flex
-    align-items center
-    padding-left 20px
+  // MenuItem 组件内部处理点击，保持原有样式不变
 
 // 高亮当前激活的菜单项
 :deep(.is-active)
