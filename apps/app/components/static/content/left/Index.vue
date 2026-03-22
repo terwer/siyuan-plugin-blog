@@ -10,16 +10,36 @@
 <script setup lang="ts">
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
+import { useRoute } from '#imports'
 
+const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
 const formData = reactive({
   sidebarVisible: false
 })
 
+const isFromDocTree = computed(() => {
+  return route.query.from === 'docTree'
+})
+
+const shouldShowSidebar = computed(() => {
+  // 显示侧边栏的条件：docTree 存在且有内容
+  return props.post.docTree && props.post.docTree.length > 0
+})
+
+const sidebarClass = computed(() => {
+  // 如果从文档树过来，默认展开；否则使用用户的手动控制状态
+  const isVisible = isFromDocTree.value ? true : formData.sidebarVisible
+  return {
+    'aside-left': true,
+    'sidebarOpen': isVisible,
+    'sidebarClosed': !isVisible
+  }
+})
+
 const emitToggleSidebar = (state: boolean) => {
   formData.sidebarVisible = state
-
   // 防止标题栏被侧边按钮遮挡
   if (BrowserUtil.isInBrowser) {
     const element = document.querySelector(".protyle-title__input") as HTMLElement | null
@@ -33,8 +53,8 @@ const emitToggleSidebar = (state: boolean) => {
 
 <template>
   <el-aside
-    v-if="props.post.docTree && props.post.docTree.length>0"
-    :class="{'aside-left': true, sidebarOpen: formData.sidebarVisible, sidebarClosed: !formData.sidebarVisible}"
+    v-if="shouldShowSidebar"
+    :class="sidebarClass"
   >
     <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
     <static-content-left-sidebar-button @toggle-sidebar="emitToggleSidebar" />

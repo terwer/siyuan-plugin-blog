@@ -20,6 +20,7 @@ import { computed } from "vue"
 interface Props {
   link: string;
   text: string;
+  fromDocTree?: boolean; // 是否从文档树过来
 }
 
 const props = defineProps<Props>()
@@ -49,7 +50,16 @@ const truncatedText = computed(() => {
 })
 
 const handleItemClick = async () => {
-  await navigateTo(props.link)
+  let finalLink = props.link
+
+  // 如果是从文档树过来的链接，添加查询参数
+  if (props.fromDocTree) {
+    const url = new URL(finalLink, window.location.origin)
+    url.searchParams.set('from', 'docTree')
+    finalLink = url.pathname + url.search
+  }
+
+  await navigateTo(finalLink)
 }
 </script>
 

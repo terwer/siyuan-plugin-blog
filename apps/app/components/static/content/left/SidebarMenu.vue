@@ -33,7 +33,7 @@ const isActive = computed(() => {
     :class="{ 'is-active': isActive }"
   >
     <template #title>
-      <MenuItem :link="props.menu.link" :text="props.menu.name" />
+      <MenuItem :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
     </template>
     <SidebarMenu
       v-for="child in props.menu.children || []"
@@ -47,7 +47,7 @@ const isActive = computed(() => {
     :index="props.menu.id"
     :class="{ 'is-active': isActive }"
   >
-    <MenuItem :link="props.menu.link" :text="props.menu.name" />
+    <MenuItem :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
   </el-menu-item>
 </template>
 
