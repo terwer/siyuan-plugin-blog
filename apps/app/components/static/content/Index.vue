@@ -8,35 +8,43 @@
   -->
 
 <script setup lang="ts">
-import type AppConfig from "~/app.config"
+import type AppConfig from "~/app.config";
 
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
-  <el-container
-    :class="{ 'main-container': true, 'headed-container': props.setting?.showHeader }"
+  <div
+    :class="{ 'content-layout': true, 'headed-layout': props.setting?.showHeader }"
   >
     <static-content-left
       :post="props.post"
       :setting="props.setting"
     />
-    <el-main class="main">
+    <main class="main-content">
       <static-content-main :post="props.post" :setting="props.setting" />
-    </el-main>
+    </main>
     <static-content-right :post="props.post" :setting="props.setting" />
-  </el-container>
+  </div>
 </template>
 
 <style scoped lang="stylus">
 @import "../../../assets/css/theme/index.styl"
 
-.main-container
+/* 使用 flex 布局替代 el-container */
+.content-layout
+  display flex
+  flex-direction row
+  align-items flex-start
   margin 20px 0
-.headed-container
-  top $navbarHeight
-.main
+  min-height calc(100vh - 40px) /* 减去 margin */
+
+.headed-layout
+  margin-top $navbarHeight
+
+.main-content
+  flex 1
+  min-width 0 /* 防止 flex 子项溢出 */
   padding 0
   margin 0
-  flex-basis min-content
 </style>

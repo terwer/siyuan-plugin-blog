@@ -125,6 +125,8 @@ watch(() => props.activeText, () => {
   overflow-x: hidden
   padding: 8px 0
   scroll-behavior: smooth /* 平滑滚动 */
+  overscroll-behavior: contain /* 防止滚动传播到父元素 */
+  -webkit-overflow-scrolling: touch /* iOS 平滑滚动 */
   
   /* 自定义滚动条 */
   &::-webkit-scrollbar

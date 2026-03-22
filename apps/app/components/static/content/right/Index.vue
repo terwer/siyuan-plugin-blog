@@ -220,10 +220,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="outlineData && outlineData.length > 0" class="outline-wrapper" :class="{ 'outline-wrapper-expanded': showOutline }">
+  <div v-if="outlineData && outlineData.length > 0" class="outline-aside" :class="{ 'outline-collapsed': !showOutline }">
+    <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
+    <div 
+        class="outline-placeholder" 
+        :style="{ width: showOutline ? outlineWidth + 'px' : '0px', transition: isResizing ? 'none' : 'width 0.3s ease' }"
+    ></div>
+    
+    <!-- 大纲容器 - 使用 sticky 定位，内部独立滚动 -->
     <div
         class="outline-container"
-        :class="{ 'outline-expanded': showOutline, 'is-resizing': isResizing }"
+        :class="{ 'is-resizing': isResizing }"
         :style="{ width: showOutline ? outlineWidth + 'px' : '0px' }"
     >
       <!-- 大纲标题栏（包含按钮组） -->
@@ -294,18 +301,29 @@ onUnmounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-/* 包裹容器 */
-.outline-wrapper
+/* 大纲侧边栏容器 - 使用 flex 布局 */
+.outline-aside
+  flex-shrink 0
+  display flex
+  flex-direction row
+  align-items flex-start
+  /* 确保大纲容器不随正文滚动 */
   position relative
-  width unset
-  margin-left 20px
+  height 100vh
 
-.outline-wrapper-expanded
-  width 200px
+/* 占位元素 - 确保正文被正确挤压 */
+.outline-placeholder
+  flex-shrink 0
+  height 100vh
+  transition width 0.3s ease
 
-/* 大纲整体容器 */
+/* 收起状态下的占位 */
+.outline-collapsed
+  width 0
+
+/* 大纲整体容器 - 使用 fixed 定位，完全独立于正文滚动 */
 .outline-container
-  position fixed /* 固定在页面右侧 */
+  position fixed /* 固定在视窗，不随正文滚动 */
   top 0
   right 0
   height 100vh /* 占满视窗高度 */
@@ -314,13 +332,10 @@ onUnmounted(() => {
   border-left 1px solid var(--border-color)
   display flex
   flex-direction column
-  transform translateX(100%) /* 默认隐藏大纲 */
-  transition transform 0.3s ease
-  box-shadow -2px 0 8px rgba(0, 0, 0, 0.08) /* 添加阴影增强层次感 */
-
-/* 展开状态 */
-.outline-container.outline-expanded
-  transform translateX(0)
+  overflow hidden /* 隐藏溢出，内部滚动 */
+  transition width 0.3s ease
+  box-shadow -2px 0 8px rgba(0, 0, 0, 0.08)
+  z-index 100
 
 /* 拖拽时禁用过渡，使调整更流畅 */
 .outline-container.is-resizing
@@ -378,12 +393,16 @@ onUnmounted(() => {
   background var(--el-color-primary)
   color white
 
-/* 大纲内容 */
+/* 大纲内容 - 完全独立滚动容器 */
 .outline-content
   flex 1
-  overflow-y auto /* 独立滚动 */
+  overflow-y auto /* 启用独立垂直滚动 */
+  overflow-x hidden
   padding 16px
   min-width 0 /* 防止flex子项溢出 */
+  scroll-behavior smooth /* 平滑滚动 */
+  overscroll-behavior contain /* 防止滚动传播到父元素 */
+  -webkit-overflow-scrolling touch /* iOS 平滑滚动 */
 
 /* 拖拽调整宽度的手柄 */
 .resize-handle
@@ -448,12 +467,12 @@ onUnmounted(() => {
 .resize-handle.is-resizing .resize-dots .dot
   background var(--el-color-primary)
 
-/* 收起状态下的展开按钮 */
+/* 收起状态下的展开按钮 - 使用 fixed 定位 */
 .toggle-btn-collapsed
   position fixed
   top 20px
   right 20px
-  z-index 100
+  z-index 101
   width 32px
   height 32px
   display flex
