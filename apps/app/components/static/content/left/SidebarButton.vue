@@ -8,23 +8,22 @@
   -->
 
 <script setup lang="ts">
+const props = defineProps<{
+  visible: boolean
+}>()
+
 const emit = defineEmits<{
   toggleSidebar: [state:boolean]
 }>()
 
-const formData = reactive({
-  sidebarVisible: false
-})
-
 const toggleSidebar = () => {
-  formData.sidebarVisible = !formData.sidebarVisible
-  emit("toggleSidebar", formData.sidebarVisible)
+  emit("toggleSidebar", !props.visible)
 }
 </script>
 
 <template>
   <div
-    :class="{'sidebar-button': true, 'sidebar-button-active':formData.sidebarVisible, 'sidebar-button-hidden': !formData.sidebarVisible}"
+    :class="{'sidebar-button': true, 'sidebar-button-active': props.visible, 'sidebar-button-hidden': !props.visible}"
     title="目录"
     @click="toggleSidebar"
   >

@@ -10,14 +10,9 @@
 <script setup lang="ts">
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
-import { onMounted } from 'vue'
 
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
-
-const formData = reactive({
-  sidebarVisible: false
-})
 
 const isFromDocTree = computed(() => {
   return route.query.from === 'docTree'
@@ -28,12 +23,9 @@ const shouldShowSidebar = computed(() => {
   return props.post.docTree && props.post.docTree.length > 0
 })
 
-// 在 mounted 时设置初始状态
-onMounted(() => {
-  // 如果从文档树过来，默认展开
-  if (isFromDocTree.value) {
-    formData.sidebarVisible = true
-  }
+// 初始状态在服务端就确定，避免客户端闪烁
+const formData = reactive({
+  sidebarVisible: isFromDocTree.value
 })
 
 const sidebarClass = computed(() => {
@@ -63,7 +55,7 @@ const emitToggleSidebar = (state: boolean) => {
     :class="sidebarClass"
   >
     <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
-    <static-content-left-sidebar-button @toggle-sidebar="emitToggleSidebar" />
+    <static-content-left-sidebar-button :visible="formData.sidebarVisible" @toggle-sidebar="emitToggleSidebar" />
   </el-aside>
   <el-aside v-else class="aside-left-empty" />
 </template>
@@ -79,7 +71,6 @@ const emitToggleSidebar = (state: boolean) => {
     left: 0
     height: 100vh
     overflow-y: auto
-    transition: opacity 0.3s ease
     opacity: 1
     pointer-events: auto
     :deep(.el-sub-menu__title)
@@ -94,4 +85,6 @@ const emitToggleSidebar = (state: boolean) => {
   .aside-sidebar
     opacity: 0
     pointer-events: none
+    // 使用 display 避免闪烁，同时禁用过渡
+    transition: none
 </style>
