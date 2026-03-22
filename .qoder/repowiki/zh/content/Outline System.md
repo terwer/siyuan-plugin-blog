@@ -6,17 +6,15 @@
 - [apps/app/components/static/content/right/Outline.vue](file://apps/app/components/static/content/right/Outline.vue)
 - [apps/app/components/static/content/right/OutlineItem.vue](file://apps/app/components/static/content/right/OutlineItem.vue)
 - [apps/app/components/static/content/Index.vue](file://apps/app/components/static/content/Index.vue)
-- [apps/app/components/static/DetailPage.vue](file://apps/app/components/static/DetailPage.vue)
 - [apps/app/pages/static/[id].vue](file://apps/app/pages/static/[id].vue)
 - [apps/app/composables/useDocId.ts](file://apps/app/composables/useDocId.ts)
 - [apps/app/utils/TreeUtils.ts](file://apps/app/utils/TreeUtils.ts)
 - [apps/app/app.config.ts](file://apps/app/app.config.ts)
-- [apps/app/package.json](file://apps/app/package.json)
 </cite>
 
 ## 更新摘要
 **变更内容**
-- 大纲系统从 flex 布局转换为固定定位策略，采用 viewport 相对定位
+- 大纲系统从相对定位重构为固定定位策略，采用 viewport 相对定位
 - 改进视口处理和视觉展示，引入新的初始化跟踪机制
 - 精细化宽度管理，支持 200-500px 的精确调整范围
 - 视觉增强：圆角、阴影、自定义滚动条等现代化设计
@@ -493,7 +491,6 @@ Components --> Utils
 ```
 
 **图表来源**
-- [apps/app/package.json:12-32](file://apps/app/package.json#L12-L32)
 - [apps/app/app.config.ts:28-72](file://apps/app/app.config.ts#L28-L72)
 
 ### 外部依赖
@@ -506,7 +503,6 @@ Components --> Utils
 - **工具库**：zhi-common 提供通用的工具函数
 
 **章节来源**
-- [apps/app/package.json:1-41](file://apps/app/package.json#L1-L41)
 - [apps/app/app.config.ts:1-92](file://apps/app/app.config.ts#L1-L92)
 
 ## 性能考虑
