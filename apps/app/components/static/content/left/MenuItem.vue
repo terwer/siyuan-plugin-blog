@@ -77,11 +77,11 @@ defineExpose({
   align-items center
   width 100%
   height 100%
-  min-height 40px
+  min-height 36px /* 更紧凑 */
   cursor pointer
   // 扩展点击区域到左侧，覆盖 el-menu-item 的 padding 区域
-  margin-left -20px
-  padding-left 20px
+  margin-left -16px /* 调整对齐 */
+  padding-left 16px
 
 .menu-title
   display inline-block
@@ -90,4 +90,6 @@ defineExpose({
   text-overflow ellipsis
   word-break break-word
   max-width 200px
+  font-size 12.5px /* 更小的字体 */
+  line-height 1.4 /* 更紧凑的行高 */
 </style>

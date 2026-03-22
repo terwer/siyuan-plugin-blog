@@ -329,12 +329,12 @@ onUnmounted(() => {
   height 100vh /* 占满视窗高度 */
   width 0 /* 默认宽度为0，通过style动态设置 */
   background var(--background)
-  border-left 1px solid var(--border-color)
+  border-left 1px solid rgba(0, 0, 0, 0.06) /* 更细的边框 */
   display flex
   flex-direction column
   overflow hidden /* 隐藏溢出，内部滚动 */
-  transition width 0.3s ease
-  box-shadow -2px 0 8px rgba(0, 0, 0, 0.08)
+  transition width 0.25s cubic-bezier(0.4, 0, 0.2, 1) /* 更流畅的缓动 */
+  box-shadow -1px 0 3px rgba(0, 0, 0, 0.04) /* 更柔和的阴影 */
   z-index 100
 
 /* 拖拽时禁用过渡，使调整更流畅 */
@@ -347,21 +347,22 @@ onUnmounted(() => {
   display flex
   align-items center
   justify-content space-between
-  padding 12px 16px
-  border-bottom 1px solid var(--border-color)
+  padding 10px 14px /* 更紧凑的间距 */
+  border-bottom 1px solid rgba(0, 0, 0, 0.04) /* 更淡的分隔线 */
   background var(--background)
 
 .outline-title
   display flex
   align-items center
-  gap 8px
-  font-size 14px
-  font-weight 500
+  gap 6px /* 更紧凑的间距 */
+  font-size 13px /* 稍小的字体 */
+  font-weight 600 /* 更粗的标题 */
   color var(--text-color-primary)
+  letter-spacing -0.01em /* 更紧凑的字间距 */
 
 .outline-title-icon
-  font-size 12px
-  opacity 0.7
+  font-size 11px
+  opacity 0.5 /* 更淡的图标 */
 
 /* 标题栏按钮组 */
 .outline-header-actions
@@ -398,11 +399,25 @@ onUnmounted(() => {
   flex 1
   overflow-y auto /* 启用独立垂直滚动 */
   overflow-x hidden
-  padding 16px
+  padding 12px 8px /* 更紧凑的间距 */
   min-width 0 /* 防止flex子项溢出 */
   scroll-behavior smooth /* 平滑滚动 */
   overscroll-behavior contain /* 防止滚动传播到父元素 */
   -webkit-overflow-scrolling touch /* iOS 平滑滚动 */
+  
+  /* 更精致的滚动条 */
+  &::-webkit-scrollbar
+    width 3px /* 更细的滚动条 */
+  
+  &::-webkit-scrollbar-track
+    background transparent
+  
+  &::-webkit-scrollbar-thumb
+    background rgba(0, 0, 0, 0.08) /* 更淡的滚动条 */
+    border-radius 2px
+  
+  &::-webkit-scrollbar-thumb:hover
+    background rgba(0, 0, 0, 0.15) /* 悬停时稍深 */
 
 /* 拖拽调整宽度的手柄 */
 .resize-handle

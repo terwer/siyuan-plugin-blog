@@ -227,20 +227,61 @@ const items = computed(() => {
 <style scoped lang="stylus">
 .sidebar-container
   min-width 220px
-  max-width 250px
-  border-right 1px solid var(--el-menu-border-color)
+  max-width 260px
+  border-right 1px solid rgba(0, 0, 0, 0.06) /* 更淡的边框 */
+  background var(--background)
+  
+  /* 更精致的滚动条 */
+  :deep(.el-scrollbar__bar.is-vertical)
+    width 3px
+    
+  :deep(.el-scrollbar__thumb)
+    background rgba(0, 0, 0, 0.08)
+    border-radius 2px
+    
+  :deep(.el-scrollbar__thumb:hover)
+    background rgba(0, 0, 0, 0.15)
 
 .sidebar-header
-  margin-top: 20px
-  font-size 16px
-  font-weight bold
-  //text-align center
-  margin-left 20px
-  padding 10px 0
-  //border-bottom 1px solid var(--el-menu-border-color)
+  margin-top 16px /* 更紧凑 */
+  font-size 13px /* 更小的字体 */
+  font-weight 600 /* 更粗的标题 */
+  color var(--text-color-primary)
+  margin-left 16px /* 更紧凑 */
+  padding 8px 0 /* 更紧凑 */
+  letter-spacing -0.01em /* 更紧凑的字间距 */
 
 .sidebar-menu
   border none
+  background transparent
+  
+  /* 菜单项样式优化 */
+  :deep(.el-menu-item)
+    font-size 12.5px /* 更小的字体 */
+    height 36px /* 更紧凑的高度 */
+    line-height 36px
+    color #666 /* 更柔和的文本色 */
+    
+  :deep(.el-sub-menu__title)
+    font-size 12.5px
+    height 36px
+    line-height 36px
+    color #666
+    
+  /* 激活状态 */
+  :deep(.el-menu-item.is-active)
+    color #1890ff
+    background rgba(24, 144, 255, 0.06) /* 更淡的背景 */
+    font-weight 500
+    
+  /* 悬停状态 */
+  :deep(.el-menu-item:hover)
+    background rgba(24, 144, 255, 0.04)
+    color #1890ff
+    
+  :deep(.el-sub-menu__title:hover)
+    background rgba(24, 144, 255, 0.04)
+    color #1890ff
 :deep(ul[role="menu"])
   li.is-active:not(.is-opened)
     background-color var(--el-menu-hover-bg-color)

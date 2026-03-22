@@ -200,25 +200,25 @@ const scrollToSection = (id) => {
     color: #ccc
 
 .item-link
-  color: #555
+  color: #666 /* 更柔和的文本色 */
   text-decoration: none
   cursor: pointer
-  transition: all 0.2s ease
+  transition: all 0.15s ease-out /* 更快的过渡 */
   display: block
   overflow: hidden
   text-overflow: ellipsis
   white-space: nowrap
   max-width: 100%
-  line-height: 1.6
-  padding: 4px 12px 4px 16px /* 左侧留出边框空间 */
-  font-size: 13px
-  border-left: 2px solid transparent /* 默认透明边框 */
-  border-radius: 0 4px 4px 0 /* 右侧圆角 */
+  line-height: 1.5 /* 更紧凑的行高 */
+  padding: 3px 10px 3px 14px /* 更紧凑的间距 */
+  font-size: 12.5px /* 稍小的字体 */
+  border-left: 1.5px solid transparent /* 更细的边框 */
+  border-radius: 0 3px 3px 0 /* 更小的圆角 */
 
   &:hover
     color: #1890ff
-    background: rgba(24, 144, 255, 0.06)
-    border-left-color: rgba(24, 144, 255, 0.3)
+    background: rgba(24, 144, 255, 0.04) /* 更淡的悬停背景 */
+    border-left-color: rgba(24, 144, 255, 0.25)
 
   // Dark mode styles
   html[data-theme-mode="dark"] &
@@ -237,38 +237,38 @@ const scrollToSection = (id) => {
 /* 激活状态 - 左侧边框高亮（当前精确匹配的项） */
 .active
   color: #1890ff
-  background: rgba(24, 144, 255, 0.1)
+  background: rgba(24, 144, 255, 0.06) /* 更淡的背景 */
   border-left-color: #1890ff
   font-weight: 500
 
   &:hover
-    background: rgba(24, 144, 255, 0.15)
+    background: rgba(24, 144, 255, 0.1)
     border-left-color: #1890ff
 
   // Dark mode styles
   html[data-theme-mode="dark"] &
     color: #40a9ff
-    background: rgba(64, 169, 255, 0.2)
+    background: rgba(64, 169, 255, 0.12)
     border-left-color: #40a9ff
     
     &:hover
-      background: rgba(64, 169, 255, 0.25)
+      background: rgba(64, 169, 255, 0.18)
 
 /* 父级激活状态 - 子项激活时父级保持半高亮 */
 .parent-active
   color: #1890ff
-  border-left-color: rgba(24, 144, 255, 0.5)
+  border-left-color: rgba(24, 144, 255, 0.35) /* 更淡的边框 */
   
   &:hover
-    background: rgba(24, 144, 255, 0.06)
+    background: rgba(24, 144, 255, 0.04)
     border-left-color: #1890ff
 
   // Dark mode styles
   html[data-theme-mode="dark"] &
     color: #40a9ff
-    border-left-color: rgba(64, 169, 255, 0.5)
+    border-left-color: rgba(64, 169, 255, 0.35)
     
     &:hover
-      background: rgba(64, 169, 255, 0.1)
+      background: rgba(64, 169, 255, 0.08)
       border-left-color: #40a9ff
 </style>
