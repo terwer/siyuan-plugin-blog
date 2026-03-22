@@ -28,12 +28,22 @@ const isFromDocTree = computed(() => {
 
 // 默认展开的节点
 const expandedIds = computed(() => {
+  const currentId = props.post.postid
+  const ids = [currentId]
+
+  // 如果从文档树过来，添加所有父节点ID
   if (isFromDocTree.value) {
-    // 从文档树过来，展开所有相关节点
-    return TreeUtils.chainExpandedIds(treeData, [props.post.postid])
+    const docTreeMap = new Map(props.post.docTree.map((item: any) => [item.id, item]))
+    let parentId = docTreeMap.get(currentId)?.parentId
+
+    // 添加所有父节点
+    while (parentId) {
+      ids.push(parentId)
+      parentId = docTreeMap.get(parentId)?.parentId
+    }
   }
-  // 默认情况，保持原有行为（展开当前文档路径）
-  return TreeUtils.chainExpandedIds(treeData, [props.post.postid])
+
+  return ids
 })
 const maxDepth = props.post?.docTreeLevel ?? 3
 const defaultDocPath = props.setting.docPath ?? "x"
