@@ -18,7 +18,8 @@ const outlineData = ref(props.post.outline ?? [] as any)
 const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
 
 // 控制大纲状态，true 为展开，false 为收起
-const showOutline = ref(false)
+// 使用 useState 确保 SSR 和客户端状态一致，避免闪烁
+const showOutline = useState('outline-show', () => false)
 // 控制 hover 状态，true 为 hover 展开，false 为 hover 收起
 const isHovered = ref(false)
 
@@ -34,7 +35,8 @@ const outlineWidth = ref(DEFAULT_WIDTH)
 const isResizing = ref(false)
 
 // 大纲固定显示状态
-const isPinned = ref(false)
+// 使用 useState 确保 SSR 和客户端状态一致，避免闪烁
+const isPinned = useState('outline-pinned', () => false)
 
 // 从 localStorage 读取保存的宽度
 const loadSavedWidth = () => {
@@ -61,7 +63,12 @@ const loadPinnedState = () => {
   if (process.client) {
     const savedPinned = localStorage.getItem(OUTLINE_PINNED_KEY)
     if (savedPinned) {
-      isPinned.value = savedPinned === 'true'
+      const pinnedValue = savedPinned === 'true'
+      isPinned.value = pinnedValue
+      // 如果固定，同步设置 showOutline 避免闪烁
+      if (pinnedValue) {
+        showOutline.value = true
+      }
     }
   }
 }
@@ -198,11 +205,6 @@ onMounted(() => {
   // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
   loadSavedWidth()
   loadPinnedState()
-  
-  // 如果处于固定状态，自动展开大纲
-  if (isPinned.value) {
-    showOutline.value = true
-  }
   
   // 有文档大纲才绑定滚动
   if (outlineData.value && outlineData.value.length > 0) {
