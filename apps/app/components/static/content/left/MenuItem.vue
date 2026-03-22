@@ -8,10 +8,12 @@
   -->
 
 <template>
-  <el-tooltip v-if="shouldShowTooltip" :content="text" effect="dark" trigger="hover" placement="right">
-    <span class="menu-title" @click="handleItemClick">{{ truncatedText }}</span>
-  </el-tooltip>
-  <span v-else class="menu-title" @click="handleItemClick">{{ text }}</span>
+  <div class="menu-item-content" @click.stop="handleItemClick">
+    <el-tooltip v-if="shouldShowTooltip" :content="text" effect="dark" trigger="hover" placement="right">
+      <span class="menu-title">{{ truncatedText }}</span>
+    </el-tooltip>
+    <span v-else class="menu-title">{{ text }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +22,7 @@ import { computed } from "vue"
 interface Props {
   link: string;
   text: string;
+  fromDocTree?: boolean; // 是否从文档树过来
 }
 
 const props = defineProps<Props>()
@@ -48,12 +51,38 @@ const truncatedText = computed(() => {
   return result + "..."
 })
 
+// 暴露给父组件调用
 const handleItemClick = async () => {
-  await navigateTo(props.link)
+  let finalLink = props.link
+
+  // 如果是从文档树过来的链接，添加查询参数
+  if (props.fromDocTree) {
+    const url = new URL(finalLink, window.location.origin)
+    url.searchParams.set('from', 'docTree')
+    finalLink = url.pathname + url.search
+  }
+
+  await navigateTo(finalLink)
 }
+
+// 暴露方法给父组件
+defineExpose({
+  handleItemClick
+})
 </script>
 
 <style scoped lang="stylus">
+.menu-item-content
+  display flex
+  align-items center
+  width 100%
+  height 100%
+  min-height 36px /* 更紧凑 */
+  cursor pointer
+  // 扩展点击区域到左侧，覆盖 el-menu-item 的 padding 区域
+  margin-left -16px /* 调整对齐 */
+  padding-left 16px
+
 .menu-title
   display inline-block
   overflow hidden
@@ -61,4 +90,6 @@ const handleItemClick = async () => {
   text-overflow ellipsis
   word-break break-word
   max-width 200px
+  font-size 12.5px /* 更小的字体 */
+  line-height 1.4 /* 更紧凑的行高 */
 </style>

@@ -11,15 +11,33 @@
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
 
+const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
+const isFromDocTree = computed(() => {
+  return route.query.from === 'docTree'
+})
+
+const shouldShowSidebar = computed(() => {
+  // 显示侧边栏的条件：docTree 存在且有内容
+  return props.post.docTree && props.post.docTree.length > 0
+})
+
+// 初始状态在服务端就确定，避免客户端闪烁
 const formData = reactive({
-  sidebarVisible: false
+  sidebarVisible: isFromDocTree.value
+})
+
+const sidebarClass = computed(() => {
+  return {
+    'aside-left': true,
+    'sidebarOpen': formData.sidebarVisible,
+    'sidebarClosed': !formData.sidebarVisible
+  }
 })
 
 const emitToggleSidebar = (state: boolean) => {
   formData.sidebarVisible = state
-
   // 防止标题栏被侧边按钮遮挡
   if (BrowserUtil.isInBrowser) {
     const element = document.querySelector(".protyle-title__input") as HTMLElement | null
@@ -33,11 +51,11 @@ const emitToggleSidebar = (state: boolean) => {
 
 <template>
   <el-aside
-    v-if="props.post.docTree && props.post.docTree.length>0"
-    :class="{'aside-left': true, sidebarOpen: formData.sidebarVisible, sidebarClosed: !formData.sidebarVisible}"
+    v-if="shouldShowSidebar"
+    :class="sidebarClass"
   >
     <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
-    <static-content-left-sidebar-button @toggle-sidebar="emitToggleSidebar" />
+    <static-content-left-sidebar-button :visible="formData.sidebarVisible" @toggle-sidebar="emitToggleSidebar" />
   </el-aside>
   <el-aside v-else class="aside-left-empty" />
 </template>
@@ -53,7 +71,6 @@ const emitToggleSidebar = (state: boolean) => {
     left: 0
     height: 100vh
     overflow-y: auto
-    transition: opacity 0.3s ease
     opacity: 1
     pointer-events: auto
     :deep(.el-sub-menu__title)
@@ -68,4 +85,6 @@ const emitToggleSidebar = (state: boolean) => {
   .aside-sidebar
     opacity: 0
     pointer-events: none
+    // 使用 display 避免闪烁，同时禁用过渡
+    transition: none
 </style>

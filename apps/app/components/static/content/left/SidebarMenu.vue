@@ -8,7 +8,7 @@
   -->
 
 <script setup lang="ts">
-import { defineProps } from "vue"
+import { computed, defineProps, ref } from "vue"
 import MenuItem from "./MenuItem.vue"
 
 interface MenuData {
@@ -19,25 +19,69 @@ interface MenuData {
   children?: MenuData[]; // 子菜单可选
 }
 
-const props = defineProps<{ menu: MenuData, maxDepth: number }>()
+const props = defineProps<{ menu: MenuData, activeIndex?: string }>()
+
+const isActive = computed(() => {
+  return props.menu.id === props.activeIndex
+})
+
+// 引用 MenuItem 组件
+const menuItemRef = ref<InstanceType<typeof MenuItem> | null>(null)
+
+// 处理菜单项点击，触发子组件的跳转逻辑
+const handleMenuClick = () => {
+  // 调用 MenuItem 的跳转方法
+  // 注意：不在这里阻止事件冒泡，由 MenuItem 组件内部处理
+  menuItemRef.value?.handleItemClick()
+}
 </script>
 
 <template>
   <el-sub-menu
-    v-if="props.menu.children?.length && props.menu.depth < props.maxDepth"
+    v-if="props.menu.children?.length"
     :index="props.menu.id"
+    :class="{ 'is-active': isActive }"
   >
     <template #title>
-      <MenuItem :link="props.menu.link" :text="props.menu.name" />
+      <div class="menu-item-wrapper" @click="handleMenuClick">
+        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
+      </div>
     </template>
     <SidebarMenu
       v-for="child in props.menu.children || []"
       :key="child.id"
       :menu="child"
-      :max-depth="props.maxDepth"
+      :active-index="activeIndex"
     />
   </el-sub-menu>
-  <el-menu-item v-else :index="props.menu.id">
-    <MenuItem :link="props.menu.link" :text="props.menu.name" />
+  <el-menu-item
+    v-else
+    :index="props.menu.id"
+    :class="{ 'is-active': isActive, 'menu-item-fullwidth': true }"
+    @click="handleMenuClick"
+  >
+    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
   </el-menu-item>
 </template>
+
+<style scoped lang="stylus">
+// 菜单项包装器，占满整个可点击区域
+.menu-item-wrapper
+  display flex
+  align-items center
+  width 100%
+  height 100%
+
+// 让 el-menu-item 的内容占满整个区域，同时保留左侧缩进
+:deep(.menu-item-fullwidth)
+  // 保留 Element Plus 默认的 padding 用于左侧缩进
+  // MenuItem 组件内部处理点击，保持原有样式不变
+
+// 高亮当前激活的菜单项
+:deep(.is-active)
+  color var(--el-color-primary) !important
+
+  // 确保子菜单标题也高亮
+  .el-sub-menu__title
+    color var(--el-color-primary) !important
+</style>

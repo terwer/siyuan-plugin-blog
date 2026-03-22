@@ -12,4 +12,4 @@
 echo "Using Node build config as SSR serve."
 cp nuxt.node.config.ts nuxt.config.ts
 pnpm postinstall
-nuxt dev --host
+NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=http://localhost:8086 PORT=4000 PORT=4000 nuxt dev --host

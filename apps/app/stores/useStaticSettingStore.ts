@@ -7,7 +7,7 @@ import { useProviderMode } from "~/composables/useProviderMode"
  * 设置配置存储
  * https://pinia.vuejs.org/ssr/nuxt.html
  */
-export const useStaticSettingStore = () => {
+export const useStaticSettingStore = (requestURL: URL) => {
   const logger = createAppLogger("use-static-setting-store")
   const staticSettingFile = "static.app.config.json"
   const { fetchConfig } = useAuthModeFetch()
@@ -16,7 +16,7 @@ export const useStaticSettingStore = () => {
    * 获取配置
    */
   const getStaticSetting = async (): Promise<typeof AppConfig> => {
-    const resText = await fetchConfig(staticSettingFile, providerMode)
+    const resText = await fetchConfig(staticSettingFile, providerMode, requestURL)
     logger.debug("get static setting text", resText)
     const setting = JsonUtil.safeParse<typeof AppConfig>(resText, {} as typeof AppConfig)
     logger.debug("get static setting from store", setting)
