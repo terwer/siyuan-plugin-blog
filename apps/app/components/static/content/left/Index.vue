@@ -11,6 +11,7 @@
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
 import { useRoute } from '#imports'
+import MintlifySidebar from "~/components/static/content/left/MintlifySidebar.vue"
 
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
@@ -56,7 +57,7 @@ const emitToggleSidebar = (state: boolean) => {
     v-if="shouldShowSidebar"
     :class="sidebarClass"
   >
-    <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
+    <mintlify-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
     <static-content-left-sidebar-button @toggle-sidebar="emitToggleSidebar" />
   </el-aside>
   <el-aside v-else class="aside-left-empty" />
