@@ -255,36 +255,29 @@ const items = computed(() => {
   border none
   background transparent
   
-  /* 菜单项样式优化 */
+  /* 菜单项样式优化 - 适配亮色/暗色主题 */
   :deep(.el-menu-item)
     font-size 12.5px /* 更小的字体 */
     height 36px /* 更紧凑的高度 */
     line-height 36px
-    color #666 /* 更柔和的文本色 */
+    color var(--el-text-color-regular)
     
   :deep(.el-sub-menu__title)
     font-size 12.5px
     height 36px
     line-height 36px
-    color #666
+    color var(--el-text-color-regular)
     
-  /* 激活状态 */
+  /* 激活状态 - 高亮明显 */
   :deep(.el-menu-item.is-active)
-    color #1890ff
-    background rgba(24, 144, 255, 0.06) /* 更淡的背景 */
-    font-weight 500
+    color var(--el-color-primary)
+    background var(--el-color-primary-light-8)
+    font-weight 600
     
   /* 悬停状态 */
   :deep(.el-menu-item:hover)
-    background rgba(24, 144, 255, 0.04)
-    color #1890ff
+    color var(--el-color-primary)
     
   :deep(.el-sub-menu__title:hover)
-    background rgba(24, 144, 255, 0.04)
-    color #1890ff
-:deep(ul[role="menu"])
-  li.is-active:not(.is-opened)
-    background-color var(--el-menu-hover-bg-color)
-    //&:hover
-    //  background-color unset
+    color var(--el-color-primary)
 </style>

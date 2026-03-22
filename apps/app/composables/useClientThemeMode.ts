@@ -30,8 +30,9 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
   onBeforeMount(() => {
     // 处理 auto 模式：检测系统主题并设置实际值
     if (store.value === "auto") {
-      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-      const actualMode = systemPrefersDark ? "dark" : "light"
+      // const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      // const actualMode = systemPrefersDark ? "dark" : "light"
+      const actualMode =  "light"
       // 将 auto 转换为实际的 light/dark
       store.value = actualMode
       logger.info("Auto mode detected, setting to:", actualMode)

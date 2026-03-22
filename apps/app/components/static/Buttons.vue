@@ -30,11 +30,11 @@ const formData = reactive({
   showModeBox: false,
   currentMode: "",
   modeList: [
-    {
-      name: "跟随系统",
-      icon: "icon-zidong",
-      KEY: "auto"
-    },
+    // {
+    //   name: "跟随系统",
+    //   icon: "icon-zidong",
+    //   KEY: "auto"
+    // },
     {
       name: "浅色模式",
       icon: "icon-rijianmoshi",

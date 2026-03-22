@@ -79,11 +79,9 @@ const handleMenuClick = () => {
 
 // 高亮当前激活的菜单项
 :deep(.is-active)
-  background-color var(--el-menu-hover-bg-color) !important
   color var(--el-color-primary) !important
 
   // 确保子菜单标题也高亮
   .el-sub-menu__title
-    background-color var(--el-menu-hover-bg-color) !important
     color var(--el-color-primary) !important
 </style>
