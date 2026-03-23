@@ -155,6 +155,9 @@ const buildTreeForRendering = (list: any[], parentId: string): any[] => {
     .map((item: any) => ({
       ...item,
       link: `/${defaultDocPath}/${item.id}`,
+      isShared: item.isShared,
+      hasPassword: item.hasPassword,
+      isExpired: item.isExpired,
       children: buildTreeForRendering(list, item.id),
     }))
 }
@@ -179,8 +182,11 @@ const items = computed(() => {
       const placeholderNode = {
         id: parentId,
         parentId: "",
-        name: `文档路径`,
+        name: `...`,
         type: "placeholder",
+        isShared: false,
+        hasPassword: false,
+        isExpired: false,
         children: []
       }
       nodeMap.set(parentId, placeholderNode)

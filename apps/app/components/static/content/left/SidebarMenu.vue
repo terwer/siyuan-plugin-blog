@@ -16,6 +16,9 @@ interface MenuData {
   name: string;
   link: string;
   depth: number;
+  isShared?: boolean;
+  hasPassword?: boolean;
+  isExpired?: boolean;
   children?: MenuData[]; // 子菜单可选
 }
 
@@ -44,7 +47,7 @@ const handleMenuClick = () => {
   >
     <template #title>
       <div class="menu-item-wrapper" @click="handleMenuClick">
-        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
+        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" />
       </div>
     </template>
     <SidebarMenu
@@ -60,7 +63,7 @@ const handleMenuClick = () => {
     :class="{ 'is-active': isActive, 'menu-item-fullwidth': true }"
     @click="handleMenuClick"
   >
-    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" />
+    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" />
   </el-menu-item>
 </template>
 
