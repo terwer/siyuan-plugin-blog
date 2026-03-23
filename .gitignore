@@ -43,3 +43,8 @@ __pycache__
 .wrangler
 startup.sh
 package.zip
+
+# temp test
+startup-prod.sh
+apps/app/script/dev-prod.sh
+
