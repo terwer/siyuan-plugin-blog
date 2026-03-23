@@ -122,21 +122,19 @@ const isFromDocTree = computed(() => {
   return route.query.from === 'docTree'
 })
 
-// 默认展开的节点
+// 默认展开的节点 - 始终展开所有父节点，确保当前文档可见
 const expandedIds = computed(() => {
   const currentId = props.post.postid
   const ids = [currentId]
 
-  // 如果从文档树过来，添加所有父节点ID
-  if (isFromDocTree.value) {
-    const docTreeMap = new Map(props.post.docTree.map((item: any) => [item.id, item]))
-    let parentId = docTreeMap.get(currentId)?.parentId
+  // 始终添加所有父节点ID，确保树结构展开
+  const docTreeMap = new Map(props.post.docTree.map((item: any) => [item.id, item]))
+  let parentId = docTreeMap.get(currentId)?.parentId
 
-    // 添加所有父节点
-    while (parentId) {
-      ids.push(parentId)
-      parentId = docTreeMap.get(parentId)?.parentId
-    }
+  // 添加所有父节点
+  while (parentId) {
+    ids.push(parentId)
+    parentId = docTreeMap.get(parentId)?.parentId
   }
 
   return ids
