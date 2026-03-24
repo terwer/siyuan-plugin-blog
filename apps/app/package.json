@@ -4,6 +4,7 @@
   "version": "6.6.0",
   "scripts": {
     "dev": "bash script/dev.sh",
+    "devProd": "bash script/dev-prod.sh",
     "build": "bash script/build.sh",
     "vercelBuild": "bash script/vercel.sh",
     "cloudflareBuild": "bash script/cloudflare.sh",
