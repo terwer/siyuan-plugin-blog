@@ -230,6 +230,7 @@ const items = computed(() => {
 </style>
 <style scoped lang="stylus">
 .sidebar-container
+  font-family var(--b3-font-family, "Helvetica Neue", Arial, sans-serif)
   min-width 220px
   max-width 260px
   border-right 1px solid rgba(0, 0, 0, 0.06) /* 更淡的边框 */
