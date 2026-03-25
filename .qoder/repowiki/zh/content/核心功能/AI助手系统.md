@@ -28,6 +28,13 @@
 - 实现垂直按钮组设计，提供统一的快速切换功能
 - 完善模块激活状态管理和按钮样式系统
 - 新增collapsed-buttons组件，支持固定定位和垂直排列
+- **重大架构升级：从静态加载状态改为流式响应，移除复杂JSON解析逻辑**
+- **简化为直接Markdown输出处理，使用集中式loading状态管理**
+- **新增流式响应支持，实时显示AI生成过程**
+- **新增独立加载状态管理**：speedReadLoading 和 qaLoading 独立状态，避免按钮冲突
+- **新增并发操作支持**：同时处理多个AI操作，提升用户体验
+- **增强错误处理机制**：使用 try-catch-finally 确保资源正确释放
+- **优化自动滚动功能**：改进的滚动机制，确保用户始终能看到最新内容
 
 ## 目录
 1. [项目概述](#项目概述)
@@ -60,6 +67,10 @@ AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记
 - **完整暗色主题支持**：200多行CSS样式实现深色模式适配
 - **模块化管理**：统一的模块化架构，支持多个功能模块的扩展
 - **垂直按钮组**：全新的垂直按钮组设计，提供统一的快速切换功能
+- **流式响应处理**：**新增** 实时流式响应处理，支持增量内容显示
+- **并发操作支持**：**新增** 支持同时处理多个AI操作，提升响应速度
+- **增强错误处理**：**新增** 使用 try-catch-finally 确保资源正确释放
+- **优化自动滚动**：**新增** 改进的滚动机制，确保最佳用户体验
 
 ## 项目结构
 
@@ -147,6 +158,10 @@ AIPanel.vue是整个AI助手系统的核心UI组件，经过重大升级后，�
 8. **动态模型选择**：自定义模式下可实时获取和选择AI模型
 9. **Lute Markdown渲染**：高质量的Markdown到HTML转换
 10. **暗色主题适配**：完整的深色模式样式支持
+11. **流式响应处理**：**新增** 实时流式响应处理，支持增量内容显示
+12. **并发操作支持**：**新增** 支持同时处理多个AI操作
+13. **增强错误处理**：**新增** 使用 try-catch-finally 确保资源正确释放
+14. **优化自动滚动**：**新增** 改进的滚动机制，确保最佳用户体验
 
 #### 界面布局
 
@@ -456,8 +471,8 @@ CollapsedButtons->>ModuleManager : 激活AI模块
 ModuleManager->>Panel : 显示AI面板
 Panel->>Assistant : 调用相应方法
 Assistant->>Assistant : 预处理文档内容
-Assistant->>Server : 发送AI请求
-Server-->>Assistant : 返回AI响应
+Assistant->>Server : 发送AI请求支持流式
+Server-->>Assistant : 返回流式AI响应
 Assistant->>Lute : 渲染Markdown内容
 Lute-->>Assistant : 返回HTML
 Assistant->>Panel : 格式化消息
@@ -676,7 +691,7 @@ enUS --> termsDialogEN
 
 ### 独立加载状态管理
 
-系统实现了独立的加载状态管理，为每个按钮和操作提供精确的状态反馈。
+**重大更新** 系统实现了独立的加载状态管理，为每个按钮和操作提供精确的状态反馈，避免了按钮冲突和状态混乱。
 
 #### 加载状态架构
 
@@ -703,7 +718,7 @@ LoadingStateManager --> ButtonComponent : controls
 **图表来源**
 - [AIPanel.vue:59-62](file://apps/app/components/ai-assistant/AIPanel.vue#L59-L62)
 
-#### 状态同步机制
+#### 独立状态管理机制
 
 ```mermaid
 sequenceDiagram
@@ -711,18 +726,246 @@ participant User as 用户
 participant Panel as AIPanel
 participant LoadingState as 加载状态管理
 participant Assistant as useAIAssistant
-User->>Panel : 点击按钮
-Panel->>LoadingState : 更新按钮状态
-Panel->>Assistant : 执行操作
+User->>Panel : 点击速读按钮
+Panel->>LoadingState : 更新speedReadLoading为true
+Panel->>Assistant : 执行速读操作
 Assistant-->>Panel : 返回结果
-Panel->>LoadingState : 恢复状态
+Panel->>LoadingState : 更新speedReadLoading为false
+User->>Panel : 点击问答按钮
+Panel->>LoadingState : 更新qaLoading为true
+Panel->>Assistant : 执行问答操作
+Assistant-->>Panel : 返回结果
+Panel->>LoadingState : 更新qaLoading为false
 ```
 
 **图表来源**
 - [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
 
+#### 状态同步机制
+
+```mermaid
+flowchart TD
+Button1[速读按钮] --> SpeedLoading[speedReadLoading]
+Button2[问答按钮] --> QALoading[qaLoading]
+SpeedLoading --> Independent[独立状态管理]
+QALoading --> Independent
+Independent --> UIUpdate[UI状态更新]
+UIUpdate --> ButtonDisable[按钮禁用/启用]
+```
+
+**图表来源**
+- [AIPanel.vue:467-485](file://apps/app/components/ai-assistant/AIPanel.vue#L467-L485)
+
 **章节来源**
 - [AIPanel.vue:59-62](file://apps/app/components/ai-assistant/AIPanel.vue#L59-L62)
+
+### 并发操作支持
+
+**重大更新** 系统现在支持并发操作，允许用户同时触发多个AI操作而不会产生状态冲突。
+
+#### 并发操作架构
+
+```mermaid
+classDiagram
+class ConcurrentOperationManager {
++operations : Map<string, OperationState>
++executeOperation(id, operation)
++completeOperation(id)
++getAllActiveOperations()
+}
+class OperationState {
++id : string
++status : 'pending' | 'running' | 'completed' | 'failed'
++startTime : number
++endTime : number
+}
+ConcurrentOperationManager --> OperationState : manages
+```
+
+**图表来源**
+- [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
+
+#### 并发操作流程
+
+```mermaid
+sequenceDiagram
+participant User as 用户
+participant Panel as AIPanel
+participant SpeedReadOp as 速读操作
+participant QAOps as 问答操作
+participant Assistant as useAIAssistant
+User->>Panel : 同时点击速读和问答按钮
+Panel->>SpeedReadOp : 创建速读操作
+Panel->>QAOps : 创建问答操作
+SpeedReadOp->>Assistant : 执行速读
+QAOps->>Assistant : 执行问答
+Assistant-->>SpeedReadOp : 返回速读结果
+Assistant-->>QAOps : 返回问答结果
+SpeedReadOp-->>Panel : 标记完成
+QAOps-->>Panel : 标记完成
+Panel->>Panel : 更新所有状态
+```
+
+**图表来源**
+- [AIPanel.vue:240-296](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L296)
+
+#### 并发状态管理
+
+```mermaid
+flowchart TD
+UserClick[用户点击] --> CheckStates{检查当前状态}
+CheckStates --> |速读运行| QACheck[检查问答状态]
+CheckStates --> |问答运行| SpeedCheck[检查速读状态]
+CheckStates --> |都空闲| StartBoth[同时启动]
+QACheck --> |问答空闲| StartBoth
+QACheck --> |问答运行| Wait[等待完成]
+SpeedCheck --> |速读空闲| StartBoth
+SpeedCheck --> |速读运行| Wait
+StartBoth --> UpdateStates[更新所有状态]
+Wait --> UpdateStates
+UpdateStates --> Complete[操作完成]
+```
+
+**图表来源**
+- [AIPanel.vue:381-386](file://apps/app/components/ai-assistant/AIPanel.vue#L381-L386)
+
+**章节来源**
+- [AIPanel.vue:240-296](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L296)
+
+### 增强错误处理机制
+
+**重大更新** 系统现在使用增强的错误处理机制，确保所有异步操作都能正确处理异常并释放资源。
+
+#### 错误处理架构
+
+```mermaid
+classDiagram
+class EnhancedErrorHandler {
++handleAsyncOperation(operation)
++tryCatchFinally(operation)
++handleError(error)
++cleanupResources()
+}
+class AsyncOperation {
++operation : Promise<any>
++cleanup : Function
++timeout : number
+}
+EnhancedErrorHandler --> AsyncOperation : handles
+```
+
+**图表来源**
+- [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
+
+#### try-catch-finally 错误处理流程
+
+```mermaid
+flowchart TD
+Start[开始操作] --> TryBlock[try 块]
+TryBlock --> ExecuteOp[执行异步操作]
+ExecuteOp --> Success{操作成功?}
+Success --> |是| FinallyBlock[finally 块]
+Success --> |否| CatchBlock[catch 块]
+CatchBlock --> HandleError[处理错误]
+HandleError --> FinallyBlock
+FinallyBlock --> Cleanup[清理资源]
+Cleanup --> End[操作结束]
+```
+
+**图表来源**
+- [AIPanel.vue:252-259](file://apps/app/components/ai-assistant/AIPanel.vue#L252-L259)
+
+#### 错误处理示例
+
+```mermaid
+sequenceDiagram
+participant Panel as AIPanel
+participant Operation as 异步操作
+participant ErrorHandler as 错误处理器
+Panel->>Operation : 开始操作
+Operation->>ErrorHandler : try 块
+Operation->>Operation : 执行操作
+Operation-->>Operation : 可能抛出异常
+Operation->>ErrorHandler : catch 块
+ErrorHandler->>Panel : 处理错误
+ErrorHandler->>Operation : finally 块
+Operation->>Panel : 清理资源
+Operation-->>Panel : 操作完成
+```
+
+**图表来源**
+- [AIPanel.vue:252-288](file://apps/app/components/ai-assistant/AIPanel.vue#L252-L288)
+
+**章节来源**
+- [AIPanel.vue:252-288](file://apps/app/components/ai-assistant/AIPanel.vue#L252-L288)
+
+### 优化自动滚动功能
+
+**重大更新** 系统现在具有优化的自动滚动功能，确保用户始终能看到最新的AI响应和操作状态。
+
+#### 自动滚动架构
+
+```mermaid
+classDiagram
+class AutoScrollManager {
++chatListRef : Ref<HTMLElement>
++scrollToBottom()
++autoScrollOnMessageChange()
++autoScrollOnLoadingStateChange()
++optimizedScrollBehavior()
+}
+class ScrollState {
++isScrolling : boolean
++lastScrollTop : number
++scrollHeight : number
+}
+AutoScrollManager --> ScrollState : manages
+```
+
+**图表来源**
+- [AIPanel.vue:335-345](file://apps/app/components/ai-assistant/AIPanel.vue#L335-L345)
+
+#### 滚动优化机制
+
+```mermaid
+flowchart TD
+UserAction[用户操作] --> CheckLoading{检查加载状态}
+CheckLoading --> |有加载| ImmediateScroll[立即滚动]
+CheckLoading --> |无加载| DelayScroll[延迟滚动]
+ImmediateScroll --> SmoothScroll[平滑滚动到底部]
+DelayScroll --> WatchMessages[监听消息变化]
+WatchMessages --> NextTick[nextTick处理]
+NextTick --> SmoothScroll
+SmoothScroll --> UpdateScrollState[更新滚动状态]
+UpdateScrollState --> PreventScrollBounce[防止滚动回弹]
+PreventScrollBounce --> OptimizePerformance[优化性能]
+OptimizePerformance --> End[滚动完成]
+```
+
+**图表来源**
+- [AIPanel.vue:376-386](file://apps/app/components/ai-assistant/AIPanel.vue#L376-L386)
+
+#### 滚动性能优化
+
+```mermaid
+flowchart TD
+ScrollTrigger[滚动触发] --> CheckScrollHeight{检查scrollHeight}
+CheckScrollHeight --> |变化超过阈值| ForceScroll[强制滚动]
+CheckScrollHeight --> |变化很小| DeferScroll[延迟滚动]
+ForceScroll --> DirectScroll[直接滚动到底部]
+DeferScroll --> NextTick[nextTick处理]
+DirectScroll --> UpdateState[更新状态]
+NextTick --> UpdateState
+UpdateState --> PreventBounce[防止回弹]
+PreventBounce --> Optimize[性能优化]
+Optimize --> End[滚动完成]
+```
+
+**图表来源**
+- [AIPanel.vue:335-345](file://apps/app/components/ai-assistant/AIPanel.vue#L335-L345)
+
+**章节来源**
+- [AIPanel.vue:335-345](file://apps/app/components/ai-assistant/AIPanel.vue#L335-L345)
 
 ### 下拉弹出式配置面板
 
@@ -1026,6 +1269,139 @@ HoverButton --> NormalButton : normal状态
 **章节来源**
 - [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
 
+### 流式响应处理系统
+
+**重大更新** 系统新增了完整的流式响应处理系统，实现了真正的实时AI生成体验。
+
+#### 流式响应架构
+
+```mermaid
+classDiagram
+class StreamingAssistant {
++messages : ChatMessage[]
++isLoading : boolean
++error : string
++sendSpeedRead(config)
++sendQA(config)
++sendMessage(input, config)
++clearMessages()
+}
+class StreamProcessor {
++reader : ReadableStreamDefaultReader
++decoder : TextDecoder
++fullContent : string
++onStreamCallback(chunk)
++processStream()
++cleanup()
+}
+class ChatMessage {
++id : string
++role : "system"|"user"|"assistant"
++content : string
++timestamp : number
++type : "summary"|"qa"|"chat"
+}
+StreamingAssistant --> StreamProcessor : uses
+StreamProcessor --> ChatMessage : updates
+```
+
+**图表来源**
+- [useAIAssistant.ts:82-194](file://apps/app/composables/useAIAssistant.ts#L82-L194)
+
+#### 流式处理流程
+
+```mermaid
+sequenceDiagram
+participant Client as 客户端
+participant Assistant as useAIAssistant
+participant Server as 服务端API
+participant StreamProcessor as 流处理器
+Client->>Assistant : 调用AI方法带onStream
+Assistant->>Server : 发送流式请求
+Server-->>Assistant : 开始流式响应
+Assistant->>StreamProcessor : 创建流处理器
+loop 实时处理
+Server-->>StreamProcessor : 推送数据块
+StreamProcessor->>StreamProcessor : 解析JSON数据
+StreamProcessor->>Assistant : 调用onStream回调
+Assistant->>Client : 更新UI显示增量内容
+end
+Server-->>Assistant : 流结束
+Assistant->>Client : 显示完整内容
+```
+
+**图表来源**
+- [useAIAssistant.ts:130-169](file://apps/app/composables/useAIAssistant.ts#L130-L169)
+
+#### 流式响应处理机制
+
+1. **流式请求建立**：客户端发起带有`stream: true`的请求
+2. **服务端流式响应**：服务端以SSE格式实时推送数据
+3. **增量内容处理**：前端解析JSON数据块，提取增量内容
+4. **实时UI更新**：通过回调函数实时更新聊天气泡内容
+5. **思维链过滤**：自动移除AI模型的思维链输出
+6. **流式清理**：流结束后释放资源，确保内存安全
+
+**章节来源**
+- [useAIAssistant.ts:82-194](file://apps/app/composables/useAIAssistant.ts#L82-L194)
+
+### 服务端流式响应支持
+
+**重大更新** 服务端API现在支持完整的流式响应处理，确保前后端的实时通信。
+
+#### 服务端流式架构
+
+```mermaid
+classDiagram
+class StreamHandler {
++request : IncomingMessage
++response : ReadableStream
++headers : Headers
++setupStreamHeaders()
++processStreamData()
++cleanup()
+}
+class ChatAPI {
++handleStreamRequest(request)
++forwardToThirdParty()
++transformToSSE()
+}
+class SSETransformer {
++encoder : TextEncoder
++controller : ReadableStreamController
++transformToSSE(data)
++writeSSEChunk(chunk)
+}
+ChatAPI --> StreamHandler : uses
+StreamHandler --> SSETransformer : transforms
+```
+
+**图表来源**
+- [chat.post.ts:98-124](file://apps/app/server/api/ai/chat.post.ts#L98-L124)
+
+#### 服务端流式处理流程
+
+```mermaid
+flowchart TD
+ClientRequest[客户端流式请求] --> ValidateParams{验证参数}
+ValidateParams --> SetupHeaders[设置SSE响应头]
+SetupHeaders --> ForwardToAI[转发到第三方AI]
+ForwardToAI --> ReadStream[读取AI响应流]
+ReadStream --> TransformSSE[转换为SSE格式]
+TransformSSE --> WriteChunk[写入数据块]
+WriteChunk --> ClientReceive[客户端接收增量]
+ClientReceive --> ContinueStream{还有数据?}
+ContinueStream --> |是| ReadStream
+ContinueStream --> |否| Cleanup[清理资源]
+Cleanup --> End[流结束]
+```
+
+**图表来源**
+- [chat.post.ts:98-124](file://apps/app/server/api/ai/chat.post.ts#L98-L124)
+
+**章节来源**
+- [chat.post.ts:98-124](file://apps/app/server/api/ai/chat.post.ts#L98-L124)
+
 ## 依赖关系分析
 
 ### 技术栈依赖
@@ -1066,7 +1442,7 @@ Lute --> Nuxt
 **图表来源**
 - [package.json:13-33](file://apps/app/package.json#L13-L33)
 
-### 插件集成
+### 插ugin集成
 
 AI助手系统作为SiYuan笔记的插件运行，需要与主应用进行集成。
 
@@ -1176,6 +1552,14 @@ AI助手系统通过智能的内容预处理和缓存机制，有效优化了Tok
 8. **垂直按钮组优化**：固定定位避免重排重绘
 9. **模块状态缓存**：激活状态在组件间共享
 10. **滚动性能优化**：独立滚动容器避免影响正文滚动
+11. **流式响应优化**：**新增** 实时增量更新，避免重复渲染
+12. **内存管理优化**：**新增** 流式处理器自动清理，防止内存泄漏
+13. **网络请求优化**：**新增** 流式请求支持断线重连
+14. **UI响应优化**：**新增** 增量内容实时显示，提升用户体验
+15. **并发操作优化**：**新增** 独立加载状态管理，避免状态冲突
+16. **错误处理优化**：**新增** try-catch-finally 确保资源正确释放
+17. **滚动性能优化**：**新增** 优化的滚动机制，提升用户体验
+18. **状态管理优化**：**新增** 精确的加载状态反馈
 
 ### 内存管理
 
@@ -1187,8 +1571,11 @@ InitMessages --> InitLute[初始化Lute实例]
 InitLute --> InitModules[初始化模块状态]
 InitModules --> UserAction[用户操作]
 UserAction --> AddMessage[添加消息到数组]
-AddMessage --> MemoryCheck{内存检查}
-MemoryCheck --> |正常| Continue[继续使用]
+AddMessage --> CheckStream{检查流式处理}
+CheckStream --> |流式| StreamProcessor[创建流处理器]
+CheckStream --> |非流式| Continue[继续使用]
+StreamProcessor --> MemoryCheck{内存检查}
+MemoryCheck --> |正常| Continue
 MemoryCheck --> |过载| Cleanup[清理旧消息]
 Cleanup --> Continue
 Continue --> UserAction
@@ -1203,12 +1590,19 @@ Continue --> UserAction
 2. **错误重试**：实现智能的错误处理和重试机制
 3. **超时控制**：设置合理的请求超时时间
 4. **状态管理**：实时更新加载状态和错误信息
-5. **流式响应**：支持实时流式响应，提升用户体验
+5. **流式响应**：**新增** 支持实时流式响应，提升用户体验
 6. **模型缓存**：动态获取的模型列表进行本地缓存
 7. **配置持久化**：用户配置自动保存到localStorage
 8. **Lute实例复用**：避免重复创建Lute实例
 9. **暗色主题CSS缓存**：CSS变量实现快速主题切换
 10. **模块懒加载**：AI面板按需加载，减少初始开销
+11. **流式处理器复用**：**新增** 流式处理器生命周期管理
+12. **SSE连接池**：**新增** 复用SSE连接，减少握手开销
+13. **增量渲染优化**：**新增** 只更新变化的消息内容
+14. **内存泄漏防护**：**新增** 流式处理器自动清理机制
+15. **并发操作优化**：**新增** 独立状态管理，避免冲突
+16. **错误处理优化**：**新增** try-catch-finally 确保资源释放
+17. **滚动性能优化**：**新增** 优化的滚动机制，提升体验
 
 ## 故障排除指南
 
@@ -1303,6 +1697,68 @@ Continue --> UserAction
 3. 确认模块激活状态
 4. 查看浏览器开发者工具的网络请求
 
+#### 流式响应问题
+
+**问题现象**：AI响应无法实时显示或显示异常
+
+**排查步骤**：
+1. 检查SSE连接状态
+2. 验证流式处理器工作状态
+3. 确认onStream回调正常执行
+4. 查看浏览器开发者工具的网络面板
+5. 检查服务端流式响应头设置
+6. 验证JSON数据块解析逻辑
+
+#### 流式处理器内存泄漏
+
+**问题现象**：长时间使用后内存占用持续增长
+
+**处理方法**：
+1. 检查流式处理器的清理逻辑
+2. 验证流结束后的资源释放
+3. 确认异常情况下也能清理资源
+4. 查看控制台是否有内存警告
+
+#### SSE连接断开
+
+**问题现象**：流式响应中断或停止更新
+
+**处理方法**：
+1. 检查网络连接稳定性
+2. 验证SSE连接的重连机制
+3. 确认服务端SSE配置正确
+4. 查看浏览器开发者工具的网络面板
+
+#### 并发操作冲突
+
+**问题现象**：同时点击多个按钮导致状态混乱
+
+**处理方法**：
+1. 检查独立加载状态管理
+2. 验证按钮禁用逻辑
+3. 确认状态更新机制
+4. 查看控制台JavaScript错误
+
+#### 错误处理异常
+
+**问题现象**：异常发生后状态未正确恢复
+
+**处理方法**：
+1. 检查try-catch-finally机制
+2. 验证资源清理逻辑
+3. 确认finally块执行
+4. 查看控制台错误日志
+
+#### 自动滚动问题
+
+**问题现象**：滚动位置异常或滚动行为不正常
+
+**处理方法**：
+1. 检查滚动状态管理
+2. 验证滚动触发条件
+3. 确认滚动优化机制
+4. 查看控制台滚动相关错误
+
 ### 调试工具
 
 ```mermaid
@@ -1316,6 +1772,12 @@ LuteDebug[Lute调试]
 ThemeDebug[主题调试]
 ModuleDebug[模块调试]
 ButtonDebug[按钮调试]
+StreamDebug[流式调试]
+SSEDebug[SSE调试]
+MemoryDebug[内存调试]
+ConcurrencyDebug[并发调试]
+ErrorDebug[错误调试]
+ScrollDebug[滚动调试]
 end
 subgraph "调试场景"
 Error[错误调试]
@@ -1328,6 +1790,12 @@ LuteRendering[Lute渲染调试]
 DarkTheme[暗色主题调试]
 ModuleActivation[模块激活调试]
 AIPanelLoading[AI面板加载调试]
+StreamProcessing[流式处理调试]
+SSEConnection[SSE连接调试]
+MemoryLeak[内存泄漏调试]
+ConcurrencyConflict[并发冲突调试]
+ErrorHandling[错误处理调试]
+AutoScroll[自动滚动调试]
 end
 Console --> Error
 Network --> Performance
@@ -1339,8 +1807,17 @@ Components --> LuteRendering
 Components --> DarkTheme
 Components --> ModuleActivation
 Components --> AIPanelLoading
+Components --> StreamProcessing
+Components --> SSEConnection
+Components --> MemoryLeak
 ModuleDebug --> ModuleActivation
 ButtonDebug --> AIPanelLoading
+StreamDebug --> StreamProcessing
+SSEDebug --> SSEConnection
+MemoryDebug --> MemoryLeak
+ConcurrencyDebug --> ConcurrencyConflict
+ErrorDebug --> ErrorHandling
+ScrollDebug --> AutoScroll
 ```
 
 **图表来源**
@@ -1361,7 +1838,7 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 3. **安全可靠**：采用服务端代理机制，确保API密钥的安全性
 4. **灵活配置**：支持内置和自定义两种AI模型模式
 5. **持久化管理**：实现使用次数的智能管理和用户同意机制
-6. **流式响应**：实时显示AI生成过程，提升用户体验
+6. **流式响应**：**新增** 实时显示AI生成过程，提升用户体验
 7. **动态模型选择**：自定义模式下可实时获取和选择AI模型
 8. **下拉配置面板**：直观的弹出式配置界面，提升用户体验
 9. **独立加载状态**：每个操作都有精确的状态反馈
@@ -1370,6 +1847,15 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 12. **完整暗色主题支持**：200多行CSS样式实现深色模式适配
 13. **模块化管理**：统一的模块化架构，支持多个功能模块的扩展
 14. **垂直按钮组**：全新的垂直按钮组设计，提供统一的快速切换功能
+15. **流式响应处理**：**新增** 实时流式响应处理，支持增量内容显示
+16. **内存管理优化**：**新增** 流式处理器自动清理，防止内存泄漏
+17. **SSE连接池**：**新增** 复用SSE连接，减少握手开销
+18. **增量渲染优化**：**新增** 只更新变化的消息内容，提升渲染性能
+19. **并发操作支持**：**新增** 支持同时处理多个AI操作，提升响应速度
+20. **增强错误处理**：**新增** 使用 try-catch-finally 确保资源正确释放
+21. **优化自动滚动**：**新增** 改进的滚动机制，确保最佳用户体验
+22. **独立状态管理**：**新增** 独立的加载状态，避免按钮冲突
+23. **并发状态优化**：**新增** 精确的状态管理，提升用户体验
 
 ### 技术亮点
 
@@ -1383,6 +1869,12 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - **Lute集成**：高质量的Markdown渲染系统
 - **暗色主题**：完整的深色模式适配
 - **模块化架构**：统一的模块化管理，支持功能扩展
+- **流式架构**：**新增** 完整的流式响应架构，支持实时交互
+- **内存安全**：**新增** 流式处理器内存管理，防止泄漏
+- **SSE优化**：**新增** SSE连接复用和断线重连机制
+- **并发优化**：**新增** 独立状态管理，避免操作冲突
+- **错误处理优化**：**新增** try-catch-finally 确保资源释放
+- **滚动优化**：**新增** 优化的滚动机制，提升用户体验
 
 ### 发展方向
 
@@ -1400,5 +1892,11 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - 优化垂直按钮组的交互体验
 - 增加模块间的通信机制
 - 实现模块的热插拔功能
+- **新增** 支持WebSocket连接池
+- **新增** 实现流式响应的断点续传
+- **新增** 增强流式处理器的错误恢复机制
+- **新增** 支持更复杂的并发操作协调
+- **新增** 实现更精细的错误处理和恢复机制
+- **新增** 优化滚动性能，支持更流畅的用户体验
 
-AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择、完整的暗色主题支持和全新的垂直按钮组设计等功能，显著提升了用户体验和系统的易用性。200多行CSS暗色主题样式的实现，确保了在各种主题下的良好视觉效果，而新增的模块化管理和垂直按钮组设计则提供了更加直观和高效的用户界面，这些改进共同构成了一个更加完善和专业的AI助手系统。
+AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择、完整的暗色主题支持、全新的垂直按钮组设计以及**新增的流式响应处理系统**等功能，显著提升了用户体验和系统的易用性。**重大架构升级**带来的独立加载状态管理、并发操作支持、增强的错误处理机制以及优化的自动滚动功能，共同构成了一个更加完善和专业的AI助手系统。

@@ -223,6 +223,19 @@ const checkTermsBeforeAction = (action: () => void) => {
 
 // Handle terms confirmation
 const handleTermsConfirm = () => {
+  // 保存同意状态到 localStorage
+  if (import.meta.client) {
+    try {
+      localStorage.setItem(AI_SUMMARY_TERMS_KEY, "true")
+      console.log('[AI Terms] Saved to localStorage:', AI_SUMMARY_TERMS_KEY)
+
+      // 验证保存成功
+      const verify = localStorage.getItem(AI_SUMMARY_TERMS_KEY)
+      console.log('[AI Terms] Verification:', verify)
+    } catch (e) {
+      console.error('[AI Terms] Failed to save:', e)
+    }
+  }
   termsAccepted.value = true
   showTermsDialog.value = false
   if (pendingAIOperation) {
@@ -385,17 +398,51 @@ watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
   }
 })
 
+// 检查条款状态
+const checkTermsOnClient = () => {
+  if (!import.meta.client) return
+
+  // 读取 localStorage
+  const localValue = localStorage.getItem(AI_SUMMARY_TERMS_KEY)
+  const hasAccepted = localValue === "true"
+
+  // 调试日志（生产环境可移除）
+  console.log('[AI Terms] Checking terms:', {
+    key: AI_SUMMARY_TERMS_KEY,
+    value: localValue,
+    hasAccepted,
+    origin: window.location.origin,
+    href: window.location.href
+  })
+
+  if (hasAccepted) {
+    termsAccepted.value = true
+    showTermsDialog.value = false
+    console.log('[AI Terms] Already accepted, hiding dialog')
+  } else if (!termsAccepted.value && !showTermsDialog.value) {
+    // 只在未同意且弹窗未显示时才显示
+    console.log('[AI Terms] Not accepted, showing dialog')
+    showTermsDialog.value = true
+  }
+}
+
 // Auto-trigger on mount
 onMounted(() => {
   loadSavedConfig()
-  if (checkTermsAccepted()) {
-    termsAccepted.value = true
-    // Show welcome message if no history
-    if (messages.value.length === 0) {
-      // Welcome message already in template
+  // 立即检查条款状态
+  checkTermsOnClient()
+})
+
+// 额外保险：使用 watchEffect 确保状态正确
+watchEffect(() => {
+  if (import.meta.client && !termsAccepted.value && !showTermsDialog.value) {
+    // 如果既未同意也未显示弹窗，检查是否应该显示
+    const hasAccepted = localStorage.getItem(AI_SUMMARY_TERMS_KEY) === "true"
+    if (!hasAccepted) {
+      showTermsDialog.value = true
+    } else {
+      termsAccepted.value = true
     }
-  } else {
-    showTermsDialog.value = true
   }
 })
 </script>
