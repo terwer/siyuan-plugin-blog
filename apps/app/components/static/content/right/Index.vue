@@ -8,7 +8,7 @@
   -->
 
 <script setup lang="ts">
-import { Paperclip, DArrowRight, Opportunity } from "@element-plus/icons-vue"
+import { Paperclip, DArrowRight, Opportunity, List } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
 
 const logger = createAppLogger("right-index")
@@ -433,7 +433,9 @@ onUnmounted(() => {
         <el-icon v-if="module.type === 'ai'" :size="16">
           <Opportunity />
         </el-icon>
-        <span v-else-if="module.type === 'outline'" class="module-icon">☰</span>
+        <el-icon v-else-if="module.type === 'outline'" :size="16">
+          <List />
+        </el-icon>
         <span v-else class="module-icon">{{ module.icon || module.id[0].toUpperCase() }}</span>
       </button>
       <!-- 收起按钮 - 仅在侧边栏展开时显示，使用右箭头表示收起 -->
@@ -475,9 +477,8 @@ onUnmounted(() => {
   right 60px /* 向右偏移，为右侧按钮组留出空间（按钮组宽度32px + 间距） */
   height calc(100vh - 120px) /* 底部留出按钮空间 */
   background var(--background)
-  border-left 1px solid rgba(0, 0, 0, 0.06) /* 更细的边框 */
-  border-top-left-radius 8px /* 顶部圆角 */
-  border-bottom-left-radius 8px /* 底部圆角 */
+  /* 移除左侧边框，保持简洁 */
+  border-radius 8px /* 统一圆角 */
   display flex
   flex-direction column
   overflow hidden /* 隐藏溢出，内部滚动 */
