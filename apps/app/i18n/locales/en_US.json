@@ -138,6 +138,7 @@
   "ai.chat.placeholder": "Type your question...",
   "ai.chat.send": "Send",
   "ai.chat.welcome": "Hi! I'm your AI reading assistant. Ask me anything about this document.",
+  "ai.chat.clear": "Clear conversation",
   "ai.chat.error.empty": "Please enter your question",
   "ai.chat.error.usage": "Daily usage limit reached. Please try again tomorrow"
 }

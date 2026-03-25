@@ -23,3 +23,6 @@ export const AI_SUMMARY_TERMS_KEY = "siyuan_blog_ai_summary_terms_accepted"
 export const AI_USAGE_KEY = "siyuan_blog_ai_usage"
 /** AI 功能：每日使用次数上限 */
 export const AI_DAILY_LIMIT = 30
+
+/** AI 助手：用户自定义模型配置 localStorage key */
+export const AI_CUSTOM_CONFIG_KEY = "siyuan_blog_ai_custom_config"

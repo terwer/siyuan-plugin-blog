@@ -70,23 +70,23 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');" ,
-            } as any,
-            {
-              defer: true,
-              src: appBase + "libs/katex/0.16.10/katex.min.js",
-            },
-          ]
+          {
+            src: appBase + "libs/eruda/eruda.js",
+          },
+          {
+            children: "eruda.init();console.log('eruda inited');",
+          } as any,
+          {
+            defer: true,
+            src: appBase + "libs/katex/0.16.10/katex.min.js",
+          },
+        ]
         : [
-            {
-              defer: true,
-              src: appBase + "libs/katex/0.16.10/katex.min.js",
-            },
-          ],
+          {
+            defer: true,
+            src: appBase + "libs/katex/0.16.10/katex.min.js",
+          },
+        ],
     },
   },
 
@@ -124,6 +124,11 @@ export default defineNuxtConfig({
 
   // 环境变量
   runtimeConfig: {
+    // Private 配置（仅在服务端可用）
+    aiBaseUrl: process.env.NUXT_AI_BASE_URL ?? "https://api.openai.com",
+    aiApiKey: process.env.NUXT_AI_API_KEY ?? "",
+    aiModel: process.env.NUXT_AI_MODEL ?? "gpt-3.5-turbo",
+    // Public 配置（客户端可用）
     public: {
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "cloudflare",
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
