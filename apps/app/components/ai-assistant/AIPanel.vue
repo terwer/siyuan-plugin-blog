@@ -13,7 +13,7 @@ import {
   Close,
   Promotion,
   RefreshRight,
-  DocumentChecked,
+  Delete,
   QuestionFilled,
   ChatLineRound,
   Setting,
@@ -413,7 +413,7 @@ onMounted(() => {
         <button class="header-btn" :title="t('ai.chat.clear')" :disabled="isLoading || messages.length === 0"
           @click="clearMessages">
           <el-icon>
-            <DocumentChecked />
+            <Delete />
           </el-icon>
         </button>
         <!-- Close -->

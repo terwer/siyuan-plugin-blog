@@ -5,6 +5,7 @@
 - [AIPanel.vue](file://apps/app/components/ai-assistant/AIPanel.vue)
 - [useAIAssistant.ts](file://apps/app/composables/useAIAssistant.ts)
 - [useAIUsage.ts](file://apps/app/composables/useAIUsage.ts)
+- [useLute.ts](file://apps/app/composables/useLute.ts)
 - [models.get.ts](file://apps/app/server/api/ai/models.get.ts)
 - [chat.post.ts](file://apps/app/server/api/ai/chat.post.ts)
 - [Constants.ts](file://apps/app/utils/Constants.ts)
@@ -13,16 +14,17 @@
 - [package.json](file://apps/app/package.json)
 - [plugin.json](file://apps/siyuan/plugin.json)
 - [index.vue](file://apps/app/pages/index.vue)
+- [nuxt.config.ts](file://apps/app/nuxt.config.ts)
 </cite>
 
 ## 更新摘要
 **变更内容**
-- 新增AI模型API端点，支持动态获取可用模型列表
-- 实现下拉弹出式配置面板，替代原有的折叠面板设计
-- 引入独立加载状态管理，为每个按钮提供精确的状态反馈
-- 增强动态模型选择功能，支持自定义模式下的实时模型切换
-- 完善错误消息本地化系统，提供多语言错误提示
-- 优化用户体验，实现更直观的配置和操作界面
+- 新增Lute Markdown渲染系统集成，支持高质量Markdown到HTML转换
+- 实现完整的动态模型选择功能，支持自定义模式下的实时模型切换
+- 大幅增强AIPanel组件，包含200多行CSS暗色主题样式和条件渲染逻辑
+- 完善暗色主题支持，实现完整的深色模式适配
+- 新增模型API端点，支持动态获取可用模型列表
+- 增强Markdown渲染功能，支持复杂的文档内容格式化
 
 ## 目录
 1. [项目概述](#项目概述)
@@ -51,6 +53,8 @@ AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记
 - **下拉配置面板**：直观的弹出式配置界面，支持模式切换和参数设置
 - **独立加载状态**：每个操作都有精确的加载状态反馈
 - **错误消息本地化**：完整的多语言错误提示系统
+- **Lute Markdown渲染**：高质量的Markdown到HTML转换系统
+- **完整暗色主题支持**：200多行CSS样式实现深色模式适配
 
 ## 项目结构
 
@@ -60,50 +64,59 @@ subgraph "应用层"
 UI[AI助手界面]
 Panel[AIPanel.vue]
 Composables[组合式函数]
+LuteRenderer[Lute渲染器]
 ConfigPanel[配置面板]
 ModelSelector[模型选择器]
 end
 subgraph "业务逻辑层"
 Assistant[useAIAssistant]
 Usage[useAIUsage]
-Utils[工具函数]
+LuteHook[useLute]
 ErrorManager[错误管理器]
 end
 subgraph "配置层"
 Constants[常量定义]
 I18n[国际化配置]
 Package[包配置]
+NuxtConfig[Nuxt配置]
 end
 subgraph "系统集成"
 Siyuan[Siyuan插件]
 Server[服务端API]
 ModelAPI[模型API端点]
 ChatAPI[聊天API端点]
+LuteLib[Lute库]
 end
 UI --> Panel
 Panel --> Assistant
 Panel --> Usage
+Panel --> LuteRenderer
 Panel --> ConfigPanel
 Panel --> ModelSelector
+Assistant --> LuteHook
 Assistant --> Utils
 Usage --> Constants
 Panel --> I18n
 Assistant --> Server
 Server --> ModelAPI
 Server --> ChatAPI
+LuteRenderer --> LuteLib
 Siyuan --> Panel
+NuxtConfig --> LuteLib
 ```
 
 **图表来源**
 - [AIPanel.vue:1-687](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L687)
 - [useAIAssistant.ts:1-560](file://apps/app/composables/useAIAssistant.ts#L1-L560)
 - [useAIUsage.ts:1-115](file://apps/app/composables/useAIUsage.ts#L1-L115)
+- [useLute.ts:1-84](file://apps/app/composables/useLute.ts#L1-L84)
 - [models.get.ts:1-102](file://apps/app/server/api/ai/models.get.ts#L1-L102)
 
 **章节来源**
 - [AIPanel.vue:1-687](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L687)
 - [useAIAssistant.ts:1-560](file://apps/app/composables/useAIAssistant.ts#L1-L560)
 - [useAIUsage.ts:1-115](file://apps/app/composables/useAIUsage.ts#L1-L115)
+- [useLute.ts:1-84](file://apps/app/composables/useLute.ts#L1-L84)
 
 ## 核心组件
 
@@ -121,6 +134,8 @@ AIPanel.vue是整个AI助手系统的核心UI组件，经过重大升级后，�
 6. **配置管理**：支持内置和自定义AI模型模式切换
 7. **下拉配置面板**：弹出式配置界面，支持模式切换和参数设置
 8. **动态模型选择**：自定义模式下可实时获取和选择AI模型
+9. **Lute Markdown渲染**：高质量的Markdown到HTML转换
+10. **暗色主题适配**：完整的深色模式样式支持
 
 #### 界面布局
 
@@ -133,6 +148,7 @@ InputArea --> ModelSelector[模型选择器<br/>自定义模式专用]
 ModelSelector --> UsageBar[使用计数栏<br/>剩余次数显示]
 UsageBar --> ConfigPanel[配置面板<br/>下拉弹出式]
 ConfigPanel --> TermsDialog[条款确认对话框<br/>首次使用弹窗]
+LuteRenderer[Lute渲染器<br/>Markdown到HTML转换] --> ChatList
 ```
 
 **图表来源**
@@ -140,6 +156,36 @@ ConfigPanel --> TermsDialog[条款确认对话框<br/>首次使用弹窗]
 
 **章节来源**
 - [AIPanel.vue:11-180](file://apps/app/components/ai-assistant/AIPanel.vue#L11-L180)
+
+### Lute Markdown渲染系统
+
+useLute.ts提供了完整的Lute Markdown渲染功能，这是系统的重要组成部分。
+
+#### 核心功能
+
+1. **Lute实例管理**：单例模式管理Lute实例
+2. **Markdown渲染**：将Markdown文本转换为HTML
+3. **错误处理**：优雅处理渲染失败的情况
+4. **HTML转义**：防止XSS攻击的安全处理
+
+#### 渲染流程
+
+```mermaid
+flowchart TD
+Input[Markdown输入] --> GetInstance[获取Lute实例]
+GetInstance --> CheckInstance{检查实例}
+CheckInstance --> |存在| RenderHTML[渲染为HTML]
+CheckInstance --> |不存在| CreateInstance[创建实例]
+CreateInstance --> RenderHTML
+RenderHTML --> WrapContent[包装为markdown-content]
+WrapContent --> Output[HTML输出]
+```
+
+**图表来源**
+- [useLute.ts:44-62](file://apps/app/composables/useLute.ts#L44-L62)
+
+**章节来源**
+- [useLute.ts:1-84](file://apps/app/composables/useLute.ts#L1-L84)
 
 ### 统一AI助手组合式函数
 
@@ -210,7 +256,7 @@ Block --> End
 
 ## 架构概览
 
-AI助手系统采用分层架构设计，经过重大升级后实现了前端UI、业务逻辑和数据持久化的完全统一。
+AI助手系统采用分层架构设计，经过重大升级后实现了前端UI、业务逻辑、数据持久化和Lute渲染系统的完全统一。
 
 ### 系统架构图
 
@@ -222,10 +268,13 @@ UIComponents[Element Plus组件]
 ConfigPanel[下拉配置面板]
 ModelSelector[动态模型选择器]
 ErrorManager[错误消息管理器]
+LuteRenderer[Lute渲染器]
+DarkTheme[暗色主题系统]
 end
 subgraph "业务逻辑层"
 useAIAssistant[useAIAssistant]
 useAIUsage[useAIUsage]
+useLute[useLute]
 preprocess[内容预处理]
 format[消息格式化]
 independentLoading[独立加载状态管理]
@@ -242,9 +291,11 @@ serverAPI[服务端AI API]
 modelAPI[模型API端点]
 chatAPI[聊天API端点]
 thirdParty[第三方AI服务]
+LuteLib[Lute库]
 end
 AIPanel --> useAIAssistant
 AIPanel --> useAIUsage
+AIPanel --> useLute
 AIPanel --> ConfigPanel
 AIPanel --> ModelSelector
 AIPanel --> ErrorManager
@@ -253,6 +304,7 @@ useAIAssistant --> format
 useAIAssistant --> independentLoading
 useAIAssistant --> termsManager
 useAIAssistant --> serverAPI
+useLute --> LuteLib
 useAIUsage --> localStorage
 localStorage --> usageData
 localStorage --> termsData
@@ -266,6 +318,7 @@ serverAPI --> thirdParty
 - [AIPanel.vue:11-51](file://apps/app/components/ai-assistant/AIPanel.vue#L11-L51)
 - [useAIAssistant.ts:102-157](file://apps/app/composables/useAIAssistant.ts#L102-L157)
 - [useAIUsage.ts:50-58](file://apps/app/composables/useAIUsage.ts#L50-L58)
+- [useLute.ts:18-37](file://apps/app/composables/useLute.ts#L18-L37)
 
 ### 数据流分析
 
@@ -273,6 +326,7 @@ serverAPI --> thirdParty
 sequenceDiagram
 participant User as 用户
 participant Panel as AIPanel
+participant Lute as useLute
 participant Assistant as useAIAssistant
 participant Server as 服务端API
 participant Storage as localStorage
@@ -281,6 +335,8 @@ Panel->>Assistant : 调用相应方法
 Assistant->>Assistant : 预处理文档内容
 Assistant->>Server : 发送AI请求
 Server-->>Assistant : 返回AI响应
+Assistant->>Lute : 渲染Markdown内容
+Lute-->>Assistant : 返回HTML
 Assistant->>Panel : 格式化消息
 Panel->>User : 显示聊天气泡
 Panel->>Storage : 更新使用计数
@@ -289,8 +345,40 @@ Panel->>Storage : 更新使用计数
 **图表来源**
 - [AIPanel.vue:71-133](file://apps/app/components/ai-assistant/AIPanel.vue#L71-L133)
 - [useAIAssistant.ts:320-485](file://apps/app/composables/useAIAssistant.ts#L320-L485)
+- [useLute.ts:44-62](file://apps/app/composables/useLute.ts#L44-L62)
 
 ## 详细组件分析
+
+### Lute Markdown渲染器
+
+Lute渲染器是系统的重要组成部分，提供了高质量的Markdown到HTML转换功能。
+
+#### 渲染流程
+
+```mermaid
+flowchart TD
+Input[Markdown内容] --> CheckInstance{检查Lute实例}
+CheckInstance --> |实例存在| RenderHTML[调用Lute渲染]
+CheckInstance --> |实例不存在| CreateInstance[创建Lute实例]
+CreateInstance --> RenderHTML
+RenderHTML --> EscapeHTML[HTML转义]
+EscapeHTML --> WrapContent[包装为markdown-content]
+WrapContent --> Output[最终HTML]
+```
+
+**图表来源**
+- [useLute.ts:18-62](file://apps/app/composables/useLute.ts#L18-L62)
+
+#### 渲染选项
+
+| 选项 | 设置值 | 说明 |
+|------|--------|------|
+| SoftBreak2HardBreak | true | 将软换行转换为硬换行 |
+| AutoSpace | true | 自动添加空格 |
+| FixTermTypo | true | 修复术语拼写错误 |
+
+**章节来源**
+- [useLute.ts:22-30](file://apps/app/composables/useLute.ts#L22-L30)
 
 ### 内容预处理模块
 
@@ -658,6 +746,50 @@ DisplayError --> ShowRetry[显示重试按钮]
 **章节来源**
 - [AIPanel.vue:351-366](file://apps/app/components/ai-assistant/AIPanel.vue#L351-L366)
 
+### 暗色主题支持
+
+系统实现了完整的暗色主题支持，包含200多行CSS样式，确保在深色模式下的良好用户体验。
+
+#### 暗色主题架构
+
+```mermaid
+classDiagram
+class DarkThemeSystem {
++html[data-theme-mode="dark"] : applies
++panelBackground : var(--b3-theme-background)
++panelBorder : var(--b3-border-color)
++buttonStyles : var(--b3-theme-on-background)
++inputStyles : var(--b3-theme-on-background)
++messageStyles : var(--b3-theme-on-background)
+}
+class CSSVariables {
++--b3-theme-background : #1e1e1e
++--b3-theme-on-background : #d1d5db
++--b3-border-color : rgba(255, 255, 255, 0.15)
++--b3-theme-primary : #409eff
+}
+DarkThemeSystem --> CSSVariables : uses
+```
+
+**图表来源**
+- [AIPanel.vue:650-652](file://apps/app/components/ai-assistant/AIPanel.vue#L650-L652)
+
+#### 暗色主题覆盖范围
+
+| 组件 | 暗色样式 | 适配效果 |
+|------|----------|----------|
+| 面板容器 | background: var(--b3-theme-background) | 深色背景 |
+| 头部区域 | border-bottom-color: rgba(255, 255, 255, 0.08) | 浅色边框 |
+| 快捷按钮 | hover状态深色背景 | 优雅悬停效果 |
+| 输入区域 | border-top-color: rgba(255, 255, 255, 0.08) | 透明边框 |
+| 模型选择器 | background: rgba(255, 255, 255, 0.03) | 深色背景 |
+| 使用计数栏 | background: rgba(255, 255, 255, 0.05) | 半透明背景 |
+| 配置弹窗 | background: var(--b3-theme-background) | 深色弹窗 |
+| 条款对话框 | background: var(--b3-theme-background) | 深色对话框 |
+
+**章节来源**
+- [AIPanel.vue:650-1571](file://apps/app/components/ai-assistant/AIPanel.vue#L650-L1571)
+
 ## 依赖关系分析
 
 ### 技术栈依赖
@@ -675,6 +807,7 @@ Pinia[Pinia 3.0.3]
 VueUse[@vueuse/core 13.5.0]
 ElementPlus[Element Plus 2+]
 Icons[Element Plus Icons]
+Lute[Lute 3.0+]
 end
 subgraph "工具库"
 Lodash[Lodash Unified]
@@ -691,6 +824,7 @@ Vue --> VueUse
 ElementPlus --> Icons
 Nuxt --> Vite
 Vite --> Stylus
+Lute --> Nuxt
 ```
 
 **图表来源**
@@ -736,6 +870,31 @@ English --> Chinese
 **章节来源**
 - [plugin.json:1-43](file://apps/siyuan/plugin.json#L1-L43)
 
+### Lute库集成
+
+系统通过Nuxt配置集成了Lute库，提供了高质量的Markdown渲染功能。
+
+#### Lute集成配置
+
+```mermaid
+flowchart TD
+NuxtConfig[Nuxt配置] --> HeadScript[head.script配置]
+HeadScript --> DevMode{开发模式}
+DevMode --> |开发| DevScripts[开发脚本]
+DevMode --> |生产| ProdScripts[生产脚本]
+DevScripts --> LuteLib[libs/lute/lute.min.js]
+ProdScripts --> LuteLib
+LuteLib --> WindowLute[window.Lute]
+WindowLute --> useLute[useLute组合式函数]
+useLute --> RenderFunction[renderMarkdown函数]
+```
+
+**图表来源**
+- [nuxt.config.ts:71-105](file://apps/app/nuxt.config.ts#L71-L105)
+
+**章节来源**
+- [nuxt.config.ts:71-105](file://apps/app/nuxt.config.ts#L71-L105)
+
 ## 性能考虑
 
 ### Token优化策略
@@ -748,6 +907,8 @@ AI助手系统通过智能的内容预处理和缓存机制，有效优化了Tok
 2. **缓存机制**：处理后的文档内容在组件生命周期内缓存
 3. **增量处理**：只发送必要的系统提示和用户输入
 4. **响应过滤**：移除AI模型的思维链输出，减少冗余内容
+5. **Lute渲染优化**：单例模式管理Lute实例，避免重复创建
+6. **暗色主题CSS**：使用CSS变量实现快速主题切换
 
 ### 内存管理
 
@@ -755,7 +916,8 @@ AI助手系统通过智能的内容预处理和缓存机制，有效优化了Tok
 flowchart TD
 Mount[组件挂载] --> CacheContent[缓存预处理内容]
 CacheContent --> InitMessages[初始化消息数组]
-InitMessages --> UserAction[用户操作]
+InitMessages --> InitLute[初始化Lute实例]
+InitLute --> UserAction[用户操作]
 UserAction --> AddMessage[添加消息到数组]
 AddMessage --> MemoryCheck{内存检查}
 MemoryCheck --> |正常| Continue[继续使用]
@@ -776,6 +938,8 @@ Continue --> UserAction
 5. **流式响应**：支持实时流式响应，提升用户体验
 6. **模型缓存**：动态获取的模型列表进行本地缓存
 7. **配置持久化**：用户配置自动保存到localStorage
+8. **Lute实例复用**：避免重复创建Lute实例
+9. **暗色主题CSS缓存**：CSS变量实现快速主题切换
 
 ## 故障排除指南
 
@@ -830,6 +994,26 @@ Continue --> UserAction
 3. 确认模式切换功能正常
 4. 查看控制台是否有JavaScript错误
 
+#### Lute渲染问题
+
+**问题现象**：Markdown内容无法正确渲染
+
+**排查步骤**：
+1. 检查Lute库是否正确加载
+2. 验证Markdown语法格式
+3. 确认Lute实例创建状态
+4. 查看渲染错误日志
+
+#### 暗色主题问题
+
+**问题现象**：深色模式样式不生效
+
+**处理方法**：
+1. 检查CSS变量是否正确设置
+2. 验证data-theme-mode属性
+3. 确认暗色主题CSS优先级
+4. 查看浏览器开发者工具的样式应用
+
 ### 调试工具
 
 ```mermaid
@@ -839,6 +1023,8 @@ Console[浏览器控制台]
 Network[网络面板]
 Storage[存储面板]
 Components[组件面板]
+LuteDebug[Lute调试]
+ThemeDebug[主题调试]
 end
 subgraph "调试场景"
 Error[错误调试]
@@ -847,6 +1033,8 @@ DataFlow[数据流调试]
 UIState[UI状态调试]
 ConfigPanel[配置面板调试]
 ModelSelection[模型选择调试]
+LuteRendering[Lute渲染调试]
+DarkTheme[暗色主题调试]
 end
 Console --> Error
 Network --> Performance
@@ -854,6 +1042,10 @@ Storage --> DataFlow
 Components --> UIState
 Components --> ConfigPanel
 Components --> ModelSelection
+Components --> LuteRendering
+Components --> DarkTheme
+LuteDebug --> LuteRendering
+ThemeDebug --> DarkTheme
 ```
 
 **图表来源**
@@ -878,6 +1070,8 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 8. **下拉配置面板**：直观的弹出式配置界面，提升用户体验
 9. **独立加载状态**：每个操作都有精确的状态反馈
 10. **错误消息本地化**：完整的多语言错误提示系统
+11. **Lute Markdown渲染**：高质量的Markdown到HTML转换系统
+12. **完整暗色主题支持**：200多行CSS样式实现深色模式适配
 
 ### 技术亮点
 
@@ -888,6 +1082,8 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - **API整合**：从多端点架构整合为单一AI聊天端点
 - **动态配置**：支持运行时的配置更新和模型选择
 - **状态管理**：精确的加载状态和错误状态管理
+- **Lute集成**：高质量的Markdown渲染系统
+- **暗色主题**：完整的深色模式适配
 
 ### 发展方向
 
@@ -900,5 +1096,7 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - 增加语音交互功能
 - 实现模型性能监控和优化
 - 添加AI助手使用统计和分析功能
+- 扩展Lute渲染器的功能支持
+- 增强暗色主题的自定义选项
 
-AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的下拉配置面板、动态模型选择和错误消息本地化等功能，显著提升了用户体验和系统的易用性。
+AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择和完整的暗色主题支持等功能，显著提升了用户体验和系统的易用性。200多行CSS暗色主题样式的实现，确保了在各种主题下的良好视觉效果，而新增的Lute渲染器则提供了高质量的Markdown处理能力，这些改进共同构成了一个更加完善和专业的AI助手系统。

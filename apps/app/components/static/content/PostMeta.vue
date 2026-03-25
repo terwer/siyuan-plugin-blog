@@ -12,14 +12,6 @@ import { useReadingTime } from "~/composables/useReadingTime"
 
 const props = defineProps<{
   post: any
-  /** 是否启用 AI 功能（控制 AI 按钮显示） */
-  enableAi?: boolean
-  /** AI 面板是否已激活（激活时隐藏按钮） */
-  aiActive?: boolean
-}>()
-
-const emit = defineEmits<{
-  (e: "openAI"): void
 }>()
 
 const { t, locale } = useI18n()
@@ -57,13 +49,17 @@ const showUpdateDate = computed(() =>
     <div class="meta-left">
       <!-- 发布日期 -->
       <span v-if="publishDate" class="meta-item">
-        <el-icon class="meta-icon"><Calendar /></el-icon>
+        <el-icon class="meta-icon">
+          <Calendar />
+        </el-icon>
         <span class="meta-text">{{ publishDate }}</span>
       </span>
 
       <!-- 更新日期（仅在不同时显示，用时钟图标，不用铅笔） -->
       <span v-if="showUpdateDate" class="meta-item meta-item--updated">
-        <el-icon class="meta-icon"><Clock /></el-icon>
+        <el-icon class="meta-icon">
+          <Clock />
+        </el-icon>
         <span class="meta-text">{{ updateDate }}</span>
       </span>
 
@@ -72,22 +68,16 @@ const showUpdateDate = computed(() =>
 
       <!-- 阅读时间 -->
       <span class="meta-item">
-        <el-icon class="meta-icon"><Reading /></el-icon>
+        <el-icon class="meta-icon">
+          <Reading />
+        </el-icon>
         <span class="meta-text">{{ readingText }}</span>
       </span>
     </div>
 
-    <!-- 右侧：AI 功能按钮 -->
+    <!-- 右侧：预留功能按钮区域 -->
     <div class="meta-actions">
-      <!-- 统一 AI 按钮（enableAi=true 且面板未激活时显示） -->
-      <button
-        v-if="enableAi && !aiActive"
-        class="action-btn action-btn--ai"
-        :title="t('ai.assistant.btn.title')"
-        @click="emit('openAI')"
-      >
-        <span class="ai-btn-badge">AI</span>
-      </button>
+      <!-- AI 按钮已移至右侧悬浮按钮组，与大纲按钮垂直排列 -->
     </div>
   </div>
 </template>
@@ -144,7 +134,10 @@ const showUpdateDate = computed(() =>
 .meta-actions
   display flex
   align-items center
+  justify-content center
   gap 6px
+  /* 确保与左侧元信息垂直对齐 */
+  height 100%
 
 .action-btn
   display inline-flex
@@ -172,30 +165,6 @@ const showUpdateDate = computed(() =>
 .action-btn:active
   transform scale(0.97)
 
-/* ===== AI 统一按钮 ===== */
-.action-btn--ai
-  background var(--el-color-primary, #409eff)
-  border-color var(--el-color-primary, #409eff)
-  color white
-  padding 4px 12px
-  border-radius 14px
-  gap 0
-
-.action-btn--ai:hover
-  background var(--el-color-primary-dark-2, #337ecc)
-  border-color var(--el-color-primary-dark-2, #337ecc)
-  color white
-  transform scale(1.05)
-
-.action-btn--ai:active
-  transform scale(0.97)
-
-.ai-btn-badge
-  font-size 12px
-  font-weight 700
-  letter-spacing 0.02em
-  line-height 1
-
 /* ===== 暗色模式适配 ===== */
 :global(.dark) .post-meta,
 :global([data-theme-mode="dark"]) .post-meta
@@ -210,15 +179,6 @@ const showUpdateDate = computed(() =>
     background rgba(255, 255, 255, 0.06)
     color rgba(255, 255, 255, 0.82)
     border-color rgba(255, 255, 255, 0.18)
-  
-  .action-btn--ai
-    background var(--el-color-primary, #409eff)
-    border-color var(--el-color-primary, #409eff)
-    color white
-  
-  .action-btn--ai:hover
-    background var(--el-color-primary-light-3, #79bbff)
-    border-color var(--el-color-primary-light-3, #79bbff)
 
 /* ===== 移动端适配 ===== */
 @media (max-width: 768px)

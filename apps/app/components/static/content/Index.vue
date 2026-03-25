@@ -14,13 +14,8 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 </script>
 
 <template>
-  <div
-    :class="{ 'content-layout': true, 'headed-layout': props.setting?.showHeader }"
-  >
-    <static-content-left
-      :post="props.post"
-      :setting="props.setting"
-    />
+  <div :class="{ 'content-layout': true, 'headed-layout': props.setting?.showHeader }">
+    <static-content-left :post="props.post" :setting="props.setting" />
     <main class="main-content">
       <static-content-main :post="props.post" :setting="props.setting" />
     </main>
@@ -45,6 +40,6 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 .main-content
   flex 1
   min-width 0 /* 防止 flex 子项溢出 */
-  padding 0
+  padding 0 60px 0 0 /* 右侧留出60px空间给按钮组 */
   margin 0
 </style>
