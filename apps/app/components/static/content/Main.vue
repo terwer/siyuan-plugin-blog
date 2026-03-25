@@ -8,8 +8,8 @@
   -->
 
 <script setup lang="ts">
-import { useImagePreview } from "~/composables/useImagePreview"
 import ImagePreview from "~/components/common/ImagePreview.vue"
+import { useImagePreview } from "~/composables/useImagePreview"
 
 const props = defineProps<{
   post: any
@@ -71,9 +71,9 @@ const VNode = () =>
 
 <style lang="stylus" scoped>
 .protyle-title
-  padding 0 !important
+  padding 16px 32px !important /* 标题区域增加左右边距 */
   margin 0 !important
 .protyle-wysiwyg
-  padding 0 !important
+  padding 24px 32px !important /* 参考大厂文档：舒适的阅读边距 */
   margin 0 !important
 </style>
