@@ -12,10 +12,14 @@ import { More, Paperclip } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
 
 const logger = createAppLogger("right-index")
+const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
 const outlineData = ref(props.post.outline ?? [] as any)
 const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
+
+// 从文档树跳转过来时，自动展开大纲（与左侧文档树保持联动）
+const isFromDocTree = computed(() => route.query.from === 'docTree')
 
 // 控制大纲状态，true 为展开，false 为收起
 // 使用 useState 确保 SSR 和客户端状态一致，避免闪烁
@@ -219,6 +223,13 @@ onMounted(() => {
   // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
   loadSavedWidth()
   loadPinnedState()
+
+  // 来自文档树跳转时，若未固定（图钉未启用），自动展开大纲
+  // 优先级：图钉固定 > URL 参数触发 > 默认收起
+  if (!isPinned.value && isFromDocTree.value && outlineData.value && outlineData.value.length > 0) {
+    showOutline.value = true
+    logger.info("Auto expand outline due to from=docTree")
+  }
   
   // 有文档大纲才绑定滚动
   if (outlineData.value && outlineData.value.length > 0) {
