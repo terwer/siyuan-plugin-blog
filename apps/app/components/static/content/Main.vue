@@ -25,6 +25,17 @@ const VNode = () =>
     class: "",
     innerHTML: editorDom,
   })
+
+// ========== AI 面板激活状态（跨组件共享）==========
+const aiPanelActive = useState('ai-panel-active', () => false)
+
+// 从 setting 读取开关，历史用户默认均关闭
+// const postMetaEnabled = computed(() => props.setting?.postMetaEnabled === true)
+// const enableAi = computed(() => props.setting?.aiSummaryEnabled === true)
+
+// 临时测试
+const postMetaEnabled = computed(() =>  true)
+const enableAi = computed(() =>  true)
 </script>
 
 <template>
@@ -41,6 +52,16 @@ const VNode = () =>
           {{ props.post.title }}
         </div>
       </div>
+
+      <!-- 文档元信息栏：阅读时间、日期、功能入口（setting.postMetaEnabled=true 时显示） -->
+      <static-content-post-meta
+        v-if="postMetaEnabled"
+        :post="props.post"
+        :enable-ai="enableAi"
+        :ai-active="aiPanelActive"
+        @open-a-i="aiPanelActive = true"
+      />
+
       <div
         v-highlight
         v-sbeauty
@@ -63,6 +84,7 @@ const VNode = () =>
         <VNode />
       </div>
     </div>
+
     <client-only>
       <ImagePreview ref="previewRef" :images="images as any" />
     </client-only>

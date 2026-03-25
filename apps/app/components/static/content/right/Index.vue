@@ -15,6 +15,13 @@ const logger = createAppLogger("right-index")
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
+// ==================== Tab 切换状态 ====================
+type SidebarTab = 'outline' | 'ai'
+const activeTab = ref<SidebarTab>('outline')
+
+// AI 面板状态（跨组件共享）
+const aiPanelActive = useState('ai-panel-active', () => false)
+
 const outlineData = ref(props.post.outline ?? [] as any)
 const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
 
@@ -219,6 +226,46 @@ const onScroll = () => {
 // 标记是否已完成初始加载
 const isInitialized = ref(false)
 
+// ==================== AI 面板相关 ====================
+// 监听 AI 面板激活，自动切换 Tab 并展开侧边栏
+watch(aiPanelActive, (active) => {
+  if (active) {
+    activeTab.value = 'ai'
+    showOutline.value = true  // 展开侧边栏
+    if (!isPinned.value) {
+      isPinned.value = true
+      savePinnedState(true)
+    }
+  }
+})
+
+// 关闭处理方法
+const handleClose = () => {
+  if (activeTab.value === 'ai') {
+    // 关闭 AI Tab
+    aiPanelActive.value = false
+    // 如果有大纲，切回大纲
+    if (outlineData.value && outlineData.value.length > 0) {
+      activeTab.value = 'outline'
+    } else {
+      // 没有大纲数据，收起侧边栏
+      toggleOutlineWithProtection()
+    }
+  } else {
+    toggleOutlineWithProtection()
+  }
+}
+
+// 关闭 AI 面板
+const handleCloseAI = () => {
+  aiPanelActive.value = false
+  if (outlineData.value && outlineData.value.length > 0) {
+    activeTab.value = 'outline'
+  } else {
+    showOutline.value = false
+  }
+}
+
 onMounted(() => {
   // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
   loadSavedWidth()
@@ -250,7 +297,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="outlineData && outlineData.length > 0" class="outline-aside" :class="{ 'outline-collapsed': !showOutline, 'outline-initialized': isInitialized }">
+  <div v-if="(outlineData && outlineData.length > 0) || aiPanelActive" class="outline-aside" :class="{ 'outline-collapsed': !showOutline, 'outline-initialized': isInitialized }">
     <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
     <div 
         class="outline-placeholder" 
@@ -271,11 +318,27 @@ onUnmounted(() => {
           maxWidth: showOutline ? outlineWidth + 'px' : '0px'
         }"
     >
-      <!-- 大纲标题栏（包含按钮组） -->
+      <!-- 大纲标题栏（包含 Tab 切换和按钮组） -->
       <div class="outline-header">
-        <div class="outline-title">
-          <span class="outline-title-icon">☰</span>
-          <span>{{ $t("static.outline") }}</span>
+        <div class="sidebar-tabs">
+          <button
+            v-if="outlineData && outlineData.length > 0"
+            class="sidebar-tab"
+            :class="{ 'sidebar-tab--active': activeTab === 'outline' }"
+            @click="activeTab = 'outline'"
+          >
+            <span class="tab-icon">☰</span>
+            <span>{{ $t("static.outline") }}</span>
+          </button>
+          <button
+            v-if="aiPanelActive"
+            class="sidebar-tab"
+            :class="{ 'sidebar-tab--active': activeTab === 'ai' }"
+            @click="activeTab = 'ai'"
+          >
+            <span class="tab-icon-ai">AI</span>
+            <span>{{ $t("ai.assistant.title") }}</span>
+          </button>
         </div>
         <div class="outline-header-actions">
           <!-- 图钉按钮 -->
@@ -283,28 +346,41 @@ onUnmounted(() => {
               class="header-btn pin-btn"
               :class="{ 'pin-btn-active': isPinned }"
               @click="togglePin"
-              title="固定显示大纲"
+              title="固定显示"
           >
             <el-icon :size="14"><Paperclip /></el-icon>
           </div>
           <!-- 关闭按钮 -->
           <div
               class="header-btn close-btn"
-              @click="toggleOutlineWithProtection"
-              title="关闭大纲"
+              @click="handleClose"
+              title="关闭"
           >
             <el-icon :size="14"><More /></el-icon>
           </div>
         </div>
       </div>
       
-      <div class="outline-content">
+      <!-- 大纲内容 -->
+      <div v-show="activeTab === 'outline'" class="outline-content">
         <static-content-right-outline
             :outline-data="outlineData"
             :max-depth="outlineMaxDepth"
             :active-text="activeNodeText"
             :width="outlineWidth"
         />
+      </div>
+
+      <!-- AI 面板内容 -->
+      <div v-show="activeTab === 'ai' && aiPanelActive" class="ai-content">
+        <client-only>
+          <ai-assistant-a-i-panel
+            :title="post.title ?? ''"
+            :content="post.editorDom ?? ''"
+            :doc-id="post.postid ?? ''"
+            @close="handleCloseAI"
+          />
+        </client-only>
       </div>
       
       <!-- 拖拽调整宽度的手柄 -->
@@ -327,11 +403,11 @@ onUnmounted(() => {
     
     <!-- 收起状态下的展开按钮 -->
     <div
-        v-if="!showOutline"
+        v-if="!showOutline && ((outlineData && outlineData.length > 0) || aiPanelActive)"
         class="toggle-btn-collapsed"
         @click="toggleOutlineWithProtection"
         @mouseenter="onHover(true)"
-        title="展开大纲"
+        :title="aiPanelActive ? '展开 AI 面板' : '展开大纲'"
     >
       <el-icon :size="14"><More /></el-icon>
     </div>
@@ -391,6 +467,46 @@ onUnmounted(() => {
   padding 10px 14px /* 更紧凑的间距 */
   border-bottom 1px solid rgba(0, 0, 0, 0.04) /* 更淡的分隔线 */
   background var(--background)
+
+/* Tab 切换栏 */
+.sidebar-tabs
+  display flex
+  align-items center
+  gap 2px
+
+.sidebar-tab
+  display inline-flex
+  align-items center
+  gap 4px
+  padding 4px 10px
+  border none
+  background transparent
+  border-radius 6px
+  cursor pointer
+  font-size 13px
+  font-weight 500
+  color var(--text-color-secondary)
+  transition all 0.2s ease
+  white-space nowrap
+  font-family inherit
+
+.sidebar-tab:hover
+  background var(--el-fill-color-light)
+  color var(--text-color-primary)
+
+.sidebar-tab--active
+  background var(--el-color-primary-light-9, rgba(64, 158, 255, 0.1))
+  color var(--el-color-primary, #409eff)
+  font-weight 600
+
+.tab-icon
+  font-size 11px
+  opacity 0.6
+
+.tab-icon-ai
+  font-size 11px
+  font-weight 700
+  color var(--el-color-primary, #409eff)
 
 .outline-title
   display flex
@@ -459,6 +575,13 @@ onUnmounted(() => {
   
   &::-webkit-scrollbar-thumb:hover
     background rgba(0, 0, 0, 0.15) /* 悬停时稍深 */
+
+/* AI 内容区域 */
+.ai-content
+  flex 1
+  overflow hidden
+  display flex
+  flex-direction column
 
 /* 拖拽调整宽度的手柄 */
 .resize-handle
