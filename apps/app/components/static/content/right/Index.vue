@@ -354,6 +354,7 @@ onUnmounted(() => {
   /* 宽度由 JS 控制，不使用 CSS 过渡 */
   box-shadow -2px 2px 8px rgba(0, 0, 0, 0.06) /* 更柔和的阴影 */
   z-index 10 /* 降低 z-index，避免覆盖右下角按钮 */
+  font-family var(--b3-font-family, "Helvetica Neue", Arial, sans-serif)
 
 /* 拖拽时禁用过渡 */
 .outline-container.is-resizing

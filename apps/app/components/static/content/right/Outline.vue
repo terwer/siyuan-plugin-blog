@@ -118,6 +118,7 @@ watch(() => props.activeText, () => {
   display: flex
   flex-direction: column
   overflow: hidden /* 防止内容溢出 */
+  font-family: var(--b3-font-family, "Helvetica Neue", Arial, sans-serif)
 
 .outline-content
   flex-grow: 1

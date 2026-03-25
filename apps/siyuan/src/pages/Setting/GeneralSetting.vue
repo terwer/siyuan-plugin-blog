@@ -82,9 +82,9 @@ const formData = reactive({
   lightTheme: "Zhihu",
   darkTheme: "Zhihu",
   versionMap: {
-    midlight: "3.1.10",
-    daylight: "3.1.10",
-    Zhihu: "0.1.3",
+    midlight: "3.6.1",
+    daylight: "3.6.1",
+    Zhihu: "0.1.7",
     Savor: "4.2.3",
     Tsundoku: "2.3.5",
     "pink-room": "0.9.4",

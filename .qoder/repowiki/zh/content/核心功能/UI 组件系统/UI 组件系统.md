@@ -47,6 +47,8 @@
 - 更新智能滚动功能，增强大纲激活状态检测和滚动到章节功能
 - 新增大纲面板性能优化和用户体验改进说明
 - 新增大纲宽度调整和固定状态的本地存储机制
+- **新增Sidebar组件的always expand功能，确保当前文档在任何深度下都可见**
+- **新增MenuItem组件的分享状态指示器和密码/过期徽章功能**
 
 ## 目录
 1. [简介](#简介)
@@ -67,7 +69,7 @@
 ## 简介
 本文件面向 UI 组件系统，系统化梳理 Vue 组件架构与使用方法，覆盖通用组件、静态组件、公共组件的设计模式与最佳实践；重点解读 Tab 组件、Header、Footer、Detail 等核心组件的功能特性、API 接口与配置项；阐述响应式设计、主题适配与国际化支持；并提供使用示例与集成指南，帮助开发者快速理解与扩展。
 
-**更新** 本次更新重点关注侧边栏和菜单系统的重大样式优化，包括更淡的rgba边框、菜单项高度从40px减少到36px、字体大小从16px减少到12.5px、内边距从20px调整到16px、引入自定义滚动条样式、优化激活状态背景透明度和改进悬停效果。
+**更新** 本次更新重点关注侧边栏和菜单系统的重大样式优化，包括更淡的rgba边框、菜单项高度从40px减少到36px、字体大小从16px减少到12.5px、内边距从20px调整到16px、引入自定义滚动条样式、优化激活状态背景透明度和改进悬停效果。**新增Sidebar组件的always expand功能，确保当前文档在任何深度下都可见；MenuItem组件增加了分享状态指示器和密码/过期徽章功能。**
 
 ## 项目结构
 UI 组件主要分布在以下目录：
@@ -173,9 +175,9 @@ SCROLL --> S
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
-- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
+- [apps/app/components/static/content/left/MenuItem.vue:1-175](file://apps/app/components/static/content/left/MenuItem.vue#L1-L175)
+- [apps/app/components/static/content/left/SidebarMenu.vue:1-91](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L91)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
@@ -210,9 +212,9 @@ SCROLL --> S
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
-- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
+- [apps/app/components/static/content/left/MenuItem.vue:1-175](file://apps/app/components/static/content/left/MenuItem.vue#L1-L175)
+- [apps/app/components/static/content/left/SidebarMenu.vue:1-91](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L91)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
@@ -258,15 +260,15 @@ SCROLL --> S
 - ConfirmPassword：密码确认表单，内置校验与加载态
 - ImagePreview：图片预览弹层，基于第三方库封装
 
-**更新** 新增大纲标题栏系统和状态管理存储系统，显著提升了用户体验和界面灵活性。
+**更新** 新增大纲标题栏系统和状态管理存储系统，显著提升了用户体验和界面灵活性。**新增Sidebar组件的always expand功能和MenuItem组件的分享状态指示器。**
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
-- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
+- [apps/app/components/static/content/left/MenuItem.vue:1-175](file://apps/app/components/static/content/left/MenuItem.vue#L1-L175)
+- [apps/app/components/static/content/left/SidebarMenu.vue:1-91](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L91)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
@@ -440,7 +442,7 @@ F-->>U : UI 更新
 ### Sidebar 组件
 - 功能要点
   - 基于 docTree 构建树形菜单
-  - 默认展开至当前文档父链
+  - **默认展开至当前文档父链，确保当前文档在任何深度下都可见**
   - 支持从文档树来源的高亮与展开
   - **智能自动滚动**：自动滚动到激活菜单项，支持重试机制、边界检查和平滑滚动
 - 关键属性
@@ -449,12 +451,14 @@ F-->>U : UI 更新
 - 数据处理
   - TreeUtils.addParentIds 补全父子关系
   - 递归构建树结构，生成链接
+  - **新增占位节点处理：为缺失的父节点创建占位节点，确保树结构完整性**
 - 交互优化
   - 滚动到激活菜单项，确保可见性
   - 支持从文档树来源的特殊处理
   - **智能滚动算法**：包含重试机制、边界检查、平滑滚动和日志记录
+  - **新增always expand功能：始终展开当前文档的所有父节点，确保可见性**
 
-**更新** 新增智能自动滚动功能，显著提升了用户体验。
+**更新** 新增智能自动滚动功能，显著提升了用户体验。**新增always expand功能，确保当前文档在任何深度下都可见。**
 
 ```mermaid
 flowchart TD
@@ -471,11 +475,11 @@ I --> J["日志记录与调试"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
+- [apps/app/components/static/content/left/Sidebar.vue:116-141](file://apps/app/components/static/content/left/Sidebar.vue#L116-L141)
 - [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
 
 **章节来源**
-- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
 
 ### Index 组件（新增大纲容器）
 - 功能要点
@@ -652,6 +656,70 @@ T->>T : 渲染对应 content组件/文本
 **章节来源**
 - [apps/app/components/common/ImagePreview.vue:1-64](file://apps/app/components/common/ImagePreview.vue#L1-L64)
 
+### MenuItem 组件（新增分享状态指示器）
+- 功能要点
+  - 渲染菜单项内容，支持文本截断和工具提示
+  - **新增分享状态指示器：显示密码保护和过期状态**
+  - **新增密码徽章：显示"(有密码)"状态**
+  - **新增过期徽章：显示"(已过期)"状态**
+  - **新增状态样式：密码保护使用警告色，过期使用危险色**
+  - **新增点击处理：支持密码验证和过期检查**
+  - **新增占位节点：未分享文档显示为占位符**
+- 关键属性
+  - link: 菜单项链接
+  - text: 菜单项文本
+  - fromDocTree: 是否从文档树来源
+  - isShared: 是否已分享
+  - hasPassword: 是否有密码
+  - isExpired: 是否已过期
+- 状态管理
+  - **显示文本：未分享文档显示为占位符**
+  - **徽章显示：仅在分享状态下显示密码和过期徽章**
+  - **样式类：根据状态动态应用警告色或危险色**
+  - **点击控制：未分享文档不可点击**
+- 交互功能
+  - **密码验证：有密码文档需要确认才能访问**
+  - **过期检查：已过期文档提示无法访问**
+  - **工具提示：超长文本显示完整内容**
+  - **点击区域优化：扩展点击区域到左侧**
+
+**更新** 新增分享状态指示器和密码/过期徽章功能，显著提升了文档状态的可视化程度。
+
+```mermaid
+flowchart TD
+A["MenuItem.vue<br/>菜单项组件"] --> B["文本截断<br/>calculateTextLength()"]
+B --> C["工具提示<br/>shouldShowTooltip"]
+C --> D["显示文本<br/>displayText"]
+D --> E["状态徽章<br/>password-badge/expired-badge"]
+E --> F["状态样式<br/>text-warning/text-danger"]
+F --> G["点击处理<br/>handleItemClick()"]
+G --> H["密码验证<br/>ElMessageBox.confirm"]
+G --> I["过期检查<br/>ElMessage.error"]
+G --> J["跳转处理<br/>navigateTo()"]
+```
+
+**图表来源**
+- [apps/app/components/static/content/left/MenuItem.vue:35-122](file://apps/app/components/static/content/left/MenuItem.vue#L35-L122)
+
+**章节来源**
+- [apps/app/components/static/content/left/MenuItem.vue:1-175](file://apps/app/components/static/content/left/MenuItem.vue#L1-L175)
+
+### SidebarMenu 组件（支持分享状态）
+- 功能要点
+  - 渲染菜单容器，支持嵌套菜单和激活状态管理
+  - **支持分享状态传递：将isShared、hasPassword、isExpired属性传递给子组件**
+  - **支持点击委派：通过ref调用子组件的handleItemClick方法**
+- 关键属性
+  - menu: 菜单数据，包含id、name、link、depth、children等
+  - activeIndex: 当前激活的菜单项索引
+- 交互优化
+  - **激活状态高亮：当前激活菜单项和子菜单标题都会高亮**
+  - **点击委派：父组件处理点击事件，子组件内部处理跳转逻辑**
+  - **全宽包装器：确保点击区域覆盖整个菜单项**
+
+**章节来源**
+- [apps/app/components/static/content/left/SidebarMenu.vue:1-91](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L91)
+
 ## 菜单系统样式优化
 
 ### 侧边栏样式优化
@@ -671,7 +739,7 @@ D --> E["悬停效果<br/>透明度0.04"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:223-291](file://apps/app/components/static/content/left/Sidebar.vue#L223-L291)
+- [apps/app/components/static/content/left/Sidebar.vue:236-248](file://apps/app/components/static/content/left/Sidebar.vue#L236-L248)
 
 ### 菜单项尺寸优化
 菜单项经过精心的尺寸调整，提升整体视觉效果和用户体验：
@@ -692,7 +760,7 @@ E --> F["行高匹配<br/>36px"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/MenuItem.vue:74-96](file://apps/app/components/static/content/left/MenuItem.vue#L74-L96)
+- [apps/app/components/static/content/left/MenuItem.vue:136-155](file://apps/app/components/static/content/left/MenuItem.vue#L136-L155)
 
 ### 悬停效果改进
 菜单系统的悬停效果经过优化，提供更细腻的交互体验：
@@ -711,7 +779,7 @@ C --> E["子菜单<br/>一致的透明度"]
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:271-284](file://apps/app/components/static/content/left/Sidebar.vue#L271-L284)
+- [apps/app/components/static/content/left/Sidebar.vue:277-287](file://apps/app/components/static/content/left/Sidebar.vue#L277-L287)
 
 ### 标题栏样式优化
 侧边栏标题栏经过优化，提升整体视觉效果：
@@ -723,8 +791,8 @@ C --> E["子菜单<br/>一致的透明度"]
 - **字间距优化**：字间距设置为-0.01em，提升文本可读性
 
 **章节来源**
-- [apps/app/components/static/content/left/Sidebar.vue:245-252](file://apps/app/components/static/content/left/Sidebar.vue#L245-L252)
-- [apps/app/components/static/content/left/MenuItem.vue:93-95](file://apps/app/components/static/content/left/MenuItem.vue#L93-L95)
+- [apps/app/components/static/content/left/Sidebar.vue:250-257](file://apps/app/components/static/content/left/Sidebar.vue#L250-L257)
+- [apps/app/components/static/content/left/MenuItem.vue:147-155](file://apps/app/components/static/content/left/MenuItem.vue#L147-L155)
 
 ## 智能自动滚动功能
 
@@ -801,6 +869,27 @@ U --> |否| V["滚动完成"]
 - **生产模式**：在生产环境下保持静默
 - **关键信息**：记录滚动目标、元素位置、容器尺寸等关键信息
 - **错误追踪**：记录警告和错误信息，便于问题排查
+
+### always expand 功能增强
+**新增** Sidebar 组件的 always expand 功能确保当前文档在任何深度下都可见：
+
+- **父节点展开**：始终展开当前文档的所有父节点
+- **展开ID计算**：递归查找父节点ID并添加到展开数组
+- **树结构完整性**：为缺失的父节点创建占位节点，确保树结构完整
+- **占位节点处理**：占位节点显示为省略号，isShared、hasPassword、isExpired 均为false
+
+```mermaid
+flowchart TD
+A["expandedIds 计算"] --> B["获取当前文档ID"]
+B --> C["查找父节点ID"]
+C --> D["添加到展开数组"]
+D --> E["继续查找祖父节点"]
+E --> F["直到根节点"]
+F --> G["渲染时始终展开"]
+```
+
+**图表来源**
+- [apps/app/components/static/content/left/Sidebar.vue:125-141](file://apps/app/components/static/content/left/Sidebar.vue#L125-L141)
 
 **章节来源**
 - [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
@@ -973,6 +1062,7 @@ I --> J["初始值设置<br/>setItem()"]
   - **Sidebar 与 Element Plus 的 el-scrollbar 组件紧密集成**
   - **Index 与 Outline 组件通过 props 传递状态和配置**
   - **大纲系统通过 localStorage 实现状态持久化**
+  - **SidebarMenu 与 MenuItem 通过 props 传递分享状态**
 - 状态管理依赖
   - **useCommonStorageAsync 依赖 commonStorage 实现存储功能**
   - **commonStorage 依赖 Siyuan Kernel API 进行数据存储**
@@ -981,6 +1071,7 @@ I --> J["初始值设置<br/>setItem()"]
   - **Sidebar 组件依赖自定义滚动条样式**
   - **菜单系统依赖主题变量和CSS变量**
   - **OutlineItem 组件依赖暗色模式样式**
+  - **MenuItem 组件依赖状态徽章样式**
 
 ```mermaid
 graph LR
@@ -1022,6 +1113,8 @@ MCSS["menu.css"] --> S
 SLIDER["尺寸调节滑杠.css"] --> I
 SCROLL["滚动条.css"] --> S
 ES["Element Plus<br/>el-scrollbar"] --> S
+SM["SidebarMenu<br/>菜单容器"] --> S
+MI["MenuItem<br/>菜单项"] --> SM
 ```
 
 **图表来源**
@@ -1068,6 +1161,8 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **localStorage 操作异步化，避免阻塞主线程**
   - **自定义滚动条样式使用 CSS 变量，提升渲染性能**
   - **菜单项尺寸优化减少不必要的重绘**
+  - **新增always expand功能使用Map优化父节点查找**
+  - **MenuItem组件使用computed优化徽章显示逻辑**
 - 可维护性
   - 组件职责单一，事件与属性清晰
   - 配置集中于 AppConfig，便于统一管理
@@ -1078,6 +1173,8 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **状态管理存储系统提供统一的状态持久化解决方案**
   - **异步存储机制确保数据一致性和可靠性**
   - **样式优化采用CSS变量，便于主题定制**
+  - **新增分享状态指示器提供清晰的文档状态可视化**
+  - **always expand功能确保用户体验一致性**
 - 用户体验
   - **智能滚动确保激活菜单项始终可见且居中**
   - **平滑滚动动画提升视觉体验**
@@ -1090,8 +1187,10 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **更淡的边框提供更柔和的视觉效果**
   - **紧凑的菜单项尺寸提升信息密度**
   - **优化的悬停效果提供更细腻的交互体验**
+  - **新增分享状态指示器提升文档状态可视化程度**
+  - **always expand功能确保当前文档始终可见**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统和智能滚动功能的性能优化说明，以及菜单系统样式优化带来的性能提升。
+**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能和菜单系统样式优化相关的性能优化说明，以及新增的分享状态指示器和always expand功能带来的性能提升。
 
 ## 故障排查指南
 - 主题未生效
@@ -1136,8 +1235,18 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **确认 CSS 变量是否正确设置**
   - **验证菜单项的尺寸和字体设置**
   - **检查激活状态和悬停效果的样式覆盖**
+- **分享状态指示器异常**
+  - **检查 isShared、hasPassword、isExpired 属性是否正确传递**
+  - **验证徽章显示逻辑，确认computed属性是否正确计算**
+  - **检查状态样式类是否正确应用**
+  - **确认点击处理逻辑，验证密码验证和过期检查**
+- **always expand功能异常**
+  - **检查expandedIds计算逻辑，确认父节点ID查找是否正确**
+  - **验证占位节点创建逻辑，确认缺失父节点是否正确处理**
+  - **检查展开状态是否正确应用到菜单项**
+  - **确认TreeUtils.addParentIds是否正确补全父子关系**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能和菜单系统样式优化相关的故障排查指导。
+**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能、菜单系统样式优化、分享状态指示器和always expand功能相关的故障排查指导。
 
 **章节来源**
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
@@ -1158,7 +1267,7 @@ ES["Element Plus<br/>el-scrollbar"] --> S
 ## 结论
 该 UI 组件系统以配置驱动为核心，结合组合式逻辑、国际化、主题工具和状态管理存储，形成清晰的静态布局与通用组件体系。各组件职责明确、接口简洁，具备良好的扩展性与可维护性。通过统一的主题注入与资源路径工具，实现了跨环境的一致体验。
 
-**更新** 菜单系统样式优化显著提升了视觉层次感和用户体验，包括更淡的rgba边框、紧凑的菜单项尺寸、优化的字体规格和改进的悬停效果；大纲标题栏系统的新增进一步增强了界面灵活性；状态管理存储系统的完善确保了用户偏好的持续性和可靠性；智能滚动功能的增强改善了用户在大型文档树中的导航体验。这些优化共同构成了更加现代化、高效和用户友好的UI组件系统。
+**更新** 菜单系统样式优化显著提升了视觉层次感和用户体验，包括更淡的rgba边框、紧凑的菜单项尺寸、优化的字体规格和改进的悬停效果；大纲标题栏系统的新增进一步增强了界面灵活性；状态管理存储系统的完善确保了用户偏好的持续性和可靠性；智能滚动功能的增强改善了用户在大型文档树中的导航体验；**新增的Sidebar组件always expand功能确保当前文档在任何深度下都可见；MenuItem组件的分享状态指示器和密码/过期徽章功能显著提升了文档状态的可视化程度。这些优化共同构成了更加现代化、高效和用户友好的UI组件系统。**
 
 ## 附录
 
@@ -1176,14 +1285,14 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - 行为：返回顶部/主题模式弹窗
 - Sidebar
   - 属性：post(AppConfig), setting(AppConfig)
-  - 行为：根据 docTree 渲染菜单，自动展开当前文档父链，**智能滚动到激活菜单项**
+  - 行为：根据 docTree 渲染菜单，自动展开当前文档父链，**智能滚动到激活菜单项，** **always expand功能确保当前文档可见**
 - SidebarMenu
   - 属性：menu(MenuData), activeIndex(string)
-  - 行为：渲染菜单容器，支持嵌套菜单和激活状态管理
+  - 行为：渲染菜单容器，支持嵌套菜单和激活状态管理，**传递分享状态属性**
 - MenuItem
-  - 属性：link(string), text(string), fromDocTree(boolean)
+  - 属性：link(string), text(string), fromDocTree(boolean), isShared(boolean), hasPassword(boolean), isExpired(boolean)
   - 方法：handleItemClick()
-  - 行为：渲染菜单项，支持文本截断、工具提示和点击区域优化
+  - 行为：渲染菜单项，支持文本截断、工具提示和点击区域优化，**显示密码/过期徽章，** **支持密码验证和过期检查**
 - Index（新增）
   - 属性：post(AppConfig), setting(AppConfig)
   - 行为：右侧大纲容器，支持标题栏、固定显示、宽度调整和智能滚动
@@ -1209,15 +1318,15 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - 事件：hide
   - 行为：图片预览弹层，暴露 show(index)
 
-**更新** 新增大纲标题栏系统和状态管理存储系统的 API 说明，以及菜单系统样式优化相关的API说明。
+**更新** 新增大纲标题栏系统和状态管理存储系统的 API 说明，以及菜单系统样式优化和新增功能相关的API说明。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
 - [apps/app/components/static/Footer.vue:1-115](file://apps/app/components/static/Footer.vue#L1-L115)
 - [apps/app/components/static/Buttons.vue:1-240](file://apps/app/components/static/Buttons.vue#L1-L240)
-- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
+- [apps/app/components/static/content/left/SidebarMenu.vue:1-91](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L91)
+- [apps/app/components/static/content/left/MenuItem.vue:1-175](file://apps/app/components/static/content/left/MenuItem.vue#L1-L175)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
@@ -1234,6 +1343,7 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **大纲面板支持固定定位，在滚动时保持可见**
   - **Index 组件使用粘性定位，提供更好的响应式支持**
   - **菜单项尺寸优化提升移动端显示效果**
+  - **新增分享状态指示器在移动端同样清晰可见**
 - 主题适配
   - useClientThemeMode 注入默认与当前主题样式，设置 data-theme-mode 属性
   - 暗色模式下 Outline 等组件自动切换背景与边框
@@ -1243,8 +1353,9 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **大纲标题栏支持主题颜色适配**
   - **自定义滚动条样式支持主题变量**
   - **菜单系统样式优化支持主题适配**
+  - **分享状态指示器使用主题颜色变量**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统和菜单系统样式优化的主题适配说明。
+**更新** 新增大纲标题栏系统、状态管理存储系统、菜单系统样式优化和新增功能的主题适配说明。
 
 **章节来源**
 - [apps/app/components/static/Header.vue:1-131](file://apps/app/components/static/Header.vue#L1-L131)
@@ -1266,8 +1377,9 @@ ES["Element Plus<br/>el-scrollbar"] --> S
 - **大纲面板：标题使用国际化词条，支持多语言显示**
 - **大纲标题栏：按钮提示使用国际化词条**
 - **菜单系统：支持多语言菜单项显示**
+- **分享状态指示器：密码徽章和过期徽章使用国际化文案**
 
-**更新** 大纲标题栏系统支持国际化，智能滚动功能的日志使用英文描述，菜单系统支持多语言显示。
+**更新** 大纲标题栏系统支持国际化，智能滚动功能的日志使用英文描述，菜单系统支持多语言显示，**分享状态指示器使用国际化文案。**
 
 **章节来源**
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
@@ -1280,9 +1392,9 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - ConfirmPassword：传入初始值与回调
   - ImagePreview：传入图片数组，调用暴露的 show(index)
 - 菜单系统集成
-  - Sidebar：传入 post 和 setting，自动渲染菜单树，**智能滚动功能自动启用**
-  - SidebarMenu：传入 menu 和 activeIndex，支持嵌套菜单
-  - MenuItem：传入 link、text 和 fromDocTree 属性
+  - Sidebar：传入 post 和 setting，自动渲染菜单树，**智能滚动功能自动启用，** **always expand功能自动启用**
+  - SidebarMenu：传入 menu 和 activeIndex，支持嵌套菜单，**传递分享状态属性**
+  - MenuItem：传入 link、text、fromDocTree、isShared、hasPassword、isExpired 属性
 - 大纲系统集成
   - Index：传入 post 和 setting，支持标题栏、固定显示、宽度调整
   - Outline：传入 outlineData、maxDepth、activeText 和 width 属性
@@ -1312,16 +1424,26 @@ ES["Element Plus<br/>el-scrollbar"] --> S
   - **确保 CSS 变量正确设置**
   - **自定义滚动条样式自动加载**
   - **菜单项尺寸和字体自动适配**
+- **分享状态指示器集成**
+  - **MenuItem 组件自动显示密码和过期徽章**
+  - **确保 isShared、hasPassword、isExpired 属性正确传递**
+  - **密码验证和过期检查自动处理**
+  - **状态样式类自动应用**
+- **always expand功能集成**
+  - **Sidebar 组件自动启用always expand功能**
+  - **无需额外配置，自动展开当前文档的所有父节点**
+  - **占位节点自动创建和处理**
+  - **TreeUtils.addParentIds自动补全父子关系**
 
-**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能和菜单系统样式优化的集成指南。
+**更新** 新增大纲标题栏系统、状态管理存储系统、智能滚动功能、菜单系统样式优化、分享状态指示器和always expand功能的集成指南。
 
 **章节来源**
 - [apps/app/composables/useClientThemeMode.ts:1-158](file://apps/app/composables/useClientThemeMode.ts#L1-L158)
 - [apps/app/i18n/locales/zh_CN.json:1-100](file://apps/app/i18n/locales/zh_CN.json#L1-L100)
 - [apps/app/i18n/locales/en_US.json:1-100](file://apps/app/i18n/locales/en_US.json#L1-L100)
-- [apps/app/components/static/content/left/Sidebar.vue:1-291](file://apps/app/components/static/content/left/Sidebar.vue#L1-L291)
-- [apps/app/components/static/content/left/SidebarMenu.vue:1-90](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L90)
-- [apps/app/components/static/content/left/MenuItem.vue:1-96](file://apps/app/components/static/content/left/MenuItem.vue#L1-L96)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
+- [apps/app/components/static/content/left/SidebarMenu.vue:1-91](file://apps/app/components/static/content/left/SidebarMenu.vue#L1-L91)
+- [apps/app/components/static/content/left/MenuItem.vue:1-175](file://apps/app/components/static/content/left/MenuItem.vue#L1-L175)
 - [apps/app/components/static/content/right/Index.vue:1-484](file://apps/app/components/static/content/right/Index.vue#L1-L484)
 - [apps/app/components/static/content/right/Outline.vue:1-154](file://apps/app/components/static/content/right/Outline.vue#L1-L154)
 - [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
