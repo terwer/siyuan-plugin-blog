@@ -56,7 +56,9 @@ const {
 // Usage management
 const { remainingCount, canUse, consume, dailyLimit } = useAIUsage()
 
-// Note: Now using isLoading from useAIAssistant for all operations
+// Button loading states (independent for each button to avoid confusion)
+const speedReadLoading = ref(false)
+const qaLoading = ref(false)
 
 // Chat input
 const chatInput = ref("")
@@ -237,8 +239,9 @@ const handleTermsCancel = () => {
 
 // Handle speed read action (with streaming)
 const handleSpeedRead = async () => {
-  if (!canUseAI.value || isLoading.value) return
+  if (!canUseAI.value || speedReadLoading.value) return
 
+  speedReadLoading.value = true
   const cfg: AIAssistantConfig = {
     mode: config.mode,
   }
@@ -246,9 +249,13 @@ const handleSpeedRead = async () => {
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
-  const result = await sendSpeedRead(cfg)
-  if (result.success) {
-    if (isUsageLimited.value) consume()
+  try {
+    const result = await sendSpeedRead(cfg)
+    if (result.success) {
+      if (isUsageLimited.value) consume()
+    }
+  } finally {
+    speedReadLoading.value = false
   }
 }
 
@@ -261,8 +268,9 @@ const triggerSpeedRead = () => {
 
 // Handle QA generation (with streaming)
 const handleGenerateQA = async () => {
-  if (!canUseAI.value || isLoading.value) return
+  if (!canUseAI.value || qaLoading.value) return
 
+  qaLoading.value = true
   const cfg: AIAssistantConfig = {
     mode: config.mode,
   }
@@ -270,9 +278,13 @@ const handleGenerateQA = async () => {
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
-  const result = await sendQA(cfg)
-  if (result.success) {
-    if (isUsageLimited.value) consume()
+  try {
+    const result = await sendQA(cfg)
+    if (result.success) {
+      if (isUsageLimited.value) consume()
+    }
+  } finally {
+    qaLoading.value = false
   }
 }
 
@@ -366,9 +378,9 @@ watch(messages, () => {
   nextTick(() => scrollToBottom())
 }, { deep: true })
 
-// Auto-scroll when loading state changes (for streaming feedback)
-watch(isLoading, (loading) => {
-  if (loading) {
+// Auto-scroll when any button loading state changes to true
+watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
+  if (speedLoading || qaLoading) {
     nextTick(() => scrollToBottom())
   }
 })
@@ -450,8 +462,8 @@ onMounted(() => {
 
     <!-- Quick Action Buttons (above input) -->
     <div class="quick-actions-bar">
-      <button class="action-btn" :disabled="isLoading || !canUseAI" @click="triggerSpeedRead">
-        <el-icon v-if="isLoading" class="is-loading">
+      <button class="action-btn" :disabled="speedReadLoading || qaLoading || !canUseAI" @click="triggerSpeedRead">
+        <el-icon v-if="speedReadLoading" class="is-loading">
           <Loading />
         </el-icon>
         <el-icon v-else>
@@ -459,8 +471,8 @@ onMounted(() => {
         </el-icon>
         <span>{{ t("ai.assistant.speedread") }}</span>
       </button>
-      <button class="action-btn" :disabled="isLoading || !canUseAI" @click="triggerQA">
-        <el-icon v-if="isLoading" class="is-loading">
+      <button class="action-btn" :disabled="speedReadLoading || qaLoading || !canUseAI" @click="triggerQA">
+        <el-icon v-if="qaLoading" class="is-loading">
           <Loading />
         </el-icon>
         <el-icon v-else>
