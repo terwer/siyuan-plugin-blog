@@ -36,13 +36,16 @@ const isHovered = ref(false)
 
 // ==================== 大纲宽度调整功能 ====================
 const OUTLINE_WIDTH_KEY = 'siyuan-blog-outline-width'
+const AI_WIDTH_KEY = 'siyuan-blog-ai-width'
 const OUTLINE_PINNED_KEY = 'siyuan-blog-outline-pinned'
 const DEFAULT_WIDTH = 280
+const AI_DEFAULT_WIDTH = 380  // AI面板默认更大宽度
 const MIN_WIDTH = 200
 const MAX_WIDTH = 500
 
 // 大纲宽度状态
 const outlineWidth = ref(DEFAULT_WIDTH)
+const aiWidth = ref(AI_DEFAULT_WIDTH)  // AI面板宽度
 const isResizing = ref(false)
 
 // 大纲固定显示状态
@@ -52,12 +55,24 @@ const isPinned = useState('outline-pinned', () => false)
 // 从 localStorage 读取保存的宽度
 const loadSavedWidth = () => {
   if (process.client) {
+    // 读取大纲宽度
     const savedWidth = localStorage.getItem(OUTLINE_WIDTH_KEY)
     if (savedWidth) {
       const width = parseInt(savedWidth, 10)
       if (width >= MIN_WIDTH && width <= MAX_WIDTH) {
         outlineWidth.value = width
       }
+    }
+    // 读取AI面板宽度 - 如果没有保存过，使用默认最大宽度
+    const savedAIWidth = localStorage.getItem(AI_WIDTH_KEY)
+    if (savedAIWidth) {
+      const width = parseInt(savedAIWidth, 10)
+      if (width >= MIN_WIDTH && width <= MAX_WIDTH) {
+        aiWidth.value = width
+      }
+    } else {
+      // 首次使用，设置为最大宽度
+      aiWidth.value = AI_DEFAULT_WIDTH
     }
   }
 }
@@ -66,6 +81,13 @@ const loadSavedWidth = () => {
 const saveWidth = (width: number) => {
   if (process.client) {
     localStorage.setItem(OUTLINE_WIDTH_KEY, width.toString())
+  }
+}
+
+// 保存AI面板宽度到 localStorage
+const saveAIWidth = (width: number) => {
+  if (process.client) {
+    localStorage.setItem(AI_WIDTH_KEY, width.toString())
   }
 }
 
@@ -106,27 +128,40 @@ const togglePin = () => {
 const startResize = (e: MouseEvent) => {
   e.preventDefault()
   isResizing.value = true
-  
+
   const startX = e.clientX
-  const startWidth = outlineWidth.value
-  
+  // 根据当前激活的Tab决定调整哪个宽度
+  const isAIActive = activeTab.value === 'ai' && aiPanelActive.value
+  const startWidth = isAIActive ? aiWidth.value : outlineWidth.value
+
   const handleMouseMove = (moveEvent: MouseEvent) => {
     if (!isResizing.value) return
-    
+
     const deltaX = startX - moveEvent.clientX
     const newWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + deltaX))
-    outlineWidth.value = newWidth
+
+    // 根据当前激活的Tab更新对应的宽度
+    if (isAIActive) {
+      aiWidth.value = newWidth
+    } else {
+      outlineWidth.value = newWidth
+    }
   }
-  
+
   const handleMouseUp = () => {
     isResizing.value = false
-    saveWidth(outlineWidth.value)
+    // 根据当前激活的Tab保存对应的宽度
+    if (isAIActive) {
+      saveAIWidth(aiWidth.value)
+    } else {
+      saveWidth(outlineWidth.value)
+    }
     document.removeEventListener('mousemove', handleMouseMove)
     document.removeEventListener('mouseup', handleMouseUp)
     document.body.style.userSelect = ''
     document.body.style.cursor = ''
   }
-  
+
   document.addEventListener('mousemove', handleMouseMove)
   document.addEventListener('mouseup', handleMouseUp)
   document.body.style.userSelect = 'none'
@@ -142,7 +177,7 @@ const toggleOutline = () => {
 let lastClickTime = 0
 
 // hover 状态控制
-const onHover = (state:boolean) => {
+const onHover = (state: boolean) => {
   // 固定模式下不响应 hover
   if (isPinned.value) return
   // 点击后 300ms 内不响应 hover，防止 click 关闭后 mouseenter 立即重新展开
@@ -200,7 +235,7 @@ const onScroll = () => {
   }
 
   // 找到距离视口顶部最近的节点
-  let closestNode:any = null
+  let closestNode: any = null
   let minDistance = Number.MAX_VALUE
 
   nodes.forEach((node) => {
@@ -277,13 +312,13 @@ onMounted(() => {
     showOutline.value = true
     logger.info("Auto expand outline due to from=docTree")
   }
-  
+
   // 有文档大纲才绑定滚动
   if (outlineData.value && outlineData.value.length > 0) {
     logger.info("Mounted: Adding scroll listener, outline width:", outlineWidth.value, "pinned:", isPinned.value)
     window.addEventListener("scroll", onScroll, true)
   }
-  
+
   // 延迟标记初始化完成，避免初始过渡动画
   setTimeout(() => {
     isInitialized.value = true
@@ -297,100 +332,68 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="(outlineData && outlineData.length > 0) || aiPanelActive" class="outline-aside" :class="{ 'outline-collapsed': !showOutline, 'outline-initialized': isInitialized }">
+  <div v-if="(outlineData && outlineData.length > 0) || aiPanelActive" class="outline-aside"
+    :class="{ 'outline-collapsed': !showOutline, 'outline-initialized': isInitialized }">
     <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
-    <div 
-        class="outline-placeholder" 
-        :style="{ 
-          width: showOutline ? outlineWidth + 'px' : '0px',
-          minWidth: showOutline ? outlineWidth + 'px' : '0px',
-          maxWidth: showOutline ? outlineWidth + 'px' : '0px'
-        }"
-    ></div>
-    
+    <div class="outline-placeholder" :style="{
+      width: showOutline ? (activeTab === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
+      minWidth: showOutline ? (activeTab === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
+      maxWidth: showOutline ? (activeTab === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px'
+    }"></div>
+
     <!-- 大纲容器 - 使用 fixed 定位，内部独立滚动 -->
-    <div
-        class="outline-container"
-        :class="{ 'is-resizing': isResizing }"
-        :style="{ 
-          width: showOutline ? outlineWidth + 'px' : '0px',
-          minWidth: showOutline ? outlineWidth + 'px' : '0px',
-          maxWidth: showOutline ? outlineWidth + 'px' : '0px'
-        }"
-    >
+    <div class="outline-container" :class="{ 'is-resizing': isResizing }" :style="{
+      width: showOutline ? (activeTab === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
+      minWidth: showOutline ? (activeTab === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
+      maxWidth: showOutline ? (activeTab === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px'
+    }">
       <!-- 大纲标题栏（包含 Tab 切换和按钮组） -->
       <div class="outline-header">
         <div class="sidebar-tabs">
-          <button
-            v-if="outlineData && outlineData.length > 0"
-            class="sidebar-tab"
-            :class="{ 'sidebar-tab--active': activeTab === 'outline' }"
-            @click="activeTab = 'outline'"
-          >
+          <button v-if="outlineData && outlineData.length > 0" class="sidebar-tab"
+            :class="{ 'sidebar-tab--active': activeTab === 'outline' }" @click="activeTab = 'outline'">
             <span class="tab-icon">☰</span>
             <span>{{ $t("static.outline") }}</span>
           </button>
-          <button
-            v-if="aiPanelActive"
-            class="sidebar-tab"
-            :class="{ 'sidebar-tab--active': activeTab === 'ai' }"
-            @click="activeTab = 'ai'"
-          >
+          <button v-if="aiPanelActive" class="sidebar-tab" :class="{ 'sidebar-tab--active': activeTab === 'ai' }"
+            @click="activeTab = 'ai'">
             <span class="tab-icon-ai">AI</span>
             <span>{{ $t("ai.assistant.title") }}</span>
           </button>
         </div>
         <div class="outline-header-actions">
           <!-- 图钉按钮 -->
-          <div
-              class="header-btn pin-btn"
-              :class="{ 'pin-btn-active': isPinned }"
-              @click="togglePin"
-              title="固定显示"
-          >
-            <el-icon :size="14"><Paperclip /></el-icon>
+          <div class="header-btn pin-btn" :class="{ 'pin-btn-active': isPinned }" @click="togglePin" title="固定显示">
+            <el-icon :size="14">
+              <Paperclip />
+            </el-icon>
           </div>
           <!-- 关闭按钮 -->
-          <div
-              class="header-btn close-btn"
-              @click="handleClose"
-              title="关闭"
-          >
-            <el-icon :size="14"><More /></el-icon>
+          <div class="header-btn close-btn" @click="handleClose" title="关闭">
+            <el-icon :size="14">
+              <More />
+            </el-icon>
           </div>
         </div>
       </div>
-      
+
       <!-- 大纲内容 -->
       <div v-show="activeTab === 'outline'" class="outline-content">
-        <static-content-right-outline
-            :outline-data="outlineData"
-            :max-depth="outlineMaxDepth"
-            :active-text="activeNodeText"
-            :width="outlineWidth"
-        />
+        <static-content-right-outline :outline-data="outlineData" :max-depth="outlineMaxDepth"
+          :active-text="activeNodeText" :width="outlineWidth" />
       </div>
 
       <!-- AI 面板内容 -->
       <div v-show="activeTab === 'ai' && aiPanelActive" class="ai-content">
         <client-only>
-          <ai-assistant-a-i-panel
-            :title="post.title ?? ''"
-            :content="post.editorDom ?? ''"
-            :doc-id="post.postid ?? ''"
-            @close="handleCloseAI"
-          />
+          <ai-assistant-a-i-panel :title="post.title ?? ''" :content="post.editorDom ?? ''" :doc-id="post.postid ?? ''"
+            @close="handleCloseAI" />
         </client-only>
       </div>
-      
+
       <!-- 拖拽调整宽度的手柄 -->
-      <div
-          v-if="showOutline"
-          class="resize-handle"
-          :class="{ 'is-resizing': isResizing }"
-          @mousedown="startResize"
-          title="拖拽调整宽度"
-      >
+      <div v-if="showOutline" class="resize-handle" :class="{ 'is-resizing': isResizing }" @mousedown="startResize"
+        title="拖拽调整宽度">
         <div class="resize-indicator">
           <div class="resize-dots">
             <span class="dot"></span>
@@ -400,16 +403,13 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    
+
     <!-- 收起状态下的展开按钮 -->
-    <div
-        v-if="!showOutline && ((outlineData && outlineData.length > 0) || aiPanelActive)"
-        class="toggle-btn-collapsed"
-        @click="toggleOutlineWithProtection"
-        @mouseenter="onHover(true)"
-        :title="aiPanelActive ? '展开 AI 面板' : '展开大纲'"
-    >
-      <el-icon :size="14"><More /></el-icon>
+    <div v-if="!showOutline && ((outlineData && outlineData.length > 0) || aiPanelActive)" class="toggle-btn-collapsed"
+      @click="toggleOutlineWithProtection" @mouseenter="onHover(true)" :title="aiPanelActive ? '展开 AI 面板' : '展开大纲'">
+      <el-icon :size="14">
+        <More />
+      </el-icon>
     </div>
   </div>
 </template>
@@ -440,7 +440,7 @@ onUnmounted(() => {
 .outline-container
   position fixed /* 固定在视窗，不随正文滚动 */
   top 60px /* 顶部留出导航空间 */
-  right 0
+  right 12px /* 向右偏移，避开页面滚动条 */
   height calc(100vh - 120px) /* 底部留出按钮空间 */
   background var(--background)
   border-left 1px solid rgba(0, 0, 0, 0.06) /* 更细的边框 */
@@ -451,7 +451,7 @@ onUnmounted(() => {
   overflow hidden /* 隐藏溢出，内部滚动 */
   /* 宽度由 JS 控制，不使用 CSS 过渡 */
   box-shadow -2px 2px 8px rgba(0, 0, 0, 0.06) /* 更柔和的阴影 */
-  z-index 10 /* 降低 z-index，避免覆盖右下角按钮 */
+  z-index 100 /* 提高 z-index，确保覆盖页面滚动条 */
   font-family var(--b3-font-family, "Helvetica Neue", Arial, sans-serif)
 
 /* 拖拽时禁用过渡 */

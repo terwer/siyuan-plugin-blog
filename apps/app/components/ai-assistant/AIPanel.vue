@@ -17,6 +17,7 @@ import {
   QuestionFilled,
   ChatLineRound,
   Setting,
+  Loading,
 } from "@element-plus/icons-vue"
 import { useAIAssistant, type AIAssistantConfig, type AIModelMode } from "~/composables/useAIAssistant"
 import { useAIUsage } from "~/composables/useAIUsage"
@@ -51,12 +52,36 @@ const {
 // Usage management
 const { remainingCount, canUse, consume, dailyLimit } = useAIUsage()
 
+// Button loading states (independent for each button)
+const speedReadLoading = ref(false)
+const qaLoading = ref(false)
+
 // Chat input
 const chatInput = ref("")
 const chatListRef = ref<HTMLElement | null>(null)
+const configBtnRef = ref<HTMLElement | null>(null)
 
 // AI Config (advanced, collapsed by default)
 const showConfig = ref(false)
+const configPopoverStyle = ref({ bottom: '0px', right: '0px' })
+
+// Update config popover position
+const updateConfigPosition = () => {
+  if (!configBtnRef.value) return
+  const rect = configBtnRef.value.getBoundingClientRect()
+  // 向上展开，避免被底部遮挡
+  configPopoverStyle.value = {
+    bottom: `${window.innerHeight - rect.top + 8}px`,
+    right: `${window.innerWidth - rect.right}px`,
+  }
+}
+
+// Watch showConfig to update position
+watch(showConfig, (val) => {
+  if (val) {
+    nextTick(updateConfigPosition)
+  }
+})
 const config = reactive<AIAssistantConfig>({
   baseUrl: "",
   apiKey: "",
@@ -105,6 +130,56 @@ const toggleMode = () => {
   saveConfig()
 }
 
+// 可用模型列表（完全从API动态获取，禁止硬编码）
+const availableModels = ref<{ id: string; name: string; provider: string }[]>([])
+const isLoadingModels = ref(false)
+const modelsError = ref<string | null>(null)
+
+// 加载模型列表 - 必须从API获取，禁止硬编码，禁止fallback
+const loadModels = async () => {
+  if (config.mode !== 'custom') return
+
+  isLoadingModels.value = true
+  modelsError.value = null
+  availableModels.value = []
+
+  try {
+    const params = new URLSearchParams({
+      mode: config.mode,
+    })
+    if (config.baseUrl) params.append('baseUrl', config.baseUrl)
+    if (config.apiKey) params.append('apiKey', config.apiKey)
+
+    const response = await fetch(`/api/ai/models?${params}`)
+    const data = await response.json()
+
+    if (data.success && data.models && data.models.length > 0) {
+      availableModels.value = data.models
+    } else {
+      // API返回错误或空列表，显示错误信息
+      modelsError.value = data.error || '无法获取模型列表，请检查API配置'
+    }
+  } catch (error) {
+    // API调用失败，显示错误
+    modelsError.value = '网络错误，无法获取模型列表'
+  } finally {
+    isLoadingModels.value = false
+  }
+}
+
+// 选择模型
+const selectModel = (modelValue: string) => {
+  config.model = modelValue
+  saveConfig()
+}
+
+// 监听模式变化，自动加载模型列表
+watch(() => config.mode, (newMode) => {
+  if (newMode === 'custom') {
+    loadModels()
+  }
+}, { immediate: true })
+
 // 检查是否可以使用 AI
 const canUseAI = computed(() => {
   // custom 模式：只要有 API Key 就无限制
@@ -128,68 +203,125 @@ const checkTermsAccepted = () => {
   return localStorage.getItem(AI_SUMMARY_TERMS_KEY) === "true"
 }
 
+// 待执行的AI操作（条款确认后执行）
+let pendingAIOperation: (() => void) | null = null
+
+// Check terms before any AI operation
+const checkTermsBeforeAction = (action: () => void) => {
+  if (checkTermsAccepted()) {
+    termsAccepted.value = true
+    action()
+  } else {
+    pendingAIOperation = action
+    showTermsDialog.value = true
+  }
+}
+
+// Handle terms confirmation
+const handleTermsConfirm = () => {
+  termsAccepted.value = true
+  showTermsDialog.value = false
+  if (pendingAIOperation) {
+    pendingAIOperation()
+    pendingAIOperation = null
+  }
+}
+
+// Handle terms cancel
+const handleTermsCancel = () => {
+  showTermsDialog.value = false
+  pendingAIOperation = null
+}
+
 // Handle speed read action
 const handleSpeedRead = async () => {
-  if (!canUse.value) return
+  if (!canUseAI.value || speedReadLoading.value) return
 
-  const cfg: AIAssistantConfig = {}
+  speedReadLoading.value = true
+  const cfg: AIAssistantConfig = {
+    mode: config.mode,
+  }
   if (config.baseUrl?.trim()) cfg.baseUrl = config.baseUrl.trim()
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
-  const result = await sendSpeedRead(cfg)
-  if (result.success) {
-    consume()
-    await nextTick()
-    scrollToBottom()
+  try {
+    const result = await sendSpeedRead(cfg)
+    if (result.success) {
+      if (isUsageLimited.value) consume()
+      await nextTick()
+      scrollToBottom()
+    }
+  } finally {
+    speedReadLoading.value = false
   }
 }
 
 // Trigger speed read (check terms first)
 const triggerSpeedRead = () => {
-  if (checkTermsAccepted()) {
-    termsAccepted.value = true
-    handleSpeedRead()
-  } else {
-    showTermsDialog.value = true
-  }
+  // 立即滚动到底部，让用户看到加载状态
+  nextTick(() => scrollToBottom())
+  checkTermsBeforeAction(handleSpeedRead)
 }
 
 // Handle QA generation
 const handleGenerateQA = async () => {
-  if (!canUse.value) return
+  if (!canUseAI.value || qaLoading.value) return
 
-  const cfg: AIAssistantConfig = {}
+  qaLoading.value = true
+  const cfg: AIAssistantConfig = {
+    mode: config.mode,
+  }
   if (config.baseUrl?.trim()) cfg.baseUrl = config.baseUrl.trim()
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
-  const result = await sendQA(cfg)
-  if (result.success) {
-    consume()
-    await nextTick()
-    scrollToBottom()
+  try {
+    const result = await sendQA(cfg)
+    if (result.success) {
+      if (isUsageLimited.value) consume()
+      await nextTick()
+      scrollToBottom()
+    }
+  } finally {
+    qaLoading.value = false
   }
 }
 
-// Send chat message
-const handleSendMessage = async () => {
-  if (!chatInput.value.trim() || !canUse.value) return
+// Trigger QA generation (check terms first)
+const triggerQA = () => {
+  // 立即滚动到底部，让用户看到加载状态
+  nextTick(() => scrollToBottom())
+  checkTermsBeforeAction(handleGenerateQA)
+}
+
+// Execute chat message send
+const executeSendMessage = async () => {
+  if (!chatInput.value.trim() || !canUseAI.value) return
 
   const msg = chatInput.value.trim()
   chatInput.value = ""
 
-  const cfg: AIAssistantConfig = {}
+  const cfg: AIAssistantConfig = {
+    mode: config.mode,
+  }
   if (config.baseUrl?.trim()) cfg.baseUrl = config.baseUrl.trim()
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
   const result = await sendMessage(msg, cfg)
   if (result.success) {
-    consume()
+    if (isUsageLimited.value) consume()
     await nextTick()
     scrollToBottom()
   }
+}
+
+// Send chat message (check terms first)
+const handleSendMessage = () => {
+  // 立即滚动到底部，让用户看到加载状态
+  nextTick(() => scrollToBottom())
+  checkTermsBeforeAction(executeSendMessage)
 }
 
 // Handle keyboard events
@@ -203,9 +335,30 @@ const handleKeyDown = (e: KeyboardEvent) => {
 // Scroll to bottom
 const scrollToBottom = () => {
   if (chatListRef.value) {
-    const lastMsg = chatListRef.value.lastElementChild as HTMLElement
-    lastMsg?.scrollIntoView({ behavior: "smooth", block: "end" })
+    // 使用 scrollTop 直接滚动到底部，更可靠
+    const scrollHeight = chatListRef.value.scrollHeight
+    chatListRef.value.scrollTo({
+      top: scrollHeight,
+      behavior: 'smooth'
+    })
   }
+}
+
+// Get localized error message
+const getErrorMessage = (errorCode: string | null): string => {
+  if (!errorCode) return ""
+
+  const errorMap: Record<string, string> = {
+    'EMPTY_CONTENT': t('ai.assistant.error.empty.content'),
+    'EMPTY_MESSAGE': t('ai.assistant.error.empty.message'),
+    'GENERATE_FAILED': t('ai.assistant.error.generate.failed'),
+    'INVALID_FORMAT': t('ai.assistant.error.format.invalid'),
+    'SEND_FAILED': t('ai.assistant.error.send.failed'),
+    'NETWORK_ERROR': t('ai.assistant.error.network'),
+    'EMPTY_AI_RESPONSE': t('ai.assistant.error.empty.ai.response'),
+  }
+
+  return errorMap[errorCode] || errorCode
 }
 
 // Accept terms
@@ -224,6 +377,13 @@ const declineTerms = () => {
 watch(messages, () => {
   nextTick(() => scrollToBottom())
 }, { deep: true })
+
+// Auto-scroll when any button loading state changes to true
+watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
+  if (speedLoading || qaLoading) {
+    nextTick(() => scrollToBottom())
+  }
+})
 
 // Auto-trigger on mount
 onMounted(() => {
@@ -244,12 +404,6 @@ onMounted(() => {
   <div class="ai-panel">
     <!-- Header -->
     <div class="ai-panel-header">
-      <div class="panel-title">
-        <el-icon class="panel-title-icon">
-          <Promotion />
-        </el-icon>
-        <span>{{ t("ai.assistant.title") }}</span>
-      </div>
       <div class="panel-header-actions">
         <!-- Clear conversation -->
         <button class="header-btn" :title="t('ai.chat.clear')" :disabled="isLoading || messages.length === 0"
@@ -265,22 +419,6 @@ onMounted(() => {
           </el-icon>
         </button>
       </div>
-    </div>
-
-    <!-- Quick Action Buttons -->
-    <div class="quick-actions-bar">
-      <button class="action-btn" :disabled="isLoading || !canUseAI" @click="triggerSpeedRead">
-        <el-icon>
-          <Promotion />
-        </el-icon>
-        <span>{{ t("ai.assistant.speedread") }}</span>
-      </button>
-      <button class="action-btn" :disabled="isLoading || !canUseAI" @click="handleGenerateQA">
-        <el-icon>
-          <QuestionFilled />
-        </el-icon>
-        <span>{{ t("ai.assistant.ask") }}</span>
-      </button>
     </div>
 
     <!-- Chat Message List -->
@@ -317,9 +455,31 @@ onMounted(() => {
       <el-icon class="error-icon">
         <DocumentChecked />
       </el-icon>
-      <span>{{ error }}</span>
+      <span>{{ getErrorMessage(error) }}</span>
       <button class="retry-btn" @click="handleSpeedRead">
         {{ t("ai.summary.retry") }}
+      </button>
+    </div>
+
+    <!-- Quick Action Buttons (above input) -->
+    <div class="quick-actions-bar">
+      <button class="action-btn" :disabled="speedReadLoading || qaLoading || !canUseAI" @click="triggerSpeedRead">
+        <el-icon v-if="speedReadLoading" class="is-loading">
+          <Loading />
+        </el-icon>
+        <el-icon v-else>
+          <Promotion />
+        </el-icon>
+        <span>{{ t("ai.assistant.speedread") }}</span>
+      </button>
+      <button class="action-btn" :disabled="speedReadLoading || qaLoading || !canUseAI" @click="triggerQA">
+        <el-icon v-if="qaLoading" class="is-loading">
+          <Loading />
+        </el-icon>
+        <el-icon v-else>
+          <QuestionFilled />
+        </el-icon>
+        <span>{{ t("ai.assistant.ask") }}</span>
       </button>
     </div>
 
@@ -333,79 +493,114 @@ onMounted(() => {
       </button>
     </div>
 
+    <!-- Model Selector (Custom Mode Only) -->
+    <div v-if="config.mode === 'custom'" class="model-selector">
+      <div class="model-selector-label">
+        <el-icon>
+          <DocumentChecked />
+        </el-icon>
+        <span>{{ t("ai.assistant.config.model") }}</span>
+      </div>
+      <div v-if="isLoadingModels" class="model-loading">
+        <span class="loading-text">加载中...</span>
+      </div>
+      <div v-else-if="modelsError" class="model-error">
+        <span class="error-text">{{ modelsError }}</span>
+      </div>
+      <div v-else-if="availableModels.length === 0" class="model-empty">
+        <span class="empty-text">未获取到模型，请检查API配置</span>
+      </div>
+      <el-select v-else v-model="config.model" class="model-select" placeholder="选择模型" size="small"
+        @change="saveConfig">
+        <el-option v-for="model in availableModels" :key="model.id" :label="model.name" :value="model.id" />
+      </el-select>
+    </div>
+
     <!-- Usage counter + Config -->
     <div class="panel-usage-bar">
       <div class="usage-left">
         <span class="usage-icon">💡</span>
-        <span v-if="isUsageLimited" :title="'内置模式使用系统资源，每日限 ' + dailyLimit + ' 次'" class="usage-text">
-          {{ canUse
-            ? t("ai.assistant.usage.remaining", { count: remainingCount }) + "（每日限次）"
-            : t("ai.assistant.usage.exhausted")
-          }}
+        <span v-if="isUsageLimited" :title="t('ai.assistant.usage.builtin.tooltip', { limit: dailyLimit })"
+          :class="['usage-text', !canUse && 'usage-text--exhausted']">
+          <template v-if="canUse">
+            {{ t("ai.assistant.usage.remaining", { count: remainingCount }) + t("ai.assistant.usage.limited") }}
+          </template>
+          <template v-else>
+            <span class="exhausted-main">{{ t("ai.assistant.usage.exhausted") }}</span>
+            <span class="exhausted-hint">{{ t("ai.assistant.usage.switch.hint") }}</span>
+          </template>
         </span>
-        <span v-else :title="'自定义模式使用您自己的 API Key，无次数限制'" class="usage-text unlimited">
-          自定义模式 · 无限制
+        <span v-else :title="t('ai.assistant.usage.custom.tooltip')" class="usage-text unlimited">
+          {{ t("ai.assistant.usage.custom.unlimited") }}
         </span>
       </div>
-      <button class="config-link" @click="showConfig = !showConfig">
+      <button ref="configBtnRef" :class="['config-link', !canUse && isUsageLimited && 'config-link--highlight']"
+        @click="showConfig = !showConfig">
         <el-icon>
           <Setting />
         </el-icon>
-        <span>配置</span>
+        <span>{{ t("ai.assistant.config") }}</span>
       </button>
     </div>
 
-    <!-- Config Panel (Bottom Sheet) -->
-    <div v-show="showConfig" class="config-bottom-sheet">
-      <div class="config-sheet-header">
-        <span class="sheet-title">AI 配置</span>
-        <button class="sheet-close" @click="showConfig = false">
-          <el-icon>
-            <Close />
-          </el-icon>
-        </button>
-      </div>
-      <div class="config-sheet-body">
-        <!-- 模式切换 -->
-        <div class="config-field">
-          <label>AI 模式</label>
-          <div class="mode-switch">
-            <button class="mode-btn" :class="{ active: config.mode === 'builtin' }"
-              @click="config.mode = 'builtin'; saveConfig()">
-              内置
-            </button>
-            <button class="mode-btn" :class="{ active: config.mode === 'custom' }"
-              @click="config.mode = 'custom'; saveConfig()">
-              自定义
-            </button>
-          </div>
-          <div class="mode-hint">
-            <template v-if="config.mode === 'builtin'">
-              使用系统 AI · 每日限 {{ dailyLimit }} 次
-            </template>
-            <template v-else>
-              使用您的 API Key · 无次数限制
-            </template>
+    <!-- Config Panel (Dropdown Popover) -->
+    <Teleport to="body">
+      <Transition name="fade">
+        <div v-if="showConfig" class="config-popover-overlay" @click.self="showConfig = false">
+          <div class="config-popover" :style="configPopoverStyle">
+            <div class="config-popover-header">
+              <span class="popover-title">{{ t("ai.assistant.config.title") }}</span>
+              <button class="popover-close" @click="showConfig = false">
+                <el-icon>
+                  <Close />
+                </el-icon>
+              </button>
+            </div>
+            <div class="config-popover-body">
+              <!-- 模式切换 -->
+              <div class="config-field">
+                <label>{{ t("ai.assistant.config.mode") }}</label>
+                <div class="mode-switch">
+                  <button class="mode-btn" :class="{ active: config.mode === 'builtin' }"
+                    @click="config.mode = 'builtin'; saveConfig()">
+                    {{ t("ai.assistant.config.mode.builtin") }}
+                  </button>
+                  <button class="mode-btn" :class="{ active: config.mode === 'custom' }"
+                    @click="config.mode = 'custom'; saveConfig()">
+                    {{ t("ai.assistant.config.mode.custom") }}
+                  </button>
+                </div>
+                <div class="mode-hint">
+                  <template v-if="config.mode === 'builtin'">
+                    {{ t("ai.assistant.config.mode.builtin.hint", { limit: dailyLimit }) }}
+                  </template>
+                  <template v-else>
+                    {{ t("ai.assistant.config.mode.custom.hint") }}
+                  </template>
+                </div>
+              </div>
+
+              <!-- 自定义配置 -->
+              <template v-if="config.mode === 'custom'">
+                <div class="config-field">
+                  <label>{{ t("ai.assistant.config.baseurl") }}</label>
+                  <input v-model="config.baseUrl" type="text" placeholder="https://api.openai.com" @blur="saveConfig">
+                </div>
+                <div class="config-field">
+                  <label>{{ t("ai.assistant.config.apikey") }} <span class="required">{{
+                    t("ai.assistant.config.required") }}</span></label>
+                  <input v-model="config.apiKey" type="password" placeholder="sk-..." @blur="saveConfig">
+                </div>
+                <div class="config-field">
+                  <label>{{ t("ai.assistant.config.model") }}</label>
+                  <input v-model="config.model" type="text" placeholder="gpt-3.5-turbo" @blur="saveConfig">
+                </div>
+              </template>
+            </div>
           </div>
         </div>
-
-        <!-- 自定义配置 -->
-        <template v-if="config.mode === 'custom'">
-          <div class="config-field">
-            <label>API Base URL</label>
-            <input v-model="config.baseUrl" type="text" placeholder="https://api.openai.com" @blur="saveConfig">
-          </div>
-          <div class="config-field">
-            <label>API Key <span class="required">*</span></label>
-            <input v-model="config.apiKey" type="password" placeholder="sk-..." @blur="saveConfig">
-          </div>
-          <div class="config-field">
-            <label>模型</label>
-            <input v-model="config.model" type="text" placeholder="gpt-3.5-turbo" @blur="saveConfig">
-          </div>
-        </template>
-      </div>
-    </div>
+      </Transition>
+    </Teleport>
 
     <!-- Terms Dialog -->
     <Teleport to="body">
@@ -421,10 +616,10 @@ onMounted(() => {
               </p>
             </div>
             <div class="terms-footer">
-              <button class="terms-btn terms-btn--cancel" @click="declineTerms">
+              <button class="terms-btn terms-btn--cancel" @click="handleTermsCancel">
                 {{ t("ai.assistant.terms.cancel") }}
               </button>
-              <button class="terms-btn terms-btn--confirm" @click="acceptTerms">
+              <button class="terms-btn terms-btn--confirm" @click="handleTermsConfirm">
                 {{ t("ai.assistant.terms.confirm") }}
               </button>
             </div>
@@ -443,27 +638,17 @@ onMounted(() => {
   flex-direction column
   font-family var(--b3-font-family, "Helvetica Neue", Arial, sans-serif)
   background var(--background, #fff)
+  overflow hidden
+  position relative
 
 /* ===== Header ===== */
 .ai-panel-header
   flex-shrink 0
   display flex
   align-items center
-  justify-content space-between
+  justify-content flex-end
   padding 10px 14px
   border-bottom 1px solid rgba(0, 0, 0, 0.04)
-
-.panel-title
-  display flex
-  align-items center
-  gap 6px
-  font-size 14px
-  font-weight 600
-  color var(--text-color-primary, #1f2329)
-
-.panel-title-icon
-  font-size 16px
-  color var(--el-color-primary, #409eff)
 
 .panel-header-actions
   display flex
@@ -575,30 +760,52 @@ onMounted(() => {
   font-weight 500
   color var(--text-color-primary, #1f2329)
   transition all 0.2s ease
+  white-space nowrap
+  min-width 0
+  overflow hidden
   &:hover:not(:disabled)
     border-color var(--el-color-primary, #409eff)
     color var(--el-color-primary, #409eff)
     background var(--el-color-primary-light-9, rgba(64, 158, 255, 0.1))
   &:disabled
-    opacity 0.5
+    opacity 0.6
     cursor not-allowed
+    background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
+  
+  .el-icon
+    width 16px
+    height 16px
+    display flex
+    align-items center
+    justify-content center
+    flex-shrink 0
+  
+  .is-loading
+    animation rotating 1s linear infinite
+    
+  @keyframes rotating
+    from
+      transform rotate(0deg)
+    to
+      transform rotate(360deg)
 
 /* ===== Chat List ===== */
 .chat-list
   flex 1
   overflow-y auto
+  overflow-x hidden
   padding 14px
   display flex
   flex-direction column
   gap 12px
   overscroll-behavior contain
+  scrollbar-width none
+  -ms-overflow-style none
   
   &::-webkit-scrollbar
-    width 4px
-  
-  &::-webkit-scrollbar-thumb
-    background rgba(0, 0, 0, 0.1)
-    border-radius 2px
+    display none
+    width 0
+    height 0
 
 /* ===== Chat Messages ===== */
 .chat-msg
@@ -632,6 +839,40 @@ onMounted(() => {
   
   &--loading
     padding 12px 16px
+  
+  /* Details/Summary 样式修复 */
+  :deep(details)
+    margin 8px 0
+    
+  :deep(summary)
+    cursor pointer
+    user-select none
+    color var(--el-color-primary, #409eff)
+    font-weight 500
+    display flex
+    align-items center
+    gap 6px
+    
+    /* 隐藏默认的三角形标记 */
+    list-style none
+    &::-webkit-details-marker
+      display none
+    
+    /* 自定义展开图标 */
+    &::before
+      content '▸'
+      font-size 12px
+      transition transform 0.2s ease
+    
+  :deep(details[open] summary::before)
+    content '▾'
+    
+  :deep(details p)
+    margin 8px 0 0 0
+    padding 8px 12px
+    background rgba(0, 0, 0, 0.03)
+    border-radius 6px
+    line-height 1.6
 
 .msg-time
   font-size 11px
@@ -747,7 +988,94 @@ onMounted(() => {
   
   &:disabled
     opacity 0.5
+
+/* ===== Model Selector ===== */
+.model-selector
+  flex-shrink 0
+  display flex
+  align-items center
+  gap 10px
+  padding 8px 14px
+  border-top 1px solid rgba(0, 0, 0, 0.04)
+  background rgba(0, 0, 0, 0.02)
+
+.model-selector-label
+  display flex
+  align-items center
+  gap 4px
+  font-size 12px
+  color var(--text-color-secondary, #606266)
+  flex-shrink 0
+
+.model-options
+  display flex
+  flex-wrap wrap
+  gap 6px
+  flex 1
+
+.model-option
+  padding 3px 10px
+  border 1px solid var(--el-border-color, rgba(0, 0, 0, 0.1))
+  border-radius 12px
+  background white
+  font-size 11px
+  color var(--text-color-regular, #606266)
+  cursor pointer
+  transition all 0.2s ease
+  white-space nowrap
+
+  &:hover
+    border-color var(--el-color-primary, #409eff)
+    color var(--el-color-primary, #409eff)
+
+  &.active
+    background var(--el-color-primary, #409eff)
+    border-color var(--el-color-primary, #409eff)
+    color white
     cursor not-allowed
+
+.model-loading
+  flex 1
+  display flex
+  align-items center
+  justify-content center
+
+  .loading-text
+    font-size 11px
+    color var(--text-color-secondary, #606266)
+
+.model-empty
+  flex 1
+  display flex
+  align-items center
+  justify-content center
+
+  .empty-text
+    font-size 11px
+    color var(--text-color-secondary, #606266)
+    font-style italic
+
+.model-error
+  flex 1
+  display flex
+  align-items center
+  justify-content center
+
+  .error-text
+    font-size 11px
+    color var(--el-color-danger, #f56c6c)
+
+// Element Plus Select 样式
+.model-select
+  flex 1
+  max-width 200px
+  
+  :deep(.el-input__wrapper)
+    background var(--background, #fff)
+    
+  :deep(.el-input__inner)
+    font-size 12px
+    color var(--text-color-primary, #1f2329)
 
 /* ===== Usage Bar ===== */
 .panel-usage-bar
@@ -771,9 +1099,22 @@ onMounted(() => {
 
 .usage-text
   flex 1
+  display flex
+  flex-direction column
+  gap 2px
   
   &.unlimited
     color var(--el-color-success, #67c23a)
+  
+  &--exhausted
+    .exhausted-main
+      color var(--el-color-danger, #f56c6c)
+      font-weight 600
+      font-size 13px
+    
+    .exhausted-hint
+      color var(--el-color-danger-light-3, #f89898)
+      font-size 11px
 
 .config-link
   display flex
@@ -792,30 +1133,58 @@ onMounted(() => {
     color var(--el-color-primary, #409eff)
     background rgba(64, 158, 255, 0.1)
   
+  &--highlight
+    color var(--el-color-danger, #f56c6c)
+    background var(--el-color-danger-light-9, rgba(245, 108, 108, 0.1))
+    font-weight 500
+    animation pulse 2s infinite
+    
+    &:hover
+      color var(--el-color-danger, #f56c6c)
+      background var(--el-color-danger-light-8, rgba(245, 108, 108, 0.2))
+  
+  @keyframes pulse
+    0%, 100%
+      opacity 1
+    50%
+      opacity 0.7
+  
   .el-icon
     font-size 14px
 
-/* ===== Config Bottom Sheet ===== */
-.config-bottom-sheet
-  flex-shrink 0
-  border-top 1px solid rgba(0, 0, 0, 0.08)
-  background var(--background, #fff)
-  max-height 300px
-  overflow-y auto
+/* ===== Config Popover ===== */
+.config-popover-overlay
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+  z-index 9998
 
-.config-sheet-header
+.config-popover
+  position fixed
+  width 280px
+  max-height calc(100vh - 200px)
+  overflow-y auto
+  background var(--background, #fff)
+  border-radius 8px
+  box-shadow 0 4px 20px rgba(0, 0, 0, 0.15)
+  border 1px solid rgba(0, 0, 0, 0.08)
+  z-index 9999
+
+.config-popover-header
   display flex
   align-items center
   justify-content space-between
-  padding 10px 14px
-  border-bottom 1px solid rgba(0, 0, 0, 0.04)
+  padding 12px 16px
+  border-bottom 1px solid rgba(0, 0, 0, 0.06)
 
-.sheet-title
-  font-size 13px
+.popover-title
+  font-size 14px
   font-weight 600
   color var(--text-color-primary, #1f2329)
 
-.sheet-close
+.popover-close
   width 24px
   height 24px
   display flex
@@ -831,11 +1200,11 @@ onMounted(() => {
     color var(--text-color-primary, #1f2329)
     background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
 
-.config-sheet-body
-  padding 12px 14px
+.config-popover-body
+  padding 16px
   display flex
   flex-direction column
-  gap 12px
+  gap 16px
 
 /* ===== Terms Dialog ===== */
 .terms-overlay

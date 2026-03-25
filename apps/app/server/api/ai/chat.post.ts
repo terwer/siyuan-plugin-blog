@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
     const body = await readBody(event)
 
-    const { mode, messages, customConfig } = body
+    const { mode, messages, customConfig, stream = false } = body
 
     // 验证必填参数
     if (!messages || !Array.isArray(messages)) {
@@ -56,8 +56,21 @@ export default defineEventHandler(async (event) => {
         }
     }
 
+    // 规范化 baseUrl，确保兼容带/不带 /v1 的情况
+    const normalizeBaseUrl = (url: string): string => {
+        // 移除末尾的斜杠
+        let normalized = url.replace(/\/$/, '')
+        // 如果已经包含 /v1，不再添加
+        if (!normalized.endsWith('/v1')) {
+            normalized += '/v1'
+        }
+        return normalized
+    }
+
+    const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
+
     try {
-        const response = await fetch(`${baseUrl}/v1/chat/completions`, {
+        const response = await fetch(`${normalizedBaseUrl}/chat/completions`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -68,6 +81,7 @@ export default defineEventHandler(async (event) => {
                 max_tokens: 2048,
                 temperature: 0.7,
                 messages,
+                stream,
             }),
         })
 
@@ -78,6 +92,34 @@ export default defineEventHandler(async (event) => {
             throw createError({
                 statusCode: response.status,
                 statusMessage: `AI API Error: ${response.status} ${errorText.slice(0, 100)}`
+            })
+        }
+
+        // 流式响应处理
+        if (stream && response.body) {
+            // 设置流式响应头
+            event.node.res.setHeader('Content-Type', 'text/event-stream')
+            event.node.res.setHeader('Cache-Control', 'no-cache')
+            event.node.res.setHeader('Connection', 'keep-alive')
+
+            const reader = response.body.getReader()
+            const encoder = new TextEncoder()
+
+            // 返回流
+            return new ReadableStream({
+                async pull(controller) {
+                    while (true) {
+                        const { done, value } = await reader.read()
+                        if (done) {
+                            controller.close()
+                            break
+                        }
+                        controller.enqueue(value)
+                    }
+                },
+                cancel() {
+                    reader.cancel()
+                }
             })
         }
 

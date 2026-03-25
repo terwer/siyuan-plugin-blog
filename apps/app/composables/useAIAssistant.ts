@@ -93,6 +93,7 @@ function preprocessHtmlContent(html: string): string {
  * 
  * @param messages - 消息数组
  * @param config - AI 配置
+ * @param onStream - 流式回调（可选）
  * @returns 成功返回内容和模式，失败返回错误信息
  * 
  * 模式区分：
@@ -101,9 +102,11 @@ function preprocessHtmlContent(html: string): string {
  */
 async function callAI(
   messages: any[],
-  config: AIAssistantConfig
+  config: AIAssistantConfig,
+  onStream?: (chunk: string) => void
 ): Promise<{ success: boolean; content?: string; error?: string; mode?: AIModelMode }> {
   const mode = config.mode || 'builtin'
+  const stream = !!onStream
 
   try {
     // 调用服务端 API（安全，不暴露 API key）
@@ -115,6 +118,7 @@ async function callAI(
       body: JSON.stringify({
         mode,
         messages,
+        stream,
         customConfig: mode === 'custom' ? {
           baseUrl: config.baseUrl,
           apiKey: config.apiKey,
@@ -127,17 +131,59 @@ async function callAI(
       const errorData = await response.json()
       return {
         success: false,
-        error: errorData.statusMessage || `API请求失败: ${response.status}`,
+        error: errorData.statusMessage || `API_ERROR_${response.status}`,
         mode
       }
     }
 
+    // 流式响应处理
+    if (stream && response.body) {
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let fullContent = ''
+
+      try {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+
+          const chunk = decoder.decode(value, { stream: true })
+          const lines = chunk.split('\n')
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6)
+              if (data === '[DONE]') continue
+
+              try {
+                const parsed = JSON.parse(data)
+                const delta = parsed.choices?.[0]?.delta?.content
+                if (delta) {
+                  fullContent += delta
+                  onStream?.(fullContent)
+                }
+              } catch {
+                // 忽略解析失败的行
+              }
+            }
+          }
+        }
+      } finally {
+        reader.releaseLock()
+      }
+
+      // Remove thinking chain (for models like qwen3)
+      const content = fullContent.replace(/<tool_call>[\s\S]*?<\/think>/gi, "").trim()
+      return { success: true, content, mode }
+    }
+
+    // 非流式响应处理
     const data = await response.json()
 
     if (!data.success || !data.data?.choices || data.data.choices.length === 0) {
       return {
         success: false,
-        error: 'AI返回空结果',
+        error: 'EMPTY_AI_RESPONSE',
         mode
       }
     }
@@ -150,7 +196,7 @@ async function callAI(
   } catch (e: any) {
     return {
       success: false,
-      error: e?.message ?? "网络请求失败",
+      error: e?.message ?? "NETWORK_ERROR",
       mode
     }
   }
@@ -319,7 +365,7 @@ export function useAIAssistant(
    */
   const sendSpeedRead = async (cfg: AIAssistantConfig = {}) => {
     if (!_html.value) {
-      error.value = "文档内容为空"
+      error.value = "EMPTY_CONTENT"
       return { success: false, mode: cfg.mode }
     }
 
@@ -335,14 +381,14 @@ export function useAIAssistant(
       const res = await callAI(aiMessages, cfg)
 
       if (!res.success || !res.content) {
-        error.value = res.error ?? "生成失败，请重试"
+        error.value = res.error ?? "GENERATE_FAILED"
         return { success: false, mode: res.mode }
       }
 
       const result = parseSummaryResponse(res.content)
 
       if (!result) {
-        error.value = "AI返回格式异常，请重试"
+        error.value = "INVALID_FORMAT"
         return { success: false, mode: res.mode }
       }
 
@@ -360,7 +406,7 @@ export function useAIAssistant(
       messages.value.push(assistantMessage)
       return { success: true, mode: res.mode }
     } catch (e: any) {
-      error.value = e?.message ?? "生成失败"
+      error.value = e?.message ?? "GENERATE_FAILED"
       return { success: false, mode: cfg.mode }
     } finally {
       isLoading.value = false
@@ -372,7 +418,7 @@ export function useAIAssistant(
    */
   const sendQA = async (cfg: AIAssistantConfig = {}) => {
     if (!_html.value) {
-      error.value = "文档内容为空"
+      error.value = "EMPTY_CONTENT"
       return { success: false, mode: cfg.mode }
     }
 
@@ -388,14 +434,14 @@ export function useAIAssistant(
       const res = await callAI(aiMessages, cfg)
 
       if (!res.success || !res.content) {
-        error.value = res.error ?? "生成失败，请重试"
+        error.value = res.error ?? "GENERATE_FAILED"
         return { success: false, mode: res.mode }
       }
 
       const result = parseQAResponse(res.content)
 
       if (!result) {
-        error.value = "AI返回格式异常，请重试"
+        error.value = "INVALID_FORMAT"
         return { success: false, mode: res.mode }
       }
 
@@ -413,7 +459,7 @@ export function useAIAssistant(
       messages.value.push(assistantMessage)
       return { success: true, mode: res.mode }
     } catch (e: any) {
-      error.value = e?.message ?? "生成失败"
+      error.value = e?.message ?? "GENERATE_FAILED"
       return { success: false, mode: cfg.mode }
     } finally {
       isLoading.value = false
@@ -421,16 +467,16 @@ export function useAIAssistant(
   }
 
   /**
-   * Send custom chat message
+   * Send custom chat message (with streaming support)
    */
   const sendMessage = async (userInput: string, cfg: AIAssistantConfig = {}) => {
     if (!userInput.trim()) {
-      error.value = "请输入消息"
+      error.value = "EMPTY_MESSAGE"
       return { success: false, mode: cfg.mode }
     }
 
     if (!_html.value) {
-      error.value = "文档内容为空"
+      error.value = "EMPTY_CONTENT"
       return { success: false, mode: cfg.mode }
     }
 
@@ -438,24 +484,7 @@ export function useAIAssistant(
     error.value = null
 
     try {
-      // Build conversation context
-      const aiMessages = [
-        { role: 'system', content: buildSystemPrompt(_title.value, processedContent.value) },
-        ...messages.value.map(msg => ({
-          role: msg.role,
-          content: msg.content
-        })),
-        { role: 'user', content: userInput.trim() }
-      ]
-
-      const res = await callAI(aiMessages, cfg)
-
-      if (!res.success || !res.content) {
-        error.value = res.error ?? "发送失败，请重试"
-        return { success: false, mode: res.mode }
-      }
-
-      // Add user message
+      // Add user message first
       const userMessage: ChatMessage = {
         id: generateMessageId(),
         role: 'user',
@@ -465,19 +494,50 @@ export function useAIAssistant(
       }
       messages.value.push(userMessage)
 
-      // Add assistant response
+      // Add placeholder assistant message for streaming
       const assistantMessage: ChatMessage = {
         id: generateMessageId(),
         role: 'assistant',
-        content: res.content,
+        content: '',
         timestamp: Date.now(),
         type: 'chat'
       }
       messages.value.push(assistantMessage)
 
+      // Build conversation context
+      const aiMessages = [
+        { role: 'system', content: buildSystemPrompt(_title.value, processedContent.value) },
+        ...messages.value.slice(0, -1).map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        { role: 'user', content: userInput.trim() }
+      ]
+
+      // Stream callback to update UI
+      const onStream = (chunk: string) => {
+        assistantMessage.content = chunk
+        // Trigger reactivity
+        messages.value = [...messages.value]
+      }
+
+      const res = await callAI(aiMessages, cfg, onStream)
+
+      if (!res.success) {
+        // Remove placeholder message on error
+        messages.value.pop()
+        messages.value.pop()
+        error.value = res.error ?? "SEND_FAILED"
+        return { success: false, mode: res.mode }
+      }
+
+      // Final update with cleaned content
+      assistantMessage.content = res.content ?? ''
+      messages.value = [...messages.value]
+
       return { success: true, mode: res.mode }
     } catch (e: any) {
-      error.value = e?.message ?? "发送失败"
+      error.value = e?.message ?? "SEND_FAILED"
       return { success: false, mode: cfg.mode }
     } finally {
       isLoading.value = false
