@@ -127,15 +127,26 @@ const toggleOutline = () => {
   showOutline.value = !showOutline.value
 }
 
+// 记录最近一次点击时间，防止 click 后 mouseenter 立即触发 hover 展开
+let lastClickTime = 0
+
 // hover 状态控制
 const onHover = (state:boolean) => {
   // 固定模式下不响应 hover
   if (isPinned.value) return
-  
+  // 点击后 300ms 内不响应 hover，防止 click 关闭后 mouseenter 立即重新展开
+  if (Date.now() - lastClickTime < 300) return
+
   if (!showOutline.value) {
     isHovered.value = state
     toggleOutline()
   }
+}
+
+// 带点击保护的切换
+const toggleOutlineWithProtection = () => {
+  lastClickTime = Date.now()
+  toggleOutline()
 }
 
 // 默认收起大纲
@@ -268,7 +279,7 @@ onUnmounted(() => {
           <!-- 关闭按钮 -->
           <div
               class="header-btn close-btn"
-              @click="toggleOutline"
+              @click="toggleOutlineWithProtection"
               title="关闭大纲"
           >
             <el-icon :size="14"><More /></el-icon>
@@ -307,7 +318,7 @@ onUnmounted(() => {
     <div
         v-if="!showOutline"
         class="toggle-btn-collapsed"
-        @click="toggleOutline"
+        @click="toggleOutlineWithProtection"
         @mouseenter="onHover(true)"
         title="展开大纲"
     >

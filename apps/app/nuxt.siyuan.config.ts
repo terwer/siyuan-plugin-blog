@@ -1,6 +1,6 @@
 import AutoImport from "unplugin-auto-import/vite"
-import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+import Components from "unplugin-vue-components/vite"
 
 const generateDynamicV = () => {
   const now = new Date()
@@ -75,7 +75,19 @@ export default defineNuxtConfig({
         "data-dark-theme": "Zhihu",
       },
       link: [
+        // 预连接到 CDN（减少 DNS + TLS 握手时间）
+        { rel: "preconnect", href: "https://at.alicdn.com" },
+        // { rel: "preconnect", href: "https://static-rs-terwer.oss-cn-beijing.aliyuncs.com" },
+        // 预加载关键字体文件
+        // {
+        //   rel: "preload",
+        //   as: "font",
+        //   href: appBase + "libs/fonts/fzbw/方正北魏楷书简体.woff2",
+        //   type: "font/woff2",
+        //   crossorigin: "anonymous",
+        // },
         { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        { rel: "stylesheet", href: appBase + "libs/fonts/lxgw_font.css?v=" + staticV },
         { rel: "stylesheet", href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV },
         {
           rel: "stylesheet",
