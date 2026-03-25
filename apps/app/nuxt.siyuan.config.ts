@@ -1,6 +1,6 @@
 import AutoImport from "unplugin-auto-import/vite"
-import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+import Components from "unplugin-vue-components/vite"
 
 const generateDynamicV = () => {
   const now = new Date()
@@ -75,7 +75,19 @@ export default defineNuxtConfig({
         "data-dark-theme": "Zhihu",
       },
       link: [
+        // 预连接到 CDN（减少 DNS + TLS 握手时间）
+        { rel: "preconnect", href: "https://at.alicdn.com" },
+        // { rel: "preconnect", href: "https://static-rs-terwer.oss-cn-beijing.aliyuncs.com" },
+        // 预加载关键字体文件
+        // {
+        //   rel: "preload",
+        //   as: "font",
+        //   href: appBase + "libs/fonts/fzbw/方正北魏楷书简体.woff2",
+        //   type: "font/woff2",
+        //   crossorigin: "anonymous",
+        // },
         { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
+        { rel: "stylesheet", href: appBase + "libs/fonts/lxgw_font.css?v=" + staticV },
         { rel: "stylesheet", href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV },
         {
           rel: "stylesheet",
@@ -90,36 +102,49 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
-            {
-              src: appBase + "libs/eruda/eruda.js",
-            },
-            {
-              children: "eruda.init();console.log('eruda inited');",
-            } as any,
-            {
-              defer: true,
-              src: appBase + "libs/katex/0.16.10/katex.min.js",
-            },
-            {
-              defer: true,
-              src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
-            },
-          ]
+          {
+            src: appBase + "libs/eruda/eruda.js",
+          },
+          {
+            children: "eruda.init();console.log('eruda inited');",
+          } as any,
+          {
+            defer: true,
+            src: appBase + "libs/katex/0.16.10/katex.min.js",
+          },
+          {
+            defer: true,
+            src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
+          },
+          {
+            defer: true,
+            src: appBase + "libs/lute/lute.min.js",
+          },
+        ]
         : [
-            {
-              defer: true,
-              src: appBase + "libs/katex/0.16.10/katex.min.js",
-            },
-            {
-              defer: true,
-              src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
-            },
-          ],
+          {
+            defer: true,
+            src: appBase + "libs/katex/0.16.10/katex.min.js",
+          },
+          {
+            defer: true,
+            src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
+          },
+          {
+            defer: true,
+            src: appBase + "libs/lute/lute.min.js",
+          },
+        ],
     },
   },
 
   // 环境变量
   runtimeConfig: {
+    // Private 配置（仅在服务端可用）
+    aiBaseUrl: process.env.NUXT_AI_BASE_URL ?? "https://api.openai.com",
+    aiApiKey: process.env.NUXT_AI_API_KEY ?? "",
+    aiModel: process.env.NUXT_AI_MODEL ?? "gpt-3.5-turbo",
+    // Public 配置（客户端可用）
     public: {
       defaultType: "siyuan",
       siyuanApiUrl: "",

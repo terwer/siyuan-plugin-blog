@@ -12,10 +12,10 @@ import { useColorMode } from "@vueuse/core"
 import { debounce } from "lodash-unified"
 
 const emit = defineEmits<{
-  toggleThemeMode:[key: "auto"|"light"|"dark"]
+  toggleThemeMode: [key: "auto" | "light" | "dark"]
 }>()
 
-const props = defineProps<{defaultMode?: "auto"|"light"|"dark"}>()
+const props = defineProps<{ defaultMode?: "auto" | "light" | "dark" }>()
 
 const formData = reactive({
   // 返回顶部
@@ -60,8 +60,8 @@ const scrollToTop = () => {
 
 const getScrollTop = () => {
   return window.scrollY ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop || 0
+    document.documentElement.scrollTop ||
+    document.body.scrollTop || 0
 }
 
 const scrollToComment = () => {
@@ -121,7 +121,7 @@ onMounted(() => {
   // 设置初始模式
   const initialMode = props.defaultMode ?? "auto"
   formData.currentMode = initialMode
-  
+
   // 如果初始是 auto，检测系统主题并刷新
   if (initialMode === "auto") {
     const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -131,7 +131,7 @@ onMounted(() => {
     window.location.reload()
     return
   }
-  
+
   // 监听系统主题变化
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
   mediaQuery.addEventListener("change", (e) => {
@@ -147,12 +147,8 @@ onMounted(() => {
   <div class="buttons">
     <client-only>
       <transition name="fade">
-        <div
-          v-show="showToTop"
-          title="返回顶部"
-          class="button blur go-to-top iconfont icon-fanhuidingbu"
-          @click="scrollToTop"
-        />
+        <div v-show="showToTop" title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu"
+          @click="scrollToTop" />
       </transition>
       <!--
       <div
@@ -162,28 +158,13 @@ onMounted(() => {
         @click="scrollToComment"
       />
       -->
-      <div
-        title="主题模式"
-        class="button blur theme-mode-but iconfont icon-zhuti"
-        @mouseenter="()=>{formData.showModeBox=true}"
-        @mouseleave="()=>{formData.showModeBox=false}"
-        @click="()=>{formData.showModeBox=true}"
-      >
+      <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"
+        @mouseenter="() => { formData.showModeBox = true }" @mouseleave="() => { formData.showModeBox = false }"
+        @click="() => { formData.showModeBox = true }">
         <transition name="mode">
-          <ul
-            v-show="formData.showModeBox"
-            ref="modeBox"
-            class="select-box"
-            @click.stop
-            @touchstart.stop
-          >
-            <li
-              v-for="item in formData.modeList"
-              :key="item.KEY"
-              class="iconfont"
-              :class="[item.icon, { active: item.KEY === formData.currentMode }]"
-              @click="toggleMode(item.KEY)"
-            >
+          <ul v-show="formData.showModeBox" ref="modeBox" class="select-box" @click.stop @touchstart.stop>
+            <li v-for="item in formData.modeList" :key="item.KEY" class="iconfont"
+              :class="[item.icon, { active: item.KEY === formData.currentMode }]" @click="toggleMode(item.KEY)">
               &nbsp;{{ item.name }}
             </li>
           </ul>
@@ -203,11 +184,11 @@ onMounted(() => {
 
 .buttons
   position fixed
-  right 2rem
+  left 2rem
   bottom 2.5rem
   z-index 11
   @media (max-width $MQNarrow)
-    right 1rem
+    left 1rem
     bottom 1.5rem
 
   .button
@@ -241,7 +222,7 @@ onMounted(() => {
       padding 0.8rem 0
       position absolute
       bottom 0rem
-      right 1.5rem
+      left 1.5rem
       background var(--mainBg)
       border 1px solid var(--borderColor)
       width 120px

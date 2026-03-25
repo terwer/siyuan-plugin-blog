@@ -56,6 +56,11 @@ interface AppConfig {
   outlineEnabled?: boolean
   outlineLevel?: number
 
+  // add by v5.6.0+ - 文档元信息栏（默认关闭，避免影响历史用户）
+  postMetaEnabled?: boolean
+  /** 在元信息栏中显示 AI 助手按钮（默认关闭） */
+  aiSummaryEnabled?: boolean
+
   customCss?: Array<{
     name: string
     content: string
