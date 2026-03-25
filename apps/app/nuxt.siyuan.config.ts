@@ -116,6 +116,10 @@ export default defineNuxtConfig({
             defer: true,
             src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
           },
+          {
+            defer: true,
+            src: appBase + "libs/lute/lute.min.js",
+          },
         ]
         : [
           {
@@ -125,6 +129,10 @@ export default defineNuxtConfig({
           {
             defer: true,
             src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
+          },
+          {
+            defer: true,
+            src: appBase + "libs/lute/lute.min.js",
           },
         ],
     },

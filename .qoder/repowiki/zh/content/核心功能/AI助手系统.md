@@ -5,9 +5,11 @@
 - [AIPanel.vue](file://apps/app/components/ai-assistant/AIPanel.vue)
 - [useAIAssistant.ts](file://apps/app/composables/useAIAssistant.ts)
 - [useAIUsage.ts](file://apps/app/composables/useAIUsage.ts)
+- [models.get.ts](file://apps/app/server/api/ai/models.get.ts)
 - [chat.post.ts](file://apps/app/server/api/ai/chat.post.ts)
 - [Constants.ts](file://apps/app/utils/Constants.ts)
 - [zh_CN.json](file://apps/app/i18n/locales/zh_CN.json)
+- [en_US.json](file://apps/app/i18n/locales/en_US.json)
 - [package.json](file://apps/app/package.json)
 - [plugin.json](file://apps/siyuan/plugin.json)
 - [index.vue](file://apps/app/pages/index.vue)
@@ -15,12 +17,12 @@
 
 ## 更新摘要
 **变更内容**
-- 重构AI助手系统架构，从分离的AI聊天、问答、摘要模块整合为统一的AI助手系统
-- 删除了useAIChat.ts、useAIQA.ts、useAISummary.ts等三个专门模块
-- 引入了新的useAIAssistant.ts统一组合式函数
-- 更新了AIPanel.vue聊天面板组件，实现统一的对话设计
-- API端点配置从多端点架构整合为单一AI聊天端点
-- 优化了消息格式化系统，支持统一的聊天气泡展示
+- 新增AI模型API端点，支持动态获取可用模型列表
+- 实现下拉弹出式配置面板，替代原有的折叠面板设计
+- 引入独立加载状态管理，为每个按钮提供精确的状态反馈
+- 增强动态模型选择功能，支持自定义模式下的实时模型切换
+- 完善错误消息本地化系统，提供多语言错误提示
+- 优化用户体验，实现更直观的配置和操作界面
 
 ## 目录
 1. [项目概述](#项目概述)
@@ -35,7 +37,7 @@
 
 ## 项目概述
 
-AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记系统设计。该系统经过重构后，提供了统一的AI交互体验，将速读、问答和自由聊天功能整合在一个对话面板中，实现了真正的"阅读助手"体验。
+AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记系统设计。经过重大架构升级后，系统提供了更加完善和用户友好的AI交互体验，实现了真正的"阅读助手"功能。
 
 ### 主要特性
 
@@ -45,6 +47,10 @@ AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记
 - **使用次数管理**：每日30次免费使用限制，支持localStorage持久化
 - **服务条款确认**：首次使用时的用户同意机制
 - **流式响应支持**：实时显示AI生成过程，提升用户体验
+- **动态模型选择**：自定义模式下可实时获取和选择AI模型
+- **下拉配置面板**：直观的弹出式配置界面，支持模式切换和参数设置
+- **独立加载状态**：每个操作都有精确的加载状态反馈
+- **错误消息本地化**：完整的多语言错误提示系统
 
 ## 项目结构
 
@@ -54,11 +60,14 @@ subgraph "应用层"
 UI[AI助手界面]
 Panel[AIPanel.vue]
 Composables[组合式函数]
+ConfigPanel[配置面板]
+ModelSelector[模型选择器]
 end
 subgraph "业务逻辑层"
 Assistant[useAIAssistant]
 Usage[useAIUsage]
 Utils[工具函数]
+ErrorManager[错误管理器]
 end
 subgraph "配置层"
 Constants[常量定义]
@@ -68,14 +77,20 @@ end
 subgraph "系统集成"
 Siyuan[Siyuan插件]
 Server[服务端API]
+ModelAPI[模型API端点]
+ChatAPI[聊天API端点]
 end
 UI --> Panel
 Panel --> Assistant
 Panel --> Usage
+Panel --> ConfigPanel
+Panel --> ModelSelector
 Assistant --> Utils
 Usage --> Constants
 Panel --> I18n
 Assistant --> Server
+Server --> ModelAPI
+Server --> ChatAPI
 Siyuan --> Panel
 ```
 
@@ -83,6 +98,7 @@ Siyuan --> Panel
 - [AIPanel.vue:1-687](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L687)
 - [useAIAssistant.ts:1-560](file://apps/app/composables/useAIAssistant.ts#L1-L560)
 - [useAIUsage.ts:1-115](file://apps/app/composables/useAIUsage.ts#L1-L115)
+- [models.get.ts:1-102](file://apps/app/server/api/ai/models.get.ts#L1-L102)
 
 **章节来源**
 - [AIPanel.vue:1-687](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L687)
@@ -93,16 +109,18 @@ Siyuan --> Panel
 
 ### AI助手面板组件
 
-AIPanel.vue是整个AI助手系统的核心UI组件，负责提供用户界面和交互逻辑。经过重构后，它现在集成了统一的对话设计和多种AI功能。
+AIPanel.vue是整个AI助手系统的核心UI组件，经过重大升级后，提供了更加完善的用户界面和交互逻辑。
 
 #### 主要功能模块
 
 1. **统一消息管理**：维护统一的消息列表，支持用户消息和AI响应
-2. **快速操作**：提供速读和问答两个快捷按钮
+2. **快速操作**：提供速读和问答两个快捷按钮，每个按钮都有独立的加载状态
 3. **输入处理**：支持键盘事件和自动滚动功能
 4. **使用计数**：显示剩余使用次数和状态
 5. **条款确认**：首次使用的用户同意机制
 6. **配置管理**：支持内置和自定义AI模型模式切换
+7. **下拉配置面板**：弹出式配置界面，支持模式切换和参数设置
+8. **动态模型选择**：自定义模式下可实时获取和选择AI模型
 
 #### 界面布局
 
@@ -111,8 +129,10 @@ flowchart TD
 Header[头部区域<br/>标题 + 操作按钮] --> QuickActions[快捷操作栏<br/>速读 + 提问]
 QuickActions --> ChatList[聊天列表<br/>消息气泡展示]
 ChatList --> InputArea[输入区域<br/>文本框 + 发送按钮]
-InputArea --> UsageBar[使用计数栏<br/>剩余次数显示]
-UsageBar --> TermsDialog[条款确认对话框<br/>首次使用弹窗]
+InputArea --> ModelSelector[模型选择器<br/>自定义模式专用]
+ModelSelector --> UsageBar[使用计数栏<br/>剩余次数显示]
+UsageBar --> ConfigPanel[配置面板<br/>下拉弹出式]
+ConfigPanel --> TermsDialog[条款确认对话框<br/>首次使用弹窗]
 ```
 
 **图表来源**
@@ -190,7 +210,7 @@ Block --> End
 
 ## 架构概览
 
-AI助手系统采用分层架构设计，经过重构后实现了前端UI、业务逻辑和数据持久化的完全统一。
+AI助手系统采用分层架构设计，经过重大升级后实现了前端UI、业务逻辑和数据持久化的完全统一。
 
 ### 系统架构图
 
@@ -199,30 +219,46 @@ graph TB
 subgraph "前端界面层"
 AIPanel[AIPanel.vue]
 UIComponents[Element Plus组件]
+ConfigPanel[下拉配置面板]
+ModelSelector[动态模型选择器]
+ErrorManager[错误消息管理器]
 end
 subgraph "业务逻辑层"
 useAIAssistant[useAIAssistant]
 useAIUsage[useAIUsage]
 preprocess[内容预处理]
 format[消息格式化]
+independentLoading[独立加载状态管理]
+termsManager[条款管理器]
 end
 subgraph "数据持久化层"
 localStorage[localStorage]
 usageData[使用计数数据]
 termsData[条款确认数据]
+configData[配置数据]
 end
 subgraph "外部服务层"
 serverAPI[服务端AI API]
+modelAPI[模型API端点]
+chatAPI[聊天API端点]
 thirdParty[第三方AI服务]
 end
 AIPanel --> useAIAssistant
 AIPanel --> useAIUsage
+AIPanel --> ConfigPanel
+AIPanel --> ModelSelector
+AIPanel --> ErrorManager
 useAIAssistant --> preprocess
 useAIAssistant --> format
+useAIAssistant --> independentLoading
+useAIAssistant --> termsManager
 useAIAssistant --> serverAPI
 useAIUsage --> localStorage
 localStorage --> usageData
 localStorage --> termsData
+localStorage --> configData
+serverAPI --> modelAPI
+serverAPI --> chatAPI
 serverAPI --> thirdParty
 ```
 
@@ -292,7 +328,7 @@ Truncate --> Output[预处理完成]
 
 ### AI API调用机制
 
-AI助手系统通过服务端代理机制调用AI服务，确保API密钥的安全性和请求的稳定性。经过重构后，API端点从多端点架构整合为单一AI聊天端点。
+AI助手系统通过服务端代理机制调用AI服务，确保API密钥的安全性和请求的稳定性。经过重大升级后，API端点从多端点架构整合为单一AI聊天端点，并新增了模型API端点。
 
 #### API调用流程
 
@@ -312,6 +348,22 @@ Proxy-->>Client : 返回标准化响应
 
 **图表来源**
 - [useAIAssistant.ts:102-157](file://apps/app/composables/useAIAssistant.ts#L102-L157)
+
+#### 新增模型API端点
+
+```mermaid
+sequenceDiagram
+participant Client as 客户端
+participant ModelAPI as 模型API端点
+participant ThirdParty as 第三方AI服务
+Client->>ModelAPI : GET /api/ai/models?mode=custom&baseUrl=&apiKey=
+ModelAPI->>ThirdParty : 请求模型列表
+ThirdParty-->>ModelAPI : 返回模型数据
+ModelAPI-->>Client : 返回可用模型列表
+```
+
+**图表来源**
+- [models.get.ts:1-102](file://apps/app/server/api/ai/models.get.ts#L1-L102)
 
 #### 配置模式
 
@@ -378,6 +430,8 @@ aiTitle[AI助手标题]
 aiSpeedRead[速读按钮]
 aiAsk[提问按钮]
 aiChat[聊天功能]
+errorMessages[错误消息]
+termsDialog[条款对话框]
 end
 subgraph "英文配置"
 enUS[en_US.json]
@@ -385,15 +439,21 @@ aiTitleEN[AI Assistant Title]
 aiSpeedReadEN[Speed Read Button]
 aiAskEN[Ask Question Button]
 aiChatEN[Chat Function]
+errorMessagesEN[Error Messages]
+termsDialogEN[Terms Dialog]
 end
 zhCN --> aiTitle
 zhCN --> aiSpeedRead
 zhCN --> aiAsk
 zhCN --> aiChat
+zhCN --> errorMessages
+zhCN --> termsDialog
 enUS --> aiTitleEN
 enUS --> aiSpeedReadEN
 enUS --> aiAskEN
 enUS --> aiChatEN
+enUS --> errorMessagesEN
+enUS --> termsDialogEN
 ```
 
 **图表来源**
@@ -401,6 +461,202 @@ enUS --> aiChatEN
 
 **章节来源**
 - [zh_CN.json:124-144](file://apps/app/i18n/locales/zh_CN.json#L124-L144)
+
+### 独立加载状态管理
+
+系统实现了独立的加载状态管理，为每个按钮和操作提供精确的状态反馈。
+
+#### 加载状态架构
+
+```mermaid
+classDiagram
+class LoadingStateManager {
++speedReadLoading : boolean
++qaLoading : boolean
++isLoading : boolean
++error : string
++updateSpeedReadLoading(status)
++updateQALoading(status)
++updateGlobalLoading(status)
++setError(message)
+}
+class ButtonComponent {
++handleSpeedRead()
++handleQA()
++handleSendMessage()
+}
+LoadingStateManager --> ButtonComponent : controls
+```
+
+**图表来源**
+- [AIPanel.vue:59-62](file://apps/app/components/ai-assistant/AIPanel.vue#L59-L62)
+
+#### 状态同步机制
+
+```mermaid
+sequenceDiagram
+participant User as 用户
+participant Panel as AIPanel
+participant LoadingState as 加载状态管理
+participant Assistant as useAIAssistant
+User->>Panel : 点击按钮
+Panel->>LoadingState : 更新按钮状态
+Panel->>Assistant : 执行操作
+Assistant-->>Panel : 返回结果
+Panel->>LoadingState : 恢复状态
+```
+
+**图表来源**
+- [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
+
+**章节来源**
+- [AIPanel.vue:59-62](file://apps/app/components/ai-assistant/AIPanel.vue#L59-L62)
+
+### 下拉弹出式配置面板
+
+系统引入了下拉弹出式配置面板，替代原有的折叠面板设计，提供更好的用户体验。
+
+#### 配置面板架构
+
+```mermaid
+classDiagram
+class ConfigPanel {
++showConfig : boolean
++config : AIAssistantConfig
++configPopoverStyle : object
++toggleMode()
++loadModels()
++selectModel(model)
++saveConfig()
+}
+class AIAssistantConfig {
++mode : "builtin"|"custom"
++baseUrl : string
++apiKey : string
++model : string
+}
+ConfigPanel --> AIAssistantConfig : manages
+```
+
+**图表来源**
+- [AIPanel.vue:68-135](file://apps/app/components/ai-assistant/AIPanel.vue#L68-L135)
+
+#### 配置面板功能
+
+```mermaid
+flowchart TD
+ConfigBtn[配置按钮] --> TogglePanel{切换面板显示}
+TogglePanel --> |显示| ShowPanel[显示下拉面板]
+TogglePanel --> |隐藏| HidePanel[隐藏面板]
+ShowPanel --> ModeSwitch[模式切换]
+ModeSwitch --> BuiltinMode[内置模式]
+ModeSwitch --> CustomMode[自定义模式]
+BuiltinMode --> NoConfig[无需配置]
+CustomMode --> ConfigFields[配置字段]
+ConfigFields --> BaseURL[Base URL]
+ConfigFields --> APIKey[API Key]
+ConfigFields --> ModelSelect[模型选择]
+```
+
+**图表来源**
+- [AIPanel.vue:552-609](file://apps/app/components/ai-assistant/AIPanel.vue#L552-L609)
+
+**章节来源**
+- [AIPanel.vue:68-135](file://apps/app/components/ai-assistant/AIPanel.vue#L68-L135)
+
+### 动态模型选择功能
+
+在自定义模式下，系统支持动态获取和选择AI模型，提供更灵活的配置选项。
+
+#### 模型选择流程
+
+```mermaid
+sequenceDiagram
+participant User as 用户
+participant Panel as AIPanel
+participant ModelAPI as 模型API
+participant ThirdParty as 第三方服务
+User->>Panel : 切换到自定义模式
+Panel->>ModelAPI : 请求模型列表
+ModelAPI->>ThirdParty : 转发请求
+ThirdParty-->>ModelAPI : 返回模型数据
+ModelAPI-->>Panel : 返回可用模型
+Panel->>User : 显示模型选择器
+User->>Panel : 选择模型
+Panel->>Panel : 保存配置
+```
+
+**图表来源**
+- [AIPanel.vue:142-178](file://apps/app/components/ai-assistant/AIPanel.vue#L142-L178)
+
+#### 模型API端点
+
+```mermaid
+flowchart TD
+Request[API请求] --> ValidateParams{验证参数}
+ValidateParams --> |自定义模式| CheckAPIKey{检查API Key}
+ValidateParams --> |内置模式| CheckBuiltin{检查内置配置}
+CheckAPIKey --> |缺失| ReturnError[返回错误]
+CheckAPIKey --> |存在| FetchModels[获取模型列表]
+CheckBuiltin --> |缺失| ReturnError
+CheckBuiltin --> |存在| FetchModels
+FetchModels --> CallThirdParty[调用第三方API]
+CallThirdParty --> ProcessResponse[处理响应]
+ProcessResponse --> ReturnSuccess[返回成功]
+ReturnError --> ReturnFailure[返回失败]
+```
+
+**图表来源**
+- [models.get.ts:9-99](file://apps/app/server/api/ai/models.get.ts#L9-L99)
+
+**章节来源**
+- [AIPanel.vue:142-178](file://apps/app/components/ai-assistant/AIPanel.vue#L142-L178)
+
+### 错误消息本地化
+
+系统实现了完整的错误消息本地化系统，提供多语言的错误提示。
+
+#### 错误消息映射
+
+```mermaid
+classDiagram
+class ErrorMessageManager {
++errorMap : object
++getErrorMessage(code) string
+}
+class ErrorCodes {
++EMPTY_CONTENT : string
++EMPTY_MESSAGE : string
++GENERATE_FAILED : string
++INVALID_FORMAT : string
++SEND_FAILED : string
++NETWORK_ERROR : string
++EMPTY_AI_RESPONSE : string
+}
+ErrorMessageManager --> ErrorCodes : uses
+```
+
+**图表来源**
+- [AIPanel.vue:351-366](file://apps/app/components/ai-assistant/AIPanel.vue#L351-L366)
+
+#### 错误处理流程
+
+```mermaid
+flowchart TD
+ErrorOccur[错误发生] --> GetErrorCode[获取错误代码]
+GetErrorCode --> CheckLocalize{检查本地化}
+CheckLocalize --> |有本地化| LocalizedMsg[获取本地化消息]
+CheckLocalize --> |无本地化| DefaultMsg[使用默认消息]
+LocalizedMsg --> DisplayError[显示错误]
+DefaultMsg --> DisplayError
+DisplayError --> ShowRetry[显示重试按钮]
+```
+
+**图表来源**
+- [AIPanel.vue:459-468](file://apps/app/components/ai-assistant/AIPanel.vue#L459-L468)
+
+**章节来源**
+- [AIPanel.vue:351-366](file://apps/app/components/ai-assistant/AIPanel.vue#L351-L366)
 
 ## 依赖关系分析
 
@@ -417,8 +673,6 @@ Vue[Vue 3.5.17]
 Nuxt[Nuxt 3.16.0]
 Pinia[Pinia 3.0.3]
 VueUse[@vueuse/core 13.5.0]
-end
-subgraph "UI组件"
 ElementPlus[Element Plus 2+]
 Icons[Element Plus Icons]
 end
@@ -520,6 +774,8 @@ Continue --> UserAction
 3. **超时控制**：设置合理的请求超时时间
 4. **状态管理**：实时更新加载状态和错误信息
 5. **流式响应**：支持实时流式响应，提升用户体验
+6. **模型缓存**：动态获取的模型列表进行本地缓存
+7. **配置持久化**：用户配置自动保存到localStorage
 
 ## 故障排除指南
 
@@ -554,6 +810,26 @@ Continue --> UserAction
 3. 验证内容预处理逻辑
 4. 查看AI模型的响应格式
 
+#### 模型选择问题
+
+**问题现象**：自定义模式下无法获取模型列表
+
+**排查步骤**：
+1. 检查API Key是否正确配置
+2. 验证Base URL格式
+3. 确认第三方AI服务可用性
+4. 查看模型API端点的响应
+
+#### 配置面板问题
+
+**问题现象**：配置面板无法显示或操作异常
+
+**处理方法**：
+1. 检查弹出式定位逻辑
+2. 验证配置数据的保存和加载
+3. 确认模式切换功能正常
+4. 查看控制台是否有JavaScript错误
+
 ### 调试工具
 
 ```mermaid
@@ -569,11 +845,15 @@ Error[错误调试]
 Performance[性能调试]
 DataFlow[数据流调试]
 UIState[UI状态调试]
+ConfigPanel[配置面板调试]
+ModelSelection[模型选择调试]
 end
 Console --> Error
 Network --> Performance
 Storage --> DataFlow
 Components --> UIState
+Components --> ConfigPanel
+Components --> ModelSelection
 ```
 
 **图表来源**
@@ -584,7 +864,7 @@ Components --> UIState
 
 ## 结论
 
-AI助手系统通过精心设计的架构和实现，为用户提供了强大而易用的智能阅读辅助功能。系统经过重构后的主要优势包括：
+AI助手系统通过重大架构升级，为用户提供了更加完善和易用的智能阅读辅助功能。系统经过重构后的主要优势包括：
 
 ### 核心优势
 
@@ -594,6 +874,10 @@ AI助手系统通过精心设计的架构和实现，为用户提供了强大而
 4. **灵活配置**：支持内置和自定义两种AI模型模式
 5. **持久化管理**：实现使用次数的智能管理和用户同意机制
 6. **流式响应**：实时显示AI生成过程，提升用户体验
+7. **动态模型选择**：自定义模式下可实时获取和选择AI模型
+8. **下拉配置面板**：直观的弹出式配置界面，提升用户体验
+9. **独立加载状态**：每个操作都有精确的状态反馈
+10. **错误消息本地化**：完整的多语言错误提示系统
 
 ### 技术亮点
 
@@ -602,6 +886,8 @@ AI助手系统通过精心设计的架构和实现，为用户提供了强大而
 - **组件化设计**：高度模块化的组件结构，便于维护和扩展
 - **性能优化**：多项性能优化策略，确保流畅的用户体验
 - **API整合**：从多端点架构整合为单一AI聊天端点
+- **动态配置**：支持运行时的配置更新和模型选择
+- **状态管理**：精确的加载状态和错误状态管理
 
 ### 发展方向
 
@@ -612,5 +898,7 @@ AI助手系统通过精心设计的架构和实现，为用户提供了强大而
 - 实现更丰富的消息类型和格式
 - 优化移动端的用户体验
 - 增加语音交互功能
+- 实现模型性能监控和优化
+- 添加AI助手使用统计和分析功能
 
-AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，是现代知识管理工具的重要补充。经过重构后的统一架构为未来的功能扩展奠定了坚实的基础。
+AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的下拉配置面板、动态模型选择和错误消息本地化等功能，显著提升了用户体验和系统的易用性。

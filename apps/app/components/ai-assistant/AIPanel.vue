@@ -21,6 +21,7 @@ import {
 } from "@element-plus/icons-vue"
 import { useAIAssistant, type AIAssistantConfig, type AIModelMode } from "~/composables/useAIAssistant"
 import { useAIUsage } from "~/composables/useAIUsage"
+import { useLute } from "~/composables/useLute"
 import { AI_SUMMARY_TERMS_KEY, AI_CUSTOM_CONFIG_KEY } from "~/utils/Constants"
 
 const props = defineProps<{
@@ -34,6 +35,9 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+
+// Lute Markdown 渲染器
+const { renderMarkdown } = useLute()
 
 // Unified AI Assistant
 const {
@@ -437,6 +441,8 @@ onMounted(() => {
           <!-- Rich HTML content for summary/QA -->
           <div v-if="msg.type === 'summary'" v-html="msg.content"></div>
           <div v-else-if="msg.type === 'qa'" v-html="msg.content"></div>
+          <!-- Chat messages: render Markdown for assistant, plain text for user -->
+          <div v-else-if="msg.role === 'assistant'" v-html="renderMarkdown(msg.content)"></div>
           <div v-else>{{ msg.content }}</div>
         </div>
         <div class="msg-time">{{ new Date(msg.timestamp).toLocaleTimeString() }}</div>
@@ -640,6 +646,10 @@ onMounted(() => {
   background var(--background, #fff)
   overflow hidden
   position relative
+  
+  // Dark mode
+  html[data-theme-mode="dark"] &
+    background var(--b3-theme-background, #1e1e1e)
 
 /* ===== Header ===== */
 .ai-panel-header
@@ -649,6 +659,9 @@ onMounted(() => {
   justify-content flex-end
   padding 10px 14px
   border-bottom 1px solid rgba(0, 0, 0, 0.04)
+  
+  html[data-theme-mode="dark"] &
+    border-bottom-color rgba(255, 255, 255, 0.08)
 
 .panel-header-actions
   display flex
@@ -675,6 +688,13 @@ onMounted(() => {
   &:disabled
     opacity 0.4
     cursor not-allowed
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.5)
+    
+    &:hover:not(:disabled)
+      background rgba(255, 255, 255, 0.08)
+      color rgba(255, 255, 255, 0.85)
 
 .header-btn--close
   font-size 16px
@@ -686,6 +706,9 @@ onMounted(() => {
   gap 8px
   padding 10px 14px
   border-bottom 1px solid rgba(0, 0, 0, 0.04)
+  
+  html[data-theme-mode="dark"] &
+    border-bottom-color rgba(255, 255, 255, 0.08)
 
 .config-field
   display flex
@@ -714,6 +737,18 @@ onMounted(() => {
     
     &::placeholder
       color var(--text-color-secondary, #8a8f99)
+  
+  html[data-theme-mode="dark"] &
+    label
+      color rgba(255, 255, 255, 0.5)
+    
+    input
+      background rgba(255, 255, 255, 0.05)
+      border-color rgba(255, 255, 255, 0.1)
+      color var(--b3-theme-on-background, #d1d5db)
+      
+      &::placeholder
+        color rgba(255, 255, 255, 0.35)
 
 // Mode switch
 .mode-switch
@@ -739,11 +774,28 @@ onMounted(() => {
     background var(--el-color-primary, #409eff)
     border-color var(--el-color-primary, #409eff)
     color white
+  
+  html[data-theme-mode="dark"] &
+    background rgba(255, 255, 255, 0.05)
+    border-color rgba(255, 255, 255, 0.1)
+    color rgba(255, 255, 255, 0.6)
+    
+    &:hover
+      border-color var(--el-color-primary, #409eff)
+      color var(--el-color-primary, #79bbff)
+    
+    &.active
+      background var(--el-color-primary, #409eff)
+      border-color var(--el-color-primary, #409eff)
+      color white
 
 .mode-hint
   font-size 11px
   color var(--text-color-secondary, #8a8f99)
   margin-top 4px
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.4)
 
 .action-btn
   flex 1
@@ -771,6 +823,20 @@ onMounted(() => {
     opacity 0.6
     cursor not-allowed
     background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
+  
+  html[data-theme-mode="dark"] &
+    background rgba(255, 255, 255, 0.05)
+    border-color rgba(255, 255, 255, 0.1)
+    color rgba(255, 255, 255, 0.7)
+    
+    &:hover:not(:disabled)
+      background rgba(255, 255, 255, 0.1)
+      border-color var(--el-color-primary, #409eff)
+      color var(--el-color-primary, #79bbff)
+    
+    &:disabled
+      background rgba(255, 255, 255, 0.03)
+      color rgba(255, 255, 255, 0.3)
   
   .el-icon
     width 16px
@@ -836,6 +902,10 @@ onMounted(() => {
   &--assistant
     background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
     color var(--text-color-primary, #1f2329)
+    
+    html[data-theme-mode="dark"] &
+      background rgba(255, 255, 255, 0.08)
+      color var(--b3-theme-on-background, #d1d5db)
   
   &--loading
     padding 12px 16px
@@ -873,11 +943,128 @@ onMounted(() => {
     background rgba(0, 0, 0, 0.03)
     border-radius 6px
     line-height 1.6
+  
+  html[data-theme-mode="dark"] &
+    :deep(details p)
+      background rgba(255, 255, 255, 0.05)
+      color var(--b3-theme-on-background, #d1d5db)
+  
+  /* Markdown 渲染内容样式 */
+  :deep(.markdown-content)
+    h1, h2, h3, h4, h5, h6
+      margin 12px 0 8px 0
+      font-weight 600
+      line-height 1.4
+      
+    h1
+      font-size 16px
+      
+    h2
+      font-size 15px
+      
+    h3, h4, h5, h6
+      font-size 14px
+    
+    p
+      margin 8px 0
+      line-height 1.6
+    
+    ul, ol
+      margin 8px 0
+      padding-left 20px
+      
+    li
+      margin 4px 0
+      line-height 1.5
+    
+    code
+      background rgba(0, 0, 0, 0.05)
+      padding 2px 6px
+      border-radius 4px
+      font-family monospace
+      font-size 12px
+    
+    pre
+      background rgba(0, 0, 0, 0.05)
+      padding 12px
+      border-radius 6px
+      overflow-x auto
+      margin 8px 0
+      
+      code
+        background none
+        padding 0
+    
+    blockquote
+      border-left 3px solid var(--el-color-primary, #409eff)
+      padding-left 12px
+      margin 8px 0
+      color var(--text-color-secondary, #606266)
+    
+    a
+      color var(--el-color-primary, #409eff)
+      text-decoration none
+      
+      &:hover
+        text-decoration underline
+    
+    table
+      width 100%
+      border-collapse collapse
+      margin 8px 0
+      
+    th, td
+      border 1px solid var(--el-border-color, #dcdfe6)
+      padding 8px 12px
+      text-align left
+      
+    th
+      background rgba(0, 0, 0, 0.03)
+      font-weight 600
+    
+    hr
+      border none
+      border-top 1px solid var(--el-border-color, #dcdfe6)
+      margin 16px 0
+  
+  html[data-theme-mode="dark"] &
+    :deep(.markdown-content)
+      code
+        background rgba(255, 255, 255, 0.1)
+        color var(--b3-theme-on-background, #d1d5db)
+      
+      pre
+        background rgba(255, 255, 255, 0.08)
+        
+        code
+          color var(--b3-theme-on-background, #d1d5db)
+      
+      blockquote
+        border-left-color var(--el-color-primary, #409eff)
+        color rgba(255, 255, 255, 0.6)
+      
+      a
+        color var(--el-color-primary, #79bbff)
+        
+        &:hover
+          color var(--el-color-primary-light-3, #a0cfff)
+      
+      th, td
+        border-color rgba(255, 255, 255, 0.15)
+      
+      th
+        background rgba(255, 255, 255, 0.08)
+      
+      hr
+        border-top-color rgba(255, 255, 255, 0.15)
 
 .msg-time
   font-size 11px
   color var(--text-color-secondary, #8a8f99)
   padding 0 4px
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.4)
 
 /* ===== Loading Dots ===== */
 .loading-dots
@@ -929,6 +1116,10 @@ onMounted(() => {
   font-size 13px
   color var(--text-color-primary, #1f2329)
   
+  html[data-theme-mode="dark"] &
+    background rgba(230, 162, 60, 0.15)
+    color var(--b3-theme-on-background, #d1d5db)
+  
   .error-icon
     font-size 16px
     color var(--el-color-warning, #e6a23c)
@@ -954,6 +1145,9 @@ onMounted(() => {
   gap 8px
   padding 12px 14px
   border-top 1px solid rgba(0, 0, 0, 0.04)
+  
+  html[data-theme-mode="dark"] &
+    border-top-color rgba(255, 255, 255, 0.08)
 
 .chat-textarea
   flex 1
@@ -970,6 +1164,14 @@ onMounted(() => {
   &:focus
     outline none
     border-color var(--el-color-primary, #409eff)
+  
+  html[data-theme-mode="dark"] &
+    background rgba(255, 255, 255, 0.05)
+    border-color rgba(255, 255, 255, 0.1)
+    color var(--b3-theme-on-background, #d1d5db)
+    
+    &::placeholder
+      color rgba(255, 255, 255, 0.35)
 
 .chat-send-btn
   flex-shrink 0
@@ -998,6 +1200,10 @@ onMounted(() => {
   padding 8px 14px
   border-top 1px solid rgba(0, 0, 0, 0.04)
   background rgba(0, 0, 0, 0.02)
+  
+  html[data-theme-mode="dark"] &
+    background rgba(255, 255, 255, 0.03)
+    border-top-color rgba(255, 255, 255, 0.08)
 
 .model-selector-label
   display flex
@@ -1006,6 +1212,9 @@ onMounted(() => {
   font-size 12px
   color var(--text-color-secondary, #606266)
   flex-shrink 0
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.5)
 
 .model-options
   display flex
@@ -1076,6 +1285,17 @@ onMounted(() => {
   :deep(.el-input__inner)
     font-size 12px
     color var(--text-color-primary, #1f2329)
+  
+  html[data-theme-mode="dark"] &
+    :deep(.el-input__wrapper)
+      background rgba(255, 255, 255, 0.05)
+      box-shadow 0 0 0 1px rgba(255, 255, 255, 0.1) inset
+    
+    :deep(.el-input__inner)
+      color var(--b3-theme-on-background, #d1d5db)
+    
+    :deep(.el-input__inner::placeholder)
+      color rgba(255, 255, 255, 0.35)
 
 /* ===== Usage Bar ===== */
 .panel-usage-bar
@@ -1088,6 +1308,10 @@ onMounted(() => {
   font-size 12px
   color var(--text-color-secondary, #8a8f99)
   background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
+  
+  html[data-theme-mode="dark"] &
+    background rgba(255, 255, 255, 0.05)
+    border-top-color rgba(255, 255, 255, 0.08)
 
 .usage-left
   display flex
@@ -1115,6 +1339,9 @@ onMounted(() => {
     .exhausted-hint
       color var(--el-color-danger-light-3, #f89898)
       font-size 11px
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.5)
 
 .config-link
   display flex
@@ -1151,6 +1378,13 @@ onMounted(() => {
   
   .el-icon
     font-size 14px
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.5)
+    
+    &:hover
+      color var(--el-color-primary, #79bbff)
+      background rgba(64, 158, 255, 0.15)
 
 /* ===== Config Popover ===== */
 .config-popover-overlay
@@ -1171,6 +1405,11 @@ onMounted(() => {
   box-shadow 0 4px 20px rgba(0, 0, 0, 0.15)
   border 1px solid rgba(0, 0, 0, 0.08)
   z-index 9999
+  
+  html[data-theme-mode="dark"] &
+    background var(--b3-theme-background, #1e1e1e)
+    border-color rgba(255, 255, 255, 0.1)
+    box-shadow 0 4px 20px rgba(0, 0, 0, 0.4)
 
 .config-popover-header
   display flex
@@ -1178,11 +1417,17 @@ onMounted(() => {
   justify-content space-between
   padding 12px 16px
   border-bottom 1px solid rgba(0, 0, 0, 0.06)
+  
+  html[data-theme-mode="dark"] &
+    border-bottom-color rgba(255, 255, 255, 0.08)
 
 .popover-title
   font-size 14px
   font-weight 600
   color var(--text-color-primary, #1f2329)
+  
+  html[data-theme-mode="dark"] &
+    color var(--b3-theme-on-background, #d1d5db)
 
 .popover-close
   width 24px
@@ -1199,6 +1444,13 @@ onMounted(() => {
   &:hover
     color var(--text-color-primary, #1f2329)
     background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
+  
+  html[data-theme-mode="dark"] &
+    color rgba(255, 255, 255, 0.5)
+    
+    &:hover
+      color rgba(255, 255, 255, 0.85)
+      background rgba(255, 255, 255, 0.08)
 
 .config-popover-body
   padding 16px
@@ -1228,6 +1480,9 @@ onMounted(() => {
   display flex
   flex-direction column
   max-height 80vh
+  
+  html[data-theme-mode="dark"] &
+    background var(--b3-theme-background, #1e1e1e)
 
 .terms-header
   padding 16px 20px
@@ -1237,6 +1492,12 @@ onMounted(() => {
     font-size 16px
     font-weight 600
     color var(--text-color-primary, #1f2329)
+  
+  html[data-theme-mode="dark"] &
+    border-bottom-color rgba(255, 255, 255, 0.08)
+    
+    .terms-title
+      color var(--b3-theme-on-background, #d1d5db)
 
 .terms-body
   padding 20px
@@ -1251,6 +1512,10 @@ onMounted(() => {
     
     &:last-child
       margin-bottom 0
+  
+  html[data-theme-mode="dark"] &
+    .terms-paragraph
+      color rgba(255, 255, 255, 0.6)
 
 .terms-footer
   display flex
@@ -1258,6 +1523,9 @@ onMounted(() => {
   gap 8px
   padding 12px 20px
   border-top 1px solid rgba(0, 0, 0, 0.06)
+  
+  html[data-theme-mode="dark"] &
+    border-top-color rgba(255, 255, 255, 0.08)
 
 .terms-btn
   padding 8px 16px
@@ -1282,6 +1550,14 @@ onMounted(() => {
     
     &:hover
       background var(--el-color-primary-light-3, #66b1ff)
+  
+  html[data-theme-mode="dark"] &
+    &--cancel
+      border-color rgba(255, 255, 255, 0.15)
+      color rgba(255, 255, 255, 0.7)
+      
+      &:hover
+        background rgba(255, 255, 255, 0.08)
 
 /* ===== Fade Transition ===== */
 .fade-enter-active,

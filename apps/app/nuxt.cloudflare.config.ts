@@ -80,11 +80,19 @@ export default defineNuxtConfig({
             defer: true,
             src: appBase + "libs/katex/0.16.10/katex.min.js",
           },
+          {
+            defer: true,
+            src: appBase + "libs/lute/lute.min.js",
+          },
         ]
         : [
           {
             defer: true,
             src: appBase + "libs/katex/0.16.10/katex.min.js",
+          },
+          {
+            defer: true,
+            src: appBase + "libs/lute/lute.min.js",
           },
         ],
     },
