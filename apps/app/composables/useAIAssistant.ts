@@ -42,17 +42,8 @@ export interface ChatMessage {
   type?: "summary" | "qa" | "chat" // 消息类型标记
 }
 
-export interface AISummaryResult {
-  summary: string
-  keyPoints: string[]
-  thinkingQuestion: string
-  thinkingAnswer: string
-}
-
-export interface QAItem {
-  question: string
-  answer: string
-}
+// Note: AISummaryResult and QAItem interfaces removed
+// Now using raw Markdown output
 
 // ==================== Content Preprocessing ====================
 
@@ -204,137 +195,47 @@ async function callAI(
 
 // ==================== Prompt Builders ====================
 
-function buildSystemPrompt(title: string, content: string): string {
-  return `你是一个专业的阅读助手。以下是用户正在阅读的文档内容，请根据文档回答用户的问题。
+function buildSpeedReadSystemPrompt(): string {
+  return `你是一位高效的文档分析师，擅长快速提取文档精华。
 
-文档标题：${title}
+## 你的风格
+- 简洁直接，不废话
+- 结构化输出，层次分明
+- 抓重点，舍细节
 
-文档内容：
-${content}
-
-请注意：
-1. 优先基于文档内容回答问题
-2. 如果问题超出文档范围，可以结合你的知识给出建议，但要说明这不是来自文档
-3. 回答要简洁清晰，使用中文回复`
+## 输出格式
+使用 Markdown，包含：
+- ## 核心摘要（2-3句话）
+- ## 关键要点（3-5条）
+- ## 延伸思考（1个问题+答案）`
 }
 
 function buildSpeedReadPrompt(content: string, title: string): string {
-  return `你是一个专业的阅读助手。请帮助读者快速理解以下文档内容。
-
-请以 JSON 格式返回，包含以下四个字段：
-1. "summary"：2-3 句话的核心摘要，概括文档最重要的内容
-2. "keyPoints"：3-5 个关键要点，每条简洁清晰（不超过 30 字）
-3. "thinkingQuestion"：1 个延伸思考问题，引导读者深度理解（不是考试题）
-4. "thinkingAnswer"：针对上面问题的参考答案（100-200 字，结合文档内容给出有见地的回答）
-
-格式示例：
-{
-  "summary": "本文介绍了...",
-  "keyPoints": ["要点一", "要点二", "要点三"],
-  "thinkingQuestion": "如果你要在实际工作中应用这些知识，你会...",
-  "thinkingAnswer": "结合文档中提到的...，在实际应用中可以..."
-}
-
-文档标题：${title}
+  return `文档标题：${title}
 
 文档内容：
-${content}
+${content}`
+}
 
-请直接返回 JSON，不要有其他说明文字。`
+function buildQASystemPrompt(): string {
+  return `你是一位启发式教学专家，擅长通过问答引导读者深入理解文档。
+
+## 你的风格
+- 由浅入深，循序渐进
+- 问题有启发性，不是简单的"找原文"
+- 答案简洁准确，2-3句话
+
+## 输出格式
+使用 Markdown，5个问答：
+- ## Q1/Q2: 基础理解题
+- ## Q3/Q4/Q5: 进阶思考题`
 }
 
 function buildQAPrompt(content: string, title: string): string {
-  return `你是一个文档阅读助手。请根据以下文档内容，生成 5 个有价值的问答对，帮助读者检验对文档的理解。
-
-要求：
-1. 问题应覆盖文档的核心概念和关键细节
-2. 问题由浅入深，前 2 个基础，后 3 个进阶
-3. 答案简洁准确，2-3 句话即可
-4. 使用中文
-
-格式示例：
-{
-  "qaList": [
-    { "question": "这篇文档主要讨论了什么主题？", "answer": "本文主要讨论了..." },
-    { "question": "文中提到的核心概念是什么？", "answer": "核心概念包括..." }
-  ]
-}
-
-文档标题：${title}
+  return `文档标题：${title}
 
 文档内容：
-${content}
-
-请以 JSON 格式返回：{"qaList": [{"question": "...", "answer": "..."}]}`
-}
-
-// ==================== Response Parsers ====================
-
-function parseSummaryResponse(text: string): AISummaryResult | null {
-  const cleanText = text.replace(/<tool_call>[\s\S]*?<\/think>/gi, "").trim()
-
-  const jsonMatch =
-    cleanText.match(/```(?:json)?\s*([\s\S]*?)```/) ||
-    cleanText.match(/(\{[\s\S]*\})/)
-  const jsonStr = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : cleanText
-
-  try {
-    const parsed = JSON.parse(jsonStr)
-    const summary = typeof parsed.summary === "string" ? parsed.summary.trim() : ""
-    const keyPoints = Array.isArray(parsed.keyPoints)
-      ? parsed.keyPoints.filter((s: any) => typeof s === "string" && s.trim()).map((s: string) => s.trim())
-      : []
-    const thinkingQuestion = typeof parsed.thinkingQuestion === "string"
-      ? parsed.thinkingQuestion.trim()
-      : ""
-    const thinkingAnswer = typeof parsed.thinkingAnswer === "string"
-      ? parsed.thinkingAnswer.trim()
-      : ""
-
-    if (summary || keyPoints.length > 0) {
-      return { summary, keyPoints, thinkingQuestion, thinkingAnswer }
-    }
-  } catch {
-    // JSON parsing failed
-  }
-
-  return null
-}
-
-function parseQAResponse(text: string): QAItem[] | null {
-  const cleanText = text.replace(/<tool_call>[\s\S]*?<\/think>/gi, "").trim()
-
-  const jsonMatch =
-    cleanText.match(/```(?:json)?\s*([\s\S]*?)```/) ||
-    cleanText.match(/(\{[\s\S]*\})/)
-  const jsonStr = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : cleanText
-
-  try {
-    const parsed = JSON.parse(jsonStr)
-    const qaList = Array.isArray(parsed.qaList) ? parsed.qaList : []
-
-    const validItems = qaList
-      .filter(
-        (item: any) =>
-          item &&
-          typeof item.question === "string" &&
-          typeof item.answer === "string" &&
-          item.question.trim() &&
-          item.answer.trim()
-      )
-      .map((item: any) => ({
-        question: item.question.trim(),
-        answer: item.answer.trim(),
-      }))
-
-    if (validItems.length > 0) {
-      return validItems
-    }
-  } catch {
-    // JSON parsing failed
-  }
-
-  return null
+${content}`
 }
 
 // ==================== Composable ====================
@@ -374,36 +275,40 @@ export function useAIAssistant(
 
     try {
       const aiMessages = [
-        { role: 'system', content: buildSystemPrompt(_title.value, processedContent.value) },
+        { role: 'system', content: buildSpeedReadSystemPrompt() },
         { role: 'user', content: buildSpeedReadPrompt(processedContent.value, _title.value) }
       ]
 
-      const res = await callAI(aiMessages, cfg)
+      // Add placeholder assistant message for streaming
+      const assistantMessage: ChatMessage = {
+        id: generateMessageId(),
+        role: 'assistant',
+        content: '',
+        timestamp: Date.now(),
+        type: 'summary'
+      }
+      messages.value.push(assistantMessage)
+
+      // Stream callback to update UI
+      const onStream = (chunk: string) => {
+        assistantMessage.content = chunk
+        // Trigger reactivity
+        messages.value = [...messages.value]
+      }
+
+      const res = await callAI(aiMessages, cfg, onStream)
 
       if (!res.success || !res.content) {
+        // Remove placeholder message on error
+        messages.value.pop()
         error.value = res.error ?? "GENERATE_FAILED"
         return { success: false, mode: res.mode }
       }
 
-      const result = parseSummaryResponse(res.content)
+      // Content is already updated via streaming, just ensure final content is set
+      assistantMessage.content = res.content
+      messages.value = [...messages.value]
 
-      if (!result) {
-        error.value = "INVALID_FORMAT"
-        return { success: false, mode: res.mode }
-      }
-
-      // Format as rich chat bubble
-      const formattedResponse = formatSummaryAsMessage(result)
-
-      const assistantMessage: ChatMessage = {
-        id: generateMessageId(),
-        role: 'assistant',
-        content: formattedResponse,
-        timestamp: Date.now(),
-        type: 'summary'
-      }
-
-      messages.value.push(assistantMessage)
       return { success: true, mode: res.mode }
     } catch (e: any) {
       error.value = e?.message ?? "GENERATE_FAILED"
@@ -427,36 +332,40 @@ export function useAIAssistant(
 
     try {
       const aiMessages = [
-        { role: 'system', content: buildSystemPrompt(_title.value, processedContent.value) },
+        { role: 'system', content: buildQASystemPrompt() },
         { role: 'user', content: buildQAPrompt(processedContent.value, _title.value) }
       ]
 
-      const res = await callAI(aiMessages, cfg)
+      // Add placeholder assistant message for streaming
+      const assistantMessage: ChatMessage = {
+        id: generateMessageId(),
+        role: 'assistant',
+        content: '',
+        timestamp: Date.now(),
+        type: 'qa'
+      }
+      messages.value.push(assistantMessage)
+
+      // Stream callback to update UI
+      const onStream = (chunk: string) => {
+        assistantMessage.content = chunk
+        // Trigger reactivity
+        messages.value = [...messages.value]
+      }
+
+      const res = await callAI(aiMessages, cfg, onStream)
 
       if (!res.success || !res.content) {
+        // Remove placeholder message on error
+        messages.value.pop()
         error.value = res.error ?? "GENERATE_FAILED"
         return { success: false, mode: res.mode }
       }
 
-      const result = parseQAResponse(res.content)
+      // Content is already updated via streaming, just ensure final content is set
+      assistantMessage.content = res.content
+      messages.value = [...messages.value]
 
-      if (!result) {
-        error.value = "INVALID_FORMAT"
-        return { success: false, mode: res.mode }
-      }
-
-      // Format as rich chat bubble
-      const formattedResponse = formatQAAsMessage(result)
-
-      const assistantMessage: ChatMessage = {
-        id: generateMessageId(),
-        role: 'assistant',
-        content: formattedResponse,
-        timestamp: Date.now(),
-        type: 'qa'
-      }
-
-      messages.value.push(assistantMessage)
       return { success: true, mode: res.mode }
     } catch (e: any) {
       error.value = e?.message ?? "GENERATE_FAILED"
@@ -506,7 +415,19 @@ export function useAIAssistant(
 
       // Build conversation context
       const aiMessages = [
-        { role: 'system', content: buildSystemPrompt(_title.value, processedContent.value) },
+        {
+          role: 'system',
+          content: `你是一位友善的文档阅读助手，正在帮助用户理解文档内容。
+
+## 你的风格
+- 友好耐心，像朋友一样交流
+- 回答基于文档，但不局限于文档
+- 适当扩展，提供有价值的补充信息
+
+## 当前文档
+标题：${_title.value}
+内容：${processedContent.value.slice(0, 2000)}...`
+        },
         ...messages.value.slice(0, -1).map(msg => ({
           role: msg.role,
           content: msg.content
@@ -562,58 +483,5 @@ export function useAIAssistant(
 
 // ==================== Message Formatters ====================
 
-/**
- * Format summary result as rich HTML message
- */
-function formatSummaryAsMessage(result: AISummaryResult): string {
-  return `
-<div class="ai-summary-bubble">
-  <div class="summary-section">
-    <h4>📌 核心摘要</h4>
-    <p>${result.summary}</p>
-  </div>
-  
-  <div class="summary-section">
-    <h4>🔑 关键要点</h4>
-    <ul>
-      ${result.keyPoints.map(point => `<li>${point}</li>`).join('')}
-    </ul>
-  </div>
-  
-  ${result.thinkingQuestion ? `
-  <div class="summary-section">
-    <h4>💭 延伸思考</h4>
-    <p><strong>问题：</strong>${result.thinkingQuestion}</p>
-    ${result.thinkingAnswer ? `
-    <details class="thinking-answer">
-      <summary>点击查看答案</summary>
-      <p>${result.thinkingAnswer}</p>
-    </details>
-    ` : ''}
-  </div>
-  ` : ''}
-</div>
-  `.trim()
-}
-
-/**
- * Format QA result as rich HTML message
- */
-function formatQAAsMessage(qaList: QAItem[]): string {
-  return `
-<div class="ai-qa-bubble">
-  <h4>📚 文档问答</h4>
-  ${qaList.map((qa, idx) => `
-  <div class="qa-item">
-    <div class="qa-question">
-      <strong>Q${idx + 1}:</strong> ${qa.question}
-    </div>
-    <details class="qa-answer">
-      <summary>点击查看答案</summary>
-      <p>${qa.answer}</p>
-    </details>
-  </div>
-  `).join('')}
-</div>
-  `.trim()
-}
+// Note: formatSummaryAsMessage and formatQAAsMessage removed
+// Now using raw Markdown output with Lute rendering

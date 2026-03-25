@@ -56,9 +56,7 @@ const {
 // Usage management
 const { remainingCount, canUse, consume, dailyLimit } = useAIUsage()
 
-// Button loading states (independent for each button)
-const speedReadLoading = ref(false)
-const qaLoading = ref(false)
+// Note: Now using isLoading from useAIAssistant for all operations
 
 // Chat input
 const chatInput = ref("")
@@ -237,11 +235,10 @@ const handleTermsCancel = () => {
   pendingAIOperation = null
 }
 
-// Handle speed read action
+// Handle speed read action (with streaming)
 const handleSpeedRead = async () => {
-  if (!canUseAI.value || speedReadLoading.value) return
+  if (!canUseAI.value || isLoading.value) return
 
-  speedReadLoading.value = true
   const cfg: AIAssistantConfig = {
     mode: config.mode,
   }
@@ -249,15 +246,9 @@ const handleSpeedRead = async () => {
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
-  try {
-    const result = await sendSpeedRead(cfg)
-    if (result.success) {
-      if (isUsageLimited.value) consume()
-      await nextTick()
-      scrollToBottom()
-    }
-  } finally {
-    speedReadLoading.value = false
+  const result = await sendSpeedRead(cfg)
+  if (result.success) {
+    if (isUsageLimited.value) consume()
   }
 }
 
@@ -268,11 +259,10 @@ const triggerSpeedRead = () => {
   checkTermsBeforeAction(handleSpeedRead)
 }
 
-// Handle QA generation
+// Handle QA generation (with streaming)
 const handleGenerateQA = async () => {
-  if (!canUseAI.value || qaLoading.value) return
+  if (!canUseAI.value || isLoading.value) return
 
-  qaLoading.value = true
   const cfg: AIAssistantConfig = {
     mode: config.mode,
   }
@@ -280,15 +270,9 @@ const handleGenerateQA = async () => {
   if (config.apiKey?.trim()) cfg.apiKey = config.apiKey.trim()
   if (config.model?.trim()) cfg.model = config.model.trim()
 
-  try {
-    const result = await sendQA(cfg)
-    if (result.success) {
-      if (isUsageLimited.value) consume()
-      await nextTick()
-      scrollToBottom()
-    }
-  } finally {
-    qaLoading.value = false
+  const result = await sendQA(cfg)
+  if (result.success) {
+    if (isUsageLimited.value) consume()
   }
 }
 
@@ -382,9 +366,9 @@ watch(messages, () => {
   nextTick(() => scrollToBottom())
 }, { deep: true })
 
-// Auto-scroll when any button loading state changes to true
-watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
-  if (speedLoading || qaLoading) {
+// Auto-scroll when loading state changes (for streaming feedback)
+watch(isLoading, (loading) => {
+  if (loading) {
     nextTick(() => scrollToBottom())
   }
 })
@@ -438,11 +422,8 @@ onMounted(() => {
       <div v-for="msg in messages" :key="msg.id" class="chat-msg"
         :class="msg.role === 'user' ? 'chat-msg--user' : 'chat-msg--assistant'">
         <div class="chat-bubble">
-          <!-- Rich HTML content for summary/QA -->
-          <div v-if="msg.type === 'summary'" v-html="msg.content"></div>
-          <div v-else-if="msg.type === 'qa'" v-html="msg.content"></div>
-          <!-- Chat messages: render Markdown for assistant, plain text for user -->
-          <div v-else-if="msg.role === 'assistant'" v-html="renderMarkdown(msg.content)"></div>
+          <!-- All assistant messages (summary/qa/chat) render Markdown -->
+          <div v-if="msg.role === 'assistant'" v-html="renderMarkdown(msg.content)"></div>
           <div v-else>{{ msg.content }}</div>
         </div>
         <div class="msg-time">{{ new Date(msg.timestamp).toLocaleTimeString() }}</div>
@@ -469,8 +450,8 @@ onMounted(() => {
 
     <!-- Quick Action Buttons (above input) -->
     <div class="quick-actions-bar">
-      <button class="action-btn" :disabled="speedReadLoading || qaLoading || !canUseAI" @click="triggerSpeedRead">
-        <el-icon v-if="speedReadLoading" class="is-loading">
+      <button class="action-btn" :disabled="isLoading || !canUseAI" @click="triggerSpeedRead">
+        <el-icon v-if="isLoading" class="is-loading">
           <Loading />
         </el-icon>
         <el-icon v-else>
@@ -478,8 +459,8 @@ onMounted(() => {
         </el-icon>
         <span>{{ t("ai.assistant.speedread") }}</span>
       </button>
-      <button class="action-btn" :disabled="speedReadLoading || qaLoading || !canUseAI" @click="triggerQA">
-        <el-icon v-if="qaLoading" class="is-loading">
+      <button class="action-btn" :disabled="isLoading || !canUseAI" @click="triggerQA">
+        <el-icon v-if="isLoading" class="is-loading">
           <Loading />
         </el-icon>
         <el-icon v-else>

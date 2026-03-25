@@ -15,16 +15,19 @@
 - [plugin.json](file://apps/siyuan/plugin.json)
 - [index.vue](file://apps/app/pages/index.vue)
 - [nuxt.config.ts](file://apps/app/nuxt.config.ts)
+- [Index.vue](file://apps/app/components/static/content/right/Index.vue)
+- [Sidebar.vue](file://apps/app/components/static/content/left/Sidebar.vue)
+- [SidebarButton.vue](file://apps/app/components/static/content/left/SidebarButton.vue)
+- [PostMeta.vue](file://apps/app/components/static/content/PostMeta.vue)
 </cite>
 
 ## 更新摘要
 **变更内容**
-- 新增Lute Markdown渲染系统集成，支持高质量Markdown到HTML转换
-- 实现完整的动态模型选择功能，支持自定义模式下的实时模型切换
-- 大幅增强AIPanel组件，包含200多行CSS暗色主题样式和条件渲染逻辑
-- 完善暗色主题支持，实现完整的深色模式适配
-- 新增模型API端点，支持动态获取可用模型列表
-- 增强Markdown渲染功能，支持复杂的文档内容格式化
+- AI助手系统已从PostMeta组件迁移至侧边栏模块，采用全新的垂直按钮组设计
+- 新增统一的模块化管理架构，支持outline和ai两个功能模块
+- 实现垂直按钮组设计，提供统一的快速切换功能
+- 完善模块激活状态管理和按钮样式系统
+- 新增collapsed-buttons组件，支持固定定位和垂直排列
 
 ## 目录
 1. [项目概述](#项目概述)
@@ -55,6 +58,8 @@ AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记
 - **错误消息本地化**：完整的多语言错误提示系统
 - **Lute Markdown渲染**：高质量的Markdown到HTML转换系统
 - **完整暗色主题支持**：200多行CSS样式实现深色模式适配
+- **模块化管理**：统一的模块化架构，支持多个功能模块的扩展
+- **垂直按钮组**：全新的垂直按钮组设计，提供统一的快速切换功能
 
 ## 项目结构
 
@@ -63,6 +68,8 @@ graph TB
 subgraph "应用层"
 UI[AI助手界面]
 Panel[AIPanel.vue]
+Sidebar[侧边栏模块]
+CollapsedButtons[垂直按钮组]
 Composables[组合式函数]
 LuteRenderer[Lute渲染器]
 ConfigPanel[配置面板]
@@ -73,6 +80,7 @@ Assistant[useAIAssistant]
 Usage[useAIUsage]
 LuteHook[useLute]
 ErrorManager[错误管理器]
+ModuleManager[模块管理器]
 end
 subgraph "配置层"
 Constants[常量定义]
@@ -101,6 +109,8 @@ Assistant --> Server
 Server --> ModelAPI
 Server --> ChatAPI
 LuteRenderer --> LuteLib
+Sidebar --> CollapsedButtons
+Sidebar --> ModuleManager
 Siyuan --> Panel
 NuxtConfig --> LuteLib
 ```
@@ -111,6 +121,7 @@ NuxtConfig --> LuteLib
 - [useAIUsage.ts:1-115](file://apps/app/composables/useAIUsage.ts#L1-L115)
 - [useLute.ts:1-84](file://apps/app/composables/useLute.ts#L1-L84)
 - [models.get.ts:1-102](file://apps/app/server/api/ai/models.get.ts#L1-L102)
+- [Index.vue:18-35](file://apps/app/components/static/content/right/Index.vue#L18-L35)
 
 **章节来源**
 - [AIPanel.vue:1-687](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L687)
@@ -156,6 +167,109 @@ LuteRenderer[Lute渲染器<br/>Markdown到HTML转换] --> ChatList
 
 **章节来源**
 - [AIPanel.vue:11-180](file://apps/app/components/ai-assistant/AIPanel.vue#L11-L180)
+
+### 侧边栏模块系统
+
+系统现已集成到统一的侧边栏模块架构中，支持多个功能模块的动态管理。
+
+#### 模块化架构
+
+```mermaid
+classDiagram
+class SidebarModule {
++id : string
++name : string
++icon : string
++type : 'outline' | 'ai' | 'graph'
++visible : boolean
++order : number
+}
+class ModuleManager {
++modules : SidebarModule[]
++activeModuleId : string
++visibleModules : SidebarModule[]
++activateModule(id)
++getModuleButtonClass(module)
+}
+class CollapsedButtons {
++showSidebar : boolean
++collapsedButtons : HTMLElement
++handleClose()
++activateModule(id)
+}
+SidebarModule --> ModuleManager : managed by
+ModuleManager --> CollapsedButtons : controls
+```
+
+**图表来源**
+- [Index.vue:18-35](file://apps/app/components/static/content/right/Index.vue#L18-L35)
+- [Index.vue:37-38](file://apps/app/components/static/content/right/Index.vue#L37-L38)
+
+#### 模块配置
+
+| 模块ID | 类型 | 可见性 | 顺序 | 功能描述 |
+|--------|------|--------|------|----------|
+| outline | outline | true | 1 | 文档大纲功能 |
+| ai | ai | true | 2 | AI助手功能 |
+| graph | graph | false | 3 | 知识图谱功能（预留） |
+
+**章节来源**
+- [Index.vue:18-35](file://apps/app/components/static/content/right/Index.vue#L18-L35)
+
+### 垂直按钮组设计
+
+新的collapsed-buttons组件提供了统一的垂直按钮组界面，支持固定定位和垂直排列。
+
+#### 按钮组架构
+
+```mermaid
+classDiagram
+class CollapsedButtons {
++showSidebar : boolean
++collapsedButtons : HTMLElement
++handleClose()
++activateModule(id)
+}
+class CollapsedBtn {
++width : 32px
++height : 32px
++borderRadius : 8px
++backgroundColor : var(--background)
++boxShadow : 0 2px 8px rgba(0, 0, 0, 0.08)
++cursor : pointer
++transition : all 0.3s ease
+}
+class ActiveState {
++transform : scale(1.05)
++boxShadow : 0 2px 12px rgba(0, 0, 0, 0.15)
+}
+class HoverState {
++transform : translateY(-1px)
++boxShadow : 0 4px 12px rgba(0, 0, 0, 0.12)
+}
+CollapsedButtons --> CollapsedBtn : creates
+CollapsedBtn --> ActiveState : applies
+CollapsedBtn --> HoverState : applies
+```
+
+**图表来源**
+- [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
+
+#### 按钮样式系统
+
+| 状态 | 样式属性 | 值 | 效果 |
+|------|----------|----|------|
+| 默认 | width/height | 32px | 标准尺寸 |
+| 默认 | backgroundColor | var(--background) | 背景继承 |
+| 默认 | borderRadius | 8px | 圆角设计 |
+| 默认 | boxShadow | 0 2px 8px rgba(0, 0, 0, 0.08) | 阴影效果 |
+| 悬停 | transform | translateY(-1px) | 上移效果 |
+| 悬停 | boxShadow | 0 4px 12px rgba(0, 0, 0, 0.12) | 增强阴影 |
+| 激活 | transform | scale(1.05) | 放大效果 |
+| 激活 | boxShadow | 0 2px 12px rgba(0, 0, 0, 0.15) | 最强阴影 |
+
+**章节来源**
+- [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
 
 ### Lute Markdown渲染系统
 
@@ -256,7 +370,7 @@ Block --> End
 
 ## 架构概览
 
-AI助手系统采用分层架构设计，经过重大升级后实现了前端UI、业务逻辑、数据持久化和Lute渲染系统的完全统一。
+AI助手系统采用分层架构设计，经过重大升级后实现了前端UI、业务逻辑、数据持久化和Lute渲染系统的完全统一。系统现已集成到统一的侧边栏模块架构中。
 
 ### 系统架构图
 
@@ -270,6 +384,8 @@ ModelSelector[动态模型选择器]
 ErrorManager[错误消息管理器]
 LuteRenderer[Lute渲染器]
 DarkTheme[暗色主题系统]
+CollapsedButtons[垂直按钮组]
+ModuleManager[模块管理器]
 end
 subgraph "业务逻辑层"
 useAIAssistant[useAIAssistant]
@@ -312,6 +428,8 @@ localStorage --> configData
 serverAPI --> modelAPI
 serverAPI --> chatAPI
 serverAPI --> thirdParty
+CollapsedButtons --> ModuleManager
+ModuleManager --> AIPanel
 ```
 
 **图表来源**
@@ -319,6 +437,7 @@ serverAPI --> thirdParty
 - [useAIAssistant.ts:102-157](file://apps/app/composables/useAIAssistant.ts#L102-L157)
 - [useAIUsage.ts:50-58](file://apps/app/composables/useAIUsage.ts#L50-L58)
 - [useLute.ts:18-37](file://apps/app/composables/useLute.ts#L18-L37)
+- [Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
 
 ### 数据流分析
 
@@ -326,11 +445,15 @@ serverAPI --> thirdParty
 sequenceDiagram
 participant User as 用户
 participant Panel as AIPanel
+participant CollapsedButtons as 垂直按钮组
+participant ModuleManager as 模块管理器
 participant Lute as useLute
 participant Assistant as useAIAssistant
 participant Server as 服务端API
 participant Storage as localStorage
-User->>Panel : 触发AI功能
+User->>CollapsedButtons : 点击AI按钮
+CollapsedButtons->>ModuleManager : 激活AI模块
+ModuleManager->>Panel : 显示AI面板
 Panel->>Assistant : 调用相应方法
 Assistant->>Assistant : 预处理文档内容
 Assistant->>Server : 发送AI请求
@@ -346,6 +469,7 @@ Panel->>Storage : 更新使用计数
 - [AIPanel.vue:71-133](file://apps/app/components/ai-assistant/AIPanel.vue#L71-L133)
 - [useAIAssistant.ts:320-485](file://apps/app/composables/useAIAssistant.ts#L320-L485)
 - [useLute.ts:44-62](file://apps/app/composables/useLute.ts#L44-L62)
+- [Index.vue:407-412](file://apps/app/components/static/content/right/Index.vue#L407-L412)
 
 ## 详细组件分析
 
@@ -790,6 +914,118 @@ DarkThemeSystem --> CSSVariables : uses
 **章节来源**
 - [AIPanel.vue:650-1571](file://apps/app/components/ai-assistant/AIPanel.vue#L650-L1571)
 
+### 模块化管理架构
+
+系统现已实现统一的模块化管理架构，支持多个功能模块的动态扩展和管理。
+
+#### 模块管理器
+
+```mermaid
+classDiagram
+class ModuleManager {
++modules : SidebarModule[]
++activeModuleId : string
++visibleModules : SidebarModule[]
++activateModule(id)
++getModuleButtonClass(module)
++addModule(module)
++removeModule(id)
++toggleVisibility(id)
+}
+class SidebarModule {
++id : string
++name : string
++icon : string
++type : 'outline' | 'ai' | 'graph'
++visible : boolean
++order : number
+}
+class CollapsedButtons {
++collapsedButtons : HTMLElement
++handleClose()
++activateModule(id)
+}
+ModuleManager --> SidebarModule : manages
+ModuleManager --> CollapsedButtons : controls
+```
+
+**图表来源**
+- [Index.vue:18-35](file://apps/app/components/static/content/right/Index.vue#L18-L35)
+- [Index.vue:37-38](file://apps/app/components/static/content/right/Index.vue#L37-L38)
+
+#### 模块激活状态
+
+```mermaid
+sequenceDiagram
+participant User as 用户
+participant CollapsedButtons as 垂直按钮组
+participant ModuleManager as 模块管理器
+participant ActiveModule as 激活模块
+User->>CollapsedButtons : 点击模块按钮
+CollapsedButtons->>ModuleManager : activateModule(id)
+ModuleManager->>ModuleManager : 更新activeModuleId
+ModuleManager->>ActiveModule : 切换显示状态
+ActiveModule-->>User : 显示对应内容
+```
+
+**图表来源**
+- [Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
+
+**章节来源**
+- [Index.vue:18-35](file://apps/app/components/static/content/right/Index.vue#L18-L35)
+
+### 垂直按钮组样式系统
+
+新的collapsed-buttons组件提供了统一的垂直按钮组样式系统，支持固定定位和垂直排列。
+
+#### 按钮组定位
+
+```mermaid
+flowchart TD
+FixedPosition[固定定位] --> Top60px[top: 60px]
+FixedPosition --> Right16px[right: 16px]
+FixedPosition --> ZIndex101[z-index: 101]
+Top60px --> VerticalLayout[垂直排列]
+VerticalLayout --> Gap8px[gap: 8px]
+Right16px --> AlwaysVisible[始终可见]
+ZIndex101 --> Clickable[始终可点击]
+```
+
+**图表来源**
+- [Index.vue:682-686](file://apps/app/components/static/content/right/Index.vue#L682-L686)
+
+#### 按钮激活样式
+
+```mermaid
+classDiagram
+class ActiveButton {
++transform : scale(1.05)
++boxShadow : 0 2px 12px rgba(0, 0, 0, 0.15)
++background : var(--el-color-primary-light-9, rgba(64, 158, 255, 0.1))
++color : var(--el-color-primary, #409eff)
++borderColor : var(--el-color-primary, #409eff)
+}
+class HoverButton {
++transform : translateY(-1px)
++boxShadow : 0 4px 12px rgba(0, 0, 0, 0.12)
+}
+class NormalButton {
++width : 32px
++height : 32px
++borderRadius : 8px
++backgroundColor : var(--background)
++boxShadow : 0 2px 8px rgba(0, 0, 0, 0.08)
+}
+ActiveButton --> HoverButton : hover状态
+HoverButton --> NormalButton : normal状态
+```
+
+**图表来源**
+- [Index.vue:724-739](file://apps/app/components/static/content/right/Index.vue#L724-L739)
+
+**章节来源**
+- [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
+
 ## 依赖关系分析
 
 ### 技术栈依赖
@@ -895,6 +1131,33 @@ useLute --> RenderFunction[renderMarkdown函数]
 **章节来源**
 - [nuxt.config.ts:71-105](file://apps/app/nuxt.config.ts#L71-L105)
 
+### 侧边栏模块集成
+
+系统现已集成到统一的侧边栏模块架构中，支持多个功能模块的动态管理。
+
+#### 模块集成架构
+
+```mermaid
+flowchart TD
+MainLayout[主布局] --> LeftSidebar[左侧侧边栏]
+MainLayout --> RightSidebar[右侧侧边栏]
+LeftSidebar --> SidebarMenu[文档树菜单]
+RightSidebar --> CollapsedButtons[垂直按钮组]
+CollapsedButtons --> ModuleManager[模块管理器]
+ModuleManager --> OutlineModule[大纲模块]
+ModuleManager --> AIModule[AI模块]
+AIModule --> AIPanel[AI面板]
+AIPanel --> useAIAssistant[AI助手组合式函数]
+```
+
+**图表来源**
+- [Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
+- [Sidebar.vue:10-23](file://apps/app/components/static/content/left/Sidebar.vue#L10-L23)
+
+**章节来源**
+- [Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
+- [Sidebar.vue:10-23](file://apps/app/components/static/content/left/Sidebar.vue#L10-L23)
+
 ## 性能考虑
 
 ### Token优化策略
@@ -909,6 +1172,10 @@ AI助手系统通过智能的内容预处理和缓存机制，有效优化了Tok
 4. **响应过滤**：移除AI模型的思维链输出，减少冗余内容
 5. **Lute渲染优化**：单例模式管理Lute实例，避免重复创建
 6. **暗色主题CSS**：使用CSS变量实现快速主题切换
+7. **模块化加载**：AI面板采用client-only按需加载
+8. **垂直按钮组优化**：固定定位避免重排重绘
+9. **模块状态缓存**：激活状态在组件间共享
+10. **滚动性能优化**：独立滚动容器避免影响正文滚动
 
 ### 内存管理
 
@@ -917,7 +1184,8 @@ flowchart TD
 Mount[组件挂载] --> CacheContent[缓存预处理内容]
 CacheContent --> InitMessages[初始化消息数组]
 InitMessages --> InitLute[初始化Lute实例]
-InitLute --> UserAction[用户操作]
+InitLute --> InitModules[初始化模块状态]
+InitModules --> UserAction[用户操作]
 UserAction --> AddMessage[添加消息到数组]
 AddMessage --> MemoryCheck{内存检查}
 MemoryCheck --> |正常| Continue[继续使用]
@@ -940,6 +1208,7 @@ Continue --> UserAction
 7. **配置持久化**：用户配置自动保存到localStorage
 8. **Lute实例复用**：避免重复创建Lute实例
 9. **暗色主题CSS缓存**：CSS变量实现快速主题切换
+10. **模块懒加载**：AI面板按需加载，减少初始开销
 
 ## 故障排除指南
 
@@ -1014,6 +1283,26 @@ Continue --> UserAction
 3. 确认暗色主题CSS优先级
 4. 查看浏览器开发者工具的样式应用
 
+#### 模块激活问题
+
+**问题现象**：垂直按钮组无法切换模块
+
+**排查步骤**：
+1. 检查模块管理器状态
+2. 验证collapsed-buttons组件
+3. 确认模块激活逻辑
+4. 查看控制台JavaScript错误
+
+#### AI面板加载问题
+
+**问题现象**：AI面板无法显示或加载缓慢
+
+**处理方法**：
+1. 检查client-only懒加载
+2. 验证AIPanel组件状态
+3. 确认模块激活状态
+4. 查看浏览器开发者工具的网络请求
+
 ### 调试工具
 
 ```mermaid
@@ -1025,6 +1314,8 @@ Storage[存储面板]
 Components[组件面板]
 LuteDebug[Lute调试]
 ThemeDebug[主题调试]
+ModuleDebug[模块调试]
+ButtonDebug[按钮调试]
 end
 subgraph "调试场景"
 Error[错误调试]
@@ -1035,6 +1326,8 @@ ConfigPanel[配置面板调试]
 ModelSelection[模型选择调试]
 LuteRendering[Lute渲染调试]
 DarkTheme[暗色主题调试]
+ModuleActivation[模块激活调试]
+AIPanelLoading[AI面板加载调试]
 end
 Console --> Error
 Network --> Performance
@@ -1044,12 +1337,15 @@ Components --> ConfigPanel
 Components --> ModelSelection
 Components --> LuteRendering
 Components --> DarkTheme
-LuteDebug --> LuteRendering
-ThemeDebug --> DarkTheme
+Components --> ModuleActivation
+Components --> AIPanelLoading
+ModuleDebug --> ModuleActivation
+ButtonDebug --> AIPanelLoading
 ```
 
 **图表来源**
 - [AIPanel.vue:66-96](file://apps/app/components/ai-assistant/AIPanel.vue#L66-L96)
+- [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
 
 **章节来源**
 - [AIPanel.vue:66-96](file://apps/app/components/ai-assistant/AIPanel.vue#L66-L96)
@@ -1072,6 +1368,8 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 10. **错误消息本地化**：完整的多语言错误提示系统
 11. **Lute Markdown渲染**：高质量的Markdown到HTML转换系统
 12. **完整暗色主题支持**：200多行CSS样式实现深色模式适配
+13. **模块化管理**：统一的模块化架构，支持多个功能模块的扩展
+14. **垂直按钮组**：全新的垂直按钮组设计，提供统一的快速切换功能
 
 ### 技术亮点
 
@@ -1084,6 +1382,7 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - **状态管理**：精确的加载状态和错误状态管理
 - **Lute集成**：高质量的Markdown渲染系统
 - **暗色主题**：完整的深色模式适配
+- **模块化架构**：统一的模块化管理，支持功能扩展
 
 ### 发展方向
 
@@ -1098,5 +1397,8 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - 添加AI助手使用统计和分析功能
 - 扩展Lute渲染器的功能支持
 - 增强暗色主题的自定义选项
+- 优化垂直按钮组的交互体验
+- 增加模块间的通信机制
+- 实现模块的热插拔功能
 
-AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择和完整的暗色主题支持等功能，显著提升了用户体验和系统的易用性。200多行CSS暗色主题样式的实现，确保了在各种主题下的良好视觉效果，而新增的Lute渲染器则提供了高质量的Markdown处理能力，这些改进共同构成了一个更加完善和专业的AI助手系统。
+AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择、完整的暗色主题支持和全新的垂直按钮组设计等功能，显著提升了用户体验和系统的易用性。200多行CSS暗色主题样式的实现，确保了在各种主题下的良好视觉效果，而新增的模块化管理和垂直按钮组设计则提供了更加直观和高效的用户界面，这些改进共同构成了一个更加完善和专业的AI助手系统。
