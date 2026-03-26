@@ -56,7 +56,7 @@ interface AppConfig {
   outlineEnabled?: boolean
   outlineLevel?: number
 
-  // add by v5.6.0+ - 文档元信息栏（默认关闭，避免影响历史用户）
+  // add by v5.6.0+ - 文档元信息栏（兼容历史线上默认显示行为）
   postMetaEnabled?: boolean
   /**
    * add by v6.7.0+
@@ -92,6 +92,8 @@ export default defineAppConfig<AppConfig>({
   header: "",
   footer: "",
   shareTemplate: "[url]",
+  postMetaEnabled: true,
+  aiAssistantEnabled: true,
 
   theme: {
     mode: "light",

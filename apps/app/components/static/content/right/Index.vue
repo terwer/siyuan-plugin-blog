@@ -50,14 +50,31 @@ const showSidebar = useState("sidebar-show", () => false)
 const outlineData = computed(() => Array.isArray(props.post?.outline) ? props.post.outline : [])
 const outlineMaxDepth = computed(() => props.post?.outlineLevel ?? 6)
 const hasOutlineData = computed(() => outlineData.value.length > 0)
-const postAiAssistantEnabled = computed(() => props.post?.aiAssistantEnabled === true || props.post?.aiAssistantEnabled === "true")
 const AIPanelComponent = __ENABLE_AI_ASSISTANT__
   ? defineAsyncComponent(() => import("~/components/ai-assistant/AIPanel.vue"))
   : null
 
 // ========== AI 助手功能配置 ==========
-// AI 能力由 viewer build capability 和分享后的 post 快照共同决定
-const aiAssistantEnabled = computed(() => aiAssistantSupported.value && postAiAssistantEnabled.value)
+// AI 最终值兼容历史默认行为：
+// 1. 若 post.aiAssistantEnabled 显式存在，优先以分享后的冻结结果为准
+// 2. 若 post 缺失该字段，回退到全局源配置
+// 3. 若全局也缺失，则兼容历史默认开启行为
+const resolvedAiAssistantEnabled = computed(() => {
+  const postValue = props.post?.aiAssistantEnabled
+
+  if (postValue === true || postValue === "true") {
+    return true
+  }
+
+  if (postValue === false || postValue === "false") {
+    return false
+  }
+
+  return props.setting?.aiAssistantEnabled !== false
+})
+
+// AI 能力由 viewer build capability、分享后的 post 快照和全局兼容回退共同决定
+const aiAssistantEnabled = computed(() => aiAssistantSupported.value && resolvedAiAssistantEnabled.value)
 
 // 检查文档内容是否有效（用于判断 AI 功能是否可用）
 const hasValidContent = computed(() => {
