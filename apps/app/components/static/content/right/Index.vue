@@ -10,11 +10,13 @@
 <script setup lang="ts">
 import { DArrowRight, List, Opportunity, Paperclip } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
+import { useViewerCapabilities } from "~/composables/useViewerCapabilities"
 import { hasMeaningfulTextContent } from "~/utils/content"
 
 const logger = createAppLogger("right-index")
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
+const { aiAssistantSupported } = useViewerCapabilities()
 
 // ==================== 侧边栏功能模块配置 ====================
 // 可扩展的功能模块配置，后续添加新功能只需在此配置中增加
@@ -48,17 +50,21 @@ const showSidebar = useState('sidebar-show', () => false)
 const outlineData = computed(() => Array.isArray(props.post?.outline) ? props.post.outline : [])
 const outlineMaxDepth = computed(() => props.post?.outlineLevel ?? 6)
 const hasOutlineData = computed(() => outlineData.value.length > 0)
+const postAiAssistantEnabled = computed(() => props.post?.aiAssistantEnabled === true || props.post?.aiAssistantEnabled === "true")
+const AIPanelComponent = __ENABLE_AI_ASSISTANT__
+  ? defineAsyncComponent(() => import("~/components/ai-assistant/AIPanel.vue"))
+  : null
 
 // ========== AI 助手功能配置 ==========
-// 从 setting 读取 AI 助手功能开关，默认为 true（开启）
-const aiAssistantEnabled = computed(() => props.setting?.aiAssistantEnabled !== false)
+// AI 能力由 viewer build capability 和分享后的 post 快照共同决定
+const aiAssistantEnabled = computed(() => aiAssistantSupported.value && postAiAssistantEnabled.value)
 
 // 检查文档内容是否有效（用于判断 AI 功能是否可用）
 const hasValidContent = computed(() => {
   return hasMeaningfulTextContent(props.post?.editorDom ?? '')
 })
 
-// AI 模块是否应该显示（受配置和内容双重控制）
+// AI 模块是否应该显示（受 viewer capability、分享快照和内容三重控制）
 const showAIModule = computed(() => aiAssistantEnabled.value && hasValidContent.value)
 
 // 从文档树跳转过来时，自动展开大纲（与左侧文档树保持联动）
@@ -512,9 +518,9 @@ onUnmounted(() => {
       </div>
 
       <!-- AI 面板内容：仅在 AI 功能可用且当前选中 AI 模块时显示 -->
-      <div v-if="currentModuleId === 'ai' && showAIModule" class="ai-content">
+      <div v-if="currentModuleId === 'ai' && showAIModule && AIPanelComponent" class="ai-content">
         <client-only>
-          <ai-assistant-a-i-panel :title="post.title ?? ''" :content="post.editorDom ?? ''" :doc-id="post.postid ?? ''"
+          <component :is="AIPanelComponent" :title="post.title ?? ''" :content="post.editorDom ?? ''" :doc-id="post.postid ?? ''"
             @close="handleCloseAI" />
         </client-only>
       </div>

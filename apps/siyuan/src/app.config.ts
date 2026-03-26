@@ -27,9 +27,6 @@ interface AppConfig {
     themeVersion?: string
   }
 
-  /** AI 助手功能独立开关（默认开启，不依赖大纲功能） */
-  aiAssistantEnabled?: boolean
-
   customCss: Array<{
     name: string
     content: string
@@ -49,7 +46,6 @@ export const AppConfig = {
   header: "",
   footer: "",
   shareTemplate: "[url]",
-  aiAssistantEnabled: true,
 
   theme: {
     mode: "light",

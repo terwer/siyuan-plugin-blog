@@ -1,4 +1,5 @@
 import AutoImport from "unplugin-auto-import/vite"
+import { fileURLToPath } from "node:url"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
 
@@ -19,6 +20,17 @@ const staticV = generateDynamicV()
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: isDev },
+
+  alias: {
+    "~/components/ai-assistant/AIPanel.vue": fileURLToPath(new URL("./components/ai-assistant/AIPanelDisabled.vue", import.meta.url)),
+  },
+
+  components: [
+    {
+      path: "~/components",
+      ignore: ["**/ai-assistant/**"],
+    },
+  ],
 
   modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
@@ -42,6 +54,7 @@ export default defineNuxtConfig({
 
   vite: {
     define: {
+      __ENABLE_AI_ASSISTANT__: "false",
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
       "process.env.SSR": "\"false\"",
@@ -150,6 +163,9 @@ export default defineNuxtConfig({
       siyuanApiUrl: "",
       providerMode: "false",
       providerUrl: "",
+      viewerCapabilities: {
+        aiAssistant: false,
+      },
     },
   },
 

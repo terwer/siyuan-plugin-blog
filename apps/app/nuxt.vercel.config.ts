@@ -118,6 +118,7 @@ export default defineNuxtConfig({
 
   vite: {
     define: {
+      __ENABLE_AI_ASSISTANT__: "true",
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
       "process.env.SSR": "\"true\"",
@@ -151,6 +152,9 @@ export default defineNuxtConfig({
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
       providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8000",
+      viewerCapabilities: {
+        aiAssistant: true,
+      },
     },
   },
 

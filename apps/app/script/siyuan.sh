@@ -10,9 +10,8 @@
 #
 
 # 使用 Siyuan 构建配置
-echo "Using Siyuan build config as SSE and SPA build."
-cp nuxt.siyuan.config.ts nuxt.config.ts
-nuxt generate
+echo "Using Siyuan build config as free SPA build. AI assistant is disabled in this target."
+pnpm exec nuxi generate -c nuxt.siyuan.config.ts
 echo "Nuxt build for siyuan finished."
 
 # 拷贝资源

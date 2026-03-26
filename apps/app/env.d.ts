@@ -8,3 +8,5 @@
  */
 
 declare module "highlight.js*";
+
+declare const __ENABLE_AI_ASSISTANT__: boolean

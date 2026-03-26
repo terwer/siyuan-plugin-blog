@@ -32,6 +32,8 @@ export const useStaticShare = () => {
     sPost.attrs = post.attrs
     sPost.title = post.title
     sPost.editorDom = post.editorDom
+    // 免费版 Siyuan SPA viewer 不提供 AI 能力，分享快照直接固化为 false。
+    sPost.aiAssistantEnabled = false
     const sJson = JSON.stringify(sPost) ?? "{}"
     await kernelApi.saveTextData(shareJsonFile, sJson)
     logger.info("static share success")

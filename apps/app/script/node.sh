@@ -11,8 +11,7 @@
 
 # 使用 Node 构建配置
 echo "Using Node build config as SSR build."
-cp nuxt.node.config.ts nuxt.config.ts
-NODE_OPTIONS=--max_old_space_size=8192 nuxt build
+NODE_OPTIONS=--max_old_space_size=8192 pnpm exec nuxi build -c nuxt.node.config.ts
 # 解决 element-plus 打包问题
 # https://github.com/element-plus/element-plus/issues/10979#issuecomment-1415496705
 echo "Nuxt build for node finished."

@@ -58,8 +58,6 @@ interface AppConfig {
 
   // add by v5.6.0+ - 文档元信息栏（默认关闭，避免影响历史用户）
   postMetaEnabled?: boolean
-  /** AI 助手功能独立开关（默认开启，不依赖大纲功能） */
-  aiAssistantEnabled?: boolean
 
   customCss?: Array<{
     name: string
@@ -86,7 +84,6 @@ export default defineAppConfig<AppConfig>({
   header: "",
   footer: "",
   shareTemplate: "[url]",
-  aiAssistantEnabled: true,
 
   theme: {
     mode: "light",

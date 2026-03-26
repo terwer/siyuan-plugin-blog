@@ -1,75 +1,75 @@
-# Nuxt Minimal Starter
+# Viewer App
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+`apps/app` is the unified viewer application used by multiple targets.
+
+## Targets
+
+- `siyuan`
+  Free SPA viewer embedded in Siyuan.
+  AI assistant is disabled in this target.
+- `node`
+  SSR/server-capable viewer.
+  AI assistant is supported.
+- `vercel`
+  Server-capable deployment.
+  AI assistant is supported.
+- `cloudflare`
+  Server-capable deployment.
+  AI assistant is supported.
+
+## AI Visibility Contract
+
+The viewer does not use global `setting.aiAssistantEnabled` to decide whether AI should render.
+
+The final decision is:
+
+`viewer capability` + `post.aiAssistantEnabled` + `meaningful content`
+
+`post.aiAssistantEnabled` must be treated as the already-merged, post-share snapshot from upstream sharing logic.
 
 ## Setup
 
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Development
 
-Start the development server on `http://localhost:3000`:
+Run the server-capable viewer locally:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+cd apps/app
+bash script/dev.sh
 ```
 
-## Production
+## Build
 
-Build the application for production:
+Build the free Siyuan SPA viewer:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+cd apps/app
+bash script/siyuan.sh
 ```
 
-Locally preview production build:
+Build the Node viewer:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+cd apps/app
+bash script/node.sh
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Build the Vercel viewer:
+
+```bash
+cd apps/app
+bash script/vercel.sh
+```
+
+Build the Cloudflare viewer:
+
+```bash
+cd apps/app
+bash script/cloudflare.sh
+```
