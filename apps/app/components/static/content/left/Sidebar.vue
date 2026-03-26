@@ -8,9 +8,9 @@
   -->
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from "vue"
-import type AppConfig from "~/app.config"
-import SidebarMenu from "~/components/static/content/left/SidebarMenu.vue"
+import { nextTick, onMounted, ref } from "vue";
+import type AppConfig from "~/app.config";
+import SidebarMenu from "~/components/static/content/left/SidebarMenu.vue";
 
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
@@ -24,7 +24,8 @@ const scrollbarRef = ref<any>(null)
 // 滚动到当前激活的菜单项
 const scrollToActiveItem = (attempt = 0) => {
   const maxAttempts = 10
-  
+  const activeId = activeIndex.value
+
   nextTick(() => {
     setTimeout(() => {
       const scrollbar = scrollbarRef.value
@@ -32,20 +33,32 @@ const scrollToActiveItem = (attempt = 0) => {
         logger.warn("scrollbar not found")
         return
       }
-      
+
       const wrap = scrollbar.wrapRef
       if (!wrap) {
         logger.warn("scrollbar wrap not found")
         return
       }
-      
-      // 查找激活的菜单项 - 优先查找 el-menu-item.is-active
-      // 因为子菜单展开后，el-sub-menu 也可能有 is-active 类
-      let activeElement = document.querySelector('.sidebar-menu .el-menu-item.is-active') as HTMLElement
-      
-      // 如果没找到，再查找任何 is-active 元素
+
+      // 使用精确的 ID 选择器查找当前文档对应的菜单项
+      // 优先查找带有 data-doc-id 属性的元素
+      let activeElement = document.querySelector(`[data-doc-id="${activeId}"]`) as HTMLElement
+
+      // 如果没找到，尝试查找 el-menu-item 或 el-sub-menu 中 index 匹配的元素
       if (!activeElement) {
-        activeElement = document.querySelector('.sidebar-menu .is-active') as HTMLElement
+        activeElement = document.querySelector(`.sidebar-menu .el-menu-item[index="${activeId}"]`) as HTMLElement
+      }
+      if (!activeElement) {
+        activeElement = document.querySelector(`.sidebar-menu .el-sub-menu[index="${activeId}"]`) as HTMLElement
+      }
+
+      // 如果仍然没找到，使用原来的备选方案（查找 is-active）
+      if (!activeElement) {
+        // 优先查找叶子节点（有 href 的）
+        activeElement = document.querySelector(`.sidebar-menu .el-menu-item.is-active [href*="${activeId}"]`) as HTMLElement
+      }
+      if (!activeElement) {
+        activeElement = document.querySelector(`.sidebar-menu .el-menu-item.is-active`) as HTMLElement
       }
       
       if (!activeElement) {

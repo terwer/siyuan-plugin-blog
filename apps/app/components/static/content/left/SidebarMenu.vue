@@ -8,8 +8,8 @@
   -->
 
 <script setup lang="ts">
-import { computed, defineProps, ref } from "vue"
-import MenuItem from "./MenuItem.vue"
+import { computed, defineProps, ref } from "vue";
+import MenuItem from "./MenuItem.vue";
 
 interface MenuData {
   id: string;
@@ -43,11 +43,12 @@ const handleMenuClick = () => {
   <el-sub-menu
     v-if="props.menu.children?.length"
     :index="props.menu.id"
+    :data-doc-id="props.menu.id"
     :class="{ 'is-active': isActive }"
   >
     <template #title>
       <div class="menu-item-wrapper" @click="handleMenuClick">
-        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" />
+        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" :data-doc-id="props.menu.id" />
       </div>
     </template>
     <SidebarMenu
@@ -60,10 +61,11 @@ const handleMenuClick = () => {
   <el-menu-item
     v-else
     :index="props.menu.id"
+    :data-doc-id="props.menu.id"
     :class="{ 'is-active': isActive, 'menu-item-fullwidth': true }"
     @click="handleMenuClick"
   >
-    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" />
+    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" :data-doc-id="props.menu.id" />
   </el-menu-item>
 </template>
 
