@@ -8,7 +8,7 @@
   -->
 
 <script setup lang="ts">
-import { Paperclip, DArrowRight, Opportunity, List } from "@element-plus/icons-vue"
+import { DArrowRight, List, Opportunity, Paperclip } from "@element-plus/icons-vue"
 import type AppConfig from "~/app.config"
 
 const logger = createAppLogger("right-index")
@@ -46,6 +46,22 @@ const showSidebar = useState('sidebar-show', () => false)
 
 const outlineData = ref(props.post.outline ?? [] as any)
 const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
+
+// ========== AI 助手功能配置 ==========
+// 从 setting 读取 AI 助手功能开关，默认为 true（开启）
+const aiAssistantEnabled = computed(() => props.setting?.aiAssistantEnabled !== false)
+
+// 检查文档内容是否有效（用于判断 AI 功能是否可用）
+const hasValidContent = computed(() => {
+  // 检查 editorDom 是否存在且有实质内容
+  const editorDom = props.post?.editorDom ?? ''
+  // 去除 HTML 标签后检查是否有文字内容
+  const textContent = editorDom.replace(/<[^>]+>/g, '').trim()
+  return textContent.length > 0
+})
+
+// AI 模块是否应该显示（受配置和内容双重控制）
+const showAIModule = computed(() => aiAssistantEnabled.value && hasValidContent.value)
 
 // 从文档树跳转过来时，自动展开大纲（与左侧文档树保持联动）
 const isFromDocTree = computed(() => route.query.from === 'docTree')
@@ -276,7 +292,17 @@ const isInitialized = ref(false)
 // 计算可见的模块（按order排序）
 const visibleModules = computed(() => {
   return modules.value
-    .filter(m => m.visible)
+    .filter(m => {
+      // 大纲模块：需要有大纲数据才显示
+      if (m.type === 'outline') {
+        return outlineData.value && outlineData.value.length > 0
+      }
+      // AI 模块：受配置和内容控制
+      if (m.type === 'ai') {
+        return showAIModule.value
+      }
+      return m.visible
+    })
     .sort((a, b) => a.order - b.order)
 })
 
@@ -291,6 +317,12 @@ const getModuleButtonClass = (module: SidebarModule) => {
 
 // 激活指定模块
 const activateModule = (moduleId: string) => {
+  // 如果是 AI 模块，检查是否可用
+  if (moduleId === 'ai' && !showAIModule.value) {
+    logger.warn('AI module is not available, content is empty or AI is disabled')
+    return
+  }
+
   if (moduleId === 'ai') {
     aiPanelActive.value = true
   }
@@ -306,10 +338,30 @@ const openAI = () => {
 // 监听 AI 面板激活，平滑展开侧边栏
 watch(aiPanelActive, (active) => {
   if (active) {
+    // 检查 AI 功能是否可用
+    if (!showAIModule.value) {
+      logger.warn('AI panel activated but AI module is not available')
+      aiPanelActive.value = false
+      return
+    }
     activeModuleId.value = 'ai'
     // 仅展开侧边栏，不强制固定，让用户可以自由控制
     showSidebar.value = true
     // 不自动固定，保持用户之前的固定状态
+  }
+})
+
+// 监听 AI 功能可用性变化，当变为不可用时自动关闭 AI 面板
+watch(showAIModule, (available) => {
+  if (!available && aiPanelActive.value) {
+    logger.info('AI module became unavailable, closing AI panel')
+    aiPanelActive.value = false
+    // 如果没有大纲，收起侧边栏
+    if (!outlineData.value || outlineData.value.length === 0) {
+      showSidebar.value = false
+    } else {
+      activeModuleId.value = 'outline'
+    }
   }
 })
 
@@ -318,15 +370,18 @@ const handleClose = () => {
   showSidebar.value = false
 }
 
-// 关闭 AI 面板 - 只关闭AI功能，侧边栏保持显示（自动切换到大纲）
+// 关闭 AI 面板 - 只关闭AI功能，侧边栏保持显示（自动切换到大纲或其他可用模块）
 const handleCloseAI = () => {
   aiPanelActive.value = false
+
   // 自动切回大纲模块（如果大纲可见）
   const outlineModule = modules.value.find(m => m.id === 'outline')
-  if (outlineModule?.visible) {
+  if (outlineModule?.visible && outlineData.value && outlineData.value.length > 0) {
     activeModuleId.value = 'outline'
+  } else {
+    // 如果没有大纲，收起侧边栏
+    showSidebar.value = false
   }
-  // 侧边栏保持显示状态，用户可以继续在侧边栏查看大纲
 }
 
 onMounted(() => {
@@ -360,7 +415,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="(outlineData && outlineData.length > 0) || aiPanelActive" class="outline-aside"
+  <!-- 侧边栏显示条件：有大纲数据或有可见的 AI 模块（AI 功能独立于大纲） -->
+  <div v-if="visibleModules.length > 0" class="outline-aside"
     :class="{ 'outline-collapsed': !showSidebar, 'outline-initialized': isInitialized }">
     <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
     <div class="outline-placeholder" :style="{
@@ -378,12 +434,14 @@ onUnmounted(() => {
       <!-- 大纲标题栏（仅保留 Tab 切换） -->
       <div class="outline-header">
         <div class="sidebar-tabs">
+          <!-- 大纲 Tab：仅在有大纲数据时显示 -->
           <button v-if="outlineData && outlineData.length > 0" class="sidebar-tab"
             :class="{ 'sidebar-tab--active': activeModuleId === 'outline' }" @click="activeModuleId = 'outline'">
             <span class="tab-icon">☰</span>
             <span>{{ $t("static.outline") }}</span>
           </button>
-          <button v-if="aiPanelActive" class="sidebar-tab" :class="{ 'sidebar-tab--active': activeModuleId === 'ai' }"
+          <!-- AI Tab：仅在 AI 面板激活且 AI 功能可用时显示 -->
+          <button v-if="aiPanelActive && showAIModule" class="sidebar-tab" :class="{ 'sidebar-tab--active': activeModuleId === 'ai' }"
             @click="activeModuleId = 'ai'">
             <span class="tab-icon-ai">AI</span>
             <span>{{ $t("ai.assistant.title") }}</span>
@@ -403,8 +461,8 @@ onUnmounted(() => {
           :active-text="activeNodeText" :width="outlineWidth" />
       </div>
 
-      <!-- AI 面板内容 -->
-      <div v-show="activeModuleId === 'ai' && aiPanelActive" class="ai-content">
+      <!-- AI 面板内容：仅在 AI 面板激活且 AI 功能可用时显示 -->
+      <div v-if="activeModuleId === 'ai' && aiPanelActive && showAIModule" class="ai-content">
         <client-only>
           <ai-assistant-a-i-panel :title="post.title ?? ''" :content="post.editorDom ?? ''" :doc-id="post.postid ?? ''"
             @close="handleCloseAI" />

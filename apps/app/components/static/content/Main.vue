@@ -8,12 +8,13 @@
   -->
 
 <script setup lang="ts">
+import type AppConfig from "~/app.config"
 import ImagePreview from "~/components/common/ImagePreview.vue"
 import { useImagePreview } from "~/composables/useImagePreview"
 
 const props = defineProps<{
   post: any
-  setting?: any
+  setting?: typeof AppConfig
 }>()
 
 const { images, previewRef } = useImagePreview()
@@ -30,10 +31,7 @@ const VNode = () =>
 const aiPanelActive = useState('ai-panel-active', () => false)
 
 // 从 setting 读取开关，历史用户默认均关闭
-// const postMetaEnabled = computed(() => props.setting?.postMetaEnabled === true)
-
-// 临时测试
-const postMetaEnabled = computed(() => true)
+const postMetaEnabled = computed(() => props.setting?.postMetaEnabled === true)
 </script>
 
 <template>
