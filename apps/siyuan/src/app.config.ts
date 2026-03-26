@@ -27,6 +27,13 @@ interface AppConfig {
     themeVersion?: string
   }
 
+  /**
+   * AI 助手全局源配置。
+   * 该字段用于跨产品线表达“全局默认策略”的存在，
+   * 免费版思源插件当前不暴露该能力的 UI。
+   */
+  aiAssistantEnabled?: boolean
+
   customCss: Array<{
     name: string
     content: string
