@@ -2,18 +2,36 @@
 
 ## Product Split
 
-This repo intentionally separates authoring and viewing responsibilities:
+This repo intentionally separates authoring and viewing responsibilities, but it is not the whole product family.
+
+Inside this repo:
 
 - `apps/siyuan`
-  The free Siyuan plugin frontend.
-  It is the authoring / sharing entry used inside Siyuan.
+  The free edition authoring frontend.
+  It is implemented as a Siyuan plugin and is the authoring / sharing entry used inside the host Siyuan app.
 - `apps/app`
   The unified viewer app.
   It serves multiple deployment targets: `siyuan`, `node`, `vercel`, `cloudflare`.
 
-The runtime chain is:
+Outside this repo:
 
-`authoring frontend (global + document config)` -> `share snapshot` -> `viewer`
+- `share-pro`
+  The paid/professional authoring frontend.
+- `siyuan-note-service`
+  The paid/professional backend service.
+
+So the real architecture has two paths:
+
+- Free path:
+  `apps/siyuan` -> host Siyuan kernel / local public storage -> `apps/app` viewer
+- Pro path:
+  `share-pro` -> `siyuan-note-service` -> `apps/app` viewer
+
+This is the key product boundary:
+
+- The free authoring frontend talks directly to the host Siyuan APIs.
+- There is no application backend owned by this repo in the free authoring path.
+- Backend participation only exists in the separate pro product line.
 
 ### AI assistant contract
 
@@ -75,21 +93,11 @@ pnpm build -F siyuan-blog -- --watch
 
 ### Important build note for `siyuan`
 
-- `apps/app/script/siyuan.sh` now calls `pnpm exec nuxi generate -c nuxt.siyuan.config.ts`.
+- `apps/app/script/siyuan.sh` now performs a safe temporary switch to `nuxt.siyuan.config.ts`, runs the build, and restores `nuxt.config.ts` automatically.
 - This target is a free SPA viewer, not a server-capable AI viewer.
 - Do not use the `siyuan` target to validate AI APIs or server AI routes.
 - AI verification should be done with `node`, `vercel`, or `cloudflare` viewer targets.
-
-### Known limitation for `siyuan generate`
-
-At the moment, `pnpm exec nuxi generate -c nuxt.siyuan.config.ts` may still fail during prerender with `/api/endpoint` errors.
-
-This is an existing SPA/prerender data-fetch issue in the `siyuan` target, not an AI capability issue.
-
-In other words:
-
-- the AI capability split in this change is intentional
-- the remaining `generate` failure is a separate follow-up task in the SPA data loading chain
+- The free SPA generation path has been adjusted so that prerender no longer blocks distribution.
 
 ## Build
 
@@ -129,18 +137,22 @@ pnpm cloudflareBuild
 
 ## Script Notes
 
-The viewer build scripts now use explicit Nuxt config files instead of overwriting `nuxt.config.ts`:
+The viewer build scripts now perform a temporary config switch and automatically restore `nuxt.config.ts` after the command exits:
 
 - `apps/app/script/siyuan.sh`
-  `pnpm exec nuxi generate -c nuxt.siyuan.config.ts`
+  temporary switch to `nuxt.siyuan.config.ts`, then `pnpm exec nuxi generate`, then restore
 - `apps/app/script/node.sh`
-  `pnpm exec nuxi build -c nuxt.node.config.ts`
+  temporary switch to `nuxt.node.config.ts`, then `pnpm exec nuxi build`, then restore
 - `apps/app/script/vercel.sh`
-  `pnpm exec nuxi build -c nuxt.vercel.config.ts`
+  temporary switch to `nuxt.vercel.config.ts`, then `pnpm exec nuxi build`, then restore
 - `apps/app/script/cloudflare.sh`
-  `pnpm exec nuxi build -c nuxt.cloudflare.config.ts`
+  temporary switch to `nuxt.cloudflare.config.ts`, then `pnpm exec nuxi build`, then restore
 - `apps/app/script/dev.sh`
-  `pnpm exec nuxi dev -c nuxt.node.config.ts --host`
+  temporary switch to `nuxt.node.config.ts`, then `pnpm exec nuxi dev --host`, then restore on exit
+
+Do not use `nuxi -c <config>` directly as the default multi-target build entry in this repo.
+
+In practice, this project's multi-config setup is only reliably reproduced by the provided scripts, because they switch the active `nuxt.config.ts`, run the command, and restore it afterward.
 
 ## Package
 

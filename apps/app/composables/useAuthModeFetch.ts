@@ -29,6 +29,11 @@ export const useAuthModeFetch = () => {
     const fetchFileUrl = `/public/siyuan-blog/${filename}`
     logger.info("getPublicFile in auth mode", fetchFileUrl)
     try {
+      if (process.server && __SIYUAN_SPA_TARGET__) {
+        logger.info("skip server-side public fetch for siyuan SPA prerender")
+        return "{}"
+      }
+
       if (isSiyuanSPA) {
         const origin = window.location.origin
         logger.info("fetchPublicText via siyuan spa, origin=>", origin)

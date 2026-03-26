@@ -6,21 +6,47 @@ Your self-hosted notion alternative
 
 ## Architecture
 
-This repository now has two clearly separated roles:
+This repository only contains part of the full product family.
 
-- `apps/siyuan`: the free Siyuan plugin frontend used to author and trigger sharing.
+Inside this repo:
+
+- `apps/siyuan`: the free edition authoring frontend, implemented as a Siyuan plugin.
 - `apps/app`: the unified viewer application used by different deployment targets.
 
-The end-to-end flow is:
+Outside this repo:
 
-`Siyuan authoring frontend (global + document config)` -> `share backend / persisted share snapshot` -> `viewer app`
+- `share-pro`: the paid/professional authoring frontend.
+- `siyuan-note-service`: the paid/professional backend service.
 
-For AI specifically:
+So there are two different product flows:
 
-- The viewer no longer reads AI visibility from global `app.config`.
-- The final viewer decision is based on:
-  `viewer capability` + `post.aiAssistantEnabled` + `meaningful document content`
-- `post.aiAssistantEnabled` is treated as the frozen, post-share result after upstream config merge.
+- Free path:
+  `apps/siyuan` -> host Siyuan kernel / local public files -> `apps/app` viewer
+- Pro path:
+  `share-pro` -> `siyuan-note-service` -> `apps/app` viewer
+
+The important distinction is:
+
+- The free authoring frontend talks directly to the host Siyuan instance.
+- It does not use an application backend owned by this repo during authoring.
+- The backend only exists in the separate pro product line.
+
+```mermaid
+flowchart LR
+    subgraph Free["Free Distribution Path"]
+        A["apps/siyuan<br/>Free Authoring Frontend<br/>(Siyuan Plugin)"]
+        B["Host Siyuan Kernel<br/>+ Local Public Files"]
+        V["apps/app<br/>Unified Viewer"]
+        A --> B --> V
+    end
+
+    subgraph Pro["Pro Distribution Path"]
+        P["share-pro<br/>Pro Authoring Frontend"]
+        S["siyuan-note-service<br/>Pro Backend"]
+        V2["apps/app<br/>Unified Viewer"]
+        P --> S --> V2
+    end
+```
 
 ## Startup Via Node provider as debug
 
@@ -51,14 +77,11 @@ pnpm packageNodeProvider
 
 - Build command: `pnpm build -F @terwer/share-pro-app -- --from siyuan`
 - Output type: free SPA viewer
-- AI assistant: disabled by design
-- This target must not be used to verify server-dependent AI capability
+- The generated viewer is distributed under `/plugins/siyuan-blog/app/`
 
 ### `node` / `vercel` / `cloudflare`
 
 - These are server-capable viewer targets
-- AI assistant is available only on these targets
-- The shared document must already provide `post.aiAssistantEnabled: true`
 
 ## More
 

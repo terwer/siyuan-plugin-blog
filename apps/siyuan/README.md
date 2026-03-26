@@ -6,15 +6,18 @@ Your self-hosted notion alternative
 
 ## Role In The Architecture
 
-`apps/siyuan` is the free Siyuan plugin frontend used to author and trigger sharing.
+`apps/siyuan` is the free edition authoring frontend in this product family.
+
+It is implemented as a Siyuan plugin and is used to author content and trigger sharing from inside the host Siyuan app.
 
 It is not the server-capable viewer.
+It is also not the paid/professional authoring frontend.
 
-## AI Capability
+The paid/professional authoring frontend is `share-pro`, and it is outside this repository.
+The paid/professional backend is `siyuan-note-service`, and it is also outside this repository.
 
-- The free Siyuan viewer target does not provide AI assistant capability.
-- Static shares produced from this free path freeze `post.aiAssistantEnabled = false`.
-- If AI is needed, it must be provided by the server-capable viewer side outside this free target.
+In the free path, `apps/siyuan` talks directly to the host Siyuan kernel and local public files.
+There is no application backend owned by this repo in that authoring flow.
 
 ## Read more
 

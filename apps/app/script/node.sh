@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
 #
 #            GNU GENERAL PUBLIC LICENSE
@@ -9,20 +10,29 @@
 #  of this license document, but changing it is not allowed.
 #
 
-# 使用 Node 构建配置
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+BACKUP_CONFIG="$APP_DIR/nuxt.config.ts.codex.bak"
+
+cleanup() {
+  if [ -f "$BACKUP_CONFIG" ]; then
+    mv "$BACKUP_CONFIG" "$APP_DIR/nuxt.config.ts"
+  fi
+}
+
+trap cleanup EXIT
+
+cd "$APP_DIR"
+cp nuxt.config.ts "$BACKUP_CONFIG"
+cp nuxt.node.config.ts nuxt.config.ts
+
 echo "Using Node build config as SSR build."
-NODE_OPTIONS=--max_old_space_size=8192 pnpm exec nuxi build -c nuxt.node.config.ts
-# 解决 element-plus 打包问题
-# https://github.com/element-plus/element-plus/issues/10979#issuecomment-1415496705
+NODE_OPTIONS=--max_old_space_size=8192 pnpm exec nuxi build
 echo "Nuxt build for node finished."
 
-# 拷贝资源
-# rsync -av --progress .output/public/ ./dist/
 mkdir -p .output/server/node_modules/@popperjs
 mv .output/server/node_modules/@sxzz/popperjs-es .output/server/node_modules/@popperjs/core
 mkdir -p ../../dist/node
-#rsync -av .output/ ../../dist/node
-#rsync -av dist/ ../../dist/node
 cp -r .output/ ../../dist/node
 cp -r dist/ ../../dist/node
 echo "Resources are copied."

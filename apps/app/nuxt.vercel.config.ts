@@ -119,6 +119,7 @@ export default defineNuxtConfig({
   vite: {
     define: {
       __ENABLE_AI_ASSISTANT__: "true",
+      __SIYUAN_SPA_TARGET__: "false",
       "process.env.DEV_MODE": `"${isDev}"`,
       "process.env.APP_BASE": `"${appBase}"`,
       "process.env.SSR": "\"true\"",

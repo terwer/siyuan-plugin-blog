@@ -11,16 +11,8 @@
 definePageMeta({
   layout: false,
 })
-
-const logger = createAppLogger("s-page")
-const { isPrivateShare } = useCommonShareType()
-
-// datas
-const isPrivate = await isPrivateShare()
-logger.info(`isPrivate=>${isPrivate}`)
 </script>
 
 <template>
-  <static-detail-page v-if="isPrivate" />
-  <public-detail-page v-else />
+  <static-detail-page />
 </template>

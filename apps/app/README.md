@@ -1,31 +1,27 @@
+[中文](README_zh_CN.md)
+
 # Viewer App
 
 `apps/app` is the unified viewer application used by multiple targets.
+It is shared by both the free path and the pro path.
+
+Those paths are:
+
+- Free path:
+  `apps/siyuan` -> host Siyuan kernel / local public files -> `apps/app`
+- Pro path:
+  `share-pro` -> `siyuan-note-service` -> `apps/app`
 
 ## Targets
 
 - `siyuan`
   Free SPA viewer embedded in Siyuan.
-  AI assistant is disabled in this target.
 - `node`
   SSR/server-capable viewer.
-  AI assistant is supported.
 - `vercel`
   Server-capable deployment.
-  AI assistant is supported.
 - `cloudflare`
   Server-capable deployment.
-  AI assistant is supported.
-
-## AI Visibility Contract
-
-The viewer does not use global `setting.aiAssistantEnabled` to decide whether AI should render.
-
-The final decision is:
-
-`viewer capability` + `post.aiAssistantEnabled` + `meaningful content`
-
-`post.aiAssistantEnabled` must be treated as the already-merged, post-share snapshot from upstream sharing logic.
 
 ## Setup
 
@@ -52,6 +48,8 @@ Build the free Siyuan SPA viewer:
 cd apps/app
 bash script/siyuan.sh
 ```
+
+This script temporarily switches to `nuxt.siyuan.config.ts`, builds the free SPA viewer, and restores `nuxt.config.ts` automatically.
 
 Build the Node viewer:
 
