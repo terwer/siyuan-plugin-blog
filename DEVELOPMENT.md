@@ -67,6 +67,9 @@ docker push registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
 serve
 
 ```bash
+pnpm dev
+# same as: pnpm dev:app
+
 pnpm dev -F siyuan-blog
 # http://localhost:6808/plugins/siyuan-blog/app/#/share?id=20240408194841-jmgbco2&origin=http://192.168.3.3:6806&isSsr=false
 
@@ -98,6 +101,17 @@ pnpm build -F siyuan-blog -- --watch
 - Do not use the `siyuan` target to validate AI APIs or server AI routes.
 - AI verification should be done with `node`, `vercel`, or `cloudflare` viewer targets.
 - The free SPA generation path has been adjusted so that prerender no longer blocks distribution.
+
+### Root shortcuts
+
+- `pnpm dev`
+  Start `apps/app` from the monorepo root.
+- `pnpm dev:app`
+  Same as `pnpm dev`.
+- `pnpm dev:siyuan`
+  Start the `apps/siyuan` watcher from the monorepo root.
+- `pnpm dev:all`
+  Run all workspace `dev` tasks through turbo.
 
 ## Build
 

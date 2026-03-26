@@ -55,9 +55,8 @@ flowchart LR
 ## 服务商开发模式启动
 
 ```bash
-# cp .env .env
-# 修改 NUXT_PUBLIC_PROVIDER_URL，或者使用默认
-pnpm devApp
+# 在 monorepo 根目录直接启动 apps/app
+pnpm dev
 ```
 
 ## 服务商生产模式启动
@@ -86,6 +85,22 @@ pnpm packageNodeProvider
 ### `node` / `vercel` / `cloudflare`
 
 - 这三类是带 server 能力的查看页目标
+
+## 根目录常用命令
+
+```bash
+# 默认：在 monorepo 根目录启动 apps/app
+pnpm dev
+
+# 显式别名
+pnpm dev:app
+
+# 在 monorepo 根目录启动 Siyuan 插件 watch
+pnpm dev:siyuan
+
+# 通过 turbo 同时跑所有 workspace 的 dev 任务
+pnpm dev:all
+```
 
 ## 详细了解
 

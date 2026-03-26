@@ -51,9 +51,8 @@ flowchart LR
 ## Startup Via Node provider as debug
 
 ```bash
-# cp .env .env
-# change NUXT_PUBLIC_PROVIDER_URL or use default
-pnpm devApp
+# run apps/app from the monorepo root
+pnpm dev
 ```
 
 ## Startup Via Node provider
@@ -82,6 +81,22 @@ pnpm packageNodeProvider
 ### `node` / `vercel` / `cloudflare`
 
 - These are server-capable viewer targets
+
+## Root Monorepo Commands
+
+```bash
+# default: start apps/app from the monorepo root
+pnpm dev
+
+# explicit alias
+pnpm dev:app
+
+# start the Siyuan plugin watcher from the monorepo root
+pnpm dev:siyuan
+
+# run every workspace dev task through turbo
+pnpm dev:all
+```
 
 ## More
 

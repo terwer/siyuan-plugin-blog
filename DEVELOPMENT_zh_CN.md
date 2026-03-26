@@ -69,6 +69,9 @@ docker push registry.cn-shenzhen.aliyuncs.com/terwer/dm:node-18-alpine
 ### 启动开发服务器
 
 ```bash
+pnpm dev
+# 等价于：pnpm dev:app
+
 # 免费版 Siyuan SPA 查看页（按设计禁用 AI）
 pnpm build -F @terwer/share-pro-app -- --from siyuan
 pnpm build -F siyuan-blog
@@ -133,6 +136,17 @@ pnpm cloudflareBuild
 - 这个目标是免费版 SPA 查看页，不是带 server 的 AI 查看页
 - 不要用 `siyuan` 目标验证 AI API 或 server 路由
 - AI 能力验证应放在 `node`、`vercel`、`cloudflare` 目标下进行
+
+## 根目录快捷命令
+
+- `pnpm dev`
+  在 monorepo 根目录启动 `apps/app`
+- `pnpm dev:app`
+  与 `pnpm dev` 等价
+- `pnpm dev:siyuan`
+  在 monorepo 根目录启动 `apps/siyuan` 的 watcher
+- `pnpm dev:all`
+  通过 turbo 同时运行所有 workspace 的 `dev` 任务
 
 ## 脚本说明
 
