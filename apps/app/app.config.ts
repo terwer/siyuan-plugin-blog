@@ -86,6 +86,7 @@ export default defineAppConfig<AppConfig>({
   header: "",
   footer: "",
   shareTemplate: "[url]",
+  aiAssistantEnabled: true,
 
   theme: {
     mode: "light",

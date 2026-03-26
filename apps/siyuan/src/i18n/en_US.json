@@ -39,6 +39,8 @@
   "main.label.homePageId": "Home Page ID",
   "main.label.homePageId.placeholder": "ID of the home page document. Note: It must be a shared document",
   "main.label.lightTheme": "Light Theme",
+  "main.label.aiAssistantEnabled": "AI Assistant",
+  "main.label.aiAssistantEnabled.description": "Enable the right-side AI assistant panel independently from the document outline",
   "main.label.darkTheme": "Dark Theme",
   "blog.site.title": "Site Title",
   "blog.site.title.placeholder": "Enter the site title",

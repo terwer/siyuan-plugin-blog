@@ -39,6 +39,8 @@
   "main.label.homePageId": "主页ID",
   "main.label.homePageId.placeholder": "主页文档ID，注意：必须是已经分享过的",
   "main.label.lightTheme": "浅色主题",
+  "main.label.aiAssistantEnabled": "AI 助手",
+  "main.label.aiAssistantEnabled.description": "启用右侧 AI 助手面板（独立于文档大纲）",
   "main.label.darkTheme": "暗色主题",
   "blog.site.title": "站点标题",
   "blog.site.title.placeholder": "站点标题",

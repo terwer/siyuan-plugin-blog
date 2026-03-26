@@ -25,6 +25,7 @@ const setting = ref()
 const formData = reactive({
   siteUrl: undefined,
   homePageId: undefined,
+  aiAssistantEnabled: true,
   themes: {
     light: [
       {
@@ -96,6 +97,7 @@ onBeforeMount(async () => {
   setting.value = await getSetting()
   formData.siteUrl = setting.value?.siteUrl
   formData.homePageId = setting.value?.homePageId
+  formData.aiAssistantEnabled = setting.value?.aiAssistantEnabled !== false
   formData.lightTheme = setting.value?.theme?.lightTheme ?? "Zhihu"
   formData.darkTheme = setting.value?.theme?.darkTheme ?? "Zhihu"
 })
@@ -105,6 +107,7 @@ const onSubmit = async () => {
   try {
     setting.value.siteUrl = formData.siteUrl
     setting.value.homePageId = formData.homePageId
+    setting.value.aiAssistantEnabled = formData.aiAssistantEnabled
     setting.value.theme ||= {}
     setting.value.theme.lightTheme = formData.lightTheme
     setting.value.theme.darkTheme = formData.darkTheme
@@ -150,6 +153,19 @@ const onSubmit = async () => {
             {{ theme.label }}
           </option>
         </select>
+      </div>
+
+      <div class="form-item">
+        <label for="aiAssistantEnabled" class="form-label">{{ props.pluginInstance.i18n["main.label.aiAssistantEnabled"] }}</label>
+        <label class="checkbox-label" for="aiAssistantEnabled">
+          <input
+              id="aiAssistantEnabled"
+              v-model="formData.aiAssistantEnabled"
+              type="checkbox"
+              class="form-checkbox"
+          />
+          <span>{{ props.pluginInstance.i18n["main.label.aiAssistantEnabled.description"] }}</span>
+        </label>
       </div>
 
       <div class="form-item">
@@ -204,6 +220,18 @@ const onSubmit = async () => {
 .form-input:focus, .form-select:focus
   border-color #409eff
   outline none
+
+.checkbox-label
+  flex 1
+  display flex
+  align-items center
+  gap 8px
+  font-size 14px
+  color #666
+
+.form-checkbox
+  width 16px
+  height 16px
 
 .form-button
   padding 8px 16px

@@ -12,17 +12,17 @@
 import {
   Close,
   Promotion,
-  RefreshRight,
   Delete,
   QuestionFilled,
-  ChatLineRound,
   Setting,
   Loading,
+  DocumentChecked,
 } from "@element-plus/icons-vue"
-import { useAIAssistant, type AIAssistantConfig, type AIModelMode } from "~/composables/useAIAssistant"
+import { useAIAssistant, type AIAssistantConfig } from "~/composables/useAIAssistant"
 import { useAIUsage } from "~/composables/useAIUsage"
 import { useLute } from "~/composables/useLute"
 import { AI_SUMMARY_TERMS_KEY, AI_CUSTOM_CONFIG_KEY } from "~/utils/Constants"
+import { hasMeaningfulTextContent } from "~/utils/content"
 
 const props = defineProps<{
   title: string
@@ -35,6 +35,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const hasMeaningfulContent = computed(() => hasMeaningfulTextContent(props.content))
 
 // Lute Markdown 渲染器
 const { renderMarkdown } = useLute()
@@ -186,6 +187,10 @@ watch(() => config.mode, (newMode) => {
 
 // 检查是否可以使用 AI
 const canUseAI = computed(() => {
+  if (!hasMeaningfulContent.value) {
+    return false
+  }
+
   // custom 模式：只要有 API Key 就无限制
   if (config.mode === 'custom') {
     return !!config.apiKey?.trim()
@@ -428,13 +433,33 @@ const checkTermsOnClient = () => {
 
 // Auto-trigger on mount
 onMounted(() => {
+  if (!hasMeaningfulContent.value) {
+    return
+  }
+
   loadSavedConfig()
   // 立即检查条款状态
   checkTermsOnClient()
 })
 
+watch(hasMeaningfulContent, (available) => {
+  if (available) {
+    return
+  }
+
+  showConfig.value = false
+  showTermsDialog.value = false
+  pendingAIOperation = null
+  clearMessages()
+  emit('close')
+}, { immediate: true })
+
 // 额外保险：使用 watchEffect 确保状态正确
 watchEffect(() => {
+  if (!hasMeaningfulContent.value) {
+    return
+  }
+
   if (import.meta.client && !termsAccepted.value && !showTermsDialog.value) {
     // 如果既未同意也未显示弹窗，检查是否应该显示
     const hasAccepted = localStorage.getItem(AI_SUMMARY_TERMS_KEY) === "true"
@@ -448,7 +473,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="ai-panel">
+  <div v-if="hasMeaningfulContent" class="ai-panel">
     <!-- Header -->
     <div class="ai-panel-header">
       <div class="panel-header-actions">
