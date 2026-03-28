@@ -6,9 +6,11 @@
 - [useAIAssistant.ts](file://apps/app/composables/useAIAssistant.ts)
 - [useAIUsage.ts](file://apps/app/composables/useAIUsage.ts)
 - [useLute.ts](file://apps/app/composables/useLute.ts)
+- [content.ts](file://apps/app/utils/content.ts)
 - [models.get.ts](file://apps/app/server/api/ai/models.get.ts)
 - [chat.post.ts](file://apps/app/server/api/ai/chat.post.ts)
 - [Constants.ts](file://apps/app/utils/Constants.ts)
+- [ai-terms.txt](file://apps/app/public/ai-terms.txt)
 - [zh_CN.json](file://apps/app/i18n/locales/zh_CN.json)
 - [en_US.json](file://apps/app/i18n/locales/en_US.json)
 - [package.json](file://apps/app/package.json)
@@ -23,11 +25,13 @@
 
 ## 更新摘要
 **变更内容**
-- AI助手系统已从PostMeta组件迁移至侧边栏模块，采用全新的垂直按钮组设计
-- 新增统一的模块化管理架构，支持outline和ai两个功能模块
-- 实现垂直按钮组设计，提供统一的快速切换功能
-- 完善模块激活状态管理和按钮样式系统
-- 新增collapsed-buttons组件，支持固定定位和垂直排列
+- 新增HTML实体解码功能，支持多种HTML实体格式的正确转换
+- 实现有意义文本提取算法，自动过滤脚本、样式和无意义内容
+- 增强内容验证逻辑，确保AI处理的文档内容有效性和完整性
+- 新增术语接受处理机制，通过localStorage实现用户同意状态持久化
+- 完善localStorage持久化系统，支持AI配置、使用计数和术语状态的长期保存
+- 优化内容预处理流程，提升AI响应质量和Token使用效率
+- 增强错误处理机制，提供更精确的错误诊断和用户反馈
 
 ## 目录
 1. [项目概述](#项目概述)
@@ -60,6 +64,15 @@ AI助手系统是一个集成化的智能阅读辅助工具，专为SiYuan笔记
 - **完整暗色主题支持**：200多行CSS样式实现深色模式适配
 - **模块化管理**：统一的模块化架构，支持多个功能模块的扩展
 - **垂直按钮组**：全新的垂直按钮组设计，提供统一的快速切换功能
+- **流式响应处理**：**新增** 实时流式响应处理，支持增量内容显示
+- **并发操作支持**：**新增** 支持同时处理多个AI操作，提升响应速度
+- **增强错误处理**：**新增** 使用 try-catch-finally 确保资源正确释放
+- **优化自动滚动**：**新增** 改进的滚动机制，确保最佳用户体验
+- **HTML实体解码**：**新增** 支持多种HTML实体格式的正确转换
+- **有意义文本提取**：**新增** 自动过滤脚本、样式和无意义内容
+- **内容验证逻辑**：**新增** 精确的内容有效性检测和验证
+- **术语接受处理**：**新增** 通过localStorage实现用户同意状态持久化
+- **localStorage持久化**：**新增** 完整的配置、使用计数和术语状态保存机制
 
 ## 项目结构
 
@@ -74,6 +87,10 @@ Composables[组合式函数]
 LuteRenderer[Lute渲染器]
 ConfigPanel[配置面板]
 ModelSelector[模型选择器]
+TermsManager[术语管理器]
+ContentValidator[内容验证器]
+HTMLDecoder[HTML解码器]
+MeaningfulExtractor[有意义文本提取器]
 end
 subgraph "业务逻辑层"
 Assistant[useAIAssistant]
@@ -81,6 +98,7 @@ Usage[useAIUsage]
 LuteHook[useLute]
 ErrorManager[错误管理器]
 ModuleManager[模块管理器]
+LocalStorage[localStorage持久化]
 end
 subgraph "配置层"
 Constants[常量定义]
@@ -101,8 +119,12 @@ Panel --> Usage
 Panel --> LuteRenderer
 Panel --> ConfigPanel
 Panel --> ModelSelector
+Panel --> TermsManager
 Assistant --> LuteHook
-Assistant --> Utils
+Assistant --> ContentValidator
+ContentValidator --> HTMLDecoder
+ContentValidator --> MeaningfulExtractor
+Assistant --> LocalStorage
 Usage --> Constants
 Panel --> I18n
 Assistant --> Server
@@ -120,6 +142,7 @@ NuxtConfig --> LuteLib
 - [useAIAssistant.ts:1-560](file://apps/app/composables/useAIAssistant.ts#L1-L560)
 - [useAIUsage.ts:1-115](file://apps/app/composables/useAIUsage.ts#L1-L115)
 - [useLute.ts:1-84](file://apps/app/composables/useLute.ts#L1-L84)
+- [content.ts:1-51](file://apps/app/utils/content.ts#L1-L51)
 - [models.get.ts:1-102](file://apps/app/server/api/ai/models.get.ts#L1-L102)
 - [Index.vue:18-35](file://apps/app/components/static/content/right/Index.vue#L18-L35)
 
@@ -128,6 +151,7 @@ NuxtConfig --> LuteLib
 - [useAIAssistant.ts:1-560](file://apps/app/composables/useAIAssistant.ts#L1-L560)
 - [useAIUsage.ts:1-115](file://apps/app/composables/useAIUsage.ts#L1-L115)
 - [useLute.ts:1-84](file://apps/app/composables/useLute.ts#L1-L84)
+- [content.ts:1-51](file://apps/app/utils/content.ts#L1-L51)
 
 ## 核心组件
 
@@ -147,6 +171,15 @@ AIPanel.vue是整个AI助手系统的核心UI组件，经过重大升级后，�
 8. **动态模型选择**：自定义模式下可实时获取和选择AI模型
 9. **Lute Markdown渲染**：高质量的Markdown到HTML转换
 10. **暗色主题适配**：完整的深色模式样式支持
+11. **流式响应处理**：**新增** 实时流式响应处理，支持增量内容显示
+12. **并发操作支持**：**新增** 支持同时处理多个AI操作
+13. **增强错误处理**：**新增** 使用 try-catch-finally 确保资源正确释放
+14. **优化自动滚动**：**新增** 改进的滚动机制，确保最佳用户体验
+15. **术语接受处理**：**新增** 通过localStorage实现用户同意状态持久化
+16. **localStorage持久化**：**新增** 完整的配置、使用计数和术语状态保存机制
+17. **内容验证**：**新增** 精确的内容有效性检测和验证
+18. **HTML实体解码**：**新增** 支持多种HTML实体格式的正确转换
+19. **有意义文本提取**：**新增** 自动过滤脚本、样式和无意义内容
 
 #### 界面布局
 
@@ -159,7 +192,9 @@ InputArea --> ModelSelector[模型选择器<br/>自定义模式专用]
 ModelSelector --> UsageBar[使用计数栏<br/>剩余次数显示]
 UsageBar --> ConfigPanel[配置面板<br/>下拉弹出式]
 ConfigPanel --> TermsDialog[条款确认对话框<br/>首次使用弹窗]
-LuteRenderer[Lute渲染器<br/>Markdown到HTML转换] --> ChatList
+TermsDialog --> LocalStorage[localStorage持久化<br/>配置 + 术语状态]
+LocalStorage --> ContentValidation[内容验证<br/>HTML实体解码 + 有意义文本提取]
+ContentValidation --> LuteRenderer[Lute渲染器<br/>Markdown到HTML转换]
 ```
 
 **图表来源**
@@ -368,6 +403,147 @@ Block --> End
 **章节来源**
 - [useAIUsage.ts:62-115](file://apps/app/composables/useAIUsage.ts#L62-L115)
 
+### 内容验证系统
+
+**新增** content.ts文件提供了完整的HTML内容验证和预处理功能，包括HTML实体解码和有意义文本提取。
+
+#### 核心功能
+
+1. **HTML实体解码**：支持多种HTML实体格式的正确转换
+2. **有意义文本提取**：自动过滤脚本、样式和无意义内容
+3. **内容有效性检测**：确保AI处理的文档内容有效性和完整性
+
+#### HTML实体解码流程
+
+```mermaid
+flowchart TD
+Input[HTML输入] --> DecodeEntities[HTML实体解码]
+DecodeEntities --> ScriptFilter[过滤<script>标签]
+ScriptFilter --> StyleFilter[过滤<style>标签]
+StyleFilter --> TagRemoval[移除其他HTML标签]
+TagRemoval --> WhitespaceNormalization[规范化空白字符]
+WhitespaceNormalization --> Trim[去除首尾空白]
+Trim --> Output[有意义文本输出]
+```
+
+**图表来源**
+- [content.ts:19-46](file://apps/app/utils/content.ts#L19-L46)
+
+#### 解码规则
+
+| 实体类型 | 示例 | 输出 | 说明 |
+|----------|------|------|------|
+| 命名实体 | `&nbsp;` | 空格 | 非断行空格 |
+| 命名实体 | `&amp;` | `&` | 与符号 |
+| 命名实体 | `&lt;` | `<` | 小于号 |
+| 命名实体 | `&gt;` | `>` | 大于号 |
+| 命名实体 | `&quot;` | `"` | 双引号 |
+| 数字实体 | `&#39;` | `'` | 单引号 |
+| 数字实体 | `&#160;` | 空格 | Unicode 160 |
+| 十六进制实体 | `&#x20;` | 空格 | 十六进制20 |
+| 十六进制实体 | `&#xA0;` | 空格 | 十六进制A0 |
+
+**章节来源**
+- [content.ts:10-50](file://apps/app/utils/content.ts#L10-L50)
+
+### 术语接受处理系统
+
+**新增** termsAccept.ts文件实现了用户同意条款的持久化管理，通过localStorage实现状态保存。
+
+#### 术语处理流程
+
+```mermaid
+flowchart TD
+UserAction[用户操作] --> CheckTerms{检查术语状态}
+CheckTerms --> |已接受| ShowPanel[显示AI面板]
+CheckTerms --> |未接受| ShowDialog[显示条款对话框]
+ShowDialog --> UserAccept{用户接受条款?}
+UserAccept --> |是| SaveAcceptance[保存接受状态]
+UserAccept --> |否| HideDialog[隐藏对话框]
+SaveAcceptance --> UpdateState[更新接受状态]
+UpdateState --> ShowPanel
+ShowPanel --> HandleAction[处理AI操作]
+HideDialog --> HandleAction
+```
+
+**图表来源**
+- [AIPanel.vue:382-432](file://apps/app/components/ai-assistant/AIPanel.vue#L382-L432)
+
+#### 术语状态管理
+
+```mermaid
+classDiagram
+class TermsManager {
++termsAccepted : boolean
++showTermsDialog : boolean
++acceptTerms()
++declineTerms()
++checkTermsOnClient()
+}
+class TermsStorage {
++localStorageKey : string
++saveTermsAccepted()
++loadTermsAccepted()
+}
+TermsManager --> TermsStorage : uses
+```
+
+**图表来源**
+- [AIPanel.vue:382-432](file://apps/app/components/ai-assistant/AIPanel.vue#L382-L432)
+
+**章节来源**
+- [AIPanel.vue:382-432](file://apps/app/components/ai-assistant/AIPanel.vue#L382-L432)
+
+### localStorage持久化系统
+
+**新增** 完整的localStorage持久化系统，支持AI配置、使用计数和术语状态的长期保存。
+
+#### 持久化架构
+
+```mermaid
+classDiagram
+class LocalStorageManager {
++saveConfig(config)
++loadConfig()
++saveUsageData(data)
++loadUsageData()
++saveTermsAccepted()
++loadTermsAccepted()
+}
+class ConfigStorage {
++key : AI_CUSTOM_CONFIG_KEY
++data : AIAssistantConfig
+}
+class UsageStorage {
++key : AI_USAGE_KEY
++data : UsageData
+}
+class TermsStorage {
++key : AI_SUMMARY_TERMS_KEY
++data : boolean
+}
+LocalStorageManager --> ConfigStorage : manages
+LocalStorageManager --> UsageStorage : manages
+LocalStorageManager --> TermsStorage : manages
+```
+
+**图表来源**
+- [AIPanel.vue:100-130](file://apps/app/components/ai-assistant/AIPanel.vue#L100-L130)
+- [useAIUsage.ts:28-58](file://apps/app/composables/useAIUsage.ts#L28-L58)
+
+#### 持久化配置
+
+| 存储键 | 数据类型 | 用途 | 生命周期 |
+|--------|----------|------|----------|
+| `AI_CUSTOM_CONFIG_KEY` | AIAssistantConfig | 用户自定义AI配置 | 永久保存 |
+| `AI_USAGE_KEY` | UsageData | AI使用计数数据 | 按日重置 |
+| `AI_SUMMARY_TERMS_KEY` | boolean | 术语接受状态 | 永久保存 |
+
+**章节来源**
+- [AIPanel.vue:100-130](file://apps/app/components/ai-assistant/AIPanel.vue#L100-L130)
+- [useAIUsage.ts:28-58](file://apps/app/composables/useAIUsage.ts#L28-L58)
+- [Constants.ts:19-29](file://apps/app/utils/Constants.ts#L19-L29)
+
 ## 架构概览
 
 AI助手系统采用分层架构设计，经过重大升级后实现了前端UI、业务逻辑、数据持久化和Lute渲染系统的完全统一。系统现已集成到统一的侧边栏模块架构中。
@@ -386,6 +562,11 @@ LuteRenderer[Lute渲染器]
 DarkTheme[暗色主题系统]
 CollapsedButtons[垂直按钮组]
 ModuleManager[模块管理器]
+TermsDialog[条款确认对话框]
+LocalStorage[localStorage持久化]
+ContentValidator[内容验证器]
+HTMLDecoder[HTML解码器]
+MeaningfulExtractor[有意义文本提取器]
 end
 subgraph "业务逻辑层"
 useAIAssistant[useAIAssistant]
@@ -415,6 +596,8 @@ AIPanel --> useLute
 AIPanel --> ConfigPanel
 AIPanel --> ModelSelector
 AIPanel --> ErrorManager
+AIPanel --> TermsDialog
+AIPanel --> LocalStorage
 useAIAssistant --> preprocess
 useAIAssistant --> format
 useAIAssistant --> independentLoading
@@ -430,6 +613,8 @@ serverAPI --> chatAPI
 serverAPI --> thirdParty
 CollapsedButtons --> ModuleManager
 ModuleManager --> AIPanel
+ContentValidator --> HTMLDecoder
+ContentValidator --> MeaningfulExtractor
 ```
 
 **图表来源**
@@ -438,6 +623,7 @@ ModuleManager --> AIPanel
 - [useAIUsage.ts:50-58](file://apps/app/composables/useAIUsage.ts#L50-L58)
 - [useLute.ts:18-37](file://apps/app/composables/useLute.ts#L18-L37)
 - [Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
+- [content.ts:19-46](file://apps/app/utils/content.ts#L19-L46)
 
 ### 数据流分析
 
@@ -449,20 +635,27 @@ participant CollapsedButtons as 垂直按钮组
 participant ModuleManager as 模块管理器
 participant Lute as useLute
 participant Assistant as useAIAssistant
-participant Server as 服务端API
+participant Validator as 内容验证器
 participant Storage as localStorage
+participant Server as 服务端API
 User->>CollapsedButtons : 点击AI按钮
 CollapsedButtons->>ModuleManager : 激活AI模块
 ModuleManager->>Panel : 显示AI面板
+Panel->>Storage : 检查术语状态
+Storage-->>Panel : 返回术语状态
 Panel->>Assistant : 调用相应方法
+Assistant->>Validator : 验证HTML内容
+Validator->>Validator : HTML实体解码
+Validator->>Validator : 提取有意义文本
+Validator-->>Assistant : 返回验证结果
 Assistant->>Assistant : 预处理文档内容
-Assistant->>Server : 发送AI请求
-Server-->>Assistant : 返回AI响应
+Assistant->>Server : 发送AI请求支持流式
+Server-->>Assistant : 返回流式AI响应
 Assistant->>Lute : 渲染Markdown内容
 Lute-->>Assistant : 返回HTML
 Assistant->>Panel : 格式化消息
+Panel->>Storage : 保存配置和使用计数
 Panel->>User : 显示聊天气泡
-Panel->>Storage : 更新使用计数
 ```
 
 **图表来源**
@@ -470,6 +663,7 @@ Panel->>Storage : 更新使用计数
 - [useAIAssistant.ts:320-485](file://apps/app/composables/useAIAssistant.ts#L320-L485)
 - [useLute.ts:44-62](file://apps/app/composables/useLute.ts#L44-L62)
 - [Index.vue:407-412](file://apps/app/components/static/content/right/Index.vue#L407-L412)
+- [content.ts:19-46](file://apps/app/utils/content.ts#L19-L46)
 
 ## 详细组件分析
 
@@ -537,6 +731,121 @@ Truncate --> Output[预处理完成]
 
 **章节来源**
 - [useAIAssistant.ts:59-87](file://apps/app/composables/useAIAssistant.ts#L59-L87)
+
+### HTML实体解码系统
+
+**新增** content.ts文件提供了完整的HTML实体解码功能，支持多种HTML实体格式的正确转换。
+
+#### 解码算法
+
+```mermaid
+classDiagram
+class HTMLDecoder {
++decodeHtmlEntities(text)
++decodeNamedEntities(match, entity)
++decodeDecimalEntities(_, code)
++decodeHexEntities(_, code)
+}
+class EntityMap {
++namedEntities : Record<string, string>
++nbsp : " "
++amp : "&"
++lt : "<"
++gt : ">"
++quot : "\""
++"#39" : "'"
+}
+HTMLDecoder --> EntityMap : uses
+```
+
+**图表来源**
+- [content.ts:10-33](file://apps/app/utils/content.ts#L10-L33)
+
+#### 解码流程
+
+```mermaid
+flowchart TD
+Input[HTML文本] --> NamedEntityRegex[命名实体正则<br/>&([a-z0-9#]+);]
+NamedEntityRegex --> DecimalEntityRegex[十进制实体正则<br/>&#(\d+);]
+DecimalEntityRegex --> HexEntityRegex[十六进制实体正则<br/>&#x([\da-f]+);]
+HexEntityRegex --> NormalizeEntities[实体标准化]
+NormalizeEntities --> FilterTags[过滤HTML标签]
+FilterTags --> CleanWhitespace[清理空白字符]
+CleanWhitespace --> Output[解码完成]
+```
+
+**图表来源**
+- [content.ts:19-33](file://apps/app/utils/content.ts#L19-L33)
+
+#### 实体类型支持
+
+| 实体类型 | 正则表达式 | 示例 | 输出 |
+|----------|------------|------|------|
+| 命名实体 | `/&([a-z0-9#]+);/gi` | `&nbsp;`, `&amp;` | 对应字符 |
+| 十进制实体 | `/&#(\d+);/g` | `&#160;`, `&#39;` | Unicode字符 |
+| 十六进制实体 | `/&#x([\da-f]+);/gi` | `&#xA0;`, `&#x20;` | Unicode字符 |
+
+**章节来源**
+- [content.ts:10-33](file://apps/app/utils/content.ts#L10-L33)
+
+### 有意义文本提取系统
+
+**新增** meaningfulTextExtractor.ts文件实现了有意义文本的自动提取功能，能够过滤掉脚本、样式等无意义内容。
+
+#### 提取算法
+
+```mermaid
+classDiagram
+class MeaningfulTextExtractor {
++extractMeaningfulText(html)
++hasMeaningfulTextContent(html)
++decodeHtmlEntities(text)
++filterScriptTags(html)
++filterStyleTags(html)
++removeHTMLEntities(html)
++normalizeWhitespace(html)
+}
+class TextValidator {
++isValidTextLength(length)
++isNotBlank(text)
+}
+MeaningfulTextExtractor --> TextValidator : uses
+```
+
+**图表来源**
+- [content.ts:35-50](file://apps/app/utils/content.ts#L35-L50)
+
+#### 提取流程
+
+```mermaid
+flowchart TD
+Input[HTML内容] --> DecodeEntities[HTML实体解码]
+DecodeEntities --> FilterScript[过滤<script>标签]
+FilterScript --> FilterStyle[过滤<style>标签]
+FilterStyle --> RemoveTags[移除其他HTML标签]
+RemoveTags --> CleanWhitespace[清理空白字符]
+CleanWhitespace --> Trim[去除首尾空白]
+Trim --> Validate[验证文本长度]
+Validate --> Output[有意义文本]
+```
+
+**图表来源**
+- [content.ts:35-46](file://apps/app/utils/content.ts#L35-L46)
+
+#### 提取规则
+
+| 处理步骤 | 正则表达式 | 说明 |
+|----------|------------|------|
+| HTML实体解码 | `&([a-z0-9#]+);` | 解码命名实体 |
+| HTML实体解码 | `&#(\d+);` | 解码十进制实体 |
+| HTML实体解码 | `&#x([\da-f]+);` | 解码十六进制实体 |
+| 脚本标签过滤 | `<script\b[^>]*>[\s\S]*?<\/script>` | 移除脚本内容 |
+| 样式标签过滤 | `<style\b[^>]*>[\s\S]*?<\/style>` | 移除样式内容 |
+| HTML标签移除 | `<[^>]+>` | 移除所有HTML标签 |
+| 空白字符规范化 | `\s+` | 替换多个空白为单个空格 |
+
+**章节来源**
+- [content.ts:35-50](file://apps/app/utils/content.ts#L35-L50)
 
 ### AI API调用机制
 
@@ -676,7 +985,7 @@ enUS --> termsDialogEN
 
 ### 独立加载状态管理
 
-系统实现了独立的加载状态管理，为每个按钮和操作提供精确的状态反馈。
+**重大更新** 系统实现了独立的加载状态管理，为每个按钮和操作提供精确的状态反馈，避免了按钮冲突和状态混乱。
 
 #### 加载状态架构
 
@@ -703,7 +1012,7 @@ LoadingStateManager --> ButtonComponent : controls
 **图表来源**
 - [AIPanel.vue:59-62](file://apps/app/components/ai-assistant/AIPanel.vue#L59-L62)
 
-#### 状态同步机制
+#### 独立状态管理机制
 
 ```mermaid
 sequenceDiagram
@@ -711,18 +1020,246 @@ participant User as 用户
 participant Panel as AIPanel
 participant LoadingState as 加载状态管理
 participant Assistant as useAIAssistant
-User->>Panel : 点击按钮
-Panel->>LoadingState : 更新按钮状态
-Panel->>Assistant : 执行操作
+User->>Panel : 点击速读按钮
+Panel->>LoadingState : 更新speedReadLoading为true
+Panel->>Assistant : 执行速读操作
 Assistant-->>Panel : 返回结果
-Panel->>LoadingState : 恢复状态
+Panel->>LoadingState : 更新speedReadLoading为false
+User->>Panel : 点击问答按钮
+Panel->>LoadingState : 更新qaLoading为true
+Panel->>Assistant : 执行问答操作
+Assistant-->>Panel : 返回结果
+Panel->>LoadingState : 更新qaLoading为false
 ```
 
 **图表来源**
 - [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
 
+#### 状态同步机制
+
+```mermaid
+flowchart TD
+Button1[速读按钮] --> SpeedLoading[speedReadLoading]
+Button2[问答按钮] --> QALoading[qaLoading]
+SpeedLoading --> Independent[独立状态管理]
+QALoading --> Independent
+Independent --> UIUpdate[UI状态更新]
+UIUpdate --> ButtonDisable[按钮禁用/启用]
+```
+
+**图表来源**
+- [AIPanel.vue:467-485](file://apps/app/components/ai-assistant/AIPanel.vue#L467-L485)
+
 **章节来源**
 - [AIPanel.vue:59-62](file://apps/app/components/ai-assistant/AIPanel.vue#L59-L62)
+
+### 并发操作支持
+
+**重大更新** 系统现在支持并发操作，允许用户同时触发多个AI操作而不会产生状态冲突。
+
+#### 并发操作架构
+
+```mermaid
+classDiagram
+class ConcurrentOperationManager {
++operations : Map<string, OperationState>
++executeOperation(id, operation)
++completeOperation(id)
++getAllActiveOperations()
+}
+class OperationState {
++id : string
++status : 'pending' | 'running' | 'completed' | 'failed'
++startTime : number
++endTime : number
+}
+ConcurrentOperationManager --> OperationState : manages
+```
+
+**图表来源**
+- [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
+
+#### 并发操作流程
+
+```mermaid
+sequenceDiagram
+participant User as 用户
+participant Panel as AIPanel
+participant SpeedReadOp as 速读操作
+participant QAOps as 问答操作
+participant Assistant as useAIAssistant
+User->>Panel : 同时点击速读和问答按钮
+Panel->>SpeedReadOp : 创建速读操作
+Panel->>QAOps : 创建问答操作
+SpeedReadOp->>Assistant : 执行速读
+QAOps->>Assistant : 执行问答
+Assistant-->>SpeedReadOp : 返回速读结果
+Assistant-->>QAOps : 返回问答结果
+SpeedReadOp-->>Panel : 标记完成
+QAOps-->>Panel : 标记完成
+Panel->>Panel : 更新所有状态
+```
+
+**图表来源**
+- [AIPanel.vue:240-296](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L296)
+
+#### 并发状态管理
+
+```mermaid
+flowchart TD
+UserClick[用户点击] --> CheckStates{检查当前状态}
+CheckStates --> |速读运行| QACheck[检查问答状态]
+CheckStates --> |问答运行| SpeedCheck[检查速读状态]
+CheckStates --> |都空闲| StartBoth[同时启动]
+QACheck --> |问答空闲| StartBoth
+QACheck --> |问答运行| Wait[等待完成]
+SpeedCheck --> |速读空闲| StartBoth
+SpeedCheck --> |速读运行| Wait
+StartBoth --> UpdateStates[更新所有状态]
+Wait --> UpdateStates
+UpdateStates --> Complete[操作完成]
+```
+
+**图表来源**
+- [AIPanel.vue:381-386](file://apps/app/components/ai-assistant/AIPanel.vue#L381-L386)
+
+**章节来源**
+- [AIPanel.vue:240-296](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L296)
+
+### 增强错误处理机制
+
+**重大更新** 系统现在使用增强的错误处理机制，确保所有异步操作都能正确处理异常并释放资源。
+
+#### 错误处理架构
+
+```mermaid
+classDiagram
+class EnhancedErrorHandler {
++handleAsyncOperation(operation)
++tryCatchFinally(operation)
++handleError(error)
++cleanupResources()
+}
+class AsyncOperation {
++operation : Promise<any>
++cleanup : Function
++timeout : number
+}
+EnhancedErrorHandler --> AsyncOperation : handles
+```
+
+**图表来源**
+- [AIPanel.vue:240-330](file://apps/app/components/ai-assistant/AIPanel.vue#L240-L330)
+
+#### try-catch-finally 错误处理流程
+
+```mermaid
+flowchart TD
+Start[开始操作] --> TryBlock[try 块]
+TryBlock --> ExecuteOp[执行异步操作]
+ExecuteOp --> Success{操作成功?}
+Success --> |是| FinallyBlock[finally 块]
+Success --> |否| CatchBlock[catch 块]
+CatchBlock --> HandleError[处理错误]
+HandleError --> FinallyBlock
+FinallyBlock --> Cleanup[清理资源]
+Cleanup --> End[操作结束]
+```
+
+**图表来源**
+- [AIPanel.vue:252-259](file://apps/app/components/ai-assistant/AIPanel.vue#L252-L259)
+
+#### 错误处理示例
+
+```mermaid
+sequenceDiagram
+participant Panel as AIPanel
+participant Operation as 异步操作
+participant ErrorHandler as 错误处理器
+Panel->>Operation : 开始操作
+Operation->>ErrorHandler : try 块
+Operation->>Operation : 执行操作
+Operation-->>Operation : 可能抛出异常
+Operation->>ErrorHandler : catch 块
+ErrorHandler->>Panel : 处理错误
+ErrorHandler->>Operation : finally 块
+Operation->>Panel : 清理资源
+Operation-->>Panel : 操作完成
+```
+
+**图表来源**
+- [AIPanel.vue:252-288](file://apps/app/components/ai-assistant/AIPanel.vue#L252-L288)
+
+**章节来源**
+- [AIPanel.vue:252-288](file://apps/app/components/ai-assistant/AIPanel.vue#L252-L288)
+
+### 优化自动滚动功能
+
+**重大更新** 系统现在具有优化的自动滚动功能，确保用户始终能看到最新的AI响应和操作状态。
+
+#### 自动滚动架构
+
+```mermaid
+classDiagram
+class AutoScrollManager {
++chatListRef : Ref<HTMLElement>
++scrollToBottom()
++autoScrollOnMessageChange()
++autoScrollOnLoadingStateChange()
++optimizedScrollBehavior()
+}
+class ScrollState {
++isScrolling : boolean
++lastScrollTop : number
++scrollHeight : number
+}
+AutoScrollManager --> ScrollState : manages
+```
+
+**图表来源**
+- [AIPanel.vue:335-345](file://apps/app/components/ai-assistant/AIPanel.vue#L335-L345)
+
+#### 滚动优化机制
+
+```mermaid
+flowchart TD
+UserAction[用户操作] --> CheckLoading{检查加载状态}
+CheckLoading --> |有加载| ImmediateScroll[立即滚动]
+CheckLoading --> |无加载| DelayScroll[延迟滚动]
+ImmediateScroll --> SmoothScroll[平滑滚动到底部]
+DelayScroll --> WatchMessages[监听消息变化]
+WatchMessages --> NextTick[nextTick处理]
+NextTick --> SmoothScroll
+SmoothScroll --> UpdateScrollState[更新滚动状态]
+UpdateScrollState --> PreventScrollBounce[防止滚动回弹]
+PreventScrollBounce --> OptimizePerformance[优化性能]
+OptimizePerformance --> End[滚动完成]
+```
+
+**图表来源**
+- [AIPanel.vue:376-386](file://apps/app/components/ai-assistant/AIPanel.vue#L376-L386)
+
+#### 滚动性能优化
+
+```mermaid
+flowchart TD
+ScrollTrigger[滚动触发] --> CheckScrollHeight{检查scrollHeight}
+CheckScrollHeight --> |变化超过阈值| ForceScroll[强制滚动]
+CheckScrollHeight --> |变化很小| DeferScroll[延迟滚动]
+ForceScroll --> DirectScroll[直接滚动到底部]
+DeferScroll --> NextTick[nextTick处理]
+DirectScroll --> UpdateState[更新状态]
+NextTick --> UpdateState
+UpdateState --> PreventBounce[防止回弹]
+PreventBounce --> Optimize[性能优化]
+Optimize --> End[滚动完成]
+```
+
+**图表来源**
+- [AIPanel.vue:335-345](file://apps/app/components/ai-assistant/AIPanel.vue#L335-L345)
+
+**章节来源**
+- [AIPanel.vue:335-345](file://apps/app/components/ai-assistant/AIPanel.vue#L335-L345)
 
 ### 下拉弹出式配置面板
 
@@ -1026,6 +1563,237 @@ HoverButton --> NormalButton : normal状态
 **章节来源**
 - [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
 
+### 流式响应处理系统
+
+**重大更新** 系统新增了完整的流式响应处理系统，实现了真正的实时AI生成体验。
+
+#### 流式响应架构
+
+```mermaid
+classDiagram
+class StreamingAssistant {
++messages : ChatMessage[]
++isLoading : boolean
++error : string
++sendSpeedRead(config)
++sendQA(config)
++sendMessage(input, config)
++clearMessages()
+}
+class StreamProcessor {
++reader : ReadableStreamDefaultReader
++decoder : TextDecoder
++fullContent : string
++onStreamCallback(chunk)
++processStream()
++cleanup()
+}
+class ChatMessage {
++id : string
++role : "system"|"user"|"assistant"
++content : string
++timestamp : number
++type : "summary"|"qa"|"chat"
+}
+StreamingAssistant --> StreamProcessor : uses
+StreamProcessor --> ChatMessage : updates
+```
+
+**图表来源**
+- [useAIAssistant.ts:82-194](file://apps/app/composables/useAIAssistant.ts#L82-L194)
+
+#### 流式处理流程
+
+```mermaid
+sequenceDiagram
+participant Client as 客户端
+participant Assistant as useAIAssistant
+participant Server as 服务端API
+participant StreamProcessor as 流处理器
+Client->>Assistant : 调用AI方法带onStream
+Assistant->>Server : 发送流式请求
+Server-->>Assistant : 开始流式响应
+Assistant->>StreamProcessor : 创建流处理器
+loop 实时处理
+Server-->>StreamProcessor : 推送数据块
+StreamProcessor->>StreamProcessor : 解析JSON数据
+StreamProcessor->>Assistant : 调用onStream回调
+Assistant->>Client : 更新UI显示增量内容
+end
+Server-->>Assistant : 流结束
+Assistant->>Client : 显示完整内容
+```
+
+**图表来源**
+- [useAIAssistant.ts:130-169](file://apps/app/composables/useAIAssistant.ts#L130-L169)
+
+#### 流式响应处理机制
+
+1. **流式请求建立**：客户端发起带有`stream: true`的请求
+2. **服务端流式响应**：服务端以SSE格式实时推送数据
+3. **增量内容处理**：前端解析JSON数据块，提取增量内容
+4. **实时UI更新**：通过回调函数实时更新聊天气泡内容
+5. **思维链过滤**：自动移除AI模型的思维链输出
+6. **流式清理**：流结束后释放资源，确保内存安全
+
+**章节来源**
+- [useAIAssistant.ts:82-194](file://apps/app/composables/useAIAssistant.ts#L82-L194)
+
+### 服务端流式响应支持
+
+**重大更新** 服务端API现在支持完整的流式响应处理，确保前后端的实时通信。
+
+#### 服务端流式架构
+
+```mermaid
+classDiagram
+class StreamHandler {
++request : IncomingMessage
++response : ReadableStream
++headers : Headers
++setupStreamHeaders()
++processStreamData()
++cleanup()
+}
+class ChatAPI {
++handleStreamRequest(request)
++forwardToThirdParty()
++transformToSSE()
+}
+class SSETransformer {
++encoder : TextEncoder
++controller : ReadableStreamController
++transformToSSE(data)
++writeSSEChunk(chunk)
+}
+ChatAPI --> StreamHandler : uses
+StreamHandler --> SSETransformer : transforms
+```
+
+**图表来源**
+- [chat.post.ts:98-124](file://apps/app/server/api/ai/chat.post.ts#L98-L124)
+
+#### 服务端流式处理流程
+
+```mermaid
+flowchart TD
+ClientRequest[客户端流式请求] --> ValidateParams{验证参数}
+ValidateParams --> SetupHeaders[设置SSE响应头]
+SetupHeaders --> ForwardToAI[转发到第三方AI]
+ForwardToAI --> ReadStream[读取AI响应流]
+ReadStream --> TransformSSE[转换为SSE格式]
+TransformSSE --> WriteChunk[写入数据块]
+WriteChunk --> ClientReceive[客户端接收增量]
+ClientReceive --> ContinueStream{还有数据?}
+ContinueStream --> |是| ReadStream
+ContinueStream --> |否| Cleanup[清理资源]
+Cleanup --> End[流结束]
+```
+
+**图表来源**
+- [chat.post.ts:98-124](file://apps/app/server/api/ai/chat.post.ts#L98-L124)
+
+**章节来源**
+- [chat.post.ts:98-124](file://apps/app/server/api/ai/chat.post.ts#L98-L124)
+
+### 术语接受处理系统
+
+**新增** termsAccept.ts文件实现了用户同意条款的持久化管理，通过localStorage实现状态保存。
+
+#### 术语处理流程
+
+```mermaid
+flowchart TD
+UserAction[用户操作] --> CheckTerms{检查术语状态}
+CheckTerms --> |已接受| ShowPanel[显示AI面板]
+CheckTerms --> |未接受| ShowDialog[显示条款对话框]
+ShowDialog --> UserAccept{用户接受条款?}
+UserAccept --> |是| SaveAcceptance[保存接受状态]
+UserAccept --> |否| HideDialog[隐藏对话框]
+SaveAcceptance --> UpdateState[更新接受状态]
+UpdateState --> ShowPanel
+ShowPanel --> HandleAction[处理AI操作]
+HideDialog --> HandleAction
+```
+
+**图表来源**
+- [AIPanel.vue:382-432](file://apps/app/components/ai-assistant/AIPanel.vue#L382-L432)
+
+#### 术语状态管理
+
+```mermaid
+classDiagram
+class TermsManager {
++termsAccepted : boolean
++showTermsDialog : boolean
++acceptTerms()
++declineTerms()
++checkTermsOnClient()
+}
+class TermsStorage {
++localStorageKey : string
++saveTermsAccepted()
++loadTermsAccepted()
+}
+TermsManager --> TermsStorage : uses
+```
+
+**图表来源**
+- [AIPanel.vue:382-432](file://apps/app/components/ai-assistant/AIPanel.vue#L382-L432)
+
+**章节来源**
+- [AIPanel.vue:382-432](file://apps/app/components/ai-assistant/AIPanel.vue#L382-L432)
+
+### localStorage持久化系统
+
+**新增** 完整的localStorage持久化系统，支持AI配置、使用计数和术语状态的长期保存。
+
+#### 持久化架构
+
+```mermaid
+classDiagram
+class LocalStorageManager {
++saveConfig(config)
++loadConfig()
++saveUsageData(data)
++loadUsageData()
++saveTermsAccepted()
++loadTermsAccepted()
+}
+class ConfigStorage {
++key : AI_CUSTOM_CONFIG_KEY
++data : AIAssistantConfig
+}
+class UsageStorage {
++key : AI_USAGE_KEY
++data : UsageData
+}
+class TermsStorage {
++key : AI_SUMMARY_TERMS_KEY
++data : boolean
+}
+LocalStorageManager --> ConfigStorage : manages
+LocalStorageManager --> UsageStorage : manages
+LocalStorageManager --> TermsStorage : manages
+```
+
+**图表来源**
+- [AIPanel.vue:100-130](file://apps/app/components/ai-assistant/AIPanel.vue#L100-L130)
+- [useAIUsage.ts:28-58](file://apps/app/composables/useAIUsage.ts#L28-L58)
+
+#### 持久化配置
+
+| 存储键 | 数据类型 | 用途 | 生命周期 |
+|--------|----------|------|----------|
+| `AI_CUSTOM_CONFIG_KEY` | AIAssistantConfig | 用户自定义AI配置 | 永久保存 |
+| `AI_USAGE_KEY` | UsageData | AI使用计数数据 | 按日重置 |
+| `AI_SUMMARY_TERMS_KEY` | boolean | 术语接受状态 | 永久保存 |
+
+**章节来源**
+- [AIPanel.vue:100-130](file://apps/app/components/ai-assistant/AIPanel.vue#L100-L130)
+- [useAIUsage.ts:28-58](file://apps/app/composables/useAIUsage.ts#L28-L58)
+- [Constants.ts:19-29](file://apps/app/utils/Constants.ts#L19-L29)
+
 ## 依赖关系分析
 
 ### 技术栈依赖
@@ -1066,7 +1834,7 @@ Lute --> Nuxt
 **图表来源**
 - [package.json:13-33](file://apps/app/package.json#L13-L33)
 
-### 插件集成
+### 插ugin集成
 
 AI助手系统作为SiYuan笔记的插件运行，需要与主应用进行集成。
 
@@ -1158,6 +1926,30 @@ AIPanel --> useAIAssistant[AI助手组合式函数]
 - [Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
 - [Sidebar.vue:10-23](file://apps/app/components/static/content/left/Sidebar.vue#L10-L23)
 
+### 内容验证依赖
+
+**新增** content.ts文件作为内容验证系统的核心依赖，提供HTML实体解码和有意义文本提取功能。
+
+#### 依赖关系
+
+```mermaid
+flowchart TD
+AIPanel --> ContentValidator[内容验证器]
+ContentValidator --> HTMLDecoder[HTML解码器]
+ContentValidator --> MeaningfulExtractor[有意义文本提取器]
+HTMLDecoder --> EntityMap[实体映射表]
+MeaningfulExtractor --> HTMLDecoder
+MeaningfulExtractor --> RegexPatterns[正则表达式模式]
+```
+
+**图表来源**
+- [AIPanel.vue:24-25](file://apps/app/components/ai-assistant/AIPanel.vue#L24-L25)
+- [content.ts:10-50](file://apps/app/utils/content.ts#L10-L50)
+
+**章节来源**
+- [AIPanel.vue:24-25](file://apps/app/components/ai-assistant/AIPanel.vue#L24-L25)
+- [content.ts:10-50](file://apps/app/utils/content.ts#L10-L50)
+
 ## 性能考虑
 
 ### Token优化策略
@@ -1176,6 +1968,18 @@ AI助手系统通过智能的内容预处理和缓存机制，有效优化了Tok
 8. **垂直按钮组优化**：固定定位避免重排重绘
 9. **模块状态缓存**：激活状态在组件间共享
 10. **滚动性能优化**：独立滚动容器避免影响正文滚动
+11. **流式响应优化**：**新增** 实时增量更新，避免重复渲染
+12. **内存管理优化**：**新增** 流式处理器自动清理，防止内存泄漏
+13. **网络请求优化**：**新增** 流式请求支持断线重连
+14. **UI响应优化**：**新增** 增量内容实时显示，提升用户体验
+15. **并发操作优化**：**新增** 独立加载状态管理，避免状态冲突
+16. **错误处理优化**：**新增** try-catch-finally 确保资源正确释放
+17. **滚动性能优化**：**新增** 优化的滚动机制，提升用户体验
+18. **状态管理优化**：**新增** 精确的加载状态反馈
+19. **HTML实体解码优化**：**新增** 高效的正则表达式匹配算法
+20. **有意义文本提取优化**：**新增** 多阶段过滤减少计算开销
+21. **localStorage持久化优化**：**新增** 异步存储避免阻塞主线程
+22. **术语状态管理优化**：**新增** 防抖处理减少存储写入频率
 
 ### 内存管理
 
@@ -1187,8 +1991,11 @@ InitMessages --> InitLute[初始化Lute实例]
 InitLute --> InitModules[初始化模块状态]
 InitModules --> UserAction[用户操作]
 UserAction --> AddMessage[添加消息到数组]
-AddMessage --> MemoryCheck{内存检查}
-MemoryCheck --> |正常| Continue[继续使用]
+AddMessage --> CheckStream{检查流式处理}
+CheckStream --> |流式| StreamProcessor[创建流处理器]
+CheckStream --> |非流式| Continue[继续使用]
+StreamProcessor --> MemoryCheck{内存检查}
+MemoryCheck --> |正常| Continue
 MemoryCheck --> |过载| Cleanup[清理旧消息]
 Cleanup --> Continue
 Continue --> UserAction
@@ -1203,12 +2010,23 @@ Continue --> UserAction
 2. **错误重试**：实现智能的错误处理和重试机制
 3. **超时控制**：设置合理的请求超时时间
 4. **状态管理**：实时更新加载状态和错误信息
-5. **流式响应**：支持实时流式响应，提升用户体验
+5. **流式响应**：**新增** 支持实时流式响应，提升用户体验
 6. **模型缓存**：动态获取的模型列表进行本地缓存
 7. **配置持久化**：用户配置自动保存到localStorage
 8. **Lute实例复用**：避免重复创建Lute实例
 9. **暗色主题CSS缓存**：CSS变量实现快速主题切换
 10. **模块懒加载**：AI面板按需加载，减少初始开销
+11. **流式处理器复用**：**新增** 流式处理器生命周期管理
+12. **SSE连接池**：**新增** 复用SSE连接，减少握手开销
+13. **增量渲染优化**：**新增** 只更新变化的消息内容
+14. **内存泄漏防护**：**新增** 流式处理器自动清理机制
+15. **并发操作优化**：**新增** 独立状态管理，避免冲突
+16. **错误处理优化**：**新增** try-catch-finally 确保资源释放
+17. **滚动性能优化**：**新增** 优化的滚动机制，提升体验
+18. **HTML实体解码优化**：**新增** 高效的正则表达式匹配算法
+19. **有意义文本提取优化**：**新增** 多阶段过滤减少计算开销
+20. **localStorage持久化优化**：**新增** 异步存储避免阻塞主线程
+21. **术语状态管理优化**：**新增** 防抖处理减少存储写入频率
 
 ## 故障排除指南
 
@@ -1303,6 +2121,108 @@ Continue --> UserAction
 3. 确认模块激活状态
 4. 查看浏览器开发者工具的网络请求
 
+#### 流式响应问题
+
+**问题现象**：AI响应无法实时显示或显示异常
+
+**排查步骤**：
+1. 检查SSE连接状态
+2. 验证流式处理器工作状态
+3. 确认onStream回调正常执行
+4. 查看浏览器开发者工具的网络面板
+5. 检查服务端流式响应头设置
+6. 验证JSON数据块解析逻辑
+
+#### 流式处理器内存泄漏
+
+**问题现象**：长时间使用后内存占用持续增长
+
+**处理方法**：
+1. 检查流式处理器的清理逻辑
+2. 验证流结束后的资源释放
+3. 确认异常情况下也能清理资源
+4. 查看控制台是否有内存警告
+
+#### SSE连接断开
+
+**问题现象**：流式响应中断或停止更新
+
+**处理方法**：
+1. 检查网络连接稳定性
+2. 验证SSE连接的重连机制
+3. 确认服务端SSE配置正确
+4. 查看浏览器开发者工具的网络面板
+
+#### 并发操作冲突
+
+**问题现象**：同时点击多个按钮导致状态混乱
+
+**处理方法**：
+1. 检查独立加载状态管理
+2. 验证按钮禁用逻辑
+3. 确认状态更新机制
+4. 查看控制台JavaScript错误
+
+#### 错误处理异常
+
+**问题现象**：异常发生后状态未正确恢复
+
+**处理方法**：
+1. 检查try-catch-finally机制
+2. 验证资源清理逻辑
+3. 确认finally块执行
+4. 查看控制台错误日志
+
+#### 自动滚动问题
+
+**问题现象**：滚动位置异常或滚动行为不正常
+
+**处理方法**：
+1. 检查滚动状态管理
+2. 验证滚动触发条件
+3. 确认滚动优化机制
+4. 查看控制台滚动相关错误
+
+#### HTML实体解码问题
+
+**问题现象**：HTML实体未正确转换或转换错误
+
+**处理方法**：
+1. 检查HTML实体解码算法
+2. 验证正则表达式匹配
+3. 确认实体映射表完整性
+4. 查看控制台解码错误日志
+
+#### 有意义文本提取问题
+
+**问题现象**：文本提取结果不正确或丢失内容
+
+**处理方法**：
+1. 检查HTML标签过滤逻辑
+2. 验证空白字符规范化
+3. 确认文本长度验证
+4. 查看控制台提取错误日志
+
+#### 术语接受状态问题
+
+**问题现象**：术语状态未正确保存或加载
+
+**处理方法**：
+1. 检查localStorage访问权限
+2. 验证术语状态存储格式
+3. 确认状态更新机制
+4. 查看控制台存储错误日志
+
+#### localStorage持久化问题
+
+**问题现象**：配置、使用计数或术语状态未正确保存
+
+**处理方法**：
+1. 检查localStorage容量限制
+2. 验证数据序列化和反序列化
+3. 确认异步存储操作
+4. 查看控制台存储错误日志
+
 ### 调试工具
 
 ```mermaid
@@ -1316,6 +2236,16 @@ LuteDebug[Lute调试]
 ThemeDebug[主题调试]
 ModuleDebug[模块调试]
 ButtonDebug[按钮调试]
+StreamDebug[流式调试]
+SSEDebug[SSE调试]
+MemoryDebug[内存调试]
+ConcurrencyDebug[并发调试]
+ErrorDebug[错误调试]
+ScrollDebug[滚动调试]
+HTMLDecodeDebug[HTML解码调试]
+MeaningfulExtractDebug[有意义文本提取调试]
+TermsDebug[术语状态调试]
+LocalStorageDebug[localStorage调试]
 end
 subgraph "调试场景"
 Error[错误调试]
@@ -1328,6 +2258,16 @@ LuteRendering[Lute渲染调试]
 DarkTheme[暗色主题调试]
 ModuleActivation[模块激活调试]
 AIPanelLoading[AI面板加载调试]
+StreamProcessing[流式处理调试]
+SSEConnection[SSE连接调试]
+MemoryLeak[内存泄漏调试]
+ConcurrencyConflict[并发冲突调试]
+ErrorHandling[错误处理调试]
+AutoScroll[自动滚动调试]
+HTMLDecoding[HTML解码调试]
+TextExtraction[文本提取调试]
+TermsState[术语状态调试]
+StoragePersistence[存储持久化调试]
 end
 Console --> Error
 Network --> Performance
@@ -1339,13 +2279,27 @@ Components --> LuteRendering
 Components --> DarkTheme
 Components --> ModuleActivation
 Components --> AIPanelLoading
+Components --> StreamProcessing
+Components --> SSEConnection
+Components --> MemoryLeak
 ModuleDebug --> ModuleActivation
 ButtonDebug --> AIPanelLoading
+StreamDebug --> StreamProcessing
+SSEDebug --> SSEConnection
+MemoryDebug --> MemoryLeak
+ConcurrencyDebug --> ConcurrencyConflict
+ErrorDebug --> ErrorHandling
+ScrollDebug --> AutoScroll
+HTMLDecodeDebug --> HTMLDecoding
+MeaningfulExtractDebug --> TextExtraction
+TermsDebug --> TermsState
+LocalStorageDebug --> StoragePersistence
 ```
 
 **图表来源**
 - [AIPanel.vue:66-96](file://apps/app/components/ai-assistant/AIPanel.vue#L66-L96)
 - [Index.vue:682-762](file://apps/app/components/static/content/right/Index.vue#L682-L762)
+- [content.ts:19-46](file://apps/app/utils/content.ts#L19-L46)
 
 **章节来源**
 - [AIPanel.vue:66-96](file://apps/app/components/ai-assistant/AIPanel.vue#L66-L96)
@@ -1361,7 +2315,7 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 3. **安全可靠**：采用服务端代理机制，确保API密钥的安全性
 4. **灵活配置**：支持内置和自定义两种AI模型模式
 5. **持久化管理**：实现使用次数的智能管理和用户同意机制
-6. **流式响应**：实时显示AI生成过程，提升用户体验
+6. **流式响应**：**新增** 实时显示AI生成过程，提升用户体验
 7. **动态模型选择**：自定义模式下可实时获取和选择AI模型
 8. **下拉配置面板**：直观的弹出式配置界面，提升用户体验
 9. **独立加载状态**：每个操作都有精确的状态反馈
@@ -1370,6 +2324,20 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 12. **完整暗色主题支持**：200多行CSS样式实现深色模式适配
 13. **模块化管理**：统一的模块化架构，支持多个功能模块的扩展
 14. **垂直按钮组**：全新的垂直按钮组设计，提供统一的快速切换功能
+15. **流式响应处理**：**新增** 实时流式响应处理，支持增量内容显示
+16. **内存管理优化**：**新增** 流式处理器自动清理，防止内存泄漏
+17. **SSE连接池**：**新增** 复用SSE连接，减少握手开销
+18. **增量渲染优化**：**新增** 只更新变化的消息内容，提升渲染性能
+19. **并发操作支持**：**新增** 支持同时处理多个AI操作，提升响应速度
+20. **增强错误处理**：**新增** 使用 try-catch-finally 确保资源正确释放
+21. **优化自动滚动**：**新增** 改进的滚动机制，确保最佳用户体验
+22. **独立状态管理**：**新增** 独立的加载状态，避免按钮冲突
+23. **并发状态优化**：**新增** 精确的状态管理，提升用户体验
+24. **HTML实体解码**：**新增** 支持多种HTML实体格式的正确转换
+25. **有意义文本提取**：**新增** 自动过滤脚本、样式和无意义内容
+26. **内容验证逻辑**：**新增** 精确的内容有效性检测和验证
+27. **术语接受处理**：**新增** 通过localStorage实现用户同意状态持久化
+28. **localStorage持久化**：**新增** 完整的配置、使用计数和术语状态保存机制
 
 ### 技术亮点
 
@@ -1383,6 +2351,16 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - **Lute集成**：高质量的Markdown渲染系统
 - **暗色主题**：完整的深色模式适配
 - **模块化架构**：统一的模块化管理，支持功能扩展
+- **流式架构**：**新增** 完整的流式响应架构，支持实时交互
+- **内存安全**：**新增** 流式处理器内存管理，防止泄漏
+- **SSE优化**：**新增** SSE连接复用和断线重连机制
+- **并发优化**：**新增** 独立状态管理，避免操作冲突
+- **错误处理优化**：**新增** try-catch-finally 确保资源释放
+- **滚动优化**：**新增** 优化的滚动机制，提升用户体验
+- **HTML实体解码优化**：**新增** 高效的正则表达式匹配算法
+- **有意义文本提取优化**：**新增** 多阶段过滤减少计算开销
+- **localStorage持久化优化**：**新增** 异步存储避免阻塞主线程
+- **术语状态管理优化**：**新增** 防抖处理减少存储写入频率
 
 ### 发展方向
 
@@ -1400,5 +2378,16 @@ AI助手系统通过重大架构升级，为用户提供了更加完善和易用
 - 优化垂直按钮组的交互体验
 - 增加模块间的通信机制
 - 实现模块的热插拔功能
+- **新增** 支持WebSocket连接池
+- **新增** 实现流式响应的断点续传
+- **新增** 增强流式处理器的错误恢复机制
+- **新增** 支持更复杂的并发操作协调
+- **新增** 实现更精细的错误处理和恢复机制
+- **新增** 优化滚动性能，支持更流畅的用户体验
+- **新增** 增强HTML实体解码的兼容性
+- **新增** 优化有意义文本提取的准确性
+- **新增** 实现更智能的术语接受状态管理
+- **新增** 支持多用户localStorage隔离
+- **新增** 实现配置导入导出功能
 
-AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择、完整的暗色主题支持和全新的垂直按钮组设计等功能，显著提升了用户体验和系统的易用性。200多行CSS暗色主题样式的实现，确保了在各种主题下的良好视觉效果，而新增的模块化管理和垂直按钮组设计则提供了更加直观和高效的用户界面，这些改进共同构成了一个更加完善和专业的AI助手系统。
+AI助手系统为SiYuan笔记用户提供了强大的智能化阅读体验，经过重大架构升级后的统一架构为未来的功能扩展奠定了坚实的基础。新的Lute Markdown渲染系统、动态模型选择、完整的暗色主题支持、全新的垂直按钮组设计以及**新增的流式响应处理系统**等功能，显著提升了用户体验和系统的易用性。**重大架构升级**带来的独立加载状态管理、并发操作支持、增强的错误处理机制以及优化的自动滚动功能，共同构成了一个更加完善和专业的AI助手系统。新增的HTML实体解码、有意义文本提取、内容验证逻辑、术语接受处理和localStorage持久化等功能，进一步增强了系统的稳定性和用户体验，为用户提供了一个更加智能、可靠和易用的AI助手工具。

@@ -8,69 +8,98 @@
   -->
 
 <script setup lang="ts">
-import { Paperclip, DArrowRight, Opportunity, List } from "@element-plus/icons-vue"
+import { List, Opportunity, Paperclip } from "@element-plus/icons-vue"
+import type { Component } from "vue"
 import type AppConfig from "~/app.config"
+import { useViewerCapabilities } from "~/composables/useViewerCapabilities"
+import { hasMeaningfulTextContent } from "~/utils/content"
 
 const logger = createAppLogger("right-index")
 const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
-
-// ==================== 侧边栏功能模块配置 ====================
-// 可扩展的功能模块配置，后续添加新功能只需在此配置中增加
-interface SidebarModule {
-  id: string
-  name: string
-  icon?: string
-  type: 'outline' | 'ai' | 'graph' // 可扩展更多类型
-  visible: boolean
-  order: number
-}
-
-// 功能模块状态管理
-const modules = ref<SidebarModule[]>([
-  { id: 'outline', name: 'static.outline', type: 'outline', visible: true, order: 1 },
-  { id: 'ai', name: 'ai.assistant.title', type: 'ai', visible: true, order: 2 },
-  // 后续可在此添加：知识图谱、标签云等
-  // { id: 'graph', name: 'knowledge.graph', type: 'graph', visible: true, order: 3 },
-])
+const { aiAssistantSupported } = useViewerCapabilities()
 
 // 当前激活的模块ID
-type ModuleId = 'outline' | 'ai'
-const activeModuleId = ref<ModuleId>('outline')
+type ModuleId = string
 
-// AI 面板状态（跨组件共享）- 保持与其他组件的兼容性
-const aiPanelActive = useState('ai-panel-active', () => false)
+// ==================== 侧边栏功能模块配置 ====================
+// 后续增加模块时，只需要补一条定义，不要再去修改切换逻辑本身。
+interface SidebarModuleDefinition {
+  id: ModuleId
+  name: string
+  type: "outline" | "ai" | "graph"
+  icon: Component
+  order: number
+  tabBadge?: string
+  tabBadgeClass?: string
+  isAvailable: () => boolean
+  getWidth: () => number
+  contentClass: string
+  clientOnly?: boolean
+  renderContent?: () => Component | null
+}
+const activeModuleId = ref<ModuleId>("outline")
 
 // 侧边栏显示状态 - 统一控制侧边栏的展开/收起
-const showSidebar = useState('sidebar-show', () => false)
+const showSidebar = useState("sidebar-show", () => false)
 
-const outlineData = ref(props.post.outline ?? [] as any)
-const outlineMaxDepth = ref(props.post?.outlineLevel ?? 6)
+const outlineData = computed(() => Array.isArray(props.post?.outline) ? props.post.outline : [])
+const outlineMaxDepth = computed(() => props.post?.outlineLevel ?? 6)
+const hasOutlineData = computed(() => outlineData.value.length > 0)
+const AIPanelComponent = __ENABLE_AI_ASSISTANT__
+  ? defineAsyncComponent(() => import("~/components/ai-assistant/AIPanel.vue"))
+  : null
+
+// ========== AI 助手功能配置 ==========
+// AI 最终值兼容历史默认行为：
+// 1. 若 post.aiAssistantEnabled 显式存在，优先以分享后的冻结结果为准
+// 2. 若 post 缺失该字段，回退到全局源配置
+// 3. 若全局也缺失，则兼容历史默认开启行为
+const resolvedAiAssistantEnabled = computed(() => {
+  const postValue = props.post?.aiAssistantEnabled
+
+  if (postValue === true || postValue === "true") {
+    return true
+  }
+
+  if (postValue === false || postValue === "false") {
+    return false
+  }
+
+  return props.setting?.aiAssistantEnabled !== false
+})
+
+// AI 能力由 viewer build capability、分享后的 post 快照和全局兼容回退共同决定
+const aiAssistantEnabled = computed(() => aiAssistantSupported.value && resolvedAiAssistantEnabled.value)
+
+// 检查文档内容是否有效（用于判断 AI 功能是否可用）
+const hasValidContent = computed(() => {
+  return hasMeaningfulTextContent(props.post?.editorDom ?? "")
+})
+
+// AI 模块是否应该显示（受 viewer capability、分享快照和内容三重控制）
+const showAIModule = computed(() => aiAssistantEnabled.value && hasValidContent.value)
 
 // 从文档树跳转过来时，自动展开大纲（与左侧文档树保持联动）
-const isFromDocTree = computed(() => route.query.from === 'docTree')
-
-// showOutline 已废弃，使用 showSidebar 统一控制
-// 保留此变量用于兼容性，实际值从 showSidebar 获取
-const showOutline = computed(() => showSidebar.value)
+const isFromDocTree = computed(() => route.query.from === "docTree")
 
 // ==================== 大纲宽度调整功能 ====================
-const OUTLINE_WIDTH_KEY = 'siyuan-blog-outline-width'
-const AI_WIDTH_KEY = 'siyuan-blog-ai-width'
-const OUTLINE_PINNED_KEY = 'siyuan-blog-outline-pinned'
+const OUTLINE_WIDTH_KEY = "siyuan-blog-outline-width"
+const AI_WIDTH_KEY = "siyuan-blog-ai-width"
+const OUTLINE_PINNED_KEY = "siyuan-blog-outline-pinned"
 const DEFAULT_WIDTH = 280
-const AI_DEFAULT_WIDTH = 380  // AI面板默认更大宽度
+const AI_DEFAULT_WIDTH = 380 // AI面板默认更大宽度
 const MIN_WIDTH = 200
 const MAX_WIDTH = 500
 
 // 大纲宽度状态
 const outlineWidth = ref(DEFAULT_WIDTH)
-const aiWidth = ref(AI_DEFAULT_WIDTH)  // AI面板宽度
+const aiWidth = ref(AI_DEFAULT_WIDTH) // AI面板宽度
 const isResizing = ref(false)
 
 // 大纲固定显示状态
 // 使用 useState 确保 SSR 和客户端状态一致，避免闪烁
-const isPinned = useState('outline-pinned', () => false)
+const isPinned = useState("outline-pinned", () => false)
 
 // 从 localStorage 读取保存的宽度
 const loadSavedWidth = () => {
@@ -116,7 +145,7 @@ const loadPinnedState = () => {
   if (process.client) {
     const savedPinned = localStorage.getItem(OUTLINE_PINNED_KEY)
     if (savedPinned) {
-      const pinnedValue = savedPinned === 'true'
+      const pinnedValue = savedPinned === "true"
       isPinned.value = pinnedValue
       // 如果固定，同步设置 showSidebar 避免闪烁
       if (pinnedValue) {
@@ -132,6 +161,72 @@ const savePinnedState = (pinned: boolean) => {
     localStorage.setItem(OUTLINE_PINNED_KEY, pinned.toString())
   }
 }
+
+const moduleDefinitions: SidebarModuleDefinition[] = [
+  {
+    id: "outline",
+    name: "static.outline",
+    type: "outline",
+    icon: List,
+    order: 1,
+    tabBadge: "☰",
+    tabBadgeClass: "tab-icon",
+    contentClass: "outline-content",
+    isAvailable: () => hasOutlineData.value,
+    getWidth: () => outlineWidth.value,
+    renderContent: () => resolveComponent("static-content-right-outline") as Component,
+  },
+  {
+    id: "ai",
+    name: "ai.assistant.title",
+    type: "ai",
+    icon: Opportunity,
+    order: 2,
+    tabBadge: "AI",
+    tabBadgeClass: "tab-icon-ai",
+    contentClass: "ai-content",
+    clientOnly: true,
+    isAvailable: () => showAIModule.value,
+    getWidth: () => aiWidth.value,
+    renderContent: () => AIPanelComponent,
+  },
+]
+
+const getModuleDefinition = (moduleId: ModuleId | null) => {
+  if (!moduleId) {
+    return null
+  }
+
+  return moduleDefinitions.find(module => module.id === moduleId) ?? null
+}
+
+const getFirstAvailableModuleId = () => {
+  return moduleDefinitions
+    .filter(module => module.isAvailable())
+    .sort((a, b) => a.order - b.order)[0]?.id ?? null
+}
+
+const getFirstAvailableModuleIdExcluding = (excludedModuleId: ModuleId) => {
+  return moduleDefinitions
+    .filter(module => module.id !== excludedModuleId && module.isAvailable())
+    .sort((a, b) => a.order - b.order)[0]?.id ?? null
+}
+
+const isModuleAvailable = (moduleId: ModuleId | null) => {
+  return getModuleDefinition(moduleId)?.isAvailable() ?? false
+}
+
+const currentModuleId = computed<ModuleId | null>(() => {
+  if (isModuleAvailable(activeModuleId.value)) {
+    return activeModuleId.value
+  }
+
+  return getFirstAvailableModuleId()
+})
+
+const activeSidebarWidth = computed(() => getModuleDefinition(currentModuleId.value)?.getWidth() ?? outlineWidth.value)
+const activeModuleDefinition = computed(() => getModuleDefinition(currentModuleId.value))
+const activeContentComponent = computed(() => activeModuleDefinition.value?.renderContent?.() ?? null)
 
 // 切换固定显示状态
 const togglePin = () => {
@@ -151,11 +246,11 @@ const startResize = (e: MouseEvent) => {
 
   const startX = e.clientX
   // 根据当前激活的模块决定调整哪个宽度
-  const isAIActive = activeModuleId.value === 'ai' && aiPanelActive.value
+  const isAIActive = currentModuleId.value === "ai"
   const startWidth = isAIActive ? aiWidth.value : outlineWidth.value
 
   const handleMouseMove = (moveEvent: MouseEvent) => {
-    if (!isResizing.value) return
+    if (!isResizing.value) { return }
 
     const deltaX = startX - moveEvent.clientX
     const newWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidth + deltaX))
@@ -176,50 +271,24 @@ const startResize = (e: MouseEvent) => {
     } else {
       saveWidth(outlineWidth.value)
     }
-    document.removeEventListener('mousemove', handleMouseMove)
-    document.removeEventListener('mouseup', handleMouseUp)
-    document.body.style.userSelect = ''
-    document.body.style.cursor = ''
+    document.removeEventListener("mousemove", handleMouseMove)
+    document.removeEventListener("mouseup", handleMouseUp)
+    document.body.style.userSelect = ""
+    document.body.style.cursor = ""
   }
 
-  document.addEventListener('mousemove', handleMouseMove)
-  document.addEventListener('mouseup', handleMouseUp)
-  document.body.style.userSelect = 'none'
-  document.body.style.cursor = 'col-resize'
+  document.addEventListener("mousemove", handleMouseMove)
+  document.addEventListener("mouseup", handleMouseUp)
+  document.body.style.userSelect = "none"
+  document.body.style.cursor = "col-resize"
 }
-
-// 切换侧边栏显示/隐藏
-const toggleSidebar = () => {
-  showSidebar.value = !showSidebar.value
-}
-
-// hover 状态控制 - 已禁用悬停自动展开功能
-// 仅保留此方法用于兼容性，实际展开需通过点击按钮触发
-const onHover = (state: boolean) => {
-  // 悬停自动展开功能已移除，防止误触
-  // 侧边栏展开仅通过点击按钮触发
-  return
-}
-
-// 带点击保护的切换
-const toggleSidebarWithProtection = () => {
-  toggleSidebar()
-}
-
-// 默认收起大纲
-// onMounted(() => {
-//   const isMobile = window.innerWidth <= 768
-//   if (!isMobile) {
-//     showOutline.value = true
-//   }
-// })
 
 // 当前激活的节点 ID
 const activeNodeText = ref("")
 
 // 清理节点文本（与 OutlineItem.vue 的 adjustItemName 保持一致）
-const cleanNodeText = (text) => {
-  if (!text) return ""
+const cleanNodeText = (text: string) => {
+  if (!text) { return "" }
   return text
     .replace(/&nbsp;/g, " ")
     .replace(/&quot;/g, "\"")
@@ -275,59 +344,89 @@ const isInitialized = ref(false)
 // ==================== AI 面板相关 ====================
 // 计算可见的模块（按order排序）
 const visibleModules = computed(() => {
-  return modules.value
-    .filter(m => m.visible)
+  return moduleDefinitions
+    .filter(module => module.isAvailable())
     .sort((a, b) => a.order - b.order)
 })
 
 // 获取模块按钮的样式类
-const getModuleButtonClass = (module: SidebarModule) => {
-  const isActive = activeModuleId.value === module.id && showSidebar.value
+const getModuleButtonClass = (module: SidebarModuleDefinition) => {
+  const isActive = currentModuleId.value === module.id && showSidebar.value
   return {
     [`collapsed-btn--${module.type}`]: true,
-    'collapsed-btn--active': isActive
+    "collapsed-btn--active": isActive
   }
 }
 
-// 激活指定模块
-const activateModule = (moduleId: string) => {
-  if (moduleId === 'ai') {
-    aiPanelActive.value = true
+const openModule = (moduleId: ModuleId) => {
+  const module = getModuleDefinition(moduleId)
+
+  if (!module || !module.isAvailable()) {
+    logger.warn(`Module ${moduleId} is not available`)
+    return
   }
-  activeModuleId.value = moduleId as ModuleId
+
+  activeModuleId.value = moduleId
   showSidebar.value = true
 }
 
-// 打开 AI 面板（保持兼容性）
-const openAI = () => {
-  activateModule('ai')
-}
-
-// 监听 AI 面板激活，平滑展开侧边栏
-watch(aiPanelActive, (active) => {
-  if (active) {
-    activeModuleId.value = 'ai'
-    // 仅展开侧边栏，不强制固定，让用户可以自由控制
-    showSidebar.value = true
-    // 不自动固定，保持用户之前的固定状态
-  }
-})
-
-// 关闭侧边栏 - 只控制显示状态，不影响AI或大纲的激活状态
-const handleClose = () => {
+const closeSidebar = () => {
   showSidebar.value = false
 }
 
-// 关闭 AI 面板 - 只关闭AI功能，侧边栏保持显示（自动切换到大纲）
-const handleCloseAI = () => {
-  aiPanelActive.value = false
-  // 自动切回大纲模块（如果大纲可见）
-  const outlineModule = modules.value.find(m => m.id === 'outline')
-  if (outlineModule?.visible) {
-    activeModuleId.value = 'outline'
-  }
-  // 侧边栏保持显示状态，用户可以继续在侧边栏查看大纲
+const selectModule = (moduleId: ModuleId) => {
+  openModule(moduleId)
 }
+
+// 模块按钮交互：
+// 1. 点击未激活模块 => 打开侧栏并切换到该模块
+// 2. 点击当前激活模块 => 直接收起侧栏
+const toggleModule = (moduleId: ModuleId) => {
+  const isCurrentModule = currentModuleId.value === moduleId
+
+  if (showSidebar.value && isCurrentModule) {
+    closeSidebar()
+    return
+  }
+
+  openModule(moduleId)
+}
+
+const closeModule = (moduleId: ModuleId) => {
+  if (currentModuleId.value !== moduleId) {
+    return
+  }
+
+  const fallbackModuleId = getFirstAvailableModuleIdExcluding(moduleId)
+  if (fallbackModuleId) {
+    openModule(fallbackModuleId)
+  } else {
+    showSidebar.value = false
+  }
+}
+
+const updateScrollListener = (enabled: boolean) => {
+  if (enabled) {
+    window.addEventListener("scroll", onScroll, true)
+  } else {
+    window.removeEventListener("scroll", onScroll, true)
+  }
+}
+
+watch(hasOutlineData, (available) => {
+  if (!process.client) {
+    return
+  }
+
+  updateScrollListener(available)
+  if (!available) {
+    activeNodeText.value = ""
+  }
+}, { immediate: false })
+
+watch(() => props.post?.postid, () => {
+  activeNodeText.value = ""
+})
 
 onMounted(() => {
   // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
@@ -336,15 +435,15 @@ onMounted(() => {
 
   // 来自文档树跳转时，若未固定（图钉未启用），自动展开大纲
   // 优先级：图钉固定 > URL 参数触发 > 默认收起
-  if (!isPinned.value && isFromDocTree.value && outlineData.value && outlineData.value.length > 0) {
+  if (!isPinned.value && isFromDocTree.value && hasOutlineData.value) {
     showSidebar.value = true
     logger.info("Auto expand sidebar due to from=docTree")
   }
 
   // 有文档大纲才绑定滚动
-  if (outlineData.value && outlineData.value.length > 0) {
+  if (hasOutlineData.value) {
     logger.info("Mounted: Adding scroll listener, outline width:", outlineWidth.value, "pinned:", isPinned.value)
-    window.addEventListener("scroll", onScroll, true)
+    updateScrollListener(true)
   }
 
   // 延迟标记初始化完成，避免初始过渡动画
@@ -355,93 +454,109 @@ onMounted(() => {
 
 onUnmounted(() => {
   logger.info("Unmounted: Removing scroll listener")
-  window.removeEventListener("scroll", onScroll)
+  window.removeEventListener("scroll", onScroll, true)
 })
 </script>
 
 <template>
-  <div v-if="(outlineData && outlineData.length > 0) || aiPanelActive" class="outline-aside"
-    :class="{ 'outline-collapsed': !showSidebar, 'outline-initialized': isInitialized }">
+  <!-- 侧边栏显示条件：有大纲数据或有可见的 AI 模块（AI 功能独立于大纲） -->
+  <div
+    v-if="visibleModules.length > 0"
+    class="outline-aside"
+    :class="{ 'outline-collapsed': !showSidebar, 'outline-initialized': isInitialized }"
+  >
     <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
-    <div class="outline-placeholder" :style="{
-      width: showSidebar ? (activeModuleId === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
-      minWidth: showSidebar ? (activeModuleId === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
-      maxWidth: showSidebar ? (activeModuleId === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px'
-    }"></div>
+    <div
+      class="outline-placeholder"
+      :style="{
+        width: showSidebar ? activeSidebarWidth + 'px' : '0px',
+        minWidth: showSidebar ? activeSidebarWidth + 'px' : '0px',
+        maxWidth: showSidebar ? activeSidebarWidth + 'px' : '0px'
+      }"
+    />
 
     <!-- 大纲容器 - 使用 fixed 定位，内部独立滚动 -->
-    <div class="outline-container" :class="{ 'is-resizing': isResizing }" :style="{
-      width: showSidebar ? (activeModuleId === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
-      minWidth: showSidebar ? (activeModuleId === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px',
-      maxWidth: showSidebar ? (activeModuleId === 'ai' && aiPanelActive ? aiWidth : outlineWidth) + 'px' : '0px'
-    }">
+    <div
+      class="outline-container"
+      :class="{ 'is-resizing': isResizing }"
+      :style="{
+        width: showSidebar ? activeSidebarWidth + 'px' : '0px',
+        minWidth: showSidebar ? activeSidebarWidth + 'px' : '0px',
+        maxWidth: showSidebar ? activeSidebarWidth + 'px' : '0px'
+      }"
+    >
       <!-- 大纲标题栏（仅保留 Tab 切换） -->
       <div class="outline-header">
         <div class="sidebar-tabs">
-          <button v-if="outlineData && outlineData.length > 0" class="sidebar-tab"
-            :class="{ 'sidebar-tab--active': activeModuleId === 'outline' }" @click="activeModuleId = 'outline'">
-            <span class="tab-icon">☰</span>
-            <span>{{ $t("static.outline") }}</span>
-          </button>
-          <button v-if="aiPanelActive" class="sidebar-tab" :class="{ 'sidebar-tab--active': activeModuleId === 'ai' }"
-            @click="activeModuleId = 'ai'">
-            <span class="tab-icon-ai">AI</span>
-            <span>{{ $t("ai.assistant.title") }}</span>
+          <button
+            v-for="module in visibleModules"
+            :key="`tab-${module.id}`"
+            class="sidebar-tab"
+            :class="{ 'sidebar-tab--active': currentModuleId === module.id }"
+            @click="selectModule(module.id)"
+          >
+            <span :class="module.tabBadgeClass">{{ module.tabBadge ?? module.id }}</span>
+            <span>{{ $t(module.name) }}</span>
           </button>
         </div>
         <!-- 图钉按钮 - 保留在标题栏 -->
-        <div class="header-btn pin-btn" :class="{ 'pin-btn-active': isPinned }" @click="togglePin" title="固定显示">
+        <div class="header-btn pin-btn" :class="{ 'pin-btn-active': isPinned }" title="固定显示" @click="togglePin">
           <el-icon :size="14">
             <Paperclip />
           </el-icon>
         </div>
       </div>
 
-      <!-- 大纲内容 -->
-      <div v-show="activeModuleId === 'outline'" class="outline-content">
-        <static-content-right-outline :outline-data="outlineData" :max-depth="outlineMaxDepth"
-          :active-text="activeNodeText" :width="outlineWidth" />
-      </div>
-
-      <!-- AI 面板内容 -->
-      <div v-show="activeModuleId === 'ai' && aiPanelActive" class="ai-content">
-        <client-only>
-          <ai-assistant-a-i-panel :title="post.title ?? ''" :content="post.editorDom ?? ''" :doc-id="post.postid ?? ''"
-            @close="handleCloseAI" />
+      <div v-if="activeContentComponent" :class="activeModuleDefinition?.contentClass">
+        <client-only v-if="activeModuleDefinition?.clientOnly">
+          <component
+            :is="activeContentComponent"
+            :title="post.title ?? ''"
+            :content="post.editorDom ?? ''"
+            :doc-id="post.postid ?? ''"
+          />
         </client-only>
+        <component
+          :is="activeContentComponent"
+          v-else
+          :outline-data="outlineData"
+          :max-depth="outlineMaxDepth"
+          :active-text="activeNodeText"
+          :width="outlineWidth"
+        />
       </div>
 
       <!-- 拖拽调整宽度的手柄 -->
-      <div v-if="showSidebar" class="resize-handle" :class="{ 'is-resizing': isResizing }" @mousedown="startResize"
-        title="拖拽调整宽度">
+      <div
+        v-if="showSidebar"
+        class="resize-handle"
+        :class="{ 'is-resizing': isResizing }"
+        title="拖拽调整宽度"
+        @mousedown="startResize"
+      >
         <div class="resize-indicator">
           <div class="resize-dots">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+            <span class="dot" />
+            <span class="dot" />
+            <span class="dot" />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 垂直按钮组 - 始终显示，用于快速切换功能 -->
+    <!-- 垂直按钮组 - 始终显示，点击按钮即可展开/收起对应功能 -->
     <div class="collapsed-buttons">
       <!-- 功能模块按钮 - 动态渲染，便于扩展 -->
-      <button v-for="module in visibleModules" :key="module.id" class="collapsed-btn"
-        :class="getModuleButtonClass(module)" :title="$t(module.name)" @click="activateModule(module.id)">
-        <!-- 使用图标代替文字，保持所有按钮风格一致 -->
-        <el-icon v-if="module.type === 'ai'" :size="16">
-          <Opportunity />
-        </el-icon>
-        <el-icon v-else-if="module.type === 'outline'" :size="16">
-          <List />
-        </el-icon>
-        <span v-else class="module-icon">{{ module.icon || module.id[0].toUpperCase() }}</span>
-      </button>
-      <!-- 收起按钮 - 仅在侧边栏展开时显示，使用右箭头表示收起 -->
-      <button v-if="showSidebar" class="collapsed-btn collapsed-btn--collapse" title="收起侧边栏" @click="handleClose">
-        <el-icon :size="14">
-          <DArrowRight />
+      <button
+        v-for="module in visibleModules"
+        :key="module.id"
+        class="collapsed-btn"
+        :class="getModuleButtonClass(module)"
+        :title="$t(module.name)"
+        @click="toggleModule(module.id)"
+      >
+        <el-icon :size="16">
+          <component :is="module.icon" />
         </el-icon>
       </button>
     </div>
@@ -594,18 +709,18 @@ onUnmounted(() => {
   scroll-behavior smooth /* 平滑滚动 */
   overscroll-behavior contain /* 防止滚动传播到父元素 */
   -webkit-overflow-scrolling touch /* iOS 平滑滚动 */
-  
+
   /* 更精致的滚动条 */
   &::-webkit-scrollbar
     width 3px /* 更细的滚动条 */
-  
+
   &::-webkit-scrollbar-track
     background transparent
-  
+
   &::-webkit-scrollbar-thumb
     background rgba(0, 0, 0, 0.08) /* 更淡的滚动条 */
     border-radius 2px
-  
+
   &::-webkit-scrollbar-thumb:hover
     background rgba(0, 0, 0, 0.15) /* 悬停时稍深 */
 
@@ -738,17 +853,6 @@ onUnmounted(() => {
   color var(--el-color-primary, #409eff)
   border-color var(--el-color-primary, #409eff)
 
-/* 收起按钮样式 - 使用主题色 */
-.collapsed-btn--collapse
-  background var(--background)
-  color var(--text-color-secondary)
-  border-color var(--border-color)
-
-.collapsed-btn--collapse:hover
-  background var(--el-color-primary-light-9, rgba(64, 158, 255, 0.1))
-  color var(--el-color-primary, #409eff)
-  border-color var(--el-color-primary, #409eff)
-
 .module-icon
   font-size 14px
   font-weight 500
@@ -757,7 +861,7 @@ onUnmounted(() => {
 @media (max-width: 768px)
   .outline-wrapper
     position fixed
-  
+
   .resize-handle
     display none /* 小屏隐藏拖拽手柄 */
 </style>

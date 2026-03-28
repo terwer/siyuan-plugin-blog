@@ -9,6 +9,7 @@
 
 <script lang="ts" setup>
 import { JsonUtil, ObjectUtil } from "zhi-common"
+import { computed, reactive, ref, watch } from "vue"
 import { checkExpires } from "~/utils/utils"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 import AppConfig from "~/app.config"
@@ -16,7 +17,7 @@ import { useServerAssets } from "~/plugins/libs/renderer/useServerAssets"
 
 const logger = createAppLogger("static-share-page")
 const requestURL = useRequestURL()
-const { docId } = useDocId()
+const route = useRoute()
 const { t } = useI18n()
 const { providerMode } = useProviderMode()
 const { fetchPostMeta, validatePassword } = useAuthModeFetch()
@@ -32,7 +33,21 @@ const props = defineProps<{
 }>()
 
 // datas
-const id = props.pageId ?? docId
+const currentDocId = computed(() => {
+  if (props.pageId) {
+    return props.pageId
+  }
+
+  const routeId = (route.params.id ?? "") as string
+  if (routeId.endsWith(".html")) {
+    return routeId.replace(".html", "")
+  }
+  if (routeId.endsWith(".htm")) {
+    return routeId.replace(".htm", "")
+  }
+  return routeId
+})
+
 const formData = reactive({
   post: {} as any,
   setting: {} as any,
@@ -46,7 +61,9 @@ const formData = reactive({
     password: "",
   }
 })
-const getPostData = async () => {
+const isLoading = ref(__SIYUAN_SPA_TARGET__)
+
+const getPostData = async (id: string) => {
   try {
     const resText = await fetchPostMeta(id, providerMode)
     const dataJson = JsonUtil.safeParse<any>(resText, {} as any)
@@ -90,26 +107,62 @@ const getSetting = async () => {
   formData.setting = currentSetting
   logger.debug("currentSetting=>", currentSetting)
 }
-await getPostData()
-await getSetting()
 
-// SEO
-if (!props.overrideSeo) {
+const seoTitle = computed(() => {
   const titleSign = " - " + t("blog.share")
-  const title = `${formData.post?.title ?? t("blog.index.no.title") + " - " + docId}${props.showTitleSign ? titleSign : ""}`
-  const desc = getSummery(formData?.post?.description ?? "")
-  const headImage = getFirstImageSrc(formData?.post?.description ?? "")
-  const seoMeta = {
-    title,
-    ogTitle: title,
-    description: desc,
-    ogDescription: desc,
-  } as any
-  if (headImage) {
-    logger.debug("get a head image from doc=>", headImage)
-    seoMeta.ogImage = headImage
+  return `${formData.post?.title ?? t("blog.index.no.title") + " - " + currentDocId.value}${props.showTitleSign ? titleSign : ""}`
+})
+const seoSource = computed(() => formData?.post?.description ?? formData?.post?.editorDom ?? "")
+const seoDescription = computed(() => getSummery(seoSource.value))
+const seoImage = computed(() => getFirstImageSrc(seoSource.value))
+
+if (!props.overrideSeo) {
+  useSeoMeta(() => {
+    const seoMeta = {
+      title: seoTitle.value,
+      ogTitle: seoTitle.value,
+      description: seoDescription.value,
+      ogDescription: seoDescription.value,
+    } as any
+
+    if (seoImage.value) {
+      seoMeta.ogImage = seoImage.value
+    }
+
+    return seoMeta
+  })
+}
+
+const loadPageData = async () => {
+  isLoading.value = true
+  try {
+    await getPostData(currentDocId.value)
+    await getSetting()
+  } finally {
+    isLoading.value = false
   }
-  useSeoMeta(seoMeta)
+}
+
+if (!__SIYUAN_SPA_TARGET__) {
+  await loadPageData()
+} else {
+  onMounted(async () => {
+    await loadPageData()
+  })
+}
+
+watch(currentDocId, async (newId, oldId) => {
+  if (!__SIYUAN_SPA_TARGET__) {
+    return
+  }
+  if (!newId || newId === oldId) {
+    return
+  }
+  await loadPageData()
+})
+
+if (!props.overrideSeo && seoImage.value) {
+  logger.debug("get a head image from doc=>", seoImage.value)
 }
 
 // functions
@@ -117,7 +170,7 @@ const handlePasswordSubmit = async (password:string) => {
   logger.debug("get password:", password)
   logger.debug("db password:",  formData.shareOptions.password)
   // 调用API验证密码
-  const valid = await validatePassword(id, password, formData.shareOptions.password)
+  const valid = await validatePassword(currentDocId.value, password, formData.shareOptions.password)
   if (valid.flag) {
     // 当前 url 参数还是 ?key
     const url = new URL(window.location.href);
@@ -130,7 +183,10 @@ const handlePasswordSubmit = async (password:string) => {
 </script>
 
 <template>
-  <div v-if="!formData.isShared">
+  <div v-if="isLoading" class="detail-loading">
+    <el-skeleton :rows="12" animated />
+  </div>
+  <div v-else-if="!formData.isShared">
     <el-empty :description=" t('blog.index.no.shared') " />
   </div>
   <div v-else-if="formData.isExpires">

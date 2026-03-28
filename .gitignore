@@ -48,3 +48,6 @@ package.zip
 startup-prod.sh
 apps/app/script/dev-prod.sh
 
+
+# ReCode local database
+.recode

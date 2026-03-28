@@ -8,7 +8,7 @@
   -->
 
 <template>
-  <div class="menu-item-content" @click.stop="handleItemClick">
+  <div class="menu-item-content" :data-doc-id="props.dataDocId" @click.stop="handleItemClick">
     <el-tooltip v-if="shouldShowTooltip" :content="text" effect="dark" trigger="hover" placement="right">
       <span class="menu-title">{{ displayText }}</span>
     </el-tooltip>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed } from "vue";
 
 interface Props {
   link: string;
@@ -28,6 +28,7 @@ interface Props {
   isShared?: boolean; // 是否已分享
   hasPassword?: boolean; // 是否有密码
   isExpired?: boolean; // 是否已过期
+  dataDocId?: string; // 文档 ID，用于精确查找激活项
 }
 
 const props = defineProps<Props>()

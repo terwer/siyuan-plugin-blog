@@ -1,75 +1,73 @@
-# Nuxt Minimal Starter
+[中文](README_zh_CN.md)
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Viewer App
+
+`apps/app` is the unified viewer application used by multiple targets.
+It is shared by both the free path and the pro path.
+
+Those paths are:
+
+- Free path:
+  `apps/siyuan` -> host Siyuan kernel / local public files -> `apps/app`
+- Pro path:
+  `share-pro` -> `siyuan-note-service` -> `apps/app`
+
+## Targets
+
+- `siyuan`
+  Free SPA viewer embedded in Siyuan.
+- `node`
+  SSR/server-capable viewer.
+- `vercel`
+  Server-capable deployment.
+- `cloudflare`
+  Server-capable deployment.
 
 ## Setup
 
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Development
 
-Start the development server on `http://localhost:3000`:
+Run the server-capable viewer locally:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+cd apps/app
+bash script/dev.sh
 ```
 
-## Production
+## Build
 
-Build the application for production:
+Build the free Siyuan SPA viewer:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+cd apps/app
+bash script/siyuan.sh
 ```
 
-Locally preview production build:
+This script temporarily switches to `nuxt.siyuan.config.ts`, builds the free SPA viewer, and restores `nuxt.config.ts` automatically.
+
+Build the Node viewer:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+cd apps/app
+bash script/node.sh
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Build the Vercel viewer:
+
+```bash
+cd apps/app
+bash script/vercel.sh
+```
+
+Build the Cloudflare viewer:
+
+```bash
+cd apps/app
+bash script/cloudflare.sh
+```

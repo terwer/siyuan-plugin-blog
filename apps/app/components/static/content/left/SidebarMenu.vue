@@ -8,8 +8,8 @@
   -->
 
 <script setup lang="ts">
-import { computed, defineProps, ref } from "vue"
-import MenuItem from "./MenuItem.vue"
+import { computed, defineProps, ref } from "vue";
+import MenuItem from "./MenuItem.vue";
 
 interface MenuData {
   id: string;
@@ -43,11 +43,13 @@ const handleMenuClick = () => {
   <el-sub-menu
     v-if="props.menu.children?.length"
     :index="props.menu.id"
-    :class="{ 'is-active': isActive }"
+    :data-doc-id="props.menu.id"
+    :popper-class="'sidebar-popper'"
   >
     <template #title>
-      <div class="menu-item-wrapper" @click="handleMenuClick">
-        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" />
+      <!-- 只使用 title-active 类控制高亮，避免 Element Plus 的级联影响 -->
+      <div class="menu-item-wrapper" :class="{ 'title-active': isActive }" @click="handleMenuClick">
+        <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" :data-doc-id="props.menu.id" />
       </div>
     </template>
     <SidebarMenu
@@ -60,10 +62,11 @@ const handleMenuClick = () => {
   <el-menu-item
     v-else
     :index="props.menu.id"
+    :data-doc-id="props.menu.id"
     :class="{ 'is-active': isActive, 'menu-item-fullwidth': true }"
     @click="handleMenuClick"
   >
-    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" />
+    <MenuItem ref="menuItemRef" :link="props.menu.link" :text="props.menu.name" :from-doc-tree="true" :is-shared="props.menu.isShared" :has-password="props.menu.hasPassword" :is-expired="props.menu.isExpired" :data-doc-id="props.menu.id" />
   </el-menu-item>
 </template>
 
@@ -80,11 +83,13 @@ const handleMenuClick = () => {
   // 保留 Element Plus 默认的 padding 用于左侧缩进
   // MenuItem 组件内部处理点击，保持原有样式不变
 
-// 高亮当前激活的菜单项
-:deep(.is-active)
+// 高亮当前激活的菜单项（叶子节点）
+:deep(.el-menu-item.is-active)
   color var(--el-color-primary) !important
 
-  // 确保子菜单标题也高亮
-  .el-sub-menu__title
+// 子菜单标题激活状态 - 只使用 title-active 类控制高亮
+// 这避免了 Element Plus 自动给包含激活子项的父菜单添加 is-active 类导致的级联高亮问题
+:deep(.el-sub-menu__title)
+  .menu-item-wrapper.title-active
     color var(--el-color-primary) !important
 </style>

@@ -10,17 +10,15 @@
 - [apps/app/composables/useAIAssistant.ts](file://apps/app/composables/useAIAssistant.ts)
 - [apps/app/utils/TreeUtils.ts](file://apps/app/utils/TreeUtils.ts)
 - [apps/app/app.config.ts](file://apps/app/app.config.ts)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css)
 </cite>
 
 ## 更新摘要
 **变更内容**
-- 大纲系统已完全重构为模块化侧边栏架构
-- 移除了悬停展开功能，采用垂直按钮组设计
-- 新增模块化功能模块配置系统
-- 集成AI助手面板，实现智能内容辅助功能
-- 优化智能滚动行为，增强大纲与正文的同步体验
-- 改进导航增强功能，支持从文档树跳转的自动展开
-- 完善固定定位策略和视口处理机制
+- 侧边栏大纲系统进行了视觉和结构改进
+- 新增List图标替换之前的自定义字符图标
+- 统一了边框圆角样式，移除了左侧边框
+- 仅保留统一圆角设计，提升视觉一致性
 
 ## 目录
 1. [简介](#简介)
@@ -33,16 +31,17 @@
 8. [智能滚动优化](#智能滚动优化)
 9. [导航增强功能](#导航增强功能)
 10. [布局系统优化](#布局系统优化)
-11. [依赖关系分析](#依赖关系分析)
-12. [性能考虑](#性能考虑)
-13. [故障排除指南](#故障排除指南)
-14. [结论](#结论)
+11. [视觉和结构改进](#视觉和结构改进)
+12. [依赖关系分析](#依赖关系分析)
+13. [性能考虑](#性能考虑)
+14. [故障排除指南](#故障排除指南)
+15. [结论](#结论)
 
 ## 简介
 
 大纲系统是 Siyuan 笔记博客插件中的核心功能模块，负责为静态文章页面提供交互式的大纲导航。该系统能够自动生成文档的层次结构，提供智能的滚动同步、可定制的显示范围和灵活的用户交互体验。
 
-**更新** 系统已全面升级为模块化侧边栏架构，采用垂直按钮组设计和模块化功能配置。新增功能包括AI助手集成、智能滚动优化、导航增强和响应式布局等。
+**更新** 系统已全面升级为模块化侧边栏架构，采用垂直按钮组设计和模块化功能配置。新增功能包括AI助手集成、智能滚动优化、导航增强和响应式布局等。本次更新特别关注了视觉和结构的改进，包括List图标替换和统一圆角设计。
 
 系统主要特点包括：
 - 自动生成文档大纲结构
@@ -55,6 +54,7 @@
 - **新增**：AI助手集成（速读、问答、聊天）
 - **新增**：智能滚动优化和导航增强
 - **新增**：从文档树跳转的自动展开功能
+- **新增**：List图标替换和统一圆角设计
 
 ## 项目结构
 
@@ -85,16 +85,19 @@ S --> V[快速动作按钮]
 W[useAIAssistant.ts] --> X[AI核心逻辑]
 W --> Y[消息管理]
 Z[TreeUtils.ts] --> AA[树形工具类]
+BB[shrink.css] --> CC[List图标样式]
+BB --> DD[统一圆角设计]
 end
 ```
 
 **图表来源**
-- [apps/app/components/static/content/right/Index.vue:10-447](file://apps/app/components/static/content/right/Index.vue#L10-L447)
+- [apps/app/components/static/content/right/Index.vue:10-762](file://apps/app/components/static/content/right/Index.vue#L10-L762)
 - [apps/app/components/static/content/right/Outline.vue:10-157](file://apps/app/components/static/content/right/Outline.vue#L10-L157)
 - [apps/app/components/static/content/right/OutlineItem.vue:10-275](file://apps/app/components/static/content/right/OutlineItem.vue#L10-L275)
 - [apps/app/components/static/content/left/Sidebar.vue:10-289](file://apps/app/components/static/content/left/Sidebar.vue#L10-L289)
 - [apps/app/components/ai-assistant/AIPanel.vue:11-800](file://apps/app/components/ai-assistant/AIPanel.vue#L11-L800)
 - [apps/app/composables/useAIAssistant.ts:1-665](file://apps/app/composables/useAIAssistant.ts#L1-665)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css:120-201](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css#L120-L201)
 
 **章节来源**
 - [apps/app/components/static/content/right/Index.vue:1-762](file://apps/app/components/static/content/right/Index.vue#L1-L762)
@@ -104,7 +107,7 @@ end
 
 ## 核心组件
 
-大纲系统由六个核心组件协同工作，其中右侧大纲容器已升级为模块化侧边栏架构：
+大纲系统由七个核心组件协同工作，其中右侧大纲容器已升级为模块化侧边栏架构：
 
 ### 1. 大纲主容器 (Index.vue) - **已全面重构**
 负责整个大纲系统的协调和状态管理，现采用模块化侧边栏架构和垂直按钮组设计，包括滚动监听、激活状态跟踪、用户交互控制和模块化功能管理。
@@ -124,6 +127,9 @@ end
 ### 6. AI助手组合式函数 (useAIAssistant.ts) - **新增**
 封装AI助手的核心逻辑，包括消息管理、API调用和内容处理。
 
+### 7. 列表样式模块 (shrink.css) - **新增**
+提供大纲面板的列表样式，包括List图标和统一圆角设计。
+
 **章节来源**
 - [apps/app/components/static/content/right/Index.vue:1-762](file://apps/app/components/static/content/right/Index.vue#L1-L762)
 - [apps/app/components/static/content/right/Outline.vue:1-157](file://apps/app/components/static/content/right/Outline.vue#L1-L157)
@@ -131,6 +137,7 @@ end
 - [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
 - [apps/app/components/ai-assistant/AIPanel.vue:1-800](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L800)
 - [apps/app/composables/useAIAssistant.ts:1-665](file://apps/app/composables/useAIAssistant.ts#L1-L665)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css:120-201](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css#L120-L201)
 
 ## 架构概览
 
@@ -599,6 +606,58 @@ ExpandSidebar --> End
 - [apps/app/components/static/content/right/Index.vue:94-123](file://apps/app/components/static/content/right/Index.vue#L94-L123)
 - [apps/app/components/static/content/right/Index.vue:355-358](file://apps/app/components/static/content/right/Index.vue#L355-L358)
 
+## 视觉和结构改进
+
+### List图标替换
+
+**更新** 大纲系统进行了重要的视觉改进，主要包括List图标替换：
+
+#### 自定义字符图标替换
+- **原有设计**：使用自定义字符图标（如"❶", "❷", "❸"等）
+- **新设计**：采用统一的List图标系统
+- **图标一致性**：所有层级使用相同的图标样式
+- **视觉统一**：提升整体视觉一致性
+
+#### 大纲面板样式优化
+- **图标定位**：`padding-left: 4px` 确保图标正确对齐
+- **图标尺寸**：`width: 17px!important` 统一图标大小
+- **图标圆角**：`border-radius: 3px` 提升视觉质感
+- **透明背景**：`color: transparent` 优化图标显示效果
+
+#### 层级图标映射
+- **H1-H6图标**：每个层级对应特定的图标样式
+- **悬停效果**：鼠标悬停时显示对应的背景色
+- **颜色主题**：使用`var(--h*-list-graphic)`变量控制颜色
+- **透明度控制**：`opacity: 0.2` 提供微妙的视觉反馈
+
+**章节来源**
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css:120-201](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css#L120-L201)
+
+### 统一边框圆角样式
+
+**更新** 大纲系统的边框设计进行了统一改进：
+
+#### 移除左侧边框
+- **设计简化**：移除左侧边框，保持简洁设计
+- **视觉平衡**：仅保留统一圆角设计
+- **现代感提升**：符合现代UI设计趋势
+- **一致性增强**：与其他组件保持设计一致性
+
+#### 统一圆角设计
+- **圆角半径**：`border-radius: 8px` 统一所有边角
+- **顶部圆角**：`border-top-left-radius: 8px`
+- **底部圆角**：`border-bottom-left-radius: 8px`
+- **柔和边框**：`rgba(0, 0, 0, 0.06)` 提供微妙的边框效果
+
+#### 设计规范统一
+- **边框样式**：移除所有方向的边框
+- **圆角规范**：统一使用8px圆角半径
+- **阴影优化**：`box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.06)`
+- **视觉层次**：通过阴影而非边框提供层次感
+
+**章节来源**
+- [apps/app/components/static/content/right/Index.vue:473-488](file://apps/app/components/static/content/right/Index.vue#L473-L488)
+
 ## 依赖关系分析
 
 大纲系统依赖于多个核心库和工具：
@@ -614,6 +673,7 @@ AIPanel[AIPanel.vue] --> AIAssistant[useAIAssistant.ts]
 AIPanel --> AIUsage[useAIUsage]
 Sidebar[Sidebar.vue] --> ElementPlus
 TreeUtils --> Sidebar
+shrinkCSS[shrink.css] --> OutlineStyles[大纲样式]
 end
 subgraph "工具类"
 TreeUtils --> Sidebar
@@ -659,6 +719,7 @@ Components --> Utils
 6. **独立滚动容器**：减少滚动事件对整个页面的影响
 7. **自定义滚动条**：使用 CSS 滚动条替代复杂组件
 8. **状态持久化**：使用本地存储减少重复计算
+9. **List图标优化**：统一图标系统减少样式计算开销
 
 ### 内存优化
 
@@ -717,6 +778,12 @@ Components --> Utils
 3. **圆角设计**：验证圆角样式的正确应用
 4. **阴影效果**：检查阴影样式的兼容性
 
+#### List图标问题
+1. **图标样式**：检查 `b3-list-item__graphic` 样式是否正确应用
+2. **层级映射**：确认H1-H6层级的图标映射是否正确
+3. **CSS优先级**：验证样式规则的优先级设置
+4. **主题变量**：检查 `var(--h*-list-graphic)` 变量是否正确
+
 **章节来源**
 - [apps/app/components/static/content/right/Index.vue:172-219](file://apps/app/components/static/content/right/Index.vue#L172-L219)
 - [apps/app/components/static/content/right/OutlineItem.vue:104-153](file://apps/app/components/static/content/right/OutlineItem.vue#L104-L153)
@@ -735,6 +802,7 @@ Components --> Utils
 6. **视觉增强**：圆角、阴影、自定义滚动条等现代化设计
 7. **导航增强**：支持从文档树跳转的自动展开功能
 8. **智能滚动**：优化的滚动同步和激活状态管理
+9. **视觉改进**：List图标替换和统一圆角设计
 
 ### 技术亮点
 
@@ -745,6 +813,8 @@ Components --> Utils
 - **AI助手集成**：统一的聊天界面设计
 - **智能滚动优化**：精确的滚动同步机制
 - **导航增强**：与文档树的深度集成
+- **List图标系统**：统一的图标设计和层级映射
+- **圆角设计规范**：移除边框的现代化UI设计
 
 ### 未来展望
 
@@ -754,5 +824,6 @@ Components --> Utils
 - 移动端优化改进
 - AI功能扩展和增强
 - 性能监控和分析
+- 更丰富的视觉效果
 
 该系统为用户提供了专业级的文档导航体验，是 Siyuan 笔记本生态系统的重要组成部分，代表了现代前端开发的最佳实践。

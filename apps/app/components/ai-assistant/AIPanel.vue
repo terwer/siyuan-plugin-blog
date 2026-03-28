@@ -12,17 +12,17 @@
 import {
   Close,
   Promotion,
-  RefreshRight,
   Delete,
   QuestionFilled,
-  ChatLineRound,
   Setting,
   Loading,
+  DocumentChecked,
 } from "@element-plus/icons-vue"
-import { useAIAssistant, type AIAssistantConfig, type AIModelMode } from "~/composables/useAIAssistant"
+import { useAIAssistant, type AIAssistantConfig } from "~/composables/useAIAssistant"
 import { useAIUsage } from "~/composables/useAIUsage"
 import { useLute } from "~/composables/useLute"
 import { AI_SUMMARY_TERMS_KEY, AI_CUSTOM_CONFIG_KEY } from "~/utils/Constants"
+import { hasMeaningfulTextContent } from "~/utils/content"
 
 const props = defineProps<{
   title: string
@@ -30,11 +30,8 @@ const props = defineProps<{
   docId: string
 }>()
 
-const emit = defineEmits<{
-  (e: "close"): void
-}>()
-
 const { t } = useI18n()
+const hasMeaningfulContent = computed(() => hasMeaningfulTextContent(props.content))
 
 // Lute Markdown 渲染器
 const { renderMarkdown } = useLute()
@@ -186,6 +183,10 @@ watch(() => config.mode, (newMode) => {
 
 // 检查是否可以使用 AI
 const canUseAI = computed(() => {
+  if (!hasMeaningfulContent.value) {
+    return false
+  }
+
   // custom 模式：只要有 API Key 就无限制
   if (config.mode === 'custom') {
     return !!config.apiKey?.trim()
@@ -223,6 +224,19 @@ const checkTermsBeforeAction = (action: () => void) => {
 
 // Handle terms confirmation
 const handleTermsConfirm = () => {
+  // 保存同意状态到 localStorage
+  if (import.meta.client) {
+    try {
+      localStorage.setItem(AI_SUMMARY_TERMS_KEY, "true")
+      console.log('[AI Terms] Saved to localStorage:', AI_SUMMARY_TERMS_KEY)
+
+      // 验证保存成功
+      const verify = localStorage.getItem(AI_SUMMARY_TERMS_KEY)
+      console.log('[AI Terms] Verification:', verify)
+    } catch (e) {
+      console.error('[AI Terms] Failed to save:', e)
+    }
+  }
   termsAccepted.value = true
   showTermsDialog.value = false
   if (pendingAIOperation) {
@@ -385,23 +399,76 @@ watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
   }
 })
 
+// 检查条款状态
+const checkTermsOnClient = () => {
+  if (!import.meta.client) return
+
+  // 读取 localStorage
+  const localValue = localStorage.getItem(AI_SUMMARY_TERMS_KEY)
+  const hasAccepted = localValue === "true"
+
+  // 调试日志（生产环境可移除）
+  console.log('[AI Terms] Checking terms:', {
+    key: AI_SUMMARY_TERMS_KEY,
+    value: localValue,
+    hasAccepted,
+    origin: window.location.origin,
+    href: window.location.href
+  })
+
+  if (hasAccepted) {
+    termsAccepted.value = true
+    showTermsDialog.value = false
+    console.log('[AI Terms] Already accepted, hiding dialog')
+  } else if (!termsAccepted.value && !showTermsDialog.value) {
+    // 只在未同意且弹窗未显示时才显示
+    console.log('[AI Terms] Not accepted, showing dialog')
+    showTermsDialog.value = true
+  }
+}
+
 // Auto-trigger on mount
 onMounted(() => {
+  if (!hasMeaningfulContent.value) {
+    return
+  }
+
   loadSavedConfig()
-  if (checkTermsAccepted()) {
-    termsAccepted.value = true
-    // Show welcome message if no history
-    if (messages.value.length === 0) {
-      // Welcome message already in template
+  // 立即检查条款状态
+  checkTermsOnClient()
+})
+
+watch(hasMeaningfulContent, (available) => {
+  if (available) {
+    return
+  }
+
+  showConfig.value = false
+  showTermsDialog.value = false
+  pendingAIOperation = null
+  clearMessages()
+}, { immediate: true })
+
+// 额外保险：使用 watchEffect 确保状态正确
+watchEffect(() => {
+  if (!hasMeaningfulContent.value) {
+    return
+  }
+
+  if (import.meta.client && !termsAccepted.value && !showTermsDialog.value) {
+    // 如果既未同意也未显示弹窗，检查是否应该显示
+    const hasAccepted = localStorage.getItem(AI_SUMMARY_TERMS_KEY) === "true"
+    if (!hasAccepted) {
+      showTermsDialog.value = true
+    } else {
+      termsAccepted.value = true
     }
-  } else {
-    showTermsDialog.value = true
   }
 })
 </script>
 
 <template>
-  <div class="ai-panel">
+  <div v-if="hasMeaningfulContent" class="ai-panel">
     <!-- Header -->
     <div class="ai-panel-header">
       <div class="panel-header-actions">
@@ -410,12 +477,6 @@ onMounted(() => {
           @click="clearMessages">
           <el-icon>
             <Delete />
-          </el-icon>
-        </button>
-        <!-- Close -->
-        <button class="header-btn header-btn--close" :title="t('main.opt.cancel')" @click="emit('close')">
-          <el-icon>
-            <Close />
           </el-icon>
         </button>
       </div>
