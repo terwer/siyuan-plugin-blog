@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { List, Opportunity, Paperclip } from "@element-plus/icons-vue"
-import type AppConfig from "~/app.config"
 import type { Component } from "vue"
+import type AppConfig from "~/app.config"
 import { useViewerCapabilities } from "~/composables/useViewerCapabilities"
 import { hasMeaningfulTextContent } from "~/utils/content"
 
@@ -20,7 +20,7 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 const { aiAssistantSupported } = useViewerCapabilities()
 
 // 当前激活的模块ID
-type ModuleId = "outline" | "ai"
+type ModuleId = string
 
 // ==================== 侧边栏功能模块配置 ====================
 // 后续增加模块时，只需要补一条定义，不要再去修改切换逻辑本身。
@@ -30,15 +30,15 @@ interface SidebarModuleDefinition {
   type: "outline" | "ai" | "graph"
   icon: Component
   order: number
+  tabBadge?: string
+  tabBadgeClass?: string
   isAvailable: () => boolean
   getWidth: () => number
-  onOpen?: () => void
-  onClose?: () => void
+  contentClass: string
+  clientOnly?: boolean
+  renderContent?: () => Component | null
 }
 const activeModuleId = ref<ModuleId>("outline")
-
-// AI 面板状态（跨组件共享）- 保持与其他组件的兼容性
-const aiPanelActive = useState("ai-panel-active", () => false)
 
 // 侧边栏显示状态 - 统一控制侧边栏的展开/收起
 const showSidebar = useState("sidebar-show", () => false)
@@ -169,8 +169,12 @@ const moduleDefinitions: SidebarModuleDefinition[] = [
     type: "outline",
     icon: List,
     order: 1,
+    tabBadge: "☰",
+    tabBadgeClass: "tab-icon",
+    contentClass: "outline-content",
     isAvailable: () => hasOutlineData.value,
     getWidth: () => outlineWidth.value,
+    renderContent: () => resolveComponent("static-content-right-outline") as Component,
   },
   {
     id: "ai",
@@ -178,14 +182,13 @@ const moduleDefinitions: SidebarModuleDefinition[] = [
     type: "ai",
     icon: Opportunity,
     order: 2,
+    tabBadge: "AI",
+    tabBadgeClass: "tab-icon-ai",
+    contentClass: "ai-content",
+    clientOnly: true,
     isAvailable: () => showAIModule.value,
     getWidth: () => aiWidth.value,
-    onOpen: () => {
-      aiPanelActive.value = true
-    },
-    onClose: () => {
-      aiPanelActive.value = false
-    },
+    renderContent: () => AIPanelComponent,
   },
 ]
 
@@ -203,6 +206,12 @@ const getFirstAvailableModuleId = () => {
     .sort((a, b) => a.order - b.order)[0]?.id ?? null
 }
 
+const getFirstAvailableModuleIdExcluding = (excludedModuleId: ModuleId) => {
+  return moduleDefinitions
+    .filter(module => module.id !== excludedModuleId && module.isAvailable())
+    .sort((a, b) => a.order - b.order)[0]?.id ?? null
+}
+
 const isModuleAvailable = (moduleId: ModuleId | null) => {
   return getModuleDefinition(moduleId)?.isAvailable() ?? false
 }
@@ -216,6 +225,8 @@ const currentModuleId = computed<ModuleId | null>(() => {
 })
 
 const activeSidebarWidth = computed(() => getModuleDefinition(currentModuleId.value)?.getWidth() ?? outlineWidth.value)
+const activeModuleDefinition = computed(() => getModuleDefinition(currentModuleId.value))
+const activeContentComponent = computed(() => activeModuleDefinition.value?.renderContent?.() ?? null)
 
 // 切换固定显示状态
 const togglePin = () => {
@@ -347,10 +358,7 @@ const getModuleButtonClass = (module: SidebarModuleDefinition) => {
   }
 }
 
-// 模块按钮交互：
-// 1. 点击未激活模块 => 打开侧栏并切换到该模块
-// 2. 点击当前激活模块 => 直接收起侧栏
-const activateModule = (moduleId: ModuleId) => {
+const openModule = (moduleId: ModuleId) => {
   const module = getModuleDefinition(moduleId)
 
   if (!module || !module.isAvailable()) {
@@ -358,70 +366,41 @@ const activateModule = (moduleId: ModuleId) => {
     return
   }
 
-  const isCurrentModule = currentModuleId.value === moduleId
-
-  if (showSidebar.value && isCurrentModule) {
-    module.onClose?.()
-    showSidebar.value = false
-    return
-  }
-
   activeModuleId.value = moduleId
-  module.onOpen?.()
   showSidebar.value = true
 }
 
-// 打开 AI 面板（保持兼容性）
-const openAI = () => {
-  activateModule("ai")
+const closeSidebar = () => {
+  showSidebar.value = false
 }
 
-// 监听 AI 面板激活，平滑展开侧边栏
-watch(aiPanelActive, (active) => {
-  if (active) {
-    // 检查 AI 功能是否可用
-    if (!showAIModule.value) {
-      logger.warn("AI panel activated but AI module is not available")
-      aiPanelActive.value = false
-      return
-    }
-    activeModuleId.value = "ai"
-    // 仅展开侧边栏，不强制固定，让用户可以自由控制
-    showSidebar.value = true
-    // 不自动固定，保持用户之前的固定状态
+const selectModule = (moduleId: ModuleId) => {
+  openModule(moduleId)
+}
+
+// 模块按钮交互：
+// 1. 点击未激活模块 => 打开侧栏并切换到该模块
+// 2. 点击当前激活模块 => 直接收起侧栏
+const toggleModule = (moduleId: ModuleId) => {
+  const isCurrentModule = currentModuleId.value === moduleId
+
+  if (showSidebar.value && isCurrentModule) {
+    closeSidebar()
+    return
   }
-})
 
-watch([currentModuleId, showSidebar, showAIModule], ([moduleId, sidebarVisible, aiAvailable]) => {
-  const shouldActivateAI = sidebarVisible && moduleId === "ai" && aiAvailable
-  if (aiPanelActive.value !== shouldActivateAI) {
-    aiPanelActive.value = shouldActivateAI
+  openModule(moduleId)
+}
+
+const closeModule = (moduleId: ModuleId) => {
+  if (currentModuleId.value !== moduleId) {
+    return
   }
-}, { immediate: true })
 
-// 监听 AI 功能可用性变化，当变为不可用时自动关闭 AI 面板
-watch(showAIModule, (available) => {
-  if (!available && aiPanelActive.value) {
-    logger.info("AI module became unavailable, closing AI panel")
-    aiPanelActive.value = false
-    // 如果没有大纲，收起侧边栏
-    if (!hasOutlineData.value) {
-      showSidebar.value = false
-    } else {
-      activeModuleId.value = "outline"
-    }
-  }
-})
-
-// 关闭 AI 面板 - 只关闭AI功能，侧边栏保持显示（自动切换到大纲或其他可用模块）
-const handleCloseAI = () => {
-  aiPanelActive.value = false
-
-  // 自动切回大纲模块（如果大纲可见）
-  if (isModuleAvailable("outline")) {
-    activeModuleId.value = "outline"
+  const fallbackModuleId = getFirstAvailableModuleIdExcluding(moduleId)
+  if (fallbackModuleId) {
+    openModule(fallbackModuleId)
   } else {
-    // 如果没有大纲，收起侧边栏
     showSidebar.value = false
   }
 }
@@ -509,25 +488,15 @@ onUnmounted(() => {
       <!-- 大纲标题栏（仅保留 Tab 切换） -->
       <div class="outline-header">
         <div class="sidebar-tabs">
-          <!-- 大纲 Tab：仅在有大纲数据时显示 -->
           <button
-            v-if="hasOutlineData"
+            v-for="module in visibleModules"
+            :key="`tab-${module.id}`"
             class="sidebar-tab"
-            :class="{ 'sidebar-tab--active': currentModuleId === 'outline' }"
-            @click="activeModuleId = 'outline'"
+            :class="{ 'sidebar-tab--active': currentModuleId === module.id }"
+            @click="selectModule(module.id)"
           >
-            <span class="tab-icon">☰</span>
-            <span>{{ $t("static.outline") }}</span>
-          </button>
-          <!-- AI Tab：AI 功能可用时始终显示，不依赖大纲模块 -->
-          <button
-            v-if="showAIModule"
-            class="sidebar-tab"
-            :class="{ 'sidebar-tab--active': currentModuleId === 'ai' }"
-            @click="activeModuleId = 'ai'"
-          >
-            <span class="tab-icon-ai">AI</span>
-            <span>{{ $t("ai.assistant.title") }}</span>
+            <span :class="module.tabBadgeClass">{{ module.tabBadge ?? module.id }}</span>
+            <span>{{ $t(module.name) }}</span>
           </button>
         </div>
         <!-- 图钉按钮 - 保留在标题栏 -->
@@ -538,27 +507,23 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- 大纲内容 -->
-      <div v-show="currentModuleId === 'outline' && hasOutlineData" class="outline-content">
-        <static-content-right-outline
+      <div v-if="activeContentComponent" :class="activeModuleDefinition?.contentClass">
+        <client-only v-if="activeModuleDefinition?.clientOnly">
+          <component
+            :is="activeContentComponent"
+            :title="post.title ?? ''"
+            :content="post.editorDom ?? ''"
+            :doc-id="post.postid ?? ''"
+          />
+        </client-only>
+        <component
+          :is="activeContentComponent"
+          v-else
           :outline-data="outlineData"
           :max-depth="outlineMaxDepth"
           :active-text="activeNodeText"
           :width="outlineWidth"
         />
-      </div>
-
-      <!-- AI 面板内容：仅在 AI 功能可用且当前选中 AI 模块时显示 -->
-      <div v-if="currentModuleId === 'ai' && showAIModule && AIPanelComponent" class="ai-content">
-        <client-only>
-          <component
-            :is="AIPanelComponent"
-            :title="post.title ?? ''"
-            :content="post.editorDom ?? ''"
-            :doc-id="post.postid ?? ''"
-            @close="handleCloseAI"
-          />
-        </client-only>
       </div>
 
       <!-- 拖拽调整宽度的手柄 -->
@@ -588,7 +553,7 @@ onUnmounted(() => {
         class="collapsed-btn"
         :class="getModuleButtonClass(module)"
         :title="$t(module.name)"
-        @click="activateModule(module.id)"
+        @click="toggleModule(module.id)"
       >
         <el-icon :size="16">
           <component :is="module.icon" />

@@ -27,9 +27,6 @@ const VNode = () =>
     innerHTML: editorDom,
   })
 
-// ========== AI 面板激活状态（跨组件共享）==========
-const aiPanelActive = useState("ai-panel-active", () => false)
-
 // 文档元信息栏兼容历史默认行为：只有显式 false 时才关闭。
 const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
 </script>

@@ -30,10 +30,6 @@ const props = defineProps<{
   docId: string
 }>()
 
-const emit = defineEmits<{
-  (e: "close"): void
-}>()
-
 const { t } = useI18n()
 const hasMeaningfulContent = computed(() => hasMeaningfulTextContent(props.content))
 
@@ -451,7 +447,6 @@ watch(hasMeaningfulContent, (available) => {
   showTermsDialog.value = false
   pendingAIOperation = null
   clearMessages()
-  emit('close')
 }, { immediate: true })
 
 // 额外保险：使用 watchEffect 确保状态正确
@@ -482,12 +477,6 @@ watchEffect(() => {
           @click="clearMessages">
           <el-icon>
             <Delete />
-          </el-icon>
-        </button>
-        <!-- Close -->
-        <button class="header-btn header-btn--close" :title="t('main.opt.cancel')" @click="emit('close')">
-          <el-icon>
-            <Close />
           </el-icon>
         </button>
       </div>
