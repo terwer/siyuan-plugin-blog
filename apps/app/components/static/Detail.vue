@@ -117,21 +117,30 @@ const seoDescription = computed(() => getSummery(seoSource.value))
 const seoImage = computed(() => getFirstImageSrc(seoSource.value))
 
 if (!props.overrideSeo) {
-  useSeoMeta(() => {
-    const seoMeta = {
-      title: seoTitle.value,
-      ogTitle: seoTitle.value,
-      description: seoDescription.value,
-      ogDescription: seoDescription.value,
-    } as any
+  useHead(() => {
+    const meta = [
+      { name: "description", content: seoDescription.value },
+      { property: "og:title", content: seoTitle.value },
+      { property: "og:description", content: seoDescription.value },
+    ] as Array<Record<string, string>>
 
     if (seoImage.value) {
-      seoMeta.ogImage = seoImage.value
+      meta.push({ property: "og:image", content: seoImage.value })
     }
 
-    return seoMeta
+    return {
+      title: seoTitle.value,
+      meta,
+    }
   })
 }
+
+watch(seoTitle, (title) => {
+  if (!import.meta.client || props.overrideSeo || !title) {
+    return
+  }
+  document.title = title
+}, { immediate: true })
 
 const loadPageData = async () => {
   isLoading.value = true

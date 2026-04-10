@@ -24,6 +24,19 @@
 </template>
 
 <style lang="stylus">
+html[data-viewer-font-mode="enhanced"][data-theme-mode="light"][data-light-theme="Zhihu"],
+html[data-viewer-font-mode="enhanced"][data-theme-mode="dark"][data-dark-theme="Zhihu"]
+  --viewer-font-stack "Open Sans", "LXGW WenKai", "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
+  --viewer-font-stack-code "JetBrains Mono", "Open Sans", "LXGW WenKai", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+  --b3-font-family var(--viewer-font-stack)
+  --b3-font-family-base var(--viewer-font-stack)
+  --b3-font-family-code var(--viewer-font-stack-code)
+  --b3-font-family-graph var(--viewer-font-stack)
+  --b3-font-family-emoji var(--viewer-font-stack)
+  --b3-font-family-math "KaTeX_Main", var(--viewer-font-stack)
+  --b3-font-family-protyle var(--viewer-font-stack)
+  --el-font-family var(--viewer-font-stack)
+
 .loading-spinner
   width: 40px
   height: 40px

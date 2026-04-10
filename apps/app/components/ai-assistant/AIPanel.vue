@@ -215,6 +215,7 @@ let pendingAIOperation: (() => void) | null = null
 const checkTermsBeforeAction = (action: () => void) => {
   if (checkTermsAccepted()) {
     termsAccepted.value = true
+    showTermsDialog.value = false
     action()
   } else {
     pendingAIOperation = action
@@ -228,11 +229,6 @@ const handleTermsConfirm = () => {
   if (import.meta.client) {
     try {
       localStorage.setItem(AI_SUMMARY_TERMS_KEY, "true")
-      console.log('[AI Terms] Saved to localStorage:', AI_SUMMARY_TERMS_KEY)
-
-      // 验证保存成功
-      const verify = localStorage.getItem(AI_SUMMARY_TERMS_KEY)
-      console.log('[AI Terms] Verification:', verify)
     } catch (e) {
       console.error('[AI Terms] Failed to save:', e)
     }
@@ -375,18 +371,6 @@ const getErrorMessage = (errorCode: string | null): string => {
   return errorMap[errorCode] || errorCode
 }
 
-// Accept terms
-const acceptTerms = () => {
-  if (import.meta.client) localStorage.setItem(AI_SUMMARY_TERMS_KEY, "true")
-  termsAccepted.value = true
-  showTermsDialog.value = false
-  handleSpeedRead()
-}
-
-const declineTerms = () => {
-  showTermsDialog.value = false
-}
-
 // Auto-scroll on message change
 watch(messages, () => {
   nextTick(() => scrollToBottom())
@@ -399,43 +383,14 @@ watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
   }
 })
 
-// 检查条款状态
-const checkTermsOnClient = () => {
-  if (!import.meta.client) return
-
-  // 读取 localStorage
-  const localValue = localStorage.getItem(AI_SUMMARY_TERMS_KEY)
-  const hasAccepted = localValue === "true"
-
-  // 调试日志（生产环境可移除）
-  console.log('[AI Terms] Checking terms:', {
-    key: AI_SUMMARY_TERMS_KEY,
-    value: localValue,
-    hasAccepted,
-    origin: window.location.origin,
-    href: window.location.href
-  })
-
-  if (hasAccepted) {
-    termsAccepted.value = true
-    showTermsDialog.value = false
-    console.log('[AI Terms] Already accepted, hiding dialog')
-  } else if (!termsAccepted.value && !showTermsDialog.value) {
-    // 只在未同意且弹窗未显示时才显示
-    console.log('[AI Terms] Not accepted, showing dialog')
-    showTermsDialog.value = true
-  }
-}
-
-// Auto-trigger on mount
 onMounted(() => {
   if (!hasMeaningfulContent.value) {
     return
   }
 
   loadSavedConfig()
-  // 立即检查条款状态
-  checkTermsOnClient()
+  termsAccepted.value = checkTermsAccepted()
+  showTermsDialog.value = false
 })
 
 watch(hasMeaningfulContent, (available) => {
@@ -445,26 +400,10 @@ watch(hasMeaningfulContent, (available) => {
 
   showConfig.value = false
   showTermsDialog.value = false
+  termsAccepted.value = false
   pendingAIOperation = null
   clearMessages()
 }, { immediate: true })
-
-// 额外保险：使用 watchEffect 确保状态正确
-watchEffect(() => {
-  if (!hasMeaningfulContent.value) {
-    return
-  }
-
-  if (import.meta.client && !termsAccepted.value && !showTermsDialog.value) {
-    // 如果既未同意也未显示弹窗，检查是否应该显示
-    const hasAccepted = localStorage.getItem(AI_SUMMARY_TERMS_KEY) === "true"
-    if (!hasAccepted) {
-      showTermsDialog.value = true
-    } else {
-      termsAccepted.value = true
-    }
-  }
-})
 </script>
 
 <template>
@@ -665,7 +604,7 @@ watchEffect(() => {
     <!-- Terms Dialog -->
     <Teleport to="body">
       <Transition name="fade">
-        <div v-if="showTermsDialog" class="terms-overlay" @click.self="declineTerms">
+        <div v-if="showTermsDialog" class="terms-overlay" @click.self="handleTermsCancel">
           <div class="terms-dialog" role="dialog" :aria-label="t('ai.assistant.terms.title')">
             <div class="terms-header">
               <span class="terms-title">{{ t("ai.assistant.terms.title") }}</span>

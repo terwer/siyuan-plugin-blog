@@ -16,6 +16,13 @@ const generateDynamicV = () => {
 const isDev = process.env.NODE_ENV === "development"
 const appBase = "/plugins/siyuan-blog/app/"
 const staticV = generateDynamicV()
+const createAsyncStylesheetLink = (href: string) =>
+  ({
+    rel: "stylesheet",
+    href,
+    media: "print",
+    onload: "this.onload=null;this.media='all'",
+  }) as any
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -80,6 +87,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: appBase,
     head: {
+      title: "在线分享",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       htmlAttrs: {
@@ -100,9 +108,7 @@ export default defineNuxtConfig({
         //   type: "font/woff2",
         //   crossorigin: "anonymous",
         // },
-        { rel: "stylesheet", href: appBase + "libs/fonts/webfont.css?v=" + staticV },
-        { rel: "stylesheet", href: appBase + "libs/fonts/lxgw_font.css?v=" + staticV },
-        { rel: "stylesheet", href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV },
+        createAsyncStylesheetLink(appBase + "libs/fonts/vdoing_font.css?v=" + staticV),
         {
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
@@ -116,6 +122,9 @@ export default defineNuxtConfig({
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
+          {
+            src: appBase + "libs/fonts/viewer-font-mode.boot.js?v=" + staticV,
+          },
           {
             src: appBase + "libs/eruda/eruda.js",
           },
@@ -136,6 +145,9 @@ export default defineNuxtConfig({
           },
         ]
         : [
+          {
+            src: appBase + "libs/fonts/viewer-font-mode.boot.js?v=" + staticV,
+          },
           {
             defer: true,
             src: appBase + "libs/katex/0.16.10/katex.min.js",
