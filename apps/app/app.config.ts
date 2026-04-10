@@ -56,9 +56,15 @@ interface AppConfig {
   outlineEnabled?: boolean
   outlineLevel?: number
 
-  // add by v5.6.0+ - 文档元信息栏（默认关闭，避免影响历史用户）
+  // add by v5.6.0+ - 文档元信息栏（兼容历史线上默认显示行为）
   postMetaEnabled?: boolean
-  /** AI 助手功能独立开关（默认开启，不依赖大纲功能） */
+  /**
+   * add by v6.7.0+
+   * AI 助手全局源配置。
+   * 该字段用于表达上游“全局默认策略”的存在，
+   * 但 viewer 端不应直接拿它作为最终显示判断。
+   * 最终是否显示 AI，以分享后的 post.aiAssistantEnabled 为准。
+   */
   aiAssistantEnabled?: boolean
 
   customCss?: Array<{
@@ -86,6 +92,8 @@ export default defineAppConfig<AppConfig>({
   header: "",
   footer: "",
   shareTemplate: "[url]",
+  postMetaEnabled: true,
+  aiAssistantEnabled: true,
 
   theme: {
     mode: "light",

@@ -5,26 +5,20 @@
 - [apps/app/components/static/content/right/Index.vue](file://apps/app/components/static/content/right/Index.vue)
 - [apps/app/components/static/content/right/Outline.vue](file://apps/app/components/static/content/right/Outline.vue)
 - [apps/app/components/static/content/right/OutlineItem.vue](file://apps/app/components/static/content/right/OutlineItem.vue)
-- [apps/app/components/static/content/left/Index.vue](file://apps/app/components/static/content/left/Index.vue)
-- [apps/app/components/static/content/left/MenuItem.vue](file://apps/app/components/static/content/left/MenuItem.vue)
 - [apps/app/components/static/content/left/Sidebar.vue](file://apps/app/components/static/content/left/Sidebar.vue)
-- [apps/app/components/static/content/left/SidebarMenu.vue](file://apps/app/components/static/content/left/SidebarMenu.vue)
-- [apps/app/components/static/content/left/SidebarButton.vue](file://apps/app/components/static/content/left/SidebarButton.vue)
-- [apps/app/components/static/content/Index.vue](file://apps/app/components/static/content/Index.vue)
-- [apps/app/pages/static/[id].vue](file://apps/app/pages/static/[id].vue)
-- [apps/app/composables/useDocId.ts](file://apps/app/composables/useDocId.ts)
+- [apps/app/components/ai-assistant/AIPanel.vue](file://apps/app/components/ai-assistant/AIPanel.vue)
+- [apps/app/composables/useAIAssistant.ts](file://apps/app/composables/useAIAssistant.ts)
 - [apps/app/utils/TreeUtils.ts](file://apps/app/utils/TreeUtils.ts)
 - [apps/app/app.config.ts](file://apps/app/app.config.ts)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css)
 </cite>
 
 ## 更新摘要
 **变更内容**
-- 大纲系统从传统的Tab界面重构为垂直按钮组设计
-- 新增模块化功能配置系统，支持大纲和AI助手的动态切换
-- 实现了完整的功能模块配置接口和状态管理
-- 改进了宽度管理和用户体验，新增垂直按钮组
-- 优化了点击保护机制，移除了悬停自动展开功能
-- 完善了文档树导航的查询参数传递和状态同步机制
+- 侧边栏大纲系统进行了视觉和结构改进
+- 新增List图标替换之前的自定义字符图标
+- 统一了边框圆角样式，移除了左侧边框
+- 仅保留统一圆角设计，提升视觉一致性
 
 ## 目录
 1. [简介](#简介)
@@ -32,20 +26,22 @@
 3. [核心组件](#核心组件)
 4. [架构概览](#架构概览)
 5. [详细组件分析](#详细组件分析)
-6. [文档树导航集成](#文档树导航集成)
-7. [多模块系统](#多模块系统)
-8. [布局系统优化](#布局系统优化)
-9. [滚动行为增强](#滚动行为增强)
-10. [依赖关系分析](#依赖关系分析)
-11. [性能考虑](#性能考虑)
-12. [故障排除指南](#故障排除指南)
-13. [结论](#结论)
+6. [模块化侧边栏系统](#模块化侧边栏系统)
+7. [AI助手集成](#ai助手集成)
+8. [智能滚动优化](#智能滚动优化)
+9. [导航增强功能](#导航增强功能)
+10. [布局系统优化](#布局系统优化)
+11. [视觉和结构改进](#视觉和结构改进)
+12. [依赖关系分析](#依赖关系分析)
+13. [性能考虑](#性能考虑)
+14. [故障排除指南](#故障排除指南)
+15. [结论](#结论)
 
 ## 简介
 
-大纲系统是 Siyuan 笔记博客插件中的核心功能模块，负责为静态文章页面提供交互式的大纲导航。该系统已经从传统的Tab界面重构为垂直按钮组设计，新增了模块化功能配置，能够自动生成文档的层次结构，提供智能的滚动同步、可定制的显示范围和灵活的用户交互体验。
+大纲系统是 Siyuan 笔记博客插件中的核心功能模块，负责为静态文章页面提供交互式的大纲导航。该系统能够自动生成文档的层次结构，提供智能的滚动同步、可定制的显示范围和灵活的用户交互体验。
 
-**更新** 系统现已升级为基于固定定位策略的多模块系统，集成了垂直按钮组设计，支持大纲和AI助手的动态切换。新增了完整的功能模块配置系统，允许开发者轻松扩展新的功能模块。
+**更新** 系统已全面升级为模块化侧边栏架构，采用垂直按钮组设计和模块化功能配置。新增功能包括AI助手集成、智能滚动优化、导航增强和响应式布局等。本次更新特别关注了视觉和结构的改进，包括List图标替换和统一圆角设计。
 
 系统主要特点包括：
 - 自动生成文档大纲结构
@@ -53,77 +49,68 @@
 - 可调整的大纲宽度和固定显示功能
 - 支持多级标题的层级展示
 - 响应式设计和主题适配
-- **新增**：垂直按钮组设计（替代传统Tab界面）
-- **新增**：模块化功能配置系统
-- **新增**：自动展开逻辑和优先级控制
-- **新增**：点击保护机制（移除悬停展开）
-- **新增**：完整的功能模块配置系统
+- **新增**：模块化侧边栏架构
+- **新增**：垂直按钮组设计
+- **新增**：AI助手集成（速读、问答、聊天）
+- **新增**：智能滚动优化和导航增强
+- **新增**：从文档树跳转的自动展开功能
+- **新增**：List图标替换和统一圆角设计
 
 ## 项目结构
 
-大纲系统位于应用的静态内容组件目录中，采用分层架构设计，现已升级为完整的多模块系统：
+大纲系统位于应用的静态内容组件目录中，现已升级为模块化侧边栏架构：
 
 ```mermaid
 graph TB
-subgraph "多模块大纲系统架构"
+subgraph "模块化侧边栏架构"
 A[static/content/right/] --> B[Index.vue - 主容器]
 A --> C[Outline.vue - 大纲容器]
 A --> D[OutlineItem.vue - 大纲项组件]
-E[static/content/left/] --> F[Index.vue - 左侧导航]
-E --> G[Sidebar.vue - 文档树]
-E --> H[MenuItem.vue - 导航项]
-E --> I[SidebarMenu.vue - 子菜单组件]
-J[left/SidebarButton.vue - 垂直按钮组] --> E
-B --> K[功能模块配置]
-B --> L[垂直按钮组系统]
-B --> M[多模块状态管理]
-B --> N[固定定位策略]
-B --> O[拖拽调整宽度]
-B --> P[点击保护机制]
-C --> Q[独立滚动容器]
-C --> R[自动滚动定位]
-D --> S[层级计算]
-D --> T[激活状态检测]
-D --> U[点击跳转]
-F --> V[侧边栏显示控制]
-G --> W[文档树展开逻辑]
-H --> X[查询参数传递]
-I --> Y[菜单项点击处理]
-Z[content/Index.vue] --> AA[flex 布局基础]
-AA --> AB[左侧内容]
-AA --> AC[正文区域]
-AA --> AD[右侧大纲]
+B --> E[模块化功能配置]
+B --> F[垂直按钮组]
+B --> G[AI助手集成]
+B --> H[智能滚动优化]
+B --> I[固定定位策略]
+C --> J[独立滚动容器]
+C --> K[自动滚动定位]
+D --> L[层级计算]
+D --> M[激活状态检测]
+D --> N[点击跳转]
+O[content/left/Sidebar.vue] --> P[文档树导航]
+O --> Q[自动展开功能]
+O --> R[滚动到激活项]
+S[AIPanel.vue] --> T[AI助手面板]
+S --> U[聊天界面]
+S --> V[快速动作按钮]
+W[useAIAssistant.ts] --> X[AI核心逻辑]
+W --> Y[消息管理]
+Z[TreeUtils.ts] --> AA[树形工具类]
+BB[shrink.css] --> CC[List图标样式]
+BB --> DD[统一圆角设计]
 end
 ```
 
 **图表来源**
-- [apps/app/components/static/content/right/Index.vue:18-46](file://apps/app/components/static/content/right/Index.vue#L18-L46)
-- [apps/app/components/static/content/right/Outline.vue:10-30](file://apps/app/components/static/content/right/Outline.vue#L10-L30)
-- [apps/app/components/static/content/right/OutlineItem.vue:10-38](file://apps/app/components/static/content/right/OutlineItem.vue#L10-L38)
-- [apps/app/components/static/content/left/Index.vue:10-24](file://apps/app/components/static/content/left/Index.vue#L10-L24)
-- [apps/app/components/static/content/left/Sidebar.vue:10-23](file://apps/app/components/static/content/left/Sidebar.vue#L10-L23)
-- [apps/app/components/static/content/left/MenuItem.vue:21-33](file://apps/app/components/static/content/left/MenuItem.vue#L21-L33)
-- [apps/app/components/static/content/left/SidebarMenu.vue:10-25](file://apps/app/components/static/content/left/SidebarMenu.vue#L10-L25)
-- [apps/app/components/static/content/left/SidebarButton.vue:10-22](file://apps/app/components/static/content/left/SidebarButton.vue#L10-L22)
-- [apps/app/components/static/content/Index.vue:10-23](file://apps/app/components/static/content/Index.vue#L10-L23)
+- [apps/app/components/static/content/right/Index.vue:10-762](file://apps/app/components/static/content/right/Index.vue#L10-L762)
+- [apps/app/components/static/content/right/Outline.vue:10-157](file://apps/app/components/static/content/right/Outline.vue#L10-L157)
+- [apps/app/components/static/content/right/OutlineItem.vue:10-275](file://apps/app/components/static/content/right/OutlineItem.vue#L10-L275)
+- [apps/app/components/static/content/left/Sidebar.vue:10-289](file://apps/app/components/static/content/left/Sidebar.vue#L10-L289)
+- [apps/app/components/ai-assistant/AIPanel.vue:11-800](file://apps/app/components/ai-assistant/AIPanel.vue#L11-L800)
+- [apps/app/composables/useAIAssistant.ts:1-665](file://apps/app/composables/useAIAssistant.ts#L1-665)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css:120-201](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css#L120-L201)
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:18-46](file://apps/app/components/static/content/right/Index.vue#L18-L46)
-- [apps/app/components/static/content/right/Outline.vue:10-30](file://apps/app/components/static/content/right/Outline.vue#L10-L30)
-- [apps/app/components/static/content/right/OutlineItem.vue:10-38](file://apps/app/components/static/content/right/OutlineItem.vue#L10-L38)
-- [apps/app/components/static/content/left/Index.vue:10-24](file://apps/app/components/static/content/left/Index.vue#L10-L24)
-- [apps/app/components/static/content/left/Sidebar.vue:10-23](file://apps/app/components/static/content/left/Sidebar.vue#L10-L23)
-- [apps/app/components/static/content/left/MenuItem.vue:21-33](file://apps/app/components/static/content/left/MenuItem.vue#L21-L33)
-- [apps/app/components/static/content/left/SidebarMenu.vue:10-25](file://apps/app/components/static/content/left/SidebarMenu.vue#L10-L25)
-- [apps/app/components/static/content/left/SidebarButton.vue:10-22](file://apps/app/components/static/content/left/SidebarButton.vue#L10-L22)
-- [apps/app/components/static/content/Index.vue:10-23](file://apps/app/components/static/content/Index.vue#L10-L23)
+- [apps/app/components/static/content/right/Index.vue:1-762](file://apps/app/components/static/content/right/Index.vue#L1-L762)
+- [apps/app/components/static/content/right/Outline.vue:1-157](file://apps/app/components/static/content/right/Outline.vue#L1-L157)
+- [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
 
 ## 核心组件
 
-大纲系统由八个核心组件协同工作，现已升级为完整的多模块系统：
+大纲系统由七个核心组件协同工作，其中右侧大纲容器已升级为模块化侧边栏架构：
 
-### 1. 多模块主容器 (Index.vue) - **已全面升级**
-负责整个大纲系统的协调和状态管理，现采用固定定位策略和多模块架构，包括滚动监听、激活状态跟踪、用户交互控制和多模块状态管理。
+### 1. 大纲主容器 (Index.vue) - **已全面重构**
+负责整个大纲系统的协调和状态管理，现采用模块化侧边栏架构和垂直按钮组设计，包括滚动监听、激活状态跟踪、用户交互控制和模块化功能管理。
 
 ### 2. 大纲容器 (Outline.vue)
 提供大纲的整体布局和样式，包含独立滚动区域和自动滚动功能。
@@ -131,161 +118,136 @@ end
 ### 3. 大纲项组件 (OutlineItem.vue)
 处理单个大纲项的渲染、层级计算和交互逻辑。
 
-### 4. 左侧导航容器 (left/Index.vue) - **新增**
-控制左侧文档树的显示和隐藏，支持文档树导航联动。
+### 4. 左侧文档树 (Sidebar.vue) - **新增**
+提供文档树导航功能，支持自动展开和滚动到激活项。
 
-### 5. 文档树组件 (left/Sidebar.vue) - **新增**
-提供文档树的渲染和交互，包含展开逻辑和父节点追踪。
+### 5. AI助手面板 (AIPanel.vue) - **新增**
+提供统一的AI助手界面，支持速读、问答生成和自由聊天功能。
 
-### 6. 导航项组件 (left/MenuItem.vue) - **新增**
-处理单个导航项的点击事件，支持查询参数传递和密码保护。
+### 6. AI助手组合式函数 (useAIAssistant.ts) - **新增**
+封装AI助手的核心逻辑，包括消息管理、API调用和内容处理。
 
-### 7. 子菜单组件 (left/SidebarMenu.vue) - **新增**
-处理菜单项的嵌套结构和点击事件转发。
-
-### 8. 垂直按钮组组件 (left/SidebarButton.vue) - **新增**
-提供垂直排列的按钮组设计，替代传统Tab界面，支持快速功能切换。
-
-### 9. 主布局容器 (content/Index.vue) - **新增**
-提供 flex 布局的基础结构，确保大纲、正文和侧边栏的正确排列。
+### 7. 列表样式模块 (shrink.css) - **新增**
+提供大纲面板的列表样式，包括List图标和统一圆角设计。
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:18-46](file://apps/app/components/static/content/right/Index.vue#L18-L46)
-- [apps/app/components/static/content/right/Outline.vue:10-30](file://apps/app/components/static/content/right/Outline.vue#L10-L30)
-- [apps/app/components/static/content/right/OutlineItem.vue:10-38](file://apps/app/components/static/content/right/OutlineItem.vue#L10-L38)
-- [apps/app/components/static/content/left/Index.vue:10-24](file://apps/app/components/static/content/left/Index.vue#L10-L24)
-- [apps/app/components/static/content/left/Sidebar.vue:10-23](file://apps/app/components/static/content/left/Sidebar.vue#L10-L23)
-- [apps/app/components/static/content/left/MenuItem.vue:21-33](file://apps/app/components/static/content/left/MenuItem.vue#L21-L33)
-- [apps/app/components/static/content/left/SidebarMenu.vue:10-25](file://apps/app/components/static/content/left/SidebarMenu.vue#L10-L25)
-- [apps/app/components/static/content/left/SidebarButton.vue:10-22](file://apps/app/components/static/content/left/SidebarButton.vue#L10-L22)
-- [apps/app/components/static/content/Index.vue:10-23](file://apps/app/components/static/content/Index.vue#L10-L23)
+- [apps/app/components/static/content/right/Index.vue:1-762](file://apps/app/components/static/content/right/Index.vue#L1-L762)
+- [apps/app/components/static/content/right/Outline.vue:1-157](file://apps/app/components/static/content/right/Outline.vue#L1-L157)
+- [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
+- [apps/app/components/ai-assistant/AIPanel.vue:1-800](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L800)
+- [apps/app/composables/useAIAssistant.ts:1-665](file://apps/app/composables/useAIAssistant.ts#L1-L665)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css:120-201](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css#L120-L201)
 
 ## 架构概览
 
-大纲系统采用多模块组件化架构设计，现已升级为完整的多模块系统：
+大纲系统采用模块化的侧边栏架构设计，现已升级为集成AI助手的完整解决方案：
 
 ```mermaid
 sequenceDiagram
 participant User as 用户
-participant DocTree as 文档树导航
-participant MenuItem as 导航项
-participant Route as 路由系统
-participant MultiModule as 多模块系统
-participant Sidebar as 侧边栏容器
-participant Outline as 大纲模块
-participant AI as AI助手模块
-participant VerticalButtons as 垂直按钮组
-participant Scroll as 滚动监听器
-User->>DocTree : 点击文档树项
-DocTree->>MenuItem : 触发点击事件
-MenuItem->>Route : 添加查询参数 from=docTree
-Route->>MultiModule : 导航到文章页面
-MultiModule->>Sidebar : 检测 from=docTree
-Sidebar->>Sidebar : 自动展开侧边栏
-Sidebar->>VerticalButtons : 显示垂直按钮组
-VerticalButtons->>Outline : 激活大纲模块
-Outline->>Scroll : 监听滚动事件
-Scroll->>Outline : 计算激活项
-Outline->>Outline : 更新激活状态
-Outline->>AI : 保持AI模块关闭
+participant CollapsedButtons as 垂直按钮组
+participant Sidebar as 模块化侧边栏
+participant ModuleManager as 模块管理器
+participant AIAssistant as AI助手
+participant Outline as 大纲内容
+participant DocTree as 文档树
+User->>CollapsedButtons : 点击功能按钮
+CollapsedButtons->>ModuleManager : 激活指定模块
+ModuleManager->>Sidebar : 切换显示状态
+Sidebar->>Outline : 显示大纲内容
+Sidebar->>AIAssistant : 显示AI面板
+AIAssistant->>User : 提供AI功能
+User->>DocTree : 点击文档树
+DocTree->>Sidebar : 自动展开侧边栏
+Sidebar->>Outline : 滚动到激活项
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/MenuItem.vue:114-121](file://apps/app/components/static/content/left/MenuItem.vue#L114-L121)
-- [apps/app/components/static/content/right/Index.vue:337-342](file://apps/app/components/static/content/right/Index.vue#L337-L342)
-- [apps/app/components/static/content/right/OutlineItem.vue:155-161](file://apps/app/components/static/content/right/OutlineItem.vue#L155-L161)
+- [apps/app/components/static/content/right/Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
+- [apps/app/components/static/content/right/Index.vue:292-329](file://apps/app/components/static/content/right/Index.vue#L292-L329)
+- [apps/app/components/static/content/left/Sidebar.vue:24-114](file://apps/app/components/static/content/left/Sidebar.vue#L24-L114)
 
 系统的核心流程包括：
-1. **初始化阶段**：加载大纲数据和配置，建立固定定位
-2. **导航阶段**：文档树点击事件触发，添加查询参数
-3. **检测阶段**：页面加载时检测URL查询参数
-4. **展开阶段**：根据条件自动展开侧边栏
-5. **模块激活阶段**：激活相应功能模块
-6. **渲染阶段**：构建大纲树形结构，应用固定定位
-7. **交互阶段**：处理用户操作和状态更新
-8. **同步阶段**：维护滚动位置和激活状态
+1. **初始化阶段**：加载模块配置和功能状态，建立模块化侧边栏
+2. **渲染阶段**：构建垂直按钮组和模块化侧边栏，应用固定定位
+3. **交互阶段**：处理用户操作、模块切换和状态更新
+4. **同步阶段**：维护滚动位置、激活状态和模块状态
 
 ## 详细组件分析
 
-### 多模块主容器 (Index.vue) - **已全面升级**
+### 大纲主容器 (Index.vue) - **已全面重构**
 
-#### 多模块系统架构
-组件现在集成了完整的多模块系统：
+#### 模块化侧边栏架构
+组件现在采用模块化侧边栏架构，提供更灵活的功能组织：
 
 ```mermaid
-flowchart TD
-InitModules["初始化功能模块"] --> ConfigModules["配置模块参数"]
-ConfigModules --> CreateState["创建模块状态"]
-CreateState --> SetupWatchers["设置状态监听器"]
-SetupWatchers --> LoadSettings["加载用户设置"]
-LoadSettings --> InitLayout["初始化布局"]
-InitLayout --> Ready["系统就绪"]
-ConfigModules --> ModuleConfig["模块配置"]
-ModuleConfig --> OutlineModule["大纲模块"]
-ModuleConfig --> AIModule["AI模块"]
-OutlineModule --> Visible{可见性?}
-AIModule --> Visible
-Visible --> |是| ActivateModule["激活模块"]
-Visible --> |否| SkipModule["跳过模块"]
-ActivateModule --> UpdateState["更新状态"]
-SkipModule --> UpdateState
-UpdateState --> Ready
+classDiagram
+class ModuleSidebar {
++SidebarModule[] modules
++ModuleId activeModuleId
++Boolean showSidebar
++Boolean isPinned
++Number outlineWidth
++Number aiWidth
++Boolean isResizing
++loadSavedWidth()
++saveWidth(width)
++loadPinnedState()
++savePinnedState(pinned)
++togglePin()
++startResize(event)
++toggleSidebar()
++activateModule(moduleId)
++handleClose()
++handleCloseAI()
+}
+class SidebarModule {
++String id
++String name
++String icon
++String type
++Boolean visible
++Number order
+}
 ```
 
 **图表来源**
-- [apps/app/components/static/content/right/Index.vue:18-46](file://apps/app/components/static/content/right/Index.vue#L18-L46)
-- [apps/app/components/static/content/right/Index.vue:276-281](file://apps/app/components/static/content/right/Index.vue#L276-L281)
+- [apps/app/components/static/content/right/Index.vue:18-45](file://apps/app/components/static/content/right/Index.vue#L18-L45)
+- [apps/app/components/static/content/right/Index.vue:292-330](file://apps/app/components/static/content/right/Index.vue#L292-L330)
 
 #### 垂直按钮组设计
-系统采用了全新的垂直按钮组设计，替代了传统的Tab界面：
+新增的垂直按钮组提供了一键访问所有功能模块：
 
-- **垂直排列**：按钮组采用垂直方向排列，节省横向空间
-- **统一样式**：所有按钮使用统一的样式系统，保持视觉一致性
-- **动态渲染**：根据模块配置动态渲染按钮，便于扩展新功能
-- **激活状态**：支持模块激活状态的视觉反馈
-- **收起按钮**：仅在侧边栏展开时显示收起按钮
+- **功能模块按钮**：动态渲染，支持大纲和AI助手模块
+- **收起按钮**：仅在侧边栏展开时显示，使用右箭头表示收起
+- **统一风格**：所有按钮采用相同的32px尺寸和圆角设计
+- **激活状态**：使用主题色突出显示当前激活的模块
 
-#### 自动展开逻辑
-实现了智能的自动展开机制，具有明确的优先级：
+#### 模块化功能配置
+系统支持动态配置功能模块：
 
-- **优先级1：图钉固定** - 如果用户已固定侧边栏，保持固定状态
-- **优先级2：URL参数触发** - 如果从文档树导航而来，自动展开侧边栏
-- **优先级3：默认收起** - 其他情况下保持收起状态
+- **模块类型**：支持outline、ai、graph等模块类型
+- **可见性控制**：每个模块都有独立的可见性开关
+- **排序机制**：通过order属性控制模块显示顺序
+- **扩展性**：新增模块只需在配置中添加
 
-#### 多模块状态管理
-新增了完整的模块状态管理系统：
-
-- **modules**：功能模块配置数组
-- **activeModuleId**：当前激活的模块ID
-- **visibleModules**：计算属性，过滤可见模块
-- **activateModule**：激活指定模块的方法
-- **模块按钮样式**：统一的模块按钮样式系统
-
-#### 点击保护机制
-移除了悬停自动展开功能，实现了更稳定的点击保护：
-
-- **toggleSidebarWithProtection**：带保护的侧边栏切换
-- **移除悬停展开**：onHover方法已禁用悬停自动展开
-- **防止误触**：确保用户操作的稳定性
-
-#### 固定定位实现
+#### 固定定位策略
 系统采用固定定位策略而非内容流定位：
 
 - **outline-container**：使用 `position: fixed` 确保不随正文滚动
 - **视窗高度**：`height: calc(100vh - 120px)` 占满视窗高度
-- **独立 z-index**：`z-index: 100` 确保侧边栏始终在最前面显示
+- **独立 z-index**：`z-index: 100` 确保大纲始终在最前面显示
 - **圆角设计**：顶部和底部圆角提升视觉质感
 
 #### 用户交互功能增强
-- **拖拽调整宽度**：支持鼠标拖拽调整大纲宽度
+- **拖拽调整宽度**：支持鼠标拖拽调整大纲和AI面板宽度
 - **固定显示**：支持固定显示侧边栏，避免频繁展开/收起
-- **标签页切换**：支持大纲和AI助手的标签页切换
+- **模块切换**：支持大纲和AI助手模块间的无缝切换
 - **本地存储**：持久化用户的偏好设置
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:18-46](file://apps/app/components/static/content/right/Index.vue#L18-L46)
-- [apps/app/components/static/content/right/Index.vue:276-331](file://apps/app/components/static/content/right/Index.vue#L276-L331)
-- [apps/app/components/static/content/right/Index.vue:337-354](file://apps/app/components/static/content/right/Index.vue#L337-L354)
+- [apps/app/components/static/content/right/Index.vue:1-762](file://apps/app/components/static/content/right/Index.vue#L1-L762)
 
 ### 大纲容器 (Outline.vue)
 
@@ -318,7 +280,7 @@ GetMin --> End
 - **防滚动传播**：使用 `overscroll-behavior: contain` 防止滚动传播到父元素
 
 **章节来源**
-- [apps/app/components/static/content/right/Outline.vue:55-90](file://apps/app/components/static/content/right/Outline.vue#L55-L90)
+- [apps/app/components/static/content/right/Outline.vue:1-157](file://apps/app/components/static/content/right/Outline.vue#L1-L157)
 
 ### 大纲项组件 (OutlineItem.vue)
 
@@ -369,357 +331,228 @@ ParentActive --> Inactive : 子项全部取消
 - **空白字符标准化**：统一处理换行和空格
 
 **章节来源**
-- [apps/app/components/static/content/right/OutlineItem.vue:50-102](file://apps/app/components/static/content/right/OutlineItem.vue#L50-L102)
+- [apps/app/components/static/content/right/OutlineItem.vue:1-275](file://apps/app/components/static/content/right/OutlineItem.vue#L1-L275)
 
-### 左侧导航容器 (left/Index.vue) - **新增**
+### 左侧文档树 (Sidebar.vue) - **新增**
 
-#### 侧边栏显示控制
-提供智能的侧边栏显示控制逻辑：
-
-```mermaid
-flowchart TD
-CheckDocTree["检查文档树"] --> HasContent{"docTree 有内容？"}
-HasContent --> |是| CheckFromDocTree["检查 from=docTree"]
-HasContent --> |否| HideSidebar["隐藏侧边栏"]
-CheckFromDocTree --> |是| ShowSidebar["显示侧边栏"]
-CheckFromDocTree --> |否| DefaultState["默认状态"]
-ShowSidebar --> SetVisible["设置可见状态"]
-HideSidebar --> SetHidden["设置隐藏状态"]
-DefaultState --> SetVisible
-```
-
-**图表来源**
-- [apps/app/components/static/content/left/Index.vue:21-29](file://apps/app/components/static/content/left/Index.vue#L21-L29)
-
-#### 侧边栏状态管理
-- **服务端初始化**：在服务端确定初始状态，避免客户端闪烁
-- **状态同步**：确保侧边栏状态与用户操作一致
-- **标题栏适配**：防止侧边栏按钮遮挡标题栏输入框
-
-**章节来源**
-- [apps/app/components/static/content/left/Index.vue:17-49](file://apps/app/components/static/content/left/Index.vue#L17-L49)
-
-### 文档树组件 (left/Sidebar.vue) - **新增**
-
-#### 文档树展开逻辑
-实现了智能的文档树展开机制：
+#### 自动展开功能
+提供了智能的文档树导航：
 
 ```mermaid
 flowchart TD
-GetCurrentId["获取当前文档ID"] --> BuildMap["构建文档树映射"]
-BuildMap --> FindParent["查找父节点ID"]
-FindParent --> AddParents["添加所有父节点ID"]
-AddParents --> ReturnIds["返回展开ID数组"]
+CheckRoute["检查路由参数"] --> IsFromDocTree{"from=docTree？"}
+IsFromDocTree --> |是| CheckPinned{"是否固定？"}
+IsFromDocTree --> |否| End([完成])
+CheckPinned --> |否| ExpandSidebar["自动展开侧边栏"]
+CheckPinned --> |是| End
+ExpandSidebar --> End
 ```
 
 **图表来源**
-- [apps/app/components/static/content/left/Sidebar.vue:126-141](file://apps/app/components/static/content/left/Sidebar.vue#L126-L141)
+- [apps/app/components/static/content/left/Sidebar.vue:120-142](file://apps/app/components/static/content/left/Sidebar.vue#L120-L142)
 
-#### 父节点追踪机制
-- **TreeUtils.addParentIds**：为每个节点添加父节点ID列表
-- **expandedIds 计算**：生成展开ID数组
-- **确保可见性**：保证当前文档在树中可见
+#### 滚动到激活项
+实现了智能的滚动定位功能：
 
-#### 滚动同步机制
-实现了智能的滚动同步功能：
+- **递增重试**：最多重试10次确保元素可见
+- **居中显示**：使激活元素在滚动条中央显示
+- **边界检查**：确保滚动位置在有效范围内
+- **平滑滚动**：使用Element Plus的滚动API
 
-- **激活项居中**：自动滚动到激活的菜单项并居中显示
-- **重试机制**：支持多次重试确保滚动成功
-- **边界检查**：防止滚动超出范围
-
-**章节来源**
-- [apps/app/components/static/content/left/Sidebar.vue:111-149](file://apps/app/components/static/content/left/Sidebar.vue#L111-L149)
-- [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
-
-### 导航项组件 (left/MenuItem.vue) - **新增**
-
-#### 查询参数传递机制
-实现了完整的查询参数传递功能：
-
-```mermaid
-flowchart TD
-HandleClick["处理点击事件"] --> CheckShared["检查是否已分享"]
-CheckShared --> |否| Stop["停止操作"]
-CheckShared --> |是| CheckExpired["检查是否已过期"]
-CheckExpired --> |是| ShowError["显示错误提示"]
-CheckExpired --> |否| CheckPassword["检查是否有密码"]
-CheckPassword --> |是| ConfirmPassword["确认密码"]
-CheckPassword --> |否| BuildUrl["构建URL"]
-ConfirmPassword --> BuildUrl
-BuildUrl --> AddQueryParam["添加查询参数 from=docTree"]
-AddQueryParam --> Navigate["执行导航"]
-Stop --> End([完成])
-ShowError --> End
-Navigate --> End
-```
-
-**图表来源**
-- [apps/app/components/static/content/left/MenuItem.vue:81-121](file://apps/app/components/static/content/left/MenuItem.vue#L81-L121)
-
-#### 导航安全机制
-- **分享状态检查**：未分享的文档不可点击
-- **过期状态检查**：已过期的文档阻止跳转
-- **密码保护机制**：需要密码验证的文档进行确认
-- **查询参数传递**：自动添加 `from=docTree` 查询参数
+#### 元素查找优化
+- **优先级查找**：优先查找`el-menu-item.is-active`
+- **降级方案**：找不到时查找任何`is-active`元素
+- **重试机制**：等待菜单展开后再进行查找
+- **日志记录**：记录查找过程和结果
 
 **章节来源**
-- [apps/app/components/static/content/left/MenuItem.vue:77-122](file://apps/app/components/static/content/left/MenuItem.vue#L77-L122)
+- [apps/app/components/static/content/left/Sidebar.vue:1-289](file://apps/app/components/static/content/left/Sidebar.vue#L1-L289)
 
-### 子菜单组件 (left/SidebarMenu.vue) - **新增**
+## 模块化侧边栏系统
 
-#### 菜单项点击处理
-实现了菜单项的点击事件处理：
+### 侧边栏架构设计
 
-```mermaid
-flowchart TD
-HandleMenuClick["处理菜单点击"] --> CheckChildren{"是否有子菜单？"}
-CheckChildren --> |是| OpenSubMenu["打开子菜单"]
-CheckChildren --> |否| HandleItemClick["处理菜单项点击"]
-OpenSubMenu --> ForwardClick["转发点击事件"]
-HandleItemClick --> ForwardClick
-ForwardClick --> CallMenuItem["调用 MenuItem 组件"]
-CallMenuItem --> ExecuteNavigation["执行导航"]
-ExecuteNavigation --> End([完成])
-```
+**更新** 大纲系统现已完全重构为模块化侧边栏架构：
 
-**图表来源**
-- [apps/app/components/static/content/left/SidebarMenu.vue:34-39](file://apps/app/components/static/content/left/SidebarMenu.vue#L34-L39)
-
-#### 菜单项包装器
-- **fullwidth 支持**：让菜单项内容占满整个可点击区域
-- **激活状态高亮**：确保当前激活的菜单项清晰可见
-- **子菜单标题适配**：正确处理子菜单标题的激活状态
-
-**章节来源**
-- [apps/app/components/static/content/left/SidebarMenu.vue:34-67](file://apps/app/components/static/content/left/SidebarMenu.vue#L34-L67)
-
-### 垂直按钮组组件 (left/SidebarButton.vue) - **新增**
+#### 模块化功能配置
+- **模块类型**：支持outline、ai、graph等模块类型
+- **可见性控制**：每个模块都有独立的可见性开关
+- **排序机制**：通过order属性控制模块显示顺序
+- **扩展性**：新增模块只需在配置中添加
 
 #### 垂直按钮组设计
-实现了全新的垂直按钮组设计：
+- **统一风格**：所有按钮采用相同的32px尺寸和圆角设计
+- **激活状态**：使用主题色突出显示当前激活的模块
+- **收起按钮**：仅在侧边栏展开时显示，使用右箭头表示收起
+- **垂直排列**：按钮组垂直排列，节省水平空间
 
-```mermaid
-flowchart TD
-CheckVisibility["检查侧边栏可见性"] --> RenderButtons["渲染垂直按钮组"]
-RenderButtons --> ButtonLayout["垂直排列按钮"]
-ButtonLayout --> UnifiedStyle["统一样式系统"]
-UnifiedStyle --> DynamicRender["动态渲染模块按钮"]
-DynamicRender --> ActivationFeedback["激活状态反馈"]
-ActivationFeedback --> CollapseButton["收起按钮"]
-```
+#### 固定定位实现
+- **outline-container**：使用 `position: fixed` 确保不随正文滚动
+- **视窗高度**：`height: calc(100vh - 120px)` 占满视窗高度
+- **独立 z-index**：`z-index: 100` 确保大纲始终在最前面显示
+- **圆角设计**：顶部和底部圆角提升视觉质感
 
-**图表来源**
-- [apps/app/components/static/content/left/SidebarButton.vue:19-21](file://apps/app/components/static/content/left/SidebarButton.vue#L19-L21)
-
-#### 按钮组特性
-- **垂直排列**：按钮采用垂直方向排列，节省横向空间
-- **统一样式**：所有按钮使用统一的样式系统，保持视觉一致性
-- **动态渲染**：根据模块配置动态渲染按钮，便于扩展新功能
-- **激活状态**：支持模块激活状态的视觉反馈
-- **收起按钮**：仅在侧边栏展开时显示收起按钮
+#### 宽度管理机制
+- **独立宽度控制**：大纲和AI面板有不同的宽度设置
+- **拖拽调整**：支持鼠标拖拽调整宽度
+- **范围限制**：200-500px的有效调整范围
+- **本地存储**：持久化用户的宽度偏好设置
 
 **章节来源**
-- [apps/app/components/static/content/left/SidebarButton.vue:10-22](file://apps/app/components/static/content/left/SidebarButton.vue#L10-L22)
+- [apps/app/components/static/content/right/Index.vue:18-45](file://apps/app/components/static/content/right/Index.vue#L18-L45)
+- [apps/app/components/static/content/right/Index.vue:427-445](file://apps/app/components/static/content/right/Index.vue#L427-L445)
+- [apps/app/components/static/content/right/Index.vue:471-487](file://apps/app/components/static/content/right/Index.vue#L471-L487)
 
-### 主布局容器 (content/Index.vue) - **新增**
+### 模块激活机制
 
-#### flex 布局系统
-提供基础的 flex 布局结构，确保各组件正确排列：
+#### 模块按钮样式
+- **统一基础样式**：所有模块按钮使用相同的圆角和阴影设计
+- **激活状态样式**：使用主题色突出显示当前激活的模块
+- **悬停效果**：提供平滑的过渡动画和阴影变化
+- **图标设计**：使用统一的图标系统，保持视觉一致性
 
-```mermaid
-flowchart TD
-FlexLayout["flex 布局容器"] --> LeftSidebar["左侧内容"]
-FlexLayout --> MainContent["正文区域"]
-FlexLayout --> RightOutline["右侧大纲"]
-LeftSidebar --> FlexGrow["flex: 0 0 auto"]
-MainContent --> FlexGrow["flex: 1 1 0"]
-RightOutline --> FlexShrink["flex-shrink: 0"]
-```
-
-**图表来源**
-- [apps/app/components/static/content/Index.vue:16-28](file://apps/app/components/static/content/Index.vue#L16-L28)
-
-#### 布局特性
-- **flex-direction: row**：水平布局
-- **align-items: flex-start**：顶部对齐
-- **min-height: calc(100vh - 40px)**：占满视窗高度
-- **flex 1**：正文区域占据剩余空间
+#### 模块切换逻辑
+- **状态同步**：模块激活状态与侧边栏显示状态保持同步
+- **自动展开**：激活模块时自动展开侧边栏
+- **固定管理**：AI面板激活时不会强制固定侧边栏
+- **宽度切换**：根据激活模块动态调整宽度
 
 **章节来源**
-- [apps/app/components/static/content/Index.vue:29-45](file://apps/app/components/static/content/Index.vue#L29-L45)
+- [apps/app/components/static/content/right/Index.vue:283-299](file://apps/app/components/static/content/right/Index.vue#L283-L299)
+- [apps/app/components/static/content/right/Index.vue:306-314](file://apps/app/components/static/content/right/Index.vue#L306-L314)
 
-### 页面集成
+## AI助手集成
 
-#### 动态页面路由
-系统支持动态页面路由，根据共享类型自动选择合适的页面组件：
+### AI助手架构设计
 
-```mermaid
-flowchart TD
-RouteRequest["路由请求"] --> CheckShare["检查共享类型"]
-CheckShare --> IsPrivate{"私有共享？"}
-IsPrivate --> |是| PrivatePage["加载私有详情页"]
-IsPrivate --> |否| PublicPage["加载公开详情页"]
-PrivatePage --> Render["渲染页面"]
-IsPrivate --> Render
-Render --> End([完成])
-```
+**更新** 大纲系统现已完全集成AI助手功能，提供智能化的内容辅助能力：
 
-**图表来源**
-- [apps/app/pages/static/[id].vue:10-L26](file://apps/app/pages/static/[id].vue#L10-L26)
+#### 统一AI交互
+- **聊天气泡设计**：所有AI交互都以对话气泡的形式呈现
+- **连续上下文**：保持完整的对话历史和上下文
+- **统一使用计数**：内置模型和自定义模型共享使用次数
 
-#### 文档 ID 处理
-提供了统一的文档 ID 获取机制：
+#### 快速动作功能
+- **速读模式**：自动生成文档摘要、关键要点和思考问题
+- **问答生成**：基于文档内容生成5个有价值的问答对
+- **自由聊天**：支持用户自定义问题和讨论
 
-- **文件扩展名处理**：自动移除 `.html` 和 `.htm` 扩展名
-- **参数解析**：从路由参数中提取文档 ID
-- **格式标准化**：确保返回标准的文档 ID 格式
+#### 消息管理系统
+- **消息类型分类**：区分摘要、问答和普通聊天消息
+- **富文本支持**：支持HTML格式的内容展示
+- **自动滚动**：新消息自动滚动到底部
+- **时间戳管理**：每条消息显示精确的时间
 
 **章节来源**
-- [apps/app/pages/static/[id].vue:1-L27](file://apps/app/pages/static/[id].vue#L1-L27)
-- [apps/app/composables/useDocId.ts:1-29](file://apps/app/composables/useDocId.ts#L1-L29)
+- [apps/app/components/ai-assistant/AIPanel.vue:1-800](file://apps/app/components/ai-assistant/AIPanel.vue#L1-L800)
+- [apps/app/composables/useAIAssistant.ts:1-665](file://apps/app/composables/useAIAssistant.ts#L1-L665)
 
-## 文档树导航集成
+### AI使用计数系统
 
-### 查询参数传递机制
+#### 使用限制管理
+- **剩余次数显示**：实时显示可用的AI使用次数
+- **使用限制**：防止过度使用AI功能
+- **消费机制**：每次使用后自动扣减剩余次数
 
-**更新** 系统现已完整支持从文档树导航到文章页面的功能：
-
-#### 导航项点击处理
-当用户点击文档树中的导航项时，系统会自动添加查询参数：
-
-- **查询参数**：`from=docTree`
-- **传递方式**：使用 `URL.searchParams.set()` 方法
-- **导航执行**：通过 `navigateTo()` 方法进行页面跳转
-
-#### URL查询参数检测
-页面加载时会检测URL中的查询参数：
-
-- **检测逻辑**：`route.query.from === 'docTree'`
-- **状态设置**：将 `isFromDocTree` 计算属性设置为 `true`
-- **影响范围**：仅影响侧边栏展开行为
-
-#### 自动展开逻辑
-基于查询参数的自动展开机制：
-
-```mermaid
-flowchart TD
-OnMount["页面挂载"] --> LoadState["加载保存的状态"]
-LoadState --> CheckPinned{"是否已固定？"}
-CheckPinned --> |是| KeepState["保持固定状态"]
-CheckPinned --> |否| CheckFromDocTree{"是否来自文档树？"}
-CheckFromDocTree --> |否| DefaultState["默认收起状态"]
-CheckFromDocTree --> |是| CheckData{"大纲数据存在？"}
-CheckData --> |否| DefaultState
-CheckData --> |是| AutoExpand["自动展开侧边栏"]
-AutoExpand --> LogInfo["记录日志：Auto expand sidebar due to from=docTree"]
-KeepState --> LogInfo
-DefaultState --> LogInfo
-```
-
-**图表来源**
-- [apps/app/components/static/content/right/Index.vue:337-342](file://apps/app/components/static/content/right/Index.vue#L337-L342)
+#### 配置管理
+- **自定义配置**：支持用户自定义AI服务提供商
+- **配置存储**：持久化AI配置信息
+- **模式切换**：支持内置模型和自定义模型切换
 
 **章节来源**
-- [apps/app/components/static/content/left/MenuItem.vue:114-121](file://apps/app/components/static/content/left/MenuItem.vue#L114-L121)
-- [apps/app/components/static/content/right/Index.vue:50-51](file://apps/app/components/static/content/right/Index.vue#L50-L51)
+- [apps/app/components/ai-assistant/AIPanel.vue:50-51](file://apps/app/components/ai-assistant/AIPanel.vue#L50-L51)
+- [apps/app/composables/useAIAssistant.ts:296-301](file://apps/app/composables/useAIAssistant.ts#L296-L301)
 
-### 文档树展开机制
+## 智能滚动优化
 
-#### 父节点追踪
-系统会自动追踪当前文档的所有父节点并展开：
+### 滚动同步机制
 
-- **TreeUtils.addParentIds**：为每个节点添加父节点ID列表
-- **expandedIds 计算**：生成展开ID数组
-- **确保可见性**：保证当前文档在树中可见
+**更新** 大纲系统实现了智能的滚动同步功能，提供更流畅的用户体验：
 
-#### 滚动同步机制
-实现了智能的滚动同步功能：
+#### 滚动监听优化
+- **精确计算**：基于到视口顶部的距离找到最近节点
+- **偏移量处理**：考虑大纲位置的80px偏移量
+- **性能优化**：避免频繁的DOM查询和计算
+- **防抖处理**：使用防抖技术减少滚动事件频率
 
-- **激活项居中**：自动滚动到激活的菜单项并居中显示
-- **重试机制**：支持多次重试确保滚动成功
-- **边界检查**：防止滚动超出范围
+#### 激活状态管理
+- **文本清理一致性**：与大纲项组件保持一致的文本清理逻辑
+- **HTML实体处理**：统一处理各种HTML实体
+- **特殊字符过滤**：移除标点符号和特殊字符
+- **正则表达式清理**：使用正则表达式确保一致性
 
-**章节来源**
-- [apps/app/components/static/content/left/Sidebar.vue:117-141](file://apps/app/components/static/content/left/Sidebar.vue#L117-L141)
-- [apps/app/utils/TreeUtils.ts:10-31](file://apps/app/utils/TreeUtils.ts#L10-L31)
-
-## 多模块系统
-
-### 功能模块配置
-
-**更新** 系统新增了完整的功能模块配置系统：
-
-#### 模块配置接口
-```typescript
-interface SidebarModule {
-  id: string
-  name: string
-  icon?: string
-  type: 'outline' | 'ai' | 'graph'
-  visible: boolean
-  order: number
-}
-```
-
-#### 模块状态管理
-- **modules**：功能模块配置数组
-- **activeModuleId**：当前激活的模块ID
-- **visibleModules**：计算属性，过滤可见模块
-- **模块按钮样式**：统一的模块按钮样式系统
-
-#### 模块激活机制
-```mermaid
-flowchart TD
-ActivateModule["激活模块"] --> CheckModule{"模块类型？"}
-CheckModule --> |outline| ActivateOutline["激活大纲模块"]
-CheckModule --> |ai| ActivateAI["激活AI模块"]
-ActivateOutline --> UpdateState["更新状态"]
-ActivateAI --> UpdateState
-UpdateState --> ShowSidebar["展开侧边栏"]
-ShowSidebar --> SaveState["保存状态"]
-```
-
-**图表来源**
-- [apps/app/components/static/content/right/Index.vue:292-299](file://apps/app/components/static/content/right/Index.vue#L292-L299)
-
-#### 垂直按钮组系统
-- **动态渲染**：根据模块配置动态渲染按钮
-- **统一样式**：所有模块按钮使用统一的样式系统
-- **激活状态**：支持模块激活状态的视觉反馈
-- **垂直排列**：按钮组采用垂直方向排列
+#### 自动滚动定位
+- **激活项居中**：自动滚动到激活项并居中显示
+- **视口偏移**：考虑大纲位置的80px偏移量
+- **距离计算**：基于到视口顶部的距离找到最近节点
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:18-46](file://apps/app/components/static/content/right/Index.vue#L18-L46)
-- [apps/app/components/static/content/right/Index.vue:276-331](file://apps/app/components/static/content/right/Index.vue#L276-L331)
+- [apps/app/components/static/content/right/Index.vue:194-224](file://apps/app/components/static/content/right/Index.vue#L194-L224)
+- [apps/app/components/static/content/right/Index.vue:174-192](file://apps/app/components/static/content/right/Index.vue#L174-L192)
 
-### 标签页切换系统
+### 滚动性能优化
 
-#### 标签页实现
-系统实现了完整的标签页切换功能：
+#### 独立滚动容器
+- **独立滚动**：大纲容器内部独立滚动
+- **防滚动传播**：使用 `overscroll-behavior: contain`
+- **iOS 优化**：启用 `-webkit-overflow-scrolling: touch`
+- **平滑滚动**：全局启用 `scroll-behavior: smooth`
 
-```mermaid
-flowchart TD
-SidebarTabs["侧边栏标签页"] --> OutlineTab["大纲标签"]
-SidebarTabs --> AITab["AI标签"]
-OutlineTab --> ShowOutline["显示大纲内容"]
-AITab --> ShowAI["显示AI内容"]
-ShowOutline --> UpdateWidth["更新宽度"]
-ShowAI --> UpdateWidth
-UpdateWidth --> SaveWidth["保存宽度"]
-```
-
-**图表来源**
-- [apps/app/components/static/content/right/Index.vue:380-412](file://apps/app/components/static/content/right/Index.vue#L380-L412)
-
-#### 标签页样式系统
-- **统一样式**：所有标签页使用统一的样式系统
-- **激活状态**：支持标签页激活状态的视觉反馈
-- **图标支持**：支持图标和文字的组合显示
+#### 滚动条自定义
+- **细滚动条**：宽度仅为 3px
+- **透明轨道**：滚动条轨道透明
+- **淡色主题**：滚动条颜色根据主题调整
+- **悬停效果**：悬停时增加透明度
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:380-412](file://apps/app/components/static/content/right/Index.vue#L380-L412)
+- [apps/app/components/static/content/right/Outline.vue:55-90](file://apps/app/components/static/content/right/Outline.vue#L55-L90)
+- [apps/app/components/static/content/right/Outline.vue:122-152](file://apps/app/components/static/content/right/Outline.vue#L122-L152)
 
-## 布案系统优化
+## 导航增强功能
+
+### 文档树集成
+
+**更新** 大纲系统增强了与文档树的集成，提供更好的导航体验：
+
+#### 自动展开功能
+- **来源检测**：检测是否从文档树跳转
+- **条件展开**：在满足条件时自动展开侧边栏
+- **优先级管理**：固定显示优先于自动展开
+- **状态同步**：确保展开状态与URL参数保持一致
+
+#### 固定显示增强
+- **状态持久化**：使用`useState`确保SSR和客户端状态一致
+- **避免闪烁**：通过状态同步避免界面闪烁
+- **用户偏好**：支持用户手动固定显示侧边栏
+
+#### AI面板联动
+- **自动激活**：AI面板激活时自动切换模块
+- **展开控制**：AI面板激活时自动展开侧边栏
+- **固定管理**：AI面板激活时不会强制固定
+- **状态同步**：确保AI面板和侧边栏状态同步
+
+**章节来源**
+- [apps/app/components/static/content/right/Index.vue:28-30](file://apps/app/components/static/content/right/Index.vue#L28-L30)
+- [apps/app/components/static/content/right/Index.vue:229-240](file://apps/app/components/static/content/right/Index.vue#L229-L240)
+
+### 左侧导航优化
+
+#### 滚动到激活项
+- **递增重试**：最多重试10次确保元素可见
+- **居中显示**：使激活元素在滚动条中央显示
+- **边界检查**：确保滚动位置在有效范围内
+- **平滑滚动**：使用Element Plus的滚动API
+
+#### 元素查找优化
+- **优先级查找**：优先查找`el-menu-item.is-active`
+- **降级方案**：找不到时查找任何`is-active`元素
+- **重试机制**：等待菜单展开后再进行查找
+- **日志记录**：记录查找过程和结果
+
+**章节来源**
+- [apps/app/components/static/content/left/Sidebar.vue:24-109](file://apps/app/components/static/content/left/Sidebar.vue#L24-L109)
+
+## 布局系统优化
 
 ### 固定定位架构
 
@@ -728,7 +561,7 @@ UpdateWidth --> SaveWidth["保存宽度"]
 #### 固定定位实现
 - **outline-container**：使用 `position: fixed` 确保不随正文滚动
 - **100vh 高度**：占满整个视窗高度
-- **独立 z-index**：`z-index: 100` 确保侧边栏始终在最前面显示
+- **独立 z-index**：`z-index: 100` 确保大纲始终在最前面显示
 - **圆角设计**：顶部和底部圆角提升视觉质感
 
 #### 视口相对定位
@@ -747,14 +580,9 @@ UpdateWidth --> SaveWidth["保存宽度"]
 - **实时预览**：拖拽时实时显示新宽度
 - **自动保存**：松开鼠标时自动保存设置
 
-#### 多模块集成
-- **模块切换**：支持大纲和AI模块的动态切换
-- **宽度独立控制**：每个模块可以独立调整宽度
-- **状态持久化**：模块状态和宽度设置持久化保存
-
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:473-566](file://apps/app/components/static/content/right/Index.vue#L473-L566)
-- [apps/app/components/static/content/right/Index.vue:587-681](file://apps/app/components/static/content/right/Index.vue#L587-L681)
+- [apps/app/components/static/content/right/Index.vue:230-317](file://apps/app/components/static/content/right/Index.vue#L230-L317)
+- [apps/app/components/static/content/right/Index.vue:320-533](file://apps/app/components/static/content/right/Index.vue#L320-L533)
 
 ### 视觉增强优化
 
@@ -775,69 +603,60 @@ UpdateWidth --> SaveWidth["保存宽度"]
 - **悬停效果**：悬停时增加透明度
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:486-586](file://apps/app/components/static/content/right/Index.vue#L486-L586)
-- [apps/app/components/static/content/right/Index.vue:598-611](file://apps/app/components/static/content/right/Index.vue#L598-L611)
+- [apps/app/components/static/content/right/Index.vue:94-123](file://apps/app/components/static/content/right/Index.vue#L94-L123)
+- [apps/app/components/static/content/right/Index.vue:355-358](file://apps/app/components/static/content/right/Index.vue#L355-L358)
 
-## 滚动行为增强
+## 视觉和结构改进
 
-### 独立滚动容器
+### List图标替换
 
-**更新** 大纲容器现在提供完全独立的滚动环境：
+**更新** 大纲系统进行了重要的视觉改进，主要包括List图标替换：
 
-#### 滚动优化特性
-- **独立滚动**：大纲容器内部独立滚动
-- **防滚动传播**：使用 `overscroll-behavior: contain`
-- **iOS 优化**：启用 `-webkit-overflow-scrolling: touch`
-- **平滑滚动**：全局启用 `scroll-behavior: smooth`
+#### 自定义字符图标替换
+- **原有设计**：使用自定义字符图标（如"❶", "❷", "❸"等）
+- **新设计**：采用统一的List图标系统
+- **图标一致性**：所有层级使用相同的图标样式
+- **视觉统一**：提升整体视觉一致性
 
-#### 自动滚动定位
-- **激活项居中**：自动滚动到激活项并居中显示
-- **视口偏移**：考虑大纲位置的 80px 偏移量
-- **距离计算**：基于到视口顶部的距离找到最近节点
+#### 大纲面板样式优化
+- **图标定位**：`padding-left: 4px` 确保图标正确对齐
+- **图标尺寸**：`width: 17px!important` 统一图标大小
+- **图标圆角**：`border-radius: 3px` 提升视觉质感
+- **透明背景**：`color: transparent` 优化图标显示效果
 
-#### 滚动条自定义
-- **细滚动条**：宽度仅为 3px
-- **透明轨道**：滚动条轨道透明
-- **淡色主题**：滚动条颜色根据主题调整
-- **悬停效果**：悬停时增加透明度
-
-#### 文档树导航联动
-- **自动展开**：从文档树导航时自动展开侧边栏
-- **激活同步**：滚动时同步更新激活状态
-- **点击跳转**：点击大纲项时自动滚动到对应位置
+#### 层级图标映射
+- **H1-H6图标**：每个层级对应特定的图标样式
+- **悬停效果**：鼠标悬停时显示对应的背景色
+- **颜色主题**：使用`var(--h*-list-graphic)`变量控制颜色
+- **透明度控制**：`opacity: 0.2` 提供微妙的视觉反馈
 
 **章节来源**
-- [apps/app/components/static/content/right/Outline.vue:122-152](file://apps/app/components/static/content/right/Outline.vue#L122-L152)
-- [apps/app/components/static/content/right/Index.vue:240-270](file://apps/app/components/static/content/right/Index.vue#L240-L270)
+- [apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css:120-201](file://apps/app/public/resources/appearance/themes/Savor/style/module/shrink.css#L120-L201)
 
-### 激活状态管理
+### 统一边框圆角样式
 
-#### 滚动同步机制
-```mermaid
-flowchart TD
-Start([滚动事件触发]) --> GetNodes["获取所有标题节点"]
-GetNodes --> CheckNodes{"找到节点？"}
-CheckNodes --> |否| Warn["记录警告日志"]
-CheckNodes --> |是| CalcDistance["计算到视口的距离"]
-CalcDistance --> FindClosest["找到最近节点"]
-FindClosest --> CleanText["清理节点文本"]
-CleanText --> UpdateState["更新激活状态"]
-UpdateState --> LogInfo["记录调试信息"]
-LogInfo --> End([完成])
-Warn --> End
-```
+**更新** 大纲系统的边框设计进行了统一改进：
 
-**图表来源**
-- [apps/app/components/static/content/right/Index.vue:240-270](file://apps/app/components/static/content/right/Index.vue#L240-L270)
+#### 移除左侧边框
+- **设计简化**：移除左侧边框，保持简洁设计
+- **视觉平衡**：仅保留统一圆角设计
+- **现代感提升**：符合现代UI设计趋势
+- **一致性增强**：与其他组件保持设计一致性
 
-#### 文本清理一致性
-- **cleanNodeText**：与 OutlineItem.vue 的 adjustItemName 保持一致
-- **HTML 实体处理**：统一处理各种 HTML 实体
-- **特殊字符过滤**：移除标点符号和特殊字符
-- **正则表达式清理**：使用正则表达式确保一致性
+#### 统一圆角设计
+- **圆角半径**：`border-radius: 8px` 统一所有边角
+- **顶部圆角**：`border-top-left-radius: 8px`
+- **底部圆角**：`border-bottom-left-radius: 8px`
+- **柔和边框**：`rgba(0, 0, 0, 0.06)` 提供微妙的边框效果
+
+#### 设计规范统一
+- **边框样式**：移除所有方向的边框
+- **圆角规范**：统一使用8px圆角半径
+- **阴影优化**：`box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.06)`
+- **视觉层次**：通过阴影而非边框提供层次感
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:220-238](file://apps/app/components/static/content/right/Index.vue#L220-L238)
+- [apps/app/components/static/content/right/Index.vue:473-488](file://apps/app/components/static/content/right/Index.vue#L473-L488)
 
 ## 依赖关系分析
 
@@ -846,21 +665,27 @@ Warn --> End
 ```mermaid
 graph LR
 subgraph "核心依赖"
-Vue[Vue 3.5.17] --> MultiModule[Index.vue]
-Nuxt[Nuxt 3.16.0] --> MultiModule
-ElementPlus[Element Plus] --> MultiModule
-Cheerio[Cheapio 1.1.1] --> Utils[TreeUtils]
+Vue[Vue 3.5.17] --> Index[Index.vue]
+Nuxt[Nuxt 3.16.0] --> Index
+ElementPlus[Element Plus] --> Index
+Cheerio[Cheapio 1.1.1] --> TreeUtils[TreeUtils]
+AIPanel[AIPanel.vue] --> AIAssistant[useAIAssistant.ts]
+AIPanel --> AIUsage[useAIUsage]
+Sidebar[Sidebar.vue] --> ElementPlus
+TreeUtils --> Sidebar
+shrinkCSS[shrink.css] --> OutlineStyles[大纲样式]
 end
 subgraph "工具类"
-TreeUtils --> MultiModule
-DocId --> Pages[页面组件]
-Utils --> Components[组件]
+TreeUtils --> Sidebar
+TreeUtils --> Outline
+Utils --> Components
+CommonStorage --> SettingStore
 end
 subgraph "配置"
 AppConfig --> Components
 PackageJSON --> Dependencies
 end
-MultiModule --> Components
+Index --> Components
 Components --> Utils
 ```
 
@@ -875,6 +700,7 @@ Components --> Utils
 - **UI 组件库**：Element Plus 2.x 提供现代化的用户界面
 - **DOM 操作**：Cheerio 1.1.1 用于服务器端的 DOM 解析
 - **工具库**：zhi-common 提供通用的工具函数
+- **颜色模式**：@vueuse/core 提供颜色模式切换功能
 
 **章节来源**
 - [apps/app/app.config.ts:1-97](file://apps/app/app.config.ts#L1-L97)
@@ -883,18 +709,17 @@ Components --> Utils
 
 ### 优化策略
 
-**更新** 新的多模块系统带来了多项性能优化：
+**更新** 新的模块化侧边栏系统和AI集成带来了多项性能优化：
 
 1. **固定定位优化**：使用 CSS fixed 定位替代 JavaScript 布局计算
 2. **viewport 定位**：固定定位避免布局重排
-3. **初始化跟踪**：避免初始过渡动画的性能开销
-4. **拖拽时禁用过渡**：避免拖拽过程中的动画开销
-5. **独立滚动容器**：减少滚动事件对整个页面的影响
-6. **自定义滚动条**：使用 CSS 滚动条替代复杂组件
-7. **点击保护机制**：移除悬停展开功能，减少不必要的状态切换
-8. **查询参数缓存**：避免重复解析URL查询参数
-9. **模块懒加载**：AI模块支持懒加载，减少初始加载时间
-10. **状态持久化**：模块状态和宽度设置持久化保存
+3. **模块化加载**：按需加载AI助手模块
+4. **初始化跟踪**：避免初始过渡动画的性能开销
+5. **拖拽时禁用过渡**：避免拖拽过程中的动画开销
+6. **独立滚动容器**：减少滚动事件对整个页面的影响
+7. **自定义滚动条**：使用 CSS 滚动条替代复杂组件
+8. **状态持久化**：使用本地存储减少重复计算
+9. **List图标优化**：统一图标系统减少样式计算开销
 
 ### 内存优化
 
@@ -911,102 +736,85 @@ Components --> Utils
 - **阴影效果**：适度的 GPU 加速
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:332-354](file://apps/app/components/static/content/right/Index.vue#L332-L354)
+- [apps/app/components/static/content/right/Index.vue:207-227](file://apps/app/components/static/content/right/Index.vue#L207-L227)
 
 ## 故障排除指南
 
 ### 常见问题
 
-#### 多模块系统不工作
-1. **检查模块配置**：确认 `modules` 数组配置正确
-2. **验证模块ID**：确保模块ID与激活逻辑匹配
-3. **查看控制台**：检查是否有 JavaScript 错误
-4. **检查状态管理**：确认 `activeModuleId` 状态正确更新
-5. **验证垂直按钮组**：确认按钮组正确渲染
-
 #### 大纲不显示
 1. **检查数据源**：确认 `outlineData` 是否正确传入
 2. **验证配置**：检查 `outlineLevel` 设置是否合理
 3. **查看控制台**：检查是否有 JavaScript 错误
-4. **固定定位检查**：确认侧边栏容器使用正确的固定定位
-5. **查询参数检查**：确认URL中是否包含 `from=docTree`
+4. **固定定位检查**：确认大纲容器使用正确的固定定位
+
+#### 模块按钮不响应
+1. **检查模块配置**：确认模块配置是否正确
+2. **验证激活状态**：检查 `activeModuleId` 是否正确
+3. **查看控制台**：检查是否有事件监听器错误
+4. **状态同步检查**：确认模块状态与UI状态保持一致
 
 #### 滚动不同步
 1. **检查选择器**：确认 `[data-subtype^="h"]` 选择器是否正确
 2. **验证元素**：确保文档中存在有效的标题元素
 3. **调试日志**：查看滚动监听器的日志输出
 4. **初始化状态**：确认 `isInitialized` 状态是否正确设置
-5. **点击保护检查**：确认点击保护机制正常工作
 
 #### 激活状态异常
 1. **文本清理**：确认 `cleanNodeText` 和 `adjustItemName` 方法的一致性
 2. **编码问题**：检查特殊字符的处理是否正确
 3. **边界情况**：验证空文本和特殊格式的处理
-4. **固定定位**：确认侧边栏容器使用正确的固定定位
-5. **查询参数处理**：检查URL查询参数的解析是否正确
+4. **固定定位**：确认大纲容器使用正确的固定定位
+
+#### AI助手问题
+1. **检查API配置**：确认AI服务提供商配置是否正确
+2. **验证使用计数**：检查剩余使用次数是否正常
+3. **查看错误日志**：检查AI调用过程中的错误信息
+4. **网络连接**：确认网络连接是否正常
 
 #### 布局问题
 1. **固定定位**：检查父容器的定位属性设置
 2. **视口高度**：确认 `calc(100vh - 120px)` 计算是否正确
 3. **圆角设计**：验证圆角样式的正确应用
 4. **阴影效果**：检查阴影样式的兼容性
-5. **模块切换冲突**：确认模块切换时的布局更新
 
-#### 文档树导航问题
-1. **查询参数传递**：确认 `from=docTree` 是否正确添加到URL
-2. **URL解析**：检查 `route.query.from` 的解析是否正确
-3. **自动展开逻辑**：验证自动展开的优先级和条件
-4. **父节点追踪**：确认 `TreeUtils.addParentIds` 的执行是否正确
-5. **侧边栏显示**：检查左侧文档树的显示和隐藏逻辑
-
-#### 多模块状态问题
-1. **模块配置**：确认 `SidebarModule` 接口配置正确
-2. **状态同步**：检查模块状态与UI状态的同步
-3. **宽度管理**：验证模块宽度的独立控制
-4. **按钮样式**：确认模块按钮的样式系统正常工作
-5. **激活逻辑**：检查模块激活时的逻辑处理
-
-#### 垂直按钮组问题
-1. **按钮渲染**：确认模块按钮正确动态渲染
-2. **样式系统**：检查统一样式系统的应用
-3. **激活反馈**：验证激活状态的视觉反馈
-4. **垂直排列**：确认按钮组垂直排列的正确性
-5. **收起按钮**：检查收起按钮的显示逻辑
+#### List图标问题
+1. **图标样式**：检查 `b3-list-item__graphic` 样式是否正确应用
+2. **层级映射**：确认H1-H6层级的图标映射是否正确
+3. **CSS优先级**：验证样式规则的优先级设置
+4. **主题变量**：检查 `var(--h*-list-graphic)` 变量是否正确
 
 **章节来源**
-- [apps/app/components/static/content/right/Index.vue:337-342](file://apps/app/components/static/content/right/Index.vue#L337-L342)
+- [apps/app/components/static/content/right/Index.vue:172-219](file://apps/app/components/static/content/right/Index.vue#L172-L219)
 - [apps/app/components/static/content/right/OutlineItem.vue:104-153](file://apps/app/components/static/content/right/OutlineItem.vue#L104-L153)
-- [apps/app/components/static/content/left/MenuItem.vue:114-121](file://apps/app/components/static/content/left/MenuItem.vue#L114-L121)
 
 ## 结论
 
-大纲系统作为 Siyuan 笔记博客插件的核心功能，经过重大升级后展现了更加优秀的架构设计和用户体验。系统通过采用固定定位策略和多模块架构，实现了高度的模块化、可维护性和性能优化。
+大纲系统作为 Siyuan 笔记博客插件的核心功能，经过重大升级后展现了更加优秀的架构设计和用户体验。系统通过采用模块化侧边栏架构和固定定位策略，实现了高度的模块化、可维护性和性能优化。
 
 ### 主要优势
 
-1. **架构升级**：从简单容器升级为完整的多模块系统
-2. **布局优化**：采用固定定位确保稳定显示和更好的性能表现
-3. **用户体验增强**：新增垂直按钮组设计，替代传统Tab界面，提供更直观的功能切换
-4. **交互优化**：移除悬停自动展开功能，实现更稳定的点击保护机制
-5. **初始化跟踪**：避免布局抖动和闪烁问题
-6. **模块化设计**：完整的功能模块配置系统，便于扩展新功能
-7. **视觉增强**：圆角、阴影、自定义滚动条等现代化设计
-8. **性能提升**：固定定位避免布局重排和重绘
+1. **架构升级**：从简单容器升级为模块化侧边栏架构
+2. **AI集成**：新增AI助手功能，提供智能化的内容辅助
+3. **布局优化**：采用固定定位确保稳定显示和更好的性能表现
+4. **用户体验**：垂直按钮组设计提供更直观的操作体验
+5. **交互增强**：精细化宽度管理和拖拽调整功能
+6. **视觉增强**：圆角、阴影、自定义滚动条等现代化设计
+7. **导航增强**：支持从文档树跳转的自动展开功能
+8. **智能滚动**：优化的滚动同步和激活状态管理
+9. **视觉改进**：List图标替换和统一圆角设计
 
 ### 技术亮点
 
-- **多模块系统**：支持大纲和AI助手的动态切换
-- **垂直按钮组**：全新的垂直排列设计，替代传统Tab界面
+- **模块化侧边栏**：支持动态配置和扩展的功能模块
+- **垂直按钮组**：统一风格的快捷操作界面
 - **固定定位策略**：现代化的布局解决方案
 - **viewport 定位**：固定定位确保稳定显示
-- **文档树导航集成**：完整的从文档树到文章的导航体验
-- **点击保护机制**：移除悬停展开，防止误触
-- **查询参数传递**：自动处理URL查询参数
-- **自动展开逻辑**：智能的展开优先级控制
-- **初始化跟踪**：智能的加载状态管理
-- **精细化宽度管理**：精确的用户偏好控制
-- **视觉增强**：圆角、阴影、自定义滚动条
-- **拖拽调整系统**：直观的用户交互
+- **AI助手集成**：统一的聊天界面设计
+- **智能滚动优化**：精确的滚动同步机制
+- **导航增强**：与文档树的深度集成
+- **List图标系统**：统一的图标设计和层级映射
+- **圆角设计规范**：移除边框的现代化UI设计
 
 ### 未来展望
 
@@ -1014,8 +822,8 @@ Components --> Utils
 - 虚拟滚动支持大型文档
 - 更多主题适配选项
 - 移动端优化改进
+- AI功能扩展和增强
 - 性能监控和分析
-- 更智能的导航联动功能
-- 新功能模块的扩展支持
+- 更丰富的视觉效果
 
-该系统为用户提供了专业级的文档导航体验，是 Siyuan 笔记本生态系统的重要组成部分，代表了现代前端开发的最佳实践。通过集成多模块系统和点击保护机制，系统不仅提升了功能性，更重要的是显著改善了用户体验的一致性和可靠性。
+该系统为用户提供了专业级的文档导航体验，是 Siyuan 笔记本生态系统的重要组成部分，代表了现代前端开发的最佳实践。

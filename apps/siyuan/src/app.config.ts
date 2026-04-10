@@ -27,6 +27,16 @@ interface AppConfig {
     themeVersion?: string
   }
 
+  /** 文档元信息栏全局源配置，兼容历史线上默认显示行为 */
+  postMetaEnabled?: boolean
+
+  /**
+   * AI 助手全局源配置。
+   * 该字段用于跨产品线表达“全局默认策略”的存在，
+   * 免费版思源插件当前不暴露该能力的 UI。
+   */
+  aiAssistantEnabled?: boolean
+
   customCss: Array<{
     name: string
     content: string
@@ -46,6 +56,8 @@ export const AppConfig = {
   header: "",
   footer: "",
   shareTemplate: "[url]",
+  postMetaEnabled: true,
+  aiAssistantEnabled: true,
 
   theme: {
     mode: "light",

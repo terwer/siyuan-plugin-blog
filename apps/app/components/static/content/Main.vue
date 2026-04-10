@@ -27,19 +27,21 @@ const VNode = () =>
     innerHTML: editorDom,
   })
 
-// ========== AI 面板激活状态（跨组件共享）==========
-const aiPanelActive = useState('ai-panel-active', () => false)
-
-// 从 setting 读取开关，历史用户默认均关闭
-const postMetaEnabled = computed(() => props.setting?.postMetaEnabled === true)
+// 文档元信息栏兼容历史默认行为：只有显式 false 时才关闭。
+const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
 </script>
 
 <template>
   <div class="fn__flex-1 protyle" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
       <div class="protyle-title protyle-wysiwyg--attr">
-        <div contenteditable="false" data-position="center" spellcheck="false" class="protyle-title__input"
-          data-render="true">
+        <div
+          contenteditable="false"
+          data-position="center"
+          spellcheck="false"
+          class="protyle-title__input"
+          data-render="true"
+        >
           {{ props.post.title }}
         </div>
       </div>
@@ -47,12 +49,25 @@ const postMetaEnabled = computed(() => props.setting?.postMetaEnabled === true)
       <!-- 文档元信息栏：阅读时间、日期（setting.postMetaEnabled=true 时显示） -->
       <static-content-post-meta v-if="postMetaEnabled" :post="props.post" />
 
-      <div v-highlight v-sbeauty v-sdomparser v-db v-embedblock v-fold v-desc v-htmlblock v-echarts
-        class="protyle-wysiwyg protyle-wysiwyg--attr" spellcheck="false" contenteditable="false"
-        data-doc-type="NodeDocument" :data-page-id="props.post.postid"
+      <div
+        v-highlight
+        v-sbeauty
+        v-sdomparser
+        v-db
+        v-embedblock
+        v-fold
+        v-desc
+        v-htmlblock
+        v-echarts
+        class="protyle-wysiwyg protyle-wysiwyg--attr"
+        spellcheck="false"
+        contenteditable="false"
+        data-doc-type="NodeDocument"
+        :data-page-id="props.post.postid"
         :data-dataviews="JSON.stringify(props.post.dataViews)"
         :data-embedblocks="JSON.stringify(props.post.embedBlocks)"
-        :data-foldblocks="JSON.stringify(props.post.foldBlocks)">
+        :data-foldblocks="JSON.stringify(props.post.foldBlocks)"
+      >
         <VNode />
       </div>
     </div>

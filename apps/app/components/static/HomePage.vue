@@ -9,6 +9,7 @@
 
 <script setup lang="ts">
 import { StrUtil } from "zhi-common"
+import type AppConfig from "~/app.config"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 
 // https://github.com/nuxt/nuxt/issues/15346
@@ -17,22 +18,47 @@ import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 const { t } = useI18n()
 const requestURL = useRequestURL()
 const { getStaticSetting } = useStaticSettingStore(requestURL)
+const logger = createAppLogger("static-home-page")
 
-const setting = await getStaticSetting()
-const title = `${setting?.siteTitle ?? t("blog.site.title")} - ${setting?.siteSlogan ?? t("blog.site.slogan")}`
-const seoMeta = {
-  title,
-  ogTitle: title,
-  description: setting?.siteDescription,
-  ogDescription: setting?.siteDescription,
-} as any
-useSeoMeta(seoMeta)
+const setting = ref<typeof AppConfig>({} as typeof AppConfig)
+const isLoading = ref(__SIYUAN_SPA_TARGET__)
 
-const homePageId = setting?.homePageId ?? undefined
+const loadSetting = async () => {
+  try {
+    setting.value = await getStaticSetting()
+  } catch (e) {
+    logger.error("load static setting failed", e)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+if (!__SIYUAN_SPA_TARGET__) {
+  await loadSetting()
+} else {
+  onMounted(async () => {
+    await loadSetting()
+  })
+}
+
+const title = computed(() => `${setting.value?.siteTitle ?? t("blog.site.title")} - ${setting.value?.siteSlogan ?? t("blog.site.slogan")}`)
+useSeoMeta(() => ({
+  title: title.value,
+  ogTitle: title.value,
+  description: setting.value?.siteDescription,
+  ogDescription: setting.value?.siteDescription,
+}) as any)
+
+const homePageId = computed(() => setting.value?.homePageId ?? undefined)
 </script>
 
 <template>
-  <el-container v-if="StrUtil.isEmptyString(homePageId)">
+  <el-container v-if="isLoading">
+    <el-main>
+      <el-skeleton :rows="8" animated />
+    </el-main>
+  </el-container>
+  <el-container v-else-if="StrUtil.isEmptyString(homePageId)">
     <static-header :setting="setting" />
     <el-main>
       <el-empty :description="t('blog.index.no.home')">
