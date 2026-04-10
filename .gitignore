@@ -47,4 +47,4 @@ package.zip
 # temp test
 startup-prod.sh
 apps/app/script/dev-prod.sh
-
+.omc
