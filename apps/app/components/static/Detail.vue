@@ -110,7 +110,20 @@ const getSetting = async () => {
 
 const seoTitle = computed(() => {
   const titleSign = " - " + t("blog.share")
-  return `${formData.post?.title ?? t("blog.index.no.title") + " - " + currentDocId.value}${props.showTitleSign ? titleSign : ""}`
+  if (isLoading.value) {
+    return undefined
+  }
+
+  const postTitle = formData.post?.title?.trim?.() ?? ""
+  if (postTitle) {
+    return `${postTitle}${props.showTitleSign ? titleSign : ""}`
+  }
+
+  if (formData.isShared === false) {
+    return `${t("blog.index.no.title")} - ${currentDocId.value}${props.showTitleSign ? titleSign : ""}`
+  }
+
+  return undefined
 })
 const seoSource = computed(() => formData?.post?.description ?? formData?.post?.editorDom ?? "")
 const seoDescription = computed(() => getSummery(seoSource.value))
@@ -118,11 +131,16 @@ const seoImage = computed(() => getFirstImageSrc(seoSource.value))
 
 if (!props.overrideSeo) {
   useHead(() => {
-    const meta = [
-      { name: "description", content: seoDescription.value },
-      { property: "og:title", content: seoTitle.value },
-      { property: "og:description", content: seoDescription.value },
-    ] as Array<Record<string, string>>
+    const meta = [] as Array<Record<string, string>>
+
+    if (seoDescription.value) {
+      meta.push({ name: "description", content: seoDescription.value })
+      meta.push({ property: "og:description", content: seoDescription.value })
+    }
+
+    if (seoTitle.value) {
+      meta.push({ property: "og:title", content: seoTitle.value })
+    }
 
     if (seoImage.value) {
       meta.push({ property: "og:image", content: seoImage.value })
@@ -134,13 +152,6 @@ if (!props.overrideSeo) {
     }
   })
 }
-
-watch(seoTitle, (title) => {
-  if (!import.meta.client || props.overrideSeo || !title) {
-    return
-  }
-  document.title = title
-}, { immediate: true })
 
 const loadPageData = async () => {
   isLoading.value = true

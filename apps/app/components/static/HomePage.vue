@@ -41,22 +41,31 @@ if (!__SIYUAN_SPA_TARGET__) {
   })
 }
 
-const title = computed(() => `${setting.value?.siteTitle ?? t("blog.site.title")} - ${setting.value?.siteSlogan ?? t("blog.site.slogan")}`)
-useHead(() => ({
-  title: title.value,
-  meta: [
-    { name: "description", content: setting.value?.siteDescription ?? "" },
-    { property: "og:title", content: title.value },
-    { property: "og:description", content: setting.value?.siteDescription ?? "" },
-  ],
-}))
-
-watch(title, (currentTitle) => {
-  if (!import.meta.client || !currentTitle) {
-    return
+const title = computed(() => {
+  if (isLoading.value) {
+    return undefined
   }
-  document.title = currentTitle
-}, { immediate: true })
+
+  return `${setting.value?.siteTitle ?? t("blog.site.title")} - ${setting.value?.siteSlogan ?? t("blog.site.slogan")}`
+})
+useHead(() => {
+  const meta = [] as Array<Record<string, string>>
+  const description = setting.value?.siteDescription ?? ""
+
+  if (description) {
+    meta.push({ name: "description", content: description })
+    meta.push({ property: "og:description", content: description })
+  }
+
+  if (title.value) {
+    meta.push({ property: "og:title", content: title.value })
+  }
+
+  return {
+    title: title.value,
+    meta,
+  }
+})
 
 const homePageId = computed(() => setting.value?.homePageId ?? undefined)
 </script>
