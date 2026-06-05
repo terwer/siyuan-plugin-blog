@@ -12,7 +12,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-BACKUP_CONFIG="$APP_DIR/nuxt.config.ts.codex.bak"
+BACKUP_CONFIG="$APP_DIR/nuxt.config.ts.bak"
 
 cleanup() {
   if [ -f "$BACKUP_CONFIG" ]; then
@@ -27,11 +27,12 @@ cp nuxt.config.ts "$BACKUP_CONFIG"
 cp nuxt.node.config.ts nuxt.config.ts
 
 echo "Using Node build config as SSR serve."
-NUXT_PUBLIC_DEFAULT_TYPE=node \
-NUXT_PUBLIC_PROVIDER_MODE=true \
-NUXT_PUBLIC_PROVIDER_URL=http://localhost:8086 \
-NUXT_AI_BASE_URL=http://localhost:8317 \
-NUXT_AI_API_KEY=sk-123456 \
-NUXT_AI_MODEL=qwen3-max \
+# 不写死
+#NUXT_PUBLIC_DEFAULT_TYPE=node \
+#NUXT_PUBLIC_PROVIDER_MODE=true \
+#NUXT_PUBLIC_PROVIDER_URL=http://localhost:8086 \
+#NUXT_AI_BASE_URL=http://localhost:8317 \
+#NUXT_AI_API_KEY=sk-123456 \
+#NUXT_AI_MODEL=qwen3-max \
 PORT=4000 \
 pnpm exec nuxi dev --host
