@@ -102,14 +102,31 @@ const toggleSidebar = () => {
     left auto
     right 8px
     transform none
+    display flex
+    align-items center
+    justify-content center
+    width 32px
+    height 32px
+    padding 0
     margin 0
     background var(--b3-theme-background, var(--el-bg-color, #fff))
     border 1px solid var(--b3-border-color, var(--el-border-color-light, rgba(0, 0, 0, 0.08)))
+    border-radius 8px
     box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
+    color var(--text-color-secondary)
+    line-height normal
     z-index 4201
+
+    .icon
+      display block
+      width 16px
+      height 16px
 
   .sidebar-button-active
     left auto
     right 8px
+    background var(--el-color-primary-light-9, rgba(64, 158, 255, 0.1))
+    color var(--el-color-primary, #409eff)
+    border-color var(--el-color-primary, #409eff)
     z-index 4201
 </style>

@@ -155,6 +155,10 @@ defineExpose({
   font-size 12.5px /* 更小的字体 */
   line-height 1.4 /* 更紧凑的行高 */
 
+@media (max-width: 768px)
+  .menu-title
+    max-width calc(100vw - 132px)
+
 // 状态颜色
 .text-warning
   color #E6A23C !important

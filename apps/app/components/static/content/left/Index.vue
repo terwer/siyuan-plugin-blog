@@ -111,6 +111,12 @@ const emitToggleSidebar = (state: boolean) => {
     overflow visible !important
 
   .aside-sidebar
+    width calc(100vw - 56px) !important
+    max-width 460px !important
+    min-width 0 !important
     background var(--b3-theme-background, var(--el-bg-color, #fff))
     z-index 4100
+
+    :deep(.el-sub-menu__title)
+      max-width none
 </style>

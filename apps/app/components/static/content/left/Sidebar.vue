@@ -247,7 +247,7 @@ const items = computed(() => {
   min-width 220px
   max-width 260px
   border-right 1px solid rgba(0, 0, 0, 0.06) /* 更淡的边框 */
-  background var(--background)
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
   
   /* 更精致的滚动条 */
   :deep(.el-scrollbar__bar.is-vertical)
@@ -272,6 +272,12 @@ const items = computed(() => {
 .sidebar-menu
   border none
   background transparent
+
+@media (max-width: 768px)
+  .sidebar-container
+    width calc(100vw - 56px) !important
+    max-width 460px !important
+    min-width 0 !important
   
   /* 菜单项样式优化 - 适配亮色/暗色主题 */
   :deep(.el-menu-item)

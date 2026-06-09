@@ -74,3 +74,9 @@
 ### 微修：左侧文档树按钮不再遮挡正文
 - 修改 `apps/app/components/static/content/left/SidebarButton.vue`：移动端文档树按钮从左侧中部改到右侧工具轨道上方；激活态也保持右侧，避免再次覆盖正文。
 - 执行 `pnpm --filter @terwer/share-pro-app exec nuxi prepare`，结果通过：`[nuxi] ✔ Types generated in .nuxt`。
+
+### 微修：文档树入口按钮视觉统一 + 移动端文档树面板加宽
+- 根据用户澄清：不改右侧大纲/AI 抽屉交互，只处理刚移动到右侧的文档树入口和其点击后的文档树面板。
+- 修改 `left/SidebarButton.vue`：移动端文档树按钮改成与右侧按钮一致的 32×32、8px 圆角、白底边框、16px 图标、激活态主题色。
+- 修改左侧文档树面板相关 CSS：移动端面板宽度改为 `calc(100vw - 56px)`，最大 `460px`，并放宽菜单标题宽度，减少过早省略。
+- 执行 `pnpm --filter @terwer/share-pro-app exec nuxi prepare`，结果通过。
