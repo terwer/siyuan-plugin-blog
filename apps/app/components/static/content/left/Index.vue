@@ -87,4 +87,30 @@ const emitToggleSidebar = (state: boolean) => {
     pointer-events: none
     // 使用 display 避免闪烁，同时禁用过渡
     transition: none
+
+@media (max-width: 768px)
+  .aside-left-empty
+    width 0 !important
+    min-width 0 !important
+    flex 0 0 0 !important
+
+  .aside-left
+    width 0 !important
+    min-width 0 !important
+    flex 0 0 0 !important
+    overflow visible !important
+
+  .sidebarOpen
+    width 0 !important
+    min-width 0 !important
+    overflow visible !important
+
+  .sidebarClosed
+    width 0 !important
+    min-width 0 !important
+    overflow visible !important
+
+  .aside-sidebar
+    background var(--b3-theme-background, var(--el-bg-color, #fff))
+    z-index 4100
 </style>

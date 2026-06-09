@@ -591,7 +591,7 @@ onUnmounted(() => {
   top 60px /* 顶部留出导航空间 */
   right 60px /* 向右偏移，为右侧按钮组留出空间（按钮组宽度32px + 间距） */
   height calc(100vh - 120px) /* 底部留出按钮空间 */
-  background var(--background)
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
   /* 移除左侧边框，保持简洁 */
   border-radius 8px /* 统一圆角 */
   display flex
@@ -614,7 +614,7 @@ onUnmounted(() => {
   justify-content space-between
   padding 10px 14px /* 更紧凑的间距 */
   border-bottom 1px solid rgba(0, 0, 0, 0.04) /* 更淡的分隔线 */
-  background var(--background)
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
 
 /* Tab 切换栏 */
 .sidebar-tabs
@@ -704,6 +704,7 @@ onUnmounted(() => {
   flex 1
   overflow-y auto /* 启用独立垂直滚动 */
   overflow-x hidden
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
   padding 12px 8px /* 更紧凑的间距 */
   min-width 0 /* 防止flex子项溢出 */
   scroll-behavior smooth /* 平滑滚动 */
@@ -730,6 +731,7 @@ onUnmounted(() => {
   overflow hidden
   display flex
   flex-direction column
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
 
 /* 拖拽调整宽度的手柄 */
 .resize-handle
@@ -811,8 +813,8 @@ onUnmounted(() => {
   align-items center
   justify-content center
   border-radius 8px
-  background var(--background)
-  border 1px solid var(--border-color)
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
+  border 1px solid var(--b3-border-color, var(--el-border-color-light, rgba(0, 0, 0, 0.08)))
   box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
   cursor pointer
   transition all 0.3s ease
@@ -828,7 +830,7 @@ onUnmounted(() => {
 /* 模块按钮基础样式 - 统一风格，不特殊化 */
 .collapsed-btn--outline,
 .collapsed-btn--ai
-  background var(--background)
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
   color var(--text-color-secondary)
 
 .collapsed-btn--outline:hover,
@@ -861,6 +863,57 @@ onUnmounted(() => {
 @media (max-width: 768px)
   .outline-wrapper
     position fixed
+
+  .outline-aside
+    width 0 !important
+    min-width 0 !important
+    flex 0 0 0 !important
+    overflow visible !important
+
+  .outline-aside:not(.outline-collapsed)
+    position fixed !important
+    inset 0 !important
+    width auto !important
+    height auto !important
+    z-index 4200 !important
+    pointer-events none
+
+  .outline-placeholder
+    display none !important
+    width 0 !important
+    min-width 0 !important
+    max-width 0 !important
+
+  .outline-aside:not(.outline-collapsed) .outline-container
+    top 12px !important
+    left 12px !important
+    right 52px !important
+    bottom 12px !important
+    height auto !important
+    width auto !important
+    min-width 0 !important
+    max-width none !important
+    background var(--b3-theme-background, var(--el-bg-color, #fff)) !important
+    border 1px solid var(--b3-border-color, var(--el-border-color-light, rgba(0, 0, 0, 0.08)))
+    box-shadow 0 12px 32px rgba(15, 23, 42, 0.16)
+    isolation isolate
+    pointer-events auto
+    z-index 4200 !important
+
+  .outline-aside:not(.outline-collapsed) .outline-header,
+  .outline-aside:not(.outline-collapsed) .outline-content,
+  .outline-aside:not(.outline-collapsed) .ai-content
+    background var(--b3-theme-background, var(--el-bg-color, #fff)) !important
+
+  .collapsed-buttons
+    top 50% !important
+    right 8px !important
+    transform translateY(-50%)
+    pointer-events auto
+    z-index 4201 !important
+
+  .collapsed-btn
+    pointer-events auto
 
   .resize-handle
     display none /* 小屏隐藏拖拽手柄 */

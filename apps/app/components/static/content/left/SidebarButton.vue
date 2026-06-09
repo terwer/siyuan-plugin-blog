@@ -94,4 +94,20 @@ const toggleSidebar = () => {
   background: var(--b3-protyle-inline-link-color);
   color #dcdcdc
   box-shadow: 0 0 6px var(--b3-protyle-inline-link-color);
+
+@media (max-width: 768px)
+  .sidebar-button
+    position fixed
+    top 50%
+    left 8px
+    transform translateY(-50%)
+    margin 0
+    background var(--b3-theme-background, var(--el-bg-color, #fff))
+    border 1px solid var(--b3-border-color, var(--el-border-color-light, rgba(0, 0, 0, 0.08)))
+    box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
+    z-index 4101
+
+  .sidebar-button-active
+    left 14.5rem
+    z-index 4101
 </style>

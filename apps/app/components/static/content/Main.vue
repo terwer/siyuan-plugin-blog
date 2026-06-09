@@ -85,4 +85,15 @@ const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
 .protyle-wysiwyg
   padding 24px 32px !important /* 参考大厂文档：舒适的阅读边距 */
   margin 0 !important
+
+@media (max-width: 768px)
+  .protyle-title
+    padding 14px clamp(8px, 2.8vw, 12px) 12px !important
+
+  .protyle-title__input
+    padding-left 0 !important
+    padding-right 0 !important
+
+  .protyle-wysiwyg
+    padding 18px clamp(8px, 2.8vw, 12px) !important
 </style>
