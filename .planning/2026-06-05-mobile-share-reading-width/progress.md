@@ -66,3 +66,11 @@
 - 使用 Chrome DevTools 390×844 移动端复现用户最新反馈。
 - 记录到关键证据：顶部空白来自 `.content-layout margin-top=96px`；右侧抽屉“层级不够”的实际运行时表现为 `.outline-container` 背景透明（`--background` 为空），导致抽屉内容和正文大标题混在一起。
 - 准备进行小范围 CSS 修复，不改 Vue 结构、不移除文档树/大纲/AI 功能。
+
+### 微修：右侧按钮展开后二次点击不能关闭
+- 修改 `apps/app/components/static/content/right/Index.vue`：移动端 `.collapsed-buttons` 与 `.collapsed-btn` 增加 `pointer-events auto`。
+- 执行 `pnpm --filter @terwer/share-pro-app exec nuxi prepare`，结果通过：`[nuxi] ✔ Types generated in .nuxt`。
+
+### 微修：左侧文档树按钮不再遮挡正文
+- 修改 `apps/app/components/static/content/left/SidebarButton.vue`：移动端文档树按钮从左侧中部改到右侧工具轨道上方；激活态也保持右侧，避免再次覆盖正文。
+- 执行 `pnpm --filter @terwer/share-pro-app exec nuxi prepare`，结果通过：`[nuxi] ✔ Types generated in .nuxt`。
