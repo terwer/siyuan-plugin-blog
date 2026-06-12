@@ -40,7 +40,7 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 .main-content
   flex 1
   min-width 0 /* 防止 flex 子项溢出 */
-  padding 0 60px 0 0 /* 右侧留出60px空间给按钮组 */
+  padding 0
   margin 0
 
 @media (max-width: 768px)

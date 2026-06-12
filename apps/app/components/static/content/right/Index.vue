@@ -12,12 +12,15 @@ import { List, Opportunity, Paperclip } from "@element-plus/icons-vue"
 import type { Component } from "vue"
 import type AppConfig from "~/app.config"
 import { useViewerCapabilities } from "~/composables/useViewerCapabilities"
+import { useDocTreeSource } from "~/composables/useDocTreeSource"
+import { usePageInteractiveReady } from "~/composables/usePageInteractiveReady"
 import { hasMeaningfulTextContent } from "~/utils/content"
 
 const logger = createAppLogger("right-index")
-const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 const { aiAssistantSupported } = useViewerCapabilities()
+const { isFromDocTree, isMobileViewport, shouldApplyDocTreeEffects } = useDocTreeSource()
+const { isPageInteractiveReady } = usePageInteractiveReady()
 
 // 当前激活的模块ID
 type ModuleId = string
@@ -42,6 +45,8 @@ const activeModuleId = ref<ModuleId>("outline")
 
 // 侧边栏显示状态 - 统一控制侧边栏的展开/收起
 const showSidebar = useState("sidebar-show", () => false)
+// 页面尚未完成客户端渲染/水合前，不让右侧栏参与布局占位
+const effectiveShowSidebar = computed(() => isPageInteractiveReady.value && showSidebar.value)
 
 const outlineData = computed(() => Array.isArray(props.post?.outline) ? props.post.outline : [])
 const outlineMaxDepth = computed(() => props.post?.outlineLevel ?? 6)
@@ -80,8 +85,7 @@ const hasValidContent = computed(() => {
 // AI 模块是否应该显示（受 viewer capability、分享快照和内容三重控制）
 const showAIModule = computed(() => aiAssistantEnabled.value && hasValidContent.value)
 
-// 从文档树跳转过来时，自动展开大纲（与左侧文档树保持联动）
-const isFromDocTree = computed(() => route.query.from === "docTree")
+// 从文档树跳转过来时，桌面端自动展开大纲；移动端屏蔽 from=docTree 的所有自动效果
 
 // ==================== 大纲宽度调整功能 ====================
 const OUTLINE_WIDTH_KEY = "siyuan-blog-outline-width"
@@ -351,7 +355,7 @@ const visibleModules = computed(() => {
 
 // 获取模块按钮的样式类
 const getModuleButtonClass = (module: SidebarModuleDefinition) => {
-  const isActive = currentModuleId.value === module.id && showSidebar.value
+  const isActive = currentModuleId.value === module.id && effectiveShowSidebar.value
   return {
     [`collapsed-btn--${module.type}`]: true,
     "collapsed-btn--active": isActive
@@ -435,7 +439,9 @@ onMounted(() => {
 
   // 来自文档树跳转时，若未固定（图钉未启用），自动展开大纲
   // 优先级：图钉固定 > URL 参数触发 > 默认收起
-  if (!isPinned.value && isFromDocTree.value && hasOutlineData.value) {
+  if (isMobileViewport.value && isFromDocTree.value && !isPinned.value) {
+    showSidebar.value = false
+  } else if (!isPinned.value && shouldApplyDocTreeEffects.value && hasOutlineData.value) {
     showSidebar.value = true
     logger.info("Auto expand sidebar due to from=docTree")
   }
@@ -459,19 +465,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <!-- 侧边栏显示条件：有大纲数据或有可见的 AI 模块（AI 功能独立于大纲） -->
+  <!-- 右侧栏真正展开后才进入正文 flex 布局；收起/未 ready 时只保留 Teleport 到 body 的按钮 -->
   <div
-    v-if="visibleModules.length > 0"
+    v-if="visibleModules.length > 0 && effectiveShowSidebar"
     class="outline-aside"
-    :class="{ 'outline-collapsed': !showSidebar, 'outline-initialized': isInitialized }"
+    :class="{ 'outline-initialized': isInitialized }"
   >
     <!-- 占位元素 - 用于在 flex 布局中预留空间，确保正文被挤压 -->
     <div
       class="outline-placeholder"
       :style="{
-        width: showSidebar ? activeSidebarWidth + 'px' : '0px',
-        minWidth: showSidebar ? activeSidebarWidth + 'px' : '0px',
-        maxWidth: showSidebar ? activeSidebarWidth + 'px' : '0px'
+        width: activeSidebarWidth + 'px',
+        minWidth: activeSidebarWidth + 'px',
+        maxWidth: activeSidebarWidth + 'px'
       }"
     />
 
@@ -480,9 +486,9 @@ onUnmounted(() => {
       class="outline-container"
       :class="{ 'is-resizing': isResizing }"
       :style="{
-        width: showSidebar ? activeSidebarWidth + 'px' : '0px',
-        minWidth: showSidebar ? activeSidebarWidth + 'px' : '0px',
-        maxWidth: showSidebar ? activeSidebarWidth + 'px' : '0px'
+        width: activeSidebarWidth + 'px',
+        minWidth: activeSidebarWidth + 'px',
+        maxWidth: activeSidebarWidth + 'px'
       }"
     >
       <!-- 大纲标题栏（仅保留 Tab 切换） -->
@@ -528,7 +534,6 @@ onUnmounted(() => {
 
       <!-- 拖拽调整宽度的手柄 -->
       <div
-        v-if="showSidebar"
         class="resize-handle"
         :class="{ 'is-resizing': isResizing }"
         title="拖拽调整宽度"
@@ -544,8 +549,11 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- 垂直按钮组 - 始终显示，点击按钮即可展开/收起对应功能 -->
-    <div class="collapsed-buttons">
+  </div>
+
+  <Teleport v-if="visibleModules.length > 0" to="body">
+    <!-- 垂直按钮组：固定到 body，完全脱离正文 flex 布局，避免收起/未 ready 时占用右侧空间 -->
+    <div v-if="isPageInteractiveReady" class="collapsed-buttons">
       <!-- 功能模块按钮 - 动态渲染，便于扩展 -->
       <button
         v-for="module in visibleModules"
@@ -553,14 +561,16 @@ onUnmounted(() => {
         class="collapsed-btn"
         :class="getModuleButtonClass(module)"
         :title="$t(module.name)"
-        @click="toggleModule(module.id)"
+        type="button"
+        @click.stop="toggleModule(module.id)"
       >
         <el-icon :size="16">
           <component :is="module.icon" />
         </el-icon>
       </button>
     </div>
-  </div>
+    <div v-else class="mobile-action-rail-placeholder" aria-hidden="true" />
+  </Teleport>
 </template>
 
 <style lang="stylus" scoped>
@@ -580,10 +590,6 @@ onUnmounted(() => {
   height calc(100vh - 120px)
   margin-top 60px
   /* 宽度由 JS 控制，不使用 CSS 过渡 */
-
-/* 收起状态下的占位 */
-.outline-collapsed
-  width 0 !important
 
 /* 大纲整体容器 - 使用 fixed 定位，完全独立于正文滚动 */
 .outline-container
@@ -821,6 +827,10 @@ onUnmounted(() => {
   color var(--text-color-secondary)
   padding 0
 
+.mobile-action-rail-placeholder
+  display none
+  pointer-events none
+
 .collapsed-btn:hover
   background var(--el-fill-color-light)
   color var(--text-color-primary)
@@ -865,12 +875,6 @@ onUnmounted(() => {
     position fixed
 
   .outline-aside
-    width 0 !important
-    min-width 0 !important
-    flex 0 0 0 !important
-    overflow visible !important
-
-  .outline-aside:not(.outline-collapsed)
     position fixed !important
     inset 0 !important
     width auto !important
@@ -884,7 +888,7 @@ onUnmounted(() => {
     min-width 0 !important
     max-width 0 !important
 
-  .outline-aside:not(.outline-collapsed) .outline-container
+  .outline-aside .outline-container
     top 12px !important
     left 12px !important
     right 52px !important
@@ -900,9 +904,9 @@ onUnmounted(() => {
     pointer-events auto
     z-index 4200 !important
 
-  .outline-aside:not(.outline-collapsed) .outline-header,
-  .outline-aside:not(.outline-collapsed) .outline-content,
-  .outline-aside:not(.outline-collapsed) .ai-content
+  .outline-aside .outline-header,
+  .outline-aside .outline-content,
+  .outline-aside .ai-content
     background var(--b3-theme-background, var(--el-bg-color, #fff)) !important
 
   .collapsed-buttons
@@ -912,9 +916,38 @@ onUnmounted(() => {
     pointer-events auto
     z-index 4201 !important
 
+  .mobile-action-rail-placeholder
+    position fixed
+    top calc(50% - 64px)
+    right 2px
+    display block
+    width 4px
+    height 128px
+    border-radius 999px
+    background linear-gradient(180deg, transparent, rgba(64, 158, 255, 0.58), transparent)
+    box-shadow 0 0 10px rgba(64, 158, 255, 0.22)
+    opacity 0.68
+    pointer-events none
+    z-index 4200 !important
+    animation mobile-action-rail-pulse 1.6s ease-in-out infinite
+
   .collapsed-btn
     pointer-events auto
+    touch-action manipulation
+    -webkit-tap-highlight-color transparent
+    user-select none
 
   .resize-handle
     display none /* 小屏隐藏拖拽手柄 */
+
+@keyframes mobile-action-rail-pulse
+  0%
+    opacity 0.24
+    transform scaleY(0.92)
+  50%
+    opacity 0.58
+    transform scaleY(1)
+  100%
+    opacity 0.24
+    transform scaleY(0.92)
 </style>

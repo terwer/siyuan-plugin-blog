@@ -10,13 +10,10 @@
 <script setup lang="ts">
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
+import { useDocTreeSource } from "~/composables/useDocTreeSource"
 
-const route = useRoute()
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
-
-const isFromDocTree = computed(() => {
-  return route.query.from === 'docTree'
-})
+const { isFromDocTree, isMobileViewport, shouldApplyDocTreeEffects } = useDocTreeSource()
 
 const shouldShowSidebar = computed(() => {
   // 显示侧边栏的条件：docTree 存在且有内容
@@ -25,18 +22,39 @@ const shouldShowSidebar = computed(() => {
 
 // 初始状态在服务端就确定，避免客户端闪烁
 const formData = reactive({
-  sidebarVisible: isFromDocTree.value
+  sidebarVisible: shouldApplyDocTreeEffects.value
+})
+const isDocTreeAutoOpen = ref(isFromDocTree.value)
+
+watch(shouldApplyDocTreeEffects, (enabled) => {
+  if (enabled) {
+    formData.sidebarVisible = true
+    isDocTreeAutoOpen.value = true
+    return
+  }
+
+  if (isMobileViewport.value && isFromDocTree.value && isDocTreeAutoOpen.value) {
+    formData.sidebarVisible = false
+  }
+}, { immediate: true })
+
+watch(isMobileViewport, (mobile) => {
+  if (mobile && isFromDocTree.value && isDocTreeAutoOpen.value) {
+    formData.sidebarVisible = false
+  }
 })
 
 const sidebarClass = computed(() => {
   return {
     'aside-left': true,
     'sidebarOpen': formData.sidebarVisible,
-    'sidebarClosed': !formData.sidebarVisible
+    'sidebarClosed': !formData.sidebarVisible,
+    'sidebarDocTreeAutoOpen': isFromDocTree.value && isDocTreeAutoOpen.value && formData.sidebarVisible
   }
 })
 
 const emitToggleSidebar = (state: boolean) => {
+  isDocTreeAutoOpen.value = false
   formData.sidebarVisible = state
   // 防止标题栏被侧边按钮遮挡
   if (BrowserUtil.isInBrowser) {
@@ -55,7 +73,11 @@ const emitToggleSidebar = (state: boolean) => {
     :class="sidebarClass"
   >
     <static-content-left-sidebar class="aside-sidebar" :post="props.post" :setting="props.setting" />
-    <static-content-left-sidebar-button :visible="formData.sidebarVisible" @toggle-sidebar="emitToggleSidebar" />
+    <static-content-left-sidebar-button
+      :visible="formData.sidebarVisible"
+      :doc-tree-auto-open="isFromDocTree && isDocTreeAutoOpen"
+      @toggle-sidebar="emitToggleSidebar"
+    />
   </el-aside>
   <el-aside v-else class="aside-left-empty" />
 </template>
@@ -109,6 +131,15 @@ const emitToggleSidebar = (state: boolean) => {
     width 0 !important
     min-width 0 !important
     overflow visible !important
+
+  .sidebarDocTreeAutoOpen
+    width 0 !important
+    min-width 0 !important
+    overflow visible !important
+
+    .aside-sidebar
+      opacity 0
+      pointer-events none
 
   .aside-sidebar
     width calc(100vw - 56px) !important
