@@ -21,6 +21,7 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 const { aiAssistantSupported } = useViewerCapabilities()
 const { isFromDocTree, isMobileViewport, shouldApplyDocTreeEffects } = useDocTreeSource()
 const { isPageInteractiveReady } = usePageInteractiveReady()
+const isClientMounted = ref(false)
 
 // 当前激活的模块ID
 type ModuleId = string
@@ -433,6 +434,8 @@ watch(() => props.post?.postid, () => {
 })
 
 onMounted(() => {
+  isClientMounted.value = true
+
   // 从 localStorage 加载保存的宽度和固定状态（确保在客户端执行）
   loadSavedWidth()
   loadPinnedState()
@@ -551,9 +554,9 @@ onUnmounted(() => {
 
   </div>
 
-  <Teleport v-if="visibleModules.length > 0" to="body">
+  <Teleport v-if="visibleModules.length > 0 && isPageInteractiveReady && isClientMounted" to="body">
     <!-- 垂直按钮组：固定到 body，完全脱离正文 flex 布局，避免收起/未 ready 时占用右侧空间 -->
-    <div v-if="isPageInteractiveReady" class="collapsed-buttons">
+    <div class="collapsed-buttons">
       <!-- 功能模块按钮 - 动态渲染，便于扩展 -->
       <button
         v-for="module in visibleModules"
@@ -569,7 +572,6 @@ onUnmounted(() => {
         </el-icon>
       </button>
     </div>
-    <div v-else class="mobile-action-rail-placeholder" aria-hidden="true" />
   </Teleport>
 </template>
 

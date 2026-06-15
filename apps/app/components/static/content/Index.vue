@@ -11,10 +11,17 @@
 import type AppConfig from "~/app.config";
 
 const props = defineProps<{ post: any, setting: typeof AppConfig }>()
+const { isPageInteractiveReady } = usePageInteractiveReady()
 </script>
 
 <template>
-  <div :class="{ 'content-layout': true, 'headed-layout': props.setting?.showHeader }">
+  <div
+    :class="{
+      'content-layout': true,
+      'headed-layout': props.setting?.showHeader,
+      'content-layout--loading': !isPageInteractiveReady,
+    }"
+  >
     <static-content-left :post="props.post" :setting="props.setting" />
     <main class="main-content">
       <static-content-main :post="props.post" :setting="props.setting" />
@@ -49,4 +56,54 @@ const props = defineProps<{ post: any, setting: typeof AppConfig }>()
 
   .main-content
     padding-right 0
+
+  .content-layout--loading
+    width 100vw
+    max-width 100vw
+    margin-right 0
+    overflow visible
+
+    :deep(.protyle),
+    :deep(.protyle-content),
+    :deep(.protyle-title),
+    :deep(.post-meta),
+    :deep(.protyle-wysiwyg)
+      width 100vw !important
+      max-width 100vw !important
+      box-sizing border-box !important
+
+    :deep(.protyle),
+    :deep(.protyle-content)
+      flex-basis 100vw !important
+      height auto !important
+      max-height none !important
+      overflow visible !important
+      overflow-y visible !important
+
+    :deep(.main-content),
+    :deep(.protyle-wysiwyg)
+      height auto !important
+      max-height none !important
+
+    &::after
+      content ""
+      position fixed
+      right 12px
+      bottom 12px
+      display block
+      width 24px
+      height 24px
+      border 2px solid rgba(64, 158, 255, 0.18)
+      border-top-color rgba(64, 158, 255, 0.78)
+      border-radius 50%
+      background transparent
+      pointer-events none
+      z-index 4200
+      animation mobile-content-loading-spin 0.9s linear infinite
+
+@keyframes mobile-content-loading-spin
+  0%
+    transform rotate(0deg)
+  100%
+    transform rotate(360deg)
 </style>

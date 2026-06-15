@@ -31,6 +31,14 @@ export const usePageInteractiveReady = () => {
     }
 
     onNuxtReady(markReadyAfterPaint)
+
+    if (document.readyState === "interactive" || document.readyState === "complete") {
+      markReadyAfterPaint()
+    } else {
+      window.addEventListener("DOMContentLoaded", markReadyAfterPaint, { once: true })
+      window.addEventListener("load", markReadyAfterPaint, { once: true })
+    }
+
     nuxtApp.hook("page:start", markPending)
     nuxtApp.hook("page:finish", markReadyAfterPaint)
   }

@@ -24,10 +24,15 @@ const toggleSidebar = () => {
 }
 
 const { isPageInteractiveReady } = usePageInteractiveReady()
+const isClientMounted = ref(false)
+
+onMounted(() => {
+  isClientMounted.value = true
+})
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport v-if="isClientMounted" to="body">
     <div
       v-if="isPageInteractiveReady"
       :class="{
@@ -142,9 +147,10 @@ const { isPageInteractiveReady } = usePageInteractiveReady()
   .sidebar-button-active
     left auto
     right 8px
-    background var(--el-color-primary-light-9, rgba(64, 158, 255, 0.1))
-    color var(--el-color-primary, #409eff)
-    border-color var(--el-color-primary, #409eff)
+    background var(--b3-theme-background, var(--el-bg-color, #fff))
+    color var(--text-color-secondary)
+    border-color var(--b3-border-color, var(--el-border-color-light, rgba(0, 0, 0, 0.08)))
+    box-shadow 0 2px 8px rgba(0, 0, 0, 0.08)
     z-index 4201
 
   .sidebar-button-doc-tree-auto-open.sidebar-button-active

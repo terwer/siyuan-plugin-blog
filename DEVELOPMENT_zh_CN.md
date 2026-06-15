@@ -82,6 +82,15 @@ pnpm build -F siyuan-blog -- --watch
 # http://localhost:6806/plugins/siyuan-blog/app/#/s/20241217142133-o580ytq?lang=en_US
 ```
 
+### 本地 dev 连接正式 provider 的注意事项
+
+当你用本地 `pnpm dev` / `./dev.sh`，但把 `NUXT_PUBLIC_PROVIDER_URL` 指向正式 provider 做联调时，请注意：
+
+- 本地 `localhost` / 内网 IP 的 `origin` 不等于正式域名，首页配置可能会走不同的 domain 白名单分支。
+- 这会直接影响 `homePageId`、分享快照、SSR 首屏分支，进而造成 hydration 误判。
+- 因此，**本地 dev 连接正式 provider 时，不要默认把 hydration mismatch 当成纯渲染 bug**，先确认当前访问域名是否与正式配置一致。
+- 如果目标是验证线上最终效果，尽量使用正式访问域名；如果必须用本地地址，请同步准备对应的 domain 白名单与配置。
+
 ### 构建和链接
 
 ```bash
