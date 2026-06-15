@@ -69,3 +69,12 @@
 - 根据用户指出的重大遗漏，重写 OpenSpec：iframe 悬浮层只展示正文，最多标题。
 - 明确 preview mode 必须隐藏 header/footer、左侧文档树、右侧大纲、AI、侧边浮动按钮、主题/深色切换、文档元信息等非正文 UI。
 - 增加 minimal-change 约束：不新建重复页面、不复制正文渲染逻辑、不重写侧栏/AI/大纲组件，优先用轻量 `isPreviewMode` 和局部条件渲染/CSS 实现。
+
+### 2026-06-15 OpenSpec apply：iframe content-only hover preview 实现
+- 根据 `add-link-hover-iframe-preview` 执行实现。
+- 新增 viewer 配置 `linkHoverPreview`，默认开启、默认 sticky、默认 `Escape` 关闭、`showTitle=true`。
+- 增强 `useStaticBlockRef.ts`：block-ref 转 `<a>` 时保留 `data-doc-id` 和 `data-share-doc-link="true"`。
+- 新增 `apps/app/plugins/020.link-hover-preview.client.ts`：同源内部文档链接 hover/focus 后显示单例 iframe 悬浮预览，追加 `preview=1&from=hoverPreview`，保留 query，提供 loading、超时 fallback、关闭、打开全文、路由切换清理和递归预览禁止。
+- 修改 `Detail.vue`、`content/Index.vue`、`content/Main.vue`：`preview=1` 下启用 content-only preview mode，只保留正文和可选标题；隐藏 header/footer、文档树、大纲、AI、侧边按钮、文档元信息和图片预览组件；密码/过期/未分享等状态保持极简内容态。
+- 执行 `pnpm --filter @terwer/share-pro-app exec nuxi prepare` 两次，均通过：`[nuxi] ✔ Types generated in .nuxt`。
+- OpenSpec tasks 已标记 48/48 完成；真实密码、过期、CSP 阻止等仍建议用对应样例做人工回归。

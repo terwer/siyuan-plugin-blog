@@ -19,6 +19,7 @@ const logger = createAppLogger("static-share-page")
 const requestURL = useRequestURL()
 const route = useRoute()
 const { t } = useI18n()
+const isPreviewMode = computed(() => route.query.preview === "1")
 const { providerMode } = useProviderMode()
 const { fetchPostMeta, validatePassword } = useAuthModeFetch()
 const { getStaticSetting } = useStaticSettingStore(requestURL)
@@ -203,37 +204,39 @@ const handlePasswordSubmit = async (password:string) => {
 </script>
 
 <template>
-  <div v-if="isLoading" class="detail-loading">
-    <el-skeleton :rows="12" animated />
-  </div>
-  <div v-else-if="!formData.isShared">
-    <el-empty :description=" t('blog.index.no.shared') " />
-  </div>
-  <div v-else-if="formData.isExpires">
-    <el-empty :description="t('blog.index.no.expires') " />
-  </div>
-  <div v-else-if="formData.shareOptions.passwordEnabled">
-    <common-confirm-password
-        :title="t('share.password.confirm.password.title')"
-        :description="t('share.password.confirm.password.description')"
-        :placeholder="t('share.password.confirm.password.placeholder')"
-        :submitText="t('share.password.confirm.password.submitText')"
-        :hint="t('share.password.confirm.password.hint')"
-        @submit="handlePasswordSubmit"
-    />
-  </div>
-  <div v-else>
-    <el-container>
-      <el-header :class="{'headed':formData.setting?.showHeader, 'plain':!formData.setting?.showHeader}">
-        <lazy-static-header :setting="formData.setting" />
-      </el-header>
-      <el-main class="main">
-        <lazy-static-content :post="formData.post" :setting="formData.setting" />
-      </el-main>
-      <el-footer>
-        <lazy-static-footer :setting="formData.setting" />
-      </el-footer>
-    </el-container>
+  <div :class="{ 'detail-preview-mode': isPreviewMode }">
+    <div v-if="isLoading" class="detail-loading">
+      <el-skeleton :rows="12" animated />
+    </div>
+    <div v-else-if="!formData.isShared" class="detail-state">
+      <el-empty :description=" t('blog.index.no.shared') " />
+    </div>
+    <div v-else-if="formData.isExpires" class="detail-state">
+      <el-empty :description="t('blog.index.no.expires') " />
+    </div>
+    <div v-else-if="formData.shareOptions.passwordEnabled" class="detail-state">
+      <common-confirm-password
+          :title="t('share.password.confirm.password.title')"
+          :description="t('share.password.confirm.password.description')"
+          :placeholder="t('share.password.confirm.password.placeholder')"
+          :submitText="t('share.password.confirm.password.submitText')"
+          :hint="t('share.password.confirm.password.hint')"
+          @submit="handlePasswordSubmit"
+      />
+    </div>
+    <div v-else>
+      <el-container>
+        <el-header v-if="!isPreviewMode" :class="{'headed':formData.setting?.showHeader, 'plain':!formData.setting?.showHeader}">
+          <lazy-static-header :setting="formData.setting" />
+        </el-header>
+        <el-main class="main">
+          <lazy-static-content :post="formData.post" :setting="formData.setting" :preview-mode="isPreviewMode" />
+        </el-main>
+        <el-footer v-if="!isPreviewMode">
+          <lazy-static-footer :setting="formData.setting" />
+        </el-footer>
+      </el-container>
+    </div>
   </div>
 </template>
 
@@ -245,4 +248,29 @@ const handlePasswordSubmit = async (password:string) => {
 .main
   padding 0
   margin 0
+
+.detail-preview-mode
+  min-height 100vh
+  background var(--b3-theme-background, var(--el-bg-color, #fff))
+
+  .main
+    padding 0 !important
+    margin 0 !important
+
+  .detail-loading,
+  .detail-state
+    min-height 100vh
+    display flex
+    align-items center
+    justify-content center
+    padding 16px
+    box-sizing border-box
+
+  :deep(.el-container),
+  :deep(.el-main)
+    padding 0 !important
+    margin 0 !important
+
+  :deep(.el-empty)
+    padding 24px 8px
 </style>

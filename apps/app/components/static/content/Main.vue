@@ -15,6 +15,7 @@ import { useImagePreview } from "~/composables/useImagePreview"
 const props = defineProps<{
   post: any
   setting?: typeof AppConfig
+  previewMode?: boolean
 }>()
 
 const { images, previewRef } = useImagePreview()
@@ -28,13 +29,14 @@ const VNode = () =>
   })
 
 // 文档元信息栏兼容历史默认行为：只有显式 false 时才关闭。
-const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
+const postMetaEnabled = computed(() => !props.previewMode && props.setting?.postMetaEnabled !== false)
+const previewShowTitle = computed(() => props.setting?.linkHoverPreview?.showTitle !== false)
 </script>
 
 <template>
-  <div class="fn__flex-1 protyle" data-loading="finished">
+  <div :class="{ 'fn__flex-1': true, protyle: true, 'protyle--preview': props.previewMode }" data-loading="finished">
     <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-      <div class="protyle-title protyle-wysiwyg--attr">
+      <div v-if="!props.previewMode || previewShowTitle" class="protyle-title protyle-wysiwyg--attr">
         <div
           contenteditable="false"
           data-position="center"
@@ -72,7 +74,7 @@ const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
       </div>
     </div>
 
-    <client-only>
+    <client-only v-if="!props.previewMode">
       <ImagePreview ref="previewRef" :images="images as any" />
     </client-only>
   </div>
@@ -85,6 +87,24 @@ const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
 .protyle-wysiwyg
   padding 24px 32px !important /* 参考大厂文档：舒适的阅读边距 */
   margin 0 !important
+
+.protyle--preview
+  width 100%
+  min-height 100vh
+
+  .protyle-content
+    width 100%
+    min-height 100vh
+
+  .protyle-title
+    padding 14px 16px 10px !important
+
+  .protyle-title__input
+    font-size 22px
+    line-height 1.35
+
+  .protyle-wysiwyg
+    padding 12px 16px 20px !important
 
 @media (max-width: 768px)
   .protyle-title

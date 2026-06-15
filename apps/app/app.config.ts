@@ -67,6 +67,24 @@ interface AppConfig {
    */
   aiAssistantEnabled?: boolean
 
+  /**
+   * 内部文档链接悬浮预览配置。
+   * viewer 端缺省开启，preview iframe 只展示正文，最多展示标题。
+   */
+  linkHoverPreview?: {
+    enabled?: boolean
+    stickyDefault?: boolean
+    closeShortcut?: string
+    hoverDelay?: number
+    width?: number
+    height?: number
+    maxWidth?: number
+    maxHeightRatio?: number
+    sameOriginOnly?: boolean
+    timeoutMs?: number
+    showTitle?: boolean
+  }
+
   customCss?: Array<{
     name: string
     content: string
@@ -94,6 +112,19 @@ export default defineAppConfig<AppConfig>({
   shareTemplate: "[url]",
   postMetaEnabled: true,
   aiAssistantEnabled: true,
+  linkHoverPreview: {
+    enabled: true,
+    stickyDefault: true,
+    closeShortcut: "Escape",
+    hoverDelay: 150,
+    width: 460,
+    height: 360,
+    maxWidth: 560,
+    maxHeightRatio: 0.7,
+    sameOriginOnly: true,
+    timeoutMs: 8000,
+    showTitle: true,
+  },
 
   theme: {
     mode: "light",

@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import type AppConfig from "~/app.config";
 
-const props = defineProps<{ post: any, setting: typeof AppConfig }>()
+const props = defineProps<{ post: any, setting: typeof AppConfig, previewMode?: boolean }>()
 const { isPageInteractiveReady } = usePageInteractiveReady()
 </script>
 
@@ -20,13 +20,14 @@ const { isPageInteractiveReady } = usePageInteractiveReady()
       'content-layout': true,
       'headed-layout': props.setting?.showHeader,
       'content-layout--loading': !isPageInteractiveReady,
+      'content-layout--preview': props.previewMode,
     }"
   >
-    <static-content-left :post="props.post" :setting="props.setting" />
+    <static-content-left v-if="!props.previewMode" :post="props.post" :setting="props.setting" />
     <main class="main-content">
-      <static-content-main :post="props.post" :setting="props.setting" />
+      <static-content-main :post="props.post" :setting="props.setting" :preview-mode="props.previewMode" />
     </main>
-    <static-content-right :post="props.post" :setting="props.setting" />
+    <static-content-right v-if="!props.previewMode" :post="props.post" :setting="props.setting" />
   </div>
 </template>
 
@@ -49,6 +50,19 @@ const { isPageInteractiveReady } = usePageInteractiveReady()
   min-width 0 /* 防止 flex 子项溢出 */
   padding 0
   margin 0
+
+.content-layout--preview
+  display block
+  margin 0 !important
+  min-height 100vh
+
+  .main-content
+    padding 0 !important
+    margin 0 !important
+    width 100%
+
+  &.content-layout--loading::after
+    display none !important
 
 @media (max-width: 768px)
   .content-layout
