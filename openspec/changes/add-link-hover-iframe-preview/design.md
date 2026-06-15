@@ -89,7 +89,8 @@ from=hoverPreview
 | 外链 / 跨域链接 | 不触发预览 | 保持链接原行为 |
 
 ## Sticky and Keyboard Behavior
-- `stickyDefault` 默认 `true`。
+- `stickyDefault` 默认 `false`。
+- 预览头部提供图钉按钮，允许用户对当前预览切换 pinned/sticky 状态。
 - 预览框必须提供可见关闭按钮。
 - 默认关闭快捷键为 `Escape`。
 - 支持后续配置自定义快捷键。
@@ -120,7 +121,7 @@ linkHoverPreview?: {
 ```ts
 {
   enabled: true,
-  stickyDefault: true,
+  stickyDefault: false,
   closeShortcut: "Escape",
   hoverDelay: 150,
   width: 460,

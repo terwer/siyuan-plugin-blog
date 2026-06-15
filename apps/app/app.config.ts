@@ -114,7 +114,7 @@ export default defineAppConfig<AppConfig>({
   aiAssistantEnabled: true,
   linkHoverPreview: {
     enabled: true,
-    stickyDefault: true,
+    stickyDefault: false,
     closeShortcut: "Escape",
     hoverDelay: 150,
     width: 460,

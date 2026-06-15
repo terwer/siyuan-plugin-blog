@@ -92,13 +92,19 @@ content-only preview mode SHALL 通过轻量 preview flag 和局部条件渲染/
 - **THEN** iframe SHALL 显示目标页面现有过期状态
 - **AND** 过期状态页 SHALL 保持极简内容态
 
-### Requirement: Preview shall be sticky and closable
-hover preview SHALL 支持默认 sticky 行为，并提供键盘和按钮关闭能力。
+### Requirement: Preview shall be pinnable and closable
+hover preview SHALL 默认非 sticky，并提供图钉、键盘和按钮关闭能力。
 
-#### Scenario: Default sticky preview
-- **GIVEN** sticky preview 默认启用
+#### Scenario: Default non-sticky preview
+- **GIVEN** sticky preview 默认未启用
 - **WHEN** 预览出现
-- **THEN** 预览 SHALL 在指针离开原链接后继续可见
+- **THEN** 预览 SHALL 在指针离开原链接和预览区域后关闭
+
+#### Scenario: Pin preview
+- **GIVEN** hover preview 正在显示
+- **WHEN** 用户点击图钉按钮
+- **THEN** 预览 SHALL 进入 sticky 状态
+- **AND** 预览 SHALL 在指针离开原链接后继续可见
 - **UNTIL** 用户关闭、hover 另一个可预览链接或发生路由切换
 
 #### Scenario: Close with Escape

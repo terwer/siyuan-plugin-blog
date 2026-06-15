@@ -18,7 +18,7 @@
 - [x] 创建并复用单例悬浮预览容器。
 - [x] 渲染预览头部、关闭按钮、打开全文、loading、fallback 和 iframe。
 - [x] 将预览定位到链接附近，并限制在 viewport 内。
-- [x] 实现默认 sticky 行为。
+- [x] 实现默认非 sticky，并通过图钉按钮切换 sticky 行为。
 - [x] 实现 `Escape` 和可配置关闭快捷键。
 - [x] 路由切换时关闭预览。
 

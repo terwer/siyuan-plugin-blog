@@ -12,7 +12,7 @@
 - content-only preview mode 只展示正文，最多展示标题。
 - 隐藏 header、footer、左侧文档树、右侧大纲、AI 助手、侧边浮动按钮、主题/深色切换、文档元信息等非正文元素。
 - 保持原链接点击跳转行为不变。
-- 预览框默认 sticky/pinned，并支持 `Escape` 关闭。
+- 预览框默认不 sticky，提供图钉按钮切换 pinned/sticky，并支持 `Escape` 关闭。
 - 无权限、有密码、过期、未分享、不存在等状态仍交给目标页面自身处理，但状态页也必须是极简内容态，不展示页面 chrome。
 - 禁止 iframe 预览页内部再次触发 hover preview。
 
@@ -35,7 +35,7 @@ iframe 中的目标页面仍是所有访问状态的事实来源。如果目标�
 ## User Experience
 - 鼠标悬浮内部文档链接：短延迟后显示 content-only iframe 预览。
 - 预览中只看到目标文档正文，最多看到目标文档标题。
-- 预览默认 sticky：出现后不会因为鼠标离开链接立即关闭。
+- 预览默认不 sticky：鼠标离开链接/预览区域后自动关闭；点击图钉后进入 pinned/sticky 状态。
 - 默认按 `Escape` 关闭。
 - 预览头部提供关闭按钮和“打开全文”。
 - 如果用户在 iframe 内完成密码验证，“打开全文”应尽量使用 iframe 当前 URL，保留验证后的 `key`。

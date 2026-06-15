@@ -23,7 +23,7 @@ type LinkHoverPreviewConfig = {
 
 const DEFAULT_CONFIG: LinkHoverPreviewConfig = {
   enabled: true,
-  stickyDefault: true,
+  stickyDefault: false,
   closeShortcut: "Escape",
   hoverDelay: 150,
   width: 460,
@@ -126,6 +126,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   let hoverTimer: number | null = null
   let loadTimer: number | null = null
+  let closeTimer: number | null = null
   let currentAnchor: HTMLAnchorElement | null = null
   let originalUrl: URL | null = null
   let currentPreviewUrl: URL | null = null
@@ -133,6 +134,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   let iframe: HTMLIFrameElement | null = null
   let statusEl: HTMLDivElement | null = null
   let openBtn: HTMLButtonElement | null = null
+  let pinBtn: HTMLButtonElement | null = null
+  let previewSticky = config.stickyDefault
   let lastTouchLikePointerAt = 0
 
   const clearHoverTimer = () => {
@@ -149,9 +152,30 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 
+  const clearCloseTimer = () => {
+    if (closeTimer) {
+      window.clearTimeout(closeTimer)
+      closeTimer = null
+    }
+  }
+
+  const setPreviewSticky = (sticky: boolean) => {
+    previewSticky = sticky
+    if (sticky) {
+      clearCloseTimer()
+    }
+    container?.classList.toggle("share-link-preview--sticky", sticky)
+    if (pinBtn) {
+      pinBtn.setAttribute("aria-pressed", String(sticky))
+      pinBtn.title = sticky ? "取消固定预览" : "固定预览"
+      pinBtn.setAttribute("aria-label", sticky ? "取消固定预览" : "固定预览")
+    }
+  }
+
   const closePreview = () => {
     clearHoverTimer()
     clearLoadTimer()
+    clearCloseTimer()
     currentAnchor = null
     originalUrl = null
     currentPreviewUrl = null
@@ -164,6 +188,15 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 
+  const scheduleClosePreview = () => {
+    clearCloseTimer()
+    closeTimer = window.setTimeout(() => {
+      if (!previewSticky) {
+        closePreview()
+      }
+    }, 180)
+  }
+
   const buildContainer = () => {
     const existing = document.getElementById(PREVIEW_CONTAINER_ID) as HTMLDivElement | null
     if (existing) {
@@ -171,6 +204,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       iframe = existing.querySelector("iframe")
       statusEl = existing.querySelector(".share-link-preview__status") as HTMLDivElement | null
       openBtn = existing.querySelector(".share-link-preview__open") as HTMLButtonElement | null
+      pinBtn = existing.querySelector(".share-link-preview__pin") as HTMLButtonElement | null
       return existing
     }
 
@@ -183,6 +217,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         <span class="share-link-preview__title">预览</span>
         <div class="share-link-preview__actions">
           <button type="button" class="share-link-preview__open" title="打开全文">打开全文</button>
+          <button type="button" class="share-link-preview__pin" title="固定预览" aria-label="固定预览" aria-pressed="false">📌</button>
           <span class="share-link-preview__shortcut" title="按 Esc 键关闭预览" aria-hidden="true">Esc 关闭</span>
           <button type="button" class="share-link-preview__close" title="关闭预览" aria-label="关闭预览，按 Esc 也可关闭">×</button>
         </div>
@@ -221,14 +256,22 @@ export default defineNuxtPlugin((nuxtApp) => {
         box-sizing: border-box;
       }
       .share-link-preview__title {
+        flex: 1 1 auto;
+        min-width: 0;
         font-size: 13px;
         font-weight: 600;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      .share-link-preview__actions { display: flex; align-items: center; gap: 6px; }
+      .share-link-preview__actions {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
       .share-link-preview__open,
+      .share-link-preview__pin,
       .share-link-preview__shortcut,
       .share-link-preview__close {
         border: 1px solid rgba(0, 0, 0, 0.12);
@@ -240,6 +283,23 @@ export default defineNuxtPlugin((nuxtApp) => {
         line-height: 22px;
         padding: 0 8px;
         font-size: 12px;
+      }
+      .share-link-preview__open,
+      .share-link-preview__shortcut {
+        white-space: nowrap;
+      }
+      .share-link-preview__pin {
+        width: 24px;
+        padding: 0;
+        opacity: 0.56;
+        filter: grayscale(1);
+        font-size: 13px;
+      }
+      .share-link-preview--sticky .share-link-preview__pin {
+        opacity: 1;
+        filter: none;
+        border-color: rgba(64, 158, 255, 0.42);
+        background: rgba(64, 158, 255, 0.08);
       }
       .share-link-preview__shortcut {
         cursor: default;
@@ -270,6 +330,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       .share-link-preview--error .share-link-preview__status { display: flex; }
       .share-link-preview--loading .share-link-preview__iframe,
       .share-link-preview--error .share-link-preview__iframe { opacity: 0; }
+      @media (max-width: 520px) {
+        .share-link-preview__shortcut { display: none; }
+      }
       @media (max-width: 768px) {
         .share-link-preview {
           left: 8px !important;
@@ -288,8 +351,18 @@ export default defineNuxtPlugin((nuxtApp) => {
     iframe = root.querySelector("iframe")
     statusEl = root.querySelector(".share-link-preview__status") as HTMLDivElement | null
     openBtn = root.querySelector(".share-link-preview__open") as HTMLButtonElement | null
+    pinBtn = root.querySelector(".share-link-preview__pin") as HTMLButtonElement | null
 
     root.querySelector(".share-link-preview__close")?.addEventListener("click", closePreview)
+    pinBtn?.addEventListener("click", () => {
+      setPreviewSticky(!previewSticky)
+    })
+    root.addEventListener("pointerenter", clearCloseTimer)
+    root.addEventListener("pointerleave", () => {
+      if (!previewSticky) {
+        scheduleClosePreview()
+      }
+    })
     openBtn?.addEventListener("click", () => {
       let href = originalUrl?.toString() ?? currentPreviewUrl?.toString() ?? ""
       try {
@@ -363,9 +436,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
 
     const root = buildContainer()
+    const wasHidden = root.hidden
     currentAnchor = anchor
     originalUrl = url
     currentPreviewUrl = getPreviewUrl(url)
+    setPreviewSticky(wasHidden ? config.stickyDefault : previewSticky)
 
     const title = anchor.textContent?.trim() || "预览"
     const titleEl = root.querySelector(".share-link-preview__title")
@@ -433,6 +508,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const schedulePreview = (anchor: HTMLAnchorElement, url: URL) => {
     clearHoverTimer()
+    clearCloseTimer()
     hoverTimer = window.setTimeout(() => showPreview(anchor, url), config.hoverDelay)
   }
 
@@ -464,8 +540,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       return
     }
     clearHoverTimer()
-    if (!config.stickyDefault) {
-      closePreview()
+    if (!previewSticky) {
+      scheduleClosePreview()
     }
   }
 
