@@ -96,4 +96,11 @@ const postMetaEnabled = computed(() => props.setting?.postMetaEnabled !== false)
 
   .protyle-wysiwyg
     padding 18px clamp(8px, 2.8vw, 12px) !important
+
+    :deep(> [data-type="NodeParagraph"]),
+    :deep(> div > [data-type="NodeParagraph"])
+      text-align justify
+      text-align-last left
+      text-justify inter-ideograph
+      overflow-wrap break-word
 </style>

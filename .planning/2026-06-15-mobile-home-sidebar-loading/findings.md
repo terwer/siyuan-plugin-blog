@@ -42,3 +42,7 @@
 - loading 遮挡正文的实际原因：上一版居中 fixed spinner 位于正文中部，并且 loading 态 `.protyle/.protyle-content` 高度被压到首屏片段，造成视觉上底部正文被遮/被裁剪。
 - 文档树按钮格格不入的原因：移动端 `.sidebar-button-active` 使用蓝色主题态，而右侧 `.collapsed-btn` 非 active 时是白底普通按钮；用户期望收起后不残留 hilight。最终为移动端统一文档树按钮 active/hidden 均为白底普通风格。
 - 验证中踩坑：在 `./dev.sh` 运行时执行 `nuxi prepare` 会导致 Nuxt dev manifest `/_nuxt/builds/meta/dev.json` 404，页面保持 `content-layout--loading`。该状态不是业务正常态，已重启 `./dev.sh` 后干净验证。
+
+## 2026-06-15 移动端正文两端对齐证据
+- 普通正文顶层段落：`.protyle-wysiwyg > div > [data-type="NodeParagraph"]`，computed style 已为 `text-align: justify; text-align-last: left`。
+- 列表内段落虽也是 `NodeParagraph`，但位于 `NodeListItem` 内；实测没有命中本次选择器，仍为 `text-align: start`，符合“不动列表”的边界。

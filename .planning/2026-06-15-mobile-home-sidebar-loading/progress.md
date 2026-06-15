@@ -51,3 +51,10 @@
 - `./dev.sh` 重新干净启动成功，页面 `http://localhost:4000/s/20260329025638-3ne0z7i` 在移动端 `390×844 DPR=3` 验证。
 - Fast 4G 完成态：`content-layout` 不含 `content-layout--loading`，`$spage-interactive-ready=true`；文档树按钮打开/关闭后均为白底普通风格，右侧两个按钮也为白底普通风格。
 - Slow 3G loading 态：`content-layout--loading` 存在；核心正文容器宽度均为 `390/right=390`；`.sidebar-button/.collapsed-buttons/.collapsed-btn/.outline-container` 均未出现；spinner 位于 `right=12px/bottom=12px`，尺寸 `24×24`；正文高度不再被裁剪。
+
+### 移动端正文两端对齐
+- 用户确认方案边界：仅移动端、仅正文普通段落两端对齐，标题/列表/代码/表格/引用不动。
+- 运行时确认普通顶层段落 DOM：`.protyle-wysiwyg [data-type="NodeParagraph"]`；列表项内段落同样是 `NodeParagraph`，因此选择器必须限定顶层普通段落。
+- 修改 `apps/app/components/static/content/Main.vue`：在 `@media (max-width: 768px)` 下，仅对 `.protyle-wysiwyg` 的顶层 `NodeParagraph` 设置 `text-align: justify`、`text-align-last: left`、`text-justify: inter-ideograph`、`overflow-wrap: break-word`。
+- 使用 `./dev.sh` + Chrome DevTools 移动端 390px 验证：顶层普通段落 computed `textAlign=justify/textAlignLast=left`；列表内段落仍为 `textAlign=start/textAlignLast=auto`。
+- 执行 `pnpm --filter @terwer/share-pro-app exec nuxi prepare` 通过。
