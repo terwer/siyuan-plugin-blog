@@ -94,6 +94,15 @@ pnpm build -F siyuan-blog -- --watch
 # http://localhost:6806/plugins/siyuan-blog/app/#/s/20241217142133-o580ytq?lang=en_US
 ```
 
+### Local dev with production provider
+
+When running local `pnpm dev` / `./dev.sh` while pointing `NUXT_PUBLIC_PROVIDER_URL` to the production provider, keep these caveats in mind:
+
+- Local `localhost` / LAN IP origins are different from the production domain, so homepage settings may follow a different domain whitelist branch.
+- This can directly affect `homePageId`, share snapshots, and the SSR first-render branch, which may look like a hydration bug.
+- Therefore, **do not treat hydration mismatch in local-dev-with-production-provider as a pure rendering issue by default**. First verify whether the current origin matches the production configuration.
+- To validate the final production behavior, prefer using the production domain. If a local address must be used, prepare matching domain whitelist entries and settings for that origin.
+
 ### Important build note for `siyuan`
 
 - `apps/app/script/siyuan.sh` now performs a safe temporary switch to `nuxt.siyuan.config.ts`, runs the build, and restores `nuxt.config.ts` automatically.

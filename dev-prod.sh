@@ -1,0 +1,1 @@
+NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=https://api.terwergreen.com:8888 pnpm dev -F @terwer/share-pro-app -- --host

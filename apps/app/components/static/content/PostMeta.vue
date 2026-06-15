@@ -183,7 +183,7 @@ const showUpdateDate = computed(() =>
 /* ===== 移动端适配 ===== */
 @media (max-width: 768px)
   .post-meta
-    padding 6px 16px 10px
+    padding 6px clamp(8px, 2.8vw, 12px) 10px
     gap 8px
   
   .meta-left

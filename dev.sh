@@ -1,0 +1,2 @@
+NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=http://localhost:8086 pnpm dev -F @terwer/share-pro-app -- --host
+#NUXT_PUBLIC_DEFAULT_TYPE=node NUXT_PUBLIC_PROVIDER_MODE=true NUXT_PUBLIC_PROVIDER_URL=http://10.10.62.25:8086 pnpm dev -F @terwer/share-pro-app -- --host

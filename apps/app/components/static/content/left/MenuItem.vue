@@ -20,6 +20,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { isMobileViewportNow } from "~/composables/useDocTreeSource"
 
 interface Props {
   link: string;
@@ -112,8 +113,8 @@ const handleItemClick = async () => {
 
   let finalLink = props.link
 
-  // 如果是从文档树过来的链接，添加查询参数
-  if (props.fromDocTree) {
+  // 如果是从文档树过来的链接，桌面端添加查询参数；移动端屏蔽 from=docTree 效果
+  if (props.fromDocTree && !isMobileViewportNow()) {
     const url = new URL(finalLink, window.location.origin)
     url.searchParams.set('from', 'docTree')
     finalLink = url.pathname + url.search
@@ -154,6 +155,10 @@ defineExpose({
   max-width 200px
   font-size 12.5px /* 更小的字体 */
   line-height 1.4 /* 更紧凑的行高 */
+
+@media (max-width: 768px)
+  .menu-title
+    max-width calc(100vw - 132px)
 
 // 状态颜色
 .text-warning

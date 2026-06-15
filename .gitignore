@@ -38,7 +38,6 @@ yarn-error.log*
 .vercel
 
 .idea
-.turbo
 __pycache__
 .wrangler
 startup.sh
@@ -48,6 +47,7 @@ package.zip
 startup-prod.sh
 apps/app/script/dev-prod.sh
 .omc
+*.bak
 
 # ReCode local database
 .recode
