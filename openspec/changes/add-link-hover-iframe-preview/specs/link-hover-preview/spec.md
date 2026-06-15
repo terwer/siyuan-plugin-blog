@@ -117,6 +117,13 @@ hover preview SHALL 默认非 sticky，并提供图钉、键盘和按钮关闭�
 - **WHEN** 用户点击关闭按钮
 - **THEN** 预览 SHALL 关闭
 
+#### Scenario: Drag preview by title bar
+- **GIVEN** hover preview 正在桌面端显示
+- **WHEN** 用户按住预览头部标题区域拖拽
+- **THEN** 预览 SHALL 跟随指针移动并保持在 viewport 内
+- **AND** 头部按钮区域 SHALL NOT 触发拖拽
+- **AND** 标题区域鼠标指针 SHOULD 使用移动语义
+
 ### Requirement: Open full page shall preserve iframe state when possible
 hover preview SHALL 提供打开完整页面的操作，并在可读取时保留 iframe 当前导航状态。
 

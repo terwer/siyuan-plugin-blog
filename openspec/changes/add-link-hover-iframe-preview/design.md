@@ -90,12 +90,18 @@ from=hoverPreview
 
 ## Sticky and Keyboard Behavior
 - `stickyDefault` 默认 `false`。
-- 预览头部提供图钉按钮，允许用户对当前预览切换 pinned/sticky 状态。
+- 预览头部提供图钉按钮，允许用户对当前预览切换 pinned/sticky 状态；图钉按钮放在关闭按钮 `×` 左侧。
 - 预览框必须提供可见关闭按钮。
 - 默认关闭快捷键为 `Escape`。
 - 支持后续配置自定义快捷键。
 - 当焦点位于 `input`、`textarea`、`select`、`contenteditable` 内时，除 `Escape` 外的自定义快捷键不应被截获。
 - 路由切换时关闭预览。
+
+## Header Drag Behavior
+- 桌面端预览头部标题栏支持拖拽移动预览框，方便用户把浮层挪开继续阅读原文。
+- 鼠标指针使用移动语义（四向移动/`move`），避免误导成可点击手型。
+- 标题栏右侧按钮区域不触发拖拽，保持“打开全文 / Esc 关闭 / 图钉 / 关闭”原点击行为。
+- 触屏或 coarse pointer 环境不启用拖拽，不影响移动端正常点击跳转。
 
 ## Configuration
 建议 viewer 配置结构：

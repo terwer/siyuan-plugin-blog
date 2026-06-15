@@ -137,6 +137,19 @@ export default defineNuxtPlugin((nuxtApp) => {
   let pinBtn: HTMLButtonElement | null = null
   let previewSticky = config.stickyDefault
   let lastTouchLikePointerAt = 0
+  let dragState: {
+    active: boolean
+    pointerId: number | null
+    offsetX: number
+    offsetY: number
+    handleEl: HTMLDivElement | null
+  } = {
+    active: false,
+    pointerId: null,
+    offsetX: 0,
+    offsetY: 0,
+    handleEl: null,
+  }
 
   const clearHoverTimer = () => {
     if (hoverTimer) {
@@ -159,6 +172,58 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 
+  const stopDrag = () => {
+    const pointerId = dragState.pointerId
+    const handleEl = dragState.handleEl
+    if (pointerId !== null && handleEl) {
+      try {
+        handleEl.releasePointerCapture(pointerId)
+      } catch {
+        // ignore
+      }
+    }
+    removeDragListeners()
+    dragState.active = false
+    dragState.pointerId = null
+    dragState.handleEl = null
+    document.body.style.userSelect = ""
+    document.body.style.cursor = ""
+    container?.classList.remove("share-link-preview--dragging")
+  }
+
+  const onDragMove = (event: PointerEvent) => {
+    if (!dragState.active || event.pointerId !== dragState.pointerId || !container) {
+      return
+    }
+
+    const left = event.clientX - dragState.offsetX
+    const top = event.clientY - dragState.offsetY
+    const margin = 8
+    const rect = container.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const maxLeft = Math.max(margin, window.innerWidth - width - margin)
+    const maxTop = Math.max(margin, window.innerHeight - height - margin)
+
+    container.style.left = `${Math.min(Math.max(margin, left), maxLeft)}px`
+    container.style.top = `${Math.min(Math.max(margin, top), maxTop)}px`
+  }
+
+  const onDragEnd = (event: PointerEvent) => {
+    if (!dragState.active || event.pointerId !== dragState.pointerId) {
+      return
+    }
+
+    event.preventDefault()
+    stopDrag()
+  }
+
+  function removeDragListeners() {
+    document.removeEventListener("pointermove", onDragMove, true)
+    document.removeEventListener("pointerup", onDragEnd, true)
+    document.removeEventListener("pointercancel", onDragEnd, true)
+  }
+
   const setPreviewSticky = (sticky: boolean) => {
     previewSticky = sticky
     if (sticky) {
@@ -176,6 +241,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     clearHoverTimer()
     clearLoadTimer()
     clearCloseTimer()
+    stopDrag()
     currentAnchor = null
     originalUrl = null
     currentPreviewUrl = null
@@ -189,6 +255,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   const scheduleClosePreview = () => {
+    if (dragState.active) {
+      return
+    }
     clearCloseTimer()
     closeTimer = window.setTimeout(() => {
       if (!previewSticky) {
@@ -217,8 +286,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         <span class="share-link-preview__title">预览</span>
         <div class="share-link-preview__actions">
           <button type="button" class="share-link-preview__open" title="打开全文">打开全文</button>
-          <button type="button" class="share-link-preview__pin" title="固定预览" aria-label="固定预览" aria-pressed="false">📌</button>
           <span class="share-link-preview__shortcut" title="按 Esc 键关闭预览" aria-hidden="true">Esc 关闭</span>
+          <button type="button" class="share-link-preview__pin" title="固定预览" aria-label="固定预览" aria-pressed="false">📌</button>
           <button type="button" class="share-link-preview__close" title="关闭预览" aria-label="关闭预览，按 Esc 也可关闭">×</button>
         </div>
       </div>
@@ -243,6 +312,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         box-shadow: 0 14px 40px rgba(15, 23, 42, 0.2);
         overflow: hidden;
       }
+      .share-link-preview--dragging {
+        cursor: move;
+      }
       .share-link-preview[hidden] { display: none !important; }
       .share-link-preview__bar {
         display: flex;
@@ -254,6 +326,11 @@ export default defineNuxtPlugin((nuxtApp) => {
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         background: rgba(248, 250, 252, 0.96);
         box-sizing: border-box;
+        cursor: move;
+        user-select: none;
+      }
+      .share-link-preview__bar--drag-disabled {
+        cursor: default;
       }
       .share-link-preview__title {
         flex: 1 1 auto;
@@ -359,9 +436,42 @@ export default defineNuxtPlugin((nuxtApp) => {
     })
     root.addEventListener("pointerenter", clearCloseTimer)
     root.addEventListener("pointerleave", () => {
-      if (!previewSticky) {
+      if (!previewSticky && !dragState.active) {
         scheduleClosePreview()
       }
+    })
+    const bar = root.querySelector(".share-link-preview__bar") as HTMLDivElement | null
+    bar?.addEventListener("pointerdown", (event: PointerEvent) => {
+      if (event.pointerType === "touch" || event.button !== 0 || !container) {
+        return
+      }
+
+      const target = event.target instanceof Element ? event.target : null
+      if (target?.closest(".share-link-preview__actions, button, a, input, textarea, select")) {
+        return
+      }
+
+      const barRect = bar.getBoundingClientRect()
+      clearCloseTimer()
+      dragState.active = true
+      dragState.pointerId = event.pointerId
+      dragState.offsetX = event.clientX - barRect.left
+      dragState.offsetY = event.clientY - barRect.top
+      dragState.handleEl = bar
+      container.classList.add("share-link-preview--dragging")
+      document.body.style.userSelect = "none"
+      document.body.style.cursor = "move"
+
+      try {
+        bar.setPointerCapture(event.pointerId)
+      } catch {
+        // ignore
+      }
+
+      document.addEventListener("pointermove", onDragMove, true)
+      document.addEventListener("pointerup", onDragEnd, true)
+      document.addEventListener("pointercancel", onDragEnd, true)
+      event.preventDefault()
     })
     openBtn?.addEventListener("click", () => {
       let href = originalUrl?.toString() ?? currentPreviewUrl?.toString() ?? ""
@@ -446,6 +556,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     const titleEl = root.querySelector(".share-link-preview__title")
     if (titleEl) {
       titleEl.textContent = title
+    }
+    const bar = root.querySelector(".share-link-preview__bar")
+    if (bar) {
+      bar.classList.toggle("share-link-preview__bar--drag-disabled", isTouchLikeDevice())
     }
 
     root.hidden = false
@@ -540,7 +654,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       return
     }
     clearHoverTimer()
-    if (!previewSticky) {
+    if (!previewSticky && !dragState.active) {
       scheduleClosePreview()
     }
   }
