@@ -1,6 +1,6 @@
 {
   "name": "siyuan-plugin-blog",
-  "version": "6.6.0",
+  "version": "6.7.0",
   "scripts": {
     "dev": "pnpm --filter @terwer/share-pro-app dev",
     "dev:app": "pnpm --filter @terwer/share-pro-app dev",
