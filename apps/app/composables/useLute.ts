@@ -77,21 +77,6 @@ const ensureLuteLoaded = async (): Promise<any> => {
 }
 
 /**
- * 修正 AI 输出中常见的 Markdown 格式问题：
- * - `###3` → `### 3`
- * - `**答案： **` → `**答案：**`
- * - `**答案：**正文` → `**答案：** 正文`
- */
-const normalizeAiMarkdown = (content: string): string => {
-    return content
-        // 只有标题符号后面紧跟非空格、且不是更多 # 时才补空格，
-        // 避免把合法的 "## 标题" 回溯成 "# # 标题"
-        .replace(/^(#{1,6})(?!#)(?=\S)/gm, '$1 ')
-        .replace(/\*\*([^*\n]+?)\s+\*\*/g, (_match, inner: string) => `**${inner.trim()}**`)
-        .replace(/\*\*([^*\n]+?)\*\*(?=[一-龥A-Za-z0-9])/g, '**$1** ')
-}
-
-/**
  * 渲染 Markdown 为 HTML
  * @param content Markdown 文本
  * @returns HTML 字符串（包裹在 .markdown-content 中）
@@ -108,7 +93,8 @@ const renderMarkdown = (content: string): string => {
             return `<div class="markdown-content"><pre>${escapeHtml(content)}</pre></div>`
         }
 
-        const html = lute.MarkdownStr('', normalizeAiMarkdown(content))
+        // 不做任何文本改写，原样交给 Markdown 解析器，避免破坏换行和标题
+        const html = lute.MarkdownStr('', content)
         return `<div class="markdown-content">${html}</div>`
     } catch (error) {
         logger.error('Error rendering markdown:', error)
