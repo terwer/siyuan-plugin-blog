@@ -76,17 +76,83 @@ const ensureLuteLoaded = async (): Promise<any> => {
     }
 }
 
+const isInsideInlineCode = (line: string, index: number): boolean => {
+    let inside = false
+    for (let i = 0; i < index; i++) {
+        if (line[i] === '`') {
+            inside = !inside
+        }
+    }
+    return inside
+}
+
 /**
- * 只处理 AI 输出里两种确定的格式问题，逐行处理，不跨行：
- * 1. 列表符号后紧跟文字，例如 `-阅读偏好` → `- 阅读偏好`
- * 2. 模型或流式输出误写、两侧都是空白的孤立 `**`
+ * 修复同一行内的加粗跨度：
+ * - 去掉 ** 内侧多余空格
+ * - 结束标记后紧跟正文时补一个空格
  *
- * 不做通用 Markdown 改写，避免破坏换行、标题和正文。
+ * 只做配对和空格修复，不跨行、不改写内容。
+ */
+const repairBoldSpans = (line: string): string => {
+    let output = ''
+    let cursor = 0
+
+    while (cursor < line.length) {
+        const open = line.indexOf('**', cursor)
+        if (open === -1) {
+            output += line.slice(cursor)
+            break
+        }
+
+        if (line[open - 1] === '\\' || isInsideInlineCode(line, open)) {
+            output += line.slice(cursor, open + 2)
+            cursor = open + 2
+            continue
+        }
+
+        const close = line.indexOf('**', open + 2)
+        if (close === -1) {
+            output += line.slice(cursor)
+            break
+        }
+
+        const inner = line.slice(open + 2, close).trim()
+        output += `${line.slice(cursor, open)}**${inner}**`
+
+        const nextChar = line[close + 2] ?? ''
+        if (nextChar && !/\s/.test(nextChar) && /[一-龥A-Za-z0-9]/.test(nextChar)) {
+            output += ' '
+        }
+
+        cursor = close + 2
+    }
+
+    return output
+}
+
+/**
+ * 只处理 AI 输出里确定的格式问题，逐行处理，不跨行：
+ * 1. 列表符号后紧跟文字，例如 `-阅读偏好` → `- 阅读偏好`
+ * 2. 两侧都是空白的孤立 `**`
+ * 3. 加粗标记内侧空格、结束标记后缺少空格
+ *
+ * 不处理标题，不跨行改写，避免破坏换行和文档结构。
  */
 const sanitizeAiMarkdown = (content: string): string => {
+    let inCodeFence = false
+
     return content
         .split('\n')
         .map((line) => {
+            if (/^\s*(```|~~~)/.test(line)) {
+                inCodeFence = !inCodeFence
+                return line
+            }
+
+            if (inCodeFence) {
+                return line
+            }
+
             let result = line
 
             if (/^[-+](?=[一-龥A-Za-z])/.test(result)) {
@@ -98,7 +164,7 @@ const sanitizeAiMarkdown = (content: string): string => {
                 result = result.replace(/\s\*\*\s/g, ' ')
             }
 
-            return result
+            return repairBoldSpans(result)
         })
         .join('\n')
 }

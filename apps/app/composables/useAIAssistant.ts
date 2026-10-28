@@ -211,14 +211,7 @@ function buildSpeedReadSystemPrompt (): string {
 使用 Markdown，包含：
 - ## 核心摘要（2-3句话）
 - ## 关键要点（3-5条）
-- ## 延伸思考（1个问题+答案）
-
-## 格式要求
-- 标题使用 ##，符号后必须有一个空格
-- 加粗使用 **内容**，两个 ** 内侧不能有空格
-- 加粗结束后如果继续写正文，必须留一个空格，例如：**答案：** 正文
-- 列表项格式：- **要点**：说明
-- 问题与答案之间必须空一行`
+- ## 延伸思考（1个问题+答案）`
 }
 
 function buildSpeedReadPrompt (content: string, title: string): string {
@@ -239,14 +232,7 @@ function buildQASystemPrompt (): string {
 ## 输出格式
 使用 Markdown，5个问答：
 - ## Q1/Q2: 基础理解题
-- ## Q3/Q4/Q5: 进阶思考题
-
-## 格式要求
-- 标题使用 ##，符号后必须有一个空格
-- 加粗使用 **内容**，两个 ** 内侧不能有空格
-- 加粗结束后如果继续写正文，必须留一个空格，例如：**答案：** 正文
-- 列表项格式：- **要点**：说明
-- 问题与答案之间必须空一行`
+- ## Q3/Q4/Q5: 进阶思考题`
 }
 
 function buildQAPrompt (content: string, title: string): string {
