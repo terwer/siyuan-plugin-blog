@@ -22,6 +22,7 @@
  */
 
 import { hasMeaningfulTextContent } from "~/utils/content"
+import { createSSEParser } from "~/utils/sse"
 
 // ==================== Type Definitions ====================
 
@@ -137,32 +138,30 @@ async function callAI (
       const decoder = new TextDecoder()
       let fullContent = ""
 
+      const parser = createSSEParser((data) => {
+        try {
+          const parsed = JSON.parse(data)
+          const delta = parsed.choices?.[0]?.delta?.content
+          if (delta) {
+            fullContent += delta
+            onStream?.(fullContent)
+          }
+        } catch {
+          // 忽略解析失败的行
+        }
+      })
+
       try {
         while (true) {
           const { done, value } = await reader.read()
           if (done) { break }
 
-          const chunk = decoder.decode(value, { stream: true })
-          const lines = chunk.split("\n")
-
-          for (const line of lines) {
-            if (line.startsWith("data: ")) {
-              const data = line.slice(6)
-              if (data === "[DONE]") { continue }
-
-              try {
-                const parsed = JSON.parse(data)
-                const delta = parsed.choices?.[0]?.delta?.content
-                if (delta) {
-                  fullContent += delta
-                  onStream?.(fullContent)
-                }
-              } catch {
-                // 忽略解析失败的行
-              }
-            }
-          }
+          parser.push(decoder.decode(value, { stream: true }))
         }
+
+        // 处理解码器和行缓冲里剩余的内容
+        parser.push(decoder.decode())
+        parser.flush()
       } finally {
         reader.releaseLock()
       }

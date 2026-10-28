@@ -9,7 +9,9 @@
     "vercelBuild": "bash script/vercel.sh",
     "cloudflareBuild": "bash script/cloudflare.sh",
     "postinstall": "nuxt prepare",
-    "test:ai-markdown": "node --experimental-strip-types script/test-ai-markdown.mjs"
+    "test": "pnpm test:ai-markdown && pnpm test:sse",
+    "test:ai-markdown": "node --experimental-strip-types script/test-ai-markdown.mjs",
+    "test:sse": "node --experimental-strip-types script/test-sse.mjs"
   },
   "dependencies": {
     "@element-plus/icons-vue": ">=0.2.6",
