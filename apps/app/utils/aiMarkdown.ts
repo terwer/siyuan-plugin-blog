@@ -18,14 +18,67 @@ const isInsideInlineCode = (text: string, index: number): boolean => {
     return inside
 }
 
+const countBoldMarkers = (text: string): number => {
+    let count = 0
+    let cursor = 0
+    while (cursor < text.length) {
+        const index = text.indexOf('**', cursor)
+        if (index === -1) {
+            break
+        }
+
+        if (text[index - 1] === '\\' || isInsideInlineCode(text, index)) {
+            cursor = index + 2
+            continue
+        }
+
+        count++
+        cursor = index + 2
+    }
+    return count
+}
+
+const stripBoldMarkers = (text: string): string => {
+    let output = ''
+    let cursor = 0
+    while (cursor < text.length) {
+        const index = text.indexOf('**', cursor)
+        if (index === -1) {
+            output += text.slice(cursor)
+            break
+        }
+
+        if (text[index - 1] === '\\' || isInsideInlineCode(text, index)) {
+            output += text.slice(cursor, index + 2)
+            cursor = index + 2
+            continue
+        }
+
+        output += text.slice(cursor, index)
+
+        // 标记两侧都是空格时去掉多余的一个，避免留下双空格
+        if (output.endsWith(' ') && text[index + 2] === ' ') {
+            cursor = index + 3
+        } else {
+            cursor = index + 2
+        }
+    }
+    return output
+}
+
 /**
  * 修复一个段落内的加粗跨度（允许跨单个换行，不允许跨空行）：
+ * - 加粗标记数为奇数时说明模型漏写了结束标记，整段去掉 **，避免原始符号泄露
  * - 去掉 ** 内侧多余空格
  * - 结束标记后紧跟正文时补一个空格
  *
  * 不处理标题，不改写其他内容。
  */
 const repairBoldSpans = (text: string): string => {
+    if (countBoldMarkers(text) % 2 === 1) {
+        return stripBoldMarkers(text)
+    }
+
     let output = ''
     let cursor = 0
 
