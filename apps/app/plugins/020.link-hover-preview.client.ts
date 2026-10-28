@@ -310,9 +310,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         width: min(var(--share-link-preview-width, 460px), calc(100vw - 24px));
         height: min(var(--share-link-preview-height, 360px), calc(100vh - 24px));
         max-width: min(var(--share-link-preview-max-width, 560px), calc(100vw - 24px));
-        background: var(--b3-theme-background, var(--el-bg-color, #fff));
-        color: var(--b3-theme-on-background, var(--el-text-color-primary, #303133));
-        border: 1px solid rgba(0, 0, 0, 0.12);
+        background: var(--mainBg, #fff);
+        color: var(--textColor, #303133);
+        border: 1px solid var(--borderColor, rgba(0, 0, 0, 0.12));
         border-radius: 12px;
         box-shadow: 0 14px 40px rgba(15, 23, 42, 0.2);
         overflow: hidden;
@@ -328,8 +328,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         gap: 8px;
         height: 36px;
         padding: 0 8px 0 12px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(248, 250, 252, 0.96);
+        border-bottom: 1px solid var(--borderColor, rgba(0, 0, 0, 0.08));
+        background: var(--sidebarBg, rgba(248, 250, 252, 0.96));
         box-sizing: border-box;
         cursor: move;
         user-select: none;
@@ -356,9 +356,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       .share-link-preview__pin,
       .share-link-preview__shortcut,
       .share-link-preview__close {
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        background: #fff;
-        color: #303133;
+        border: 1px solid var(--borderColor, rgba(0, 0, 0, 0.12));
+        background: var(--mainBg, #fff);
+        color: var(--textColor, #303133);
         border-radius: 7px;
         cursor: pointer;
         height: 24px;
@@ -385,7 +385,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
       .share-link-preview__shortcut {
         cursor: default;
-        color: #606266;
+        color: var(--textColor, #606266);
+        opacity: 0.7;
         user-select: none;
       }
       .share-link-preview__close {
@@ -394,7 +395,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         font-size: 18px;
       }
       .share-link-preview__body { position: relative; width: 100%; height: calc(100% - 36px); }
-      .share-link-preview__iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+      .share-link-preview__iframe { width: 100%; height: 100%; border: 0; display: block; background: var(--mainBg, #fff); }
       .share-link-preview__status {
         position: absolute;
         inset: 0;
@@ -404,8 +405,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         padding: 18px;
         text-align: center;
         font-size: 13px;
-        color: #606266;
-        background: #fff;
+        color: var(--textColor, #606266);
+        background: var(--mainBg, #fff);
         z-index: 1;
       }
       .share-link-preview--loading .share-link-preview__status,
