@@ -77,6 +77,33 @@ const ensureLuteLoaded = async (): Promise<any> => {
 }
 
 /**
+ * 只处理 AI 输出里两种确定的格式问题，逐行处理，不跨行：
+ * 1. 列表符号后紧跟文字，例如 `-阅读偏好` → `- 阅读偏好`
+ * 2. 模型或流式输出误写、两侧都是空白的孤立 `**`
+ *
+ * 不做通用 Markdown 改写，避免破坏换行、标题和正文。
+ */
+const sanitizeAiMarkdown = (content: string): string => {
+    return content
+        .split('\n')
+        .map((line) => {
+            let result = line
+
+            if (/^[-+](?=[一-龥A-Za-z])/.test(result)) {
+                result = `${result[0]} ${result.slice(1)}`
+            }
+
+            const boldMarkers = result.match(/\*\*/g)
+            if (boldMarkers && boldMarkers.length % 2 === 1) {
+                result = result.replace(/\s\*\*\s/g, ' ')
+            }
+
+            return result
+        })
+        .join('\n')
+}
+
+/**
  * 渲染 Markdown 为 HTML
  * @param content Markdown 文本
  * @returns HTML 字符串（包裹在 .markdown-content 中）
@@ -93,8 +120,7 @@ const renderMarkdown = (content: string): string => {
             return `<div class="markdown-content"><pre>${escapeHtml(content)}</pre></div>`
         }
 
-        // 不做任何文本改写，原样交给 Markdown 解析器，避免破坏换行和标题
-        const html = lute.MarkdownStr('', content)
+        const html = lute.MarkdownStr('', sanitizeAiMarkdown(content))
         return `<div class="markdown-content">${html}</div>`
     } catch (error) {
         logger.error('Error rendering markdown:', error)
