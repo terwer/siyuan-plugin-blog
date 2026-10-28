@@ -7,6 +7,9 @@
  *  of this license document, but changing it is not allowed.
  */
 
+import { watch } from "vue"
+import { useViewerPreferences } from "~/composables/useViewerPreferences"
+
 type LinkHoverPreviewConfig = {
   enabled: boolean
   stickyDefault: boolean
@@ -123,6 +126,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   if (!config.enabled) {
     return
   }
+
+  const { preferences } = useViewerPreferences()
 
   let hoverTimer: number | null = null
   let loadTimer: number | null = null
@@ -621,6 +626,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   const schedulePreview = (anchor: HTMLAnchorElement, url: URL) => {
+    if (!preferences.linkHoverPreview) {
+      return
+    }
+
     clearHoverTimer()
     clearCloseTimer()
     hoverTimer = window.setTimeout(() => showPreview(anchor, url), config.hoverDelay)
@@ -693,6 +702,15 @@ export default defineNuxtPlugin((nuxtApp) => {
   document.addEventListener("pointerout", onPointerOut, true)
   document.addEventListener("focusin", onFocusIn, true)
   document.addEventListener("keydown", onKeyDown, true)
+
+  watch(
+    () => preferences.linkHoverPreview,
+    (enabled) => {
+      if (!enabled) {
+        closePreview()
+      }
+    },
+  )
 
   nuxtApp.hook("page:start", () => {
     closePreview()

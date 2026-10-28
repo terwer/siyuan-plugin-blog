@@ -31,6 +31,7 @@ export default defineNuxtConfig({
 
   i18n: {
     defaultLocale: "zh_CN",
+    fallbackLocale: "zh_CN",
     locales: [
       { code: "en_US", name: "English", file: "en_US.json" },
       { code: "zh_CN", name: "Chinese", file: "zh_CN.json" }
@@ -38,6 +39,21 @@ export default defineNuxtConfig({
     strategy: "no_prefix",
     detectBrowserLanguage: false,
   },
+
+  // 生产环境为字体文件增加长缓存；开发环境不启用，避免调试时被缓存干扰
+  routeRules: isDev
+    ? {}
+    : {
+        "/libs/fonts/LXGWWenkai/**": {
+          headers: { "Cache-Control": "public, max-age=31536000, immutable" },
+        },
+        "/libs/fonts/opensans/**": {
+          headers: { "Cache-Control": "public, max-age=31536000, immutable" },
+        },
+        "/libs/fonts/fzbw/**": {
+          headers: { "Cache-Control": "public, max-age=31536000, immutable" },
+        },
+      },
 
   app: {
     baseURL: appBase,
@@ -78,9 +94,6 @@ export default defineNuxtConfig({
       script: isDev
         ? [
           {
-            src: appBase + "libs/fonts/viewer-font-mode.boot.js?v=" + staticV,
-          },
-          {
             src: appBase + "libs/eruda/eruda.js",
           },
           {
@@ -100,9 +113,6 @@ export default defineNuxtConfig({
           },
         ]
         : [
-          {
-            src: appBase + "libs/fonts/viewer-font-mode.boot.js?v=" + staticV,
-          },
           {
             defer: true,
             src: appBase + "libs/katex/0.16.10/katex.min.js",

@@ -38,6 +38,7 @@ yarn-error.log*
 .vercel
 
 .idea
+.mcp.json
 __pycache__
 .wrangler
 startup.sh

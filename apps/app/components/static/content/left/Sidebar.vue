@@ -41,8 +41,16 @@ const scrollToActiveItem = (attempt = 0) => {
       }
 
       // 使用精确的 ID 选择器查找当前文档对应的菜单项
-      // 优先查找带有 data-doc-id 属性的元素
-      let activeElement = document.querySelector(`[data-doc-id="${activeId}"]`) as HTMLElement
+      // 优先定位可见行内容（.menu-item-content），避免匹配到包含整个子树的 el-sub-menu 容器
+      let activeElement =
+        (document.querySelector(`.menu-item-content[data-doc-id="${activeId}"]`) as HTMLElement | null) ??
+        (document.querySelector(`[data-doc-id="${activeId}"]`) as HTMLElement | null)
+
+      // 如果命中的是子菜单容器，取其可见标题行参与滚动计算
+      if (activeElement?.classList.contains("el-sub-menu")) {
+        activeElement =
+          (activeElement.querySelector(":scope > .el-sub-menu__title") as HTMLElement | null) ?? activeElement
+      }
 
       // 如果没找到，尝试查找 el-menu-item 或 el-sub-menu 中 index 匹配的元素
       if (!activeElement) {
@@ -62,10 +70,11 @@ const scrollToActiveItem = (attempt = 0) => {
       }
       
       if (!activeElement) {
-        logger.warn("active element not found, attempt:", attempt)
         if (attempt < maxAttempts) {
-          // 重试，等待菜单展开
+          // 重试，等待菜单渲染完成
           scrollToActiveItem(attempt + 1)
+        } else {
+          logger.warn("active element not found after retries, docId:", activeId)
         }
         return
       }
@@ -128,8 +137,8 @@ onMounted(() => {
 
 // 初始化文档树
 const treeData = TreeUtils.addParentIds(props.post.docTree)
-// 默认选中
-const activeIndex = props.post.postid
+// 默认选中（保持响应式：模板高亮与滚动定位共用）
+const activeIndex = computed(() => props.post.postid as string)
 // 检查是否从文档树过来
 const isFromDocTree = computed(() => {
   return route.query.from === 'docTree'

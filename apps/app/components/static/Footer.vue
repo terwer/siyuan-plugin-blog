@@ -19,7 +19,7 @@ import AppConfig from "~/app.config"
 const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const { providerMode } = useProviderMode()
 const { getHome } = useBaseUrl()
 const { colorMode, toggleDark } = useClientThemeMode(props.setting)
@@ -60,18 +60,16 @@ const VNode = () =>
     innerHTML: footer,
   })
 
-// lifecycles
-onBeforeMount(() => {
-  // 设置默认语言
-  if (props.setting?.lang) {
-    locale.value = props.setting?.lang as any
-  }
-})
 </script>
 
 <template>
   <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
-    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+    <static-buttons
+      :default-mode="colorMode?'dark':'light'"
+      :site-link-hover-preview-enabled="props.setting?.linkHoverPreview?.enabled !== false"
+      :site-post-meta-enabled="props.setting?.postMetaEnabled !== false"
+      @toggle-theme-mode="emitToggleThemeMode"
+    />
 
     <span class="text"> &copy;2011-{{ nowYear }} </span>
     <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
@@ -84,7 +82,12 @@ onBeforeMount(() => {
     <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
   </div>
   <div v-else class="footer">
-    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+    <static-buttons
+      :default-mode="colorMode?'dark':'light'"
+      :site-link-hover-preview-enabled="props.setting?.linkHoverPreview?.enabled !== false"
+      :site-post-meta-enabled="props.setting?.postMetaEnabled !== false"
+      @toggle-theme-mode="emitToggleThemeMode"
+    />
     <VNode />
   </div>
 </template>
