@@ -19,7 +19,7 @@ import AppConfig from "~/app.config"
 const props = defineProps<{ setting: typeof AppConfig }>()
 
 // uses
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const { providerMode } = useProviderMode()
 const { getHome } = useBaseUrl()
 const { colorMode, toggleDark } = useClientThemeMode(props.setting)
@@ -60,13 +60,6 @@ const VNode = () =>
     innerHTML: footer,
   })
 
-// lifecycles
-onBeforeMount(() => {
-  // 设置默认语言
-  if (props.setting?.lang) {
-    locale.value = props.setting?.lang as any
-  }
-})
 </script>
 
 <template>

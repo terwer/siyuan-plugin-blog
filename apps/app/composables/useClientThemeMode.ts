@@ -9,6 +9,7 @@
 
 import { useColorMode } from "@vueuse/core"
 import { useRoute } from "vue-router"
+import { useI18n } from "vue-i18n"
 import { BrowserUtil } from "zhi-device"
 import type AppConfig from "~/app.config"
 import { useAppBase } from "~/composables/useAppBase"
@@ -25,6 +26,7 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
   const { store } = useColorMode()
   const { query } = useRoute()
   const { appBase } = useAppBase()
+  const { locale } = useI18n()
 
   // 在 mounted 生命周期中处理加载后逻辑
   onBeforeMount(() => {
@@ -72,7 +74,8 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
   const isDarkMode = colorMode.value
   useHead({
     htmlAttrs: {
-      lang: "zh_CN",
+      // HTML lang 使用 BCP-47 写法（zh-CN / en-US），与 i18n 的 zh_CN / en_US 区分
+      lang: computed(() => String(locale.value ?? "").replace(/_/g, "-")),
       "data-theme-mode": isDarkMode ? "dark" : "light",
       "data-light-theme": siyuanLightTheme,
       "data-dark-theme": siyuanDarkTheme,

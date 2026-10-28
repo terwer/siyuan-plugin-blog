@@ -16,6 +16,7 @@ import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 // 由于布局是个宏，不能动态设置了，因此只能写死
 
 const { t } = useI18n()
+const { applyLocale } = useAppLocale()
 const requestURL = useRequestURL()
 const { getStaticSetting } = useStaticSettingStore(requestURL)
 const logger = createAppLogger("static-home-page")
@@ -26,6 +27,8 @@ const isLoading = ref(__SIYUAN_SPA_TARGET__)
 const loadSetting = async () => {
   try {
     setting.value = await getStaticSetting()
+    // 在子组件渲染前统一应用语言，保证 SSR 与客户端水合结果一致
+    await applyLocale(setting.value?.lang)
   } catch (e) {
     logger.error("load static setting failed", e)
   } finally {

@@ -19,6 +19,7 @@ const logger = createAppLogger("static-share-page")
 const requestURL = useRequestURL()
 const route = useRoute()
 const { t } = useI18n()
+const { applyLocale } = useAppLocale()
 const isPreviewMode = computed(() => route.query.preview === "1")
 const { providerMode } = useProviderMode()
 const { fetchPostMeta, validatePassword } = useAuthModeFetch()
@@ -106,6 +107,8 @@ const getSetting = async () => {
     currentSetting = await getStaticSetting()
   }
   formData.setting = currentSetting
+  // 在子组件渲染前统一应用语言，保证 SSR 与客户端水合结果一致
+  await applyLocale(currentSetting?.lang)
   logger.debug("currentSetting=>", currentSetting)
 }
 
