@@ -8,6 +8,9 @@
  */
 
 import { JsonUtil } from "zhi-common"
+import { loadScriptOnce } from "~/utils/assetLoader"
+
+const ECHARTS_SCRIPT_PATH = "resources/stage/protyle/js/echarts/echarts.min.js"
 
 /**
  * ECharts 渲染插件 - 客户端
@@ -60,36 +63,60 @@ export default defineNuxtPlugin(({ vueApp }) => {
     }
   }
 
-  vueApp.directive("echarts", (el: HTMLElement) => {
-    logger.info("Start handling ECharts blocks on client")
-    // 查找所有 ECharts 代码块
+  const renderEchartsBlocks = (el: HTMLElement) => {
     const echartsBlocks = el.querySelectorAll("[data-type=\"NodeCodeBlock\"][data-subtype=\"echarts\"]")
     echartsBlocks.forEach((block: any) => {
       const content = block.getAttribute("data-content")
-      if (content) {
-        try {
-          const option = parseOption(content)
-          if (!option) {
-            logger.error("Failed to parse ECharts option")
-            return
-          }
-          // 创建新的图表容器
-          const chartContainer = document.createElement("div")
-          chartContainer.style.width = "100%"
-          chartContainer.style.height = "400px"
-          // 替换原有的代码块
-          block.parentNode.replaceChild(chartContainer, block)
-          // 初始化图表
-          const chart = (window as any).echarts.init(chartContainer)
-          chart.setOption(option)
-          // 监听窗口大小变化
-          window.addEventListener("resize", () => {
-            chart.resize()
-          })
-        } catch (e) {
-          logger.error("Failed to render ECharts", e)
+      if (!content || !block.parentNode) {
+        return
+      }
+
+      try {
+        const option = parseOption(content)
+        if (!option) {
+          logger.error("Failed to parse ECharts option")
+          return
         }
+        // 创建新的图表容器
+        const chartContainer = document.createElement("div")
+        chartContainer.style.width = "100%"
+        chartContainer.style.height = "400px"
+        // 替换原有的代码块
+        block.parentNode.replaceChild(chartContainer, block)
+        // 初始化图表
+        const chart = (window as any).echarts.init(chartContainer)
+        chart.setOption(option)
+        // 监听窗口大小变化
+        window.addEventListener("resize", () => {
+          chart.resize()
+        })
+      } catch (e) {
+        logger.error("Failed to render ECharts", e)
       }
     })
+  }
+
+  vueApp.directive("echarts", (el: HTMLElement) => {
+    // 没有图表块时完全不加载 ECharts
+    if (!el.querySelector("[data-type=\"NodeCodeBlock\"][data-subtype=\"echarts\"]")) {
+      return
+    }
+
+    logger.info("Start handling ECharts blocks on client")
+    void (async () => {
+      try {
+        await loadScriptOnce(ECHARTS_SCRIPT_PATH)
+      } catch (e) {
+        logger.error("Failed to load ECharts", e)
+        return
+      }
+
+      if (!(window as any).echarts) {
+        logger.error("ECharts is not available")
+        return
+      }
+
+      renderEchartsBlocks(el)
+    })()
   })
 })

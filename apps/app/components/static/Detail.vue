@@ -160,8 +160,8 @@ if (!props.overrideSeo) {
 const loadPageData = async () => {
   isLoading.value = true
   try {
-    await getPostData(currentDocId.value)
-    await getSetting()
+    // 文档与站点配置互不依赖，并行请求，缩短服务端首屏等待时间
+    await Promise.all([getPostData(currentDocId.value), getSetting()])
   } finally {
     isLoading.value = false
   }

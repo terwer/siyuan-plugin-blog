@@ -1,19 +1,27 @@
 /**
  * useLute - Lute Markdown 渲染工具
- * 
- * 用于将 Markdown 文本转换为 HTML
- * Lute 库通过 nuxt.config.ts 的 head.script 加载
+ *
+ * 用于将 Markdown 文本转换为 HTML。
+ * Lute 体积较大，只在 AI 面板真正需要时按需加载。
  */
+
+import { ref } from "vue"
+import { loadScriptOnce } from "~/utils/assetLoader"
 
 // 创建日志记录器
 const logger = createAppLogger("use-lute")
 
+const LUTE_SCRIPT_PATH = "libs/lute/lute.min.js"
+
 // Lute 实例（单例模式）
 let luteInstance: any = null
+let luteLoadPromise: Promise<void> | null = null
+
+// 供模板建立响应式依赖：加载完成后自动重新渲染已存在的消息
+const luteReady = ref(false)
 
 /**
  * 获取 Lute 实例
- * 注意：Lute 脚本通过 nuxt.config.ts 的 head.script 加载
  */
 const getLuteInstance = (): any => {
     if (typeof window === 'undefined') return null
@@ -37,6 +45,51 @@ const getLuteInstance = (): any => {
 }
 
 /**
+ * 按需加载 Lute 脚本并创建实例。
+ *
+ * 只有打开 AI 面板时才会下载，普通阅读页面不会加载。
+ */
+const ensureLuteLoaded = async (): Promise<any> => {
+    if (typeof window === 'undefined') {
+        return null
+    }
+
+    if ((window as any).Lute) {
+        const instance = getLuteInstance()
+        luteReady.value = Boolean(instance)
+        return instance
+    }
+
+    if (!luteLoadPromise) {
+        luteLoadPromise = loadScriptOnce(LUTE_SCRIPT_PATH)
+    }
+
+    try {
+        await luteLoadPromise
+        const instance = getLuteInstance()
+        luteReady.value = Boolean(instance)
+        return instance
+    } catch (error) {
+        logger.error('Failed to load Lute:', error)
+        luteLoadPromise = null
+        return null
+    }
+}
+
+/**
+ * 修正 AI 输出中常见的 Markdown 格式问题：
+ * - `###3` → `### 3`
+ * - `**答案： **` → `**答案：**`
+ * - `**答案：**正文` → `**答案：** 正文`
+ */
+const normalizeAiMarkdown = (content: string): string => {
+    return content
+        .replace(/^(#{1,6})(?=\S)/gm, '$1 ')
+        .replace(/\*\*([^*\n]+?)\s+\*\*/g, (_match, inner: string) => `**${inner.trim()}**`)
+        .replace(/\*\*([^*\n]+?)\*\*(?=[一-龥A-Za-z0-9])/g, '**$1** ')
+}
+
+/**
  * 渲染 Markdown 为 HTML
  * @param content Markdown 文本
  * @returns HTML 字符串（包裹在 .markdown-content 中）
@@ -47,13 +100,13 @@ const renderMarkdown = (content: string): string => {
     }
 
     try {
-        const lute = getLuteInstance()
+        const ready = luteReady.value
+        const lute = ready ? getLuteInstance() : null
         if (!lute) {
-            logger.warn('Lute not available, returning plain text')
             return `<div class="markdown-content"><pre>${escapeHtml(content)}</pre></div>`
         }
 
-        const html = lute.MarkdownStr('', content)
+        const html = lute.MarkdownStr('', normalizeAiMarkdown(content))
         return `<div class="markdown-content">${html}</div>`
     } catch (error) {
         logger.error('Error rendering markdown:', error)
@@ -72,12 +125,14 @@ const escapeHtml = (text: string): string => {
 
 /**
  * Composable: useLute
- * 
+ *
  * 提供 Markdown 渲染功能
  */
 export const useLute = () => {
     return {
         renderMarkdown,
         getLuteInstance,
+        ensureLuteLoaded,
+        luteReady,
     }
 }

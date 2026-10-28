@@ -27,6 +27,11 @@ const createAsyncStylesheetLink = (href: string) =>
 export default defineNuxtConfig({
   devtools: { enabled: isDev },
 
+  // 自托管部署时由 Nitro 直接提供 gzip/brotli 静态资源
+  nitro: {
+    compressPublicAssets: true,
+  },
+
   modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
@@ -83,11 +88,6 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
         },
-        {
-          rel: "stylesheet",
-          href: appBase + "libs/katex/0.16.10/katex.min.css?v=" + staticV,
-          crossorigin: "anonymous",
-        },
       ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
@@ -98,32 +98,8 @@ export default defineNuxtConfig({
           {
             children: "eruda.init();console.log('eruda inited');",
           } as any,
-          {
-            defer: true,
-            src: appBase + "libs/katex/0.16.10/katex.min.js",
-          },
-          {
-            defer: true,
-            src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
-          },
-          {
-            defer: true,
-            src: appBase + "libs/lute/lute.min.js",
-          },
         ]
         : [
-          {
-            defer: true,
-            src: appBase + "libs/katex/0.16.10/katex.min.js",
-          },
-          {
-            defer: true,
-            src: appBase + "resources/stage/protyle/js/echarts/echarts.min.js",
-          },
-          {
-            defer: true,
-            src: appBase + "libs/lute/lute.min.js",
-          },
         ],
     },
   },

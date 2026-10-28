@@ -34,7 +34,7 @@ const { t } = useI18n()
 const hasMeaningfulContent = computed(() => hasMeaningfulTextContent(props.content))
 
 // Lute Markdown 渲染器
-const { renderMarkdown } = useLute()
+const { renderMarkdown, ensureLuteLoaded } = useLute()
 
 // Unified AI Assistant
 const {
@@ -384,6 +384,9 @@ watch([speedReadLoading, qaLoading], ([speedLoading, qaLoading]) => {
 })
 
 onMounted(() => {
+  // 仅在 AI 面板打开时加载 Lute，避免首屏下载大体积脚本
+  void ensureLuteLoaded()
+
   if (!hasMeaningfulContent.value) {
     return
   }

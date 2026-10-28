@@ -52,6 +52,6 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
     // 公式（Formulate）
     logger.info("Start handling formula on static client")
-    renderFormulate(el)
+    void renderFormulate(el)
   })
 })
