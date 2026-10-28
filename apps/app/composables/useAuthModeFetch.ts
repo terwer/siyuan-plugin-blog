@@ -12,6 +12,48 @@ import {buildUrl} from "~/server/utils/urlUtils"
 import {useSiyuanSPA} from "~/composables/useSiyuanSPA"
 import {useRoute} from "#vue-router";
 
+// 服务端短缓存：provider 的 getDoc 接口单次约 700-900ms，
+// 短时间内的重复访问直接复用结果，避免每次首屏都等待。
+const PROVIDER_CACHE_TTL_MS = 60_000
+const PROVIDER_CACHE_MAX_ENTRIES = 200
+const providerCache = new Map<string, { expiresAt: number; value: string }>()
+
+const readProviderCache = (key: string): string | null => {
+  if (!process.server) {
+    return null
+  }
+
+  const entry = providerCache.get(key)
+  if (!entry) {
+    return null
+  }
+
+  if (entry.expiresAt <= Date.now()) {
+    providerCache.delete(key)
+    return null
+  }
+
+  return entry.value
+}
+
+const writeProviderCache = (key: string, value: string) => {
+  if (!process.server || !value) {
+    return
+  }
+
+  providerCache.set(key, {
+    expiresAt: Date.now() + PROVIDER_CACHE_TTL_MS,
+    value,
+  })
+
+  if (providerCache.size > PROVIDER_CACHE_MAX_ENTRIES) {
+    const oldestKey = providerCache.keys().next().value
+    if (oldestKey) {
+      providerCache.delete(oldestKey)
+    }
+  }
+}
+
 export const useAuthModeFetch = () => {
   const logger = createAppLogger("use-config-fetch")
   const { docId } = useDocId()
@@ -110,6 +152,11 @@ export const useAuthModeFetch = () => {
     const url = "/api/settings/byAuthor"
     const reqUrl = `${apiBase}${url}`
     let resText = ""
+    const cacheKey = `setting-author:${author}:${filename}`
+    const cachedText = readProviderCache(cacheKey)
+    if (cachedText) {
+      return cachedText
+    }
     logger.info(`fetch config text ${filename} in provider mode, reqUrl=>${reqUrl}`)
     const res = await fetch(reqUrl, {
       method: "POST",
@@ -127,6 +174,7 @@ export const useAuthModeFetch = () => {
     if (!res.ok) {
       throw new Error("fetch provider config error")
     }
+    writeProviderCache(cacheKey, resText)
     return resText
   }
 
@@ -141,6 +189,11 @@ export const useAuthModeFetch = () => {
     const url = "/api/settings/share"
     const reqUrl = `${apiBase}${url}`
     let resText = ""
+    const cacheKey = `setting-doc:${docId}:${filename}`
+    const cachedText = readProviderCache(cacheKey)
+    if (cachedText) {
+      return cachedText
+    }
     logger.info(`fetch config text ${filename} in provider mode, reqUrl=>${reqUrl}`)
     const res = await fetch(reqUrl, {
       method: "POST",
@@ -158,6 +211,7 @@ export const useAuthModeFetch = () => {
     if (!res.ok) {
       throw new Error("fetch provider config error")
     }
+    writeProviderCache(cacheKey, resText)
     return resText
   }
 
@@ -171,9 +225,17 @@ export const useAuthModeFetch = () => {
     const url = `/settings/share/${filename}`
     const reqUrl = `${apiBase}${url}`
     let resText = ""
+    const cacheKey = `setting-default:${filename}`
+    const cachedText = readProviderCache(cacheKey)
+    if (cachedText) {
+      return cachedText
+    }
     try {
       const res = await fetch(reqUrl)
       resText = await res.text()
+      if (res.ok) {
+        writeProviderCache(cacheKey, resText)
+      }
     } catch (e) {
       logger.error(`fetch provider config ${reqUrl}`, e)
     }
@@ -237,6 +299,13 @@ export const useAuthModeFetch = () => {
     if(query.key){
         params.fdKey = query.key
     }
+
+    const cacheKey = `post:${id}:${String(params.fdKey ?? "")}`
+    const cachedText = readProviderCache(cacheKey)
+    if (cachedText) {
+      return cachedText
+    }
+
     let resText = "{}"
     try {
       const res = await fetch(reqUrl, {
@@ -251,6 +320,9 @@ export const useAuthModeFetch = () => {
         // const dataJson = JSON.parse(resJson.data)
         // resText = JSON.stringify(dataJson.post)
         resText = resJson.data
+        if (typeof resText === "string") {
+          writeProviderCache(cacheKey, resText)
+        }
       } else {
         logger.error("doc fetch error=>" + resJson.msg)
         throw new Error("doc fetch error=>" + resJson.msg)
