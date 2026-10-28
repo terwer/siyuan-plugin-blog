@@ -214,9 +214,10 @@ function buildSpeedReadSystemPrompt (): string {
 - ## 延伸思考（1个问题+答案）
 
 ## 格式要求
-- 标题符号（#）后必须有空格
-- 加粗标记内侧不要留空格
-- 加粗结束后如果紧跟正文，必须留一个空格，例如：**答案：** 正文`
+- 标题使用 ##，符号后必须有一个空格
+- 加粗使用 **内容**，两个 ** 内侧不能有空格
+- 加粗结束后如果继续写正文，必须留一个空格，例如：**答案：** 正文
+- 问题与答案之间必须空一行`
 }
 
 function buildSpeedReadPrompt (content: string, title: string): string {
@@ -240,9 +241,10 @@ function buildQASystemPrompt (): string {
 - ## Q3/Q4/Q5: 进阶思考题
 
 ## 格式要求
-- 标题符号（#）后必须有空格
-- 加粗标记内侧不要留空格
-- 加粗结束后如果紧跟正文，必须留一个空格，例如：**答案：** 正文`
+- 标题使用 ##，符号后必须有一个空格
+- 加粗使用 **内容**，两个 ** 内侧不能有空格
+- 加粗结束后如果继续写正文，必须留一个空格，例如：**答案：** 正文
+- 问题与答案之间必须空一行`
 }
 
 function buildQAPrompt (content: string, title: string): string {
