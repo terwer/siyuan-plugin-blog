@@ -93,3 +93,25 @@
 - 叶子项正确获得 `is-active` 高亮。
 - 控制台仅剩测试环境图片 404。
 
+## 2026-10-28 会话 4：首次加载字体阻塞浏览器加载指示
+
+### 实测数据
+- 线上字体 CSS 共 98 个 @font-face，全部 woff2 合计约 4.49MB；参考文章实际只用到约 9 个子集。
+- 线上首次加载时字体在 `load` 之后才请求；但 head 中的 boot 脚本会为回访用户提前注入 CSS，
+  且 `app:mounted` 后立即调用 `document.fonts.load`（512 字样本），在部分页面会与 load 事件重叠，
+  导致 Chrome 标签页加载转圈持续到字体下载结束。
+
+### 修复
+- `plugins/019.viewer-font-mode.client.ts`
+  - 字体加载改为 `window.load` 完成后再执行，并用 `requestIdleCallback`（超时 2s）延后。
+  - 去掉 512 字样本预加载，改用 `document.fonts.ready` 等待页面实际用到的字体。
+  - 先切换字体再等待字体就绪，字体按需渐进下载。
+- 5 个 Nuxt 配置文件移除 `viewer-font-mode.boot.js` 的 head 引用。
+- `public/libs/fonts/viewer-font-mode.boot.js` 改为兼容空实现，避免旧缓存 HTML 404。
+
+### 验证（本地 dev，桌面 + 390px 移动端）
+- 桌面：`window-load` 1713ms，字体 CSS 注入 3151ms，字体模式切换 3172ms。
+- 移动端：`window-load` 1849ms，字体 CSS 注入 3076ms，字体模式切换 3099ms。
+- 两种视口下字体均正常生效（`document.fonts.check` 为 true），boot 脚本不再被请求。
+- 控制台无新增错误。
+

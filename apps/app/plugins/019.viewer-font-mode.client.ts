@@ -14,20 +14,6 @@ const getAppBase = () => {
 
 const getFontStylesheetHref = () => `${getAppBase()}${VIEWER_FONT_STYLESHEET_PATH}`
 
-const normalizeViewerFontSample = (text: string) => text.replace(/\s+/g, " ").trim()
-
-const getViewerFontSampleText = () => {
-  const title = normalizeViewerFontSample(document.title ?? "")
-  const bodyText = normalizeViewerFontSample(document.body?.innerText ?? "")
-  const sampleText = `${title} ${bodyText}`.trim()
-
-  if (!sampleText) {
-    return "在线分享字体体验 Open Sans LXGW WenKai 1234567890"
-  }
-
-  return sampleText.slice(0, 512)
-}
-
 const markEnhancedFontMode = () => {
   document.documentElement.setAttribute(VIEWER_FONT_MODE_ATTR, VIEWER_FONT_MODE_ENHANCED)
   localStorage.setItem(VIEWER_FONT_MODE_KEY, VIEWER_FONT_MODE_ENHANCED)
@@ -36,11 +22,6 @@ const markEnhancedFontMode = () => {
 const markEnhancedFontReady = () => {
   localStorage.setItem(VIEWER_FONT_READY_KEY, "true")
 }
-
-const hasEnhancedFontMode = () =>
-  localStorage.getItem(VIEWER_FONT_MODE_KEY) === VIEWER_FONT_MODE_ENHANCED
-
-const hasEnhancedFontReady = () => localStorage.getItem(VIEWER_FONT_READY_KEY) === "true"
 
 const ensureViewerFontStylesheet = () => {
   if (viewerFontLoadPromise) {
@@ -74,54 +55,61 @@ const ensureViewerFontStylesheet = () => {
   return viewerFontLoadPromise
 }
 
-const waitForViewerFontsReady = async (sampleText: string) => {
+const waitForViewerFontsReady = async () => {
   if (!("fonts" in document)) {
     return
   }
 
-  await Promise.all([
-    document.fonts.load('400 1em "Open Sans"', sampleText),
-    document.fonts.load('400 1em "LXGW WenKai"', sampleText),
-  ])
+  // 只等待当前页面实际用到的字体，不再用 512 字样本强行预加载大量子集
+  await document.fonts.ready
 }
 
 const enableEnhancedFonts = async () => {
   try {
     await ensureViewerFontStylesheet()
-    await waitForViewerFontsReady(getViewerFontSampleText())
+    // 先切换字体：页面文字保持可读，字体按需渐进下载
     markEnhancedFontMode()
+    await waitForViewerFontsReady()
     markEnhancedFontReady()
   } catch (error) {
     console.error("[viewer-font-mode] failed to enable enhanced fonts", error)
   }
 }
 
+/**
+ * 字体只在页面完全加载后、浏览器空闲时开始加载。
+ *
+ * 这样字体请求不会拖住页面的 load 事件，Chrome 标签页的加载转圈会在
+ * 页面主体加载完成后停止，字体在后台继续加载。
+ */
 const scheduleEnhancedFonts = () => {
-  if (typeof window.requestAnimationFrame === "function") {
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        void enableEnhancedFonts()
-      })
-    })
+  const run = () => {
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(
+        () => {
+          void enableEnhancedFonts()
+        },
+        { timeout: 2000 },
+      )
+      return
+    }
+
+    window.setTimeout(() => {
+      void enableEnhancedFonts()
+    }, 300)
+  }
+
+  if (document.readyState === "complete") {
+    run()
     return
   }
 
-  window.setTimeout(() => {
-    void enableEnhancedFonts()
-  }, 0)
+  window.addEventListener("load", run, { once: true })
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("app:mounted", () => {
     if (!import.meta.client) {
-      return
-    }
-
-    if (hasEnhancedFontMode() && hasEnhancedFontReady()) {
-      if (document.documentElement.getAttribute(VIEWER_FONT_MODE_ATTR) !== VIEWER_FONT_MODE_ENHANCED) {
-        markEnhancedFontMode()
-      }
-      void ensureViewerFontStylesheet()
       return
     }
 
