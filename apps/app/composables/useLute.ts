@@ -84,7 +84,9 @@ const ensureLuteLoaded = async (): Promise<any> => {
  */
 const normalizeAiMarkdown = (content: string): string => {
     return content
-        .replace(/^(#{1,6})(?=\S)/gm, '$1 ')
+        // 只有标题符号后面紧跟非空格、且不是更多 # 时才补空格，
+        // 避免把合法的 "## 标题" 回溯成 "# # 标题"
+        .replace(/^(#{1,6})(?!#)(?=\S)/gm, '$1 ')
         .replace(/\*\*([^*\n]+?)\s+\*\*/g, (_match, inner: string) => `**${inner.trim()}**`)
         .replace(/\*\*([^*\n]+?)\*\*(?=[一-龥A-Za-z0-9])/g, '**$1** ')
 }
