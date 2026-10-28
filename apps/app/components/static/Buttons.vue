@@ -15,7 +15,11 @@ const emit = defineEmits<{
   toggleThemeMode: [key: "auto" | "light" | "dark"]
 }>()
 
-const props = defineProps<{ defaultMode?: "auto" | "light" | "dark" }>()
+const props = defineProps<{
+  defaultMode?: "auto" | "light" | "dark"
+  siteLinkHoverPreviewEnabled?: boolean
+  sitePostMetaEnabled?: boolean
+}>()
 
 const formData = reactive({
   // 返回顶部
@@ -170,6 +174,10 @@ onMounted(() => {
           </ul>
         </transition>
       </div>
+      <static-viewer-preferences
+        :site-link-hover-preview-enabled="props.siteLinkHoverPreviewEnabled"
+        :site-post-meta-enabled="props.sitePostMetaEnabled"
+      />
     </client-only>
   </div>
 </template>
@@ -233,6 +241,7 @@ onMounted(() => {
         list-style none
         line-height 2rem
         font-size 0.95rem
+        color var(--text-color-primary, #1f2329)
 
         &:hover
           color $accentColor

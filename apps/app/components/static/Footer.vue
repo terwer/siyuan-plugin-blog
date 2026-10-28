@@ -64,7 +64,12 @@ const VNode = () =>
 
 <template>
   <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
-    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+    <static-buttons
+      :default-mode="colorMode?'dark':'light'"
+      :site-link-hover-preview-enabled="props.setting?.linkHoverPreview?.enabled !== false"
+      :site-post-meta-enabled="props.setting?.postMetaEnabled !== false"
+      @toggle-theme-mode="emitToggleThemeMode"
+    />
 
     <span class="text"> &copy;2011-{{ nowYear }} </span>
     <span class="text s-dark" @click="goGithub()">&nbsp;{{ t("name") }}</span>
@@ -77,7 +82,12 @@ const VNode = () =>
     <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
   </div>
   <div v-else class="footer">
-    <static-buttons :default-mode="colorMode?'dark':'light'" @toggle-theme-mode="emitToggleThemeMode" />
+    <static-buttons
+      :default-mode="colorMode?'dark':'light'"
+      :site-link-hover-preview-enabled="props.setting?.linkHoverPreview?.enabled !== false"
+      :site-post-meta-enabled="props.setting?.postMetaEnabled !== false"
+      @toggle-theme-mode="emitToggleThemeMode"
+    />
     <VNode />
   </div>
 </template>

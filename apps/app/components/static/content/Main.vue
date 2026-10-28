@@ -11,6 +11,7 @@
 import type AppConfig from "~/app.config"
 import ImagePreview from "~/components/common/ImagePreview.vue"
 import { useImagePreview } from "~/composables/useImagePreview"
+import { useViewerPreferences } from "~/composables/useViewerPreferences"
 
 const props = defineProps<{
   post: any
@@ -28,8 +29,19 @@ const VNode = () =>
     innerHTML: editorDom,
   })
 
-// 文档元信息栏兼容历史默认行为：只有显式 false 时才关闭。
-const postMetaEnabled = computed(() => !props.previewMode && props.setting?.postMetaEnabled !== false)
+const { preferences } = useViewerPreferences()
+const isClientMounted = ref(false)
+onMounted(() => {
+  isClientMounted.value = true
+})
+
+// 文档信息栏：站点开启后，还需要用户自己在“阅读偏好”里打开（默认关闭）
+const postMetaEnabled = computed(() =>
+  !props.previewMode &&
+  props.setting?.postMetaEnabled !== false &&
+  isClientMounted.value &&
+  preferences.postMeta,
+)
 const previewShowTitle = computed(() => props.setting?.linkHoverPreview?.showTitle !== false)
 </script>
 
