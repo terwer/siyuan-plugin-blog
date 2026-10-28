@@ -177,6 +177,8 @@ onMounted(() => {
       <static-viewer-preferences
         :site-link-hover-preview-enabled="props.siteLinkHoverPreviewEnabled"
         :site-post-meta-enabled="props.sitePostMetaEnabled"
+        :theme-menu-open="formData.showModeBox"
+        @open="formData.showModeBox = false"
       />
     </client-only>
   </div>
@@ -241,7 +243,7 @@ onMounted(() => {
         list-style none
         line-height 2rem
         font-size 0.95rem
-        color var(--text-color-primary, #1f2329)
+        color var(--textColor)
 
         &:hover
           color $accentColor

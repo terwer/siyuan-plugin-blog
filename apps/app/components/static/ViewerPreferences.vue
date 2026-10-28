@@ -13,6 +13,11 @@ import { Setting } from "@element-plus/icons-vue"
 const props = defineProps<{
   siteLinkHoverPreviewEnabled?: boolean
   sitePostMetaEnabled?: boolean
+  themeMenuOpen?: boolean
+}>()
+
+const emit = defineEmits<{
+  open: []
 }>()
 
 const { preferences, setLinkHoverPreview, setPostMeta } = useViewerPreferences()
@@ -71,12 +76,27 @@ watch(showPanel, (visible) => {
 const togglePanel = () => {
   hideHint()
   showPanel.value = !showPanel.value
+  if (showPanel.value) {
+    emit("open")
+  }
 }
 
 const openPanelFromHint = () => {
   hideHint()
   showPanel.value = true
+  emit("open")
 }
+
+// 主题菜单和偏好面板同在左下角，避免两个浮层叠在一起
+watch(
+  () => props.themeMenuOpen,
+  (open) => {
+    if (open) {
+      showPanel.value = false
+      hideHint()
+    }
+  }
+)
 
 onMounted(() => {
   isClientMounted.value = true
@@ -227,7 +247,7 @@ onUnmounted(() => {
   border 1px solid var(--borderColor)
   border-radius 6px
   box-shadow 0 0 15px rgba(255, 255, 255, 0.2)
-  color var(--text-color-primary, #1f2329)
+  color var(--textColor)
   text-align left
   z-index 20
 
@@ -252,7 +272,8 @@ onUnmounted(() => {
 
 .preference-empty
   font-size 12px
-  color var(--text-color-secondary, #8a8f99)
+  color var(--textColor)
+  opacity 0.75
 
 .preferences-hint
   position fixed
@@ -264,7 +285,7 @@ onUnmounted(() => {
   border 1px solid var(--borderColor)
   border-radius 6px
   box-shadow 0 0 15px rgba(255, 255, 255, 0.2)
-  color var(--text-color-primary, #1f2329)
+  color var(--textColor)
   font-size 12px
   line-height 1.5
   white-space nowrap
