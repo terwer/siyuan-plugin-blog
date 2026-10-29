@@ -86,7 +86,7 @@ export default defineNuxtConfig({
         createAsyncStylesheetLink(appBase + "libs/fonts/vdoing_font.css?v=" + staticV),
         {
           rel: "stylesheet",
-          href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
+          href: appBase + "resources/stage/build/export/base.css?v=" + staticV,
         },
       ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
