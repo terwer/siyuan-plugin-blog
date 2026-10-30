@@ -39,6 +39,40 @@ body
   --b3-font-family-graph var(--viewer-font-stack)
   --el-font-family var(--viewer-font-stack)
 
+/*
+ * 分享页阅读留白：沿用更新前的对称间距（桌面 32px，移动端自适应）。
+ * 思源主题给编辑器正文的 72/48px 留白会让分享页整体右移、右侧图表溢出，
+ * 已在 bundled 的 Zhihu 主题中移除；这里只调整页面留白，不改字号/行高/颜色。
+ */
+html body .protyle-title
+  padding 16px 32px
+  margin 0
+
+html body .protyle-wysiwyg
+  padding 24px 32px
+  margin 0
+
+.protyle--preview .protyle-title
+  padding 14px 16px 10px
+
+.protyle--preview .protyle-title__input
+  font-size 22px
+  line-height 1.35
+
+.protyle--preview .protyle-wysiwyg
+  padding 12px 16px 20px
+
+@media (max-width: 768px)
+  html body .protyle-title
+    padding 14px clamp(8px, 2.8vw, 12px) 12px
+
+  html body .protyle-title__input
+    padding-left 0
+    padding-right 0
+
+  html body .protyle-wysiwyg
+    padding 18px clamp(8px, 2.8vw, 12px)
+
 /* 只读分享页不展示块级操作按钮 */
 .protyle-gutters,
 .protyle-icons
