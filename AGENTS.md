@@ -47,9 +47,14 @@
   - 桌面：标题 `padding: 16px 32px`，正文 `padding: 24px 32px`
   - 移动端：标题 `14px clamp(8px, 2.8vw, 12px) 12px`，正文 `18px clamp(8px, 2.8vw, 12px)`
   - 预览：标题 `14px 16px 10px`，正文 `12px 16px 20px`
-- 原因：思源 Zhihu 主题给编辑器的 72/48px 留白会让分享页整体右移、右侧图表溢出；同时主题把 `protyle-wysiwyg--attr` 的顶部 padding 设为 0，导致标题与正文过近。
-- 这些只是页面留白，不改变字号、行高、颜色等正文样式；规则写在 `siyuan.styl`，不使用 `!important`。
-- bundled 的 `Zhihu/theme.css` 中对应的编辑器留白规则已移除，避免和分享页布局冲突。
+- 留白只作用于页面容器，不改变字号、行高、颜色等正文样式；规则写在 `siyuan.styl`，不使用 `!important`。
+- bundled 的 `Zhihu/theme.css` 不包含编辑器专用的 72/48px 留白和 `protyle-wysiwyg--attr` 顶部清零规则，分享页布局由自身留白控制。
+
+## 链接样式
+
+- 普通链接保留思源原生 `span[data-type~=a]`，使用原生链接色和 1px 下边框。
+- 普通链接悬停时下边框颜色切换为 `var(--b3-theme-primary)`，浅色/深色模式都有可感知反馈。
+- 引用链接保留思源原生 `span[data-type~=block-ref]`，使用原生引用样式（虚线）并保留悬停背景。
 
 ## 背景与主题
 

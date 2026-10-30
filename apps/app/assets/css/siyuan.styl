@@ -1,6 +1,6 @@
 /*
  * 正文样式以思源原生 app/base.css + 当前主题为准。
- * 这里只保留只读查看必须处理的编辑器 UI，不再覆盖字号、标题、链接、列表等正文样式。
+ * 本文件只处理只读查看所需的页面布局和编辑器 UI。
  */
 
 /*
@@ -40,9 +40,8 @@ body
   --el-font-family var(--viewer-font-stack)
 
 /*
- * 分享页阅读留白：沿用更新前的对称间距（桌面 32px，移动端自适应）。
- * 思源主题给编辑器正文的 72/48px 留白会让分享页整体右移、右侧图表溢出，
- * 已在 bundled 的 Zhihu 主题中移除；这里只调整页面留白，不改字号/行高/颜色。
+ * 分享页使用对称阅读留白：桌面标题 16px 32px、正文 24px 32px；
+ * 移动端随视口收缩。留白只作用于页面容器，字号、行高、颜色仍由思源原生样式决定。
  */
 html body .protyle-title
   padding 16px 32px
@@ -72,6 +71,13 @@ html body .protyle-wysiwyg
 
   html body .protyle-wysiwyg
     padding 18px clamp(8px, 2.8vw, 12px)
+
+/*
+ * 普通链接保留思源原生 span 结构和下边框；悬停时下划线颜色跟随主题主色，
+ * 让真实链接在浅色/深色下都有可感知的交互反馈。
+ */
+.protyle-wysiwyg [data-node-id] span[data-type~=a]:hover
+  border-bottom-color var(--b3-theme-primary)
 
 /* 只读分享页不展示块级操作按钮 */
 .protyle-gutters,
