@@ -12,32 +12,32 @@
     "clean": "rm -rf node_modules"
   },
   "dependencies": {
-    "@vueuse/core": "^12.2.0",
-    "cheerio": "^1.0.0",
+    "@vueuse/core": "^12.8.2",
+    "cheerio": "^1.2.0",
     "copy-to-clipboard": "^3.3.3",
-    "vue": "^3.5.13",
-    "zhi-common": "^1.33.1",
-    "zhi-device": "^2.11.0",
+    "vue": "^3.5.44",
+    "zhi-common": "^1.35.0",
+    "zhi-device": "^2.12.0",
     "zhi-lib-base": "^0.8.0",
-    "zhi-siyuan-api": "^2.29.0"
+    "zhi-siyuan-api": "^2.38.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.15.0",
-    "@rushstack/eslint-patch": "^1.10.4",
+    "@eslint/js": "^10.0.1",
+    "@rushstack/eslint-patch": "^1.16.1",
     "@types/minimist": "^1.2.5",
-    "@types/node": "^18.19.67",
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@types/node": "^24.19.2",
+    "@vitejs/plugin-vue": "^6.0.10",
     "eslint-config-custom": "workspace:*",
-    "fast-glob": "^3.3.2",
+    "fast-glob": "^3.3.3",
     "minimis": "^0.1.7",
     "minimist": "^1.2.8",
     "rollup-plugin-livereload": "^2.0.5",
-    "siyuan": "^1.0.6",
+    "siyuan": "^1.2.9",
     "stylus": "^0.64.0",
     "tsconfig": "workspace:*",
-    "typescript": "~5.6.2",
-    "typescript-eslint": "^8.15.0",
-    "vite": "^5.4.11",
-    "vite-plugin-static-copy": "^2.2.0"
+    "typescript": "^7.0.2",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
+    "vite-plugin-static-copy": "^4.1.1"
   }
 }

@@ -7,6 +7,7 @@
 
 import { ref } from "vue"
 import { loadScriptOnce } from "~/utils/assetLoader"
+import { sanitizeAiMarkdown } from "~/utils/aiMarkdown"
 
 // 创建日志记录器
 const logger = createAppLogger("use-lute")
@@ -93,8 +94,7 @@ const renderMarkdown = (content: string): string => {
             return `<div class="markdown-content"><pre>${escapeHtml(content)}</pre></div>`
         }
 
-        // 不做任何文本改写，原样交给 Markdown 解析器，避免破坏换行和标题
-        const html = lute.MarkdownStr('', content)
+        const html = lute.MarkdownStr('', sanitizeAiMarkdown(content))
         return `<div class="markdown-content">${html}</div>`
     } catch (error) {
         logger.error('Error rendering markdown:', error)

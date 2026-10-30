@@ -31,7 +31,9 @@ NODE_OPTIONS=--max_old_space_size=8192 pnpm exec nuxi build
 echo "Nuxt build for node finished."
 
 mkdir -p .output/server/node_modules/@popperjs
-mv .output/server/node_modules/@sxzz/popperjs-es .output/server/node_modules/@popperjs/core
+if [ -d .output/server/node_modules/@sxzz/popperjs-es ]; then
+  mv .output/server/node_modules/@sxzz/popperjs-es .output/server/node_modules/@popperjs/core
+fi
 mkdir -p ../../dist/node
 cp -r .output/ ../../dist/node
 cp -r dist/ ../../dist/node

@@ -93,13 +93,6 @@ const previewShowTitle = computed(() => props.setting?.linkHoverPreview?.showTit
 </template>
 
 <style lang="stylus" scoped>
-.protyle-title
-  padding 16px 32px !important /* 标题区域增加左右边距 */
-  margin 0 !important
-.protyle-wysiwyg
-  padding 24px 32px !important /* 参考大厂文档：舒适的阅读边距 */
-  margin 0 !important
-
 .protyle--preview
   width 100%
   min-height 100vh
@@ -107,32 +100,4 @@ const previewShowTitle = computed(() => props.setting?.linkHoverPreview?.showTit
   .protyle-content
     width 100%
     min-height 100vh
-
-  .protyle-title
-    padding 14px 16px 10px !important
-
-  .protyle-title__input
-    font-size 22px
-    line-height 1.35
-
-  .protyle-wysiwyg
-    padding 12px 16px 20px !important
-
-@media (max-width: 768px)
-  .protyle-title
-    padding 14px clamp(8px, 2.8vw, 12px) 12px !important
-
-  .protyle-title__input
-    padding-left 0 !important
-    padding-right 0 !important
-
-  .protyle-wysiwyg
-    padding 18px clamp(8px, 2.8vw, 12px) !important
-
-    :deep(> [data-type="NodeParagraph"]),
-    :deep(> div > [data-type="NodeParagraph"])
-      text-align justify
-      text-align-last left
-      text-justify inter-ideograph
-      overflow-wrap break-word
 </style>

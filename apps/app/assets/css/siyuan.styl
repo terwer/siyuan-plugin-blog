@@ -1,64 +1,49 @@
-.b3-typography, .protyle-wysiwyg, .protyle-title
-  font-size 16px !important
+/*
+ * 正文样式以思源原生 app/base.css + 当前主题为准。
+ * 这里只保留只读查看必须处理的编辑器 UI，不再覆盖字号、标题、链接、列表等正文样式。
+ */
 
-.b3-typography code:not(.hljs), .protyle-wysiwyg span[data-type~=code]
-  font-variant-ligatures none
+/*
+ * 分享页是阅读页面，不展示思源编辑器的灰色画布。
+ * 使用主题背景变量，浅色/深色模式自动适配；不改其他原生正文样式。
+ */
+html body
+  background-color var(--b3-theme-background)
+  background-image none
 
-.li > .protyle-action
-  height 34px
-  line-height 34px
+/*
+ * 左下角主题/偏好按钮的图标继承 footer 固定的 #bbb，
+ * 浅色背景下几乎看不见。用主题文字色覆盖，浅色/深色自动适配。
+ */
+.footer .buttons .button
+  color var(--textColor)
 
-.protyle-wysiwyg [data-node-id].li > .protyle-action ~ .h1, .protyle-wysiwyg [data-node-id].li > .protyle-action ~ .h2, .protyle-wysiwyg [data-node-id].li > .protyle-action ~ .h3, .protyle-wysiwyg [data-node-id].li > .protyle-action ~ .h4, .protyle-wysiwyg [data-node-id].li > .protyle-action ~ .h5, .protyle-wysiwyg [data-node-id].li > .protyle-action ~ .h6
-  line-height 34px
+/*
+ * 分享页的四类字体体系分别由独立的查看端变量控制：
+ * 正文、代码、Emoji、数学。思源主题字体先渲染、查看端字体随后替换会造成字体跳变，
+ * 所以四类都在 body 上定义，覆盖从 html 继承的思源主题字体变量，无需 !important。
+ */
+body
+  --viewer-font-stack "Open Sans", "LXGW WenKai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
+  --viewer-font-stack-code "Open Sans", "JetBrains Mono", "LXGW WenKai", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+  --viewer-font-stack-emoji "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Emojis Additional", "Emojis Reset", sans-serif
+  --viewer-font-stack-math "KaTeX_Main", var(--viewer-font-stack)
 
-.protyle-wysiwyg [data-node-id].li > .protyle-action:after
-  height 16px
-  width 16px
-  margin -8px 0 0 -8px
+  --b3-font-family var(--viewer-font-stack)
+  --b3-font-family-base var(--viewer-font-stack)
+  --b3-font-family-protyle var(--viewer-font-stack)
+  --b3-font-family-code var(--viewer-font-stack-code)
+  --b3-font-family-kbd var(--viewer-font-stack-code)
+  --b3-font-family-emoji var(--viewer-font-stack-emoji)
+  --b3-font-family-math var(--viewer-font-stack-math)
+  --b3-font-family-graph var(--viewer-font-stack)
+  --el-font-family var(--viewer-font-stack)
 
-.protyle-wysiwyg [data-node-id].li > .protyle-action svg
-  height 14px
-
-.protyle-wysiwyg [data-node-id].li:before
-  height calc(100% - 34px)
-  top 34px
-
-// fix database
-// v6.2.0+
-//.protyle-wysiwyg [data-node-id] [spellcheck]
-//  min-height 26px
-
-.protyle-wysiwyg .li
-  min-height 34px
-
-.protyle-gutters button svg
-  height 26px
-
-.protyle-wysiwyg img.emoji, .b3-typography img.emoji
-  width 18px
-
-.protyle-wysiwyg .h1 img.emoji, .b3-typography h1 img.emoji
-  width 35px
-
-.protyle-wysiwyg .h2 img.emoji, .b3-typography h2 img.emoji
-  width 31px
-
-.protyle-wysiwyg .h3 img.emoji, .b3-typography h3 img.emoji
-  width 27px
-
-.protyle-wysiwyg .h4 img.emoji, .b3-typography h4 img.emoji
-  width 25px
-
-.protyle-wysiwyg .h5 img.emoji, .b3-typography h5 img.emoji
-  width 22px
-
-.protyle-wysiwyg .h6 img.emoji, .b3-typography h6 img.emoji
-  width 20px
+/* 只读分享页不展示块级操作按钮 */
+.protyle-gutters,
+.protyle-icons
+  display none
 
 /* 避免正文出现横向滚动条 */
 .protyle-content
   overflow hidden
-
-/* html块隐藏操作按钮 */
-div[data-type="NodeHTMLBlock"] .protyle-icons
-  display none

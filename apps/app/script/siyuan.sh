@@ -31,7 +31,7 @@ pnpm exec nuxi generate
 echo "Nuxt build for siyuan finished."
 
 mkdir -p ../../dist/siyuan/app
-rsync -av .output/public/ ../../dist/siyuan/app
+rsync -av --delete .output/public/ ../../dist/siyuan/app
 echo "Resources are copied."
 
 echo "Siyuan build finished."

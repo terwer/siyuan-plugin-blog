@@ -120,36 +120,51 @@ export const useStaticBlockRef = () => {
     return null
   }
 
-  // 将所有类型为 "block-ref" 的 span 元素转换成 a 元素
-  const convertBlockRefLinks = (rootElement: any) => {
-    const home = getHome()
+  /**
+   * 保留思源原生的 span 结构，只附加打开链接需要的元数据和事件。
+   *
+   * 不能替换成 <a>：思源主题和 base.css 的正文样式都挂在
+   * span[data-type~=block-ref] / span[data-type~=a] 上，替换后会丢失原生样式。
+   */
+  const makeNativeLinkInteractive = (el: HTMLElement, href: string, docId: string | null) => {
+    el.dataset.shareHref = href
+    el.dataset.shareDocLink = "true"
+    el.setAttribute("role", "link")
+    el.setAttribute("tabindex", "0")
+    if (docId) {
+      el.dataset.docId = docId
+    }
 
-    rootElement.querySelectorAll("span[data-type=\"block-ref\"]").forEach((el: HTMLElement) => {
-      const id = el.getAttribute("data-id")
-      const cfg = getCfg()
-      let urlPath = "s"
-      if (cfg) {
-        urlPath = cfg?.docPath ?? urlPath
+    const open = (event: Event) => {
+      event.preventDefault()
+      window.open(href, "_blank", "noopener,noreferrer")
+    }
+
+    el.addEventListener("click", open)
+    el.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        open(event)
       }
-      const href = `${home}/${urlPath}/${id}`
-
-      // 创建一个新的 a 元素
-      const newEl = document.createElement("a")
-      newEl.href = href
-      newEl.target = "_blank"
-      newEl.textContent = el.textContent
-      if (id) {
-        newEl.dataset.docId = id
-        newEl.dataset.shareDocLink = "true"
-      }
-
-      // 将原来的元素替换为新创建的 a 元素
-      el.replaceWith(newEl)
     })
-    logger.info("Converted all span elements of type block-ref to a elements")
   }
 
-  // 将所有类型为 "a" 的 span 元素转化成 a 元素
+  // 保留 block-ref 原生 span，只附加点击行为
+  const convertBlockRefLinks = (rootElement: any) => {
+    const home = getHome()
+    const cfg = getCfg()
+    const urlPath = cfg?.docPath ?? "s"
+
+    rootElement.querySelectorAll("span[data-type=\"block-ref\"]").forEach((el: HTMLElement) => {
+      const id = normalizeDocId(el.getAttribute("data-id"))
+      if (!id) {
+        return
+      }
+      makeNativeLinkInteractive(el, `${home}/${urlPath}/${id}`, id)
+    })
+    logger.info("Attached click handlers to native block-ref spans")
+  }
+
+  // 保留 a 类型原生 span，只附加点击行为
   const convertALinks = (rootElement: any) => {
     const cfg = getCfg()
     const docPath = cfg?.docPath ?? "s"
@@ -157,21 +172,9 @@ export const useStaticBlockRef = () => {
     rootElement.querySelectorAll("span[data-type=\"a\"]").forEach((el: HTMLElement) => {
       const href = el.getAttribute("data-href") ?? "#"
       const docId = normalizeDocId(el.getAttribute("data-id")) ?? extractDocIdFromHref(href, docPath)
-
-      // 创建一个新的 a 元素
-      const newEl = document.createElement("a")
-      newEl.href = href
-      newEl.target = "_blank"
-      newEl.textContent = el.textContent
-      if (docId) {
-        newEl.dataset.docId = docId
-        newEl.dataset.shareDocLink = "true"
-      }
-
-      // 将原来的元素替换为新创建的 a 元素
-      el.replaceWith(newEl)
+      makeNativeLinkInteractive(el, href, docId)
     })
-    logger.info("Convert all span elements of type a to a element")
+    logger.info("Attached click handlers to native a spans")
   }
 
   // 组合上述函数，实现对所有类型为 "block-ref" 和 "a" 的 span 元素的转换

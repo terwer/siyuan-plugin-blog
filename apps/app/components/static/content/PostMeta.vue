@@ -105,7 +105,8 @@ const showUpdateDate = computed(() =>
   align-items center
   gap 4px
   font-size 12.5px
-  color var(--text-color-secondary, #8a8f99)
+  color var(--textColor, #8a8f99)
+  opacity 0.72
   letter-spacing 0.01em
   line-height 1.4
   white-space nowrap
@@ -145,12 +146,13 @@ const showUpdateDate = computed(() =>
   gap 5px
   padding 4px 10px
   border-radius 6px
-  border 1px solid var(--border-color, rgba(0, 0, 0, 0.1))
+  border 1px solid var(--borderColor, rgba(0, 0, 0, 0.1))
   background transparent
   cursor pointer
   font-size 12px
   font-family inherit
-  color var(--text-color-secondary, #8a8f99)
+  color var(--textColor, #8a8f99)
+  opacity 0.75
   line-height 1.4
   transition all 0.18s ease
   white-space nowrap
@@ -159,21 +161,23 @@ const showUpdateDate = computed(() =>
 
 .action-btn:hover
   background var(--el-fill-color-light, rgba(0, 0, 0, 0.04))
-  color var(--text-color-primary, #1f2329)
-  border-color var(--el-border-color, rgba(0, 0, 0, 0.15))
+  color var(--textColor, #1f2329)
+  border-color var(--borderColor, rgba(0, 0, 0, 0.15))
+  opacity 1
 
 .action-btn:active
   transform scale(0.97)
 
 /* ===== 暗色模式适配 ===== */
-:global(.dark) .post-meta,
-:global([data-theme-mode="dark"]) .post-meta
+html[data-theme-mode="dark"] .post-meta
   .meta-item
     color rgba(255, 255, 255, 0.45)
-  
+    opacity 1
+
   .action-btn
     border-color rgba(255, 255, 255, 0.1)
     color rgba(255, 255, 255, 0.45)
+    opacity 1
   
   .action-btn:hover
     background rgba(255, 255, 255, 0.06)
