@@ -1,6 +1,14 @@
 .b3-typography, .protyle-wysiwyg, .protyle-title
   font-size 16px !important
 
+/* 思源 3.8.8 的全局 a 样式带下划线，分享页正文链接保持原来的无下划线 */
+.b3-typography a, .protyle-wysiwyg a
+  color var(--b3-protyle-inline-link-color)
+  text-decoration none
+
+.b3-typography a:hover, .protyle-wysiwyg a:hover
+  text-decoration underline
+
 .b3-typography code:not(.hljs), .protyle-wysiwyg span[data-type~=code]
   font-variant-ligatures none
 
