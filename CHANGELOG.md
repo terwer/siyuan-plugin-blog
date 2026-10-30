@@ -1,5 +1,112 @@
 # Changelog
 
+## [6.7.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.6.0...siyuan-plugin-blog-v6.7.0) (2026-10-30)
+
+
+### Features
+
+* add html entity decoding and meaningful text extraction utils ([f980a89](https://github.com/terwer/siyuan-plugin-blog/commit/f980a89d9d9c562566de39da70f47ff6f80dc555))
+* add password feature 🍰 ([7e19064](https://github.com/terwer/siyuan-plugin-blog/commit/7e19064b34e1275282b8fcf1ba50b7769fe88844))
+* add password feature ok 🍰 ([3604fa9](https://github.com/terwer/siyuan-plugin-blog/commit/3604fa9e37aad8a7d911652c91a0536c0a604141))
+* add password feature release 🍰 ([7a95844](https://github.com/terwer/siyuan-plugin-blog/commit/7a9584432c8b05d2e642e6ed65ab49887fdddd8f))
+* add stable Suspense feature 🌹 ([c150aac](https://github.com/terwer/siyuan-plugin-blog/commit/c150aaca76619f82d0c3d2751afb0f91d0cccf99))
+* **ai-assistant:** add dynamic model selection & dropdown config ([e7d622c](https://github.com/terwer/siyuan-plugin-blog/commit/e7d622ccdebd919dd8969461302f9d55bebe98e9))
+* **ai-assistant:** add Lute Markdown & dark theme ([1f39705](https://github.com/terwer/siyuan-plugin-blog/commit/1f3970593087b4ce91a5e5d551df7d9922f61830))
+* **ai:** add independent AI assistant toggle and content validation ([5cbf515](https://github.com/terwer/siyuan-plugin-blog/commit/5cbf515886dbeeb3361fe05eb9fdb9c2fbdc66a3))
+* **ai:** enable AI assistant independently with content validation ([8bdc4af](https://github.com/terwer/siyuan-plugin-blog/commit/8bdc4afd227d12475c7e7023da26d3dfad8ffda7))
+* **ai:** integrate AI assistant with outline system and qwen3-max model ([7b7cea7](https://github.com/terwer/siyuan-plugin-blog/commit/7b7cea74dd77971428a913fc0614a2ad711edf71))
+* **app:** add aiAssistantEnabled config for global AI policy ([c6df630](https://github.com/terwer/siyuan-plugin-blog/commit/c6df63037287b10a8063eb2d0e425c98eee76707))
+* **app:** add siyuan artifacts build ([0782a6a](https://github.com/terwer/siyuan-plugin-blog/commit/0782a6a101632adeebe596d84d78518ba1817111))
+* **app:** add siyuan artifacts build ([13f16df](https://github.com/terwer/siyuan-plugin-blog/commit/13f16dfbbbb1fe7c628693a0e3b9bed8f5e72183))
+* **apps/app:** split viewer AI by target w/ post snapshot control ([d0258c7](https://github.com/terwer/siyuan-plugin-blog/commit/d0258c77e77722be0abb92c251d1883ef643bbb8))
+* **content-left:** add and enhance left sidebar and menu components ([6862f84](https://github.com/terwer/siyuan-plugin-blog/commit/6862f846eafacae564ebc71a0400ca31ac420e37))
+* **content:** implement mobile layout improvements for share reading page ([2c458a5](https://github.com/terwer/siyuan-plugin-blog/commit/2c458a50a4747c696164eb581f6e80c86b1bf578))
+* **fonts:** add LXGWWenkai subsets (regular, bold, light, mono) and update metadata & CSS ([08754d7](https://github.com/terwer/siyuan-plugin-blog/commit/08754d7408eb2a7928a28f4e24b23b26aacbf078))
+* **left-sidebar:** add sidebar with dynamic toggle and docTree support ([604ec31](https://github.com/terwer/siyuan-plugin-blog/commit/604ec310706d23df3d9320a8a643f088825a72de))
+* **link-hover-preview:** add drag functionality to preview header ([3c0ae9f](https://github.com/terwer/siyuan-plugin-blog/commit/3c0ae9fbdf1cfa5541cfc500c11100525a0c7f35))
+* **link-hover-preview:** add iframe-based shared link hover preview feature ([cc03695](https://github.com/terwer/siyuan-plugin-blog/commit/cc036956858cfb9a8a2278b7ee1df77d27ea6383))
+* **link-hover-preview:** add pin button and make preview non-sticky by default ([2590993](https://github.com/terwer/siyuan-plugin-blog/commit/25909937b77a4d9cb4dd831ea526df1b3de907bf))
+* **mobile-sidebar:** improve loading and sidebar behavior on mobile home page ([b9dfdf5](https://github.com/terwer/siyuan-plugin-blog/commit/b9dfdf53b04666751ec68530b6184e69f64569b2))
+* **opsx:** add experimental OPSX workflow commands and planning system ([5026d21](https://github.com/terwer/siyuan-plugin-blog/commit/5026d214a67570dbbd5572555a3d24f6271b0a4e))
+* **outline:** add auto-scroll to active item and improve styling ([c672cc9](https://github.com/terwer/siyuan-plugin-blog/commit/c672cc9db6a55baead993645136110242359c3bc))
+* **outline:** integrate doc tree nav with auto-expand & click protection ([8e890f3](https://github.com/terwer/siyuan-plugin-blog/commit/8e890f351322fd959e25eb48f161c3610708f711))
+* **preview:** add link hover preview functionality with configuration support ([7a770a1](https://github.com/terwer/siyuan-plugin-blog/commit/7a770a1fa89e21cd7a5672f4d4a9e95ed8dd7c3d))
+* **right-index:** add List icon and unify border-radius styling ([35a6ab2](https://github.com/terwer/siyuan-plugin-blog/commit/35a6ab270414efc6d3fb1b88000cfc24b0079804))
+* **right-index:** auto-expand outline when navigating from doc tree ([dd859e1](https://github.com/terwer/siyuan-plugin-blog/commit/dd859e10d040069fbc3866a173505061e61ce096))
+* **right:** add resizable outline panel with localStorage persistence ([7d7beda](https://github.com/terwer/siyuan-plugin-blog/commit/7d7bedaa08a90932038e58a27eeec0f9f6e0eb8e))
+* **sidebar:** add data-doc-id for precise active item scrolling ([4754c49](https://github.com/terwer/siyuan-plugin-blog/commit/4754c497ab541cbde1914285ae2497d47b79dd28))
+* **sidebar:** add left sidebar component with recursive menu rendering ([b2abc02](https://github.com/terwer/siyuan-plugin-blog/commit/b2abc027b09483790e7807b73299d10509d42cdf))
+* **sidebar:** add left sidebar with dynamic tree menu ([3cc24a9](https://github.com/terwer/siyuan-plugin-blog/commit/3cc24a929789ca6b77c2fec296943767e19e171d))
+* **sidebar:** add new mintlify sidebar and outline components ([a61d9be](https://github.com/terwer/siyuan-plugin-blog/commit/a61d9be36d69c81324c0d27b0fe8e476456ff79f))
+* **static-sidebar:** add collapsible left sidebar component ([ed9010f](https://github.com/terwer/siyuan-plugin-blog/commit/ed9010f9264b5a0084bbfc711eb7678797b7a698))
+* **static/content/right:** enhance outline UI with header and pin ([d7c798a](https://github.com/terwer/siyuan-plugin-blog/commit/d7c798aa684528257e58a57ef1920cf79d8053fb))
+* **static:** add static Detail and HomePage Vue components ([bb389a6](https://github.com/terwer/siyuan-plugin-blog/commit/bb389a63b85f69e8ce51ed141dc3c42e161f2df5))
+* **viewer-font:** implement enhanced font mode for viewer ([71ebc3a](https://github.com/terwer/siyuan-plugin-blog/commit/71ebc3a80e8e2b26cfcca1d2927f3e23f37d5df4))
+* **viewer:** add reading preferences for hover preview and post meta ([806f03c](https://github.com/terwer/siyuan-plugin-blog/commit/806f03cc664c2fbb951d75783a5ae8103c65a9a2))
+* **Zhihu theme:** add Fangzheng font files ([5a489e5](https://github.com/terwer/siyuan-plugin-blog/commit/5a489e5d977d73041a634d3933d38850267b4bd0))
+
+
+### Bug Fixes
+
+* **ai-panel:** use separate loading states for speed read and qa buttons ([9eb016a](https://github.com/terwer/siyuan-plugin-blog/commit/9eb016ae8c57669adf3a03a38a4decd6248a88ee))
+* **ai:** buffer partial SSE lines to stop dropping streamed text ([303e440](https://github.com/terwer/siyuan-plugin-blog/commit/303e4404356931f60932a9c27701abd39b6d27c6))
+* **ai:** keep valid markdown headings intact during normalization ([8f9699f](https://github.com/terwer/siyuan-plugin-blog/commit/8f9699fe93dbcd28ce8f5f18e8c794f047a30470))
+* **ai:** preserve line breaks by removing broad markdown rewriting ([5d9f1e1](https://github.com/terwer/siyuan-plugin-blog/commit/5d9f1e1bcc4f7434ac1ec3058e451ce35a90e731))
+* **ai:** repair malformed bold spans and simplify AI formatting prompt ([4c47576](https://github.com/terwer/siyuan-plugin-blog/commit/4c47576223b7eaeba654b1cdb550d55bac144d78))
+* **ai:** repair malformed list markers in AI markdown output ([931d72d](https://github.com/terwer/siyuan-plugin-blog/commit/931d72dfa3ed78a17c3b1f03e8223934797e2dab))
+* **ai:** strip unclosed bold markers and expand markdown tests ([f9f3252](https://github.com/terwer/siyuan-plugin-blog/commit/f9f32525c30450aba5c840d5b3c4d84b943cb3c4))
+* **ai:** support multi-line bold spans and add markdown regression tests ([effdf03](https://github.com/terwer/siyuan-plugin-blog/commit/effdf03e9ffa564b09cbba3f58af42a9d8035371))
+* **app:** default postMeta and aiAssistant to enabled ([ea58dd2](https://github.com/terwer/siyuan-plugin-blog/commit/ea58dd20b4591537ab37d08b722312c29bcb8dbf))
+* **app:** defer siyuan SPA data fetch to client and add loading ([a361ea9](https://github.com/terwer/siyuan-plugin-blog/commit/a361ea9065ce05c84594a8e42c51dd4302cb3448))
+* **build:** make node provider build work on Nuxt 4 ([8cbbbf2](https://github.com/terwer/siyuan-plugin-blog/commit/8cbbbf24df9a15fe5c25fa27038e14c35d6ffb8f))
+* compress icons ([a872f27](https://github.com/terwer/siyuan-plugin-blog/commit/a872f27b13b1b5ea85144a78dea86cdb98f28215))
+* **dev:** update dev script for flexible environment configuration ([8952911](https://github.com/terwer/siyuan-plugin-blog/commit/8952911872ccd8fc9e5ea1d5d43821f9d09a7afb))
+* **fonts:** load enhanced fonts after page load and cache font files ([92b08b5](https://github.com/terwer/siyuan-plugin-blog/commit/92b08b567b0d626efa95be1042ec4bc0c8592fce))
+* **i18n:** normalize locale codes and prevent hydration text mismatch ([137c5d1](https://github.com/terwer/siyuan-plugin-blog/commit/137c5d1d1e390123c0677ce9a3d780d3834acf18))
+* **mobile-home:** fix sidebar loading and layout issues on mobile ([e7826f1](https://github.com/terwer/siyuan-plugin-blog/commit/e7826f19865bdf6b48000276a91e5287a352e343))
+* **mobile:** improve mobile share page reading width and button usability ([bed8625](https://github.com/terwer/siyuan-plugin-blog/commit/bed8625bbeb10954a1b1a2c923bbc1be82736ff1))
+* **outline:** adjust sidebar pos, disable width transitions ([7f642ab](https://github.com/terwer/siyuan-plugin-blog/commit/7f642ab25838ce2adb4ea46c135c53c71e8e01de))
+* **outline:** use useState for SSR consistency and sync pinned state ([77cf236](https://github.com/terwer/siyuan-plugin-blog/commit/77cf2366f2364dc2e72dbb614d9172cba4ee70cb))
+* **post-meta:** use theme colors in every viewing mode ([8c3e586](https://github.com/terwer/siyuan-plugin-blog/commit/8c3e5868fedcad085db72bd725c3ec0b442053c0))
+* **preview:** use theme colors for link preview in dark mode ([10074b6](https://github.com/terwer/siyuan-plugin-blog/commit/10074b62088385799ca95d52b0414a2f42cc1272))
+* seo not work ([1afacb6](https://github.com/terwer/siyuan-plugin-blog/commit/1afacb6b21db42fb32d65e09e6434433e22ba7c6))
+* **Sidebar:** always expand parent nodes for current doc visibility ([0d9bac1](https://github.com/terwer/siyuan-plugin-blog/commit/0d9bac1019dda20942a1943929c7edafbe796696))
+* **sidebar:** correct default expanded node IDs calculation ([d3e3cf1](https://github.com/terwer/siyuan-plugin-blog/commit/d3e3cf156328c88ee73c7f90370581502502b4b8))
+* **sidebar:** refine active state styling to prevent cascading highlight ([07e45fe](https://github.com/terwer/siyuan-plugin-blog/commit/07e45fecb14de4a42aabc87ba8853d57a720ab9a))
+* **sidebar:** scroll to the active document tree item ([cab9680](https://github.com/terwer/siyuan-plugin-blog/commit/cab96807e4aa56c42d9b93fe83762fef92e9b4ba))
+* **startup:** add PORT environment variable to startup script ([d3fb341](https://github.com/terwer/siyuan-plugin-blog/commit/d3fb341ad88c986006af9ae4b6963ac4f7c5ae3a))
+* **viewer:** include code font used by the content stylesheet ([8610d58](https://github.com/terwer/siyuan-plugin-blog/commit/8610d5890bea11c74e2bca7f2000f2128f681b9d))
+* **viewer:** keep body links free of default underline ([d49d555](https://github.com/terwer/siyuan-plugin-blog/commit/d49d555adecf06cd559626e55bdf32f7a5840aaa))
+* **viewer:** make reading preferences readable in dark mode ([d52f2be](https://github.com/terwer/siyuan-plugin-blog/commit/d52f2be1ec8ac3fdc39091e9c54ba3f9603ea513))
+* **viewer:** restore document title and link styles ([68c02e1](https://github.com/terwer/siyuan-plugin-blog/commit/68c02e1cc699c91c1b7acb01b1cef13bf2a15549))
+
+
+### Code Refactoring
+
+* **app:** remove unused useRoute import in left content component ([2d8abce](https://github.com/terwer/siyuan-plugin-blog/commit/2d8abce25317482ddb08bf0f2f38018097a2f33c))
+* **right-index:** replace MintlifyOutline with StaticContentRightOutline component ([7beef10](https://github.com/terwer/siyuan-plugin-blog/commit/7beef1013d50154b24e39e91d3317081504f4c10))
+* **sidebar:** centralize module definitions and toggle active panel ([fd6d078](https://github.com/terwer/siyuan-plugin-blog/commit/fd6d07816aeab738d8fca9629782af7de265ddc5))
+* **sidebar:** unify module rendering and remove ai close state ([6d1b88f](https://github.com/terwer/siyuan-plugin-blog/commit/6d1b88fb4edc63175cf5955e20c451e318c32301))
+* **static/content/left:** move sidebar logic up, remove transition ([4264946](https://github.com/terwer/siyuan-plugin-blog/commit/4264946e299043d143c7e271dff9583eace49a4b))
+* **viewer:** follow native SiYuan styles end to end ([a146b16](https://github.com/terwer/siyuan-plugin-blog/commit/a146b168c48dfbb1ab57a6fff742b37715bd59f6))
+* **viewer:** load only SiYuan editor content styles ([97d4951](https://github.com/terwer/siyuan-plugin-blog/commit/97d4951e93c8b1902a2e059b1ccae7e3585de1d9))
+
+
+### Miscellaneous
+
+* **.qoder/repowiki:** add zh wiki metadata with parent-child relationships ([e78070f](https://github.com/terwer/siyuan-plugin-blog/commit/e78070f7eb6535d7b1e325b716e3acbce3b0b395))
+* **deps:** upgrade Nuxt 4 and workspace dependencies ([d5404cc](https://github.com/terwer/siyuan-plugin-blog/commit/d5404ccaf02b0f21b008befa9f240e91270cb075))
+* **fonts:** simplify webfont.css to single [@font-face](https://github.com/font-face) rule ([408dfd4](https://github.com/terwer/siyuan-plugin-blog/commit/408dfd4257bd5941f38aaaa92d0c3c18f6e1132c))
+* **git:** ignore local .mcp.json ([dff3f83](https://github.com/terwer/siyuan-plugin-blog/commit/dff3f833a677858a9ad3c2b98ab6610d600cbcb0))
+* **gitignore:** add comprehensive .gitignore rules for project files ([e5b4c61](https://github.com/terwer/siyuan-plugin-blog/commit/e5b4c61017b23cc65e2882bbedda08bf250e874a))
+* **repowiki:** update zh metadata with new theme and share snippets ([0cad417](https://github.com/terwer/siyuan-plugin-blog/commit/0cad4175f84e0d0e7219380fe6cc0633bd330f26))
+* update .gitignore and repowiki metadata files ([9a4b101](https://github.com/terwer/siyuan-plugin-blog/commit/9a4b1017753512d55f743a947a35da3237cfe8e4))
+
+
+### Performance Improvements
+
+* **viewer:** load heavy libraries on demand and speed up first paint ([ec57a2e](https://github.com/terwer/siyuan-plugin-blog/commit/ec57a2e67ee8a146195f718752ec5a1a9d063c8e))
+
 ## [6.6.0](https://github.com/terwer/siyuan-plugin-blog/compare/siyuan-plugin-blog-v6.5.0...siyuan-plugin-blog-v6.6.0) (2025-07-21)
 ### Features
 * **app:** add js-base64 and vue-easy-lightbox dependencies ([ef9b3f9](https://github.com/terwer/siyuan-plugin-blog/commit/ef9b3f9ca6bfb2046026b318760e2ff08f4cdbdd))
