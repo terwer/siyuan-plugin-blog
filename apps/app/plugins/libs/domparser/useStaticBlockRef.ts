@@ -121,10 +121,9 @@ export const useStaticBlockRef = () => {
   }
 
   /**
-   * 保留思源原生的 span 结构，只附加打开链接需要的元数据和事件。
-   *
-   * 不能替换成 <a>：思源主题和 base.css 的正文样式都挂在
-   * span[data-type~=block-ref] / span[data-type~=a] 上，替换后会丢失原生样式。
+   * 为思源原生 span 链接附加打开链接所需的元数据和事件。
+   * span[data-type~=block-ref] / span[data-type~=a] 是正文样式的载体，
+   * 保留其结构和原生属性，交互通过 data-* 与事件完成。
    */
   const makeNativeLinkInteractive = (el: HTMLElement, href: string, docId: string | null) => {
     el.dataset.shareHref = href

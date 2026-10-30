@@ -4,24 +4,22 @@
  */
 
 /*
- * 分享页是阅读页面，不展示思源编辑器的灰色画布。
- * 使用主题背景变量，浅色/深色模式自动适配；不改其他原生正文样式。
+ * 分享页背景使用主题背景变量，随浅色/深色模式变化。
+ * 该规则只作用于页面背景，不改变正文样式。
  */
 html body
   background-color var(--b3-theme-background)
   background-image none
 
 /*
- * 左下角主题/偏好按钮的图标继承 footer 固定的 #bbb，
- * 浅色背景下几乎看不见。用主题文字色覆盖，浅色/深色自动适配。
+ * 左下角主题/偏好按钮的图标使用主题文字色，浅色/深色模式下都保持可见。
  */
 .footer .buttons .button
   color var(--textColor)
 
 /*
- * 分享页的四类字体体系分别由独立的查看端变量控制：
- * 正文、代码、Emoji、数学。思源主题字体先渲染、查看端字体随后替换会造成字体跳变，
- * 所以四类都在 body 上定义，覆盖从 html 继承的思源主题字体变量，无需 !important。
+ * 分享页的四类字体体系由独立变量控制：正文、代码、Emoji、数学。
+ * 变量在 body 上定义并映射到 --b3-font-family-*，保证整套页面从首屏起使用同一套查看端字体。
  */
 body
   --viewer-font-stack "Open Sans", "LXGW WenKai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
@@ -74,10 +72,12 @@ html body .protyle-wysiwyg
 
 /*
  * 普通链接保留思源原生 span 结构和下边框；悬停时下划线颜色跟随主题主色，
- * 让真实链接在浅色/深色下都有可感知的交互反馈。
+ * 并显示与引用链接一致的浅色背景，让真实链接在浅色/深色下都有明确反馈。
  */
 .protyle-wysiwyg [data-node-id] span[data-type~=a]:hover
   border-bottom-color var(--b3-theme-primary)
+  background-color var(--b3-list-hover)
+  border-radius 2px
 
 /* 只读分享页不展示块级操作按钮 */
 .protyle-gutters,
