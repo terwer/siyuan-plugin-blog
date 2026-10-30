@@ -15,13 +15,6 @@ const generateDynamicV = () => {
 const isDev = process.env.NODE_ENV === "development"
 const appBase = "/"
 const staticV = generateDynamicV()
-const createAsyncStylesheetLink = (href: string) =>
-  ({
-    rel: "stylesheet",
-    href,
-    media: "print",
-    onload: "this.onload=null;this.media='all'",
-  }) as any
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -79,7 +72,10 @@ export default defineNuxtConfig({
         //   type: "font/woff2",
         //   crossorigin: "anonymous",
         // },
-        createAsyncStylesheetLink(appBase + "libs/fonts/vdoing_font.css?v=" + staticV),
+        {
+          rel: "stylesheet",
+          href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV,
+        },
         {
           rel: "stylesheet",
           href: appBase + "resources/stage/build/app/base.css?v=" + staticV,

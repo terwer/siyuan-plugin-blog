@@ -47,9 +47,16 @@ const { isPageInteractiveReady } = usePageInteractiveReady()
 
 .main-content
   flex 1
+  align-self stretch
   min-width 0 /* 防止 flex 子项溢出 */
   padding 0
   margin 0
+  display flex
+  flex-direction column
+
+  :deep(.protyle)
+    flex 1
+    min-height 0
 
 .content-layout--preview
   display block

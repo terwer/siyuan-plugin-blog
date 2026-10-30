@@ -91,7 +91,7 @@ const isPreviewContext = () => {
   return params.get(PREVIEW_QUERY) === "1" || params.get(PREVIEW_FROM_QUERY) === PREVIEW_FROM_VALUE || window.self !== window.top
 }
 
-const isInternalDocUrl = (url: URL, anchor: HTMLAnchorElement) => {
+const isInternalDocUrl = (url: URL, anchor: HTMLElement) => {
   const config = getStoredConfig()
   if (config.sameOriginOnly && url.origin !== window.location.origin) {
     return false
@@ -132,7 +132,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   let hoverTimer: number | null = null
   let loadTimer: number | null = null
   let closeTimer: number | null = null
-  let currentAnchor: HTMLAnchorElement | null = null
+  let currentAnchor: HTMLElement | null = null
   let originalUrl: URL | null = null
   let currentPreviewUrl: URL | null = null
   let container: HTMLDivElement | null = null
@@ -502,7 +502,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     return root
   }
 
-  const positionPreview = (anchor: HTMLAnchorElement) => {
+  const positionPreview = (anchor: HTMLElement) => {
     if (!container) {
       return
     }
@@ -545,7 +545,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 
-  const showPreview = (anchor: HTMLAnchorElement, url: URL) => {
+  const showPreview = (anchor: HTMLElement, url: URL) => {
     config = getStoredConfig()
     if (!config.enabled) {
       return
@@ -607,14 +607,23 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const findPreviewAnchor = (target: EventTarget | null) => {
     const el = target instanceof Element ? target : null
-    const anchor = el?.closest?.(".protyle-wysiwyg a[href]") as HTMLAnchorElement | null
+    const anchor = el?.closest?.(
+      ".protyle-wysiwyg a[href], .protyle-wysiwyg [data-share-doc-link=\"true\"]"
+    ) as HTMLElement | null
     if (!anchor) {
+      return null
+    }
+
+    const href = anchor instanceof HTMLAnchorElement
+      ? anchor.href
+      : anchor.dataset.shareHref ?? ""
+    if (!href) {
       return null
     }
 
     let url: URL
     try {
-      url = new URL(anchor.href, window.location.href)
+      url = new URL(href, window.location.href)
     } catch {
       return null
     }
@@ -626,7 +635,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     return { anchor, url }
   }
 
-  const schedulePreview = (anchor: HTMLAnchorElement, url: URL) => {
+  const schedulePreview = (anchor: HTMLElement, url: URL) => {
     if (!preferences.linkHoverPreview) {
       return
     }
