@@ -71,13 +71,15 @@ html body .protyle-wysiwyg
     padding 18px clamp(8px, 2.8vw, 12px)
 
 /*
- * 普通链接保留思源原生 span 结构和下边框；悬停时下划线颜色跟随主题主色，
- * 并显示与引用链接一致的浅色背景，让真实链接在浅色/深色下都有明确反馈。
+ * 普通超链接使用查看端链接色，默认不显示下划线，悬停时显示下划线。
+ * 颜色取自主题变量，浅色/深色模式自动适配。
  */
-.protyle-wysiwyg [data-node-id] span[data-type~=a]:hover
-  border-bottom-color var(--b3-theme-primary)
-  background-color var(--b3-list-hover)
-  border-radius 2px
+.b3-typography a, .protyle-wysiwyg a
+  color var(--b3-protyle-inline-link-color)
+  text-decoration none
+
+.b3-typography a:hover, .protyle-wysiwyg a:hover
+  text-decoration underline
 
 /* 只读分享页不展示块级操作按钮 */
 .protyle-gutters,

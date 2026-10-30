@@ -121,9 +121,9 @@ export const useStaticBlockRef = () => {
   }
 
   /**
-   * 为思源原生 span 链接附加打开链接所需的元数据和事件。
-   * span[data-type~=block-ref] / span[data-type~=a] 是正文样式的载体，
-   * 保留其结构和原生属性，交互通过 data-* 与事件完成。
+   * 为思源原生引用 span 附加打开链接所需的元数据和事件。
+   * span[data-type~=block-ref] 是引用样式的载体，保留其结构和原生属性，
+   * 交互通过 data-* 与事件完成。
    */
   const makeNativeLinkInteractive = (el: HTMLElement, href: string, docId: string | null) => {
     el.dataset.shareHref = href
@@ -163,7 +163,7 @@ export const useStaticBlockRef = () => {
     logger.info("Attached click handlers to native block-ref spans")
   }
 
-  // 保留 a 类型原生 span，只附加点击行为
+  // 普通超链接转换为 a 元素，使用查看端的链接样式和悬停反馈
   const convertALinks = (rootElement: any) => {
     const cfg = getCfg()
     const docPath = cfg?.docPath ?? "s"
@@ -171,9 +171,21 @@ export const useStaticBlockRef = () => {
     rootElement.querySelectorAll("span[data-type=\"a\"]").forEach((el: HTMLElement) => {
       const href = el.getAttribute("data-href") ?? "#"
       const docId = normalizeDocId(el.getAttribute("data-id")) ?? extractDocIdFromHref(href, docPath)
-      makeNativeLinkInteractive(el, href, docId)
+
+      const anchor = document.createElement("a")
+      anchor.href = href
+      anchor.target = "_blank"
+      anchor.rel = "noopener noreferrer"
+      anchor.textContent = el.textContent
+      anchor.dataset.shareHref = href
+      anchor.dataset.shareDocLink = "true"
+      if (docId) {
+        anchor.dataset.docId = docId
+      }
+
+      el.replaceWith(anchor)
     })
-    logger.info("Attached click handlers to native a spans")
+    logger.info("Converted normal link spans to anchors")
   }
 
   // 组合上述函数，实现对所有类型为 "block-ref" 和 "a" 的 span 元素的转换
