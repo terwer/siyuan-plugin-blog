@@ -52,3 +52,7 @@ apps/app/script/dev-prod.sh
 
 # ReCode local database
 .recode
+
+# Generated type declarations
+apps/app/auto-imports.d.ts
+apps/app/components.d.ts
