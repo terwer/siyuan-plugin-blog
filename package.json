@@ -13,7 +13,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "clean": "./scripts/clean.sh",
-    "start": "./startup.sh",
+    "start": "bash scripts/start-node.sh",
     "buildNodeProvider": "./build-node-provider.sh",
     "packageNodeProvider": "./package-node-provider.sh",
     "package": "python scripts/package.py",
@@ -25,5 +25,8 @@
   "devDependencies": {
     "turbo": "^2.11.10"
   },
-  "packageManager": "pnpm@10.14.0"
+  "packageManager": "pnpm@10.14.0",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
 }
