@@ -38,9 +38,7 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
       // 将 auto 转换为实际的 light/dark
       store.value = actualMode
       logger.info("Auto mode detected, setting to:", actualMode)
-      // 刷新页面以应用新主题
-      window.location.reload()
-      return
+      // Apply the resolved mode in place; do not restart SSR hydration.
     }
     // 初始化主题模式
     setThemeMode()
@@ -84,6 +82,7 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
       {
         rel: "stylesheet",
         id: "themeDefaultStyle",
+        tagPriority: 210,
         href: `${appBase}resources/appearance/themes/${isDarkMode ? "midnight" : "daylight"}/theme.css?v=${siyuanV}`,
       },
       ...(siyuanLightTheme !== "daylight" && siyuanDarkTheme !== "midlight"
@@ -91,6 +90,7 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
             {
               rel: "stylesheet",
               id: "themeStyle",
+              tagPriority: 220,
               href: `${appBase}resources/appearance/themes/${
               isDarkMode ? siyuanDarkTheme : siyuanLightTheme
             }/theme.css?v=${siyuanThemeV}`,
@@ -100,6 +100,7 @@ export const useClientThemeMode = (setting: typeof AppConfig) => {
       {
         rel: "stylesheet",
         id: "protyleHljsStyle",
+        tagPriority: 230,
         href: `${appBase}resources/stage/protyle/js/highlight.js/styles/vs${
           isDarkMode ? "2015" : ""
         }.min.css?v=${hljsV}`,

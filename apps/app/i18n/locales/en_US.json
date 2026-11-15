@@ -163,5 +163,12 @@
   "ai.chat.welcome": "Hi! I'm your AI reading assistant. Ask me anything about this document.",
   "ai.chat.clear": "Clear conversation",
   "ai.chat.error.empty": "Please enter your question",
-  "ai.chat.error.usage": "Daily usage limit reached. Please try again tomorrow"
+  "ai.chat.error.usage": "Daily usage limit reached. Please try again tomorrow",
+  "connection.requiredTitle": "Site configuration required",
+  "connection.requiredDescription": "In the sharing client, save the service API address and reading address, then reload this page.",
+  "connection.conflictTitle": "Reading address conflict",
+  "connection.conflictDescription": "Multiple sites use this reading address. Assign a unique address or path prefix in the sharing client.",
+  "connection.unavailableTitle": "The shared page is unavailable",
+  "connection.unavailableDescription": "Check the shared link or try again after the sharing service is available.",
+  "connection.retry": "Reload"
 }

@@ -63,7 +63,8 @@ export default defineNuxtPlugin(({ vueApp }) => {
             const div = document.createElement("div")
             div.className = "hljs"
             // 将 block 的内容移动到 <code> 中
-            code.innerHTML = block.innerHTML
+            // Code is literal text; nested editor spans must not be interpreted as HTML.
+            code.textContent = block.textContent
             // 将 <code> 添加到 <pre> 中
             pre.appendChild(code)
             div.appendChild(pre)
@@ -73,7 +74,9 @@ export default defineNuxtPlugin(({ vueApp }) => {
           })
 
           const blocks = el.querySelectorAll("pre code")
-          Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+          Array.prototype.forEach.call(blocks, (block: HTMLElement) => {
+            if (!block.dataset.highlighted) hljs.highlightElement(block)
+          })
           logger.info("hljs code highlighted")
         } catch (e) {
           logger.error("hljs highlight failed", e)

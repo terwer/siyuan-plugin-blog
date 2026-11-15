@@ -11,7 +11,7 @@ const scriptLoadPromises = new Map<string, Promise<void>>()
 const styleLoadPromises = new Map<string, Promise<void>>()
 
 const resolveAssetUrl = (path: string) => {
-  const appBase = process.env.APP_BASE ?? "/"
+  const appBase = useRuntimeConfig().app.baseURL
   const base = appBase.endsWith("/") ? appBase : `${appBase}/`
   return `${base}${path.replace(/^\/+/, "")}`
 }

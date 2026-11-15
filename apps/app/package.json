@@ -9,9 +9,12 @@
     "vercelBuild": "bash script/vercel.sh",
     "cloudflareBuild": "bash script/cloudflare.sh",
     "postinstall": "nuxt prepare",
-    "test": "pnpm test:ai-markdown && pnpm test:sse",
+    "test": "node --experimental-strip-types scripts/test-ai-markdown.mjs && node --experimental-strip-types scripts/test-sse.mjs && node --test tests/*.test.mjs",
     "test:ai-markdown": "node --experimental-strip-types script/test-ai-markdown.mjs",
-    "test:sse": "node --experimental-strip-types script/test-sse.mjs"
+    "test:sse": "node --experimental-strip-types script/test-sse.mjs",
+    "dev:self-hosted": "nuxt dev --envName self-hosted",
+    "build:self-hosted": "nuxt build --envName self-hosted && node scripts/finalize-node.mjs",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -44,6 +47,14 @@
     "vite": "^8.3.5"
   },
   "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "vue-demi"
+    ]
   }
 }

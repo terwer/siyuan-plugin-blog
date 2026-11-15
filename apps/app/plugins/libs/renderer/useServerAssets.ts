@@ -8,6 +8,7 @@
  */
 
 import * as cheerio from "cheerio"
+import { providerAssetUrl } from "~/utils/viewerUrls"
 import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 
 /**
@@ -55,7 +56,7 @@ export const useServerAssets = () => {
     const images = $("img")
     for (const image of images) {
       const src = image.attribs.src
-      const newImageUrl = [baseUrl, src].join("/")
+      const newImageUrl = providerAssetUrl(src ?? "", String(baseUrl))
       logger.debug("image src=>", src)
       logger.debug("newImageUrl=>", newImageUrl)
 

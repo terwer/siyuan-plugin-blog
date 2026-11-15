@@ -1,0 +1,876 @@
+{
+  "source": "P0 archive freeze-client-share-contract; share-pro 1.17.1 real host snapshots",
+  "posts": {
+    "complex": {
+      "docId": "20261111131708-85v3a05",
+      "post": {
+        "postid": "",
+        "originalId": "",
+        "title": "p0-contract-1794374155070-complex",
+        "originalTitle": "",
+        "permalink": "",
+        "shortDesc": "",
+        "yaml": "---\n---",
+        "mdFilename": "test",
+        "html": "",
+        "markdown": "",
+        "editorDom": "<div data-subtype=\"h1\" data-node-id=\"20261111131708-lys0e1v\" data-node-index=\"0\" data-type=\"NodeHeading\" class=\"h1\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">复杂正文</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-c4mma65\" data-node-index=\"1\" data-type=\"NodeBlockquote\" class=\"bq\" updated=\"20261111131708\"><div data-node-id=\"20261111131708-el6rq0p\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">引用与 <span data-type=\"strong\">粗体</span></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-subtype=\"u\" data-node-id=\"20261111131708-qi31lk5\" data-node-index=\"2\" data-type=\"NodeList\" class=\"list\" updated=\"20261111131708\"><div data-marker=\"*\" data-subtype=\"u\" data-node-id=\"20261111131708-me2l0l0\" data-type=\"NodeListItem\" class=\"li\" updated=\"20261111131708\"><div class=\"protyle-action\" draggable=\"true\"><svg><use xlink:href=\"#iconDot\"></use></svg></div><div data-node-id=\"20261111131708-nr7160s\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">第一项</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-marker=\"*\" data-subtype=\"u\" data-node-id=\"20261111131708-jll5hu8\" data-type=\"NodeListItem\" class=\"li\" updated=\"20261111131708\"><div class=\"protyle-action\" draggable=\"true\"><svg><use xlink:href=\"#iconDot\"></use></svg></div><div data-node-id=\"20261111131708-fcafbpj\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">第二项</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-a02kcbi\" data-node-index=\"3\" data-type=\"NodeTable\" class=\"table\" colgroup=\"|\" updated=\"20261111131708\"><div contenteditable=\"false\"><table contenteditable=\"true\" spellcheck=\"false\"><colgroup><col /><col /></colgroup><thead><tr><th>A</th><th>B</th></tr></thead><tbody><tr><td>中文</td><td>English</td></tr></tbody></table><div class=\"protyle-action__table\"><div class=\"table__resize\"></div><div class=\"table__select\"></div></div></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-n3u6b9c\" data-node-index=\"4\" data-type=\"NodeCodeBlock\" class=\"code-block\" updated=\"20261111131708\"><div class=\"protyle-action\"><span class=\"protyle-action--first protyle-action__language\" contenteditable=\"false\">js</span><span class=\"fn__flex-1\"></span><span class=\"ariaLabel protyle-icon protyle-icon--first protyle-action__copy\" data-position=\"4north\"><svg><use xlink:href=\"#iconCopy\"></use></svg></span><span class=\"ariaLabel protyle-icon protyle-icon--last protyle-action__menu\" data-position=\"4north\"><svg><use xlink:href=\"#iconMore\"></use></svg></span></div><div class=\"hljs\"><div></div><div contenteditable=\"true\" style=\"flex: 1\" spellcheck=\"false\">const message = &quot;契约&quot;;\n</div></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-5pbp210\" data-node-index=\"5\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">公式 <span data-type=\"inline-math\" data-subtype=\"math\" data-content=\"x^2\" contenteditable=\"false\" class=\"render-node\"></span>。</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div>",
+        "description": "",
+        "mt_excerpt": "",
+        "wp_slug": "",
+        "dateCreated": "2026-11-11T05:17:08.000Z",
+        "dateUpdated": "2026-11-11T05:17:08.000Z",
+        "mt_keywords": "",
+        "tags_slugs": "",
+        "categories": [],
+        "cate_slugs": [],
+        "post_status": "publish",
+        "isPublished": true,
+        "wp_password": "",
+        "attrs": "{\"custom-publish-status\":\"\",\"custom-publish-time\":\"1794376162328\",\"custom-expires\":\"\",\"custom-slug\":\"\",\"custom-doc-tree-enable\":\"\",\"custom-doc-tree-level\":\"\",\"custom-outline-enable\":\"\",\"custom-outline-level\":\"\"}",
+        "editMode": 0,
+        "yamlType": 0,
+        "outline": [
+          {
+            "id": "20261111131708-lys0e1v",
+            "box": "20261111131555-2wovt5b",
+            "name": "复杂正文",
+            "nameIsHTML": true,
+            "hPath": "",
+            "type": "outline",
+            "nodeType": "NodeHeading",
+            "subType": "h1",
+            "depth": 0,
+            "count": 0,
+            "folded": false,
+            "updated": "",
+            "created": ""
+          }
+        ],
+        "outlineLevel": 6,
+        "docTree": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-simple",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-5q6tkcy",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-english",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-85v3a05",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-complex",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-75ito6n",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-password",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-3nmm0d8",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-media",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-fcrzqql",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-database",
+            "depth": 0,
+            "type": "sibling"
+          }
+        ],
+        "docTreeLevel": 3,
+        "docTreeHierarchy": [
+          {
+            "id": "20261111131708-85v3a05",
+            "name": "p0-contract-1794374155070-complex",
+            "order": 1
+          }
+        ],
+        "embedBlocks": {
+          "embedBlockMap": {},
+          "order": []
+        },
+        "dataViews": {},
+        "foldBlocks": {
+          "foldBlockMap": {},
+          "order": []
+        },
+        "aiAssistantEnabled": true
+      }
+    },
+    "database": {
+      "docId": "20261111131708-fcrzqql",
+      "post": {
+        "postid": "",
+        "originalId": "",
+        "title": "p0-contract-1794374155070-database",
+        "originalTitle": "",
+        "permalink": "",
+        "shortDesc": "",
+        "yaml": "---\n---",
+        "mdFilename": "test",
+        "html": "",
+        "markdown": "",
+        "editorDom": "<div data-subtype=\"h1\" data-node-id=\"20261111131708-uxgrc16\" data-node-index=\"0\" data-type=\"NodeHeading\" class=\"h1\" updated=\"20261111131848\"><div contenteditable=\"true\" spellcheck=\"false\">数据库视图</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-sfvbsao\" data-node-index=\"1\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">本轮数据库附件。</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div contenteditable=\"false\" data-av-id=\"20261111131709-9m7du1n\" data-av-type=\"table\" data-node-id=\"20261111131709-awij4wy\" data-node-index=\"2\" data-type=\"NodeAttributeView\" class=\"av\" updated=\"20261111131709\"><div spellcheck=\"false\"></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131848-sfj55ho\" data-node-index=\"3\" data-type=\"NodeParagraph\" class=\"p\" custom-avs=\"20261111131709-9m7du1n\" updated=\"20261111131848\" av-names=\"&lt;span data-av-id=&quot;20261111131709-9m7du1n&quot; data-popover-url=&quot;/api/av/getMirrorDatabaseBlocks&quot; class=&quot;popover__block&quot;&gt;未命名&lt;/span&gt;\"><div contenteditable=\"true\" spellcheck=\"false\">P0 database row</div><div class=\"protyle-attr\" contenteditable=\"false\"><div class=\"protyle-attr--av\"><svg><use xlink:href=\"#iconDatabase\"></use></svg><span data-av-id=\"20261111131709-9m7du1n\" data-popover-url=\"/api/av/getMirrorDatabaseBlocks\" class=\"popover__block\">未命名</span></div>​</div></div>",
+        "description": "",
+        "mt_excerpt": "",
+        "wp_slug": "",
+        "dateCreated": "2026-11-11T05:17:08.000Z",
+        "dateUpdated": "2026-11-11T05:18:48.000Z",
+        "mt_keywords": "",
+        "tags_slugs": "",
+        "categories": [],
+        "cate_slugs": [],
+        "post_status": "publish",
+        "isPublished": true,
+        "wp_password": "",
+        "attrs": "{\"custom-publish-status\":\"\",\"custom-publish-time\":\"1794376163532\",\"custom-expires\":\"\",\"custom-slug\":\"\",\"custom-doc-tree-enable\":\"\",\"custom-doc-tree-level\":\"\",\"custom-outline-enable\":\"\",\"custom-outline-level\":\"\"}",
+        "editMode": 0,
+        "yamlType": 0,
+        "outline": [
+          {
+            "id": "20261111131708-uxgrc16",
+            "box": "20261111131555-2wovt5b",
+            "name": "数据库视图",
+            "nameIsHTML": true,
+            "hPath": "",
+            "type": "outline",
+            "nodeType": "NodeHeading",
+            "subType": "h1",
+            "depth": 0,
+            "count": 0,
+            "folded": false,
+            "updated": "",
+            "created": ""
+          }
+        ],
+        "outlineLevel": 6,
+        "docTree": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-simple",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-5q6tkcy",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-english",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-85v3a05",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-complex",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-75ito6n",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-password",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-3nmm0d8",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-media",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-fcrzqql",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-database",
+            "depth": 0,
+            "type": "sibling"
+          }
+        ],
+        "docTreeLevel": 3,
+        "docTreeHierarchy": [
+          {
+            "id": "20261111131708-fcrzqql",
+            "name": "p0-contract-1794374155070-database",
+            "order": 1
+          }
+        ],
+        "embedBlocks": {
+          "embedBlockMap": {},
+          "order": []
+        },
+        "dataViews": {
+          "20261111131709-9m7du1n": {
+            "order": [
+              "20261111131709-om9505z"
+            ],
+            "20261111131709-om9505z": {
+              "name": "",
+              "id": "20261111131709-9m7du1n",
+              "customColors": [],
+              "colorOrder": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14"
+              ],
+              "usedCustomColorIndexes": [],
+              "viewType": "table",
+              "viewID": "20261111131709-om9505z",
+              "views": [
+                {
+                  "id": "20261111131709-om9505z",
+                  "icon": "",
+                  "name": "表格",
+                  "desc": "",
+                  "hideAttrViewName": false,
+                  "type": "table",
+                  "pageSize": 50
+                }
+              ],
+              "view": {
+                "conditionalColors": null,
+                "id": "20261111131709-om9505z",
+                "icon": "",
+                "name": "表格",
+                "desc": "",
+                "hideAttrViewName": false,
+                "filters": [
+                  {
+                    "column": "",
+                    "operator": "",
+                    "value": null,
+                    "combination": "and"
+                  }
+                ],
+                "sorts": [],
+                "group": null,
+                "pageSize": 50,
+                "showIcon": true,
+                "wrapField": false,
+                "groupFolded": false,
+                "groupHidden": 0,
+                "columns": [
+                  {
+                    "id": "20261111131848-jvs7431",
+                    "name": "P0 images",
+                    "type": "mAsset",
+                    "icon": "",
+                    "wrap": false,
+                    "hidden": false,
+                    "desc": "",
+                    "calc": null,
+                    "numberFormat": "",
+                    "template": "",
+                    "pin": false,
+                    "width": "",
+                    "align": ""
+                  },
+                  {
+                    "id": "20261111131709-e0lrz4f",
+                    "name": "主键",
+                    "type": "block",
+                    "icon": "",
+                    "wrap": false,
+                    "hidden": false,
+                    "desc": "",
+                    "calc": null,
+                    "numberFormat": "",
+                    "template": "",
+                    "pin": false,
+                    "width": "",
+                    "align": ""
+                  },
+                  {
+                    "id": "20261111131709-r2enk0e",
+                    "name": "单选",
+                    "type": "select",
+                    "icon": "",
+                    "wrap": false,
+                    "hidden": false,
+                    "desc": "",
+                    "calc": null,
+                    "numberFormat": "",
+                    "template": "",
+                    "pin": false,
+                    "width": "",
+                    "align": ""
+                  }
+                ],
+                "rows": [
+                  {
+                    "id": "20261111131848-on4ehxq",
+                    "cells": [
+                      {
+                        "id": "20261111131918-k2x2p48",
+                        "value": {
+                          "id": "20261111131918-k2x2p48",
+                          "keyID": "20261111131848-jvs7431",
+                          "blockID": "20261111131848-on4ehxq",
+                          "type": "mAsset",
+                          "createdAt": 1794374358195,
+                          "updatedAt": 1794376161646,
+                          "mAsset": [
+                            {
+                              "type": "image",
+                              "name": "P0 AV 0",
+                              "content": "assets/p0-contract-1794374155070/pixel-0.png"
+                            },
+                            {
+                              "type": "image",
+                              "name": "P0 AV 1",
+                              "content": "assets/p0-contract-1794374155070/pixel-1.png"
+                            },
+                            {
+                              "type": "image",
+                              "name": "P0 AV 2",
+                              "content": "assets/p0-contract-1794374155070/pixel-2.png"
+                            },
+                            {
+                              "type": "image",
+                              "name": "P0 AV 3",
+                              "content": "assets/p0-contract-1794374155070/pixel-3.png"
+                            },
+                            {
+                              "type": "image",
+                              "name": "P0 AV 4",
+                              "content": "assets/p0-contract-1794374155070/pixel-4.png"
+                            },
+                            {
+                              "type": "image",
+                              "name": "P0 AV 5",
+                              "content": "assets/p0-contract-1794374155070/pixel-5.png"
+                            }
+                          ]
+                        },
+                        "valueType": "mAsset",
+                        "color": "",
+                        "bgColor": ""
+                      },
+                      {
+                        "id": "20261111131848-k4p1y72",
+                        "value": {
+                          "id": "20261111131848-k4p1y72",
+                          "keyID": "20261111131709-e0lrz4f",
+                          "blockID": "20261111131848-on4ehxq",
+                          "type": "block",
+                          "createdAt": 1794374328598,
+                          "updatedAt": 1794376161646,
+                          "block": {
+                            "id": "20261111131848-sfj55ho",
+                            "content": "P0 database row",
+                            "refSubtype": "d",
+                            "created": 1794374328598,
+                            "updated": 1794376161646
+                          }
+                        },
+                        "valueType": "block",
+                        "color": "",
+                        "bgColor": ""
+                      },
+                      {
+                        "id": "20261111131848-bjzqlh2",
+                        "value": {
+                          "id": "20261111131848-bjzqlh2",
+                          "keyID": "20261111131709-r2enk0e",
+                          "blockID": "20261111131848-on4ehxq",
+                          "type": "select",
+                          "createdAt": 1794374328000,
+                          "updatedAt": 1794374328000
+                        },
+                        "valueType": "select",
+                        "color": "",
+                        "bgColor": ""
+                      }
+                    ]
+                  }
+                ],
+                "rowCount": 1
+              },
+              "isMirror": false,
+              "newItemTemplates": null,
+              "defaultTemplateID": "",
+              "contextFilter": null,
+              "contextFilterFields": []
+            }
+          }
+        },
+        "foldBlocks": {
+          "foldBlockMap": {},
+          "order": []
+        },
+        "aiAssistantEnabled": true
+      }
+    },
+    "english": {
+      "docId": "20261111131708-5q6tkcy",
+      "post": {
+        "postid": "",
+        "originalId": "",
+        "title": "p0-contract-1794374155070-english",
+        "originalTitle": "",
+        "permalink": "",
+        "shortDesc": "",
+        "yaml": "---\n---",
+        "mdFilename": "test",
+        "html": "",
+        "markdown": "",
+        "editorDom": "<div data-subtype=\"h1\" data-node-id=\"20261111131708-bf1ljya\" data-node-index=\"0\" data-type=\"NodeHeading\" class=\"h1\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">English contract</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-h1grcca\" data-node-index=\"1\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">Independent LAN publishing sample.</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div>",
+        "description": "",
+        "mt_excerpt": "",
+        "wp_slug": "",
+        "dateCreated": "2026-11-11T05:17:08.000Z",
+        "dateUpdated": "2026-11-11T05:17:08.000Z",
+        "mt_keywords": "",
+        "tags_slugs": "",
+        "categories": [],
+        "cate_slugs": [],
+        "post_status": "publish",
+        "isPublished": true,
+        "wp_password": "",
+        "attrs": "{\"custom-publish-status\":\"\",\"custom-publish-time\":\"1794376165381\",\"custom-expires\":\"\",\"custom-slug\":\"\",\"custom-doc-tree-enable\":\"\",\"custom-doc-tree-level\":\"\",\"custom-outline-enable\":\"\",\"custom-outline-level\":\"\"}",
+        "editMode": 0,
+        "yamlType": 0,
+        "outline": [
+          {
+            "id": "20261111131708-bf1ljya",
+            "box": "20261111131555-2wovt5b",
+            "name": "English&nbsp;contract",
+            "nameIsHTML": true,
+            "hPath": "",
+            "type": "outline",
+            "nodeType": "NodeHeading",
+            "subType": "h1",
+            "depth": 0,
+            "count": 0,
+            "folded": false,
+            "updated": "",
+            "created": ""
+          }
+        ],
+        "outlineLevel": 6,
+        "docTree": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-simple",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-5q6tkcy",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-english",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-85v3a05",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-complex",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-75ito6n",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-password",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-3nmm0d8",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-media",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-fcrzqql",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-database",
+            "depth": 0,
+            "type": "sibling"
+          }
+        ],
+        "docTreeLevel": 3,
+        "docTreeHierarchy": [
+          {
+            "id": "20261111131708-5q6tkcy",
+            "name": "p0-contract-1794374155070-english",
+            "order": 1
+          }
+        ],
+        "embedBlocks": {
+          "embedBlockMap": {},
+          "order": []
+        },
+        "dataViews": {},
+        "foldBlocks": {
+          "foldBlockMap": {},
+          "order": []
+        },
+        "aiAssistantEnabled": true
+      }
+    },
+    "media": {
+      "docId": "20261111131708-3nmm0d8",
+      "post": {
+        "postid": "",
+        "originalId": "",
+        "title": "p0-contract-1794374155070-media",
+        "originalTitle": "",
+        "permalink": "",
+        "shortDesc": "",
+        "yaml": "---\n---",
+        "mdFilename": "test",
+        "html": "",
+        "markdown": "",
+        "editorDom": "<div data-subtype=\"h1\" data-node-id=\"20261111131708-f25hswt\" data-node-index=\"0\" data-type=\"NodeHeading\" class=\"h1\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">Media batches</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131709-2iakfxe\" data-node-index=\"1\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">​<span contenteditable=\"false\" data-type=\"img\" class=\"img\"><span> </span><span><span class=\"protyle-action protyle-icons\"><span class=\"protyle-icon protyle-icon--only\"><svg class=\"svg\"><use xlink:href=\"#iconMore\"></use></svg></span></span><img src=\"assets/p0-contract-1794374155070/pixel-0.png\" data-src=\"assets/p0-contract-1794374155070/pixel-0.png\" loading=\"lazy\" alt=\"p0\" /><span class=\"protyle-action__drag\"></span><span class=\"protyle-action__title\"><span></span></span></span><span> </span></span>​</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131709-ns1kqkj\" data-node-index=\"2\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">​<span contenteditable=\"false\" data-type=\"img\" class=\"img\"><span> </span><span><span class=\"protyle-action protyle-icons\"><span class=\"protyle-icon protyle-icon--only\"><svg class=\"svg\"><use xlink:href=\"#iconMore\"></use></svg></span></span><img src=\"assets/p0-contract-1794374155070/pixel-1.png\" data-src=\"assets/p0-contract-1794374155070/pixel-1.png\" loading=\"lazy\" alt=\"p0\" /><span class=\"protyle-action__drag\"></span><span class=\"protyle-action__title\"><span></span></span></span><span> </span></span>​</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131709-hfjdrh8\" data-node-index=\"3\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">​<span contenteditable=\"false\" data-type=\"img\" class=\"img\"><span> </span><span><span class=\"protyle-action protyle-icons\"><span class=\"protyle-icon protyle-icon--only\"><svg class=\"svg\"><use xlink:href=\"#iconMore\"></use></svg></span></span><img src=\"assets/p0-contract-1794374155070/pixel-2.png\" data-src=\"assets/p0-contract-1794374155070/pixel-2.png\" loading=\"lazy\" alt=\"p0\" /><span class=\"protyle-action__drag\"></span><span class=\"protyle-action__title\"><span></span></span></span><span> </span></span>​</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131709-9a88u26\" data-node-index=\"4\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">​<span contenteditable=\"false\" data-type=\"img\" class=\"img\"><span> </span><span><span class=\"protyle-action protyle-icons\"><span class=\"protyle-icon protyle-icon--only\"><svg class=\"svg\"><use xlink:href=\"#iconMore\"></use></svg></span></span><img src=\"assets/p0-contract-1794374155070/pixel-3.png\" data-src=\"assets/p0-contract-1794374155070/pixel-3.png\" loading=\"lazy\" alt=\"p0\" /><span class=\"protyle-action__drag\"></span><span class=\"protyle-action__title\"><span></span></span></span><span> </span></span>​</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131709-v0nuts5\" data-node-index=\"5\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">​<span contenteditable=\"false\" data-type=\"img\" class=\"img\"><span> </span><span><span class=\"protyle-action protyle-icons\"><span class=\"protyle-icon protyle-icon--only\"><svg class=\"svg\"><use xlink:href=\"#iconMore\"></use></svg></span></span><img src=\"assets/p0-contract-1794374155070/pixel-4.png\" data-src=\"assets/p0-contract-1794374155070/pixel-4.png\" loading=\"lazy\" alt=\"p0\" /><span class=\"protyle-action__drag\"></span><span class=\"protyle-action__title\"><span></span></span></span><span> </span></span>​</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131709-vrxfij4\" data-node-index=\"6\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131709\"><div contenteditable=\"true\" spellcheck=\"false\">​<span contenteditable=\"false\" data-type=\"img\" class=\"img\"><span> </span><span><span class=\"protyle-action protyle-icons\"><span class=\"protyle-icon protyle-icon--only\"><svg class=\"svg\"><use xlink:href=\"#iconMore\"></use></svg></span></span><img src=\"assets/p0-contract-1794374155070/pixel-5.png\" data-src=\"assets/p0-contract-1794374155070/pixel-5.png\" loading=\"lazy\" alt=\"p0\" /><span class=\"protyle-action__drag\"></span><span class=\"protyle-action__title\"><span></span></span></span><span> </span></span>​</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div>",
+        "description": "",
+        "mt_excerpt": "",
+        "wp_slug": "",
+        "dateCreated": "2026-11-11T05:17:08.000Z",
+        "dateUpdated": "2026-11-11T05:17:09.000Z",
+        "mt_keywords": "",
+        "tags_slugs": "",
+        "categories": [],
+        "cate_slugs": [],
+        "post_status": "publish",
+        "isPublished": true,
+        "wp_password": "",
+        "attrs": "{\"custom-publish-status\":\"\",\"custom-publish-time\":\"1794376162893\",\"custom-expires\":\"\",\"custom-slug\":\"\",\"custom-doc-tree-enable\":\"\",\"custom-doc-tree-level\":\"\",\"custom-outline-enable\":\"\",\"custom-outline-level\":\"\"}",
+        "editMode": 0,
+        "yamlType": 0,
+        "outline": [
+          {
+            "id": "20261111131708-f25hswt",
+            "box": "20261111131555-2wovt5b",
+            "name": "Media&nbsp;batches",
+            "nameIsHTML": true,
+            "hPath": "",
+            "type": "outline",
+            "nodeType": "NodeHeading",
+            "subType": "h1",
+            "depth": 0,
+            "count": 0,
+            "folded": false,
+            "updated": "",
+            "created": ""
+          }
+        ],
+        "outlineLevel": 6,
+        "docTree": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-simple",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-5q6tkcy",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-english",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-85v3a05",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-complex",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-75ito6n",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-password",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-3nmm0d8",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-media",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-fcrzqql",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-database",
+            "depth": 0,
+            "type": "sibling"
+          }
+        ],
+        "docTreeLevel": 3,
+        "docTreeHierarchy": [
+          {
+            "id": "20261111131708-3nmm0d8",
+            "name": "p0-contract-1794374155070-media",
+            "order": 1
+          }
+        ],
+        "embedBlocks": {
+          "embedBlockMap": {},
+          "order": []
+        },
+        "dataViews": {},
+        "foldBlocks": {
+          "foldBlockMap": {},
+          "order": []
+        },
+        "aiAssistantEnabled": true
+      }
+    },
+    "password": {
+      "docId": "20261111131708-75ito6n",
+      "post": {
+        "postid": "",
+        "originalId": "",
+        "title": "p0-contract-1794374155070-password",
+        "originalTitle": "",
+        "permalink": "",
+        "shortDesc": "",
+        "yaml": "---\n---",
+        "mdFilename": "test",
+        "html": "",
+        "markdown": "",
+        "editorDom": "<div data-subtype=\"h1\" data-node-id=\"20261111131708-od6vw4o\" data-node-index=\"0\" data-type=\"NodeHeading\" class=\"h1\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">Password protected</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-onqabam\" data-node-index=\"1\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">本轮合成密码文档。</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div>",
+        "description": "",
+        "mt_excerpt": "",
+        "wp_slug": "",
+        "dateCreated": "2026-11-11T05:17:08.000Z",
+        "dateUpdated": "2026-11-11T05:17:08.000Z",
+        "mt_keywords": "",
+        "tags_slugs": "",
+        "categories": [],
+        "cate_slugs": [],
+        "post_status": "publish",
+        "isPublished": true,
+        "wp_password": "",
+        "attrs": "{\"custom-publish-status\":\"\",\"custom-publish-time\":\"1794376162612\",\"custom-expires\":\"\",\"custom-slug\":\"\",\"custom-doc-tree-enable\":\"\",\"custom-doc-tree-level\":\"\",\"custom-outline-enable\":\"\",\"custom-outline-level\":\"\"}",
+        "editMode": 0,
+        "yamlType": 0,
+        "outline": [
+          {
+            "id": "20261111131708-od6vw4o",
+            "box": "20261111131555-2wovt5b",
+            "name": "Password&nbsp;protected",
+            "nameIsHTML": true,
+            "hPath": "",
+            "type": "outline",
+            "nodeType": "NodeHeading",
+            "subType": "h1",
+            "depth": 0,
+            "count": 0,
+            "folded": false,
+            "updated": "",
+            "created": ""
+          }
+        ],
+        "outlineLevel": 6,
+        "docTree": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-simple",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-5q6tkcy",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-english",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-85v3a05",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-complex",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-75ito6n",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-password",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-3nmm0d8",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-media",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-fcrzqql",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-database",
+            "depth": 0,
+            "type": "sibling"
+          }
+        ],
+        "docTreeLevel": 3,
+        "docTreeHierarchy": [
+          {
+            "id": "20261111131708-75ito6n",
+            "name": "p0-contract-1794374155070-password",
+            "order": 1
+          }
+        ],
+        "embedBlocks": {
+          "embedBlockMap": {},
+          "order": []
+        },
+        "dataViews": {},
+        "foldBlocks": {
+          "foldBlockMap": {},
+          "order": []
+        },
+        "aiAssistantEnabled": true
+      }
+    },
+    "simple": {
+      "docId": "20261111131708-x6e5r7f",
+      "post": {
+        "postid": "",
+        "originalId": "",
+        "title": "p0-contract-1794374155070-simple",
+        "originalTitle": "",
+        "permalink": "",
+        "shortDesc": "",
+        "yaml": "---\n---",
+        "mdFilename": "test",
+        "html": "",
+        "markdown": "",
+        "editorDom": "<div data-subtype=\"h1\" data-node-id=\"20261111131708-ejh4r6r\" data-node-index=\"0\" data-type=\"NodeHeading\" class=\"h1\" updated=\"20261111134924\"><div contenteditable=\"true\" spellcheck=\"false\">中文分享</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111131708-zlwfh2n\" data-node-index=\"1\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111131708\"><div contenteditable=\"true\" spellcheck=\"false\">这是本轮独立的简单正文。</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111132907-lm6g7kg\" data-node-index=\"2\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111132907\"><div contenteditable=\"true\" spellcheck=\"false\">P0 update marker: 更新正文。</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111134206-eiuh33a\" data-node-index=\"3\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111134206\"><div contenteditable=\"true\" spellcheck=\"false\"></div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div><div data-node-id=\"20261111134924-596gq28\" data-node-index=\"4\" data-type=\"NodeParagraph\" class=\"p\" updated=\"20261111134924\"><div contenteditable=\"true\" spellcheck=\"false\">P0 update marker: 更新正文。</div><div class=\"protyle-attr\" contenteditable=\"false\">​</div></div>",
+        "description": "",
+        "mt_excerpt": "",
+        "wp_slug": "",
+        "dateCreated": "2026-11-11T05:17:08.000Z",
+        "dateUpdated": "2026-11-11T05:42:06.000Z",
+        "mt_keywords": "",
+        "tags_slugs": "",
+        "categories": [],
+        "cate_slugs": [],
+        "post_status": "publish",
+        "isPublished": true,
+        "wp_password": "",
+        "attrs": "{\"custom-publish-status\":\"\",\"custom-publish-time\":\"1794376164467\",\"custom-expires\":\"\",\"custom-slug\":\"\",\"custom-doc-tree-enable\":\"\",\"custom-doc-tree-level\":\"\",\"custom-outline-enable\":\"\",\"custom-outline-level\":\"\"}",
+        "editMode": 0,
+        "yamlType": 0,
+        "outline": [
+          {
+            "id": "20261111131708-ejh4r6r",
+            "box": "20261111131555-2wovt5b",
+            "name": "中文分享",
+            "nameIsHTML": true,
+            "hPath": "",
+            "type": "outline",
+            "nodeType": "NodeHeading",
+            "subType": "h1",
+            "depth": 0,
+            "count": 0,
+            "folded": false,
+            "updated": "",
+            "created": ""
+          }
+        ],
+        "outlineLevel": 6,
+        "docTree": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-simple",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-5q6tkcy",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-english",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-85v3a05",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-complex",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-75ito6n",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-password",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-3nmm0d8",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-media",
+            "depth": 0,
+            "type": "sibling"
+          },
+          {
+            "id": "20261111131708-fcrzqql",
+            "parentId": "",
+            "name": "p0-contract-1794374155070-database",
+            "depth": 0,
+            "type": "sibling"
+          }
+        ],
+        "docTreeLevel": 3,
+        "docTreeHierarchy": [
+          {
+            "id": "20261111131708-x6e5r7f",
+            "name": "p0-contract-1794374155070-simple",
+            "order": 1
+          }
+        ],
+        "embedBlocks": {
+          "embedBlockMap": {},
+          "order": []
+        },
+        "dataViews": {},
+        "foldBlocks": {
+          "foldBlockMap": {},
+          "order": []
+        },
+        "aiAssistantEnabled": true
+      }
+    }
+  }
+}

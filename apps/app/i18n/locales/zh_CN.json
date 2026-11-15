@@ -163,5 +163,12 @@
   "ai.chat.welcome": "您好！我是您的 AI 阅读助手，随时为您解答关于这篇文档的任何疑问。",
   "ai.chat.clear": "清空对话",
   "ai.chat.error.empty": "请输入您的问题",
-  "ai.chat.error.usage": "今日次数已用完，请明日再试"
+  "ai.chat.error.usage": "今日次数已用完，请明日再试",
+  "connection.requiredTitle": "请配置阅读站点",
+  "connection.requiredDescription": "请在分享客户端保存服务 API 地址和分享访问地址，再刷新此页面。",
+  "connection.conflictTitle": "阅读地址存在冲突",
+  "connection.conflictDescription": "多个站点使用了相同阅读地址，请在分享客户端为站点设置独立地址或路径前缀。",
+  "connection.unavailableTitle": "分享页面暂不可用",
+  "connection.unavailableDescription": "请检查分享链接，或在分享服务恢复后重试。",
+  "connection.retry": "刷新页面"
 }

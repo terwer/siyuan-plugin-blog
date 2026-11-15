@@ -24,6 +24,8 @@ import { useLute } from "~/composables/useLute"
 import { AI_SUMMARY_TERMS_KEY, AI_CUSTOM_CONFIG_KEY } from "~/utils/Constants"
 import { hasMeaningfulTextContent } from "~/utils/content"
 
+const appBase = useRuntimeConfig().app.baseURL
+
 const props = defineProps<{
   title: string
   content: string
@@ -151,7 +153,7 @@ const loadModels = async () => {
     if (config.baseUrl) params.append('baseUrl', config.baseUrl)
     if (config.apiKey) params.append('apiKey', config.apiKey)
 
-    const response = await fetch(`/api/ai/models?${params}`)
+    const response = await fetch(`${appBase}api/ai/models?${params}`)
     const data = await response.json()
 
     if (data.success && data.models && data.models.length > 0) {

@@ -8,6 +8,8 @@
   -->
 
 <script lang="ts" setup>
+import { isPublicConfigurationError } from "~/utils/publicConnection"
+import { documentMedia } from "~/utils/documentMedia"
 import { JsonUtil, ObjectUtil } from "zhi-common"
 import { computed, reactive, ref, watch } from "vue"
 import { checkExpires } from "~/utils/utils"
@@ -18,10 +20,13 @@ import { useServerAssets } from "~/plugins/libs/renderer/useServerAssets"
 const logger = createAppLogger("static-share-page")
 const requestURL = useRequestURL()
 const route = useRoute()
+const nuxtApp=useNuxtApp()
 const { t } = useI18n()
 const { applyLocale } = useAppLocale()
 const isPreviewMode = computed(() => route.query.preview === "1")
 const { providerMode } = useProviderMode()
+const publicConnection=useState<any>("viewer-public-connection")
+const runtimeConfig=useRuntimeConfig()
 const { fetchPostMeta, validatePassword } = useAuthModeFetch()
 const { getStaticSetting } = useStaticSettingStore(requestURL)
 const { getFirstImageSrc } = useServerAssets()
@@ -68,6 +73,7 @@ const isLoading = ref(__SIYUAN_SPA_TARGET__)
 const getPostData = async (id: string) => {
   try {
     const resText = await fetchPostMeta(id, providerMode)
+    if(id!==currentDocId.value)return
     const dataJson = JsonUtil.safeParse<any>(resText, {} as any)
     logger.debug("dataJson in providerMode=>", dataJson)
     if(providerMode){
@@ -77,7 +83,7 @@ const getPostData = async (id: string) => {
       formData.isShared = dataJson.isShared === true
       // 文档信息
       if(dataJson.post){
-        const currentPost = JsonUtil.safeParse<any>(dataJson.post, {} as any)
+        const currentPost = documentMedia(JsonUtil.safeParse<any>(dataJson.post, {} as any), String(publicConnection.value?.config?.publicApiUrl || runtimeConfig.public.providerUrl))
         currentPost.postid = id
         formData.post = currentPost
         logger.debug("currentPost in providerMode=>", currentPost)
@@ -96,16 +102,20 @@ const getPostData = async (id: string) => {
       formData.isExpires = checkExpires(attrs)
     }
   } catch (e) {
+    if(id!==currentDocId.value)return
+    if(isPublicConfigurationError(e)){nuxtApp.runWithContext(()=>showError(e));throw e}
     formData.isShared = false
     logger.error("getPostData error=>", e)
   }
 }
 const getSetting = async () => {
+  const id=currentDocId.value
   let currentSetting = props.setting
   // 防止重复请求
   if (!props.setting) {
     currentSetting = await getStaticSetting()
   }
+  if(id!==currentDocId.value)return
   formData.setting = currentSetting
   // 在子组件渲染前统一应用语言，保证 SSR 与客户端水合结果一致
   await applyLocale(currentSetting?.lang)
@@ -158,12 +168,13 @@ if (!props.overrideSeo) {
 }
 
 const loadPageData = async () => {
+  const id=currentDocId.value
   isLoading.value = true
   try {
     // 文档与站点配置互不依赖，并行请求，缩短服务端首屏等待时间
     await Promise.all([getPostData(currentDocId.value), getSetting()])
   } finally {
-    isLoading.value = false
+    if(id===currentDocId.value)isLoading.value = false
   }
 }
 
@@ -191,10 +202,10 @@ if (!props.overrideSeo && seoImage.value) {
 
 // functions
 const handlePasswordSubmit = async (password:string) => {
-  logger.debug("get password:", password)
-  logger.debug("db password:",  formData.shareOptions.password)
   // 调用API验证密码
-  const valid = await validatePassword(currentDocId.value, password, formData.shareOptions.password)
+  const id=currentDocId.value
+  const valid = await validatePassword(id, password, formData.shareOptions.password)
+  if(id!==currentDocId.value)return
   if (valid.flag) {
     // 当前 url 参数还是 ?key
     const url = new URL(window.location.href);

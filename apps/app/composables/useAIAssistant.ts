@@ -97,14 +97,15 @@ function preprocessHtmlContent (html: string): string {
 async function callAI (
   messages: any[],
   config: AIAssistantConfig,
-  onStream?: (chunk: string) => void
+  onStream?: (chunk: string) => void,
+  appBase = "/"
 ): Promise<{ success: boolean; content?: string; error?: string; mode?: AIModelMode }> {
   const mode = config.mode || "builtin"
   const stream = !!onStream
 
   try {
     // 调用服务端 API（安全，不暴露 API key）
-    const response = await fetch("/api/ai/chat", {
+    const response = await fetch(appBase + "api/ai/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -247,6 +248,7 @@ export function useAIAssistant (
   title: Ref<string> | string,
   htmlContent: Ref<string> | string
 ) {
+  const appBase = useRuntimeConfig().app.baseURL
   const _title = isRef(title) ? title : ref(title)
   const _html = isRef(htmlContent) ? htmlContent : ref(htmlContent)
 
@@ -300,7 +302,7 @@ export function useAIAssistant (
         messages.value = [...messages.value]
       }
 
-      const res = await callAI(aiMessages, cfg, onStream)
+      const res = await callAI(aiMessages, cfg, onStream, appBase)
 
       if (!res.success || !res.content) {
         // Remove placeholder message on error
@@ -357,7 +359,7 @@ export function useAIAssistant (
         messages.value = [...messages.value]
       }
 
-      const res = await callAI(aiMessages, cfg, onStream)
+      const res = await callAI(aiMessages, cfg, onStream, appBase)
 
       if (!res.success || !res.content) {
         // Remove placeholder message on error
@@ -446,7 +448,7 @@ export function useAIAssistant (
         messages.value = [...messages.value]
       }
 
-      const res = await callAI(aiMessages, cfg, onStream)
+      const res = await callAI(aiMessages, cfg, onStream, appBase)
 
       if (!res.success) {
         // Remove placeholder message on error

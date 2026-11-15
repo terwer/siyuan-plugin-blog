@@ -26,6 +26,7 @@
 type ThemeType = "system" | "dark" | "light"
 
 interface AppConfig {
+  publicApiUrl?: string
   lang?: string
   siteUrl?: string
   siteTitle?: string
@@ -102,10 +103,10 @@ interface AppConfig {
 
 export default defineAppConfig<AppConfig>({
   lang: "zh_CN",
-  siteUrl: "https://siyuan.wiki",
+  siteUrl: "",
   siteTitle: "在线分享",
-  siteSlogan: "随时随便分享您的思源笔记",
-  siteDescription: "致力于做 obsidian.publish 国内替代品，notion 发布国内替代品",
+  siteSlogan: "在自己的网络中分享和阅读",
+  siteDescription: "自部署笔记分享服务",
   homePageId: "",
   header: "",
   footer: "",

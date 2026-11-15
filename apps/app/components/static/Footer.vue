@@ -21,6 +21,7 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 // uses
 const { t } = useI18n()
 const { providerMode } = useProviderMode()
+const selfHosted=useRuntimeConfig().public.connectionSync
 const { getHome } = useBaseUrl()
 const { colorMode, toggleDark } = useClientThemeMode(props.setting)
 
@@ -63,6 +64,7 @@ const VNode = () =>
 </script>
 
 <template>
+  <template v-if="!selfHosted">
   <div v-if="!providerMode && StrUtil.isEmptyString(footer)" class="footer">
     <static-buttons
       :default-mode="colorMode?'dark':'light'"
@@ -90,12 +92,17 @@ const VNode = () =>
     />
     <VNode />
   </div>
+  </template>
+  <footer v-else class="footer">
+    <static-buttons :default-mode="colorMode?'dark':'light'" :site-link-hover-preview-enabled="props.setting?.linkHoverPreview?.enabled !== false" :site-post-meta-enabled="props.setting?.postMetaEnabled !== false" @toggle-theme-mode="emitToggleThemeMode" />
+    <div v-if="props.setting?.footer" v-html="props.setting.footer" />
+  </footer>
 </template>
 
 <style scoped>
 .footer {
   font-size: 12px;
-  color: #bbb;
+  color: var(--b3-theme-on-surface);
   text-align: center;
   padding-bottom: 8px;
 }

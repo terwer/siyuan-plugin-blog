@@ -7,6 +7,19 @@
   -  of this license document, but changing it is not allowed.
   -->
 
+<script setup lang="ts">
+const { appBase } = useAppBase()
+// Native CSS follows application CSS; URLs follow the runtime prefix, not a
+// build-time environment value. Icon fonts stay synchronous for first paint.
+useHead(() => ({
+  link: [
+    { rel: "icon", href: appBase + "favicon.ico" },
+    { rel: "stylesheet", href: appBase + "libs/fonts/vdoing_font.css", tagPriority: 190 },
+    { rel: "stylesheet", href: appBase + "resources/stage/build/app/base.css", tagPriority: 200 },
+  ],
+}))
+</script>
+
 <template>
   <div>
     <Suspense>

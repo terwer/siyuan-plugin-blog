@@ -8,7 +8,7 @@ const VIEWER_FONT_STYLESHEET_PATH = "libs/fonts/lxgw_font.css"
 let viewerFontLoadPromise: Promise<void> | null = null
 
 const getAppBase = () => {
-  const appBase = process.env.APP_BASE ?? "/"
+  const appBase = useRuntimeConfig().app.baseURL
   return appBase.endsWith("/") ? appBase : `${appBase}/`
 }
 

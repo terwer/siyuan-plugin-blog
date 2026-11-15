@@ -8,6 +8,7 @@
   -->
 
 <script setup lang="ts">
+import { isPublicConfigurationError } from "~/utils/publicConnection"
 import { StrUtil } from "zhi-common"
 import type AppConfig from "~/app.config"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
@@ -15,6 +16,7 @@ import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 // https://github.com/nuxt/nuxt/issues/15346
 // 由于布局是个宏，不能动态设置了，因此只能写死
 
+const nuxtApp=useNuxtApp()
 const { t } = useI18n()
 const { applyLocale } = useAppLocale()
 const requestURL = useRequestURL()
@@ -30,6 +32,7 @@ const loadSetting = async () => {
     // 在子组件渲染前统一应用语言，保证 SSR 与客户端水合结果一致
     await applyLocale(setting.value?.lang)
   } catch (e) {
+    if(isPublicConfigurationError(e)){nuxtApp.runWithContext(()=>showError(e));throw e}
     logger.error("load static setting failed", e)
   } finally {
     isLoading.value = false
