@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     "self-hosted": {
       srcDir:".", ssr:true, devtools:{enabled:false}, devServer:{port:4000},
       nitro:{preset:"node-server"},
-      runtimeConfig:{public:{connectionSync:true,providerMode:"true",viewerCapabilities:{aiAssistant:false}}},
+      runtimeConfig:{public:{connectionSync:true,providerMode:"true",viewerCapabilities:{aiAssistant:true}}},
     },
   },
   devtools: { enabled: isDev },
