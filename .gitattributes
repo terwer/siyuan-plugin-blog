@@ -1,0 +1,2 @@
+# Keep the app sources LF so checkouts are byte-identical across platforms.
+apps/app/** text=auto eol=lf
