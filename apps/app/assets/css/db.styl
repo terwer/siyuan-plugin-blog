@@ -269,3 +269,53 @@ html[data-theme-mode="dark"]
 .db-tab-content[data-view-type="kanban"],
 .db-tab-content[data-view-type="calendar"]
   width 100%
+
+/* 数据库视图本地只读筛选 */
+.db-view-filter
+  display flex
+  flex-wrap wrap
+  align-items flex-end
+  gap 10px
+  margin 8px 0
+  padding 10px 12px
+  border 1px solid var(--b3-border-color)
+  border-radius 8px
+  background var(--b3-theme-surface-lighter)
+
+.db-view-filter-field
+  display flex
+  flex-direction column
+  gap 4px
+  min-width 140px
+  color var(--b3-theme-on-surface-light)
+  font-size 12px
+
+.db-view-filter-value
+  flex 1 1 180px
+
+.db-view-filter-field select,
+.db-view-filter-field input
+  min-width 0
+  height 30px
+
+.db-view-filter-actions
+  display flex
+  gap 6px
+
+.db-view-filter-status
+  min-height 18px
+  margin 4px 0 8px
+  color var(--b3-theme-on-surface-light)
+  font-size 12px
+
+.db-view-filter-status:empty
+  display none
+
+.db-view-results
+  width 100%
+
+@media (max-width: 640px)
+  .db-view-filter-field,
+  .db-view-filter-value
+    flex 1 1 100%
+    min-width 0

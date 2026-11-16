@@ -29,6 +29,13 @@ test('未知类型只读回退不猜测为表格', () => {
   assert.doesNotMatch(source, /default:\s*renderTable/)
 })
 
-
-
-
+test('筛选编辑器和双语状态保持本地只读', () => {
+  assert.match(source, /createFilterEditor/)
+  assert.match(source, /db-view-filter-status/)
+  assert.match(source, /role", "status"/)
+  assert.match(source, /筛选/)
+  assert.match(source, /No matching entries/)
+  assert.match(source, /filterViewSnapshot/)
+  assert.match(source, /noFields/)
+  assert.match(source, /aria-live/)
+})

@@ -9,6 +9,7 @@
 
 import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
 import { useStaticClientAssets } from "~/plugins/libs/renderer/useStaticClientAssets"
+import { filterViewSnapshot, getFilterFields, resultCount, type FilterField, type ViewFilter } from "~/utils/databaseViewFilter"
 
 /**
  * 数据库插件
@@ -375,6 +376,180 @@ export default defineNuxtPlugin(({ vueApp }) => {
     }
   }
 
+  const filterLocale = () => {
+    const zh = (document.documentElement.lang || "").toLowerCase().startsWith("zh")
+    return zh
+      ? {
+          label: "筛选",
+          field: "字段",
+          operator: "条件",
+          value: "值",
+          apply: "应用",
+          reset: "重置",
+          results: "匹配条目",
+          noResults: "没有匹配条目",
+          invalid: "筛选条件无效",
+          unsupported: "当前视图没有可用的本地筛选字段",
+          contains: "包含",
+          equals: "等于",
+          gt: "大于",
+          gte: "大于等于",
+          lt: "小于",
+          lte: "小于等于",
+          before: "早于",
+          after: "晚于",
+          empty: "暂无数据",
+          noFields: "当前视图没有可用的本地筛选字段",
+        }
+      : {
+          label: "Filter",
+          field: "Field",
+          operator: "Operator",
+          value: "Value",
+          apply: "Apply",
+          reset: "Reset",
+          results: "Matches",
+          noResults: "No matching entries",
+          invalid: "Invalid filter",
+          unsupported: "No local filterable fields are available for this view",
+          contains: "contains",
+          equals: "equals",
+          gt: "greater than",
+          gte: "greater than or equal",
+          lt: "less than",
+          lte: "less than or equal",
+          before: "before",
+          after: "after",
+          empty: "No data",
+          noFields: "No local filterable fields are available for this view",
+        }
+  }
+
+  const createFilterEditor = (container: HTMLElement, item: any, type: any) => {
+    const locale = filterLocale()
+    const results = document.createElement("div")
+    results.className = "db-view-results"
+    container.appendChild(results)
+
+    const fields = getFilterFields(item.view, type)
+    const status = document.createElement("p")
+    status.className = "db-view-filter-status"
+    status.setAttribute("role", "status")
+    status.setAttribute("aria-live", "polite")
+
+    const showView = (view: any) => {
+      results.replaceChildren()
+      renderView(results, { ...item, view })
+      if (resultCount(view, type) === 0) {
+        const empty = document.createElement("p")
+        empty.className = "db-view-empty"
+        empty.textContent = locale.empty
+        results.appendChild(empty)
+      }
+    }
+
+    if (!fields.length) {
+      container.appendChild(status)
+      status.textContent = locale.noFields
+      showView(item.view)
+      return
+    }
+    const toolbar = document.createElement("div")
+    toolbar.className = "db-view-filter"
+    toolbar.setAttribute("role", "group")
+    toolbar.setAttribute("aria-label", locale.label)
+
+    const fieldLabel = document.createElement("label")
+    fieldLabel.className = "db-view-filter-field"
+    const fieldText = document.createElement("span")
+    fieldText.textContent = locale.field
+    const fieldSelect = document.createElement("select")
+    fieldSelect.className = "b3-select"
+    fields.forEach((field: FilterField) => {
+      const option = document.createElement("option")
+      option.value = field.id
+      option.textContent = field.name
+      fieldSelect.appendChild(option)
+    })
+    fieldLabel.append(fieldText, fieldSelect)
+
+    const operatorLabel = document.createElement("label")
+    operatorLabel.className = "db-view-filter-field"
+    const operatorText = document.createElement("span")
+    operatorText.textContent = locale.operator
+    const operatorSelect = document.createElement("select")
+    operatorSelect.className = "b3-select"
+    operatorLabel.append(operatorText, operatorSelect)
+
+    const valueLabel = document.createElement("label")
+    valueLabel.className = "db-view-filter-field db-view-filter-value"
+    const valueText = document.createElement("span")
+    valueText.textContent = locale.value
+    const valueInput = document.createElement("input")
+    valueInput.className = "b3-text-field"
+    valueLabel.append(valueText, valueInput)
+
+    const actions = document.createElement("div")
+    actions.className = "db-view-filter-actions"
+    const apply = document.createElement("button")
+    apply.type = "button"
+    apply.className = "b3-button b3-button--outline"
+    apply.textContent = locale.apply
+    const reset = document.createElement("button")
+    reset.type = "button"
+    reset.className = "b3-button b3-button--cancel"
+    reset.textContent = locale.reset
+    actions.append(apply, reset)
+
+    const currentField = () => fields.find((field: FilterField) => field.id === fieldSelect.value) || fields[0]
+    const syncOperators = () => {
+      const field = currentField()
+      operatorSelect.replaceChildren()
+      field.operators.forEach((operator) => {
+        const option = document.createElement("option")
+        option.value = operator
+        option.textContent = locale[operator] || operator
+        operatorSelect.appendChild(option)
+      })
+      valueInput.type = field.type === "date" ? "date" : field.type === "number" ? "number" : "text"
+      valueInput.setAttribute("aria-label", `${locale.value} · ${field.name}`)
+    }
+
+    const renderFiltered = () => {
+      const field = currentField()
+      const operator = operatorSelect.value as ViewFilter["operator"]
+      const query = valueInput.value.trim()
+      if (!query || !field.operators.includes(operator)) {
+        status.textContent = locale.invalid
+        return
+      }
+      const filtered = filterViewSnapshot(item.view, type, { fieldId: field.id, operator, query })
+      showView(filtered)
+      const count = resultCount(filtered, type)
+      status.textContent = count === 0 ? locale.noResults : `${locale.results}: ${count}`
+    }
+
+    fieldSelect.addEventListener("change", syncOperators)
+    apply.addEventListener("click", renderFiltered)
+    valueInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault()
+        renderFiltered()
+      }
+    })
+    reset.addEventListener("click", () => {
+      valueInput.value = ""
+      status.textContent = ""
+      showView(item.view)
+    })
+
+    toolbar.append(fieldLabel, operatorLabel, valueLabel, actions)
+    container.appendChild(toolbar)
+    container.appendChild(status)
+    syncOperators()
+    showView(item.view)
+  }
+
   const createDataViews = (dataTableEl: HTMLElement, currentDataTable: any) => {
     const dataTableId = dataTableEl.getAttribute("data-av-id")
     if (!dataTableId) {
@@ -416,7 +591,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
       tabContent.dataset.viewId = viewId
       tabContent.dataset.viewType = type
       tabContent.setAttribute("aria-label", tabButton.textContent)
-      renderView(tabContent, item)
+      createFilterEditor(tabContent, item, type)
       tabContentsContainer.appendChild(tabContent)
     })
 
