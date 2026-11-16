@@ -163,131 +163,289 @@ export default defineNuxtPlugin(({ vueApp }) => {
     }
   }
 
-  const createTable = (dataTableEl: HTMLElement, currentDataTable: any) => {
-    const dataTableId = dataTableEl.getAttribute("data-av-id")
-    // const defaultViewId = dataTableEl.getAttribute("custom-sy-av-view")
-    // logger.debug(`start createTable for ${dataTableId} =>view:${dataTableId}`)
-    logger.debug(`start createTable for ${dataTableId}`)
+  const SUPPORTED_VIEW_TYPES = ["table", "list", "gallery", "kanban", "calendar"]
 
-    // 创建 Tabs 容器和内容容器
+  const resolveViewType = (item: any) => {
+    const listed = item?.views?.find((view: any) => view.id === item?.view?.id)
+    return listed?.type || item?.viewType || item?.view?.type || "unknown"
+  }
+
+  const setSafeHtml = (element: HTMLElement, html: string) => {
+    element.innerHTML = html || ""
+  }
+
+  const setSafeCellContent = (element: HTMLElement, cell: any) => {
+    const plainTypes = ["block", "text", "number", "date", "created", "updated"]
+    if (plainTypes.includes(cell?.valueType)) {
+      element.textContent = getCellContent(cell) || ""
+      return
+    }
+    setSafeHtml(element, getCellContent(cell))
+  }
+
+  const getCardValue = (card: any, field: any) => {
+    return (card?.values || []).find((value: any) => {
+      return value?.keyID === field?.id || value?.value?.keyID === field?.id
+    })
+  }
+
+  const createCard = (card: any, fields: any[], className: string) => {
+    const article = document.createElement("article")
+    article.className = className
+    article.setAttribute("data-card-id", card?.id || "")
+
+    if (card?.coverURL) {
+      const cover = document.createElement("img")
+      cover.className = "db-view-card-cover"
+      cover.src = card.coverURL
+      cover.alt = ""
+      article.appendChild(cover)
+    }
+
+    const body = document.createElement("div")
+    body.className = "db-view-card-body"
+    fields.forEach((field: any) => {
+      const value = getCardValue(card, field)
+      if (!value) {
+        return
+      }
+      const row = document.createElement("div")
+      row.className = "db-view-card-field"
+      const label = document.createElement("span")
+      label.className = "db-view-card-label"
+      label.textContent = field.name || ""
+      const content = document.createElement("span")
+      content.className = "db-view-card-value"
+      setSafeCellContent(content, { valueType: value.valueType, value: value.value })
+      row.append(label, content)
+      body.appendChild(row)
+    })
+    article.appendChild(body)
+    return article
+  }
+
+  const renderTable = (container: HTMLElement, view: any) => {
+    const table = document.createElement("table")
+    table.className = "db-data-table"
+    const thead = document.createElement("thead")
+    const headerRow = document.createElement("tr")
+    ;(view?.columns || []).forEach((column: any) => {
+      const th = document.createElement("th")
+      th.textContent = column.name || ""
+      headerRow.appendChild(th)
+    })
+    thead.appendChild(headerRow)
+    table.appendChild(thead)
+
+    const tbody = document.createElement("tbody")
+    ;(view?.rows || []).forEach((row: any) => {
+      const tr = document.createElement("tr")
+      ;(view?.columns || []).forEach((_column: any, index: number) => {
+        const td = document.createElement("td")
+        setSafeCellContent(td, row.cells?.[index])
+        tr.appendChild(td)
+      })
+      tbody.appendChild(tr)
+    })
+    table.appendChild(tbody)
+    container.appendChild(table)
+  }
+
+  const renderList = (container: HTMLElement, view: any) => {
+    const list = document.createElement("ol")
+    list.className = "db-data-list"
+    ;(view?.rows || []).forEach((row: any) => {
+      const item = document.createElement("li")
+      item.className = "db-data-list-item"
+      ;(row.cells || []).forEach((cell: any, index: number) => {
+        const value = document.createElement("span")
+        value.className = "db-data-list-value"
+        value.setAttribute("data-column-index", String(index))
+        setSafeCellContent(value, cell)
+        item.appendChild(value)
+      })
+      list.appendChild(item)
+    })
+    container.appendChild(list)
+  }
+
+  const renderGallery = (container: HTMLElement, view: any) => {
+    const gallery = document.createElement("div")
+    gallery.className = "db-data-gallery"
+    ;(view?.cards || []).forEach((card: any) => {
+      gallery.appendChild(createCard(card, view?.fields || [], "db-view-card db-view-gallery-card"))
+    })
+    container.appendChild(gallery)
+  }
+
+  const renderKanban = (container: HTMLElement, view: any) => {
+    const board = document.createElement("div")
+    board.className = "db-data-kanban"
+    const groups = view?.groups?.length ? view.groups : [{ name: "", cards: view?.cards || [], fields: view?.fields || [] }]
+    groups.forEach((group: any) => {
+      const column = document.createElement("section")
+      column.className = "db-view-kanban-column"
+      const heading = document.createElement("h3")
+      heading.className = "db-view-kanban-heading"
+      const groupText = group.groupValue?.text?.content || group.name || ""
+      heading.textContent = groupText === "_@default@_" ? "未分类" : groupText
+      column.appendChild(heading)
+      const cards = document.createElement("div")
+      cards.className = "db-view-kanban-cards"
+      ;(group.cards || []).forEach((card: any) => {
+        cards.appendChild(createCard(card, group.fields || view?.fields || [], "db-view-card db-view-kanban-card"))
+      })
+      column.appendChild(cards)
+      board.appendChild(column)
+    })
+    container.appendChild(board)
+  }
+
+  const renderCalendar = (container: HTMLElement, view: any) => {
+    const calendar = document.createElement("div")
+    calendar.className = "db-data-calendar"
+    const dateKeyID = view?.calendar?.dateKeyID
+    const columns = view?.columns || []
+    const dateIndex = columns.findIndex((column: any) => column.id === dateKeyID)
+    const groups = new Map<string, any[]>()
+    ;(view?.rows || []).forEach((row: any) => {
+      const dateCell = dateIndex >= 0 ? row.cells?.[dateIndex] : row.cells?.find((cell: any) => cell.valueType === "date")
+      const dateLabel = getCellContent(dateCell) || "未设置日期"
+      const values = groups.get(dateLabel) || []
+      values.push(row)
+      groups.set(dateLabel, values)
+    })
+    groups.forEach((rows, dateLabel) => {
+      const section = document.createElement("section")
+      section.className = "db-view-calendar-day"
+      const heading = document.createElement("h3")
+      heading.className = "db-view-calendar-heading"
+      heading.textContent = dateLabel
+      section.appendChild(heading)
+      const list = document.createElement("ul")
+      list.className = "db-view-calendar-items"
+      rows.forEach((row: any) => {
+        const item = document.createElement("li")
+        item.className = "db-view-calendar-item"
+        const primary = row.cells?.find((cell: any) => cell.valueType === "block" || cell.valueType === "text")
+        setSafeCellContent(item, primary || { valueType: "text", value: { text: { content: row.id || "" } } })
+        list.appendChild(item)
+      })
+      section.appendChild(list)
+      calendar.appendChild(section)
+    })
+    if (!groups.size) {
+      const empty = document.createElement("p")
+      empty.className = "db-view-empty"
+      empty.textContent = "暂无日期数据"
+      calendar.appendChild(empty)
+    }
+    container.appendChild(calendar)
+  }
+
+  const renderUnsupported = (container: HTMLElement, type: string, item: any) => {
+    const fallback = document.createElement("div")
+    fallback.className = "db-view-unsupported"
+    fallback.setAttribute("role", "status")
+    fallback.textContent = `暂不支持数据库视图类型：${type || "unknown"}（${item?.view?.name || "未命名视图"}）`
+    container.appendChild(fallback)
+  }
+
+  const renderView = (container: HTMLElement, item: any) => {
+    const type = resolveViewType(item)
+    container.dataset.viewType = type
+    switch (type) {
+      case "table":
+        renderTable(container, item.view)
+        break
+      case "list":
+        renderList(container, item.view)
+        break
+      case "gallery":
+        renderGallery(container, item.view)
+        break
+      case "kanban":
+        renderKanban(container, item.view)
+        break
+      case "calendar":
+        renderCalendar(container, item.view)
+        break
+      default:
+        renderUnsupported(container, type, item)
+    }
+  }
+
+  const createDataViews = (dataTableEl: HTMLElement, currentDataTable: any) => {
+    const dataTableId = dataTableEl.getAttribute("data-av-id")
+    if (!dataTableId) {
+      return
+    }
+
     const tabsContainer = document.createElement("div")
     tabsContainer.id = `db-tabs-${dataTableId}`
     tabsContainer.className = "db-tabs"
-
     const tabContentsContainer = document.createElement("div")
     tabContentsContainer.id = `db-tab-contents-${dataTableId}`
     tabContentsContainer.className = "db-tab-contents"
+    dataTableEl.append(tabsContainer, tabContentsContainer)
 
-    // 创建表格标题
-    const tableTitle = document.createElement("div")
-    tableTitle.id = `db-title-${dataTableId}`
-    tableTitle.className = "db-tabs-title"
-    tableTitle.innerText = "Table Title"
-    dataTableEl.appendChild(tableTitle)
+    const activate = (viewId: string) => {
+      tabsContainer.querySelectorAll(".db-tab-button").forEach(button => button.classList.remove("active"))
+      tabContentsContainer.querySelectorAll(".db-tab-content").forEach(content => content.classList.remove("active"))
+      tabsContainer.querySelector(`[data-tab-id="${viewId}"]`)?.classList.add("active")
+      tabContentsContainer.querySelector(`[data-view-id="${viewId}"]`)?.classList.add("active")
+    }
 
-    // Add the tabs container and contents container to the DOM
-    dataTableEl.appendChild(tabsContainer)
-    dataTableEl.appendChild(tabContentsContainer)
-
-    // 动态生成 Tabs 和表格内容
-    const views = currentDataTable.order
-    logger.debug(`Found views: ${views} for datatable=>${dataTableId}`)
-    views.forEach((viewId: any) => {
-      logger.debug(`start create view: ${viewId} for datatable=>${dataTableId}`)
+    ;(currentDataTable.order || []).forEach((viewId: string) => {
       const item = currentDataTable[viewId]
-      tableTitle.innerText = item.name
-
-      // 创建 Tab 按钮
-      const tabButton = document.createElement("button")
-      tabButton.className = "db-tab-button"
-      tabButton.innerText = item.view.name || item.name
-      tabButton.dataset.tabId = viewId
-      tabButton.onclick = () => {
-        // 仅在当前 dataTableEl 内查找
-        const allTabs = tabsContainer.querySelectorAll(".db-tab-button")
-        const allTabContents = tabContentsContainer.querySelectorAll(".db-tab-content")
-
-        allTabs.forEach(btn => btn.classList.remove("active"))
-        allTabContents.forEach(content => content.classList.remove("active"))
-
-        tabButton.classList.add("active")
-        document.getElementById(`db-content-${viewId}`)?.classList.add("active")
+      if (!item) {
+        return
       }
+      const type = resolveViewType(item)
+      const tabButton = document.createElement("button")
+      tabButton.type = "button"
+      tabButton.className = "db-tab-button"
+      tabButton.dataset.tabId = viewId
+      tabButton.dataset.viewType = type
+      tabButton.textContent = item.view?.name || item.name || type
+      tabButton.onclick = () => activate(viewId)
       tabsContainer.appendChild(tabButton)
 
-      // 创建表格内容
-      const tabContent = document.createElement("div")
+      const tabContent = document.createElement("section")
       tabContent.className = "db-tab-content"
-      tabContent.id = `db-content-${viewId}`
-      tabContent.style.display = "none"
-
-      const table = document.createElement("table")
-      table.className = "db-data-table"
-
-      // 创建表头
-      const thead = document.createElement("thead")
-      const headerRow = document.createElement("tr")
-      item.view.columns.forEach((col: any) => {
-        const th = document.createElement("th")
-        th.innerText = col.name || ""
-        headerRow.appendChild(th)
-      })
-      thead.appendChild(headerRow)
-      table.appendChild(thead)
-
-      // 创建表格主体
-      const tbody = document.createElement("tbody")
-      item.view.rows.forEach((row: any) => {
-        const tr = document.createElement("tr")
-        item.view.columns.forEach((col: any, colIndex: number) => {
-          const td = document.createElement("td")
-          const cell = row.cells[colIndex]
-
-          td.innerHTML = getCellContent(cell) || ""
-          tr.appendChild(td)
-        })
-        tbody.appendChild(tr)
-      })
-      table.appendChild(tbody)
-
-      tabContent.appendChild(table)
+      tabContent.dataset.viewId = viewId
+      tabContent.dataset.viewType = type
+      tabContent.setAttribute("aria-label", tabButton.textContent)
+      renderView(tabContent, item)
       tabContentsContainer.appendChild(tabContent)
     })
 
-    // 默认激活第一个 Tab 和内容
-    const firstTab = tabsContainer.querySelector(".db-tab-button")
-    const firstContent = tabContentsContainer.querySelector(".db-tab-content")
-    if (firstTab && firstContent) {
-      firstTab.classList.add("active")
-      firstContent.classList.add("active")
+    const firstViewId = currentDataTable.order?.[0]
+    if (firstViewId) {
+      activate(firstViewId)
     }
   }
 
   vueApp.directive("db", {
-    mounted (el, binding) {
-      // 获取数据库数据集合
+    mounted (el) {
       const dataTableStr = el.getAttribute("data-dataviews")
       if (StrUtil.isEmptyString(dataTableStr)) {
         return
       }
       const dataTableDatas = JsonUtil.safeParse<any>(dataTableStr, {} as any)
-      logger.debug("Found dataTableDatas: ", dataTableDatas)
-      // 渲染元素
-      const dataTables = el.querySelectorAll("div[data-av-type='table']")
-      // logger.debug("find dataTables:", dataTables)
+      const dataTables = el.querySelectorAll("div[data-av-type]")
       dataTables.forEach((dataTableEl: any) => {
         const dataTableId = dataTableEl.getAttribute("data-av-id")
-        logger.debug(`Found dataTable: ${dataTableId}`)
-        if (!dataTableId) {
+        const dataAvType = dataTableEl.getAttribute("data-av-type")
+        if (!dataTableId || !SUPPORTED_VIEW_TYPES.includes(dataAvType)) {
           return
         }
         const currentDataTable = dataTableDatas[dataTableId]
-        if (!currentDataTable) {
+        if (!currentDataTable || dataTableEl.dataset.dbRendered === "true") {
           return
         }
-        logger.debug("Found currentDataTable =>", currentDataTable)
-        createTable(dataTableEl, currentDataTable)
-        // 处理数据库图谱
+        dataTableEl.dataset.dbRendered = "true"
+        createDataViews(dataTableEl, currentDataTable)
         addClientAssetsPrefix(dataTableEl)
       })
     },

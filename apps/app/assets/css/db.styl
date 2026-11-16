@@ -149,3 +149,123 @@ html[data-theme-mode="dark"]
 
   .db-phone-value
     color inherit
+
+/* 多视图只读渲染 */
+.db-data-list
+  display flex
+  flex-direction column
+  gap 8px
+  margin 12px 0
+  padding 0 0 0 24px
+
+.db-data-list-item
+  padding 10px 12px
+  border: 1px solid var(--b3-border-color)
+  border-radius 6px
+  background var(--b3-theme-surface)
+
+.db-data-list-value
+  display inline-block
+  margin-right 14px
+
+.db-data-gallery
+  display grid
+  grid-template-columns repeat(auto-fill, minmax(220px, 1fr))
+  gap 12px
+  padding 12px 0
+
+.db-view-card
+  display flex
+  flex-direction column
+  min-width 0
+  overflow hidden
+  border 1px solid var(--b3-border-color)
+  border-radius 8px
+  background var(--b3-theme-surface)
+
+.db-view-card-cover
+  width 100%
+  max-height 160px
+  object-fit cover
+
+.db-view-card-body
+  display flex
+  flex-direction column
+  gap 6px
+  padding 10px
+
+.db-view-card-field
+  display grid
+  grid-template-columns minmax(70px, 35%) 1fr
+  gap 8px
+  align-items start
+
+.db-view-card-label
+  color var(--b3-theme-on-surface-light)
+  font-size 12px
+
+.db-view-card-value
+  min-width 0
+  overflow-wrap anywhere
+
+.db-data-kanban
+  display flex
+  gap 12px
+  overflow-x auto
+  padding 12px 0
+
+.db-view-kanban-column
+  flex 0 0 260px
+  min-height 120px
+  padding 10px
+  border 1px solid var(--b3-border-color)
+  border-radius 8px
+  background var(--b3-theme-surface-lighter)
+
+.db-view-kanban-heading,
+.db-view-calendar-heading
+  margin 0 0 8px
+  font-size 15px
+  font-weight 600
+
+.db-view-kanban-cards
+  display flex
+  flex-direction column
+  gap 8px
+
+.db-view-kanban-card
+  background var(--b3-theme-surface)
+
+.db-data-calendar
+  display flex
+  flex-direction column
+  gap 12px
+  padding 12px 0
+
+.db-view-calendar-day
+  padding 10px 12px
+  border-left 3px solid var(--b3-theme-primary)
+  border-radius 4px
+  background var(--b3-theme-surface-lighter)
+
+.db-view-calendar-items
+  display flex
+  flex-direction column
+  gap 6px
+  margin 0
+  padding-left 20px
+
+.db-view-calendar-item
+  overflow-wrap anywhere
+
+.db-view-empty,
+.db-view-unsupported
+  padding 16px
+  border: 1px dashed var(--b3-border-color)
+  border-radius 6px
+  color var(--b3-theme-on-surface-light)
+
+.db-tab-content[data-view-type="gallery"],
+.db-tab-content[data-view-type="kanban"],
+.db-tab-content[data-view-type="calendar"]
+  width 100%
