@@ -11,7 +11,7 @@
 import { isPublicConfigurationError } from "~/utils/publicConnection"
 import { documentMedia } from "~/utils/documentMedia"
 import { JsonUtil, ObjectUtil } from "zhi-common"
-import { computed, reactive, ref, watch } from "vue"
+import { computed, ref, watch } from "vue"
 import { checkExpires } from "~/utils/utils"
 import { useStaticSettingStore } from "~/stores/useStaticSettingStore"
 import AppConfig from "~/app.config"
@@ -55,19 +55,17 @@ const currentDocId = computed(() => {
   return routeId
 })
 
-const formData = reactive({
-  post: {} as any,
-  setting: {} as any,
-
+const formData = useState<any>(`static-detail:${currentDocId.value}`, () => ({
+  post: {},
+  setting: {},
   isShared: true,
   isExpires: false,
-
   // 密码授权
   shareOptions: {
     passwordEnabled: false,
     password: "",
-  }
-})
+  },
+})).value
 const isLoading = ref(__SIYUAN_SPA_TARGET__)
 
 const getPostData = async (id: string) => {

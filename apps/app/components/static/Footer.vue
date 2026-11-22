@@ -21,7 +21,7 @@ const props = defineProps<{ setting: typeof AppConfig }>()
 // uses
 const { t } = useI18n()
 const { providerMode } = useProviderMode()
-const selfHosted=useRuntimeConfig().public.connectionSync
+const selfHosted = providerMode
 const { getHome } = useBaseUrl()
 const { colorMode, toggleDark } = useClientThemeMode(props.setting)
 
