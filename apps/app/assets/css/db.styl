@@ -417,3 +417,41 @@
 .db-view-search-clear svg
   width 14px
   height 14px
+
+// 原生只读样式会隐藏管理视图入口；分享页单独呈现已发布视图的导航按钮。
+.protyle-wysiwyg[data-readonly=true] .av .av__views > button.block__icon.av__views-switcher--all[data-type=av-switcher]
+  display inline-flex
+  gap 4px
+
+.db-view-switcher
+  position fixed
+  inset auto
+  margin 0
+  box-sizing border-box
+  width 290px
+  max-width calc(100vw - 16px)
+  max-height calc(100vh - 16px)
+  overflow auto
+  padding 8px
+
+.db-view-switcher input.db-view-switcher-search
+  width 100%
+  box-sizing border-box
+  margin-bottom 8px
+
+.db-view-switcher-heading
+  border-top 1px solid var(--b3-border-color)
+  padding 8px 6px 3px
+
+.db-view-switcher .db-view-switcher-item
+  gap 8px
+
+.db-view-switcher-item[hidden],
+.db-view-switcher .db-view-filter-status[hidden]
+  display none
+
+.db-view-switcher-item svg
+  width 14px
+  height 14px
+  flex none
+  color var(--b3-theme-on-surface)

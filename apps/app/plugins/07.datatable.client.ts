@@ -8,6 +8,7 @@
  */
 
 import { resolveDatabaseRecordDetail } from "~/utils/databaseRecordDetail"
+import { openDatabaseViewSwitcher } from "~/plugins/libs/dataview/viewSwitcher"
 import { openDatabaseRecordPanel } from "~/plugins/libs/dataview/recordPanel"
 import { openDatabaseSortMenu } from "~/plugins/libs/dataview/sortMenu"
 import { openDatabaseFilterMenu } from "~/plugins/libs/dataview/filterMenu"
@@ -85,6 +86,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
   let closeFilter: (() => void) | null = null
   let closeSort: (() => void) | null = null
   let closeDetail: (() => void) | null = null
+  let closeViewSwitcher: (() => void) | null = null
 
   const renderUnsupported = (container: HTMLElement, type: string, item: any) => {
     container.className = "db-view-unsupported"
@@ -155,11 +157,22 @@ export default defineNuxtPlugin(({ vueApp }) => {
         onActivate: (nextViewId: string) => {
           closeFilter?.()
           closeSort?.()
+          closeViewSwitcher?.()
           render(nextViewId)
+        },
+        onSwitchViews: (anchor, views) => {
+          if (closeViewSwitcher) { closeViewSwitcher(); return }
+          closeFilter?.()
+          closeSort?.()
+          closeViewSwitcher = openDatabaseViewSwitcher(anchor, views, viewId, nextViewId => {
+            if (nextViewId !== viewId) render(nextViewId)
+            dataTableEl.querySelector<HTMLButtonElement>('button[data-type="av-switcher"]')?.focus({ preventScroll: true })
+          }, () => { closeViewSwitcher = null })
         },
         onSort: (anchor: HTMLButtonElement) => {
           if (closeSort) { closeSort(); return }
           closeFilter?.()
+          closeViewSwitcher?.()
           const rules = sort ?? []
           activeSorts.set(viewId, rules)
           const getAnchor = () => dataTableEl.querySelector<HTMLButtonElement>('button[data-type="av-sort"]')
@@ -177,6 +190,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         onFilter: (anchor: HTMLElement) => {
           if (closeFilter) { closeFilter(); return }
           closeSort?.()
+          closeViewSwitcher?.()
           const root = filter || { kind: "group", join: "and", rules: [] }
           activeFilters.set(viewId, root)
           const getAnchor = () => dataTableEl.querySelector<HTMLButtonElement>('button[data-type="av-filter"]')
@@ -195,6 +209,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
       closeFilter?.()
       closeSort?.()
       closeDetail?.()
+      closeViewSwitcher?.()
     },
     mounted (el) {
       const dataTableStr = el.getAttribute("data-dataviews")

@@ -1,3 +1,4 @@
+import type { AvViewOption } from "./viewSwitcher"
 import { readDatabaseCardCell, readDatabaseRowCell } from "~/utils/databaseRecordDetail"
 import { createDatabaseSearchControl } from "./searchControl"
 import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
@@ -123,8 +124,6 @@ const setAttrs = (element: HTMLElement, attrs: Record<string, string | number | 
 }
 
 const resolveViewType = (item: any) => String(item?.viewType || "unknown")
-
-const viewMeta = (item: any, _viewId: string) => item
 
 const resolveCell = (cell: any) => {
   if (cell?.value !== undefined) {
@@ -389,84 +388,86 @@ const createCell = (rawCell: any, field: any, className = "av__cell") => {
   return { cell, hasValue }
 }
 
-const createViewTabs = (item: any, activeViewId: string, onActivate: (viewId: string) => void) => {
+const VIEW_LABELS: Record<string, string> = { table: "表格", list: "列表", gallery: "卡片", kanban: "看板", calendar: "日历" }
+
+export const getNativeViewOptions = (item: any): AvViewOption[] => (item?.order || []).flatMap((id: string) => {
+  const entry = item[id]
+  const type = resolveViewType(entry)
+  if (!entry || !SUPPORTED_VIEW_TYPES.includes(type)) return []
+  return [{ id, type, name: entry.name || VIEW_LABELS[type], iconName: VIEW_ICONS[type], pageSize: entry.pageSize, desc: entry.desc }]
+})
+
+const createViewTabs = (views: AvViewOption[], activeViewId: string, onActivate: (viewId: string) => void) => {
   const bar = tag("div", "layout-tab-bar fn__flex")
-  ;(item?.order || []).forEach((viewId: string) => {
-    const entry = item?.[viewId]
-    const view = entry?.view || entry
-    if (!view) {
-      return
-    }
-    const meta = viewMeta(entry, viewId)
-    const type = resolveViewType(item?.[viewId])
-    const tab = tag("div", `ariaLabel item${viewId === activeViewId ? " item--focus" : ""}`)
-    tab.setAttribute("draggable", "true")
+  views.forEach(view => {
+    const tab = tag("div", `ariaLabel item${view.id === activeViewId ? " item--focus" : ""}`)
     setAttrs(tab, {
       "data-position": "north",
-      "data-av-type": type,
-      "data-id": viewId,
-      "data-page": meta?.pageSize || 50,
-      "data-desc": meta?.desc || "",
+      "data-av-type": view.type,
+      "data-id": view.id,
+      "data-page": view.pageSize || 50,
+      "data-desc": view.desc || "",
     })
-    const graphic = createSvg("item__graphic", VIEW_ICONS[type] || "iconTable")
+    const graphic = createSvg("item__graphic", view.iconName)
     const text = tag("span", "item__text")
-    text.textContent = meta?.name || type
+    text.textContent = view.name
     tab.append(graphic, text)
-    tab.addEventListener("click", () => onActivate(viewId))
+    tab.addEventListener("click", () => onActivate(view.id))
     bar.appendChild(tab)
   })
   return bar
 }
 
-type AvToolbarState = { hasFilter?: boolean; hasSort?: boolean; searchQuery?: string }
+type AvToolbarOptions = {
+  hasFilter?: boolean
+  hasSort?: boolean
+  searchQuery?: string
+  onFilter: (anchor: HTMLElement) => void
+  onSort: (anchor: HTMLButtonElement) => void
+  onSearch: (query: string) => void
+  onActivate: (viewId: string) => void
+  onSwitchViews: (anchor: HTMLButtonElement, views: AvViewOption[]) => void
+}
 
 type AvRecordActions = {
   onOpen?: (recordId: string, opener: HTMLElement) => void
   onCopy?: (text: string) => void
 }
 
-const createToolbar = (
-  item: any,
-  activeViewId: string,
-  onFilter: (anchor: HTMLElement) => void,
-  onSort: (anchor: HTMLButtonElement) => void,
-  state: AvToolbarState,
-  onSearch: (query: string) => void,
-  onActivate: (viewId: string) => void,
-) => {
+const createToolbar = (item: any, activeViewId: string, options: AvToolbarOptions) => {
   const views = tag("div", "fn__flex av__views")
+  const publishedViews = getNativeViewOptions(item)
 
   const selection = tag("div", "av__selection-toolbar")
   const count = tag("span", "av__selection-count")
   selection.appendChild(count)
   views.appendChild(selection)
 
-  views.appendChild(createViewTabs(item, activeViewId, onActivate))
-
-  views.appendChild(tag("div", "fn__space"))
-
-  const addView = tag("span", "block__icon ariaLabel")
-  setAttrs(addView, { "data-type": "av-add", "data-position": "8south", "aria-label": "添加视图" })
-  addView.innerHTML = icon("iconAdd")
-  views.appendChild(addView)
-
+  views.appendChild(createViewTabs(publishedViews, activeViewId, options.onActivate))
   views.appendChild(tag("div", "fn__flex-1"))
 
-  const switcher = tag("span", "ariaLabel block__icon av__views-switcher--all")
-  setAttrs(switcher, { "data-type": "av-switcher", "aria-label": "所有视图", "data-position": "8south" })
-  switcher.innerHTML = `${icon("iconEye")}<span class="fn__space"></span><small>${item?.order?.length || 0}/${item?.order?.length || 0}</small>`
-  views.appendChild(switcher)
-
+  if (publishedViews.length) {
+    const switcher = tag("button", "ariaLabel block__icon av__views-switcher--all")
+    switcher.type = "button"
+    setAttrs(switcher, { "data-type": "av-switcher", "aria-label": "切换视图", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
+    switcher.innerHTML = `${icon("iconEye")}<small>${publishedViews.length}/${publishedViews.length}</small>`
+    switcher.addEventListener("click", event => {
+      event.preventDefault()
+      event.stopPropagation()
+      options.onSwitchViews(switcher, publishedViews)
+    })
+    views.appendChild(switcher)
+  }
   views.appendChild(tag("div", "fn__space"))
 
-  const filter = tag("button", `ariaLabel block__icon av__readonly-filter${state.hasFilter ? " block__icon--active" : ""}`)
+  const filter = tag("button", `ariaLabel block__icon av__readonly-filter${options.hasFilter ? " block__icon--active" : ""}`)
   filter.type = "button"
   setAttrs(filter, { "data-type": "av-filter", "aria-label": "筛选", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
   filter.innerHTML = icon("iconFilter")
   filter.addEventListener("click", (event) => {
     event.preventDefault()
     event.stopPropagation()
-    onFilter(filter)
+    options.onFilter(filter)
   })
   views.appendChild(filter)
 
@@ -479,20 +480,20 @@ const createToolbar = (
 
   views.appendChild(tag("div", "fn__space"))
 
-  const sort = tag("button", `ariaLabel block__icon av__readonly-sort${state.hasSort ? " block__icon--active" : ""}`)
+  const sort = tag("button", `ariaLabel block__icon av__readonly-sort${options.hasSort ? " block__icon--active" : ""}`)
   sort.type = "button"
   setAttrs(sort, { "data-type": "av-sort", "aria-label": "排序", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
   sort.innerHTML = icon("iconSort")
   sort.addEventListener("click", (event) => {
     event.preventDefault()
     event.stopPropagation()
-    onSort(sort)
+    options.onSort(sort)
   })
   views.appendChild(sort)
 
   views.appendChild(tag("div", "fn__space"))
 
-  const { button: searchButton, search } = createDatabaseSearchControl(icon, state.searchQuery ?? "", onSearch)
+  const { button: searchButton, search } = createDatabaseSearchControl(icon, options.searchQuery ?? "", options.onSearch)
   views.append(searchButton, search)
 
   views.appendChild(tag("div", "fn__space"))
@@ -519,15 +520,7 @@ const createToolbar = (
   return views
 }
 
-const createHeader = (
-  item: any,
-  currentViewId: string,
-  onFilter: (anchor: HTMLElement) => void,
-  onSort: (anchor: HTMLButtonElement) => void,
-  state: AvToolbarState,
-  onSearch: (query: string) => void,
-  onActivate: (viewId: string) => void,
-) => {
+const createHeader = (item: any, currentViewId: string, options: AvToolbarOptions) => {
   const meta = item?.view || {}
   const header = tag("div", "av__header")
   setAttrs(header, {
@@ -536,7 +529,7 @@ const createHeader = (
     "data-view-count": item?.order?.length || 0,
     "data-view-ids": (item?.order || []).join(","),
   })
-  header.appendChild(createToolbar(item, currentViewId, onFilter, onSort, state, onSearch, onActivate))
+  header.appendChild(createToolbar(item, currentViewId, options))
 
   const title = tag("div", "av__title")
   title.setAttribute("contenteditable", "false")
@@ -1356,12 +1349,7 @@ export const updateNativeAvResults = (target: HTMLElement, item: any, actions: A
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: AvToolbarState & AvRecordActions & {
-    onFilter: (anchor: HTMLElement) => void
-    onSort: (anchor: HTMLButtonElement) => void
-    onSearch: (query: string) => void
-    onActivate: (viewId: string) => void
-  },
+  options: AvToolbarOptions & AvRecordActions,
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1378,7 +1366,7 @@ export const mountNativeAv = (
   })
   target.dataset.viewType = type
 
-  const header = createHeader(item, currentViewId, options.onFilter, options.onSort, options, options.onSearch, options.onActivate)
+  const header = createHeader(item, currentViewId, options)
   const containerClass = type === "gallery" || type === "kanban" || type === "calendar"
     ? "av__container fn__block"
     : "av__container"
