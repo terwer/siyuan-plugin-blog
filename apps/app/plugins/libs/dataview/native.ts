@@ -168,7 +168,7 @@ const jsonValue = (value: any) => {
   }
 }
 
-const appendCopyAction = (cell: HTMLElement) => {
+const appendCopyAction = (cell: HTMLElement, text = "") => {
   const button = tag("button", "av__cell-action ariaLabel")
   button.type = "button"
   setAttrs(button, {
@@ -177,6 +177,7 @@ const appendCopyAction = (cell: HTMLElement) => {
     "data-type": "copy",
   })
   button.innerHTML = icon("iconCopy")
+  ;(button as any).__copyText = text
   cell.appendChild(button)
 }
 
@@ -261,7 +262,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       appendRowActions(cellprimary, value)
       primary.appendChild(cellprimary)
       cell.appendChild(primary)
-      appendCopyAction(cell)
+      appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "number": {
@@ -273,7 +274,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       text.setAttribute("data-content", String(number.content))
       text.textContent = number.formattedContent || String(number.content)
       cell.appendChild(text)
-      appendCopyAction(cell)
+      appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "date":
@@ -287,7 +288,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       text.setAttribute("data-value", jsonValue(date))
       text.textContent = dateText(date)
       cell.appendChild(text)
-      appendCopyAction(cell)
+      appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "select":
@@ -300,7 +301,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       items.forEach((item: any) => {
         renderSelectText(cell, item, resolved.color, resolved.bgColor)
       })
-      appendCopyAction(cell)
+      appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "mAsset": {
@@ -354,7 +355,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       const span = tag("span", "av__celltext")
       span.textContent = text
       cell.appendChild(span)
-      appendCopyAction(cell)
+      appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "relation":
@@ -376,7 +377,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       const span = tag("span", "av__celltext")
       span.textContent = text
       cell.appendChild(span)
-      appendCopyAction(cell)
+      appendCopyAction(cell, valueToText(rawCell))
       return true
     }
   }
@@ -440,6 +441,8 @@ const createToolbar = (
   item: any,
   activeViewId: string,
   onFilter: (anchor: HTMLElement) => void,
+  onSort: (anchor: HTMLElement) => void,
+  onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
   const views = tag("div", "fn__flex av__views")
@@ -489,6 +492,11 @@ const createToolbar = (
   const sort = tag("span", "ariaLabel block__icon av__readonly-sort")
   setAttrs(sort, { "data-type": "av-sort", "aria-label": "临时排序", "data-position": "8south" })
   sort.innerHTML = icon("iconSort")
+  sort.addEventListener("click", (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    onSort(sort)
+  })
   views.appendChild(sort)
 
   views.appendChild(tag("div", "fn__space"))
@@ -505,6 +513,8 @@ const createToolbar = (
   input.setAttribute("contenteditable", "plaintext-only")
   input.setAttribute("data-type", "av-search")
   input.setAttribute("placeholder", "搜索...")
+  input.setAttribute("role", "searchbox")
+  input.setAttribute("aria-label", "搜索")
   input.style.width = "0"
   input.style.paddingLeft = "0"
   input.style.paddingRight = "0"
@@ -514,6 +524,36 @@ const createToolbar = (
   clear.style.width = "1em"
   search.append(input, clear)
   views.appendChild(search)
+  const openSearch = () => {
+    input.style.width = "160px"
+    input.style.paddingLeft = "8px"
+    input.style.paddingRight = "24px"
+    input.classList.add("av__search-input--active")
+    input.focus()
+  }
+  searchButton.addEventListener("click", (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    openSearch()
+  })
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      onSearch(input.textContent || "")
+      return
+    }
+    if (event.key === "Escape") {
+      input.textContent = ""
+      onSearch("")
+      input.blur()
+    }
+  })
+  clear.addEventListener("click", (event) => {
+    event.preventDefault()
+    input.textContent = ""
+    onSearch("")
+    openSearch()
+  })
 
   views.appendChild(tag("div", "fn__space"))
 
@@ -543,6 +583,8 @@ const createHeader = (
   item: any,
   currentViewId: string,
   onFilter: (anchor: HTMLElement) => void,
+  onSort: (anchor: HTMLElement) => void,
+  onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
   const meta = item?.view || {}
@@ -553,7 +595,7 @@ const createHeader = (
     "data-view-count": item?.order?.length || 0,
     "data-view-ids": (item?.order || []).join(","),
   })
-  header.appendChild(createToolbar(item, currentViewId, onFilter, onActivate))
+  header.appendChild(createToolbar(item, currentViewId, onFilter, onSort, onSearch, onActivate))
 
   const title = tag("div", "av__title")
   title.setAttribute("contenteditable", "false")
@@ -1335,7 +1377,7 @@ const enforceReadOnly = (target: HTMLElement) => {
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: { onFilter: (anchor: HTMLElement) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void },
+  options: { onFilter: (anchor: HTMLElement) => void; onSort: (anchor: HTMLElement) => void; onSearch: (query: string) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void; onCopy?: (text: string) => void },
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1352,7 +1394,7 @@ export const mountNativeAv = (
   })
   target.dataset.viewType = type
 
-  const header = createHeader(item, currentViewId, options.onFilter, options.onActivate)
+  const header = createHeader(item, currentViewId, options.onFilter, options.onSort, options.onSearch, options.onActivate)
   const body = !hasViewShape(item?.view, type)
     ? renderInvalidView(type)
     : isEmptyView(item.view, type)
@@ -1365,6 +1407,14 @@ export const mountNativeAv = (
   container.append(header, body || renderEmptyView(type))
   target.replaceChildren(container)
   enforceReadOnly(target)
+  target.querySelectorAll('[data-type="copy"]').forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      const text = String((button as any).__copyText || "")
+      options.onCopy?.(text)
+    })
+  })
   target.querySelectorAll('[data-type="av-row-open"]').forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault()

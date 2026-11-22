@@ -34,6 +34,10 @@ test('renderer 分支覆盖真实响应专属字段', () => {
   assert.match(source, /data-readonly-title/)
   assert.match(source, /当前视图暂无数据/)
   assert.match(source, /createSvg/)
+  assert.match(source, /onSort/)
+  assert.match(source, /onSearch/)
+  assert.match(source, /onCopy/)
+  assert.match(source, /navigator\.clipboard/)
 })
 
 test('未知类型只读回退不猜测为表格', () => {

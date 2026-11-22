@@ -7,6 +7,11 @@ export type ViewFilter = {
   query: string
 }
 
+export type ViewSort = {
+  fieldId: string
+  direction: "asc" | "desc"
+}
+
 export type FilterField = {
   id: string
   name: string
@@ -231,4 +236,66 @@ export const resultCount = (view: any, type: DatabaseViewType): number => {
   if (type === "gallery") return view?.cards?.length || 0
   if (type === "kanban") return (view?.groups || []).reduce((total: number, group: any) => total + (group.cards?.length || 0), 0)
   return view?.rows?.length || 0
+}
+
+const compareSortValues = (left: any, right: any): number => {
+  const leftValue = normalizeCellValue(left)
+  const rightValue = normalizeCellValue(right)
+  if (leftValue == null && rightValue == null) return 0
+  if (leftValue == null) return 1
+  if (rightValue == null) return -1
+  if (typeof leftValue === "number" && typeof rightValue === "number") return leftValue - rightValue
+  return String(leftValue).localeCompare(String(rightValue), "zh-CN", { numeric: true, sensitivity: "base" })
+}
+
+const matchesSearch = (cell: any, query: string): boolean => {
+  const value = normalizeCellValue(cell)
+  return value != null && String(value).toLocaleLowerCase().includes(query.toLocaleLowerCase())
+}
+
+const rowMatchesSearch = (row: any, query: string): boolean => (row?.cells || []).some((cell: any) => matchesSearch(cell, query))
+const cardMatchesSearch = (card: any, query: string): boolean => (card?.values || []).some((cell: any) => matchesSearch(cell, query))
+
+export const searchViewSnapshot = (view: any, type: DatabaseViewType, query: string): any => {
+  const normalized = String(query || "").trim()
+  if (!normalized) return view
+  if (type === "table" || type === "list" || type === "calendar") {
+    return { ...view, rows: (view?.rows || []).filter((row: any) => rowMatchesSearch(row, normalized)) }
+  }
+  if (type === "gallery") {
+    return { ...view, cards: (view?.cards || []).filter((card: any) => cardMatchesSearch(card, normalized)) }
+  }
+  if (type === "kanban") {
+    return {
+      ...view,
+      groups: (view?.groups || []).map((group: any) => ({
+        ...group,
+        cards: (group?.cards || []).filter((card: any) => cardMatchesSearch(card, normalized)),
+      })),
+    }
+  }
+  return view
+}
+
+export const sortViewSnapshot = (view: any, type: DatabaseViewType, sort: ViewSort | null): any => {
+  if (!sort?.fieldId) return view
+  const fields = type === "gallery" || type === "kanban" ? view?.fields || [] : view?.columns || []
+  const fieldIndex = fields.findIndex((field: any) => field?.id === sort.fieldId)
+  if (fieldIndex < 0) return view
+  const compare = (left: any, right: any) => {
+    const leftCell = left?.cells?.[fieldIndex] || findCardCell(left, sort.fieldId)
+    const rightCell = right?.cells?.[fieldIndex] || findCardCell(right, sort.fieldId)
+    const result = compareSortValues(leftCell, rightCell)
+    return sort.direction === "desc" ? -result : result
+  }
+  if (type === "table" || type === "list" || type === "calendar") {
+    return { ...view, rows: [...(view?.rows || [])].sort(compare) }
+  }
+  if (type === "gallery") {
+    return { ...view, cards: [...(view?.cards || [])].sort(compare) }
+  }
+  if (type === "kanban") {
+    return { ...view, groups: (view?.groups || []).map((group: any) => ({ ...group, cards: [...(group?.cards || [])].sort(compare) })) }
+  }
+  return view
 }

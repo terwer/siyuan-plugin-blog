@@ -146,3 +146,19 @@
 .db-view-ssr-placeholder-content small
   color var(--b3-theme-on-surface-light, #888)
   font-size 12px
+
+.db-view-toast
+  position fixed
+  left 50%
+  bottom 32px
+  z-index 1100
+  transform translateX(-50%)
+  padding 8px 14px
+  border-radius 6px
+  background var(--b3-theme-on-surface, #333)
+  color var(--b3-theme-background, #fff)
+  font-size 13px
+  box-shadow 0 4px 16px rgba(0, 0, 0, .18)
+
+.db-view-toast--error
+  background var(--b3-theme-error, #d93025)

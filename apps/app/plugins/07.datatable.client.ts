@@ -13,8 +13,11 @@ import {
   filterViewSnapshot,
   getFilterFields,
   resultCount,
+  searchViewSnapshot,
+  sortViewSnapshot,
   type FilterField,
   type ViewFilter,
+  type ViewSort,
 } from "~/utils/databaseViewFilter"
 import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, valueToText } from "~/plugins/libs/dataview/native"
 
@@ -79,6 +82,48 @@ const showDetailPanel = (detail: any) => {
   activeDetailPanel = panel
 }
 
+let activeToast: HTMLElement | null = null
+
+const showToast = (message: string, kind: "success" | "error" = "success") => {
+  activeToast?.remove()
+  const toast = document.createElement("div")
+  toast.className = `db-view-toast db-view-toast--${kind}`
+  toast.setAttribute("role", "status")
+  toast.textContent = message
+  document.body.appendChild(toast)
+  activeToast = toast
+  window.setTimeout(() => {
+    if (activeToast === toast) {
+      toast.remove()
+      activeToast = null
+    }
+  }, 1800)
+}
+
+const copyText = async (text: string) => {
+  if (!text) {
+    showToast("没有可复制的内容", "error")
+    return
+  }
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text)
+    } else {
+      const textarea = document.createElement("textarea")
+      textarea.value = text
+      textarea.style.position = "fixed"
+      textarea.style.opacity = "0"
+      document.body.appendChild(textarea)
+      textarea.select()
+      if (!document.execCommand("copy")) throw new Error("copy failed")
+      textarea.remove()
+    }
+    showToast("已复制")
+  } catch {
+    showToast("复制失败，请检查浏览器权限", "error")
+  }
+}
+
 export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("datatable-client-plugin")
   const { addClientAssetsPrefix } = useStaticClientAssets()
@@ -134,6 +179,10 @@ export default defineNuxtPlugin(({ vueApp }) => {
           after: "晚于",
           empty: "暂无数据",
           noFields: "当前视图没有可用的本地筛选字段",
+          sort: "排序",
+          direction: "方向",
+          ascending: "升序",
+          descending: "降序",
         }
       : {
           label: "Filter",
@@ -156,6 +205,10 @@ export default defineNuxtPlugin(({ vueApp }) => {
           after: "after",
           empty: "No data",
           noFields: "No local filterable fields are available for this view",
+          sort: "Sort",
+          direction: "Direction",
+          ascending: "Ascending",
+          descending: "Descending",
         }
   }
 
@@ -291,6 +344,82 @@ export default defineNuxtPlugin(({ vueApp }) => {
     return panel
   }
 
+  const createSortPanel = (anchor: HTMLElement, fields: FilterField[], onApply: (sort: ViewSort | null) => void) => {
+    closeActivePanel()
+    const locale = filterLocale()
+    const panel = document.createElement("div")
+    panel.className = "b3-menu db-view-filter db-view-sort"
+    panel.setAttribute("role", "dialog")
+    panel.setAttribute("aria-label", locale.sort)
+    panel.style.position = "fixed"
+    panel.style.zIndex = "10"
+
+    const title = document.createElement("div")
+    title.className = "b3-menu__title"
+    const label = document.createElement("span")
+    label.className = "b3-menu__label"
+    label.textContent = locale.sort
+    title.appendChild(label)
+    panel.appendChild(title)
+
+    const items = document.createElement("div")
+    items.className = "b3-menu__items db-view-filter-items"
+    const fieldLabel = document.createElement("label")
+    fieldLabel.className = "b3-menu__item db-view-filter-field"
+    const fieldText = document.createElement("span")
+    fieldText.textContent = locale.field
+    const fieldSelect = document.createElement("select")
+    fieldSelect.className = "b3-select"
+    fields.forEach((field) => {
+      const option = document.createElement("option")
+      option.value = field.id
+      option.textContent = field.name
+      fieldSelect.appendChild(option)
+    })
+    fieldLabel.append(fieldText, fieldSelect)
+
+    const directionLabel = document.createElement("label")
+    directionLabel.className = "b3-menu__item db-view-filter-field"
+    const directionText = document.createElement("span")
+    directionText.textContent = locale.direction
+    const directionSelect = document.createElement("select")
+    directionSelect.className = "b3-select"
+    for (const [value, text] of [["asc", locale.ascending], ["desc", locale.descending]] as const) {
+      const option = document.createElement("option")
+      option.value = value
+      option.textContent = text
+      directionSelect.appendChild(option)
+    }
+    directionLabel.append(directionText, directionSelect)
+
+    const actions = document.createElement("div")
+    actions.className = "db-view-filter-actions"
+    const apply = document.createElement("button")
+    apply.type = "button"
+    apply.className = "b3-button b3-button--outline"
+    apply.textContent = locale.apply
+    const reset = document.createElement("button")
+    reset.type = "button"
+    reset.className = "b3-button b3-button--cancel"
+    reset.textContent = locale.reset
+    actions.append(apply, reset)
+    apply.addEventListener("click", () => {
+      onApply({ fieldId: fieldSelect.value, direction: directionSelect.value as ViewSort["direction"] })
+      closeActivePanel()
+    })
+    reset.addEventListener("click", () => {
+      onApply(null)
+      closeActivePanel()
+    })
+    items.append(fieldLabel, directionLabel, actions)
+    panel.appendChild(items)
+    document.body.appendChild(panel)
+    const rect = anchor.getBoundingClientRect()
+    panel.style.left = `${Math.max(8, Math.min(rect.left, window.innerWidth - panel.offsetWidth - 8))}px`
+    panel.style.top = `${rect.bottom + 4}px`
+    activePanel = panel
+  }
+
   const renderUnsupported = (container: HTMLElement, type: string, item: any) => {
     container.className = "db-view-unsupported"
     container.dataset.viewType = type || "unknown"
@@ -304,6 +433,8 @@ export default defineNuxtPlugin(({ vueApp }) => {
     }
 
     const activeFilters = new Map<string, ViewFilter | null>()
+    const activeSorts = new Map<string, ViewSort | null>()
+    const activeSearches = new Map<string, string>()
     const currentViewId = dataTableEl.getAttribute("custom-sy-av-view") || currentDataTable.order?.[0]
     if (!currentViewId || !currentDataTable.order?.includes(currentViewId)) {
       renderUnsupported(dataTableEl, "invalid", { view: { name: "缺少有效视图顺序" } })
@@ -322,18 +453,38 @@ export default defineNuxtPlugin(({ vueApp }) => {
         return
       }
       const filter = activeFilters.get(viewId) || null
+      const sort = activeSorts.get(viewId) || null
+      const search = activeSearches.get(viewId) || ""
       const filtered = filter ? filterViewSnapshot(item, type, filter) : item
+      const searched = search ? searchViewSnapshot(filtered, type, search) : filtered
+      const arranged = sort ? sortViewSnapshot(searched, type, sort) : searched
       const renderItem = {
         ...currentDataTable,
         id: dataTableId,
-        view: filtered,
+        view: arranged,
         viewID: viewId,
         viewType: type,
-        [viewId]: { ...filtered, viewType: type, id: viewId, name: item.name, desc: item.desc },
+        [viewId]: { ...arranged, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
       mountNativeAv(dataTableEl, renderItem, {
         onActivate: (nextViewId: string) => render(nextViewId),
         onOpen: (detail: any) => showDetailPanel(detail),
+        onCopy: (text: string) => { void copyText(text) },
+        onSort: (anchor: HTMLElement) => {
+          const fields = getFilterFields(item, type)
+          if (!fields.length) {
+            showToast(filterLocale().noFields, "error")
+            return
+          }
+          createSortPanel(anchor, fields, (nextSort) => {
+            activeSorts.set(viewId, nextSort)
+            render(viewId)
+          })
+        },
+        onSearch: (query: string) => {
+          activeSearches.set(viewId, query.trim())
+          render(viewId)
+        },
         onFilter: (anchor: HTMLElement) => {
           const fields = getFilterFields(item, type)
           const locale = filterLocale()

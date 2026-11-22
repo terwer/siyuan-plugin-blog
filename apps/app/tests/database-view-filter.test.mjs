@@ -6,7 +6,7 @@ const require = createRequire(await realpath(new URL('../node_modules/vite/packa
 const { transform } = require('esbuild')
 const source = (await readFile(new URL('../utils/databaseViewFilter.ts', import.meta.url), 'utf8')).replace(/export /g, '')
 const { code } = await transform(source, { loader: 'ts', target: 'es2022' })
-const mod = new Function(code + '\nreturn {filterViewSnapshot,matchesCell,matchesDate,getFilterFields,resultCount}')()
+const mod = new Function(code + '\nreturn {filterViewSnapshot,matchesCell,matchesDate,getFilterFields,resultCount,searchViewSnapshot,sortViewSnapshot}')()
 
 const cell = (valueType, value) => ({ valueType, value })
 const column = (id, name, type) => ({ id, name, type })
@@ -90,4 +90,28 @@ test('一万行合成快照本地筛选保持可接受性能', () => {
   const elapsed = performance.now() - start
   assert.equal(filtered.rows.length, 1)
   assert.ok(elapsed < 250, `filter took ${elapsed.toFixed(1)}ms`)
+})
+test('搜索和排序只改变本地快照，不改原始数据', () => {
+  const view = {
+    columns: [column('name', '名称', 'text'), column('amount', '金额', 'number')],
+    rows: [
+      { id: 'a', cells: [text('华东项目'), number(300)] },
+      { id: 'b', cells: [text('华南项目'), number(100)] },
+      { id: 'c', cells: [text('西北运维'), number(200)] },
+    ],
+  }
+  const searched = mod.searchViewSnapshot(view, 'table', '华南')
+  assert.deepEqual(searched.rows.map(row => row.id), ['b'])
+  const sorted = mod.sortViewSnapshot(view, 'table', { fieldId: 'amount', direction: 'asc' })
+  assert.deepEqual(sorted.rows.map(row => row.id), ['b', 'c', 'a'])
+  assert.deepEqual(view.rows.map(row => row.id), ['a', 'b', 'c'])
+})
+
+test('卡片和看板搜索覆盖卡片字段', () => {
+  const fields = [column('name', '名称', 'text')]
+  const cards = [{ id: 'a', values: [{ valueType: 'text', value: { keyID: 'name', text: { content: '华东项目' } } }] }, { id: 'b', values: [{ valueType: 'text', value: { keyID: 'name', text: { content: '华南项目' } } }] }]
+  assert.deepEqual(mod.searchViewSnapshot({ fields, cards }, 'gallery', '华南').cards.map(card => card.id), ['b'])
+  const board = mod.searchViewSnapshot({ fields, groups: [{ id: 'g1', cards }, { id: 'g2', cards: [] }] }, 'kanban', '华东')
+  assert.deepEqual(board.groups[0].cards.map(card => card.id), ['a'])
+  assert.equal(board.groups[1].cards.length, 0)
 })
