@@ -442,7 +442,7 @@ const createToolbar = (
   activeViewId: string,
   onFilter: (anchor: HTMLElement) => void,
   onSort: (anchor: HTMLButtonElement) => void,
-  hasSort: boolean,
+  state: { hasFilter?: boolean; hasSort?: boolean },
   onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
@@ -471,7 +471,7 @@ const createToolbar = (
 
   views.appendChild(tag("div", "fn__space"))
 
-  const filter = tag("button", "ariaLabel block__icon av__readonly-filter")
+  const filter = tag("button", `ariaLabel block__icon av__readonly-filter${state.hasFilter ? " block__icon--active" : ""}`)
   filter.type = "button"
   setAttrs(filter, { "data-type": "av-filter", "aria-label": "筛选", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
   filter.innerHTML = icon("iconFilter")
@@ -491,7 +491,7 @@ const createToolbar = (
 
   views.appendChild(tag("div", "fn__space"))
 
-  const sort = tag("button", `ariaLabel block__icon av__readonly-sort${hasSort ? " block__icon--active" : ""}`)
+  const sort = tag("button", `ariaLabel block__icon av__readonly-sort${state.hasSort ? " block__icon--active" : ""}`)
   sort.type = "button"
   setAttrs(sort, { "data-type": "av-sort", "aria-label": "排序", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
   sort.innerHTML = icon("iconSort")
@@ -587,7 +587,7 @@ const createHeader = (
   currentViewId: string,
   onFilter: (anchor: HTMLElement) => void,
   onSort: (anchor: HTMLButtonElement) => void,
-  hasSort: boolean,
+  state: { hasFilter?: boolean; hasSort?: boolean },
   onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
@@ -599,7 +599,7 @@ const createHeader = (
     "data-view-count": item?.order?.length || 0,
     "data-view-ids": (item?.order || []).join(","),
   })
-  header.appendChild(createToolbar(item, currentViewId, onFilter, onSort, hasSort, onSearch, onActivate))
+  header.appendChild(createToolbar(item, currentViewId, onFilter, onSort, state, onSearch, onActivate))
 
   const title = tag("div", "av__title")
   title.setAttribute("contenteditable", "false")
@@ -1381,7 +1381,7 @@ const enforceReadOnly = (target: HTMLElement) => {
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: { onFilter: (anchor: HTMLElement) => void; onSort: (anchor: HTMLButtonElement) => void; hasSort?: boolean; onSearch: (query: string) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void; onCopy?: (text: string) => void },
+  options: { onFilter: (anchor: HTMLElement) => void; onSort: (anchor: HTMLButtonElement) => void; hasFilter?: boolean; hasSort?: boolean; onSearch: (query: string) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void; onCopy?: (text: string) => void },
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1398,7 +1398,7 @@ export const mountNativeAv = (
   })
   target.dataset.viewType = type
 
-  const header = createHeader(item, currentViewId, options.onFilter, options.onSort, Boolean(options.hasSort), options.onSearch, options.onActivate)
+  const header = createHeader(item, currentViewId, options.onFilter, options.onSort, options, options.onSearch, options.onActivate)
   const body = !hasViewShape(item?.view, type)
     ? renderInvalidView(type)
     : isEmptyView(item.view, type)

@@ -183,6 +183,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         [viewId]: { ...arranged, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
       mountNativeAv(dataTableEl, renderItem, {
+        hasFilter: Boolean(filter?.rules.length),
         hasSort: Boolean(sort?.length),
         onActivate: (nextViewId: string) => {
           closeFilter?.()
