@@ -76,6 +76,7 @@ const previewShowTitle = computed(() => props.setting?.linkHoverPreview?.showTit
         class="protyle-wysiwyg protyle-wysiwyg--attr"
         spellcheck="false"
         contenteditable="false"
+        data-readonly="true"
         data-doc-type="NodeDocument"
         :data-page-id="props.post.postid"
         :data-dataviews="JSON.stringify(props.post.dataViews)"

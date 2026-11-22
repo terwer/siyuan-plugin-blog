@@ -24,5 +24,22 @@ export const useSvg = () => {
     document.body.insertAdjacentHTML("afterbegin", wrapper)
   }
 
-  return { addSvgToPage }
+  /**
+   * 注入完整的思源原生 symbol 精灵，元素本身已包含 symbol 标签。
+   */
+  const addSymbolsToPage = (symbols: string[]): void => {
+    if (document.querySelector('svg[data-name="siyuan-symbols"]')) {
+      return
+    }
+    const wrapper = `
+    <svg data-name="siyuan-symbols" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+      <defs>
+        ${symbols.join("")}
+      </defs>
+    </svg>
+  `
+    document.body.insertAdjacentHTML("afterbegin", wrapper)
+  }
+
+  return { addSvgToPage, addSymbolsToPage }
 }

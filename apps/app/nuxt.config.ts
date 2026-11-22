@@ -1,6 +1,20 @@
 import AutoImport from "unplugin-auto-import/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
+import { existsSync, readFileSync } from "node:fs"
+import { fileURLToPath } from "node:url"
+
+const loadRootEnv = () => {
+  const file = fileURLToPath(new URL("../.env", import.meta.url))
+  if (!existsSync(file)) return
+  for (const line of readFileSync(file, "utf8").split(/\r?\n/)) {
+    const match = line.match(/^\s*([A-Z][A-Z0-9_]*)\s*=\s*(.*?)\s*$/)
+    if (!match || match[1] in process.env) continue
+    process.env[match[1]] = match[2].replace(/^(["'])(.*)\1$/, "$2")
+  }
+}
+
+loadRootEnv()
 
 const generateDynamicV = () => {
   const now = new Date()
@@ -114,7 +128,7 @@ export default defineNuxtConfig({
 
   // 环境变量
   runtimeConfig: {
-    providerInternalUrl: "",
+    providerInternalUrl: process.env.NUXT_PROVIDER_INTERNAL_URL ?? "",
     // Private 配置（仅在服务端可用）
     aiBaseUrl: process.env.NUXT_AI_BASE_URL ?? "https://api.openai.com",
     aiApiKey: process.env.NUXT_AI_API_KEY ?? "",
@@ -125,7 +139,7 @@ export default defineNuxtConfig({
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "node",
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
-      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
+      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? process.env.SHARE_API_URL ?? "http://127.0.0.1:8086",
       viewerCapabilities: {
         aiAssistant: true,
       },

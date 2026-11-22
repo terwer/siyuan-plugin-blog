@@ -1,321 +1,60 @@
-div[data-av-type="table"]
-  display flex
-  flex-direction column
+/*
+ * 数据库外观完全由思源原生 base.css 提供。
+ * 本文件只保留查看端本地筛选面板、空结果和未知类型回退的布局适配，
+ * 不定义数据库标题、标签、工具栏、表格、卡片、看板或日历的视觉样式。
+ */
 
-/* 整体 Tabs 样式 */
-.db-tabs
-  display flex
-  flex-direction row
-  border-bottom 2px solid #007bff
-  margin-bottom 8px
-  padding-bottom 4px
-  flex-wrap wrap
-
-/* Tab 标题样式 */
-.db-tabs-title
-  font-size 18px
-  font-weight bold
-  margin-bottom 8px
-  color #333
-
-/* 每个 Tab 按钮样式 */
-.db-tab-button
-  padding 6px 12px
-  cursor pointer
-  background-color transparent
-  border none
-  border-radius 4px
-  margin-right 4px
-  font-size 14px
-  color #333
-  transition background-color 0.2s ease, color 0.2s ease
-  outline none
-
-  &.active
-    background-color #f0f8ff
-    color #007bff
-
-  &:hover
-    background-color #eef6ff
-
-/* Tab 内容容器样式 */
-.db-tab-contents
-  display flex
-  flex-direction column
-  width 100%
-  padding 0 12px
-  overflow-y auto
-  overflow-x hidden
-
-/* 每个 Tab 内容 */
-.db-tab-content
-  display none
-  flex 1 0 auto
-  opacity 0
-  transition opacity 0.3s ease
-
-  &.active
-    display block !important
-    opacity 1
-
-/* 表格样式 */
-.db-data-table
-  width 100%
-  border-collapse collapse
-  margin-top 12px
-  font-size 14px
-  border-radius 8px
-  overflow hidden
-  box-shadow 0 2px 6px rgba(0, 0, 0, 0.1)
-
-  th, td
-    padding 10px 12px
-    text-align left
-    border-bottom 1px solid #f0f0f0
-    transition background-color 0.2s ease
-
-  th
-    background-color #f9f9f9
-    color #666
-
-  td
-    background-color #fff
-    color #333
-
-  tr:hover
-    background-color #f9f9f9
-
-/* 暗黑模式 */
-html[data-theme-mode="dark"]
-  .db-tabs
-    border-bottom 2px solid #4aaef8
-
-  .db-tabs-title
-    color #ddd
-
-  .db-tab-button
-    color #ddd
-
-    &.active
-      background-color #2a3b4d
-      color #4aaef8
-
-    &:hover
-      background-color #33475b
-
-  .db-data-table
-    box-shadow 0 2px 6px rgba(255, 255, 255, 0.1)
-
-    th, td
-      border-bottom 1px solid #444
-
-    th
-      background-color #2c3e50
-      color #bbb
-
-    td
-      background-color #1e2d3a
-      color #ddd
-
-    tr:hover
-      background-color #2c3e50
-
-/* 数据库选项类型数据样式 */
-.db-select-item
-  padding 2px 4px
-  border-radius 3px
-
-.db-phone-button-group
-  display inline-flex
-  align-items center
-  padding 4px 8px
-  //background-color #f9f9f9
-  border-radius 4px
-  cursor pointer
-  transition background-color 0.3s ease
-
-  //&:hover
-  //  background-color #e6f7ff
-
-  .db-phone-icon
-    margin-right 4px
-    font-size 14px
-    color #1890ff
-
-  .db-phone-label
-    margin-right 4px
-    font-weight bold
-    color #595959
-
-  .db-phone-value
-    color inherit
-
-/* 多视图只读渲染 */
-.db-data-list
-  display flex
-  flex-direction column
-  gap 8px
-  margin 12px 0
-  padding 0 0 0 24px
-
-.db-data-list-item
-  padding 10px 12px
-  border: 1px solid var(--b3-border-color)
-  border-radius 6px
-  background var(--b3-theme-surface)
-
-.db-data-list-value
-  display inline-block
-  margin-right 14px
-
-.db-data-gallery
-  display grid
-  grid-template-columns repeat(auto-fill, minmax(220px, 1fr))
-  gap 12px
-  padding 12px 0
-
-.db-view-card
-  display flex
-  flex-direction column
-  min-width 0
-  overflow hidden
-  border 1px solid var(--b3-border-color)
-  border-radius 8px
-  background var(--b3-theme-surface)
-
-.db-view-card-cover
-  width 100%
-  max-height 160px
-  object-fit cover
-
-.db-view-card-body
-  display flex
-  flex-direction column
-  gap 6px
-  padding 10px
-
-.db-view-card-field
-  display grid
-  grid-template-columns minmax(70px, 35%) 1fr
-  gap 8px
-  align-items start
-
-.db-view-card-label
-  color var(--b3-theme-on-surface-light)
-  font-size 12px
-
-.db-view-card-value
-  min-width 0
-  overflow-wrap anywhere
-
-.db-data-kanban
-  display flex
-  gap 12px
-  overflow-x auto
-  padding 12px 0
-
-.db-view-kanban-column
-  flex 0 0 260px
-  min-height 120px
-  padding 10px
-  border 1px solid var(--b3-border-color)
-  border-radius 8px
-  background var(--b3-theme-surface-lighter)
-
-.db-view-kanban-heading,
-.db-view-calendar-heading
-  margin 0 0 8px
-  font-size 15px
-  font-weight 600
-
-.db-view-kanban-cards
-  display flex
-  flex-direction column
-  gap 8px
-
-.db-view-kanban-card
-  background var(--b3-theme-surface)
-
-.db-data-calendar
-  display flex
-  flex-direction column
-  gap 12px
-  padding 12px 0
-
-.db-view-calendar-day
-  padding 10px 12px
-  border-left 3px solid var(--b3-theme-primary)
-  border-radius 4px
-  background var(--b3-theme-surface-lighter)
-
-.db-view-calendar-items
-  display flex
-  flex-direction column
-  gap 6px
-  margin 0
-  padding-left 20px
-
-.db-view-calendar-item
-  overflow-wrap anywhere
-
-.db-view-empty,
-.db-view-unsupported
-  padding 16px
-  border: 1px dashed var(--b3-border-color)
-  border-radius 6px
-  color var(--b3-theme-on-surface-light)
-
-.db-tab-content[data-view-type="gallery"],
-.db-tab-content[data-view-type="kanban"],
-.db-tab-content[data-view-type="calendar"]
-  width 100%
-
-/* 数据库视图本地只读筛选 */
 .db-view-filter
-  display flex
-  flex-wrap wrap
-  align-items flex-end
-  gap 10px
-  margin 8px 0
-  padding 10px 12px
-  border 1px solid var(--b3-border-color)
-  border-radius 8px
-  background var(--b3-theme-surface-lighter)
+  min-width 320px
+  max-width calc(100vw - 16px)
 
-.db-view-filter-field
+.db-view-filter .db-view-filter-items
   display flex
   flex-direction column
-  gap 4px
-  min-width 140px
+  gap 8px
+  padding 8px 12px
+
+.db-view-filter .db-view-filter-field
+  display flex
+  align-items center
+  gap 8px
+  min-height 28px
+
+.db-view-filter .db-view-filter-field > span
+  flex 0 0 48px
   color var(--b3-theme-on-surface-light)
   font-size 12px
 
-.db-view-filter-value
-  flex 1 1 180px
-
-.db-view-filter-field select,
-.db-view-filter-field input
+.db-view-filter .db-view-filter-field select,
+.db-view-filter .db-view-filter-field input
+  flex 1 1 auto
   min-width 0
   height 30px
 
 .db-view-filter-actions
   display flex
   gap 6px
+  padding-top 4px
 
 .db-view-filter-status
   min-height 18px
-  margin 4px 0 8px
+  margin 0
   color var(--b3-theme-on-surface-light)
   font-size 12px
 
 .db-view-filter-status:empty
   display none
 
-.db-view-results
-  width 100%
+.db-view-empty,
+.db-view-unsupported
+  margin 8px 0
+  padding 16px
+  color var(--b3-theme-on-surface-light)
 
 @media (max-width: 640px)
-  .db-view-filter-field,
-  .db-view-filter-value
-    flex 1 1 100%
+  .db-view-filter
     min-width 0
+    width calc(100vw - 16px)
+
+  .db-view-filter .db-view-filter-field
+    flex 1 1 100%

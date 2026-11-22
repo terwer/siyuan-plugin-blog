@@ -23,29 +23,19 @@ const requestURL = useRequestURL()
 const { getStaticSetting } = useStaticSettingStore(requestURL)
 const logger = createAppLogger("static-home-page")
 
-const setting = ref<typeof AppConfig>({} as typeof AppConfig)
-const isLoading = ref(__SIYUAN_SPA_TARGET__)
-
-const loadSetting = async () => {
+const { data: setting, pending: isLoading } = await useAsyncData<typeof AppConfig>('viewer-static-setting', async () => {
   try {
-    setting.value = await getStaticSetting()
-    // 在子组件渲染前统一应用语言，保证 SSR 与客户端水合结果一致
-    await applyLocale(setting.value?.lang)
+    const value = await getStaticSetting()
+    await applyLocale(value?.lang)
+    return value
   } catch (e) {
-    if(isPublicConfigurationError(e)){nuxtApp.runWithContext(()=>showError(e));throw e}
+    if (isPublicConfigurationError(e)) {
+      nuxtApp.runWithContext(() => showError(e))
+    }
     logger.error("load static setting failed", e)
-  } finally {
-    isLoading.value = false
+    throw e
   }
-}
-
-if (!__SIYUAN_SPA_TARGET__) {
-  await loadSetting()
-} else {
-  onMounted(async () => {
-    await loadSetting()
-  })
-}
+}, { default: () => ({} as typeof AppConfig) })
 
 const title = computed(() => {
   if (isLoading.value) {

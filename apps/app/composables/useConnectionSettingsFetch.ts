@@ -1,13 +1,13 @@
 /** Per-request SSR bootstrap; only the browser uses the author's public API address. */
 import { withAppBase } from '~/utils/viewerUrls'
 import { normalizePublicUrl, parsePublicSettings } from '~/utils/publicConnection'
+
 export const useConnectionSettingsFetch = () => {
   const env=useRuntimeConfig()
   const route=useRoute()
   const requestURL=useRequestURL()
   const state=useState<any>('viewer-public-connection',()=>null)
   const scope=()=>String(route.path)
-  const internalBase=()=>normalizePublicUrl(String(env.providerInternalUrl || env.public.providerUrl))
   const postAt=async(base:string,path:string,body:unknown)=>{
     const controller=new AbortController()
     const timer=setTimeout(()=>controller.abort(),8000)
@@ -19,20 +19,41 @@ export const useConnectionSettingsFetch = () => {
     } finally {clearTimeout(timer)}
   }
   const pending=new Map<string,Promise<any>>()
-  const bootstrap=async(id?:string)=>{
+  const loadConnection=async()=>{
     const routeScope=scope()
-    const target=routeScope+":"+String(id || "home")
-    if(state.value?.scope===target)return state.value
+    const target=routeScope+':home'
+    if(state.value?.scope?.startsWith(routeScope+':') && (state.value.config?.publicApiUrl || state.value.hostedMode!==false)){
+      return state.value
+    }
     if(pending.has(target))return pending.get(target)
     const request=(async()=>{
-      // A public setting never selects the SSR destination. Browser SPA switches stay on the last service until settings resolve.
-      const base=process.server?internalBase():normalizePublicUrl(state.value?.config?.publicApiUrl || String(env.public.providerUrl))
-      const path=id?'/api/settings/share':'/api/settings/byResource'
-      const body=id?{group:'GENERAL',docId:id,key:'static.app.config.json'}:{key:'static.app.config.json',readingAddress:requestURL.origin+withAppBase(env.app.baseURL,route.path)}
-      const raw=await postAt(base,path,body)
+      // The public connection is resolved by the reading address, never by a document response.
+      const base=process.server?normalizePublicUrl(String(env.providerInternalUrl || env.public.providerUrl)):normalizePublicUrl(String(env.public.providerUrl))
+      const raw=await postAt(base,'/api/settings/byResource',{key:'static.app.config.json',readingAddress:requestURL.origin+withAppBase(env.app.baseURL,route.path)})
       const parsed=parsePublicSettings(raw)
+      if(!parsed.config.publicApiUrl && parsed.hostedMode===false)parsed.config.publicApiUrl=normalizePublicUrl(String(env.public.providerUrl))
+      if(!parsed.config.domain)parsed.config.domain=requestURL.origin
       if(!parsed.config.publicApiUrl && parsed.hostedMode===false)throw createError({statusCode:404,statusMessage:'CONFIGURATION_REQUIRED'})
       const result={scope:target,...parsed}
+      if(scope()===routeScope)state.value=result
+      return result
+    })()
+    pending.set(target,request)
+    try{return await request}finally{pending.delete(target)}
+  }
+  const bootstrap=async(id?:string)=>{
+    const routeScope=scope()
+    const target=routeScope+':'+String(id || 'home')
+    if(state.value?.scope===target)return state.value
+    if(!id)return loadConnection()
+    if(pending.has(target))return pending.get(target)
+    const request=(async()=>{
+      const connection=await loadConnection()
+      const base=process.server?normalizePublicUrl(String(env.providerInternalUrl || env.public.providerUrl)):normalizePublicUrl(String(connection.config.publicApiUrl || env.public.providerUrl))
+      const raw=await postAt(base,'/api/settings/share',{group:'GENERAL',docId:id,key:'static.app.config.json'})
+      const parsed=parsePublicSettings(raw)
+      // publicApiUrl remains owned by the connection result; document settings only add document/author fields.
+      const result={scope:target,config:{...connection.config,...parsed.config,publicApiUrl:connection.config.publicApiUrl},hostedMode:connection.hostedMode}
       if(scope()===routeScope)state.value=result
       return result
     })()
@@ -44,16 +65,16 @@ export const useConnectionSettingsFetch = () => {
   const fetchConfig=async(filename:string,_providerMode:boolean,_url:URL)=>{
     const current=await bootstrap(currentDoc())
     if(filename==='static.app.config.json')return JSON.stringify(current.config)
-    const base=process.server?internalBase():normalizePublicUrl(current.config.publicApiUrl || String(env.public.providerUrl))
+    const base=process.server?normalizePublicUrl(String(env.providerInternalUrl || env.public.providerUrl)):normalizePublicUrl(String(current.config.publicApiUrl || env.public.providerUrl))
     return postAt(base,'/api/settings/byResource',{key:filename})
   }
   const publicPost=async(path:string,body:unknown,id?:string)=>{
     const requestedRoute=scope()
     const current=await bootstrap(id || currentDoc())
-    if(scope()!==requestedRoute)throw createError({statusCode:409,statusMessage:"STALE_NAVIGATION"})
-    const base=process.server?internalBase():normalizePublicUrl(current.config.publicApiUrl || String(env.public.providerUrl))
+    if(scope()!==requestedRoute)throw createError({statusCode:409,statusMessage:'STALE_NAVIGATION'})
+    const base=process.server?normalizePublicUrl(String(env.providerInternalUrl || env.public.providerUrl)):normalizePublicUrl(String(current.config.publicApiUrl || env.public.providerUrl))
     const response=await postAt(base,path,body)
-    if(scope()!==requestedRoute)throw createError({statusCode:409,statusMessage:"STALE_NAVIGATION"})
+    if(scope()!==requestedRoute)throw createError({statusCode:409,statusMessage:'STALE_NAVIGATION'})
     return JSON.parse(response)
   }
   const fetchPostMeta=async(id:string,_providerMode=true)=>{
