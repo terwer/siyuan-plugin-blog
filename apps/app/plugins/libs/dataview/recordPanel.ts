@@ -8,7 +8,7 @@ export const openDatabaseRecordPanel = (
   prepareAssets: (panel: HTMLElement) => void,
 ) => {
   const panel = document.createElement("aside")
-  panel.className = "db-view-detail protyle-db-row"
+  panel.className = "db-view-detail"
   panel.setAttribute("role", "dialog")
   panel.setAttribute("aria-labelledby", "db-view-detail-title")
   panel.setAttribute("popover", "manual")

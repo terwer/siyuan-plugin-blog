@@ -19,11 +19,13 @@ html body
 
 /*
  * 分享页的四类字体体系由独立变量控制：正文、代码、Emoji、数学。
- * 默认使用系统字体；开启增强字体后由 app.vue 的 data-viewer-font-mode 覆盖正文和代码字体。
+ * 默认使用系统字体；增强字体资源就绪后，在同一个 body 上切换正文和代码字体。
  */
 body
-  --viewer-font-stack -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
-  --viewer-font-stack-code "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+  --viewer-system-font-stack -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
+  --viewer-system-font-stack-code "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+  --viewer-font-stack var(--viewer-system-font-stack)
+  --viewer-font-stack-code var(--viewer-system-font-stack-code)
   --viewer-font-stack-emoji "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Emojis Additional", "Emojis Reset", sans-serif
   --viewer-font-stack-math "KaTeX_Main", var(--viewer-font-stack)
 
@@ -36,6 +38,10 @@ body
   --b3-font-family-math var(--viewer-font-stack-math)
   --b3-font-family-graph var(--viewer-font-stack)
   --el-font-family var(--viewer-font-stack)
+
+html[data-viewer-font-mode="enhanced"] body
+  --viewer-font-stack "Open Sans", "LXGW WenKai", var(--viewer-system-font-stack)
+  --viewer-font-stack-code "Open Sans", "JetBrains Mono", "LXGW WenKai", var(--viewer-system-font-stack-code)
 
 /*
  * 分享页使用对称阅读留白：桌面标题 16px 32px、正文 24px 32px；

@@ -39,7 +39,9 @@
 
 .db-view-detail
   position fixed
-  inset 0 0 0 auto
+  inset-block 0
+  inset-inline-start auto
+  inset-inline-end 0
   box-sizing border-box
   margin 0
   width var(--db-record-pane-width)
@@ -47,14 +49,19 @@
   max-width 100vw
   max-height none
   padding 0
-  overflow auto
+  overflow clip
   border 0
   border-inline-start 1px solid var(--b3-border-color)
   background var(--b3-theme-background)
   color var(--b3-theme-on-background)
   font-family var(--b3-font-family)
 
+.db-view-detail:popover-open
+  display flex
+  flex-direction column
+
 .db-view-detail-header
+  flex none
   display flex
   gap 4px
   align-items flex-start
@@ -76,6 +83,10 @@
   opacity 1
 
 .db-view-detail-body
+  flex 1
+  min-height 0
+  overflow-y auto
+  overscroll-behavior-y contain
   padding 8px 24px 24px
 
 .db-view-detail-database,
@@ -143,7 +154,7 @@
 
 @media (max-width: 899px)
   .db-view-detail
-    width 100vw
+    width 100%
 
 .db-view-ssr-placeholder
   display flex
