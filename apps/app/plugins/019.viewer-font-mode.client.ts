@@ -64,6 +64,13 @@ const waitForViewerFontsReady = async () => {
   await document.fonts.ready
 }
 
+const disableEnhancedFonts = () => {
+  document.documentElement.removeAttribute(VIEWER_FONT_MODE_ATTR)
+  localStorage.removeItem(VIEWER_FONT_MODE_KEY)
+  localStorage.removeItem(VIEWER_FONT_READY_KEY)
+  document.getElementById(VIEWER_FONT_STYLESHEET_ID)?.remove()
+}
+
 const enableEnhancedFonts = async () => {
   try {
     await ensureViewerFontStylesheet()
@@ -115,6 +122,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     const enabled = String(useRuntimeConfig().public.viewerFontsEnabled ?? "false").toLowerCase() === "true"
     if (!enabled) {
+      disableEnhancedFonts()
       return
     }
 
