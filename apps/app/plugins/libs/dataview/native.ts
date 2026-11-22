@@ -180,7 +180,7 @@ const appendCopyAction = (cell: HTMLElement) => {
   cell.appendChild(button)
 }
 
-const appendRowActions = (cellprimary: HTMLElement, primary: any) => {
+const appendRowActions = (cellprimary: HTMLElement, primary: any, detail?: any) => {
   const actions = tag("span", "av__row-actions")
   const open = tag("button", "av__row-action av__cell-action ariaLabel")
   open.type = "button"
@@ -191,6 +191,7 @@ const appendRowActions = (cellprimary: HTMLElement, primary: any) => {
   })
   open.innerHTML = icon("iconOpen")
   open.dataset.blockId = primary?.id || ""
+  ;(open as any).__detail = detail || primary
   actions.appendChild(open)
 
   const update = tag("button", "av__row-action av__cell-action ariaLabel")
@@ -671,7 +672,7 @@ const renderTableBody = (view: any) => {
       tr.appendChild(cell)
     })
     const rowActions = tag("div", "av__cell av__row-detail-cell")
-    appendRowActions(rowActions, { id: row.id })
+    appendRowActions(rowActions, { id: row.id }, { record: row, fields: view.columns || [], type: "table" })
     tr.appendChild(rowActions)
     body.appendChild(tr)
   })
@@ -748,7 +749,7 @@ const renderListBody = (view: any) => {
       tr.appendChild(cell)
     })
     const rowActions = tag("div", "av__cell av__row-detail-cell")
-    appendRowActions(rowActions, { id: row.id })
+    appendRowActions(rowActions, { id: row.id }, { record: row, fields: view.columns || [], type: "table" })
     tr.appendChild(rowActions)
     body.appendChild(tr)
   })
@@ -806,7 +807,7 @@ const createCard = (card: any, fields: any[], className: string, showCover = tru
   })
   article.appendChild(fieldList)
   const detailActions = tag("div", "av__card-detail-actions")
-  appendRowActions(detailActions, card)
+  appendRowActions(detailActions, card, { record: card, fields, type: "card" })
   article.appendChild(detailActions)
   return article
 }
@@ -1334,7 +1335,7 @@ const enforceReadOnly = (target: HTMLElement) => {
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: { onFilter: (anchor: HTMLElement) => void; onActivate: (viewId: string) => void; onOpen?: (blockId: string) => void },
+  options: { onFilter: (anchor: HTMLElement) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void },
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1369,7 +1370,8 @@ export const mountNativeAv = (
       event.preventDefault()
       event.stopPropagation()
       const blockId = (button as HTMLElement).dataset.blockId || ""
-      if (blockId) options.onOpen?.(blockId)
+      const detail = (button as any).__detail || { record: { id: blockId }, fields: [], type: "row" }
+      if (blockId || detail?.record) options.onOpen?.(detail)
     })
   })
   return target
@@ -1399,7 +1401,3 @@ export const valueToText = (cell: any) => {
 }
 
 export const parseDataViews = (value: string) => JsonUtil.safeParse<any>(value, null)
-
-
-
-

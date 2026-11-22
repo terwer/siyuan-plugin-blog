@@ -58,3 +58,91 @@
 
   .db-view-filter .db-view-filter-field
     flex 1 1 100%
+
+.db-view-detail
+  position fixed
+  top 16px
+  right 16px
+  z-index 1000
+  width 420px\n  max-width calc(100vw - 32px)
+  max-height calc(100vh - 32px)
+  overflow auto
+  padding 16px
+  background var(--b3-theme-background, #fff)
+  border 1px solid var(--b3-border-color, #d9d9d9)
+  border-radius 8px
+  box-shadow 0 8px 28px rgba(0, 0, 0, .18)
+
+.db-view-detail-header
+  display flex
+  align-items center
+  justify-content space-between
+  gap 12px
+  padding-bottom 12px
+  border-bottom 1px solid var(--b3-border-color, #d9d9d9)
+
+.db-view-detail-close
+  border 0
+  background transparent
+  color var(--b3-theme-on-surface, #333)
+  font-size 22px
+  cursor pointer
+
+.db-view-detail-body
+  display flex
+  flex-direction column
+  gap 12px
+  padding-top 12px
+
+.db-view-detail-field
+  display grid
+  grid-template-columns minmax(96px, 38%) 1fr
+  gap 12px
+
+.db-view-detail-label
+  color var(--b3-theme-on-surface-light, #777)
+
+.db-view-detail-value
+  color var(--b3-theme-on-surface, #222)
+  overflow-wrap anywhere
+
+.db-view-ssr-placeholder
+  display flex
+  align-items center
+  gap 12px
+  margin 12px 0
+  padding 14px 16px
+  border 1px solid var(--b3-border-color, #d9d9d9)
+  border-radius 8px
+  background var(--b3-theme-surface-lighter, #f7f7f7)
+  color var(--b3-theme-on-surface, #333)
+
+.db-view-ssr-placeholder-icon
+  display inline-flex
+  align-items center
+  justify-content center
+  width 32px
+  height 32px
+  border-radius 6px
+  background var(--b3-theme-primary-lightest, #eaf2ff)
+  color var(--b3-theme-primary, #4285f4)
+  font-size 22px
+  line-height 1
+
+.db-view-ssr-placeholder-content
+  display flex
+  flex-direction column
+  gap 3px
+  min-width 0
+
+.db-view-ssr-placeholder-content strong
+  font-size 13px
+
+.db-view-ssr-placeholder-content span
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.db-view-ssr-placeholder-content small
+  color var(--b3-theme-on-surface-light, #888)
+  font-size 12px

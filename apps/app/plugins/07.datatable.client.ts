@@ -9,7 +9,6 @@
 
 import { StrUtil } from "zhi-common"
 import { useStaticClientAssets } from "~/plugins/libs/renderer/useStaticClientAssets"
-import { useBaseUrl } from "~/plugins/libs/renderer/useClientBaseUrl"
 import {
   filterViewSnapshot,
   getFilterFields,
@@ -17,7 +16,7 @@ import {
   type FilterField,
   type ViewFilter,
 } from "~/utils/databaseViewFilter"
-import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES } from "~/plugins/libs/dataview/native"
+import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, valueToText } from "~/plugins/libs/dataview/native"
 
 /**
  * 数据库插件
@@ -28,10 +27,61 @@ import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES } from "~/plugins/l
  * @version 1.0.0
  * @since 0.0.1
  */
+let activeDetailPanel: HTMLElement | null = null
+
+const closeDetailPanel = () => {
+  activeDetailPanel?.remove()
+  activeDetailPanel = null
+}
+
+const showDetailPanel = (detail: any) => {
+  closeDetailPanel()
+  const panel = document.createElement("aside")
+  panel.className = "db-view-detail"
+  panel.setAttribute("role", "dialog")
+  panel.setAttribute("aria-label", "查看详情")
+
+  const header = document.createElement("header")
+  header.className = "db-view-detail-header"
+  const title = document.createElement("strong")
+  title.textContent = detail?.record?.name || detail?.record?.title || "查看详情"
+  const close = document.createElement("button")
+  close.type = "button"
+  close.className = "db-view-detail-close"
+  close.setAttribute("aria-label", "关闭详情")
+  close.textContent = "×"
+  close.addEventListener("click", closeDetailPanel)
+  header.append(title, close)
+  panel.appendChild(header)
+
+  const fields = detail?.fields || []
+  const record = detail?.record || {}
+  const values = detail?.type === "card" ? (record.values || []) : (record.cells || [])
+  const body = document.createElement("div")
+  body.className = "db-view-detail-body"
+  fields.filter((field: any) => !field?.hidden).forEach((field: any, index: number) => {
+    const value = detail?.type === "card"
+      ? values.find((item: any) => item?.keyID === field?.id || item?.value?.keyID === field?.id)
+      : values[(record.columns || fields).findIndex((item: any) => item?.id === field?.id) >= 0 ? (record.columns || fields).findIndex((item: any) => item?.id === field?.id) : index]
+    const row = document.createElement("div")
+    row.className = "db-view-detail-field"
+    const label = document.createElement("div")
+    label.className = "db-view-detail-label"
+    label.textContent = field?.name || `字段 ${index + 1}`
+    const content = document.createElement("div")
+    content.className = "db-view-detail-value"
+    content.textContent = valueToText(value) || "—"
+    row.append(label, content)
+    body.appendChild(row)
+  })
+  panel.appendChild(body)
+  document.body.appendChild(panel)
+  activeDetailPanel = panel
+}
+
 export default defineNuxtPlugin(({ vueApp }) => {
   const logger = createAppLogger("datatable-client-plugin")
   const { addClientAssetsPrefix } = useStaticClientAssets()
-  const { getHome } = useBaseUrl()
 
   const resolveViewType = (item: any) => String(item?.viewType || "unknown")
 
@@ -283,11 +333,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
       }
       mountNativeAv(dataTableEl, renderItem, {
         onActivate: (nextViewId: string) => render(nextViewId),
-        onOpen: (blockId: string) => {
-          const config = JSON.parse(window.localStorage.getItem("static.app.config.json") || "{}")
-          const docPath = config?.docPath || "s"
-          window.open(`${getHome()}/${docPath}/${encodeURIComponent(blockId)}`, "_blank", "noopener,noreferrer")
-        },
+        onOpen: (detail: any) => showDetailPanel(detail),
         onFilter: (anchor: HTMLElement) => {
           const fields = getFilterFields(item, type)
           const locale = filterLocale()
