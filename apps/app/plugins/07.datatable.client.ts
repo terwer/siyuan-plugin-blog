@@ -7,16 +7,17 @@
  *  of this license document, but changing it is not allowed.
  */
 
+import { openDatabaseFilterMenu } from "~/plugins/libs/dataview/filterMenu"
+import { normalizeDataTable } from "~/utils/databaseViewSsr"
 import { StrUtil } from "zhi-common"
 import { useStaticClientAssets } from "~/plugins/libs/renderer/useStaticClientAssets"
 import {
   filterViewSnapshot,
   getFilterFields,
-  resultCount,
   searchViewSnapshot,
   sortViewSnapshot,
   type FilterField,
-  type ViewFilter,
+  type FilterGroup,
   type ViewSort,
 } from "~/utils/databaseViewFilter"
 import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, valueToText } from "~/plugins/libs/dataview/native"
@@ -130,31 +131,6 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
   const resolveViewType = (item: any) => String(item?.viewType || "unknown")
 
-  // 历史发布数据：旧版本只有一个直接的 table 视图，没有 order/viewId 包装。
-  const normalizeDataTable = (value: any, dataTableId: string) => {
-    if (value && Array.isArray(value.order)) {
-      const normalized = { ...value }
-      value.order.forEach((viewId: string) => {
-        const entry = value[viewId]
-        if (!entry || typeof entry !== "object") return
-        const view = entry.view && typeof entry.view === "object" ? entry.view : entry
-        normalized[viewId] = {
-          ...view,
-          id: entry.viewID || view.id || viewId,
-          viewType: entry.viewType || view.viewType || view.type,
-          name: entry.name || view.name,
-          desc: entry.desc || view.desc,
-        }
-      })
-      return normalized
-    }
-    if (value && value.viewType === "table" && Array.isArray(value.columns) && Array.isArray(value.rows)) {
-      const viewId = String(value.viewID || value.id || `${dataTableId}:legacy-table`)
-      return { order: [viewId], viewTypes: { [viewId]: "table" }, [viewId]: value }
-    }
-    return null
-  }
-
   const filterLocale = () => {
     const zh = (document.documentElement.lang || "").toLowerCase().startsWith("zh")
     return zh
@@ -213,138 +189,15 @@ export default defineNuxtPlugin(({ vueApp }) => {
   }
 
   let activePanel: HTMLElement | null = null
+  let closeFilter: (() => void) | null = null
 
   const closeActivePanel = () => {
     activePanel?.remove()
     activePanel = null
   }
 
-  const createFilterPanel = (
-    anchor: HTMLElement,
-    fields: FilterField[],
-    onApply: (filter: ViewFilter | null) => void,
-  ) => {
-    closeActivePanel()
-    const locale = filterLocale()
-    const panel = document.createElement("div")
-    panel.className = "b3-menu db-view-filter"
-    panel.setAttribute("role", "dialog")
-    panel.setAttribute("aria-label", locale.label)
-    panel.style.position = "fixed"
-    panel.style.zIndex = "10"
-
-    const title = document.createElement("div")
-    title.className = "b3-menu__title"
-    const label = document.createElement("span")
-    label.className = "b3-menu__label"
-    label.textContent = locale.label
-    title.appendChild(label)
-    panel.appendChild(title)
-
-    const items = document.createElement("div")
-    items.className = "b3-menu__items db-view-filter-items"
-    panel.appendChild(items)
-
-    const fieldLabel = document.createElement("label")
-    fieldLabel.className = "b3-menu__item db-view-filter-field"
-    const fieldText = document.createElement("span")
-    fieldText.textContent = locale.field
-    const fieldSelect = document.createElement("select")
-    fieldSelect.className = "b3-select"
-    fields.forEach((field: FilterField) => {
-      const option = document.createElement("option")
-      option.value = field.id
-      option.textContent = field.name
-      fieldSelect.appendChild(option)
-    })
-    fieldLabel.append(fieldText, fieldSelect)
-
-    const operatorLabel = document.createElement("label")
-    operatorLabel.className = "b3-menu__item db-view-filter-field"
-    const operatorText = document.createElement("span")
-    operatorText.textContent = locale.operator
-    const operatorSelect = document.createElement("select")
-    operatorSelect.className = "b3-select"
-    operatorLabel.append(operatorText, operatorSelect)
-
-    const valueLabel = document.createElement("label")
-    valueLabel.className = "b3-menu__item db-view-filter-field db-view-filter-value"
-    const valueText = document.createElement("span")
-    valueText.textContent = locale.value
-    const valueInput = document.createElement("input")
-    valueInput.className = "b3-text-field"
-    valueLabel.append(valueText, valueInput)
-
-    const status = document.createElement("p")
-    status.className = "db-view-filter-status"
-    status.setAttribute("role", "status")
-    status.setAttribute("aria-live", "polite")
-
-    const actions = document.createElement("div")
-    actions.className = "db-view-filter-actions"
-    const apply = document.createElement("button")
-    apply.type = "button"
-    apply.className = "b3-button b3-button--outline"
-    apply.textContent = locale.apply
-    const reset = document.createElement("button")
-    reset.type = "button"
-    reset.className = "b3-button b3-button--cancel"
-    reset.textContent = locale.reset
-    actions.append(apply, reset)
-
-    const currentField = () => fields.find((field: FilterField) => field.id === fieldSelect.value) || fields[0]
-    const syncOperators = () => {
-      const field = currentField()
-      operatorSelect.replaceChildren()
-      field.operators.forEach((operator) => {
-        const option = document.createElement("option")
-        option.value = operator
-        option.textContent = locale[operator] || operator
-        operatorSelect.appendChild(option)
-      })
-      valueInput.type = field.type === "date" ? "date" : field.type === "number" ? "number" : "text"
-      valueInput.setAttribute("aria-label", `${locale.value} · ${field.name}`)
-    }
-
-    const submit = () => {
-      const field = currentField()
-      const operator = operatorSelect.value as ViewFilter["operator"]
-      const query = valueInput.value.trim()
-      if (!query || !field.operators.includes(operator)) {
-        status.textContent = locale.invalid
-        return
-      }
-      onApply({ fieldId: field.id, operator, query })
-      closeActivePanel()
-    }
-
-    fieldSelect.addEventListener("change", syncOperators)
-    apply.addEventListener("click", submit)
-    valueInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault()
-        submit()
-      }
-    })
-    reset.addEventListener("click", () => {
-      valueInput.value = ""
-      status.textContent = ""
-      onApply(null)
-      closeActivePanel()
-    })
-
-    items.append(fieldLabel, operatorLabel, valueLabel, actions, status)
-    document.body.appendChild(panel)
-
-    const rect = anchor.getBoundingClientRect()
-    panel.style.left = `${Math.max(8, Math.min(rect.left, window.innerWidth - panel.offsetWidth - 8))}px`
-    panel.style.top = `${rect.bottom + 4}px`
-    syncOperators()
-    activePanel = panel
-    return panel
-  }
-
   const createSortPanel = (anchor: HTMLElement, fields: FilterField[], onApply: (sort: ViewSort | null) => void) => {
+    closeFilter?.()
     closeActivePanel()
     const locale = filterLocale()
     const panel = document.createElement("div")
@@ -432,10 +285,11 @@ export default defineNuxtPlugin(({ vueApp }) => {
       return
     }
 
-    const activeFilters = new Map<string, ViewFilter | null>()
+    const activeFilters = new Map<string, FilterGroup>()
     const activeSorts = new Map<string, ViewSort | null>()
     const activeSearches = new Map<string, string>()
-    const currentViewId = dataTableEl.getAttribute("custom-sy-av-view") || currentDataTable.order?.[0]
+    const publishedViewId = dataTableEl.getAttribute("custom-sy-av-view")
+    const currentViewId = currentDataTable.order?.length === 1 ? currentDataTable.order[0] : publishedViewId || currentDataTable.order?.[0]
     if (!currentViewId || !currentDataTable.order?.includes(currentViewId)) {
       renderUnsupported(dataTableEl, "invalid", { view: { name: "缺少有效视图顺序" } })
       return
@@ -467,7 +321,11 @@ export default defineNuxtPlugin(({ vueApp }) => {
         [viewId]: { ...arranged, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
       mountNativeAv(dataTableEl, renderItem, {
-        onActivate: (nextViewId: string) => render(nextViewId),
+        onActivate: (nextViewId: string) => {
+          closeFilter?.()
+          closeActivePanel()
+          render(nextViewId)
+        },
         onOpen: (detail: any) => showDetailPanel(detail),
         onCopy: (text: string) => { void copyText(text) },
         onSort: (anchor: HTMLElement) => {
@@ -486,27 +344,13 @@ export default defineNuxtPlugin(({ vueApp }) => {
           render(viewId)
         },
         onFilter: (anchor: HTMLElement) => {
-          const fields = getFilterFields(item, type)
-          const locale = filterLocale()
-          if (!fields.length) {
-            const message = document.createElement("p")
-            message.className = "db-view-filter-status"
-            message.setAttribute("role", "status")
-            message.setAttribute("aria-live", "polite")
-            message.textContent = locale.noFields
-            dataTableEl.appendChild(message)
-            return
-          }
-          createFilterPanel(anchor, fields, (nextFilter) => {
-            activeFilters.set(viewId, nextFilter)
-            render(viewId)
-            if (nextFilter && resultCount(filterViewSnapshot(item, type, nextFilter), type) === 0) {
-              const empty = document.createElement("p")
-              empty.className = "db-view-empty"
-              empty.textContent = locale.noResults
-              dataTableEl.appendChild(empty)
-            }
-          })
+          if (closeFilter) { closeFilter(); return }
+          closeActivePanel()
+          const root = filter || { kind: "group", join: "and", rules: [] }
+          activeFilters.set(viewId, root)
+          const getAnchor = () => dataTableEl.querySelector<HTMLButtonElement>('button[data-type="av-filter"]')
+          closeFilter = openDatabaseFilterMenu(anchor as HTMLButtonElement, getAnchor, getFilterFields(item, type), root,
+            () => render(viewId), () => { closeFilter = null })
         },
       })
       logger.debug("native database view rendered", dataTableId, viewId, type)
@@ -516,6 +360,10 @@ export default defineNuxtPlugin(({ vueApp }) => {
   }
 
   vueApp.directive("db", {
+    beforeUnmount() {
+      closeFilter?.()
+      closeActivePanel()
+    },
     mounted (el) {
       const dataTableStr = el.getAttribute("data-dataviews")
       if (StrUtil.isEmptyString(dataTableStr)) {

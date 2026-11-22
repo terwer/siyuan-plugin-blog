@@ -48,13 +48,15 @@ test('gallery 类型筛选 cards，kanban 类型筛选 groups[].cards', () => {
 test('只暴露有确定语义的字段和操作符', () => {
   const fields = mod.getFilterFields({ columns: [column('name', '任务名称', 'text'), column('asset', '附件', 'mAsset')] }, 'table')
   assert.deepEqual(fields.map(field => field.id), ['name'])
-  assert.deepEqual(fields[0].operators, ['contains', 'equals'])
+  assert.ok(fields[0].operators.includes('contains'))
+  assert.ok(fields[0].operators.includes('empty'))
 })
 
 test('日历隐藏日期列仍可用于筛选但资源字段仍不可用', () => {
   const fields = mod.getFilterFields({ columns: [column('date', '截止日期', 'date'), column('asset', '附件', 'mAsset')] }, 'calendar')
   assert.deepEqual(fields.map(field => field.id), ['date'])
-  assert.deepEqual(fields[0].operators, ['equals', 'before', 'after'])
+  assert.ok(fields[0].operators.includes('before'))
+  assert.ok(fields[0].operators.includes('after'))
 })
 
 test('块与多选值使用稳定的文本比较值', () => {
@@ -114,4 +116,32 @@ test('卡片和看板搜索覆盖卡片字段', () => {
   const board = mod.searchViewSnapshot({ fields, groups: [{ id: 'g1', cards }, { id: 'g2', cards: [] }] }, 'kanban', '华东')
   assert.deepEqual(board.groups[0].cards.map(card => card.id), ['a'])
   assert.equal(board.groups[1].cards.length, 0)
+})
+
+test('多条件与嵌套分组支持且或、清空和未完成条件', () => {
+  const view = { columns: [column('status', '合同状态', 'text'), column('amount', '合同金额', 'number')], rows: [
+    {id: '华中教育', cells: [text('执行中'), number(960000)]},
+    {id: '华北能源', cells: [text('已完成'), number(540000)]},
+    {id: '西部交通', cells: [text('待启动'), number(1780000)]},
+  ] }
+  const status = {fieldId: 'status', operator: 'equals', query: '执行中'}
+  const amount = {fieldId: 'amount', operator: 'gt', query: '1000000'}
+  const group = {kind: 'group', join: 'or', rules: [status, {kind: 'group', join: 'and', rules: [amount, {...status, query: ''}]}]}
+  assert.deepEqual(mod.filterViewSnapshot(view, 'table', group).rows.map(row => row.id), ['华中教育', '西部交通'])
+  group.join = 'and'
+  assert.equal(mod.resultCount(mod.filterViewSnapshot(view, 'table', group), 'table'), 0)
+  group.rules.length = 0
+  assert.equal(mod.filterViewSnapshot(view, 'table', group), view)
+  assert.equal(view.rows.length, 3)
+})
+
+test('日期条件区分起止端点，空值与数字零不混淆', () => {
+  const from = new Date(2026, 10, 20).getTime(); const until = new Date(2027, 1, 28).getTime()
+  const range = cell('date', {date:{content:from, content2:until, hasEndDate:true}})
+  assert.equal(mod.matchesDate(range, 'equals', '2026-11-20', 'start'), true)
+  assert.equal(mod.matchesDate(range, 'equals', '2027-02-28', 'end'), true)
+  assert.equal(mod.matchesDate(date(from), 'empty', '', 'end'), true)
+  assert.equal(mod.matchesCell(number(0), 'notEmpty', ''), true)
+  assert.equal(mod.matchesCell(number(0), 'equals', '0'), true)
+  assert.equal(mod.matchesCell(cell('number', {number:{}}), 'equals', '0'), false)
 })

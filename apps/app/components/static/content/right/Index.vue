@@ -46,8 +46,8 @@ const activeModuleId = ref<ModuleId>("outline")
 
 // 侧边栏显示状态 - 统一控制侧边栏的展开/收起
 const showSidebar = useState("sidebar-show", () => false)
-// 页面尚未完成客户端渲染/水合前，不让右侧栏参与布局占位
-const effectiveShowSidebar = computed(() => isPageInteractiveReady.value && showSidebar.value)
+// 首次水合期间不让客户端历史状态改变正文子节点数量
+const effectiveShowSidebar = computed(() => isClientMounted.value && isPageInteractiveReady.value && showSidebar.value)
 
 const outlineData = computed(() => Array.isArray(props.post?.outline) ? props.post.outline : [])
 const outlineMaxDepth = computed(() => props.post?.outlineLevel ?? 6)

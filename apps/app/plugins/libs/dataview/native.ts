@@ -383,7 +383,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
   }
 }
 
-const fieldIcon = (field: any) => {
+export const fieldIcon = (field: any) => {
   return field?.icon ? field.icon : TYPE_ICONS[field?.type] || "iconAlignLeft"
 }
 
@@ -470,8 +470,9 @@ const createToolbar = (
 
   views.appendChild(tag("div", "fn__space"))
 
-  const filter = tag("span", "ariaLabel block__icon")
-  setAttrs(filter, { "data-type": "av-filter", "aria-label": "筛选", "data-position": "8south" })
+  const filter = tag("button", "ariaLabel block__icon av__readonly-filter")
+  filter.type = "button"
+  setAttrs(filter, { "data-type": "av-filter", "aria-label": "筛选", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
   filter.innerHTML = icon("iconFilter")
   filter.addEventListener("click", (event) => {
     event.preventDefault()

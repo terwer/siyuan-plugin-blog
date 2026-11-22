@@ -1,10 +1,18 @@
-export type FilterOperator = "contains" | "equals" | "gt" | "gte" | "lt" | "lte" | "before" | "after"
+export type FilterOperator = "contains" | "equals" | "gt" | "gte" | "lt" | "lte" | "before" | "after" | "notContains" | "notEquals" | "empty" | "notEmpty"
 export type DatabaseViewType = "table" | "list" | "gallery" | "kanban" | "calendar"
 
 export type ViewFilter = {
   fieldId: string
   operator: FilterOperator
   query: string
+  datePart?: "start" | "end"
+  dateMode?: "specific" | "relative"
+}
+
+export type FilterGroup = {
+  kind: "group"
+  join: "and" | "or"
+  rules: (ViewFilter | FilterGroup)[]
 }
 
 export type ViewSort = {
@@ -17,11 +25,12 @@ export type FilterField = {
   name: string
   type: string
   operators: FilterOperator[]
+  icon?: string
 }
 
-const textOperators: FilterOperator[] = ["contains", "equals"]
-const numberOperators: FilterOperator[] = ["equals", "gt", "gte", "lt", "lte"]
-const dateOperators: FilterOperator[] = ["equals", "before", "after"]
+const textOperators: FilterOperator[] = ["contains", "notContains", "equals", "notEquals", "empty", "notEmpty"]
+const numberOperators: FilterOperator[] = ["equals", "notEquals", "gt", "gte", "lt", "lte", "empty", "notEmpty"]
+const dateOperators: FilterOperator[] = ["equals", "notEquals", "before", "after", "empty", "notEmpty"]
 
 export const operatorsForCellType = (type: string): FilterOperator[] => {
   switch (type) {
@@ -54,6 +63,7 @@ export const getFilterFields = (view: any, type: DatabaseViewType): FilterField[
       name: field.name || field.id,
       type: field.type || "text",
       operators: operatorsForCellType(field.type),
+      icon: field.icon,
     }))
     .filter((field: FilterField) => field.operators.length > 0)
 }
@@ -75,9 +85,9 @@ export const normalizeCellValue = (cell: any): string | number | boolean | null 
   const value = cell?.value ?? cell
   switch (cell?.valueType ?? value?.type) {
     case "number":
-      return value?.number?.isNotEmpty === false ? null : Number(value?.number?.content ?? 0)
+      return value?.number?.isNotEmpty === false || value?.number?.content == null ? null : Number(value.number.content)
     case "date":
-      return value?.date?.isNotEmpty === false ? null : Number(value?.date?.content ?? 0)
+      return value?.date?.isNotEmpty === false || value?.date?.content == null ? null : Number(value.date.content)
     case "created":
       return value?.created?.content == null ? null : Number(value.created.content)
     case "updated":
@@ -89,7 +99,7 @@ export const normalizeCellValue = (cell: any): string | number | boolean | null 
     case "mSelect":
       return selectText(value?.mSelect) || null
     case "block":
-      return value?.block?.content || null
+      return value?.block?.content ?? value?.content ?? null
     case "text":
       return value?.text?.content || null
     case "url":
@@ -107,25 +117,15 @@ export const normalizeCellValue = (cell: any): string | number | boolean | null 
   }
 }
 
-const normalizeQuery = (operator: FilterOperator, query: string): string | number | boolean | null => {
-  if (query == null || String(query).trim() === "") {
-    return null
-  }
-  if (operator === "equals" || operator === "gt" || operator === "gte" || operator === "lt" || operator === "lte") {
-    const number = Number(query)
-    return Number.isFinite(number) && String(number) === String(Number(query)) ? number : query
-  }
-  return query
-}
-
 const compareNumber = (left: number, right: number, operator: FilterOperator): boolean => {
   if (!Number.isFinite(left) || !Number.isFinite(right)) {
     return false
   }
   switch (operator) {
     case "equals":
-    case "eq":
       return left === right
+    case "notEquals":
+      return left !== right
     case "gt":
       return left > right
     case "gte":
@@ -139,50 +139,48 @@ const compareNumber = (left: number, right: number, operator: FilterOperator): b
   }
 }
 
+export const filterNeedsValue = (operator: FilterOperator) => operator !== "empty" && operator !== "notEmpty"
+const isEmptyValue = (value: unknown) => value == null || value === "" || (typeof value === "number" && !Number.isFinite(value))
+
 export const matchesCell = (cell: any, operator: FilterOperator, query: string): boolean => {
   const value = normalizeCellValue(cell)
-  if (value == null || query == null || String(query).trim() === "") {
-    return false
-  }
-  if (typeof value === "number") {
-    const numberQuery = Number(query)
-    if (!Number.isFinite(numberQuery)) {
-      return false
-    }
-    if (operator === "equals" || operator === "gt" || operator === "gte" || operator === "lt" || operator === "lte") {
-      return compareNumber(value, numberQuery, operator)
-    }
-  }
+  if (operator === "empty") return isEmptyValue(value)
+  if (operator === "notEmpty") return !isEmptyValue(value)
+  if (isEmptyValue(value) || !query.trim()) return false
+  if (typeof value === "number") return compareNumber(value, Number(query), operator)
   const text = String(value).toLowerCase()
-  const target = String(query).trim().toLowerCase()
-  if (operator === "contains") {
-    return text.includes(target)
-  }
-  if (operator === "equals") {
-    return text === target || Number(text) === Number(target)
-  }
-  if (operator === "before" || operator === "after") {
-    return false
-  }
+  const target = query.trim().toLowerCase()
+  if (operator === "contains") return text.includes(target)
+  if (operator === "notContains") return !text.includes(target)
+  if (operator === "equals") return text === target
+  if (operator === "notEquals") return text !== target
   return false
 }
 
-export const matchesDate = (cell: any, operator: FilterOperator, query: string): boolean => {
-  const value = normalizeCellValue(cell)
-  const dateValue = typeof value === "number" ? value : Date.parse(String(query))
-  const dateQuery = Date.parse(`${query}T00:00:00Z`)
-  if (!Number.isFinite(dateValue) || !Number.isFinite(dateQuery)) {
-    return false
+const localDay = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
+
+export const matchesDate = (cell: any, operator: FilterOperator, query: string, datePart = "start", dateMode = "specific"): boolean => {
+  const source = cell?.value ?? cell
+  const value = datePart === "end" ? (source?.date?.hasEndDate ? source.date.content2 : null) : normalizeCellValue(cell)
+  if (operator === "empty") return isEmptyValue(value)
+  if (operator === "notEmpty") return !isEmptyValue(value)
+  if (isEmptyValue(value)) return false
+  const date = new Date(Number(value))
+  if (!Number.isFinite(date.getTime())) return false
+  let target = query
+  if (dateMode === "relative") {
+    if (!/^-?\d+$/.test(query)) return false
+    const today = new Date()
+    today.setDate(today.getDate() + Number(query))
+    if (!Number.isFinite(today.getTime())) return false
+    target = localDay(today)
   }
-  if (operator === "equals") {
-    return new Date(dateValue).toISOString().slice(0, 10) === new Date(dateQuery).toISOString().slice(0, 10)
-  }
-  if (operator === "before") {
-    return dateValue < dateQuery
-  }
-  if (operator === "after") {
-    return dateValue > dateQuery
-  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(target)) return false
+  const day = localDay(date)
+  if (operator === "equals") return day === target
+  if (operator === "notEquals") return day !== target
+  if (operator === "before") return day < target
+  if (operator === "after") return day > target
   return false
 }
 
@@ -199,35 +197,31 @@ const findCardCell = (card: any, fieldId: string) => {
   return (card?.values || []).find((cell: any) => cell?.value?.keyID === fieldId || cell?.keyID === fieldId) || null
 }
 
-const matchesTypedCell = (cell: any, field: FilterField, filter: ViewFilter): boolean => {
-  if (field.type === "date" || field.type === "created" || field.type === "updated") {
-    return matchesDate(cell, filter.operator, filter.query)
+const compileFilter = (root: ViewFilter | FilterGroup, fields: Map<string, FilterField>): ((cell: (id: string) => any) => boolean) | null => {
+  if ("kind" in root) {
+    const rules = root.rules.map(rule => compileFilter(rule, fields)).filter(rule => rule !== null)
+    if (!rules.length) return null
+    return getCell => root.join === "and" ? rules.every(rule => rule(getCell)) : rules.some(rule => rule(getCell))
   }
-  return matchesCell(cell, filter.operator, filter.query)
+  const field = fields.get(root.fieldId)
+  if (!field?.operators.includes(root.operator) || (filterNeedsValue(root.operator) && !root.query.trim())) return null
+  if (["date", "created", "updated"].includes(field.type)) {
+    return getCell => matchesDate(getCell(field.id), root.operator, root.query, root.datePart, root.dateMode)
+  }
+  return getCell => matchesCell(getCell(field.id), root.operator, root.query)
 }
 
-export const filterViewSnapshot = (view: any, type: DatabaseViewType, filter: ViewFilter | null): any => {
-  if (!filter || !filter.fieldId || !filter.query) {
-    return view
-  }
-  const field = getFilterFields(view, type).find((item) => item.id === filter.fieldId)
-  if (!field || !field.operators.includes(filter.operator)) {
-    return view
-  }
+export const filterViewSnapshot = (view: any, type: DatabaseViewType, filter: ViewFilter | FilterGroup | null): any => {
+  if (!filter) return view
+  const match = compileFilter(filter, new Map(getFilterFields(view, type).map(field => [field.id, field])))
+  if (!match) return view
   if (type === "table" || type === "list" || type === "calendar") {
-    return { ...view, rows: (view?.rows || []).filter((row: any) => matchesTypedCell(findRowCell(row, view, field.id), field, filter)) }
+    return { ...view, rows: (view?.rows || []).filter((row: any) => match(id => findRowCell(row, view, id))) }
   }
-  if (type === "gallery") {
-    return { ...view, cards: (view?.cards || []).filter((card: any) => matchesTypedCell(findCardCell(card, field.id), field, filter)) }
-  }
-  if (type === "kanban") {
-    return {
-      ...view,
-      groups: (view?.groups || []).map((group: any) => ({
-        ...group,
-        cards: (group?.cards || []).filter((card: any) => matchesTypedCell(findCardCell(card, field.id), field, filter)),
-      })),
-    }
+  const filterCards = (cards: any[]) => cards.filter(card => match(id => findCardCell(card, id)))
+  if (type === "gallery") return { ...view, cards: filterCards(view?.cards || []) }
+  if (type === "kanban") return {
+    ...view, groups: (view?.groups || []).map((group: any) => ({ ...group, cards: filterCards(group?.cards || []) })),
   }
   return view
 }

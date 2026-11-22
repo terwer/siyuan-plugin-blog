@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
+const menu = await readFile(new URL('../plugins/libs/dataview/filterMenu.ts', import.meta.url), 'utf8')
 const source = (await readFile(new URL('../plugins/07.datatable.client.ts', import.meta.url), 'utf8')) + '\n' + (await readFile(new URL('../plugins/libs/dataview/native.ts', import.meta.url), 'utf8'))
 
 test('真实五种数据库视图都有独立 renderer 分支', () => {
@@ -13,7 +14,6 @@ test('真实五种数据库视图都有独立 renderer 分支', () => {
   assert.match(source, /currentDataTable/)
   assert.match(source, /renderUnsupported/)
   assert.match(source, /normalizeDataTable/)
-  assert.match(source, /legacy-table/)
   assert.match(source, /div\[data-av-type\]/)
 })
 
@@ -46,13 +46,10 @@ test('未知类型只读回退不猜测为表格', () => {
   assert.doesNotMatch(source, /default:\s*renderTable/)
 })
 
-test('筛选编辑器和双语状态保持本地只读', () => {
-  assert.match(source, /createFilter(?:Editor|Panel)/)
-  assert.match(source, /db-view-filter-status/)
-  assert.match(source, /role", "status"/)
-  assert.match(source, /筛选/)
-  assert.match(source, /No matching entries/)
+test('筛选菜单提供条件、分组及本地状态控制', () => {
+  assert.match(source, /openDatabaseFilterMenu/)
   assert.match(source, /filterViewSnapshot/)
-  assert.match(source, /noFields/)
-  assert.match(source, /aria-live/)
+  assert.match(menu, /添加筛选条件分组/)
+  assert.match(menu, /清空筛选规则/)
+  assert.match(menu, /aria-live/)
 })

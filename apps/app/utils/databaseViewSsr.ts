@@ -7,30 +7,37 @@ const escapeHtml = (value: unknown) => String(value ?? "")
   .replaceAll('"', "&quot;")
   .replaceAll("'", "&#39;")
 
-/**
- * 只识别当前 share-pro 1.19.0 的多视图快照，以及上线前的旧单表快照。
- * SSR 不把数据库内部表格直接拼进正文，避免首屏出现未加载思源样式的裸表格。
- */
-const normalizeTable = (value: any, id: string) => {
+export const normalizeDataTable = (value: any, id: string) => {
   if (value && Array.isArray(value.order)) {
-    const normalized = { ...value }
-    value.order.forEach((viewId: string) => {
+    const ids: string[] = [...new Set<string>(value.order)].filter(viewId => value[viewId] && typeof value[viewId] === "object")
+    if (!ids.length) return null
+    const metadata = ids.map(viewId => value[viewId]).find(entry => Array.isArray(entry.views))?.views
+    const orderedIds: string[] = Array.isArray(metadata)
+      ? metadata.map(view => view.id).filter(viewId => ids.includes(viewId))
+      : []
+    const order = [...new Set([...orderedIds, ...ids])]
+    const first = value[order[0]]
+    const name = value.name ?? (first.view ? first.name : "") ?? ""
+    const normalized = { ...value, order, name }
+    for (const viewId of order) {
       const entry = value[viewId]
-      if (!entry || typeof entry !== "object") return
-      const view = entry.view && typeof entry.view === "object" ? entry.view : entry
+      const wrapped = entry.view && typeof entry.view === "object"
+      const view = wrapped ? entry.view : entry
+      const meta = metadata?.find((candidate: any) => candidate.id === viewId)
       normalized[viewId] = {
         ...view,
-        id: entry.viewID || view.id || viewId,
-        viewType: entry.viewType || view.viewType || view.type,
-        name: entry.name || view.name,
-        desc: entry.desc || view.desc,
+        id: viewId,
+        viewType: entry.viewType || view.viewType || meta?.type || view.type,
+        name: meta?.name ?? view.name,
+        desc: meta?.desc ?? view.desc,
       }
-    })
+    }
     return normalized
   }
   if (value && value.viewType === "table" && Array.isArray(value.columns) && Array.isArray(value.rows)) {
     const viewId = String(value.viewID || value.id || `${id}:legacy-table`)
-    return { order: [viewId], [viewId]: value }
+    const meta = value.views?.find?.((item: any) => item.id === viewId)
+    return { order: [viewId], name: value.name, [viewId]: { ...value, id: viewId, name: meta?.name } }
   }
   return null
 }
@@ -49,7 +56,7 @@ const viewLabel = (view: any) => {
 
 const renderDatabasePlaceholder = (table: any) => {
   const firstView = table[table.order[0]] || {}
-  const title = firstView.name || "未命名数据库"
+  const title = table.name || "未命名数据库"
   const viewCount = table.order.length
   return `<div class="db-view-ssr-placeholder" data-db-ssr-placeholder="true" role="img" aria-label="数据库：${escapeHtml(title)}"><span class="db-view-ssr-placeholder-icon" aria-hidden="true">▦</span><span class="db-view-ssr-placeholder-content"><strong>数据库</strong><span>${escapeHtml(title)}</span><small>${viewCount} 个视图 · ${escapeHtml(viewLabel(firstView))}</small></span></div>`
 }
@@ -58,11 +65,12 @@ export const renderDatabaseViewsSsr = (html: string, dataViews: any) => {
   if (!html || !dataViews || typeof dataViews !== "object") return html
   let output = html
   for (const [id, raw] of Object.entries(dataViews)) {
-    const table = normalizeTable(raw, id)
+    const table = normalizeDataTable(raw, id)
     if (!table) continue
     const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-    const pattern = new RegExp(`(<div[^>]*data-av-id="${escaped}"[^>]*>)[\\s\\S]*?(</div>\\s*<div class="protyle-attr")`)
-    output = output.replace(pattern, `$1${renderDatabasePlaceholder(table)}$2`)
+    // 只替换数据库的空内容槽，保留块外层和属性栏的原始层级。
+    const pattern = new RegExp(`(<div\\b[^>]*\\sdata-av-id="${escaped}"[^>]*>\\s*)<div\\b[^>]*>\\s*</div>(?=\\s*<div class="protyle-attr")`)
+    output = output.replace(pattern, (_, opening) => `${opening}${renderDatabasePlaceholder(table)}`)
   }
   return output
 }

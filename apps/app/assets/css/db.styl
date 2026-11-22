@@ -162,3 +162,117 @@
 
 .db-view-toast--error
   background var(--b3-theme-error, #d93025)
+
+// 思源宿主隐藏只读工具栏中的筛选入口；分享页筛选仅作用于内存快照。
+.protyle-wysiwyg[data-readonly=true] .av .av__views > button.block__icon.av__readonly-filter[data-type=av-filter]
+  display inline-flex
+
+// 阅读筛选使用原生菜单控件；按视口约束浮层与分组内联布局。
+.db-view-filter-menu,
+.db-view-filter-picker
+  position fixed
+  inset auto
+  margin 0
+  box-sizing border-box
+  max-width calc(100vw - 16px)
+  max-height calc(100vh - 16px)
+  overflow auto
+
+.db-view-filter-menu
+  z-index 1000
+  width max-content
+  min-width 360px
+  padding 8px
+
+.db-view-filter-picker
+  z-index 1001
+  min-width 150px
+  padding 4px
+
+.db-view-filter-heading
+  position relative
+  display grid
+  place-items center
+  min-height 36px
+  border-bottom 1px solid var(--b3-border-color)
+
+.db-view-filter-heading > button
+  position absolute
+  left 4px
+  display inline-flex
+  opacity 1
+
+.db-view-filter-body
+  padding-top 6px
+
+.db-view-filter-rule
+  display grid
+  grid-template-columns 48px minmax(0, 1fr) 28px
+  align-items start
+  gap 8px
+  padding 4px
+
+.db-view-filter-rule > span
+  line-height 30px
+  text-align center
+  color var(--b3-theme-on-surface)
+
+.db-view-filter-controls
+  display flex
+  flex-wrap wrap
+  align-items center
+  gap 6px
+  min-width 0
+
+.db-view-filter-group
+  flex 1 1 100%
+  min-width 0
+  padding 6px
+  border 1px solid var(--b3-border-color)
+  border-radius 6px
+  background var(--b3-theme-surface)
+
+.db-view-filter-select,
+.db-view-filter-choice,
+.db-view-filter-remove
+  display inline-flex
+  align-items center
+  gap 6px
+
+.db-view-filter-menu .db-view-filter-remove
+  opacity 1
+
+.db-view-filter-choice
+  display flex
+  text-align start
+  min-height 30px
+
+.db-view-filter-select,
+.db-view-filter-value-input
+  min-height 30px
+
+.db-view-filter-select
+  cursor pointer
+
+.db-view-filter-value-input
+  flex 1 1 120px
+  width 155px
+  box-sizing border-box
+
+.db-view-filter-icon
+  display inline-flex
+  flex none
+  color var(--b3-theme-on-surface)
+
+.db-view-filter-icon svg
+  width 14px
+  height 14px
+
+@media (max-width: 640px)
+  .db-view-filter-menu
+    min-width 0
+    width calc(100vw - 16px)
+
+  .db-view-filter-rule
+    grid-template-columns 36px minmax(0, 1fr) 24px
+    gap 4px
