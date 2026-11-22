@@ -126,7 +126,7 @@ const resolveViewType = (item: any) => {
 }
 
 const viewMeta = (item: any, viewId: string) => {
-  return item?.views?.find((view: any) => view.id === viewId) || item?.view || {}
+  return item?.views?.find((view: any) => view.id === viewId) || item?.view || item || {}
 }
 
 const resolveCell = (cell: any) => {
@@ -414,11 +414,12 @@ const createCell = (rawCell: any, field: any, className = "av__cell") => {
 const createViewTabs = (item: any, activeViewId: string, onActivate: (viewId: string) => void) => {
   const bar = tag("div", "layout-tab-bar fn__flex")
   ;(item?.order || []).forEach((viewId: string) => {
-    const view = item?.[viewId]?.view
+    const entry = item?.[viewId]
+    const view = entry?.view || entry
     if (!view) {
       return
     }
-    const meta = viewMeta(item?.[viewId], viewId)
+    const meta = viewMeta(entry, viewId)
     const type = resolveViewType(item?.[viewId])
     const tab = tag("div", `ariaLabel item${viewId === activeViewId ? " item--focus" : ""}`)
     tab.setAttribute("draggable", "true")

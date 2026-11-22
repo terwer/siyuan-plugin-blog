@@ -248,7 +248,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         return
       }
       const filter = activeFilters.get(viewId) || null
-      const filtered = filter ? filterViewSnapshot(item.view, type, filter) : item.view
+      const filtered = filter ? filterViewSnapshot(item, type, filter) : item
       const renderItem = {
         ...currentDataTable,
         id: dataTableId,
@@ -265,7 +265,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
           window.open(`${getHome()}/${docPath}/${encodeURIComponent(blockId)}`, "_blank", "noopener,noreferrer")
         },
         onFilter: (anchor: HTMLElement) => {
-          const fields = getFilterFields(item.view, type)
+          const fields = getFilterFields(item, type)
           const locale = filterLocale()
           if (!fields.length) {
             const message = document.createElement("p")
@@ -279,7 +279,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
           createFilterPanel(anchor, fields, (nextFilter) => {
             activeFilters.set(viewId, nextFilter)
             render(viewId)
-            if (nextFilter && resultCount(filterViewSnapshot(item.view, type, nextFilter), type) === 0) {
+            if (nextFilter && resultCount(filterViewSnapshot(item, type, nextFilter), type) === 0) {
               const empty = document.createElement("p")
               empty.className = "db-view-empty"
               empty.textContent = locale.noResults
