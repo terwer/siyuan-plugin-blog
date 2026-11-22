@@ -12,6 +12,7 @@ import type AppConfig from "~/app.config"
 import ImagePreview from "~/components/common/ImagePreview.vue"
 import { useImagePreview } from "~/composables/useImagePreview"
 import { useViewerPreferences } from "~/composables/useViewerPreferences"
+import { renderDatabaseViewsSsr } from "~/utils/databaseViewSsr"
 
 const props = defineProps<{
   post: any
@@ -22,7 +23,7 @@ const props = defineProps<{
 const { images, previewRef } = useImagePreview()
 
 // 正文
-const editorDom = props.post.editorDom?.replaceAll("contenteditable=\"true\"", "contenteditable=\"false\"") ?? ""
+const editorDom = renderDatabaseViewsSsr(props.post.editorDom?.replaceAll("contenteditable=\"true\"", "contenteditable=\"false\"") ?? "", props.post.dataViews)
 const VNode = () =>
   h("div", {
     class: "",

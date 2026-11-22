@@ -38,7 +38,20 @@ export default defineNuxtPlugin(({ vueApp }) => {
   // 历史发布数据：旧版本只有一个直接的 table 视图，没有 order/viewId 包装。
   const normalizeDataTable = (value: any, dataTableId: string) => {
     if (value && Array.isArray(value.order)) {
-      return value
+      const normalized = { ...value }
+      value.order.forEach((viewId: string) => {
+        const entry = value[viewId]
+        if (!entry || typeof entry !== "object") return
+        const view = entry.view && typeof entry.view === "object" ? entry.view : entry
+        normalized[viewId] = {
+          ...view,
+          id: entry.viewID || view.id || viewId,
+          viewType: entry.viewType || view.viewType || view.type,
+          name: entry.name || view.name,
+          desc: entry.desc || view.desc,
+        }
+      })
+      return normalized
     }
     if (value && value.viewType === "table" && Array.isArray(value.columns) && Array.isArray(value.rows)) {
       const viewId = String(value.viewID || value.id || `${dataTableId}:legacy-table`)
@@ -266,7 +279,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         view: filtered,
         viewID: viewId,
         viewType: type,
-        [viewId]: { ...item, view: filtered },
+        [viewId]: { ...filtered, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
       mountNativeAv(dataTableEl, renderItem, {
         onActivate: (nextViewId: string) => render(nextViewId),
