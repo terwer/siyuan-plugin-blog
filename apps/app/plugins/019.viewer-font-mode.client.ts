@@ -113,6 +113,11 @@ export default defineNuxtPlugin((nuxtApp) => {
       return
     }
 
+    const enabled = String(useRuntimeConfig().public.viewerFontsEnabled ?? "false").toLowerCase() === "true"
+    if (!enabled) {
+      return
+    }
+
     scheduleEnhancedFonts()
   })
 })

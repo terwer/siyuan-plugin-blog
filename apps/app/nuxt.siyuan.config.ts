@@ -153,6 +153,7 @@ export default defineNuxtConfig({
       siyuanApiUrl: "",
       providerMode: "false",
       providerUrl: "",
+      viewerFontsEnabled: process.env.NUXT_PUBLIC_VIEWER_FONTS_ENABLED ?? process.env.VIEWER_FONTS_ENABLED ?? "false",
       viewerCapabilities: {
         aiAssistant: false,
       },

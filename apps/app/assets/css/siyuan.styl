@@ -19,11 +19,11 @@ html body
 
 /*
  * 分享页的四类字体体系由独立变量控制：正文、代码、Emoji、数学。
- * 变量在 body 上定义并映射到 --b3-font-family-*，保证整套页面从首屏起使用同一套查看端字体。
+ * 默认使用系统字体；开启增强字体后由 app.vue 的 data-viewer-font-mode 覆盖正文和代码字体。
  */
 body
-  --viewer-font-stack "Open Sans", "LXGW WenKai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
-  --viewer-font-stack-code "Open Sans", "JetBrains Mono", "LXGW WenKai", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+  --viewer-font-stack -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif
+  --viewer-font-stack-code "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
   --viewer-font-stack-emoji "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Emojis Additional", "Emojis Reset", sans-serif
   --viewer-font-stack-math "KaTeX_Main", var(--viewer-font-stack)
 

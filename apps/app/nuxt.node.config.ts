@@ -137,6 +137,7 @@ export default defineNuxtConfig({
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
       providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
+      viewerFontsEnabled: process.env.NUXT_PUBLIC_VIEWER_FONTS_ENABLED ?? process.env.VIEWER_FONTS_ENABLED ?? "true",
       viewerCapabilities: {
         aiAssistant: true,
       },

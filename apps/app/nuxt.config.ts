@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     "self-hosted": {
       srcDir:".", ssr:true, devtools:{enabled:false}, devServer:{port:4000},
       nitro:{preset:"node-server"},
-      runtimeConfig:{public:{connectionSync:true,providerMode:"true",viewerCapabilities:{aiAssistant:true}}},
+      runtimeConfig:{public:{connectionSync:true,providerMode:"true",viewerFontsEnabled:process.env.NUXT_PUBLIC_VIEWER_FONTS_ENABLED ?? process.env.VIEWER_FONTS_ENABLED ?? "false",viewerCapabilities:{aiAssistant:true}}},
     },
   },
   devtools: { enabled: isDev },
@@ -140,6 +140,7 @@ export default defineNuxtConfig({
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
       providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? process.env.SHARE_API_URL ?? "http://127.0.0.1:8086",
+      viewerFontsEnabled: process.env.NUXT_PUBLIC_VIEWER_FONTS_ENABLED ?? process.env.VIEWER_FONTS_ENABLED ?? "true",
       viewerCapabilities: {
         aiAssistant: true,
       },
