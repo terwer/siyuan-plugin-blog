@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pnpm build -F @terwer/share-pro-app -- --from node
+# pnpm build -F @terwer/share-pro-app -- --from node
 # for /
 NUXT_PUBLIC_DEFAULT_TYPE=node \
 NUXT_PUBLIC_PROVIDER_MODE=true \

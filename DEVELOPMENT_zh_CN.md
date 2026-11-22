@@ -228,6 +228,11 @@ Rename-Item dist dist_bak
 
 3. 启动命令
 
-```
+`pnpm start` 执行仓库根目录的 `startup.sh`（生产环境从 `startup.example.sh` 复制一份），Windows 上执行等价的 `startup.ps1`：
+
+```bash
+cp startup.example.sh startup.sh
 pnpm start
 ```
+
+`startup.sh` 第一行是 `pnpm build -F @terwer/share-pro-app -- --from node`。如果服务器以非 root 用户运行、pnpm 无法创建全局目录（报 `/root/.local/share/pnpm/global/v11 Permission denied`），就把这一行注释掉，直接启动已上传的 `dist/node` 产物；同时确认运行用户对项目目录和 `dist` 有读权限。

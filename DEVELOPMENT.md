@@ -227,6 +227,11 @@ Paths inside `node-provider.zip` are `dist/node/...`; after extraction `dist/nod
 
 3. Start command
 
+`pnpm start` runs the repository root `startup.sh` (copy it from `startup.example.sh` in production); on Windows the equivalent `startup.ps1` runs instead:
+
 ```bash
+cp startup.example.sh startup.sh
 pnpm start
 ```
+
+The first line of `startup.sh` is `pnpm build -F @terwer/share-pro-app -- --from node`. If the server runs as a non-root user and pnpm cannot create its global directory (`/root/.local/share/pnpm/global/v11 Permission denied`), comment that line out and start the already uploaded `dist/node` artifacts directly; make sure the run user can read the project directory and `dist`.

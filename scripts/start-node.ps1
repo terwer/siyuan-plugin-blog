@@ -1,6 +1,6 @@
 ﻿#!/usr/bin/env pwsh
 # Windows 对应实现：scripts/start-node.sh
-# 只在 Windows 上由 `pnpm start` 经 scripts/run-platform-script.mjs 自动调用。
+# 只在 Windows 上由平台分派器调用。
 # 与 .sh 一致：set -eu（任一步失败立即退出）。
 $ErrorActionPreference = "Stop"
 

@@ -13,7 +13,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "clean": "node scripts/run-platform-script.mjs scripts/clean",
-    "start": "node scripts/run-platform-script.mjs scripts/start-node",
+    "start": "node scripts/run-platform-script.mjs startup",
     "buildNodeProvider": "node scripts/run-platform-script.mjs build-node-provider",
     "packageNodeProvider": "node scripts/run-platform-script.mjs package-node-provider",
     "package": "node scripts/run-python.mjs scripts/package.py",
