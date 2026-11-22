@@ -11,14 +11,25 @@ $ErrorActionPreference = "Stop"
 
 Set-Location -LiteralPath $PSScriptRoot
 
+# 与 .sh 的 `rm -rf build` 一致：删除失败（目录被其它进程占用等）不中止，
+# 后面的 ZipFile.Open(Create) 会直接覆盖旧的 node-provider.zip。
 if (Test-Path -LiteralPath "./build") {
-    Remove-Item -LiteralPath "./build" -Recurse -Force
+    Remove-Item -LiteralPath "./build" -Recurse -Force -ErrorAction SilentlyContinue
 }
 New-Item -ItemType Directory -Force -Path "./build" | Out-Null
 
 if (-not (Test-Path -LiteralPath "./dist/node")) {
     Write-Host "dist/node directory does not exist"
     exit 1
+}
+
+# 打包前校验入口，避免把 .output 结构或构建残留打成包，部署后才报找不到 server/index.mjs
+if (-not (Test-Path -LiteralPath "./dist/node/server/index.mjs")) {
+    Write-Host "dist/node/server/index.mjs does not exist; run pnpm buildNodeProvider first"
+    exit 1
+}
+if (Test-Path -LiteralPath "./dist/node/dist") {
+    Write-Host "dist/node/dist is a build leftover and will not be packed"
 }
 
 Add-Type -AssemblyName System.IO.Compression
@@ -36,6 +47,10 @@ try {
     Get-ChildItem -LiteralPath $source -Recurse -Force | ForEach-Object {
         # 条目名固定加 dist/node/ 前缀（与 zip -r build/node-provider.zip dist/node 一致），并统一用正斜杠
         $relative = "dist/node/" + $_.FullName.Substring($source.Length).TrimStart('\', '/').Replace('\', '/')
+        # 跳过构建残留：dist/node/dist 是 siyuan SPA 产物，不属于 node provider
+        if ($relative -eq "dist/node/dist" -or $relative.StartsWith("dist/node/dist/")) {
+            return
+        }
         if ($_.PSIsContainer) {
             $archive.CreateEntry("$relative/") | Out-Null
         }
