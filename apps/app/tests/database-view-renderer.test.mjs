@@ -12,6 +12,8 @@ test('真实五种数据库视图都有独立 renderer 分支', () => {
   assert.match(source, /renderItem/)
   assert.match(source, /currentDataTable/)
   assert.match(source, /renderUnsupported/)
+  assert.match(source, /normalizeDataTable/)
+  assert.match(source, /legacy-table/)
   assert.match(source, /div\[data-av-type\]/)
 })
 

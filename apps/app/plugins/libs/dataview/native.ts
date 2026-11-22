@@ -120,14 +120,9 @@ const setAttrs = (element: HTMLElement, attrs: Record<string, string | number | 
   })
 }
 
-const resolveViewType = (item: any) => {
-  const listed = item?.views?.find((view: any) => view.id === item?.view?.id)
-  return listed?.type || item?.viewType || item?.view?.type || "unknown"
-}
+const resolveViewType = (item: any) => String(item?.viewType || "unknown")
 
-const viewMeta = (item: any, viewId: string) => {
-  return item?.views?.find((view: any) => view.id === viewId) || item?.view || item || {}
-}
+const viewMeta = (item: any, _viewId: string) => item
 
 const resolveCell = (cell: any) => {
   if (cell?.value !== undefined) {
@@ -1285,10 +1280,26 @@ export const renderNativeView = (item: any, view: any, type: string) => {
   return scroll
 }
 
+const hasViewShape = (view: any, type: string) => {
+  if (!view || typeof view !== "object") return false
+  if (type === "gallery") return Array.isArray(view.cards)
+  if (type === "kanban") return Array.isArray(view.groups)
+  if (type === "calendar") return Boolean(view.calendar) || Array.isArray(view.rows)
+  return Array.isArray(view.rows) && Array.isArray(view.columns)
+}
+
 const isEmptyView = (view: any, type: string) => {
-  if (type === "gallery") return !(view?.cards || []).length
-  if (type === "kanban") return !(view?.groups || []).some((group: any) => (group?.cards || []).length > 0)
-  return !(view?.rows || []).length
+  if (type === "gallery") return view.cards.length === 0
+  if (type === "kanban") return !view.groups.some((group: any) => (group?.cards || []).length > 0)
+  return (view.rows || []).length === 0
+}
+
+const renderInvalidView = (type: string) => {
+  const empty = tag("div", "db-view-error")
+  empty.setAttribute("role", "alert")
+  empty.textContent = `数据库视图数据结构无效：${type}`
+  empty.dataset.viewType = type
+  return empty
 }
 
 const renderEmptyView = (type: string) => {
@@ -1323,7 +1334,7 @@ const enforceReadOnly = (target: HTMLElement) => {
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: { onFilter: (anchor: HTMLElement) => void; onActivate: (viewId: string) => void },
+  options: { onFilter: (anchor: HTMLElement) => void; onActivate: (viewId: string) => void; onOpen?: (blockId: string) => void },
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1341,9 +1352,11 @@ export const mountNativeAv = (
   target.dataset.viewType = type
 
   const header = createHeader(item, currentViewId, options.onFilter, options.onActivate)
-  const body = isEmptyView(item?.view, type)
-    ? renderEmptyView(type)
-    : renderNativeView(item, item?.view, type)
+  const body = !hasViewShape(item?.view, type)
+    ? renderInvalidView(type)
+    : isEmptyView(item.view, type)
+      ? renderEmptyView(type)
+      : renderNativeView(item, item.view, type)
   const containerClass = type === "gallery" || type === "kanban" || type === "calendar"
     ? "av__container fn__block"
     : "av__container"
@@ -1385,7 +1398,7 @@ export const valueToText = (cell: any) => {
   }
 }
 
-export const parseDataViews = (value: string) => JsonUtil.safeParse<any>(value, {})
+export const parseDataViews = (value: string) => JsonUtil.safeParse<any>(value, null)
 
 
 

@@ -33,9 +33,18 @@ export default defineNuxtPlugin(({ vueApp }) => {
   const { addClientAssetsPrefix } = useStaticClientAssets()
   const { getHome } = useBaseUrl()
 
-  const resolveViewType = (item: any) => {
-    const listed = item?.views?.find((view: any) => view.id === item?.view?.id)
-    return listed?.type || item?.viewType || item?.view?.type || "unknown"
+  const resolveViewType = (item: any) => String(item?.viewType || "unknown")
+
+  // 历史发布数据：旧版本只有一个直接的 table 视图，没有 order/viewId 包装。
+  const normalizeDataTable = (value: any, dataTableId: string) => {
+    if (value && Array.isArray(value.order)) {
+      return value
+    }
+    if (value && value.viewType === "table" && Array.isArray(value.columns) && Array.isArray(value.rows)) {
+      const viewId = String(value.viewID || value.id || `${dataTableId}:legacy-table`)
+      return { order: [viewId], viewTypes: { [viewId]: "table" }, [viewId]: value }
+    }
+    return null
   }
 
   const filterLocale = () => {
@@ -233,13 +242,15 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
     const activeFilters = new Map<string, ViewFilter | null>()
     const currentViewId = dataTableEl.getAttribute("custom-sy-av-view") || currentDataTable.order?.[0]
-    if (!currentViewId) {
+    if (!currentViewId || !currentDataTable.order?.includes(currentViewId)) {
+      renderUnsupported(dataTableEl, "invalid", { view: { name: "缺少有效视图顺序" } })
       return
     }
 
     const render = (viewId: string) => {
       const item = currentDataTable[viewId]
-      if (!item) {
+      if (!item || typeof item !== "object") {
+        renderUnsupported(dataTableEl, "invalid", { view: { name: "缺少真实视图数据" } })
         return
       }
       const type = resolveViewType(item)
@@ -301,6 +312,12 @@ export default defineNuxtPlugin(({ vueApp }) => {
         return
       }
       const dataTableDatas = parseDataViews(dataTableStr)
+      if (!dataTableDatas || typeof dataTableDatas !== "object") {
+        el.querySelectorAll("div[data-av-type]").forEach((dataTableEl: any) => {
+          renderUnsupported(dataTableEl, "invalid", { view: { name: "数据库数据解析失败" } })
+        })
+        return
+      }
       const dataTables = el.querySelectorAll("div[data-av-type]")
       dataTables.forEach((dataTableEl: any) => {
         const dataTableId = dataTableEl.getAttribute("data-av-id")
@@ -308,8 +325,13 @@ export default defineNuxtPlugin(({ vueApp }) => {
         if (!dataTableId || !SUPPORTED_VIEW_TYPES.includes(dataAvType)) {
           return
         }
-        const currentDataTable = dataTableDatas[dataTableId]
-        if (!currentDataTable || dataTableEl.dataset.dbRendered === "true") {
+        const currentDataTable = normalizeDataTable(dataTableDatas[dataTableId], dataTableId)
+        if (dataTableEl.dataset.dbRendered === "true") {
+          return
+        }
+        if (!currentDataTable) {
+          renderUnsupported(dataTableEl, "invalid", { view: { name: "数据库数据解析失败" } })
+          dataTableEl.dataset.dbRendered = "true"
           return
         }
         dataTableEl.dataset.dbRendered = "true"
