@@ -34,16 +34,18 @@ pnpm install
 
 ```bash
 cd apps/app
-bash script/dev.sh
+pnpm dev
 ```
 
 ## 构建
+
+所有构建都通过 `pnpm` 调用，Windows 会自动走对应的 `.ps1`，Linux / macOS 走 `.sh`。
 
 构建免费版 Siyuan SPA 查看页：
 
 ```bash
 cd apps/app
-bash script/siyuan.sh
+pnpm build -- --from siyuan
 ```
 
 这个脚本会临时切换到 `nuxt.siyuan.config.ts`，完成免费版 SPA 查看页构建后，再自动恢复 `nuxt.config.ts`。
@@ -52,19 +54,19 @@ bash script/siyuan.sh
 
 ```bash
 cd apps/app
-bash script/node.sh
+pnpm build -- --from node
 ```
 
 构建 Vercel 查看页：
 
 ```bash
 cd apps/app
-bash script/vercel.sh
+pnpm vercelBuild
 ```
 
 构建 Cloudflare 查看页：
 
 ```bash
 cd apps/app
-bash script/cloudflare.sh
+pnpm cloudflareBuild
 ```

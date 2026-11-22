@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf node_modules"
+    "clean": "node -e \"require('node:fs').rmSync('node_modules',{recursive:true,force:true})\""
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",

@@ -1,20 +1,6 @@
 import AutoImport from "unplugin-auto-import/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
-import { existsSync, readFileSync } from "node:fs"
-import { fileURLToPath } from "node:url"
-
-const loadRootEnv = () => {
-  const file = fileURLToPath(new URL("../.env", import.meta.url))
-  if (!existsSync(file)) return
-  for (const line of readFileSync(file, "utf8").split(/\r?\n/)) {
-    const match = line.match(/^\s*([A-Z][A-Z0-9_]*)\s*=\s*(.*?)\s*$/)
-    if (!match || match[1] in process.env) continue
-    process.env[match[1]] = match[2].replace(/^(["'])(.*)\1$/, "$2")
-  }
-}
-
-loadRootEnv()
 
 const generateDynamicV = () => {
   const now = new Date()
@@ -27,18 +13,11 @@ const generateDynamicV = () => {
 }
 
 const isDev = process.env.NODE_ENV === "development"
-const appBase = process.env.NUXT_APP_BASE_URL || "/"
+const appBase = "/"
 const staticV = generateDynamicV()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  $env: {
-    "self-hosted": {
-      srcDir:".", ssr:true, devtools:{enabled:false}, devServer:{port:4000},
-      nitro:{preset:"node-server"},
-      runtimeConfig:{public:{connectionSync:true,providerMode:"true",viewerFontsEnabled:process.env.NUXT_PUBLIC_VIEWER_FONTS_ENABLED ?? process.env.VIEWER_FONTS_ENABLED ?? "false",viewerCapabilities:{aiAssistant:true}}},
-    },
-  },
   devtools: { enabled: isDev },
 
   // 自托管部署时由 Nitro 直接提供 gzip/brotli 静态资源
@@ -46,7 +25,7 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
 
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt"],
+  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@pinia/nuxt", "@element-plus/nuxt"],
 
   i18n: {
     defaultLocale: "zh_CN",
@@ -86,6 +65,26 @@ export default defineNuxtConfig({
         "data-light-theme": "Zhihu",
         "data-dark-theme": "Zhihu",
       },
+      link: [
+        // 预连接到 CDN（减少 DNS + TLS 握手时间）
+        { rel: "preconnect", href: "https://at.alicdn.com" },
+        // 预加载关键字体文件
+        // {
+        //   rel: "preload",
+        //   as: "font",
+        //   href: appBase + "libs/fonts/fzbw/方正北魏楷书简体.woff2",
+        //   type: "font/woff2",
+        //   crossorigin: "anonymous",
+        // },
+        {
+          rel: "stylesheet",
+          href: appBase + "libs/fonts/vdoing_font.css?v=" + staticV,
+        },
+        {
+          rel: "stylesheet",
+          href: appBase + "resources/stage/build/app/base.css?v=" + staticV,
+        },
+      ],
       // https://nuxt.com/docs/api/configuration/nuxt-config#head
       script: isDev
         ? [
@@ -128,18 +127,16 @@ export default defineNuxtConfig({
 
   // 环境变量
   runtimeConfig: {
-    providerInternalUrl: process.env.NUXT_PROVIDER_INTERNAL_URL ?? "",
     // Private 配置（仅在服务端可用）
     aiBaseUrl: process.env.NUXT_AI_BASE_URL ?? "https://api.openai.com",
     aiApiKey: process.env.NUXT_AI_API_KEY ?? "",
     aiModel: process.env.NUXT_AI_MODEL ?? "gpt-3.5-turbo",
     // Public 配置（客户端可用）
     public: {
-      connectionSync: false,
       defaultType: process.env.NUXT_PUBLIC_DEFAULT_TYPE ?? "node",
       siyuanApiUrl: process.env.NUXT_PUBLIC_SIYUAN_API_URL ?? "http://127.0.0.1:6806",
       providerMode: process.env.NUXT_PUBLIC_PROVIDER_MODE ?? "false",
-      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? process.env.SHARE_API_URL ?? "http://127.0.0.1:8086",
+      providerUrl: process.env.NUXT_PUBLIC_PROVIDER_URL ?? "http://127.0.0.1:8086",
       viewerFontsEnabled: process.env.NUXT_PUBLIC_VIEWER_FONTS_ENABLED ?? process.env.VIEWER_FONTS_ENABLED ?? "true",
       viewerCapabilities: {
         aiAssistant: true,

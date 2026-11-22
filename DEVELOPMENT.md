@@ -96,7 +96,7 @@ pnpm build -F siyuan-blog -- --watch
 
 ### Local dev with production provider
 
-When running local `pnpm dev` / `./dev.sh` while pointing `NUXT_PUBLIC_PROVIDER_URL` to the production provider, keep these caveats in mind:
+When running local `pnpm dev` / `./dev.sh` (Windows: `./dev.ps1`) while pointing `NUXT_PUBLIC_PROVIDER_URL` to the production provider, keep these caveats in mind:
 
 - Local `localhost` / LAN IP origins are different from the production domain, so homepage settings may follow a different domain whitelist branch.
 - This can directly affect `homePageId`, share snapshots, and the SSR first-render branch, which may look like a hydration bug.
@@ -160,22 +160,31 @@ pnpm cloudflareBuild
 
 ## Script Notes
 
-The viewer build scripts now perform a temporary config switch and automatically restore `nuxt.config.ts` after the command exits:
+All script entry points are invoked through `pnpm` and dispatched automatically for the current platform (`scripts/run-platform-script.mjs` at the repo root, `apps/app/script/run-platform-script.mjs` inside `apps/app`):
 
-- `apps/app/script/siyuan.sh`
+- Windows: runs the matching `.ps1`, preferring PowerShell 7+ (`pwsh`) and falling back to `powershell.exe`; no bash, rsync, or zip required
+- Linux / macOS: runs the existing `.sh`, preferring `bash` and falling back to `sh`
+
+The viewer build scripts still perform a temporary config switch and automatically restore `nuxt.config.ts` after the command exits. Every `.sh` has a behavior-equivalent `.ps1`:
+
+- `apps/app/script/siyuan.sh` / `siyuan.ps1`
   temporary switch to `nuxt.siyuan.config.ts`, then `pnpm exec nuxi generate`, then restore
-- `apps/app/script/node.sh`
-  temporary switch to `nuxt.node.config.ts`, then `pnpm exec nuxi build`, then restore
-- `apps/app/script/vercel.sh`
+- `apps/app/script/node.sh` / `node.ps1`
+  temporary switch to `nuxt.node.config.ts`, then `pnpm exec nuxi build`, then restore; `dist/node` equals the contents of `.output`, and the entry is `dist/node/server/index.mjs`
+- `apps/app/script/vercel.sh` / `vercel.ps1`
   temporary switch to `nuxt.vercel.config.ts`, then `pnpm exec nuxi build`, then restore
-- `apps/app/script/cloudflare.sh`
+- `apps/app/script/cloudflare.sh` / `cloudflare.ps1`
   temporary switch to `nuxt.cloudflare.config.ts`, then `pnpm exec nuxi build`, then restore
-- `apps/app/script/dev.sh`
+- `apps/app/script/dev.sh` / `dev.ps1`
   temporary switch to `nuxt.node.config.ts`, then `pnpm exec nuxi dev --host`, then restore on exit
 
 Do not use `nuxi -c <config>` directly as the default multi-target build entry in this repo.
 
 In practice, this project's multi-config setup is only reliably reproduced by the provided scripts, because they switch the active `nuxt.config.ts`, run the command, and restore it afterward.
+
+When changing a script, update both the `.sh` and the `.ps1` so the artifacts and behavior stay identical on every platform.
+
+`.ps1` files must be saved as **UTF-8 with BOM**: Windows PowerShell 5.1 parses files without a BOM using the system ANSI code page, which corrupts Chinese comments and can even break parsing.
 
 ## Package
 
@@ -206,6 +215,15 @@ pnpm packageNodeProvider
 mv dist dist_bak
 ./install.sh
 ```
+
+On Windows:
+
+```powershell
+Rename-Item dist dist_bak
+./install.ps1
+```
+
+Paths inside `node-provider.zip` are `dist/node/...`; after extraction `dist/node` equals the contents of `.output`, and the entry point is `dist/node/server/index.mjs`.
 
 3. Start command
 

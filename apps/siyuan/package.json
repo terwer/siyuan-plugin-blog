@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "clean": "rm -rf node_modules"
+    "clean": "node -e \"require('node:fs').rmSync('node_modules',{recursive:true,force:true})\""
   },
   "dependencies": {
     "@vueuse/core": "^12.8.2",

@@ -37,16 +37,18 @@ Run the server-capable viewer locally:
 
 ```bash
 cd apps/app
-bash script/dev.sh
+pnpm dev
 ```
 
 ## Build
+
+Every build goes through `pnpm`: Windows dispatches to the matching `.ps1`, while Linux / macOS use the `.sh`.
 
 Build the free Siyuan SPA viewer:
 
 ```bash
 cd apps/app
-bash script/siyuan.sh
+pnpm build -- --from siyuan
 ```
 
 This script temporarily switches to `nuxt.siyuan.config.ts`, builds the free SPA viewer, and restores `nuxt.config.ts` automatically.
@@ -55,19 +57,19 @@ Build the Node viewer:
 
 ```bash
 cd apps/app
-bash script/node.sh
+pnpm build -- --from node
 ```
 
 Build the Vercel viewer:
 
 ```bash
 cd apps/app
-bash script/vercel.sh
+pnpm vercelBuild
 ```
 
 Build the Cloudflare viewer:
 
 ```bash
 cd apps/app
-bash script/cloudflare.sh
+pnpm cloudflareBuild
 ```

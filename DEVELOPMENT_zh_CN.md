@@ -84,7 +84,7 @@ pnpm build -F siyuan-blog -- --watch
 
 ### 本地 dev 连接正式 provider 的注意事项
 
-当你用本地 `pnpm dev` / `./dev.sh`，但把 `NUXT_PUBLIC_PROVIDER_URL` 指向正式 provider 做联调时，请注意：
+当你用本地 `pnpm dev` / `./dev.sh`（Windows 为 `./dev.ps1`），但把 `NUXT_PUBLIC_PROVIDER_URL` 指向正式 provider 做联调时，请注意：
 
 - 本地 `localhost` / 内网 IP 的 `origin` 不等于正式域名，首页配置可能会走不同的 domain 白名单分支。
 - 这会直接影响 `homePageId`、分享快照、SSR 首屏分支，进而造成 hydration 误判。
@@ -159,22 +159,31 @@ pnpm cloudflareBuild
 
 ## 脚本说明
 
-查看页脚本现在统一采用“临时切换目标配置 -> 执行命令 -> 自动恢复 `nuxt.config.ts`”的方式：
+所有脚本入口统一由 `pnpm` 调用，并按当前平台自动分派（根目录 `scripts/run-platform-script.mjs`，`apps/app` 内为 `apps/app/script/run-platform-script.mjs`）：
 
-- `apps/app/script/siyuan.sh`
+- Windows：自动执行对应的 `.ps1`，优先 PowerShell 7+ 的 `pwsh`，没有则退回系统自带的 `powershell.exe`；不需要 bash、rsync、zip
+- Linux / macOS：执行原有的 `.sh`，优先 `bash`，没有则退回 `sh`
+
+查看页脚本仍然采用“临时切换目标配置 -> 执行命令 -> 自动恢复 `nuxt.config.ts`”的方式，每个 `.sh` 都有一个行为一致的 `.ps1` 实现：
+
+- `apps/app/script/siyuan.sh` / `siyuan.ps1`
   临时切换到 `nuxt.siyuan.config.ts`，执行 `pnpm exec nuxi generate`，再自动恢复
-- `apps/app/script/node.sh`
-  临时切换到 `nuxt.node.config.ts`，执行 `pnpm exec nuxi build`，再自动恢复
-- `apps/app/script/vercel.sh`
+- `apps/app/script/node.sh` / `node.ps1`
+  临时切换到 `nuxt.node.config.ts`，执行 `pnpm exec nuxi build`，再自动恢复；产物 `dist/node` 直接等于 `.output` 的内容，启动入口是 `dist/node/server/index.mjs`
+- `apps/app/script/vercel.sh` / `vercel.ps1`
   临时切换到 `nuxt.vercel.config.ts`，执行 `pnpm exec nuxi build`，再自动恢复
-- `apps/app/script/cloudflare.sh`
+- `apps/app/script/cloudflare.sh` / `cloudflare.ps1`
   临时切换到 `nuxt.cloudflare.config.ts`，执行 `pnpm exec nuxi build`，再自动恢复
-- `apps/app/script/dev.sh`
+- `apps/app/script/dev.sh` / `dev.ps1`
   临时切换到 `nuxt.node.config.ts`，执行 `pnpm exec nuxi dev --host`，结束后自动恢复
 
 默认不要直接使用 `nuxi -c <config>` 作为本仓库的多目标构建入口。
 
 在当前这套多配置结构里，最稳定的方式仍然是走仓库提供的脚本，因为它们会负责切换目标配置并在命令结束后恢复。
+
+修改脚本时请同时更新对应的 `.sh` 与 `.ps1`，保证两个平台的产物和行为一致。
+
+`.ps1` 文件必须保存为 **UTF-8 with BOM**：Windows PowerShell 5.1 对无 BOM 的文件会按系统 ANSI 代码页解析，中文注释会乱码甚至导致语法错误。
 
 
 ## 打包
@@ -207,6 +216,15 @@ pnpm packageNodeProvider
 mv dist dist_bak
 ./install.sh
 ```
+
+Windows 上对应：
+
+```powershell
+Rename-Item dist dist_bak
+./install.ps1
+```
+
+`node-provider.zip` 内的路径是 `dist/node/...`，解压后 `dist/node` 就是 `.output` 的内容，启动入口为 `dist/node/server/index.mjs`。
 
 3. 启动命令
 

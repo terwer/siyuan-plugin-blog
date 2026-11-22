@@ -6,7 +6,7 @@
   "types": "./index.ts",
   "scripts": {
     "lint": "eslint .",
-    "clean": "rm -rf node_modules"
+    "clean": "node -e \"require('node:fs').rmSync('node_modules',{recursive:true,force:true})\""
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",

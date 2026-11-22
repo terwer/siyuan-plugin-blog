@@ -34,9 +34,14 @@ mkdir -p .output/server/node_modules/@popperjs
 if [ -d .output/server/node_modules/@sxzz/popperjs-es ]; then
   mv .output/server/node_modules/@sxzz/popperjs-es .output/server/node_modules/@popperjs/core
 fi
-mkdir -p ../../dist/node
-cp -r .output/ ../../dist/node
-cp -r dist/ ../../dist/node
+# 产物目录必须等于 .output 的内容（启动入口是 ../../dist/node/server/index.mjs）。
+# 先清空再复制：cp -r 在目标已存在时会把 .output 复制成 ../../dist/node/.output，与启动路径不符。
+rm -rf ../../dist/node
+cp -r .output ../../dist/node
+# apps/app/dist 是 Nuxt 2 时期的额外静置资源；Nuxt 4 下不存在，存在时才复制，避免构建必然失败。
+if [ -d dist ]; then
+  cp -r dist ../../dist/node
+fi
 echo "Resources are copied."
 
 echo "Node build finished."
