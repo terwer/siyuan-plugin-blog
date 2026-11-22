@@ -29,7 +29,7 @@ test('renderer 分支覆盖真实响应专属字段', () => {
   assert.match(source, /av__gallery-item\", false/)
   assert.match(source, /data-readonly-sort/)
   assert.match(source, /enforceReadOnly/)
-  assert.match(source, /av-row-update/)
+  assert.match(source, /data-row-id/)
   assert.match(source, /av-row-open/)
   assert.match(source, /data-readonly-title/)
   assert.match(source, /当前视图暂无数据/)

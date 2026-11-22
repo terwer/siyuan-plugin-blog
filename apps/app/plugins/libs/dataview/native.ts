@@ -1,3 +1,4 @@
+import { readDatabaseCardCell, readDatabaseRowCell } from "~/utils/databaseRecordDetail"
 import { createDatabaseSearchControl } from "./searchControl"
 import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
 
@@ -182,7 +183,8 @@ const appendCopyAction = (cell: HTMLElement, text = "") => {
   cell.appendChild(button)
 }
 
-const appendRowActions = (cellprimary: HTMLElement, primary: any, detail?: any) => {
+const appendRecordAction = (host: HTMLElement, recordId: string) => {
+  if (!recordId) return
   const actions = tag("span", "av__row-actions")
   const open = tag("button", "av__row-action av__cell-action ariaLabel")
   open.type = "button"
@@ -190,33 +192,12 @@ const appendRowActions = (cellprimary: HTMLElement, primary: any, detail?: any) 
     "data-position": "4north",
     "aria-label": "查看详情",
     "data-type": "av-row-open",
+    "data-row-id": recordId,
   })
   open.innerHTML = icon("iconOpen")
-  open.dataset.blockId = primary?.id || ""
-  ;(open as any).__detail = detail || primary
   actions.appendChild(open)
-
-  const update = tag("button", "av__row-action av__cell-action ariaLabel")
-  update.type = "button"
-  setAttrs(update, {
-    "data-position": "4north",
-    "aria-label": primary?.isDetached ? "绑定" : "换绑",
-    "data-type": "av-row-update",
-  })
-  update.innerHTML = icon(primary?.isDetached ? "iconRef" : "iconRefresh")
-  actions.appendChild(update)
-
-  const more = tag("button", "av__row-action av__row-more av__cell-action ariaLabel")
-  more.type = "button"
-  setAttrs(more, {
-    "data-position": "4north",
-    "aria-label": "更多",
-    "aria-haspopup": "menu",
-    "data-type": "av-row-more",
-  })
-  more.innerHTML = icon("iconMore")
-  actions.appendChild(more)
-  cellprimary.appendChild(actions)
+  host.classList.add("av__detail-host")
+  host.appendChild(actions)
 }
 
 const renderSelectText = (cell: HTMLElement, cellValue: any, color: any, bgColor: any) => {
@@ -234,7 +215,7 @@ const renderSelectText = (cell: HTMLElement, cellValue: any, color: any, bgColor
   cell.appendChild(chip)
 }
 
-const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
+export const renderCellValue = (cell: HTMLElement, rawCell: any, field: any, copy = true) => {
   const resolved = resolveCell(rawCell)
   const value = resolved.value
   const valueType = resolved.valueType || field?.type
@@ -260,10 +241,9 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       })
       ref.textContent = blockContent
       cellprimary.append(emoji, ref)
-      appendRowActions(cellprimary, value)
       primary.appendChild(cellprimary)
       cell.appendChild(primary)
-      appendCopyAction(cell, valueToText(rawCell))
+      if (copy) appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "number": {
@@ -275,7 +255,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       text.setAttribute("data-content", String(number.content))
       text.textContent = number.formattedContent || String(number.content)
       cell.appendChild(text)
-      appendCopyAction(cell, valueToText(rawCell))
+      if (copy) appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "date":
@@ -289,7 +269,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       text.setAttribute("data-value", jsonValue(date))
       text.textContent = dateText(date)
       cell.appendChild(text)
-      appendCopyAction(cell, valueToText(rawCell))
+      if (copy) appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "select":
@@ -302,7 +282,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       items.forEach((item: any) => {
         renderSelectText(cell, item, resolved.color, resolved.bgColor)
       })
-      appendCopyAction(cell, valueToText(rawCell))
+      if (copy) appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "mAsset": {
@@ -330,7 +310,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
     }
     case "checkbox": {
       const checkbox = tag("span", "av__checkbox")
-      checkbox.innerHTML = icon(value.checked ? "iconCheck" : "iconUncheck")
+      checkbox.innerHTML = icon((value.checkbox?.checked ?? value.checked) ? "iconCheck" : "iconUncheck")
       cell.appendChild(checkbox)
       return true
     }
@@ -356,7 +336,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       const span = tag("span", "av__celltext")
       span.textContent = text
       cell.appendChild(span)
-      appendCopyAction(cell, valueToText(rawCell))
+      if (copy) appendCopyAction(cell, valueToText(rawCell))
       return true
     }
     case "relation":
@@ -378,7 +358,7 @@ const renderCellValue = (cell: HTMLElement, rawCell: any, field: any) => {
       const span = tag("span", "av__celltext")
       span.textContent = text
       cell.appendChild(span)
-      appendCopyAction(cell, valueToText(rawCell))
+      if (copy) appendCopyAction(cell, valueToText(rawCell))
       return true
     }
   }
@@ -441,7 +421,7 @@ const createViewTabs = (item: any, activeViewId: string, onActivate: (viewId: st
 type AvToolbarState = { hasFilter?: boolean; hasSort?: boolean; searchQuery?: string }
 
 type AvRecordActions = {
-  onOpen?: (detail: any) => void
+  onOpen?: (recordId: string, opener: HTMLElement) => void
   onCopy?: (text: string) => void
 }
 
@@ -666,17 +646,16 @@ const renderTableBody = (view: any) => {
     first.innerHTML = `${icon("iconUncheck")}<div class="av__freeze-drag ariaLabel" data-position="east" aria-label="拖拽调整冻结范围"></div>`
     sticky.appendChild(first)
     tr.appendChild(sticky)
-    columns.forEach((column: any, columnIndex: number) => {
-      const rawCell = row.cells?.[columnIndex]
+    columns.forEach((column: any) => {
+      const rawCell = readDatabaseRowCell(row, view.columns, column.id)
       const { cell } = createCell(rawCell, column)
       if (cell.dataset.id === undefined) {
         cell.removeAttribute("data-id")
       }
       tr.appendChild(cell)
     })
-    const rowActions = tag("div", "av__cell av__row-detail-cell")
-    appendRowActions(rowActions, { id: row.id }, { record: row, fields: view.columns || [], type: "table" })
-    tr.appendChild(rowActions)
+    const actionHost = tr.querySelector<HTMLElement>('.av__cell[data-dtype="block"]') ?? tr.querySelector<HTMLElement>(".av__cell") ?? first
+    appendRecordAction(actionHost, row.id)
     body.appendChild(tr)
   })
 
@@ -744,16 +723,14 @@ const renderListBody = (view: any) => {
     sticky.appendChild(first)
     tr.appendChild(sticky)
     visibleColumns.forEach((column: any) => {
-      const columnIndex = (view?.columns || []).findIndex((item: any) => item.id === column.id)
-      const rawCell = row.cells?.[columnIndex]
+      const rawCell = readDatabaseRowCell(row, view.columns, column.id)
       const { cell } = createCell(rawCell, column)
       cell.setAttribute("aria-label", column.name || "")
       cell.setAttribute("data-position", "north")
       tr.appendChild(cell)
     })
-    const rowActions = tag("div", "av__cell av__row-detail-cell")
-    appendRowActions(rowActions, { id: row.id }, { record: row, fields: view.columns || [], type: "table" })
-    tr.appendChild(rowActions)
+    const actionHost = tr.querySelector<HTMLElement>('.av__cell[data-dtype="block"]') ?? tr.querySelector<HTMLElement>(".av__cell") ?? first
+    appendRecordAction(actionHost, row.id)
     body.appendChild(tr)
   })
 
@@ -788,9 +765,7 @@ const createCard = (card: any, fields: any[], className: string, showCover = tru
 
   const fieldList = tag("div", "av__gallery-fields")
   fields.forEach((field: any) => {
-    const value = (card?.values || []).find((item: any) => {
-      return item?.keyID === field?.id || item?.value?.keyID === field?.id
-    })
+    const value = readDatabaseCardCell(card, field.id)
     const { cell, hasValue } = createCell(value, field, "av__cell")
     cell.setAttribute("data-position", "5west")
     cell.setAttribute("aria-label", field?.name || "")
@@ -809,9 +784,7 @@ const createCard = (card: any, fields: any[], className: string, showCover = tru
     fieldList.appendChild(wrapper)
   })
   article.appendChild(fieldList)
-  const detailActions = tag("div", "av__card-detail-actions")
-  appendRowActions(detailActions, card, { record: card, fields, type: "card" })
-  article.appendChild(detailActions)
+  appendRecordAction(article, card.id)
   return article
 }
 
@@ -981,11 +954,14 @@ const renderCalendarItem = (row: any, primaryField: any, dateValue: any, startIn
     tabindex: "0",
     "data-calendar-item": row?.id || "",
     "data-id": row?.id || "",
+    "data-row-id": row?.id || "",
+    "data-type": "av-row-open",
+    "aria-label": `查看详情：${valueToText(primaryField?.cell) || "未命名条目"}`,
   })
   item.style.gridColumn = `${startIndex + 1}/span ${span}`
   item.style.gridRow = "1"
   const dateTextValue = dateText(dateValue)
-  item.title = `${primaryField?.value || ""}\n${dateTextValue}`
+  item.title = `${valueToText(primaryField?.cell)}\n${dateTextValue}`
 
   const startResize = tag("span", "av__calendar-resize av__calendar-resize--start")
   setAttrs(startResize, { "data-calendar-resize": "start", title: "拖动调整开始日期" })
@@ -1003,7 +979,7 @@ const renderCalendarItem = (row: any, primaryField: any, dateValue: any, startIn
     title: primaryField?.name || "",
   })
   const resolved = resolveCell(primaryField?.cell)
-  renderCellValue(field, primaryField?.cell, primaryField)
+  renderCellValue(field, primaryField?.cell, primaryField, false)
   if (!field.childNodes.length) {
     const spanText = tag("span", "av__celltext")
     spanText.textContent = resolved.value?.content || ""
@@ -1123,7 +1099,7 @@ const renderCalendarBody = (view: any, mode: "month" | "week") => {
 
   const events = (view?.rows || [])
     .map((row: any) => {
-      const rawCell = dateIndex >= 0 ? row.cells?.[dateIndex] : null
+      const rawCell = dateIndex >= 0 ? readDatabaseRowCell(row, columns, dateKeyID) : null
       const dateValue = calendarDate(rawCell)
       if (!dateValue) {
         return null
@@ -1133,7 +1109,7 @@ const renderCalendarBody = (view: any, mode: "month" | "week") => {
         dateValue,
         start: new Date(dateValue.content),
         end: new Date(dateValue.hasEndDate && dateValue.content2 ? dateValue.content2 : dateValue.content),
-        primaryCell: row.cells?.[primaryIndex >= 0 ? primaryIndex : 0],
+        primaryCell: primaryIndex >= 0 ? readDatabaseRowCell(row, columns, columns[primaryIndex].id) : undefined,
       }
     })
     .filter(Boolean)
@@ -1329,7 +1305,9 @@ const enforceReadOnly = (target: HTMLElement) => {
     '[data-type="av-add-top"]',
     '[data-type="av-add-bottom"]',
     '[data-type="av-more"]',
-    '[data-calendar-add]'
+    '[data-calendar-add]',
+    '[data-calendar-resize]',
+    '.av__calendar-move'
   ].join(",")
   target.querySelectorAll(writeSelectors).forEach((element) => element.remove())
   target.querySelectorAll('[draggable="true"]').forEach((element) => element.removeAttribute("draggable"))
@@ -1351,14 +1329,18 @@ const createNativeAvBody = (item: any, options: AvRecordActions) => {
       options.onCopy?.(text)
     })
   })
-  body.querySelectorAll('[data-type="av-row-open"]').forEach((button) => {
-    button.addEventListener("click", (event) => {
+  body.querySelectorAll<HTMLElement>('[data-type="av-row-open"]').forEach(opener => {
+    const open = (event: Event) => {
       event.preventDefault()
       event.stopPropagation()
-      const blockId = (button as HTMLElement).dataset.blockId || ""
-      const detail = (button as any).__detail || { record: { id: blockId }, fields: [], type: "row" }
-      if (blockId || detail?.record) options.onOpen?.(detail)
-    })
+      if (opener.dataset.rowId) options.onOpen?.(opener.dataset.rowId, opener)
+    }
+    opener.addEventListener("click", open)
+    if (opener.getAttribute("role") === "button") {
+      opener.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") open(event)
+      })
+    }
   })
   return body
 }
@@ -1412,9 +1394,9 @@ export const valueToText = (cell: any) => {
   const value = resolved.value
   switch (resolved.valueType) {
     case "block":
-      return value?.content || ""
+      return value?.block?.content ?? value?.content ?? ""
     case "number":
-      return value?.formattedContent || value?.content || ""
+      return String(value?.number?.formattedContent || value?.formattedContent || (value?.number?.content ?? value?.content ?? ""))
     case "date":
     case "created":
     case "updated":

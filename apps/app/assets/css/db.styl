@@ -28,52 +28,122 @@
     min-width 0
     width calc(100vw - 16px)
 
+// 正文与只读属性并排；窄屏使用全宽详情栏。
+:root
+  --db-record-pane-width clamp(360px, 42vw, 720px)
+
+@media (min-width: 900px)
+  html:has(.db-view-detail:popover-open) .content-layout:not(.content-layout--preview)
+    box-sizing border-box
+    padding-inline-end var(--db-record-pane-width)
+
 .db-view-detail
   position fixed
-  top 16px
-  right 16px
-  z-index 1000
-  width 420px\n  max-width calc(100vw - 32px)
-  max-height calc(100vh - 32px)
+  inset 0 0 0 auto
+  box-sizing border-box
+  margin 0
+  width var(--db-record-pane-width)
+  height 100dvh
+  max-width 100vw
+  max-height none
+  padding 0
   overflow auto
-  padding 16px
-  background var(--b3-theme-background, #fff)
-  border 1px solid var(--b3-border-color, #d9d9d9)
-  border-radius 8px
-  box-shadow 0 8px 28px rgba(0, 0, 0, .18)
+  border 0
+  border-inline-start 1px solid var(--b3-border-color)
+  background var(--b3-theme-background)
+  color var(--b3-theme-on-background)
+  font-family var(--b3-font-family)
 
 .db-view-detail-header
   display flex
-  align-items center
+  gap 4px
+  align-items flex-start
   justify-content space-between
-  gap 12px
-  padding-bottom 12px
-  border-bottom 1px solid var(--b3-border-color, #d9d9d9)
+  padding 16px 24px 4px
 
-.db-view-detail-close
-  border 0
-  background transparent
-  color var(--b3-theme-on-surface, #333)
-  font-size 22px
-  cursor pointer
+.db-view-detail-header .protyle-db-row__title
+  margin 0
+  padding 7px 0
+  overflow-wrap anywhere
+  line-height 1.4
+
+.db-view-detail-header svg
+  flex none
+
+.db-view-detail .db-view-detail-close
+  flex none
+  margin-top 9px
+  opacity 1
 
 .db-view-detail-body
+  padding 8px 24px 24px
+
+.db-view-detail-database,
+.db-view-detail-label
   display flex
-  flex-direction column
-  gap 12px
-  padding-top 12px
+  align-items center
+  gap 8px
+  min-width 0
+
+.db-view-detail-database
+  color var(--b3-protyle-inline-blockref-color, var(--b3-theme-primary))
+  font-weight 600
+  margin-bottom 8px
+
+.db-view-detail-database svg,
+.db-view-detail-label svg
+  width 16px
+  height 16px
+  flex none
 
 .db-view-detail-field
   display grid
-  grid-template-columns minmax(96px, 38%) 1fr
+  grid-template-columns minmax(88px, 31%) minmax(0, 1fr)
+  align-items start
   gap 12px
+  box-sizing border-box
+  min-height 42px
+  padding 8px 0
 
 .db-view-detail-label
-  color var(--b3-theme-on-surface-light, #777)
+  color var(--b3-theme-on-surface)
 
 .db-view-detail-value
-  color var(--b3-theme-on-surface, #222)
+  margin 0
+  min-width 0
   overflow-wrap anywhere
+
+.db-view-detail-value .av__celltext
+  white-space pre-wrap
+
+.db-view-detail-value [data-type=block-ref]
+  white-space pre-wrap
+
+.db-view-detail-value[data-empty=true]
+  color var(--b3-theme-on-surface-light)
+
+.db-view-detail-value .av__cellassetimg
+  max-width 100%
+
+.av .av__detail-host
+  position relative
+
+.av .av__detail-host:has(> [data-type=copy]) > .av__row-actions
+  right 26px
+
+.av :is(.av__row:hover, .av__row:focus-within) .av__detail-host > .av__row-actions,
+.av .av__detail-host:focus-within > .av__row-actions
+  opacity 1
+  pointer-events auto
+
+@media (hover: none)
+  .av .av__detail-host > .av__row-actions
+    opacity 1
+    pointer-events auto
+
+@media (max-width: 899px)
+  .db-view-detail
+    width 100vw
 
 .db-view-ssr-placeholder
   display flex

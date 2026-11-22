@@ -7,6 +7,8 @@
  *  of this license document, but changing it is not allowed.
  */
 
+import { resolveDatabaseRecordDetail } from "~/utils/databaseRecordDetail"
+import { openDatabaseRecordPanel } from "~/plugins/libs/dataview/recordPanel"
 import { openDatabaseSortMenu } from "~/plugins/libs/dataview/sortMenu"
 import { openDatabaseFilterMenu } from "~/plugins/libs/dataview/filterMenu"
 import { normalizeDataTable } from "~/utils/databaseViewSsr"
@@ -21,7 +23,7 @@ import {
   type FilterGroup,
   type ViewSort,
 } from "~/utils/databaseViewFilter"
-import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, updateNativeAvResults, valueToText } from "~/plugins/libs/dataview/native"
+import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, updateNativeAvResults } from "~/plugins/libs/dataview/native"
 
 /**
  * 数据库插件
@@ -32,58 +34,6 @@ import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, updateNativeAvResu
  * @version 1.0.0
  * @since 0.0.1
  */
-let activeDetailPanel: HTMLElement | null = null
-
-const closeDetailPanel = () => {
-  activeDetailPanel?.remove()
-  activeDetailPanel = null
-}
-
-const showDetailPanel = (detail: any) => {
-  closeDetailPanel()
-  const panel = document.createElement("aside")
-  panel.className = "db-view-detail"
-  panel.setAttribute("role", "dialog")
-  panel.setAttribute("aria-label", "查看详情")
-
-  const header = document.createElement("header")
-  header.className = "db-view-detail-header"
-  const title = document.createElement("strong")
-  title.textContent = detail?.record?.name || detail?.record?.title || "查看详情"
-  const close = document.createElement("button")
-  close.type = "button"
-  close.className = "db-view-detail-close"
-  close.setAttribute("aria-label", "关闭详情")
-  close.textContent = "×"
-  close.addEventListener("click", closeDetailPanel)
-  header.append(title, close)
-  panel.appendChild(header)
-
-  const fields = detail?.fields || []
-  const record = detail?.record || {}
-  const values = detail?.type === "card" ? (record.values || []) : (record.cells || [])
-  const body = document.createElement("div")
-  body.className = "db-view-detail-body"
-  fields.filter((field: any) => !field?.hidden).forEach((field: any, index: number) => {
-    const value = detail?.type === "card"
-      ? values.find((item: any) => item?.keyID === field?.id || item?.value?.keyID === field?.id)
-      : values[(record.columns || fields).findIndex((item: any) => item?.id === field?.id) >= 0 ? (record.columns || fields).findIndex((item: any) => item?.id === field?.id) : index]
-    const row = document.createElement("div")
-    row.className = "db-view-detail-field"
-    const label = document.createElement("div")
-    label.className = "db-view-detail-label"
-    label.textContent = field?.name || `字段 ${index + 1}`
-    const content = document.createElement("div")
-    content.className = "db-view-detail-value"
-    content.textContent = valueToText(value) || "—"
-    row.append(label, content)
-    body.appendChild(row)
-  })
-  panel.appendChild(body)
-  document.body.appendChild(panel)
-  activeDetailPanel = panel
-}
-
 let activeToast: HTMLElement | null = null
 
 const showToast = (message: string, kind: "success" | "error" = "success") => {
@@ -134,6 +84,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
   let closeFilter: (() => void) | null = null
   let closeSort: (() => void) | null = null
+  let closeDetail: (() => void) | null = null
 
   const renderUnsupported = (container: HTMLElement, type: string, item: any) => {
     container.className = "db-view-unsupported"
@@ -182,7 +133,15 @@ export default defineNuxtPlugin(({ vueApp }) => {
         viewType: type,
         [viewId]: { ...arranged, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
-      const recordActions = { onOpen: showDetailPanel, onCopy: (text: string) => { void copyText(text) } }
+      const recordActions = {
+        onOpen: (recordId: string, opener: HTMLElement) => {
+          const detail = resolveDatabaseRecordDetail(currentDataTable, viewId, recordId)
+          if (!detail) { showToast("已发布快照中没有该条目的详情", "error"); return }
+          closeDetail?.()
+          closeDetail = openDatabaseRecordPanel(detail, opener, () => { closeDetail = null }, addClientAssetsPrefix)
+        },
+        onCopy: (text: string) => { void copyText(text) },
+      }
       if (resultsOnly) {
         updateNativeAvResults(dataTableEl, renderItem, recordActions)
         addClientAssetsPrefix(dataTableEl)
@@ -235,6 +194,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     beforeUnmount() {
       closeFilter?.()
       closeSort?.()
+      closeDetail?.()
     },
     mounted (el) {
       const dataTableStr = el.getAttribute("data-dataviews")
