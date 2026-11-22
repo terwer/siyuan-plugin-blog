@@ -21,7 +21,7 @@ import {
   type FilterGroup,
   type ViewSort,
 } from "~/utils/databaseViewFilter"
-import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, valueToText } from "~/plugins/libs/dataview/native"
+import { mountNativeAv, parseDataViews, SUPPORTED_VIEW_TYPES, updateNativeAvResults, valueToText } from "~/plugins/libs/dataview/native"
 
 /**
  * 数据库插件
@@ -157,7 +157,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
       return
     }
 
-    const render = (viewId: string) => {
+    const render = (viewId: string, resultsOnly = false) => {
       const item = currentDataTable[viewId]
       if (!item || typeof item !== "object") {
         renderUnsupported(dataTableEl, "invalid", { view: { name: "缺少真实视图数据" } })
@@ -182,7 +182,15 @@ export default defineNuxtPlugin(({ vueApp }) => {
         viewType: type,
         [viewId]: { ...arranged, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
+      const recordActions = { onOpen: showDetailPanel, onCopy: (text: string) => { void copyText(text) } }
+      if (resultsOnly) {
+        updateNativeAvResults(dataTableEl, renderItem, recordActions)
+        addClientAssetsPrefix(dataTableEl)
+        return
+      }
       mountNativeAv(dataTableEl, renderItem, {
+        ...recordActions,
+        searchQuery: search,
         hasFilter: Boolean(filter?.rules.length),
         hasSort: Boolean(sort?.length),
         onActivate: (nextViewId: string) => {
@@ -190,8 +198,6 @@ export default defineNuxtPlugin(({ vueApp }) => {
           closeSort?.()
           render(nextViewId)
         },
-        onOpen: (detail: any) => showDetailPanel(detail),
-        onCopy: (text: string) => { void copyText(text) },
         onSort: (anchor: HTMLButtonElement) => {
           if (closeSort) { closeSort(); return }
           closeFilter?.()
@@ -206,8 +212,8 @@ export default defineNuxtPlugin(({ vueApp }) => {
           }, () => { closeSort = null })
         },
         onSearch: (query: string) => {
-          activeSearches.set(viewId, query.trim())
-          render(viewId)
+          activeSearches.set(viewId, query)
+          render(viewId, true)
         },
         onFilter: (anchor: HTMLElement) => {
           if (closeFilter) { closeFilter(); return }

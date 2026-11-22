@@ -1,3 +1,4 @@
+import { createDatabaseSearchControl } from "./searchControl"
 import { DateUtil, JsonUtil, StrUtil } from "zhi-common"
 
 export const SUPPORTED_VIEW_TYPES = ["table", "list", "gallery", "kanban", "calendar"]
@@ -437,12 +438,19 @@ const createViewTabs = (item: any, activeViewId: string, onActivate: (viewId: st
   return bar
 }
 
+type AvToolbarState = { hasFilter?: boolean; hasSort?: boolean; searchQuery?: string }
+
+type AvRecordActions = {
+  onOpen?: (detail: any) => void
+  onCopy?: (text: string) => void
+}
+
 const createToolbar = (
   item: any,
   activeViewId: string,
   onFilter: (anchor: HTMLElement) => void,
   onSort: (anchor: HTMLButtonElement) => void,
-  state: { hasFilter?: boolean; hasSort?: boolean },
+  state: AvToolbarState,
   onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
@@ -504,59 +512,8 @@ const createToolbar = (
 
   views.appendChild(tag("div", "fn__space"))
 
-  const searchButton = tag("button", "ariaLabel block__icon")
-  searchButton.type = "button"
-  setAttrs(searchButton, { "data-type": "av-search-icon", "aria-label": "搜索", "data-position": "8south" })
-  searchButton.innerHTML = icon("iconSearch")
-  views.appendChild(searchButton)
-
-  const search = tag("div", "fn__flex av__search")
-  search.style.position = "relative"
-  const input = tag("div", "b3-text-field b3-text-field--text")
-  input.setAttribute("contenteditable", "plaintext-only")
-  input.setAttribute("data-type", "av-search")
-  input.setAttribute("placeholder", "搜索...")
-  input.setAttribute("role", "searchbox")
-  input.setAttribute("aria-label", "搜索")
-  input.style.width = "0"
-  input.style.paddingLeft = "0"
-  input.style.paddingRight = "0"
-  const clear = createSvg("b3-form__icon-clear ariaLabel fn__none", "iconCloseRound")
-  clear.setAttribute("aria-label", "清空")
-  clear.style.height = "28px"
-  clear.style.width = "1em"
-  search.append(input, clear)
-  views.appendChild(search)
-  const openSearch = () => {
-    input.style.width = "160px"
-    input.style.paddingLeft = "8px"
-    input.style.paddingRight = "24px"
-    input.classList.add("av__search-input--active")
-    input.focus()
-  }
-  searchButton.addEventListener("click", (event) => {
-    event.preventDefault()
-    event.stopPropagation()
-    openSearch()
-  })
-  input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault()
-      onSearch(input.textContent || "")
-      return
-    }
-    if (event.key === "Escape") {
-      input.textContent = ""
-      onSearch("")
-      input.blur()
-    }
-  })
-  clear.addEventListener("click", (event) => {
-    event.preventDefault()
-    input.textContent = ""
-    onSearch("")
-    openSearch()
-  })
+  const { button: searchButton, search } = createDatabaseSearchControl(icon, state.searchQuery ?? "", onSearch)
+  views.append(searchButton, search)
 
   views.appendChild(tag("div", "fn__space"))
 
@@ -587,7 +544,7 @@ const createHeader = (
   currentViewId: string,
   onFilter: (anchor: HTMLElement) => void,
   onSort: (anchor: HTMLButtonElement) => void,
-  state: { hasFilter?: boolean; hasSort?: boolean },
+  state: AvToolbarState,
   onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
@@ -1378,10 +1335,51 @@ const enforceReadOnly = (target: HTMLElement) => {
   target.querySelectorAll('[draggable="true"]').forEach((element) => element.removeAttribute("draggable"))
 }
 
+const createNativeAvBody = (item: any, options: AvRecordActions) => {
+  const type = resolveViewType(item)
+  const body = !hasViewShape(item?.view, type)
+    ? renderInvalidView(type)
+    : isEmptyView(item.view, type)
+      ? renderEmptyView(type)
+      : renderNativeView(item, item.view, type) ?? renderEmptyView(type)
+  enforceReadOnly(body)
+  body.querySelectorAll('[data-type="copy"]').forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      const text = String((button as any).__copyText || "")
+      options.onCopy?.(text)
+    })
+  })
+  body.querySelectorAll('[data-type="av-row-open"]').forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      const blockId = (button as HTMLElement).dataset.blockId || ""
+      const detail = (button as any).__detail || { record: { id: blockId }, fields: [], type: "row" }
+      if (blockId || detail?.record) options.onOpen?.(detail)
+    })
+  })
+  return body
+}
+
+export const updateNativeAvResults = (target: HTMLElement, item: any, actions: AvRecordActions) => {
+  const outer = target.firstElementChild
+  const previous = outer?.lastElementChild
+  if (!outer?.classList.contains("av__container") || outer.childElementCount !== 2 || !previous) return
+  const body = createNativeAvBody(item, actions)
+  previous.replaceWith(body)
+}
+
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: { onFilter: (anchor: HTMLElement) => void; onSort: (anchor: HTMLButtonElement) => void; hasFilter?: boolean; hasSort?: boolean; onSearch: (query: string) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void; onCopy?: (text: string) => void },
+  options: AvToolbarState & AvRecordActions & {
+    onFilter: (anchor: HTMLElement) => void
+    onSort: (anchor: HTMLButtonElement) => void
+    onSearch: (query: string) => void
+    onActivate: (viewId: string) => void
+  },
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1399,35 +1397,13 @@ export const mountNativeAv = (
   target.dataset.viewType = type
 
   const header = createHeader(item, currentViewId, options.onFilter, options.onSort, options, options.onSearch, options.onActivate)
-  const body = !hasViewShape(item?.view, type)
-    ? renderInvalidView(type)
-    : isEmptyView(item.view, type)
-      ? renderEmptyView(type)
-      : renderNativeView(item, item.view, type)
   const containerClass = type === "gallery" || type === "kanban" || type === "calendar"
     ? "av__container fn__block"
     : "av__container"
   const container = tag("div", containerClass)
-  container.append(header, body || renderEmptyView(type))
+  enforceReadOnly(header)
+  container.append(header, createNativeAvBody(item, options))
   target.replaceChildren(container)
-  enforceReadOnly(target)
-  target.querySelectorAll('[data-type="copy"]').forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      const text = String((button as any).__copyText || "")
-      options.onCopy?.(text)
-    })
-  })
-  target.querySelectorAll('[data-type="av-row-open"]').forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      const blockId = (button as HTMLElement).dataset.blockId || ""
-      const detail = (button as any).__detail || { record: { id: blockId }, fields: [], type: "row" }
-      if (blockId || detail?.record) options.onOpen?.(detail)
-    })
-  })
   return target
 }
 

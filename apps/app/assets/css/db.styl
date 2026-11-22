@@ -318,3 +318,32 @@
   height 14px
   flex none
   color var(--b3-theme-on-surface)
+
+// 搜索框失焦且为空时移出布局；原生清空图标用按钮承载，支持键盘操作。
+.db-view-search
+  position relative
+  flex 0 0 auto
+
+.db-view-search[hidden],
+.db-view-search-clear[hidden]
+  display none
+
+.db-view-search-input
+  width 128px
+  max-width 28vw
+  padding-right 18px
+  white-space nowrap
+  overflow hidden
+
+.db-view-search-clear
+  align-self center
+  display inline-grid
+  place-items center
+  border 0
+  padding 0
+  background transparent
+  color var(--b3-theme-on-surface)
+
+.db-view-search-clear svg
+  width 14px
+  height 14px

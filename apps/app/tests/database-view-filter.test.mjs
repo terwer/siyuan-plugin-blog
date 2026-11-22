@@ -175,3 +175,16 @@ test('日期起止分别排序，卡片与看板保留所在分组', () => {
   assert.deepEqual(result.groups[0].cards.map(item => item.id), ['仓储升级', '门店改造', '运维交接'])
   assert.equal(cards[0].id, '门店改造')
 })
+
+test('清除关键词恢复当前筛选与排序的结果', () => {
+  const view = { columns: [column('project', '合同项目', 'text'), column('state', '合同状态', 'text'), column('amount', '合同金额', 'number')], rows: [
+    {id: '仓储升级', cells: [text('智能仓储升级'), text('执行中'), number(1280000)]},
+    {id: '医药冷链', cells: [text('医药冷链追溯'), text('执行中'), number(2160000)]},
+    {id: '设备维保', cells: [text('设备年度维保'), text('已完成'), number(540000)]},
+  ] }
+  const filtered = mod.filterViewSnapshot(view, 'table', { fieldId: 'state', operator: 'equals', query: '执行中' })
+  const result = query => mod.sortViewSnapshot(mod.searchViewSnapshot(filtered, 'table', query), 'table', [{fieldId: 'amount', direction: 'desc'}]).rows.map(row => row.id)
+  assert.deepEqual(result('仓储'), ['仓储升级'])
+  assert.deepEqual(result(''), ['医药冷链', '仓储升级'])
+  assert.equal(view.rows.length, 3)
+})
