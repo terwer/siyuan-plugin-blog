@@ -7,6 +7,7 @@
  *  of this license document, but changing it is not allowed.
  */
 
+import { openDatabaseSortMenu } from "~/plugins/libs/dataview/sortMenu"
 import { openDatabaseFilterMenu } from "~/plugins/libs/dataview/filterMenu"
 import { normalizeDataTable } from "~/utils/databaseViewSsr"
 import { StrUtil } from "zhi-common"
@@ -14,9 +15,9 @@ import { useStaticClientAssets } from "~/plugins/libs/renderer/useStaticClientAs
 import {
   filterViewSnapshot,
   getFilterFields,
+  getSortFields,
   searchViewSnapshot,
   sortViewSnapshot,
-  type FilterField,
   type FilterGroup,
   type ViewSort,
 } from "~/utils/databaseViewFilter"
@@ -131,147 +132,8 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
   const resolveViewType = (item: any) => String(item?.viewType || "unknown")
 
-  const filterLocale = () => {
-    const zh = (document.documentElement.lang || "").toLowerCase().startsWith("zh")
-    return zh
-      ? {
-          label: "筛选",
-          field: "字段",
-          operator: "条件",
-          value: "值",
-          apply: "应用",
-          reset: "重置",
-          results: "匹配条目",
-          noResults: "没有匹配条目",
-          invalid: "筛选条件无效",
-          unsupported: "当前视图没有可用的本地筛选字段",
-          contains: "包含",
-          equals: "等于",
-          gt: "大于",
-          gte: "大于等于",
-          lt: "小于",
-          lte: "小于等于",
-          before: "早于",
-          after: "晚于",
-          empty: "暂无数据",
-          noFields: "当前视图没有可用的本地筛选字段",
-          sort: "排序",
-          direction: "方向",
-          ascending: "升序",
-          descending: "降序",
-        }
-      : {
-          label: "Filter",
-          field: "Field",
-          operator: "Operator",
-          value: "Value",
-          apply: "Apply",
-          reset: "Reset",
-          results: "Matches",
-          noResults: "No matching entries",
-          invalid: "Invalid filter",
-          unsupported: "No local filterable fields are available for this view",
-          contains: "contains",
-          equals: "equals",
-          gt: "greater than",
-          gte: "greater than or equal",
-          lt: "less than",
-          lte: "less than or equal",
-          before: "before",
-          after: "after",
-          empty: "No data",
-          noFields: "No local filterable fields are available for this view",
-          sort: "Sort",
-          direction: "Direction",
-          ascending: "Ascending",
-          descending: "Descending",
-        }
-  }
-
-  let activePanel: HTMLElement | null = null
   let closeFilter: (() => void) | null = null
-
-  const closeActivePanel = () => {
-    activePanel?.remove()
-    activePanel = null
-  }
-
-  const createSortPanel = (anchor: HTMLElement, fields: FilterField[], onApply: (sort: ViewSort | null) => void) => {
-    closeFilter?.()
-    closeActivePanel()
-    const locale = filterLocale()
-    const panel = document.createElement("div")
-    panel.className = "b3-menu db-view-filter db-view-sort"
-    panel.setAttribute("role", "dialog")
-    panel.setAttribute("aria-label", locale.sort)
-    panel.style.position = "fixed"
-    panel.style.zIndex = "10"
-
-    const title = document.createElement("div")
-    title.className = "b3-menu__title"
-    const label = document.createElement("span")
-    label.className = "b3-menu__label"
-    label.textContent = locale.sort
-    title.appendChild(label)
-    panel.appendChild(title)
-
-    const items = document.createElement("div")
-    items.className = "b3-menu__items db-view-filter-items"
-    const fieldLabel = document.createElement("label")
-    fieldLabel.className = "b3-menu__item db-view-filter-field"
-    const fieldText = document.createElement("span")
-    fieldText.textContent = locale.field
-    const fieldSelect = document.createElement("select")
-    fieldSelect.className = "b3-select"
-    fields.forEach((field) => {
-      const option = document.createElement("option")
-      option.value = field.id
-      option.textContent = field.name
-      fieldSelect.appendChild(option)
-    })
-    fieldLabel.append(fieldText, fieldSelect)
-
-    const directionLabel = document.createElement("label")
-    directionLabel.className = "b3-menu__item db-view-filter-field"
-    const directionText = document.createElement("span")
-    directionText.textContent = locale.direction
-    const directionSelect = document.createElement("select")
-    directionSelect.className = "b3-select"
-    for (const [value, text] of [["asc", locale.ascending], ["desc", locale.descending]] as const) {
-      const option = document.createElement("option")
-      option.value = value
-      option.textContent = text
-      directionSelect.appendChild(option)
-    }
-    directionLabel.append(directionText, directionSelect)
-
-    const actions = document.createElement("div")
-    actions.className = "db-view-filter-actions"
-    const apply = document.createElement("button")
-    apply.type = "button"
-    apply.className = "b3-button b3-button--outline"
-    apply.textContent = locale.apply
-    const reset = document.createElement("button")
-    reset.type = "button"
-    reset.className = "b3-button b3-button--cancel"
-    reset.textContent = locale.reset
-    actions.append(apply, reset)
-    apply.addEventListener("click", () => {
-      onApply({ fieldId: fieldSelect.value, direction: directionSelect.value as ViewSort["direction"] })
-      closeActivePanel()
-    })
-    reset.addEventListener("click", () => {
-      onApply(null)
-      closeActivePanel()
-    })
-    items.append(fieldLabel, directionLabel, actions)
-    panel.appendChild(items)
-    document.body.appendChild(panel)
-    const rect = anchor.getBoundingClientRect()
-    panel.style.left = `${Math.max(8, Math.min(rect.left, window.innerWidth - panel.offsetWidth - 8))}px`
-    panel.style.top = `${rect.bottom + 4}px`
-    activePanel = panel
-  }
+  let closeSort: (() => void) | null = null
 
   const renderUnsupported = (container: HTMLElement, type: string, item: any) => {
     container.className = "db-view-unsupported"
@@ -286,7 +148,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     }
 
     const activeFilters = new Map<string, FilterGroup>()
-    const activeSorts = new Map<string, ViewSort | null>()
+    const activeSorts = new Map<string, ViewSort[]>()
     const activeSearches = new Map<string, string>()
     const publishedViewId = dataTableEl.getAttribute("custom-sy-av-view")
     const currentViewId = currentDataTable.order?.length === 1 ? currentDataTable.order[0] : publishedViewId || currentDataTable.order?.[0]
@@ -321,23 +183,26 @@ export default defineNuxtPlugin(({ vueApp }) => {
         [viewId]: { ...arranged, viewType: type, id: viewId, name: item.name, desc: item.desc },
       }
       mountNativeAv(dataTableEl, renderItem, {
+        hasSort: Boolean(sort?.length),
         onActivate: (nextViewId: string) => {
           closeFilter?.()
-          closeActivePanel()
+          closeSort?.()
           render(nextViewId)
         },
         onOpen: (detail: any) => showDetailPanel(detail),
         onCopy: (text: string) => { void copyText(text) },
-        onSort: (anchor: HTMLElement) => {
-          const fields = getFilterFields(item, type)
-          if (!fields.length) {
-            showToast(filterLocale().noFields, "error")
-            return
-          }
-          createSortPanel(anchor, fields, (nextSort) => {
-            activeSorts.set(viewId, nextSort)
+        onSort: (anchor: HTMLButtonElement) => {
+          if (closeSort) { closeSort(); return }
+          closeFilter?.()
+          const rules = sort ?? []
+          activeSorts.set(viewId, rules)
+          const getAnchor = () => dataTableEl.querySelector<HTMLButtonElement>('button[data-type="av-sort"]')
+          closeSort = openDatabaseSortMenu(anchor, getAnchor, getSortFields(item, type), rules, () => {
+            const scrollLeft = dataTableEl.querySelector('.av__scroll')?.scrollLeft ?? 0
             render(viewId)
-          })
+            const scroll = dataTableEl.querySelector('.av__scroll')
+            if (scroll) scroll.scrollLeft = scrollLeft
+          }, () => { closeSort = null })
         },
         onSearch: (query: string) => {
           activeSearches.set(viewId, query.trim())
@@ -345,7 +210,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
         },
         onFilter: (anchor: HTMLElement) => {
           if (closeFilter) { closeFilter(); return }
-          closeActivePanel()
+          closeSort?.()
           const root = filter || { kind: "group", join: "and", rules: [] }
           activeFilters.set(viewId, root)
           const getAnchor = () => dataTableEl.querySelector<HTMLButtonElement>('button[data-type="av-filter"]')
@@ -362,7 +227,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
   vueApp.directive("db", {
     beforeUnmount() {
       closeFilter?.()
-      closeActivePanel()
+      closeSort?.()
     },
     mounted (el) {
       const dataTableStr = el.getAttribute("data-dataviews")

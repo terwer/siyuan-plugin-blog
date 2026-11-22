@@ -6,7 +6,7 @@ const require = createRequire(await realpath(new URL('../node_modules/vite/packa
 const { transform } = require('esbuild')
 const source = (await readFile(new URL('../utils/databaseViewFilter.ts', import.meta.url), 'utf8')).replace(/export /g, '')
 const { code } = await transform(source, { loader: 'ts', target: 'es2022' })
-const mod = new Function(code + '\nreturn {filterViewSnapshot,matchesCell,matchesDate,getFilterFields,resultCount,searchViewSnapshot,sortViewSnapshot}')()
+const mod = new Function(code + '\nreturn {filterViewSnapshot,matchesCell,matchesDate,getFilterFields,resultCount,searchViewSnapshot,sortViewSnapshot,getSortFields}')()
 
 const cell = (valueType, value) => ({ valueType, value })
 const column = (id, name, type) => ({ id, name, type })
@@ -104,7 +104,7 @@ test('搜索和排序只改变本地快照，不改原始数据', () => {
   }
   const searched = mod.searchViewSnapshot(view, 'table', '华南')
   assert.deepEqual(searched.rows.map(row => row.id), ['b'])
-  const sorted = mod.sortViewSnapshot(view, 'table', { fieldId: 'amount', direction: 'asc' })
+  const sorted = mod.sortViewSnapshot(view, 'table', [{ fieldId: 'amount', direction: 'asc' }])
   assert.deepEqual(sorted.rows.map(row => row.id), ['b', 'c', 'a'])
   assert.deepEqual(view.rows.map(row => row.id), ['a', 'b', 'c'])
 })
@@ -144,4 +144,34 @@ test('日期条件区分起止端点，空值与数字零不混淆', () => {
   assert.equal(mod.matchesCell(number(0), 'notEmpty', ''), true)
   assert.equal(mod.matchesCell(number(0), 'equals', '0'), true)
   assert.equal(mod.matchesCell(cell('number', {number:{}}), 'equals', '0'), false)
+})
+
+test('多字段排序按优先级稳定比较并保留空值在末尾', () => {
+  const view = { columns: [column('status', '合同状态', 'text'), column('amount', '合同金额', 'number')], rows: [
+    {id: '华中教育', cells: [text('执行中'), number(960000)]},
+    {id: '华北能源', cells: [text('已完成'), number(540000)]},
+    {id: '江南医药', cells: [text('执行中'), number(2160000)]},
+    {id: '南方零售', cells: [text('执行中'), number(2160000)]},
+    {id: '待确认合同', cells: [text('执行中'), null]},
+  ] }
+  const status = {fieldId: 'status', direction: 'asc'}
+  const amount = {fieldId: 'amount', direction: 'desc'}
+  const first = mod.sortViewSnapshot(view, 'table', [status, amount]).rows.map(row => row.id)
+  assert.deepEqual(first.filter(id => id !== '华北能源'), ['江南医药', '南方零售', '华中教育', '待确认合同'])
+  assert.deepEqual(mod.sortViewSnapshot(view, 'table', [amount, status]).rows.map(row => row.id), ['江南医药', '南方零售', '华中教育', '华北能源', '待确认合同'])
+  assert.equal(mod.sortViewSnapshot(view, 'table', []), view)
+  assert.equal(view.rows[0].id, '华中教育')
+})
+
+test('日期起止分别排序，卡片与看板保留所在分组', () => {
+  const fields = [column('plan', '计划开始', 'date'), column('project', '合同项目', 'block')]
+  assert.deepEqual(mod.getSortFields({fields}, 'gallery').map(field => field.id), ['project', 'plan'])
+  const entry = (id, from, until) => ({id, values: [{valueType: 'date', keyID: 'plan', value: {date: {content: from, content2: until, hasEndDate: until != null}}}]})
+  const cards = [entry('门店改造', 1, 5), entry('仓储升级', 2, 4), entry('运维交接', 3, null)]
+  const rule = {fieldId: 'plan', direction: 'asc'}
+  assert.deepEqual(mod.sortViewSnapshot({fields, cards}, 'gallery', [rule]).cards.map(item => item.id), ['门店改造', '仓储升级', '运维交接'])
+  const result = mod.sortViewSnapshot({fields, groups:[{id:'实施中',cards}, {id:'待启动',cards:[]}]}, 'kanban', [{...rule, datePart:'end'}])
+  assert.deepEqual(result.groups.map(group => group.id), ['实施中', '待启动'])
+  assert.deepEqual(result.groups[0].cards.map(item => item.id), ['仓储升级', '门店改造', '运维交接'])
+  assert.equal(cards[0].id, '门店改造')
 })

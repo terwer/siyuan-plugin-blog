@@ -8,34 +8,6 @@
   min-width 320px
   max-width calc(100vw - 16px)
 
-.db-view-filter .db-view-filter-items
-  display flex
-  flex-direction column
-  gap 8px
-  padding 8px 12px
-
-.db-view-filter .db-view-filter-field
-  display flex
-  align-items center
-  gap 8px
-  min-height 28px
-
-.db-view-filter .db-view-filter-field > span
-  flex 0 0 48px
-  color var(--b3-theme-on-surface-light)
-  font-size 12px
-
-.db-view-filter .db-view-filter-field select,
-.db-view-filter .db-view-filter-field input
-  flex 1 1 auto
-  min-width 0
-  height 30px
-
-.db-view-filter-actions
-  display flex
-  gap 6px
-  padding-top 4px
-
 .db-view-filter-status
   min-height 18px
   margin 0
@@ -55,9 +27,6 @@
   .db-view-filter
     min-width 0
     width calc(100vw - 16px)
-
-  .db-view-filter .db-view-filter-field
-    flex 1 1 100%
 
 .db-view-detail
   position fixed
@@ -276,3 +245,76 @@
   .db-view-filter-rule
     grid-template-columns 36px minmax(0, 1fr) 24px
     gap 4px
+
+// 排序复用思源菜单与原生下拉；日期规则的端点与方向独占下一行。
+.db-view-sort-menu
+  position fixed
+  inset auto
+  margin 0
+  box-sizing border-box
+  width 290px
+  max-width calc(100vw - 16px)
+  max-height calc(100vh - 16px)
+  overflow auto
+  padding 8px
+
+.db-view-sort-items
+  padding-top 4px
+
+.db-view-sort-row
+  display grid
+  grid-template-columns 22px minmax(0, 1fr) 22px
+  align-items start
+  gap 6px
+  padding 4px
+  border-radius 6px
+
+.db-view-sort-row:hover,
+.db-view-sort-row:focus-within
+  background var(--b3-list-hover)
+
+.db-view-sort-row[data-sort-drop=before]
+  box-shadow inset 0 2px var(--b3-theme-primary)
+
+.db-view-sort-row[data-sort-drop=after]
+  box-shadow inset 0 -2px var(--b3-theme-primary)
+
+.db-view-sort-controls
+  display grid
+  grid-template-columns minmax(0, 1fr) auto
+  gap 4px 6px
+
+.db-view-sort-controls select
+  width 100%
+  min-width 0
+
+.db-view-sort-row--date .db-view-sort-field
+  grid-column 1 / -1
+
+.db-view-sort-menu .db-view-sort-handle,
+.db-view-sort-menu .db-view-sort-remove
+  opacity 1
+  margin-top 2px
+
+.db-view-sort-menu .db-view-sort-handle
+  cursor grab
+  touch-action none
+
+.db-view-sort-menu .db-view-sort-handle:active
+  cursor grabbing
+
+.db-view-sort-menu .db-view-sort-handle:disabled
+  cursor default
+  opacity .45
+
+.db-view-sort-action
+  display flex
+  align-items center
+  gap 8px
+  min-height 28px
+
+.db-view-sort-action svg
+  width 14px
+  height 14px
+  flex none
+  color var(--b3-theme-on-surface)

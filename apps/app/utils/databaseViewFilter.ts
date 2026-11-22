@@ -18,6 +18,7 @@ export type FilterGroup = {
 export type ViewSort = {
   fieldId: string
   direction: "asc" | "desc"
+  datePart?: "start" | "end"
 }
 
 export type FilterField = {
@@ -232,14 +233,33 @@ export const resultCount = (view: any, type: DatabaseViewType): number => {
   return view?.rows?.length || 0
 }
 
-const compareSortValues = (left: any, right: any): number => {
-  const leftValue = normalizeCellValue(left)
-  const rightValue = normalizeCellValue(right)
-  if (leftValue == null && rightValue == null) return 0
-  if (leftValue == null) return 1
-  if (rightValue == null) return -1
-  if (typeof leftValue === "number" && typeof rightValue === "number") return leftValue - rightValue
-  return String(leftValue).localeCompare(String(rightValue), "zh-CN", { numeric: true, sensitivity: "base" })
+export type SortField = { id: string; name: string; type: string }
+
+export const getSortFields = (view: any, type: DatabaseViewType): SortField[] => {
+  const source: SortField[] = (type === "gallery" || type === "kanban" ? view?.fields : view?.columns) || []
+  const supported = source.filter(field => field?.id && (operatorsForCellType(field.type).length > 0 || field.type === "checkbox"))
+  return [...supported.filter(field => field.type === "block"), ...supported.filter(field => field.type !== "block")]
+}
+
+const sortCollator = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" })
+
+const sortValue = (cell: any, rule: ViewSort, field: SortField) => {
+  if (field.type === "date" && rule.datePart === "end") {
+    const date = (cell?.value ?? cell)?.date
+    return date?.hasEndDate && date.content2 != null ? Number(date.content2) : null
+  }
+  return normalizeCellValue(cell)
+}
+
+const compareSortValues = (
+  left: string | number | boolean | null, right: string | number | boolean | null, direction: ViewSort["direction"],
+): number => {
+  if (isEmptyValue(left)) return isEmptyValue(right) ? 0 : 1
+  if (isEmptyValue(right)) return -1
+  const difference = typeof left === "number" && typeof right === "number" || typeof left === "boolean" && typeof right === "boolean"
+    ? Number(left) - Number(right)
+    : sortCollator.compare(String(left), String(right))
+  return direction === "desc" ? -difference : difference
 }
 
 const matchesSearch = (cell: any, query: string): boolean => {
@@ -271,25 +291,32 @@ export const searchViewSnapshot = (view: any, type: DatabaseViewType, query: str
   return view
 }
 
-export const sortViewSnapshot = (view: any, type: DatabaseViewType, sort: ViewSort | null): any => {
-  if (!sort?.fieldId) return view
-  const fields = type === "gallery" || type === "kanban" ? view?.fields || [] : view?.columns || []
-  const fieldIndex = fields.findIndex((field: any) => field?.id === sort.fieldId)
-  if (fieldIndex < 0) return view
-  const compare = (left: any, right: any) => {
-    const leftCell = left?.cells?.[fieldIndex] || findCardCell(left, sort.fieldId)
-    const rightCell = right?.cells?.[fieldIndex] || findCardCell(right, sort.fieldId)
-    const result = compareSortValues(leftCell, rightCell)
-    return sort.direction === "desc" ? -result : result
-  }
+export const sortViewSnapshot = (view: any, type: DatabaseViewType, sorts: readonly ViewSort[]): any => {
+  if (!sorts.length) return view
+  const fields = new Map(getSortFields(view, type).map(field => [field.id, field]))
+  const active = sorts.flatMap(rule => {
+    const field = fields.get(rule.fieldId)
+    return field ? [{ rule, field }] : []
+  })
+  if (!active.length) return view
+
+  const sortItems = (items: any[], resolve: (item: any, fieldId: string) => any) => items
+    .map((item, index) => ({ item, index, values: active.map(({ rule, field }) => sortValue(resolve(item, field.id), rule, field)) }))
+    .sort((left, right) => {
+      for (let index = 0; index < active.length; index++) {
+        const result = compareSortValues(left.values[index], right.values[index], active[index].rule.direction)
+        if (result) return result
+      }
+      return left.index - right.index
+    })
+    .map(result => result.item)
+
   if (type === "table" || type === "list" || type === "calendar") {
-    return { ...view, rows: [...(view?.rows || [])].sort(compare) }
+    return { ...view, rows: sortItems(view?.rows || [], (row, fieldId) => findRowCell(row, view, fieldId)) }
   }
-  if (type === "gallery") {
-    return { ...view, cards: [...(view?.cards || [])].sort(compare) }
-  }
-  if (type === "kanban") {
-    return { ...view, groups: (view?.groups || []).map((group: any) => ({ ...group, cards: [...(group?.cards || [])].sort(compare) })) }
+  if (type === "gallery") return { ...view, cards: sortItems(view?.cards || [], findCardCell) }
+  if (type === "kanban") return {
+    ...view, groups: (view?.groups || []).map((group: any) => ({ ...group, cards: sortItems(group?.cards || [], findCardCell) })),
   }
   return view
 }

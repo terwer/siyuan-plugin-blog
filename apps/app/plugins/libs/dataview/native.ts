@@ -441,7 +441,8 @@ const createToolbar = (
   item: any,
   activeViewId: string,
   onFilter: (anchor: HTMLElement) => void,
-  onSort: (anchor: HTMLElement) => void,
+  onSort: (anchor: HTMLButtonElement) => void,
+  hasSort: boolean,
   onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
@@ -490,8 +491,9 @@ const createToolbar = (
 
   views.appendChild(tag("div", "fn__space"))
 
-  const sort = tag("span", "ariaLabel block__icon av__readonly-sort")
-  setAttrs(sort, { "data-type": "av-sort", "aria-label": "临时排序", "data-position": "8south" })
+  const sort = tag("button", `ariaLabel block__icon av__readonly-sort${hasSort ? " block__icon--active" : ""}`)
+  sort.type = "button"
+  setAttrs(sort, { "data-type": "av-sort", "aria-label": "排序", "aria-haspopup": "dialog", "aria-expanded": "false", "data-position": "8south" })
   sort.innerHTML = icon("iconSort")
   sort.addEventListener("click", (event) => {
     event.preventDefault()
@@ -584,7 +586,8 @@ const createHeader = (
   item: any,
   currentViewId: string,
   onFilter: (anchor: HTMLElement) => void,
-  onSort: (anchor: HTMLElement) => void,
+  onSort: (anchor: HTMLButtonElement) => void,
+  hasSort: boolean,
   onSearch: (query: string) => void,
   onActivate: (viewId: string) => void,
 ) => {
@@ -596,7 +599,7 @@ const createHeader = (
     "data-view-count": item?.order?.length || 0,
     "data-view-ids": (item?.order || []).join(","),
   })
-  header.appendChild(createToolbar(item, currentViewId, onFilter, onSort, onSearch, onActivate))
+  header.appendChild(createToolbar(item, currentViewId, onFilter, onSort, hasSort, onSearch, onActivate))
 
   const title = tag("div", "av__title")
   title.setAttribute("contenteditable", "false")
@@ -1378,7 +1381,7 @@ const enforceReadOnly = (target: HTMLElement) => {
 export const mountNativeAv = (
   target: HTMLElement,
   item: any,
-  options: { onFilter: (anchor: HTMLElement) => void; onSort: (anchor: HTMLElement) => void; onSearch: (query: string) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void; onCopy?: (text: string) => void },
+  options: { onFilter: (anchor: HTMLElement) => void; onSort: (anchor: HTMLButtonElement) => void; hasSort?: boolean; onSearch: (query: string) => void; onActivate: (viewId: string) => void; onOpen?: (detail: any) => void; onCopy?: (text: string) => void },
 ) => {
   const currentViewId = item?.view?.id || item?.viewID || item?.order?.[0]
   const type = resolveViewType(item)
@@ -1395,7 +1398,7 @@ export const mountNativeAv = (
   })
   target.dataset.viewType = type
 
-  const header = createHeader(item, currentViewId, options.onFilter, options.onSort, options.onSearch, options.onActivate)
+  const header = createHeader(item, currentViewId, options.onFilter, options.onSort, Boolean(options.hasSort), options.onSearch, options.onActivate)
   const body = !hasViewShape(item?.view, type)
     ? renderInvalidView(type)
     : isEmptyView(item.view, type)
