@@ -23,12 +23,14 @@ test('右侧栏组件可编译，并在挂载后才恢复侧栏状态', async ()
 });
 test('static detail uses serialized state and stable provider mode for hydration', async () => { const detail = await read('../components/static/Detail.vue'); const footer = await read('../components/static/Footer.vue'); assert.match(detail, /useState<any>\(`static-detail:/); assert.doesNotMatch(detail, /const formData = reactive/); assert.match(footer, /const selfHosted = providerMode/); assert.doesNotMatch(footer, /public\.connectionSync/); });
 test('self-hosted has no public API proxy and preserves optional upstream SPA behavior',async()=>{const source=await read('../composables/useConnectionSettingsFetch.ts');assert.ok(!source.includes('public/siyuan-blog'));assert.ok(source.includes('providerInternalUrl'));assert.ok((await read('../composables/useLegacyAuthModeFetch.ts')).includes('useSiyuanSPA'));const config=await read('../nuxt.config.ts');assert.match(config,/providerInternalUrl: process\.env\.NUXT_PROVIDER_INTERNAL_URL \?\? ""/);assert.ok(config.includes('"self-hosted"'));assert.ok(!/aiApiKey[\s\S]*public:[\s\S]*aiApiKey/.test(config))});
-test('hosted reader keeps the document page scrollable over SiYuan base CSS', async () => {
+test('hosted reader removes SiYuan host-level root layout pollution', async () => {
+  const base = await read('../public/resources/stage/build/app/base.css')
   const css = await read('../assets/css/index.styl')
-  assert.match(css, /html:root[\s\S]*height auto !important/)
-  assert.match(css, /max-height none !important/)
-  assert.match(css, /overflow-y auto !important/)
-  assert.match(css, /#app, #__nuxt/)
+  assert.doesNotMatch(base, /body\{[^}]*height:100%;[^}]*max-height:100%;[^}]*overflow:hidden/)
+  assert.doesNotMatch(base, /html\{position:fixed;top:0;right:0;left:0\}/)
+  const rootLayout = css.slice(0, css.indexOf('// 思源笔记额外样式'))
+  assert.doesNotMatch(rootLayout, /!important/)
+  assert.match(css, /html, body/)
 })
 
 test('enhanced fonts are opt-in for self-hosted runtime', async () => { const plugin = await read('../plugins/019.viewer-font-mode.client.ts'); const css = await read('../assets/css/siyuan.styl'); const config = await read('../nuxt.config.ts'); assert.match(plugin, /viewerFontsEnabled/); assert.match(plugin, /if \(!enabled\)/); assert.match(plugin, /disableEnhancedFonts/); assert.doesNotMatch(css, /--viewer-font-stack.*Open Sans/); assert.match(config, /viewerFontsEnabled: process\.env\.NUXT_PUBLIC_VIEWER_FONTS_ENABLED/); assert.match(config, /viewerFontsEnabled:.*"false"/); });
