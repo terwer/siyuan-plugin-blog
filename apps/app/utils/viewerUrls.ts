@@ -6,6 +6,11 @@ export const normalizeAppBase = (base: string = "/") =>
 export const withAppBase = (base: string, path: string) =>
   normalizeAppBase(base) + path.replace(/^\/+/, "")
 
+export const normalizeViewerHome = (origin: string, base: string = "/", spaTarget = false) => {
+  const root = `${origin.replace(/\/+$/, "")}${normalizeAppBase(base)}`.replace(/\/+$/, "")
+  return root + (spaTarget ? "/#" : "")
+}
+
 // Only unresolved legacy relative assets need the provider's legacy read route.
 // Absolute historical references and newly bound provider URLs remain unchanged.
 export const isLegacyAssetPath = (url: string) => /^(?:\.\/)?assets\//.test(url)

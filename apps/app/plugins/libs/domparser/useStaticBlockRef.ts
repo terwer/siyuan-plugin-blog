@@ -149,7 +149,7 @@ export const useStaticBlockRef = () => {
 
   // 保留 block-ref 原生 span，只附加点击行为
   const convertBlockRefLinks = (rootElement: any) => {
-    const home = getHome().replace(/\/+$/, "")
+    const home = getHome()
     const cfg = getCfg()
     const urlPath = cfg?.docPath ?? "s"
 
