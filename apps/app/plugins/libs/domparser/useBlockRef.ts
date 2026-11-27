@@ -18,7 +18,7 @@ export const useBlockRef = () => {
 
   // 将所有类型为 "block-ref" 的 span 元素转换成 a 元素
   const convertBlockRefLinks = (rootElement: any) => {
-    const home = getHome()
+    const home = getHome().replace(/\/+$/, "")
 
     rootElement.querySelectorAll("span[data-type=\"block-ref\"]").forEach((el: HTMLElement) => {
       const id = el.getAttribute("data-id")
