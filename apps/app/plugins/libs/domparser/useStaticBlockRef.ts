@@ -100,6 +100,19 @@ const extractDocIdFromHref = (href: string, docPath: string) => {
   return extractDocIdFromSegments(splitPathSegments(rawHref), docPath)
 }
 
+// The directive runs on mount and update; stable handlers are registered only once per element.
+const openNativeLink = (event: Event) => {
+  const el = event.currentTarget as HTMLElement
+  event.preventDefault()
+  window.open(el.dataset.shareHref, "_blank", "noopener,noreferrer")
+}
+
+const onNativeLinkKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Enter" || event.key === " ") {
+    openNativeLink(event)
+  }
+}
+
 /**
  * 处理块链接
  */
@@ -134,17 +147,8 @@ export const useStaticBlockRef = () => {
       el.dataset.docId = docId
     }
 
-    const open = (event: Event) => {
-      event.preventDefault()
-      window.open(href, "_blank", "noopener,noreferrer")
-    }
-
-    el.addEventListener("click", open)
-    el.addEventListener("keydown", (event: KeyboardEvent) => {
-      if (event.key === "Enter" || event.key === " ") {
-        open(event)
-      }
-    })
+    el.addEventListener("click", openNativeLink)
+    el.addEventListener("keydown", onNativeLinkKeydown)
   }
 
   // 保留 block-ref 原生 span，只附加点击行为
